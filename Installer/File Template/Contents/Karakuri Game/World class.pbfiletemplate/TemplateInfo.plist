@@ -1,0 +1,5 @@
+{
+	MainTemplateFile = "WorldClass.cpp";
+	"CounterpartTemplateFile" = "WorldClass.h";
+	Description = "A C++ class file for Karakuri World, with an optional header file.";
+}

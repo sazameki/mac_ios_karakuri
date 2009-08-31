@@ -1,0 +1,424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8E89C2EE102A269D0000BB1C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED9B81E101CC872001577AB /* Default.png */; };
+		8E89C2EF102A269D0000BB1C /* chara.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED9B821101CC884001577AB /* chara.png */; };
+		8E89C2F1102A269D0000BB1C /* KarakuriLibraryConnector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7D0101CC468001577AB /* KarakuriLibraryConnector.mm */; };
+		8E89C2F2102A269D0000BB1C /* GameMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7DB101CC507001577AB /* GameMain.cpp */; };
+		8E89C2F3102A269D0000BB1C /* LogoWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7DF101CC507001577AB /* LogoWorld.cpp */; };
+		8E89C2F4102A269D0000BB1C /* PlayWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7E0101CC507001577AB /* PlayWorld.cpp */; };
+		8ED9B7D1101CC468001577AB /* KarakuriLibraryConnector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7D0101CC468001577AB /* KarakuriLibraryConnector.mm */; };
+		8ED9B7E1101CC507001577AB /* GameMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7DB101CC507001577AB /* GameMain.cpp */; };
+		8ED9B7E2101CC507001577AB /* LogoWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7DF101CC507001577AB /* LogoWorld.cpp */; };
+		8ED9B7E3101CC507001577AB /* PlayWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED9B7E0101CC507001577AB /* PlayWorld.cpp */; };
+		8ED9B81F101CC872001577AB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED9B81E101CC872001577AB /* Default.png */; };
+		8ED9B822101CC884001577AB /* chara.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED9B821101CC884001577AB /* chara.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* «PROJECTNAME».app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "«PROJECTNAME».app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E89C2F9102A269D0000BB1C /* «PROJECTNAME».app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "«PROJECTNAME».app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ED9B7C6101CC3CD001577AB /* Karakuri_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Prefix.pch; sourceTree = "<group>"; };
+		8ED9B7D0101CC468001577AB /* KarakuriLibraryConnector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriLibraryConnector.mm; sourceTree = "<group>"; };
+		8ED9B7DB101CC507001577AB /* GameMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMain.cpp; sourceTree = "<group>"; };
+		8ED9B7DC101CC507001577AB /* GameMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMain.h; sourceTree = "<group>"; };
+		8ED9B7DD101CC507001577AB /* LogoWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoWorld.h; sourceTree = "<group>"; };
+		8ED9B7DE101CC507001577AB /* PlayWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayWorld.h; sourceTree = "<group>"; };
+		8ED9B7DF101CC507001577AB /* LogoWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogoWorld.cpp; sourceTree = "<group>"; };
+		8ED9B7E0101CC507001577AB /* PlayWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayWorld.cpp; sourceTree = "<group>"; };
+		8ED9B81E101CC872001577AB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		8ED9B821101CC884001577AB /* chara.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chara.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E89C2F5102A269D0000BB1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* «PROJECTNAME».app */,
+				8E89C2F9102A269D0000BB1C /* «PROJECTNAME».app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* Karakuri Base 2.5 */ = {
+			isa = PBXGroup;
+			children = (
+				8ED9B7D9101CC4EE001577AB /* Source Files */,
+				29B97317FDCFA39411CA2CEA /* Resource Files */,
+				8ED9B81C101CC855001577AB /* Settings */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = "Karakuri Base 2.5";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				8ED9B7C6101CC3CD001577AB /* Karakuri_Prefix.pch */,
+				8ED9B7D0101CC468001577AB /* KarakuriLibraryConnector.mm */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resource Files */ = {
+			isa = PBXGroup;
+			children = (
+				8ED9B81E101CC872001577AB /* Default.png */,
+				8ED9B821101CC884001577AB /* chara.png */,
+			);
+			name = "Resource Files";
+			path = resource;
+			sourceTree = "<group>";
+		};
+		8ED9B7D9101CC4EE001577AB /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				8ED9B7DC101CC507001577AB /* GameMain.h */,
+				8ED9B7DB101CC507001577AB /* GameMain.cpp */,
+				8ED9B7DD101CC507001577AB /* LogoWorld.h */,
+				8ED9B7DF101CC507001577AB /* LogoWorld.cpp */,
+				8ED9B7DE101CC507001577AB /* PlayWorld.h */,
+				8ED9B7E0101CC507001577AB /* PlayWorld.cpp */,
+			);
+			name = "Source Files";
+			path = source;
+			sourceTree = "<group>";
+		};
+		8ED9B81C101CC855001577AB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Mac OS X */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Mac OS X" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mac OS X";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Karakuri Base 2.5";
+			productReference = 8D1107320486CEB800E47090 /* «PROJECTNAME».app */;
+			productType = "com.apple.product-type.application";
+		};
+		8E89C2EC102A269D0000BB1C /* iPhone (Emulator) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E89C2F6102A269D0000BB1C /* Build configuration list for PBXNativeTarget "iPhone (Emulator)" */;
+			buildPhases = (
+				8E89C2ED102A269D0000BB1C /* Resources */,
+				8E89C2F0102A269D0000BB1C /* Sources */,
+				8E89C2F5102A269D0000BB1C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iPhone (Emulator)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Karakuri Base 2.5";
+			productReference = 8E89C2F9102A269D0000BB1C /* «PROJECTNAME».app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "___PROJECTNAME___" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Karakuri Base 2.5 */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Mac OS X */,
+				8E89C2EC102A269D0000BB1C /* iPhone (Emulator) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ED9B81F101CC872001577AB /* Default.png in Resources */,
+				8ED9B822101CC884001577AB /* chara.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E89C2ED102A269D0000BB1C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E89C2EE102A269D0000BB1C /* Default.png in Resources */,
+				8E89C2EF102A269D0000BB1C /* chara.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ED9B7D1101CC468001577AB /* KarakuriLibraryConnector.mm in Sources */,
+				8ED9B7E1101CC507001577AB /* GameMain.cpp in Sources */,
+				8ED9B7E2101CC507001577AB /* LogoWorld.cpp in Sources */,
+				8ED9B7E3101CC507001577AB /* PlayWorld.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E89C2F0102A269D0000BB1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E89C2F1102A269D0000BB1C /* KarakuriLibraryConnector.mm in Sources */,
+				8E89C2F2102A269D0000BB1C /* GameMain.cpp in Sources */,
+				8E89C2F3102A269D0000BB1C /* LogoWorld.cpp in Sources */,
+				8E89C2F4102A269D0000BB1C /* PlayWorld.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8E89C2F7102A269D0000BB1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "KR_MACPHONE_EMU=1";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lkarakuri-macphone-emu-Debug",
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					"-framework",
+					OpenAL,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					IOKit,
+				);
+				PRODUCT_NAME = "«PROJECTNAME»";
+				SYMROOT = "build-emulator";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8E89C2F8102A269D0000BB1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = "KR_MACPHONE_EMU=1";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lkarakuri-macphone-emu-Release",
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					"-framework",
+					OpenAL,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					IOKit,
+				);
+				PRODUCT_NAME = "«PROJECTNAME»";
+				SYMROOT = "build-emulator";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lkarakuri-macosx-Debug",
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					"-framework",
+					OpenAL,
+					"-framework",
+					AudioToolbox,
+				);
+				PRODUCT_NAME = "«PROJECTNAME»";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-lkarakuri-macosx-Release",
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					"-framework",
+					OpenAL,
+					"-framework",
+					AudioToolbox,
+				);
+				PRODUCT_NAME = "«PROJECTNAME»";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Karakuri_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Developer/Extras/Karakuri/include;
+				LIBRARY_SEARCH_PATHS = /Developer/Extras/Karakuri/lib;
+				MACH_O_TYPE = mh_execute;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Karakuri_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Developer/Extras/Karakuri/include;
+				LIBRARY_SEARCH_PATHS = /Developer/Extras/Karakuri/lib;
+				MACH_O_TYPE = mh_execute;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8E89C2F6102A269D0000BB1C /* Build configuration list for PBXNativeTarget "iPhone (Emulator)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E89C2F7102A269D0000BB1C /* Debug */,
+				8E89C2F8102A269D0000BB1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Mac OS X" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "___PROJECTNAME___" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

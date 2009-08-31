@@ -1,0 +1,5 @@
+{
+	MainTemplateFile = "KarakuriClass.cpp";
+	"CounterpartTemplateFile" = "KarakuriClass.h";
+	Description = "A C++ class file for Karakuri Framework, with an optional header file.";
+}

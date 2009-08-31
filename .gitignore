@@ -1,0 +1,16 @@
+# General Noise
+.*
+!.git*
+ 
+# Xcode Noise
+*/build
+*.pbxuser
+*.mode1v3
+*~.nib
+
+# Installer Noise
+Installer/Karakuri Library/Contents/*
+ 
+# Mac OS X Noise
+*.swp
+

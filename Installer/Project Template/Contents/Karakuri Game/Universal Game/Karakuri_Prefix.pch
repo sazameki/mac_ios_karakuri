@@ -1,0 +1,6 @@
+/*!
+    @file   Karakuri_prefix.pch
+ */
+
+#include <Karakuri/Karakuri.h>
+
