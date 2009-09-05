@@ -1,2 +1,42 @@
 A sophisticated 2D/3D game framework for Mac OS X and iPhone.
 
+
+<< How to build >>
+
+1. Open the project in Xcode.
+2. Build "Build & Install All" for Debug.
+3. Build "Bulid & Install All" for Release.
+
+
+<< How to make an installer >>
+
+1. Do "build" at first.
+2. Copy "Karakuri Library/build/Universal/Karakuri" folder to "Installer/Karakuri Library/Contents".
+3. Execute Installer/set_permission_all.sh script in Terminal.
+4. Open all package projects in Package Maker bundled in Xcode 2.5.
+5. Build all packages.
+6. Move a library package, project template packages and file template packages into the framework package.
+7. Now publish the framework package.
+
+
+<< License >>
+
+Karakuri Framework is provided under the terms of the MIT license.
+
+Copyright ©2009 Satoshi Numata, Ph.D.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the 
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit 
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the 
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+

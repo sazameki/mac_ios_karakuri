@@ -10,6 +10,7 @@
 
 # Installer Noise
 Installer/Karakuri Library/Contents/*
+Installer/Installers/build
  
 # Mac OS X Noise
 *.swp
