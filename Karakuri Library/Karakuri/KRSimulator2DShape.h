@@ -36,6 +36,7 @@ protected:
 
 private:
     void    *mRepresentedObject;
+    int     mTag;
 
 protected:
     bool    mIsRemovedFromSpace;
@@ -67,6 +68,9 @@ public:
     
     void    *getRepresentedObject() const;
     void    setRepresentedObject(float *anObj);
+    
+    int     getTag() const;
+    void    setTag(int tag);
     
     KRSimulator2D   *getSimulator() const;
     

@@ -13,12 +13,14 @@
 
 
 KRJoint2D::KRJoint2D(KRShape2D *shape, const KRVector2D& anchor, const KRVector2D& staticAnchor)
-    : mConstraint(NULL), mRepresentedObject(NULL), mIsStatic(true), mShape1(shape), mShape2(NULL), mAnchor1(anchor), mAnchor2(staticAnchor), mIsRemovedFromSpace(true)
+    : mConstraint(NULL), mRepresentedObject(NULL), mIsStatic(true), mShape1(shape), mShape2(NULL),
+      mAnchor1(anchor), mAnchor2(staticAnchor), mIsRemovedFromSpace(true), mTag(0)
 {
 }
 
 KRJoint2D::KRJoint2D(KRShape2D *shape1, const KRVector2D& anchor1,  KRShape2D *shape2, const KRVector2D& anchor2)
-    : mConstraint(NULL), mRepresentedObject(NULL), mIsStatic(false), mShape1(shape1), mAnchor1(anchor1), mShape2(shape2), mAnchor2(anchor2), mIsRemovedFromSpace(true)
+    : mConstraint(NULL), mRepresentedObject(NULL), mIsStatic(false), mShape1(shape1),
+      mAnchor1(anchor1), mShape2(shape2), mAnchor2(anchor2), mIsRemovedFromSpace(true), mTag(0)
 {
 }
 
@@ -60,6 +62,16 @@ void *KRJoint2D::getRepresentedObject() const
 void KRJoint2D::setRepresentedObject(float *anObj)
 {
     mRepresentedObject = anObj;
+}
+
+int KRJoint2D::getTag() const
+{
+    return mTag;
+}
+
+void KRJoint2D::setTag(int tag)
+{
+    mTag = tag;
 }
 
 KRSimulator2D *KRJoint2D::getSimulator() const

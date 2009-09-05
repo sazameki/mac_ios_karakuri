@@ -15,7 +15,7 @@
 
 KRShape2D::KRShape2D()
     : mCPBody(NULL), mCPShape(NULL), mIsStatic(false), mMass(1.0f), mElasticity(0.0f), mFriction(1.0f),
-      mIsRemovedFromSpace(true), mRepresentedObject(NULL), mSimulator(NULL), mCollisionID(0)
+      mIsRemovedFromSpace(true), mRepresentedObject(NULL), mSimulator(NULL), mCollisionID(0), mTag(0)
 {
     // Nothing to do.
 }
@@ -135,6 +135,16 @@ void *KRShape2D::getRepresentedObject() const
 void KRShape2D::setRepresentedObject(float *anObj)
 {
     mRepresentedObject = anObj;
+}
+
+int KRShape2D::getTag() const
+{
+    return mTag;
+}
+
+void KRShape2D::setTag(int tag)
+{
+    mTag = tag;
 }
 
 KRSimulator2D *KRShape2D::getSimulator() const

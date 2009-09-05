@@ -16,8 +16,13 @@
 #define KRMin(a, b)  ((a) < (b))? (a): (b);
 #define KRMax(a, b)  ((a) > (b))? (a): (b);
 
-#define KRPushMatrix()      _KRMatrixPushCount++;glPushMatrix();
-#define KRPopMatrix()       _KRMatrixPushCount--;glPopMatrix();
+#define KRPushMatrix()\
+    _KRMatrixPushCount++;\
+    glPushMatrix();
+#define KRPopMatrix()\
+    KRTexture2D::processBatchedTexture2DDraws();\
+    _KRMatrixPushCount--;\
+    glPopMatrix();
 
 #define KRRotateScreen2D(angle, centerPos)     glTranslatef(((centerPos).x), ((centerPos).y), 0.0f);glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);glTranslatef(-((centerPos).x), -((centerPos).y), 0.0f);
 #define KRRotate2D(angle)       glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);
