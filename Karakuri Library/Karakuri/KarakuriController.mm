@@ -762,6 +762,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             
 #if KR_IPHONE_MACOSX_EMU
             [KRGLViewInst drawTouches];
+            KRTexture2D::processBatchedTexture2DDraws();
 #endif
 
             // ダブルバッファのスワップ

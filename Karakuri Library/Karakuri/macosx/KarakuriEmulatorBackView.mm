@@ -22,9 +22,9 @@
     if (self) {
         //[self setAlphaValue:0.0f];
         
-        NSString *imageFilePath = @"/Developer/Extras/Karakuri/images/iphone_emu_back.png";
+        NSString *imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back.png";
         if (KRGame->getScreenWidth() < KRGame->getScreenHeight()) {
-            imageFilePath = @"/Developer/Extras/Karakuri/images/iphone_emu_back2.png";
+            imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back2.png";
         }
         mBackgroundImage = [[NSImage alloc] initWithContentsOfFile:imageFilePath];
     }

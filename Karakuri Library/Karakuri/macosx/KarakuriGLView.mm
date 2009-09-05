@@ -92,7 +92,7 @@ static volatile BOOL    sIsReady = NO;
     
     mDefaultTex = new KRTexture2D("Default.png");
 #if KR_IPHONE_MACOSX_EMU
-    mTouchTex = new KRTexture2D("/Developer/Extras/Karakuri/images/touch_circle.png");
+    mTouchTex = new KRTexture2D("/Developer/Extras/Karakuri/images/System/iPhone Emulator/touch_circle.png");
     [self clearTouches];
 #endif
 

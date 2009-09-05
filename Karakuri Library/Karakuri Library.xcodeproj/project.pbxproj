@@ -399,6 +399,10 @@
 		8E6023C01032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */; };
 		8E6023C11032B0E20009C1F4 /* KRSimulator2DJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E6023B91032B0E20009C1F4 /* KRSimulator2DJoint.h */; };
 		8E6023C21032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */; };
+		8E75FE38105288CE0012DAD3 /* KRBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E75FE36105288CE0012DAD3 /* KRBundle.h */; };
+		8E75FE39105288CE0012DAD3 /* KRBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E75FE37105288CE0012DAD3 /* KRBundle.m */; };
+		8E75FE3A105288CE0012DAD3 /* KRBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E75FE36105288CE0012DAD3 /* KRBundle.h */; };
+		8E75FE3B105288CE0012DAD3 /* KRBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E75FE37105288CE0012DAD3 /* KRBundle.m */; };
 		8E87B6E7103A04F80010745C /* KarakuriNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KarakuriNetwork.h */; };
 		8E87B6E8103A04F80010745C /* KarakuriNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */; };
 		8E87B6E9103A04F80010745C /* KarakuriNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KarakuriNetwork.h */; };
@@ -2488,6 +2492,8 @@
 		8E60214410322F8F0009C1F4 /* smsutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smsutils.h; sourceTree = "<group>"; };
 		8E6023B91032B0E20009C1F4 /* KRSimulator2DJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRSimulator2DJoint.h; sourceTree = "<group>"; };
 		8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRSimulator2DJoint.cpp; sourceTree = "<group>"; };
+		8E75FE36105288CE0012DAD3 /* KRBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRBundle.h; sourceTree = "<group>"; };
+		8E75FE37105288CE0012DAD3 /* KRBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRBundle.m; sourceTree = "<group>"; };
 		8E87B6E5103A04F80010745C /* KarakuriNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriNetwork.h; sourceTree = "<group>"; };
 		8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriNetwork.mm; sourceTree = "<group>"; };
 		8E946906102265240073A4FD /* KRPrimitive2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRPrimitive2D.h; sourceTree = "<group>"; };
@@ -3342,6 +3348,8 @@
 		8EAB5FE1101B209E00DDA881 /* macosx */ = {
 			isa = PBXGroup;
 			children = (
+				8E75FE36105288CE0012DAD3 /* KRBundle.h */,
+				8E75FE37105288CE0012DAD3 /* KRBundle.m */,
 				8EAB5FE2101B209E00DDA881 /* KarakuriMenu.h */,
 				8EAB5FE3101B209E00DDA881 /* KarakuriMenu.mm */,
 				8EAB5FE4101B209E00DDA881 /* KarakuriWindow.h */,
@@ -4390,6 +4398,7 @@
 				8EF0567410470C6000CD7212 /* KRSwitch.h in Headers */,
 				8EF0567E10470C6700CD7212 /* KRSlider.h in Headers */,
 				8EF05DC81048887400CD7212 /* KRLabel.h in Headers */,
+				8E75FE3A105288CE0012DAD3 /* KRBundle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5387,6 +5396,7 @@
 				8EF0567610470C6000CD7212 /* KRSwitch.h in Headers */,
 				8EF0568010470C6700CD7212 /* KRSlider.h in Headers */,
 				8EF05DCA1048887400CD7212 /* KRLabel.h in Headers */,
+				8E75FE38105288CE0012DAD3 /* KRBundle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5498,7 +5508,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/../Karakuri iPhone Emulator/images\"/* \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
+			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp -r \"${PROJECT_DIR}/../Artworks/images\" \"${BUILD_ROOT}/Universal/Karakuri/\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
 		};
 		8E423AA9103C82A800ED3880 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5511,7 +5521,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/../Karakuri iPhone Emulator/images\"/* \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
+			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp -r \"${PROJECT_DIR}/../Artworks/images\" \"${BUILD_ROOT}/Universal/Karakuri/\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
 		};
 		8E601A7C1031F3630009C1F4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5524,7 +5534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/../Karakuri iPhone Emulator/images\"/* \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
+			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp -r \"${PROJECT_DIR}/../Artworks/images\" \"${BUILD_ROOT}/Universal/Karakuri/\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
 		};
 		8EAB5F12101B1E1A00DDA881 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5537,7 +5547,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp \"${PROJECT_DIR}/../Karakuri iPhone Emulator/images\"/* \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
+			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp -r \"${PROJECT_DIR}/../Artworks/images\" \"${BUILD_ROOT}/Universal/Karakuri/\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -5793,6 +5803,7 @@
 				8EF0567510470C6000CD7212 /* KRSwitch.cpp in Sources */,
 				8EF0567F10470C6700CD7212 /* KRSlider.cpp in Sources */,
 				8EF05DC91048887400CD7212 /* KRLabel.cpp in Sources */,
+				8E75FE3B105288CE0012DAD3 /* KRBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6544,6 +6555,7 @@
 				8EF0567710470C6000CD7212 /* KRSwitch.cpp in Sources */,
 				8EF0568110470C6700CD7212 /* KRSlider.cpp in Sources */,
 				8EF05DCB1048887400CD7212 /* KRLabel.cpp in Sources */,
+				8E75FE39105288CE0012DAD3 /* KRBundle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6632,6 +6644,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "__DEBUG__=1";
+				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -6656,6 +6669,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

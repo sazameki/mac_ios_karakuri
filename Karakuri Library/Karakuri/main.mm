@@ -10,6 +10,10 @@
 
 #import "KarakuriController.h"
 
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+#import "KRBundle.h"
+#endif
+
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +22,8 @@ int main(int argc, char *argv[])
     int ret = 0;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    [[KRBundle class] poseAsClass:[NSBundle class]];
+
     KarakuriController *controller = [KarakuriController new];
     ret = NSApplicationMain(argc, (const char **)argv);
 #endif
