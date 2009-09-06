@@ -48,9 +48,9 @@ void *KRFont::getFontObject() const
     return mFontObj;
 }
 
-KRTexture2D *KRFont::createStringTexture(const std::string& str, const KRColor& color)
+KRTexture2D *KRFont::createStringTexture(const std::string& str)
 {
-    return new KRTexture2D(str, this, color);
+    return new KRTexture2D(str, this);
 }
 
 std::string KRFont::to_s() const

@@ -3,9 +3,10 @@ A sophisticated 2D/3D game framework for Mac OS X and iPhone.
 
 << How to build >>
 
-1. Open the project in Xcode.
-2. Build "Build & Install All" for Debug.
-3. Build "Bulid & Install All" for Release.
+1. Change version string in KarakuriFunctions.mm.
+2. Open the project in Xcode.
+3. Build "Build & Install All" for Debug.
+4. Build "Bulid & Install All" for Release.
 
 
 << How to make an installer >>

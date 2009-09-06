@@ -24,7 +24,7 @@ public:
 	virtual ~KRFont();
     
 public:
-    KRTexture2D *createStringTexture(const std::string& str, const KRColor& color=KRColor::White);
+    KRTexture2D *createStringTexture(const std::string& str);
 
 public:
     void        *getFontObject() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

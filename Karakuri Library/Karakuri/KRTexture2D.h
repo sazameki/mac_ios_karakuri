@@ -29,7 +29,7 @@ private:
     
 public:
     KRTexture2D(const std::string& filename);
-    KRTexture2D(const std::string& str, KRFont *font, const KRColor& color);
+    KRTexture2D(const std::string& str, KRFont *font);
     ~KRTexture2D();
     
 public:

@@ -74,14 +74,14 @@ KRTexture2D::KRTexture2D(const std::string& filename)
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::KRTexture2D(const std::string& str, KRFont *font, const KRColor& color)
+KRTexture2D::KRTexture2D(const std::string& str, KRFont *font)
 {
     if (sTexture2DBatchCount > 0) {
         KRTexture2D::processBatchedTexture2DDraws();
     }
 
     NSString *strStr = [[NSString alloc] initWithCString:str.c_str() encoding:NSUTF8StringEncoding];
-    mTextureName = KRCreateGLTextureFromString(strStr, font->getFontObject(), color, &mTextureTarget, &mImageSize, &mTextureSize);
+    mTextureName = KRCreateGLTextureFromString(strStr, font->getFontObject(), KRColor::White, &mTextureTarget, &mImageSize, &mTextureSize);
     [strStr release];
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
         const char *errorFormat = "Failed to create a texture for a string: \"%s\"";

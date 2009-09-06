@@ -19,13 +19,13 @@ KRFPSDisplay::KRFPSDisplay()
 {
     mFont = new KRFont("Helvetica-Bold", 24.0f);
 
-    mNumberTex = mFont->createStringTexture("0123456789", KRColor::White);
+    mNumberTex = mFont->createStringTexture("0123456789");
     mNumberAtlas = new KRTexture2DAtlas(mNumberTex, KRVector2DZero, KRVector2D(mNumberTex->getWidth()/10, mNumberTex->getHeight()));
 
-    mPointTex = mFont->createStringTexture(".", KRColor::White);
-    mFPSTex = mFont->createStringTexture("fps", KRColor::White);
-    mTPFTex = mFont->createStringTexture("tpf", KRColor::White);
-    mBPFTex = mFont->createStringTexture("bpf", KRColor::White);
+    mPointTex = mFont->createStringTexture(".");
+    mFPSTex = mFont->createStringTexture("fps");
+    mTPFTex = mFont->createStringTexture("tpf");
+    mBPFTex = mFont->createStringTexture("bpf");
 }
 
 /*!

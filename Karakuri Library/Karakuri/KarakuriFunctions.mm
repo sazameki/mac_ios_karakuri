@@ -29,3 +29,8 @@ bool KRCheckOpenGLExtensionSupported(const std::string& extensionName)
     return (strstr(extensions, extensionName.c_str()) != NULL);
 }
 
+std::string KRGetKarakuriVersion()
+{
+    return "0.7.3";
+}
+

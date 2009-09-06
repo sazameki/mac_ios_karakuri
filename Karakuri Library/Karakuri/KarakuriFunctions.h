@@ -35,3 +35,5 @@ float   KRCurrentTime();
 
 bool    KRCheckOpenGLExtensionSupported(const std::string& extensionName);
 
+std::string KRGetKarakuriVersion();
+
