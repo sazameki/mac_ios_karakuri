@@ -24,6 +24,14 @@ typedef enum KRAudioMixType {
 #pragma mark -
 #pragma mark Game Class Declaration
 
+/*!
+    @class  KarakuriGame
+    @group  Game Foundation
+ 
+    ゲームの実行を制御するための基本機能を提供するクラスです。
+ 
+    このクラスのインスタンスは、グローバル変数の KRGame を使用して、どこからでもアクセスできます。
+ */
 class KarakuriGame : public KRObject {
     std::string     mTitle;
     float           mFrameRate;
@@ -47,7 +55,12 @@ public:
     KarakuriGame();
     
 public:
+    /*!
+        @method setupWorlds
+        @abstract ゲーム実行に必要なワールドを追加するために、ゲーム起動直後に呼ばれます。
+     */
     virtual std::string setupWorlds() = 0;
+    
     void    cleanUpGame();
     void    updateModel(KRInput *input);
     void    drawView(KRGraphics *g);
@@ -80,12 +93,34 @@ protected:
 #pragma mark World Management
 
 protected:
+    /*!
+        @method     addWorld
+        @abstract   新しいワールドクラスのインスタンスを、名前を付けて登録します。
+     */
     void            addWorld(const std::string& name, KarakuriWorld *aWorld);
     
 public:
     KarakuriWorld   *getWorld(const std::string& name) const;
+
+    /*!
+        @method     getCurrentWorld
+        @abstract   現在選択されているワールドを取得します。
+        @return     現在選択されているワールド
+     */
     KarakuriWorld   *getCurrentWorld() const;
+
+    /*!
+        @method     changeWorld
+        @abstract   指定された名前で登録されたワールドを、次フレームからの実行対象に選択します。
+        @param  name    ワールドの登録名
+     */
     void            changeWorld(const std::string& name);
+    
+    /*!
+        @method     exitGame
+        @abstract   ゲームを終了します。
+        iPhone 用のアプリケーションは、ホームボタンが押された場合などにのみ終了されるべきという<a href="http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html" target="_blank">ガイドライン</a>があるため、iPhone に対応する場合、この関数の使用は推奨されません。
+     */
     void            exitGame();
     
 public:

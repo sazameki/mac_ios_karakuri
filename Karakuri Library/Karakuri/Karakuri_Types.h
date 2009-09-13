@@ -25,6 +25,10 @@ typedef struct KRObject {
 } KRObject;
 
 
+/*!
+    @struct KRRect2D
+    @group  Game Foundation
+ */
 typedef struct KRRect2D : public KRObject {
     float x;
     float y;
@@ -66,11 +70,35 @@ typedef struct KRRect2D : public KRObject {
 } KRRect2D;
 
 
+/*!
+    @struct KRVector2D
+    @group  Game Foundation
+    2次元ベクトルを表すための構造体です。点情報、サイズ情報を表すためにも使われます。
+ */
 typedef struct KRVector2D : public KRObject {
+    
+    /*!
+        @var    x
+        @abstract   X座標
+     */
     float   x;
+
+    /*!
+        @var    y
+        @abstract   Y座標
+     */
     float   y;
 
+    /*!
+        @method KRVector2D
+     */
     KRVector2D();
+
+    /*!
+        @method KRVector2D
+        @param _x   X座標
+        @param _y   Y座標
+     */
     KRVector2D(float _x, float _y);
     KRVector2D(const KRVector2D& vec);
     
@@ -105,6 +133,11 @@ typedef struct KRVector2D : public KRObject {
 } KRVector2D;
 
 
+/*!
+    @struct KRVector3D
+    @group  Game Foundation
+    3次元ベクトルを表すための構造体です。点情報、サイズ情報を表すためにも使われます。
+ */
 typedef struct KRVector3D : public KRObject {
     float   x;
     float   y;
@@ -149,11 +182,19 @@ extern const KRVector2D       KRVector2DOne;
 extern const KRVector3D       KRVector3DZero;
 
 
+/*!
+    @enum   KRLanguageType
+    @group  Game Foundation
+ */
 typedef enum KRLanguageType {
     KRLanguageEnglish,
     KRLanguageJapanese
 } KRLanguageType;
 
+/*!
+    @var    KRLanguage
+    @group  Game Foundation
+ */
 extern KRLanguageType   KRLanguage;
 
 

@@ -12,6 +12,12 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
+/*!
+    @class  KRSound
+    @group  Game Audio
+    <p>10秒以下の長さのサウンドファイルを、ゲームの効果音として再生するためのクラスです。</p>
+    <p>このクラスを利用して再生するファイルの形式については、サウンド形式についてを参照してください。</p>
+ */
 class KRSound : public KRObject {
     
 private:
@@ -21,7 +27,14 @@ private:
     bool        mDoLoop;
 
 public:
+    /*!
+        @method getListenerHorizontalOrientation
+     */
     static  float       getListenerHorizontalOrientation();
+
+    /*!
+        @method setListenerHorizontalOrientation
+     */
     static  void        setListenerHorizontalOrientation(float radAngle);
     static  KRVector3D  getListenerPos();
     static  void        setListenerPos(float x, float y, float z);
@@ -32,7 +45,17 @@ public:
     ~KRSound();
     
 public:
+    /*!
+        @method play
+        @abstract サウンドの再生を開始します。
+        このサウンドがすでに再生済みであった場合には、その再生が中断され、頭から再生が再開されます。
+     */
     void        play();
+
+    /*!
+        @method stop
+        @abstract サウンドの再生を中断します。
+     */
     void        stop();
 
     bool        isPlaying() const;

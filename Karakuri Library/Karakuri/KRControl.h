@@ -14,6 +14,10 @@
 #include <Karakuri/KarakuriWorld.h>
 
 
+/*!
+    @class KRControl
+    @group  Game Controls
+ */
 class KRControl {
     
 protected:

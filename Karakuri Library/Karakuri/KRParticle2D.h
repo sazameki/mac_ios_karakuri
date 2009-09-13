@@ -54,6 +54,10 @@ public:
 
 };
 
+/*!
+    @class  KRParticle2DSystem
+    @group  Game 2D Graphics
+ */
 class KRParticle2DSystem : KRObject {
     
     std::list<KRParticle2D *>   mParticles;

@@ -22,6 +22,10 @@ class KRSlider;
 class KRSwitch;
 
 
+/*!
+    @class KarakuriWorld
+    @group  Game Foundation
+ */
 class KarakuriWorld : public KRObject {
     
 private:

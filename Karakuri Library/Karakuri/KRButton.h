@@ -12,6 +12,10 @@
 #include <Karakuri/KRLabel.h>
 
 
+/*!
+    @class KRButton
+    @group Game Controls
+ */
 class KRButton : public KRControl {
 
 protected:

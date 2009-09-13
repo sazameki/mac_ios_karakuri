@@ -12,6 +12,10 @@
 #include <Karakuri/KRTexture2D.h>
 
 
+/*!
+    @class KRSwitch
+    @group Game Controls
+ */
 class KRSwitch : public KRControl {
     
 protected:

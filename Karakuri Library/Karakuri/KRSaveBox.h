@@ -17,6 +17,10 @@ void KRCleanUpSaveBox();
 #pragma mark -
 #pragma mark SaveBox Class Declaration
 
+/*!
+    @class  KRSaveBox
+    @group  Game Text Processing
+ */
 class KRSaveBox : KRObject {
 
 #pragma mark -

@@ -72,7 +72,6 @@
 
 // Physical Simulation
 #include <Karakuri/KRSimulator2D.h>
-#include <Karakuri/KRSimulator3D.h>
 
 // Network Classes
 #include <Karakuri/KarakuriNetwork.h>

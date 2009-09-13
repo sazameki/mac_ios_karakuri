@@ -11,6 +11,10 @@
 #include <Karakuri/Karakuri.h>
 
 
+/*!
+    @class KRTexture2DAtlas
+    @group Game 2D Graphics
+ */
 class KRTexture2DAtlas : public KRObject {
     
     KRTexture2D     *mTexture;

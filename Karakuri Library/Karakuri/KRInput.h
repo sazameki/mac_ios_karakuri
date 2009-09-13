@@ -42,6 +42,10 @@ typedef struct KRTouchInfo {
 #pragma mark -
 #pragma mark Input Class Declaration
 
+/*!
+    @class  KRInput
+    @group  Game Foundation
+ */
 class KRInput : public KRObject {
 
 

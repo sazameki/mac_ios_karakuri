@@ -12,6 +12,10 @@
 #include <Karakuri/KRTexture2D.h>
 
 
+/*!
+    @class KRSlider
+    @group Game Controls
+ */
 class KRSlider : public KRControl {
 
 protected:

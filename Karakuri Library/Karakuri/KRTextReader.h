@@ -11,6 +11,10 @@
 #include <Karakuri/Karakuri.h>
 
 
+/*!
+    @class  KRTextReader
+    @group  Game Text Processing
+ */
 class KRTextReader : KRObject {
 
     void		*mFileData;	//!< Objective-C でファイルデータを表すオブジェクトへのポインタ

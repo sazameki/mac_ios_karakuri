@@ -7,6 +7,7 @@
 //
 
 #import "KarakuriFunctions.h"
+#import "Karakuri_Defines.h"
 
 #include <string>
 
@@ -31,6 +32,6 @@ bool KRCheckOpenGLExtensionSupported(const std::string& extensionName)
 
 std::string KRGetKarakuriVersion()
 {
-    return "0.7.3";
+    return KARAKURI_FRAMEWORK_VERSION;
 }
 

@@ -13,6 +13,11 @@
 #include <Karakuri/Karakuri_Types.h>
 
 
+/*!
+    @class KRColor
+    @group  Game Foundation
+    色を表すクラスです。
+ */
 class KRColor : public KRObject {
 public:
     static const KRColor &AliceBlue;

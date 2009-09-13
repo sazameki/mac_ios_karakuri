@@ -13,6 +13,13 @@
 #include <Karakuri/KRFont.h>
 
 
+/*!
+    @enum   KRTextAlignment
+    @group  Game Controls
+    @constant KRTextAlignmentLeft   何か書く。
+    @constant KRTextAlignmentCenter 何か書く。
+    @constant KRTextAlignmentRight  何か書く。
+ */
 typedef enum {
     KRTextAlignmentLeft,
     KRTextAlignmentCenter,
@@ -20,6 +27,10 @@ typedef enum {
 } KRTextAlignment;
 
 
+/*!
+    @class KRLabel
+    @group Game Controls
+ */
 class KRLabel : public KRControl {
 
 protected:

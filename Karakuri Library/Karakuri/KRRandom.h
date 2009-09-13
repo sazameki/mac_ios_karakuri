@@ -11,6 +11,11 @@
 #include <Karakuri/Karakuri.h>
 
 
+/*!
+    @class  KRRandom
+    @group  Game Foundation
+    @abstract 乱数を生成するクラスです。
+ */
 class KRRandom : KRObject {
 
     unsigned x, y, z, w;
@@ -22,9 +27,24 @@ private:
     unsigned xor128() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
+    /*!
+        @method nextInt
+     */
     int     nextInt();
+
+    /*!
+        @method nextInt
+     */
     int     nextInt(int upper);
+
+    /*!
+        @method nextFloat
+     */
     float   nextFloat();
+
+    /*!
+        @method nextDouble
+     */
     double  nextDouble();
     
 public:
@@ -32,5 +52,10 @@ public:
 
 };
 
+
+/*!
+    @var    KRRand
+    @group  Game Foundation
+ */
 extern KRRandom *KRRand;
 

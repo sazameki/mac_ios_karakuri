@@ -27,6 +27,10 @@ typedef enum {
 } KRBlendMode;
 
 
+/*!
+    @class KRGraphics
+    @group  Game Foundation
+ */
 class KRGraphics : public KRObject {
 private:
     KRBlendMode     mBlendMode;
@@ -37,6 +41,10 @@ public:
 public:
     void    clear(const KRColor& color) const;
     
+    /*!
+        @method     getBlendMode
+        @abstract   現在のブレンドモードを取得します。
+     */
     KRBlendMode     getBlendMode() const;
     void            setBlendMode(KRBlendMode mode);
     

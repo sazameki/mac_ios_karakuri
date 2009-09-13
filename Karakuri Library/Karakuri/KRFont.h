@@ -14,12 +14,20 @@
 #include <Karakuri/KRColor.h>
 
 
+/*!
+    @class KRFont
+    @group  Game 2D Graphics
+ */
 class KRFont : public KRObject {
     
     void        *mFontObj;
     std::string mFontName;
 
 public:
+    /*!
+        @method KRFont
+        Contructor
+     */
 	KRFont(const std::string& fontName, float size);
 	virtual ~KRFont();
     
