@@ -25,6 +25,10 @@ class KRSwitch;
 /*!
     @class KarakuriWorld
     @group  Game Foundation
+ 
+    <p>ロゴ画面、タイトル画面、プレイ画面といった各画面に対応したクラスです。Karakuri Framework では、これを「ワールド」と呼びます。</p>
+    <p>現在のワールドから他のワールドに移動する場合には、KarakuriGame クラスの changeWorld() 関数を使ってください。KarakuriGame クラスのインスタンスには、KRGame 変数を使ってアクセスできます。</p>
+    <p>なお、他のワールドへの移動は、updateModel() 関数の処理中にのみ実行できます。</p>
  */
 class KarakuriWorld : public KRObject {
     
@@ -35,6 +39,16 @@ private:
     bool                mIsControlProcessEnabled;
     
 public:
+    
+    /*!
+        @task 読み込み中画面の処理のためのオーバーライド関数
+     */
+    
+    /*!
+        @method getLoadingScreenWorldName
+        <p>「読み込み中」画面のために使用する軽量の描画を行うワールドの名前（クラス名ではなく、GameMain.cpp で addWorld() 関数で登録した名前です）をリターンします。</p>
+        <p>この関数をオーバーライドして適切なワールド名をリターンすることで、このワールドのリソース読み込み時（becameActive() 関数の処理時）に、軽量の描画を行うワールドが表示されるようになります。</p>
+     */
     virtual std::string getLoadingScreenWorldName() const;
 
     void    startBecameActive();
@@ -42,24 +56,102 @@ public:
     void    startUpdateModel(KRInput *input);
     void    startDrawView(KRGraphics *g);
 
+    /*!
+        @task ゲーム実行のためのオーバーライド関数
+     */
+    
+    /*!
+        @method becameActive
+        このワールドの実行のための初期化（モデルの初期化とマルチメディアリソースの読み込み）を行います。
+     */
     virtual void    becameActive() = 0;
+
+    /*!
+        @method resignedActive
+        このワールドの実行中に作成したオブジェクトの解放を行います。
+     */
     virtual void    resignedActive() = 0;
+    
+    /*!
+        @method updateModel
+        このワールド内のゲームモデルの更新を行います。
+     */
     virtual void    updateModel(KRInput *input) = 0;
+    
+    /*!
+        @method drawView
+        このワールド内のゲームモデルを元にして、画面描画を行います。
+     */
     virtual void    drawView(KRGraphics *g) = 0;
 
+    
+    /*!
+        @task   緊急終了サポートのためのオーバーライド関数
+     */
+
+    /*!
+        @method saveForEmergency
+        ウィンドウの閉じるボタンを押して終了した場合、iPhone のホームボタンが押された場合、電話コールを受信した場合に対応するために、この関数をオーバーライドして、ゲームの実行状態を保存します。
+     */
     virtual void    saveForEmergency(KRSaveBox *saveBox);
     
 #pragma mark -
 #pragma mark Control Support
 public:
+    /*!
+        @task コントロールのサポート
+     */
+    
+    /*!
+        @method addControl
+        新しいコントロールをこのワールドに追加します。追加されたコントロールは、自動的に解放されます。自分では delete しないように注意してください。
+     */
     void    addControl(KRControl *aControl);
+    
+    /*!
+        @method removeControl
+        指定されたコントロールを、このワールドから削除します。一度追加されたこのコントロールは、自動的に解放されます。自分では delete しないように注意してください。
+     */
     void    removeControl(KRControl *aControl);
+    
+    /*!
+        このワールドに登録されたいずれかのコントロールが、直前にユーザからの入力を受け付けたかどうかを取得します。
+     */
     bool    hasProcessedControl() const;
+    
+    /*!
+        @method startControlProcess
+        @abstract コントロールのユーザ入力受け付けを行うようにします。
+        ワールドの開始時には、ユーザ入力受け付けが行われる状態になっています。
+     */
     void    startControlProcess();
+
+    /*!
+        @method stopControlProcess
+        @abstract コントロールのユーザ入力受け付けを行わないようにします。
+     */
     void    stopControlProcess();
     
+    /*!
+        @task コントロールのサポートのためのオーバーライド関数
+     */
+    
+    /*!
+        @method buttonPressed
+        このワールドに追加されているボタンが押されたときに呼び出されます。この関数は、updateModel() 関数が呼び出される直前に呼び出されます。
+     */
     virtual void    buttonPressed(KRButton *aButton);
+
+    /*!
+        @method sliderValueChanged
+        このワールドに追加されているスライダの値が変更されたときに呼び出されます。この関数は、updateModel() 関数が呼び出される直前に呼び出されます。
+     */
     virtual void    sliderValueChanged(KRSlider *slider);
+    
+    /*!
+        @method switchStateChanged
+        このワールドに追加されている ON/OFF スイッチの状態が変更されたときに呼び出されます。この関数は、updateModel() 関数が呼び出される直前に呼び出されます。
+     */
     virtual void    switchStateChanged(KRSwitch *switcher);
 
 #pragma mark -

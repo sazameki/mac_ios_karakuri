@@ -16,9 +16,10 @@
 /*!
     @enum   KRTextAlignment
     @group  Game Controls
-    @constant KRTextAlignmentLeft   何か書く。
-    @constant KRTextAlignmentCenter 何か書く。
-    @constant KRTextAlignmentRight  何か書く。
+    @constant KRTextAlignmentLeft   左寄せ
+    @constant KRTextAlignmentCenter 中央寄せ
+    @constant KRTextAlignmentRight  右寄せ
+    文字列の横方向の配置方法を表す列挙型です。
  */
 typedef enum {
     KRTextAlignmentLeft,

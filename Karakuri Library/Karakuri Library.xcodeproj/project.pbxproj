@@ -1102,8 +1102,8 @@
 				8EF0565310470BA100CD7212 /* control */,
 				8EAB5F81101B205C00DDA881 /* 2d_draw */,
 				8E60188D1031E0420009C1F4 /* 2d_simulation */,
+				8EAB5F85101B205C00DDA881 /* audio */,
 				8E87B6D6103A03D60010745C /* network */,
-				8EAB5F85101B205C00DDA881 /* sound */,
 				8EAB5FE1101B209E00DDA881 /* macosx */,
 				8EAB5FF2101B20C100DDA881 /* iphone */,
 				8E6017411031DCA00009C1F4 /* chipmunk 4.1.0 */,
@@ -1205,7 +1205,7 @@
 			name = 2d_draw;
 			sourceTree = "<group>";
 		};
-		8EAB5F85101B205C00DDA881 /* sound */ = {
+		8EAB5F85101B205C00DDA881 /* audio */ = {
 			isa = PBXGroup;
 			children = (
 				8EAB5F86101B205C00DDA881 /* KRMusic.h */,
@@ -1215,7 +1215,7 @@
 				8EAB5F8A101B205C00DDA881 /* KarakuriSound.h */,
 				8EAB5F8B101B205C00DDA881 /* KarakuriSound.mm */,
 			);
-			name = sound;
+			name = audio;
 			sourceTree = "<group>";
 		};
 		8EAB5FE1101B209E00DDA881 /* macosx */ = {

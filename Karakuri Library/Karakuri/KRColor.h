@@ -16,7 +16,7 @@
 /*!
     @class KRColor
     @group  Game Foundation
-    色を表すクラスです。
+    色を表すためのクラスです。
  */
 class KRColor : public KRObject {
 public:
@@ -164,16 +164,63 @@ public:
     static const KRColor &ClearColor;
     
 public:
+    /*!
+        @var r
+        色の赤成分
+     */
     float r;
+    
+    /*!
+        @var g
+        色の緑成分
+     */
     float g;
+    
+    /*!
+        @var b
+        色の青成分
+     */
     float b;
+    
+    /*!
+        @var a
+        色のアルファ成分
+     */
     float a;
     
 public:
+    /*!
+        @task コンストラクタ
+     */
+    
+    /*!
+        @method KRColor
+        @abstract 不透明な黒（r=0.0f, g=0.0f, b=0.0f, a=1.0f）を生成します。
+     */
     KRColor();
+    
+    /*!
+        @method KRColor
+        @abstract 赤、緑、青の各要素を 0x00(0)〜0xff(255) の256段階で表したHTML形式の16進表記（0xff00aa など）で色を生成します。
+     */
     KRColor(int rgb);
+    
+    /*!
+        @method KRColor
+        @abstract 赤、緑、青の各要素を 0.0f〜1.0f で表して色を指定します。
+     */
     KRColor(float r, float g, float b);
+    
+    /*!
+        @method KRColor
+        @abstract 赤、緑、青、アルファ値の各要素を 0.0f〜1.0f で表して色を指定します。
+     */
     KRColor(float r, float g, float b, float a);
+    
+    /*!
+        @method KRColor
+        @abstract この色を、与えられた色と同じ色で生成します。
+     */
     KRColor(const KRColor &color);
     
 public:
@@ -181,7 +228,20 @@ public:
     void setAsClearColor() const;
     
 public:
+    /*!
+        @task 演算子のオーバーライド
+     */
+    
+    /*!
+        @method operator=
+        与えられた色の情報をこのインスタンスにコピーします。
+     */
     KRColor&    operator=(const KRColor &color);
+    
+    /*!
+        @method operator==
+        与えられた色とこの色が等しいかどうかをリターンします。
+     */
     bool        operator==(const KRColor &color);
 
 

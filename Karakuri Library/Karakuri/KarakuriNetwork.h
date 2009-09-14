@@ -44,6 +44,12 @@ public:
 };
 
 
+/*!
+    @var KRNetwork
+    @group Game Network
+    @abstract 通信クラスのインスタンスを指す変数です。
+    この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
+ */
 extern KarakuriNetwork *KRNetwork;
 
 

@@ -50,43 +50,49 @@
     glPopMatrix();
 
 /*!
-    @function   KRRotateScreen2D
-    @group      Game 2D Graphics
- */
-#define KRRotateScreen2D(angle, centerPos)     glTranslatef(((centerPos).x), ((centerPos).y), 0.0f);glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);glTranslatef(-((centerPos).x), -((centerPos).y), 0.0f);
-
-/*!
     @function   KRRotate2D
     @group      Game 2D Graphics
+    2次元的に（Z軸を中心として）画面を回転させます。
  */
 #define KRRotate2D(angle)       glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);
 
 /*!
-    @function   KRTranslate2D
+    @function   KRRotateScreen2D
     @group      Game 2D Graphics
+    中心点と角度を指定して、2次元的に（Z軸を中心として）画面を回転させます。
  */
-#define KRTranslate2D(x, y)     glTranslatef((x), (y), 0.0f);
+#define KRRotateScreen2D(angle, centerPos)     glTranslatef(((centerPos).x), ((centerPos).y), 0.0f);glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);glTranslatef(-((centerPos).x), -((centerPos).y), 0.0f);
+
 
 /*!
     @function   KRScale2D
     @group      Game 2D Graphics
+    2次元的に（Z軸を中心として）画面をスケーリングさせます。
  */
 #define KRScale2D(x, y)         glScalef((x), (y), 1.0f);
+
+/*!
+    @function   KRTranslate2D
+    @group      Game 2D Graphics
+    2次元的に（Z軸を中心として）画面を平行移動させます。
+ */
+#define KRTranslate2D(x, y)     glTranslatef((x), (y), 0.0f);
 
 
 /*!
     @function   KRSleep
     @group      Game Foundation
-    @abstract   一定時間スリープします。
-    @param  interval    スリープする時間（秒単位）。
+    @abstract   一定時間スリープさせます。
+    @param  interval    スリープさせる時間（秒単位）。
  */
 void    KRSleep(float interval);
 
 /*!
     @function   KRCurrentTime
     @group      Game Foundation
-    @abstract   現在時刻を取得します。
+    @abstract   現在時刻を秒単位で表す数値をリターンします。
     @return     現在時刻
+    @discussion この数値は2001年1月1日 0時00分00秒からの経過時間（秒）となっていますが、基本的には差分をとって利用してください。
  */
 float   KRCurrentTime();
 
@@ -95,6 +101,9 @@ bool    KRCheckOpenGLExtensionSupported(const std::string& extensionName);
 /*!
     @function   KRGetKarakuriVersion
     @group      Game Foundation
+    @discussion Karakuri Framework の現在のバージョンを取得します。
  */
 std::string KRGetKarakuriVersion();
+
+
 

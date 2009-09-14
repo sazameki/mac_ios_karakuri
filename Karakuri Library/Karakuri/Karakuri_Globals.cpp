@@ -29,5 +29,3 @@ float           _KROpenGLVersionValue;
 
 bool    _KRIsFullScreen = false;
 
-const std::string     KRFrameworkVersion = "0.5.2";
-

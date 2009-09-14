@@ -15,6 +15,13 @@
 #include <Karakuri/KarakuriWorldManager.h>
 
 
+/*!
+    @enum KRAudioMixType
+    @group Game Audio
+    @constant KRAudioMixTypeAmbient         iPhone の iPod の曲再生と、このゲーム独自のサウンド効果をミックスして同時に出力します。
+    @constant KRAudioMixTypeAmbientSolo     iPhone の iPod の曲再生を中止し、このゲームのサウンド効果のみを出力します。
+    iPhone の iPod の曲再生と、ゲームのサウンド効果のミックス方法を指定するための enum 定数です。
+ */
 typedef enum KRAudioMixType {
     KRAudioMixTypeAmbient,         //!< Mix iPod audio playback and own sound effects
     KRAudioMixTypeAmbientSolo,     //!< Play own background music and own sound effects
@@ -28,9 +35,8 @@ typedef enum KRAudioMixType {
     @class  KarakuriGame
     @group  Game Foundation
  
-    ゲームの実行を制御するための基本機能を提供するクラスです。
- 
-    このクラスのインスタンスは、グローバル変数の KRGame を使用して、どこからでもアクセスできます。
+    <p>ゲームの実行を制御するための基本機能を提供するクラスです。</p>
+    <p>このクラスのインスタンスは、グローバル変数の KRGame を使用して、どこからでもアクセスできます。</p>
  */
 class KarakuriGame : public KRObject {
     std::string     mTitle;
@@ -66,27 +72,92 @@ public:
     void    drawView(KRGraphics *g);
     
 public:
-    std::string     getTitle() const;
-    float           getFrameRate() const;
-    int             getScreenWidth() const;
-    int             getScreenHeight() const;
-    KRVector2D      getScreenSize() const;
-    bool            getShowsMouseCursor() const;
+    /*!
+        @task 状態を取得するための関数
+     */
+
+    /*!
+        @method getAudioMixType
+        @abstract 設定されたオーディオ再生の方法を取得します。
+     */
     KRAudioMixType  getAudioMixType() const;
-    bool            getShowsFPS() const;
+
+    /*!
+        @method getFrameRate
+        @abstract ゲームに設定されたフレームレートを取得します。
+     */
+    float           getFrameRate() const;
     
+    /*!
+        @method getGameIDForNetwork
+     */
     std::string     getGameIDForNetwork() const;
+    
+    /*!
+        @method getNetworkStartWorldName
+     */
     std::string     getNetworkStartWorldName() const;
+    
+    /*!
+        @method getScreenHeight
+        @abstract ゲームに設定された画面サイズの高さを取得します。
+     */
+    int             getScreenHeight() const;
+
+    /*!
+        @method getScreenSize
+        @abstract ゲームに設定された画面サイズを取得します。
+     */
+    KRVector2D      getScreenSize() const;
+
+    /*!
+        @method getScreenWidth
+        @abstract ゲームに設定された画面サイズの横幅を取得します。
+     */
+    int             getScreenWidth() const;
+
+    /*!
+        @method getShowsFPS
+        @abstract 現在の FPS 情報をデバッグ用に表示するようになっているかどうかを取得します。
+     */
+    bool            getShowsFPS() const;
+
+    /*!
+        @method getShowsMouseCursor
+        @abstract ゲームウィンドウ内にマウスカーソルが乗っているときに、Mac OS X 標準のマウスカーソルを表示するかどうかを取得します。
+     */
+    bool            getShowsMouseCursor() const;
+
+    /*!
+        @method getTitle
+        @abstract ゲームに設定されたタイトル文字列を取得します。
+     */
+    std::string     getTitle() const;
 
 protected:
+    /*!
+        @task コンストラクタの中でだけ使用できる関数
+     */
+
+    /*!
+        @method setAudioMixType
+        @abstract オーディオ再生の方法を設定します。
+        デフォルトでは KRAudioMixTypeAmbientSolo が設定されています。
+     */
+    void            setAudioMixType(KRAudioMixType type);
+    
+    /*!
+        @method setNetworkGameID
+        ネットワーク上でこのゲームを識別するための識別子と、ネットワークのピア通信開始時にアクティブになるワールドの名前を指定します。識別子には、英数字（a-zA-Z0-9）とアンダーバー (_) のみを用いてください。
+     */
+    void            setNetworkGameID(const std::string& gameID, const std::string& startWorldName);
+    
     void            setTitle(const std::string& str);
     void            setFrameRate(float value);
     void            setScreenSize(int width, int height);    
     void            setShowsMouseCursor(bool flag);
-    void            setAudioMixType(KRAudioMixType type);
-    void            setShowsFPS(bool flag);
 
-    void            setNetworkGameID(const std::string& gameID, const std::string& startWorldName);
+    void            setShowsFPS(bool flag);
     
     
 #pragma mark -
@@ -94,13 +165,22 @@ protected:
 
 protected:
     /*!
+        @task ワールドに関する関数
+     */
+    
+    /*!
         @method     addWorld
         @abstract   新しいワールドクラスのインスタンスを、名前を付けて登録します。
      */
     void            addWorld(const std::string& name, KarakuriWorld *aWorld);
     
 public:
-    KarakuriWorld   *getWorld(const std::string& name) const;
+    /*!
+        @method     changeWorld
+        @abstract   指定された名前で登録されたワールドを、次フレームからの実行対象に選択します。
+        @param  name    ワールドの登録名
+     */
+    void            changeWorld(const std::string& name);
 
     /*!
         @method     getCurrentWorld
@@ -110,11 +190,15 @@ public:
     KarakuriWorld   *getCurrentWorld() const;
 
     /*!
-        @method     changeWorld
-        @abstract   指定された名前で登録されたワールドを、次フレームからの実行対象に選択します。
-        @param  name    ワールドの登録名
+        @method getWorld
+        @abstract 名前を指定して登録されたワールドを取得します。 
      */
-    void            changeWorld(const std::string& name);
+    KarakuriWorld   *getWorld(const std::string& name) const;
+    
+public:
+    /*!
+        @task ゲーム実行に関する関数
+     */
     
     /*!
         @method     exitGame
@@ -138,6 +222,18 @@ public:
 
 };
 
+/*!
+    @var    KRGame
+    @group  Game Foundation
+    @abstract ゲームのインスタンスを指す変数です。
+    この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
+ */
 extern KarakuriGame *KRGame;
+
+/*!
+    @var    KRScreenSize
+    @group  Game Foundation
+    ゲームの画面サイズを示す変数です。
+ */
 extern KRVector2D   KRScreenSize;
 

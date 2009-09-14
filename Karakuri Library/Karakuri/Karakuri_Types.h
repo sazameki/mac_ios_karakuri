@@ -185,6 +185,9 @@ extern const KRVector3D       KRVector3DZero;
 /*!
     @enum   KRLanguageType
     @group  Game Foundation
+    @constant   KRLanguageEnglish   英語環境を表す定数です。
+    @constant   KRLanguageJapanese  日本語環境を表す定数です。
+    グローバル変数 KRLanguage で、ゲームが実行されている言語環境を表すために使われます。
  */
 typedef enum KRLanguageType {
     KRLanguageEnglish,
@@ -194,6 +197,13 @@ typedef enum KRLanguageType {
 /*!
     @var    KRLanguage
     @group  Game Foundation
+    @abstract 現在の言語環境を表す変数です。
+    <p>該当する環境定数が KRLanguageType 列挙型に見つからない場合には、自動的に KRLanguageEnglish が設定されます。</p>
+    <p>以下のようにして利用します。</p>
+    <blockquote class="code"><pre>std::string text = "English Text";<br />
+    if (KRLanguage == KRLanguageJapanese) {<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;text = "日本語のテキスト";<br />
+    }</pre></blockquote>
  */
 extern KRLanguageType   KRLanguage;
 
