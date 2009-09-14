@@ -20,6 +20,12 @@ public:
     virtual ~KRGameExitError() throw();
 };
 
+/*!
+    @class KRRuntimeError
+    @group Game Foundation
+    <p>Karakuri Framework 内で起きるすべてのエラーを表すための例外クラスです。</p>
+    <p>このクラスは直接使用せず、サブクラスの KRGameError クラスを利用してください。</p>
+ */
 class KRRuntimeError : public std::runtime_error {
     
 protected:
@@ -35,22 +41,60 @@ public:
 
 };
 
-class KRNetworkError : public KRRuntimeError {
-
-public:
-    KRNetworkError(const std::string &message);
-    KRNetworkError(const char *format, ...);
-    virtual ~KRNetworkError() throw();
-
-};
-
+/*!
+    @class KRGameError
+    @group Game Foundation
+    <p>ゲーム実行中のエラーを表すための例外クラスです。</p>
+    <p>ゲーム制作者は、実行時のエラー処理を行うために、この例外クラスあるいはこのクラスから継承した例外クラスをスローしてください。</p>
+ */
 class KRGameError : public KRRuntimeError {
     
 public:
+    /*!
+        @task コンストラクタ
+     */
+
+    /*!
+        @method KRGameError
+        @abstract エラーメッセージを指定して、エラーを生成します。
+     */
     KRGameError(const std::string &message);
+    
+    /*!
+        @method KRGameError
+        @abstract エラーメッセージの書式と引数を指定して、エラーを生成します。
+     */
     KRGameError(const char *format, ...);
+
     virtual ~KRGameError() throw();
     
+};
+
+/*!
+    @class KRNetworkError
+    @group Game Network
+    <p>KarakuriNetwork クラスでピアとの通信時に起きたエラーを表すための例外クラスです。</p>
+ */
+class KRNetworkError : public KRRuntimeError {
+
+public:
+    /*!
+        @task コンストラクタ
+     */
+
+    /*!
+        @method KRNetworkError
+        @abstract エラーメッセージを指定して、エラーを生成します。
+     */
+    KRNetworkError(const std::string &message);
+
+    /*!
+        @method KRNetworkError
+        @abstract エラーメッセージの書式と引数を指定して、エラーを生成します。
+     */
+    KRNetworkError(const char *format, ...);
+    virtual ~KRNetworkError() throw();
+
 };
 
 

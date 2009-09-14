@@ -1097,7 +1097,7 @@
 				8EAB5F33101B200000DDA881 /* base */,
 				8EAB5F6A101B205C00DDA881 /* game */,
 				8EAB5F73101B205C00DDA881 /* connection */,
-				8EAB5F7A101B205C00DDA881 /* fundamental */,
+				8EAB5F7A101B205C00DDA881 /* foundation */,
 				8EAB5F77101B205C00DDA881 /* text */,
 				8EF0565310470BA100CD7212 /* control */,
 				8EAB5F81101B205C00DDA881 /* 2d_draw */,
@@ -1171,7 +1171,7 @@
 			name = text;
 			sourceTree = "<group>";
 		};
-		8EAB5F7A101B205C00DDA881 /* fundamental */ = {
+		8EAB5F7A101B205C00DDA881 /* foundation */ = {
 			isa = PBXGroup;
 			children = (
 				8EAB5F7B101B205C00DDA881 /* KRColor.h */,
@@ -1183,7 +1183,7 @@
 				8EBE81371028988800F77A39 /* KRRandom.h */,
 				8EBE81381028988900F77A39 /* KRRandom.cpp */,
 			);
-			name = fundamental;
+			name = foundation;
 			sourceTree = "<group>";
 		};
 		8EAB5F81101B205C00DDA881 /* 2d_draw */ = {
@@ -1771,7 +1771,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp -r \"${PROJECT_DIR}/../Artworks/images\" \"${BUILD_ROOT}/Universal/Karakuri/\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
+			shellScript = "##### Remove existing lib file\nrm -rf build/libkarakuri-iphone-${BUILD_STYLE}.a\n\n##### Combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libkarakuri-iphone-dev.a\"\\\n  \"build/${BUILD_STYLE}-iphonesimulator/libkarakuri-iphone-sim.a\"\\\n  -output \"build/libkarakuri-iphone-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macosx.a\"\\\n  -output \"build/libkarakuri-macosx-${BUILD_STYLE}.a\"\n\nlipo -create \"build/${BUILD_STYLE}/libkarakuri-macphone-emu.a\"\\\n  -output \"build/libkarakuri-macphone-emu-${BUILD_STYLE}.a\"\n\n##### Create local folder package\n\nrm -rf \"${BUILD_ROOT}/Universal\"\n\nmkdir \"${BUILD_ROOT}/Universal\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/lib\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/Documents\"\nmkdir \"${BUILD_ROOT}/Universal/Karakuri/images\"\n\ncp \"${PROJECT_DIR}/Karakuri\"/*.h \"${BUILD_ROOT}/Universal/Karakuri/include/Karakuri\"\n\ncp \"${BUILD_ROOT}\"/libkarakuri-*.a \"${BUILD_ROOT}/Universal/Karakuri/lib\"\n\ncp -r \"${PROJECT_DIR}/../Artworks/images\" \"${BUILD_ROOT}/Universal/Karakuri/\"\n\ncp -r \"${PROJECT_DIR}/../Docs/jp.designed.karakuri.KarakuriFramework.CoreReference.docset\" \"${BUILD_ROOT}/Universal/Karakuri/Documents\"\n\nrm -rf /Developer/Extras/Karakuri\ncp -r \"${BUILD_ROOT}/Universal/Karakuri\" /Developer/Extras\n\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 

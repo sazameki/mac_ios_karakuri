@@ -31,6 +31,7 @@ typedef enum {
 /*!
     @class KRLabel
     @group Game Controls
+    テキストラベルを表すためのクラスです。
  */
 class KRLabel : public KRControl {
 
@@ -43,20 +44,58 @@ protected:
     KRTextAlignment mTextAlignment;
     
 public:
+    /*!
+        @task コンストラクタ
+     */
+    
+    /*!
+        @method KRLabel
+        位置と大きさを指定して、このラベルを生成します。
+     */
 	KRLabel(const KRRect2D& frame);
 	virtual ~KRLabel();
     
 public:
-    virtual bool    update(KRInput *input);
-    virtual void    draw(KRGraphics *g);
+    virtual bool    update(KRInput *input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics *g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 public:
+    /*!
+        @task 状態の設定
+     */
+    
+    /*!
+        @method getText
+        このラベルに設定されたテキストを取得します。
+     */
     std::string     getText() const;
+
+    /*!
+        @method setText
+        このラベルのテキストを設定します。
+     */
     void            setText(const std::string& text);
     
+    /*!
+        @task 見た目の設定
+     */
+
+    /*!
+        @method getTextAlignment
+        このラベルに設定された横方向のテキスト配置方法を取得します。
+     */
     KRTextAlignment getTextAlignment() const;
+    
+    /*!
+        @method setTextAlignment
+        横方向のテキスト配置方法を設定します。
+     */
     void            setTextAlignment(KRTextAlignment alignment);
     
+    /*!
+        @method setTextColor
+        このラベルのテキスト描画色を設定します。
+     */
     void            setTextColor(const KRColor& color);
     
 };

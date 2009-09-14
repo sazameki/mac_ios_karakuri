@@ -16,7 +16,13 @@
 #include <unistd.h>
 
 
-class KarakuriNetwork {
+/*!
+    @class KarakuriNetwork
+    @group Game Network
+    <p>ネットワークを介して、1対1の通信をサポートするためのクラスです。</p>
+    <p>KRNetwork 変数を使ってアクセスしてください。</p>
+ */
+class KarakuriNetwork : public KRObject {
     
 private:
     void    *mImpl;
@@ -26,13 +32,41 @@ public:
     virtual ~KarakuriNetwork();
     
 public:
+    /*!
+        @method getMessages
+        通信中のピアから受信したすべてのメッセージを取得します。
+     */
     std::list<std::string>  getMessages() throw(KRNetworkError, KRRuntimeError);
+    
+    /*!
+        @method isConnected
+        ピアとの通信が保たれているかどうかをチェックします。
+     */
     bool                    isConnected();
+    
+    /*!
+        @method reset
+        現在のピアとの通信を遮断して、新しいピアの受け入れが可能な状態にリセットします。
+     */
     void                    reset();
+    
+    /*!
+        @method sendMessage
+        @abstract 通信中のピアに対して、1行分のメッセージを送信します。
+        メッセージの終端を示す「\r\n」は不要です。メッセージの最大長は128バイトです。ASCII 文字コード以外は送信しないでください。
+     */
     int                     sendMessage(const std::string& str) throw(KRNetworkError, KRRuntimeError);
     
+    /*!
+        @method getOwnName
+        ピア上での自分の名前を取得します。
+     */
     std::string             getOwnName() const;
     
+    /*!
+        @method showPeerPicker
+        通信相手のピアを選択するためのピッカーを表示します。
+     */
     void                    showPeerPicker() throw(KRRuntimeError);
     
 public:

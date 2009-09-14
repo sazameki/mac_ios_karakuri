@@ -16,7 +16,7 @@ class KRTexture2D;
 class KRTexture2DAtlas;
 
 
-class KRFPSDisplay : KRObject {
+class KRFPSDisplay : public KRObject {
 
     KRFont          *mFont;
 

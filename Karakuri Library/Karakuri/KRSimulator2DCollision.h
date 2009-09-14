@@ -14,8 +14,24 @@
 class KRShape2D;
 
 
-typedef struct KRCollisionInfo2D {
+/*!
+    @struct KRCollisionInfo2D
+    @group Game 2D Simulator
+    KRSimulator2D クラスで衝突が検知された図形の組の情報を格納しておくための構造体です。
+ */
+typedef struct KRCollisionInfo2D : public KRObject {
+    /*!
+        @var shape1
+        衝突した図形に対応したオブジェクトのポインタです。
+     */
     KRShape2D   *shape1;
+
+    /*!
+        @var shape2
+        衝突した図形に対応したオブジェクトのポインタです。
+     */
     KRShape2D   *shape2;
 } KRCollisionInfo2D;
+
+
 

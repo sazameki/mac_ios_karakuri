@@ -223,6 +223,11 @@ bool KRColor::operator==(const KRColor &color)
     return (r == color.r && g == color.g && b == color.b && a == color.a);
 }
 
+bool KRColor::operator!=(const KRColor &color)
+{
+    return (r != color.r || g != color.g || b != color.b || a != color.a);
+}
+
 
 #pragma mark -
 #pragma mark Debug Support

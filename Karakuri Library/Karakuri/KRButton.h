@@ -15,6 +15,7 @@
 /*!
     @class KRButton
     @group Game Controls
+    プッシュボタンを表すためのクラスです。
  */
 class KRButton : public KRControl {
 
@@ -33,18 +34,53 @@ protected:
     float       mTextureEdgeSize;
 
 public:
+    /*!
+        @task コンストラクタ
+     */
+    
+    /*!
+        @method KRButton
+        位置と大きさを指定して、このボタンを生成します。
+     */
 	KRButton(const KRRect2D& frame);
 	virtual ~KRButton();
 
 public:
-    virtual bool    update(KRInput *input);
-    virtual void    draw(KRGraphics *g);
+    virtual bool    update(KRInput *input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics *g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 public:
+    /*!
+        @task 状態の設定
+     */
+
+    /*!
+        @method getTitle
+        このボタンに設定されているタイトルを取得します。
+     */
     std::string getTitle() const;
+    
+    /*!
+        @method setTitle
+        このボタンのタイトルを設定します。
+     */
     void        setTitle(const std::string& text);
     
+    /*!
+        @task 見た目の設定
+     */
+    
+    /*!
+        @method setTextureNames
+        @abstract ボタンの描画に使用するテクスチャの名前を指定します（通常時とハイライト（押されている）時）。
+        ボタンの画像は、横方向に可変サイズになるようにデザインされている必要があります。左端と右端のサイズを textureEdgeSize 引数で指定してください。
+     */
     void        setTextureNames(const std::string& normalName, const std::string& highlightedName, float textureEdgeSize);
+    
+    /*!
+        @method setTitleColors
+        ボタンのタイトルの表示色を設定します（通常時とハイライト（押されている）時）。
+     */
     void        setTitleColors(const KRColor& normalColor, const KRColor& hilightedColor);
     
 };

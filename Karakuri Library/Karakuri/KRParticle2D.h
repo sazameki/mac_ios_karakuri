@@ -60,7 +60,7 @@ public:
     @abstract 2次元の移動を行うパーティクル群を生成し管理するための仕組みです。
     火、爆発、煙、雲、霧などの表現に利用できます。
  */
-class KRParticle2DSystem : KRObject {
+class KRParticle2DSystem : public KRObject {
     
     std::list<KRParticle2D *>   mParticles;
 

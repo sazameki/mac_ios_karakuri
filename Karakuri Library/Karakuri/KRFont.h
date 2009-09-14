@@ -17,6 +17,9 @@
 /*!
     @class KRFont
     @group  Game 2D Graphics
+    @abstract 文字列のテクスチャを生成するためのクラスです。
+    <!--利用可能なフォント名については、フォント名を参照してください。-->
+    <p>文字列のテクスチャは、できるだけワールドの becameActive() 関数内で生成してください。ゲーム実行中の生成は強く推奨しません。</p>
  */
 class KRFont : public KRObject {
     
@@ -25,13 +28,26 @@ class KRFont : public KRObject {
 
 public:
     /*!
+        @task コンストラクタ
+     */
+
+    /*!
         @method KRFont
-        Contructor
+        @abstract フォント名とサイズを指定して、このクラスのインスタンスを生成します。
      */
 	KRFont(const std::string& fontName, float size);
+
 	virtual ~KRFont();
     
 public:
+    /*!
+        @task 基本の関数
+     */
+    
+    /*!
+        @method createStringTexture
+        @abstract 指定された文字列のテクスチャを生成します。
+     */
     KRTexture2D *createStringTexture(const std::string& str);
 
 public:
@@ -41,4 +57,6 @@ public:
     virtual std::string to_s() const;
 
 };
+
+
 

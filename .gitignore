@@ -1,6 +1,7 @@
 # General Noise
 .*
 !.git*
+Docs/*.docset
  
 # Xcode Noise
 */build

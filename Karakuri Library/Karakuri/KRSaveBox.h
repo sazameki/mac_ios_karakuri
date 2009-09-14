@@ -20,8 +20,9 @@ void KRCleanUpSaveBox();
 /*!
     @class  KRSaveBox
     @group  Game Text Processing
+    ゲームの実行状態を保存し、読み込み直すためのクラスです。
  */
-class KRSaveBox : KRObject {
+class KRSaveBox : public KRObject {
 
 #pragma mark -
 #pragma mark Friend Function Declaration
@@ -42,23 +43,83 @@ private:
 #pragma mark 値が設定されていることの確認と、保存の実行
 
 public:
+    /*!
+        @task 値が設定されていることの確認と、保存の実行
+     */
+
+    /*!
+        @method hasValue
+        指定したキーに対応する値が存在することを確認します。
+     */
     bool    hasValue(const std::string &key) const;
+    
+    /*!
+        @method save
+        @abstract 保存を実行します。
+        <p>値を設定したあと、この関数を呼び出すまでは、確実に設定された値が保存されることは保証されません。
+        また、この関数が呼び出されなくても、設定された値が保存されることはあります。</p>
+     */
     void    save();
     
 public:
 #pragma mark -
 #pragma mark 値の取得
+    /*!
+        @task 値の取得
+     */
+    
+    /*!
+        @method getBoolValue
+        名前を指定して bool 値を取得します。
+     */
     bool        getBoolValue(const std::string &key) const;
+
+    /*!
+        @method getFloatValue
+        名前を指定して float 値を取得します。
+     */
     float       getFloatValue(const std::string &key) const;
+
+    /*!
+        @method getIntValue
+        名前を指定して int 値を取得します。
+     */
     int         getIntValue(const std::string &key) const;
+    
+    /*!
+        @method getStringValue
+        名前を指定して文字列を取得します。
+     */
     std::string getStringValue(const std::string &key) const;
     
 public:
 #pragma mark -
 #pragma mark 値の設定
+    /*!
+        @task 値の設定
+     */
+    
+    /*!
+        @method setBoolValue
+        名前を指定して bool 値を保存します。
+     */
     void        setBoolValue(const std::string &key, bool boolValue);
+    /*!
+        @method setFloatValue
+        名前を指定して float 値を保存します。
+     */
     void        setFloatValue(const std::string &key, float floatValue);
+
+    /*!
+        @method setIntValue
+        名前を指定して int 値を保存します。
+     */
     void        setIntValue(const std::string &key, int intValue);
+
+    /*!
+        @method setStringValue
+        名前を指定して文字列を保存します。
+     */
     void        setStringValue(const std::string &key, const std::string &strValue);
 
     

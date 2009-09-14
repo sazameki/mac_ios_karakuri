@@ -244,6 +244,12 @@ public:
      */
     bool        operator==(const KRColor &color);
 
+    /*!
+        @method operator!=
+        与えられた色とこの色が等しくないかどうかをリターンします。
+     */
+    bool        operator!=(const KRColor &color);
+    
 
 #pragma mark -
 #pragma mark Debug Support

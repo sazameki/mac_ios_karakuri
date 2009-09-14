@@ -16,7 +16,6 @@
 
 /* cf. http://d.hatena.ne.jp/keim_at_Si/searchdiary?word=*%5BOpenGL%5D */
 
-test;
 
 /*!
     @enum KRBlendMode
@@ -45,6 +44,7 @@ typedef enum {
 /*!
     @class KRGraphics
     @group  Game Foundation
+    画面描画の基本設定の管理を行います。
  */
 class KRGraphics : public KRObject {
 private:
@@ -54,6 +54,14 @@ public:
     KRGraphics();
 
 public:
+    /*!
+        @task 基本の関数
+     */
+    
+    /*!
+        @method clear
+        @abstract 指定された色で背景をクリアします。
+     */
     void    clear(const KRColor& color) const;
     
     /*!
@@ -61,6 +69,12 @@ public:
         @abstract   現在のブレンドモードを取得します。
      */
     KRBlendMode     getBlendMode() const;
+    
+    /*!
+        @method     setBlendMode
+        @abstract   ブレンドモードを設定します。
+        <p>デフォルトのブレンドモードは KRBlendAlpha です。毎フレームの描画開始前に、このデフォルトのブレンドモードが設定されます。</p>
+     */
     void            setBlendMode(KRBlendMode mode);
     
 public:
