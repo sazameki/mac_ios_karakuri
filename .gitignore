@@ -12,6 +12,7 @@ Docs/*.docset
 # Installer Noise
 Installer/Karakuri Library/Contents/*
 Installer/Installers/build
+Installer/*/*/*/*/build
  
 # Mac OS X Noise
 *.swp

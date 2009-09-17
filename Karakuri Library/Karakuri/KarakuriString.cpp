@@ -20,16 +20,6 @@ std::string KRFS(const char *format, ...)
     return buffer;
 }
 
-std::string KRStringMake(const char *format, ...)
-{
-    static char buffer[1024];
-    va_list marker;
-    va_start(marker,format);
-    vsprintf(buffer, format, marker);
-    va_end(marker);
-    return buffer;
-}
-
 std::vector<std::string> KRSplitString(const std::string& str, const std::string& separators)
 {
 	std::vector<std::string> vec;

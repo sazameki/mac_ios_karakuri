@@ -14,7 +14,16 @@
 class «FILEBASENAME» {
 
 public:
+    /*!
+        @method «FILEBASENAME»
+        Constructor
+     */
 	«FILEBASENAME»();
+
+    /*!
+        @method ~«FILEBASENAME»
+        Destructor
+     */
 	virtual ~«FILEBASENAME»();
     
 };
