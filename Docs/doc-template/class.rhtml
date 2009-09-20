@@ -1,0 +1,147 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../../../../css/main.css" type="text/css" />
+	<title><%= $the_class.d_name %> Class</title>
+</head>
+
+<body class="class">
+
+	<div class="logo"><a href="http://karakuri.designed.jp/" target="_top"><img src="../../../../images/title.png" width="100%" /></a></div>
+
+	<p><a href="../../../index.html" target="_top">Back to TOC</a></p>
+
+	<a name="<%= $the_class.d_tag %>"></a>
+	<h1><%= $the_class.d_name %> Class</h1>
+	
+	<div class="class_info_box">
+		<h2>Super Class</h2>
+		<ul>
+		<% if $the_class.d_parent_class %>
+			<li><a href="../../../<%= $the_class.d_parent_class.d_href %>"><%= $the_class.d_parent_class.d_name %></a></li>
+		<% else %>
+			<li>None</li>
+		<% end %>
+		</ul>
+		<% if $the_class.d_sub_classes.size() > 0 %>
+			<h2>Sub Classes</h2>
+			<ul>
+			<%
+				sub_classes = $the_class.d_sub_classes.sort {|a, b| (a.d_name.downcase <=> b.d_name.downcase)}
+				sub_classes.each do |a_class|
+			%>
+				<li><a href="../../../<%= a_class.d_href %>"><%= a_class.d_name %></a></li>
+			<% end %>
+			</ul>
+		<% end %>
+	</div>
+
+	<h2>Overview</h2>
+	<div class="overview">
+		<p><%= $the_class.d_abstract %></p>
+		<p><%= $the_class.d_discussion %></p>
+	</div>
+
+	<% if $the_class.d_tasks.size() > 0 %>
+		<h2>Tasks</h2>
+		<div class="task">
+		<% $the_class.d_tasks.each do |a_task| %>
+			<h3><%= a_task.d_name %></h3>
+			<ul>
+			<% a_task.d_methods.each do |a_method| %>
+				<li><a href="#<%= a_method.d_tag %>"><%= a_method.d_declare_p %></a></li>
+			<% end %>
+			</ul>
+		<% end %>
+		</div>
+	<% end %>
+	
+	<% if $the_class.d_enums.size() > 0 %>
+		<h2>Enumerations</h2>		
+		<% $the_class.d_enums.each do |an_elem| %>
+			<div class="one_info">
+				<a name="<%= an_elem.d_tag %>"></a>
+				<h3><%= an_elem.d_name %></h3>
+				<div class="declare"><%= an_elem.d_declare %></div>
+				<% if an_elem.d_abstract %>
+					<div class="abstract"><%= an_elem.d_abstract %></div>
+				<% end %>
+				<% if an_elem.d_discussion %>
+					<div class="discussion">
+						<h4>Discussion</h4>
+						<%= an_elem.d_discussion %>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+
+	<% if $the_class.d_constants.size() > 0 %>
+		<h2>Constants</h2>		
+		<% $the_class.d_constants.each do |an_elem| %>
+			<div class="one_info">
+				<a name="<%= an_elem.d_tag %>"></a>
+				<h3><%= an_elem.d_name %></h3>
+				<div class="declare"><%= an_elem.d_declare %></div>
+				<% if an_elem.d_abstract %>
+					<div class="abstract"><%= an_elem.d_abstract %></div>
+				<% end %>
+				<% if an_elem.d_discussion %>
+					<div class="discussion">
+						<h4>Discussion</h4>
+						<%= an_elem.d_discussion %>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+
+	<% if $the_class.d_class_methods.size() > 0 %>
+		<h2>Class Methods</h2>		
+
+		<% $the_class.d_class_methods.each do |a_method| %>
+			<div class="one_info">
+				<a name="<%= a_method.d_tag %>"></a>
+				<h3><%= a_method.d_name %></h3>
+				<div class="declare"><%= a_method.d_declare %></div>
+				<% if a_method.d_abstract %>
+					<div class="abstract"><%= a_method.d_abstract %></div>
+				<% end %>
+				<% if a_method.d_discussion %>
+					<div class="discussion">
+						<h4>Discussion</h4>
+						<%= a_method.d_discussion %>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+
+	<% if $the_class.d_instant_methods.size() > 0 %>
+		<h2>Instant Methods</h2>
+		
+		<% $the_class.d_instant_methods.each do |a_method| %>
+			<div class="one_info">
+				<a name="<%= a_method.d_tag %>"></a>
+				<h3><%= a_method.d_name %></h3>
+				<div class="declare"><%= a_method.d_declare %></div>
+				<% if a_method.d_abstract %>
+					<div class="abstract"><%= a_method.d_abstract %></div>
+				<% end %>
+				<% if a_method.d_discussion %>
+					<div class="discussion">
+						<h4>Discussion</h4>
+						<%= a_method.d_discussion %>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+	
+	<div class="footer">
+		Copyright &copy; 2009 Satoshi Numata Ph.D.
+	</div>
+
+</body>
+
+</html>

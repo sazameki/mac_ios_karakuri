@@ -65,7 +65,13 @@ public:
         このワールドの実行のための初期化（モデルの初期化とマルチメディアリソースの読み込み）を行います。
      */
     virtual void    becameActive() = 0;
-
+    
+    /*!
+     @method drawView
+     このワールド内のゲームモデルを元にして、画面描画を行います。
+     */
+    virtual void    drawView(KRGraphics *g) = 0;
+    
     /*!
         @method resignedActive
         このワールドの実行中に作成したオブジェクトの解放を行います。
@@ -77,12 +83,6 @@ public:
         このワールド内のゲームモデルの更新を行います。
      */
     virtual void    updateModel(KRInput *input) = 0;
-    
-    /*!
-        @method drawView
-        このワールド内のゲームモデルを元にして、画面描画を行います。
-     */
-    virtual void    drawView(KRGraphics *g) = 0;
 
     
     /*!

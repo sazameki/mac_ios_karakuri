@@ -1,0 +1,301 @@
+/* ===== Basic ===== */
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #333;
+	margin-bottom: 40px;
+	
+	font-family: 'Lucida Grande', Geneva, Verdana, Arial, Helvetica, sans-serif;
+}
+
+.footer {
+	clear: both;
+	border-top: 1px solid #aaa;
+	margin-top: 60px;
+	width: 100%;
+	text-align: center;
+}
+
+a:link {
+	color: rgb(68, 153, 0);
+	text-decoration: none;
+}
+
+a:visited {
+	color: rgb(68, 153, 0);
+	text-decoration: none;
+}
+
+a:hover {
+	color: rgb(119, 187, 0);
+	text-decoration: underline;
+}
+
+blockquote.code {
+	border: 1px solid #aaa;
+	background-color: #eee;
+	padding: 4px;
+	font-family: 'Menlo', 'Monaco', Arial, Helvetica, sans-serif;
+}
+
+body .one_info {
+	margin-bottom: 40px;
+}
+
+body .declare {
+	width: 75%;
+	margin-left: 30px;
+	margin-bottom: 10px;
+	margin-right: 0 auto;
+	padding: 4px 12px;
+	border: 1px solid #aaa;
+	font-size: 12px;
+	font-family: 'Menlo', 'Monaco';
+}
+
+body .abstract {
+	margin-left: 30px;
+	font-size: 13px;
+}
+
+body .discussion {
+	margin-left: 50px;
+	font-size: 13px;
+}
+
+body .discussion h4 {
+	margin-left: -20px;
+}
+
+body .constants {
+	margin-left: 50px;
+	font-size: 13px;
+}
+
+body .constants dl dt {
+    display: list-item;
+	list-style: disc;
+	margin-left: 20px;
+}
+
+body .constants dl dd {
+	margin-bottom: 4px;
+}
+
+body .constants h4 {
+	margin-left: -20px;
+}
+
+.class_info_box {
+	width: 400px;
+	border: 1px solid #aaa;
+	margin-left: 50px;
+	padding: 10px;
+}
+
+
+/* ===== TOC ===== */
+
+body.toc {
+	padding: 12px 16px;
+}
+
+body.toc .logo {
+	float: right;
+	width: 250px;
+}
+
+body.toc h1 {
+	font-size: 34px;
+	color: #aaa;
+}
+
+body.toc h2 {
+	clear: both;
+	background-color: rgb(238, 255, 170);
+	padding: 4px 8px;
+	margin: 0;
+	color: #222;
+}
+
+body.toc h3 {
+	font-size: 13px;
+	border-bottom: 1px solid #aaa;
+	margin: 8px 0;
+	padding: 0;
+}
+
+body.toc .column {
+	margin: 0;
+	padding: 0;
+	width: 30%;
+	padding-left: 16px;
+	padding-bottom: 40px;
+	float: left;
+	font-size: 13px;
+}
+
+body.toc .column ul {
+	margin: 0;
+	padding: 0;
+	padding-left: 10px;
+}
+
+body.toc .column li {
+	list-style: none inside; 
+}
+
+
+/* ===== Class / Struct / Data Types ===== */
+
+body.class {
+	padding: 12px 16px;
+}
+
+body.class .logo {
+	float: right;
+	padding-top: 20px;
+	width: 250px;
+}
+
+body.class .overview {
+	margin: 0;
+	padding: 0;
+	padding-left: 30px;
+	margin-bottom: 40px;
+	font-size: 13px;
+}
+
+body.class .task {
+	font-size: 12px;
+}
+
+body.class h2 {
+	margin-top: 40px;
+	border-bottom: 1px solid #aaa;
+}
+
+body.class h3 {
+	margin-top: 20px;
+}
+
+body.class .overview h3 {
+	margin-left: -15px;
+}
+
+body.class .class_info_box h2 {
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+
+/* ===== Class List at Left Side ===== */
+
+body.list {
+	padding: 4px;
+	background-color: #e60;
+	font-size: 13px;
+}
+
+body.list h1 {
+	font-size: 18px;
+	color: yellow;
+}
+
+body.list ul {
+	margin: 0;
+	padding: 0;
+}
+
+body.list li {
+	margin: 0;
+	padding: 0;
+	padding-left: 10px;
+	padding-bottom: 2px;
+	list-style: none inside; 
+}
+
+body.list a:link {
+	color: white;
+	text-decoration: none;
+}
+
+body.list a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+body.list a:hover {
+	text-decoration: underline;
+}
+
+
+/* ===== Guide Book ===== */
+
+body.guide {
+	padding: 24px 32px;
+}
+
+body.guide h2 {
+	margin-top: 40px;
+	border-bottom: 1px solid #aaa;
+}
+
+body.guide p {
+	margin-left: 20px;
+}
+
+body.guide dl {
+	margin-left: 40px;
+}
+
+body.guide dl dt {
+    display: list-item;
+	list-style: disc;
+	margin-left: 20px;
+}
+
+body.guide dl dd {
+	margin-bottom: 4px;
+}
+
+body.guide .guide_toc dl {
+	margin-left: 10px;
+}
+
+body.guide .guide_toc dl dt {
+	list-style: none;
+	font-weight: bold;
+	width: 90%;
+	font-size: 16px;
+	border-bottom: 1px dashed #bbb;
+	margin-bottom: 8px;
+}
+
+body.guide .guide_toc dl dd {
+	margin-bottom: 14px;
+}
+
+body.guide .title {
+	font-weight: bold;
+}
+
+body.guide dl.faq {
+	margin-right: 40px;
+}
+
+body.guide dl.faq dt {
+	font-weight: bold;
+	border-bottom: 1px dashed #bbb;
+	margin-bottom: 8px;
+}
+
+body.guide dl.faq dd {
+	margin-bottom: 14px;
+}
+
+body.guide .logo {
+	float: right;
+}
+

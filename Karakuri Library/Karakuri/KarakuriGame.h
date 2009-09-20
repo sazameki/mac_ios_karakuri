@@ -147,17 +147,46 @@ protected:
     void            setAudioMixType(KRAudioMixType type);
     
     /*!
+        @method setFrameRate
+        @abstract   ゲーム実行のフレームレートを設定します。
+        デフォルトのフレームレートは、60.0 fps に設定されています。
+     */
+    void            setFrameRate(float value);
+    
+    /*!
         @method setNetworkGameID
+        @abstract   ネットワーク対応のための識別子を設定します。
         ネットワーク上でこのゲームを識別するための識別子と、ネットワークのピア通信開始時にアクティブになるワールドの名前を指定します。識別子には、英数字（a-zA-Z0-9）とアンダーバー (_) のみを用いてください。
      */
     void            setNetworkGameID(const std::string& gameID, const std::string& startWorldName);
     
-    void            setTitle(const std::string& str);
-    void            setFrameRate(float value);
-    void            setScreenSize(int width, int height);    
-    void            setShowsMouseCursor(bool flag);
-
+    /*!
+        @method setScreenSize
+        @abstract   ゲーム画面のサイズを設定します。
+        iPhone 環境では、(480, 320) あるいは (320, 480) のみが指定できます。(480, 320) を指定した場合には横方向で使用するモードになり、(320, 480) を指定した場合には縦方向で使用するモードになります。
+     */
+    void            setScreenSize(int width, int height);
+    
+    /*!
+     @method setShowsFPS
+     @abstract デバッグ用の FPS 情報の表示／非表示を設定します。
+     FPS 情報は、Debug ビルドの環境でのみ表示されます。
+     */
     void            setShowsFPS(bool flag);
+    
+    /*!
+        @method setShowsMouseCursor
+        @abstract マウスカーソルの表示／非表示を設定します。
+        Mac OS X 環境での実行にのみ影響します。
+     */
+    void            setShowsMouseCursor(bool flag);
+    
+    /*!
+        @method setTitle
+        @abstract ゲームのタイトルを設定します。
+        設定されたタイトルは、Mac OS X 環境のウィンドウのタイトルバーや、警告メッセージのタイトルなどに使用されます。
+     */
+    void            setTitle(const std::string& str);
     
     
 #pragma mark -

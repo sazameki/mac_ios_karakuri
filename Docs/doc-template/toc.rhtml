@@ -1,0 +1,95 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>DocSet Maker TOC</title>
+</head>
+
+<body class="toc">
+
+	<div class="logo"><a href="http://karakuri.designed.jp/" target="_top"><img src="../images/title.png" width="100%" /></a></div>
+
+	<h1>Karakuri Framework Reference Library</h1>
+	<ul>
+		<li><a href="http://karakuri.designed.jp/" target="_top">Karakuri Framework ホームページ</a></li>
+		<li><a href="../guide/index.html" target="_top">Karakuri Framework 開発ガイド</a></li>
+	</ul>
+	<% $groups.each do |group| %>
+		<h2><%= group.d_name %></h2>
+
+		<% if (group.d_classes.size > 0) %>
+			<div class="column">
+				<h3>Classes</h3>
+				<ul>
+				<% group.d_classes.each do |a_class| %>
+					<li><a href="<%= a_class.d_href %>"><%= a_class.d_name %></a></li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<% if (group.d_functions.size > 0) %>
+			<div class="column">
+				<h3>Functions</h3>
+				<ul>
+				<% group.d_functions.each do |a_func| %>
+					<li><a href="<%= a_func.d_href %>"><%= a_func.d_name %></a></li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<% if (group.d_structs.size > 0) || (group.d_enums.size > 0) || (group.d_typedefs.size > 0) || (group.d_variables.size > 0) || (group.d_macros.size > 0) %>
+			<div class="column">
+				<% if (group.d_structs.size > 0) %>
+					<h3>Structs</h3>
+					<ul>
+					<% group.d_structs.each do |a_struct| %>
+						<li><a href="<%= a_struct.d_href %>"><%= a_struct.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
+				<% if (group.d_enums.size > 0) %>
+					<h3>Enums</h3>
+					<ul>
+					<% group.d_enums.each do |an_enum| %>
+						<li><a href="<%= an_enum.d_href %>"><%= an_enum.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
+				<% if (group.d_typedefs.size > 0) %>
+					<h3>Type defs</h3>
+					<ul>
+					<% group.d_typedefs.each do |a_typedef| %>
+						<li><a href="<%= a_typedef.d_href %>"><%= a_typedef.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
+				<% if (group.d_variables.size > 0) %>
+					<h3>Variables</h3>
+					<ul>
+					<% group.d_variables.each do |a_var| %>
+						<li><a href="<%= a_var.d_href %>"><%= a_var.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
+				<% if (group.d_macros.size > 0) %>
+					<h3>Macros</h3>
+					<ul>
+					<% group.d_macros.each do |a_macro| %>
+						<li><a href="<%= a_macro.d_href %>"><%= a_macro.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
+			<% end %>
+			</div>
+
+		<% end %>
+	
+	<div class="footer">
+		Copyright &copy; 2009 Satoshi Numata Ph.D.
+	</div>
+	
+</body>
+
+</html>

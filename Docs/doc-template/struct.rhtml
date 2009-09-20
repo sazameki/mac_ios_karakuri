@@ -1,0 +1,75 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../../../../css/main.css" type="text/css" />
+	<title>DocSet Maker Struct</title>
+</head>
+
+<body class="class">
+
+	<div class="logo"><a href="http://karakuri.designed.jp/" target="_top"><img src="../../../../images/title.png" width="100%" /></a></div>
+
+	<p><a href="../../../index.html" target="_top">Back to TOC</a></p>
+
+	<a name="<%= $the_struct.d_tag %>"></a>
+	<h1><%= $the_struct.d_name %> Struct</h1>
+
+	<h2>Overview</h2>
+	<div class="overview">
+		<p><%= $the_struct.d_abstract %></p>
+		<p><%= $the_struct.d_discussion %></p>
+	</div>
+
+	<% if $the_struct.d_tasks.size() > 0 %>
+		<h2>Tasks</h2>
+		<div class="task">
+		<% $the_struct.d_tasks.each do |a_task| %>
+			<h3><%= a_task.d_name %></h3>
+			<ul>
+			<% a_task.d_methods.each do |a_method| %>
+				<li><a href="#<%= a_method.d_tag %>"><%= a_method.d_declare_p %></a></li>
+			<% end %>
+			</ul>
+		<% end %>
+		</div>
+	<% end %>
+
+	<% if $the_struct.d_instant_variables.size() > 0 %>
+		<h2>Instant Variables</h2>
+		<% $the_struct.d_instant_variables.each do |an_elem| %>
+			<a name="<%= an_elem.d_tag %>"></a>
+			<h3><%= an_elem.d_name %></h3>
+			<div class="declare"><%= an_elem.d_declare %></div>
+			<% if an_elem.d_abstract %>
+				<div class="abstract"><%= an_elem.d_abstract %></div>
+			<% end %>
+			<% if an_elem.d_discussion %>
+				<div class="discussion">
+					<h4>Discussion</h4>
+					<%= an_elem.d_discussion %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+
+	<% if $the_struct.d_instant_methods.size() > 0 %>
+		<h2>Instant Methods</h2>
+		<% $the_struct.d_instant_methods.each do |an_elem| %>
+			<a name="<%= an_elem.d_tag %>"></a>
+			<h3><%= an_elem.d_name %></h3>
+			<div class="declare"><%= an_elem.d_declare %></div>
+			<% if an_elem.d_abstract %>
+				<div class="abstract"><%= an_elem.d_abstract %></div>
+			<% end %>
+			<% if an_elem.d_discussion %>
+				<div class="discussion">
+					<h4>Discussion</h4>
+					<%= an_elem.d_discussion %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+
+</body>
+
+</html>

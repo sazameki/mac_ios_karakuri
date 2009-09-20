@@ -1,0 +1,35 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - その他の FAQ</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>その他の FAQ</h1>
+
+<dl class="faq">
+
+	<dt>FPS の表示はどうやったら消せますか？</dt>
+	<dd>GameMain.cpp の中で、setShowsFPS() 関数の呼び出しの引数を false にしてください。</dd>
+
+	<dt>Xcode のオーガナイザで「A valid signing identity matching this profile could not be found in your keychain」というエラーが出て、実機用のビルドができません。</dt>
+	<dd>この問題は、開発用プロファイルを作成したマシンと、現在開発を行っているマシンが異なる場合によく起こります。開発中のマシンに、使用しているプロファイルに対応した証明書の秘密鍵もコピーしていることを確認してください。</dd>
+
+	<dt>iPhone を縦モードで使うにはどうすればいいですか？</dt>
+	<dd>GameMain.cpp で、デフォルトで横モード用に設定されている画面サイズ (480, 320) を、(320, 480) にして使ってください。</dd>
+</dl>
+
+<div class="footer">
+	Copyright &copy; 2009 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>

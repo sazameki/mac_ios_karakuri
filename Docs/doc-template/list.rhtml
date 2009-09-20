@@ -1,0 +1,18 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>DocSet Maker List</title>
+</head>
+
+<body class="list">
+	<a href="toc.html" target="toc">Karakuri Framework</a>
+	<h1>All Classes</h1>
+	<ul>
+	<% $classes_and_structs.each do |a_class| %>
+		<li><a href="<%= a_class.d_href %>" target="toc"><%= a_class.d_name %></a></li>
+	<% end %>
+	</ul>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - テクスチャについて</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>テクスチャについて</h1>
+
+<h2>テクスチャとして利用する画像の形式について</h2>
+
+<p>テクスチャとして利用する画像には、PNG 画像を利用することを推奨します。画像サイズは、1024×1024ピクセル以内でなければいけません。</p>
+
+<p>画像サイズの横幅または縦幅が2の乗数 (1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024) でない場合には、その画像は横方向または縦方向に余白を付け足して、もっとも近い2の乗数のサイズにしてから読み込まれます。そのため、あらかじめ2の乗数のサイズにしておく方が、メモリの無駄を省けるようになります。</p>
+
+<h2>テクスチャアトラスについて</h2>
+
+<p>Karakuri Framework は OpenGL をベースに構築されていますが、OpenGL では（DirectX でも同様ですが）、使用するテクスチャを切り替える度に一定のコストが発生します。そのため、複数の素材画像を1枚の画像にまとめて保存しておき、その画像をテクスチャとして読み込んで、部分部分を描画に使用するといった使い方が効率的です。</p>
+
+<p>Karakuri Framework では、これを実現するために、<a href="../referencelibrary/Game 2D Graphics/Classes/KRTexture2D/index.html#//apple_ref/cpp/cl/KRTexture2D">KRTexture2D</a> というテクスチャクラスに加えて、<a href="../referencelibrary/Game 2D Graphics/Classes/KRTexture2DAtlas/index.html#//apple_ref/cpp/cl/KRTexture2DAtlas">KRTexture2DAtlas</a> というクラスを提供しています。</p>
+
+<div class="footer">
+	Copyright &copy; 2009 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>

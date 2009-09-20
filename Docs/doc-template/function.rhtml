@@ -1,0 +1,36 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../../css/main.css" type="text/css" />
+	<title>DocSet Maker Functions</title>
+</head>
+
+<body class="class">
+
+	<div class="logo"><a href="http://karakuri.designed.jp/" target="_top"><img src="../../images/title.png" width="100%" /></a></div>
+
+	<p><a href="../index.html" target="_top">Back to TOC</a></p>
+
+	<h1><%= $the_group.d_name %> Functions</h1>
+	<ul>
+		<% $the_group.d_functions.each do |a_func| %>
+			<div class="one_info">
+				<a name="<%= a_func.d_tag %>"></a>
+				<h3><%= a_func.d_name %></h3>
+				<div class="declare"><%= a_func.d_declare %></div>
+				<% if a_func.d_abstract %>
+					<div class="abstract"><%= a_func.d_abstract %></div>
+				<% end %>
+				<% if a_func.d_discussion %>
+					<div class="discussion">
+						<h4>Discussion</h4>
+						<%= a_func.d_discussion %>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	</ul>
+
+</body>
+
+</html>

@@ -21,7 +21,7 @@ struct KRSize2D;
 /*!
     @class KRObject
     @group Game Foundation
-    Karakuri Framework 内のすべてのクラスの基底クラスとなるクラスです。
+    @abstract Karakuri Framework 内のすべてのクラスの基底クラスとなるクラスです。
  */
 typedef struct KRObject {
     KRObject();
@@ -47,7 +47,7 @@ typedef struct KRObject {
 /*!
     @struct KRRect2D
     @group  Game Foundation
-    位置およびサイズで定義される矩形を表すための構造体です。
+    @abstract 位置およびサイズで定義される矩形を表すための構造体です。
  */
 typedef struct KRRect2D : public KRObject {
     
@@ -532,6 +532,7 @@ extern const KRVector3D       KRVector3DZero;
     @group  Game Foundation
     @constant   KRLanguageEnglish   英語環境を表す定数です。
     @constant   KRLanguageJapanese  日本語環境を表す定数です。
+    @abstract   言語環境を表すための型です。
     グローバル変数 KRLanguage で、ゲームが実行されている言語環境を表すために使われます。
  */
 typedef enum KRLanguageType {

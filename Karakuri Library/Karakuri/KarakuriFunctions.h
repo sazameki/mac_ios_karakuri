@@ -52,14 +52,14 @@
 /*!
     @function   KRRotate2D
     @group      Game 2D Graphics
-    2次元的に（Z軸を中心として）画面を回転させます。
+    @abstract   2次元的に（Z軸を中心として）画面を回転させます。
  */
 #define KRRotate2D(angle)       glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);
 
 /*!
     @function   KRRotateScreen2D
     @group      Game 2D Graphics
-    中心点と角度を指定して、2次元的に（Z軸を中心として）画面を回転させます。
+    @abstract   中心点と角度を指定して、2次元的に（Z軸を中心として）画面を回転させます。
  */
 #define KRRotateScreen2D(angle, centerPos)     glTranslatef(((centerPos).x), ((centerPos).y), 0.0f);glRotatef(((angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);glTranslatef(-((centerPos).x), -((centerPos).y), 0.0f);
 
@@ -67,14 +67,14 @@
 /*!
     @function   KRScale2D
     @group      Game 2D Graphics
-    2次元的に（Z軸を中心として）画面をスケーリングさせます。
+    @abstract   2次元的に（Z軸を中心として）画面をスケーリングさせます。
  */
 #define KRScale2D(x, y)         glScalef((x), (y), 1.0f);
 
 /*!
     @function   KRTranslate2D
     @group      Game 2D Graphics
-    2次元的に（Z軸を中心として）画面を平行移動させます。
+    @abstract   2次元的に（Z軸を中心として）画面を平行移動させます。
  */
 #define KRTranslate2D(x, y)     glTranslatef((x), (y), 0.0f);
 
@@ -101,7 +101,7 @@ bool    KRCheckOpenGLExtensionSupported(const std::string& extensionName);
 /*!
     @function   KRGetKarakuriVersion
     @group      Game Foundation
-    @discussion Karakuri Framework の現在のバージョンを取得します。
+    @abstract   Karakuri Framework の現在のバージョンを取得します。
  */
 std::string KRGetKarakuriVersion();
 

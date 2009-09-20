@@ -1,0 +1,46 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - サウンド形式について</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>サウンド形式について</h1>
+
+<h2>推奨されるサウンドファイル形式</h2>
+
+<p>サウンドファイルには、22kHz モノラルの CAF (Core Audio File) 形式 (〜.caf) の利用が推奨されます。さらに容量の観点から、サイズが 1/4 になる IMA4 で圧縮されていることが望ましいと言えます。</p>
+
+<p>CAF ファイルが用意できない場合には、WAV 形式か AIFF 形式のサウンドファイルを用意してください。MP3 や AAC も利用できますが、デコード処理のために CPU 負荷が高くなるだけでなく、再生終了時にプチノイズが入ったり、ループ時にギャップが生じる可能性が高くなりますので、推奨できません。</p>
+
+<h2>iPhone SDK でのエンコード方法</h2>
+
+<p>iPhone SDK がインストールされている環境下では、ターミナルから以下のように afconvert コマンドを実行する事で、適切な効果音ファイルが生成できます。</p>
+
+<blockquote class="code">% afconvert -f caff -d ima4@22050 -c 1 [元になるオーディオファイル名] [出力対象のファイル名.caf]</blockquote>
+
+<p>なお、何らかの理由で IMA4 で圧縮しない場合には、以下のようにしてエンコードします。</p>
+
+<blockquote class="code">% afconvert -f caff -d LEI16@22050 -c 1 [元になるオーディオファイル名] [出力対象のファイル名.caf]</blockquote>
+
+<p>いずれの例でも、ステレオでエンコードする場合には「-c 1」のオプションを取り除きます。</p>
+
+<h2>iPhone SDK 以外でのエンコード方法</h2>
+
+<p>iPhone SDK がインストールされていない環境では、WAV か AIFF 形式のサウンドファイルを用意してください。QuickTime Player Pro を使用すると、「ファイル」-「書き出し」で IMA4 で圧縮した AIFF ファイルが作成できます。</p>
+
+
+<div class="footer">
+	Copyright &copy; 2009 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>

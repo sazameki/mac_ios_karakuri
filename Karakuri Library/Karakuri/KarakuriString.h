@@ -26,6 +26,7 @@ std::string KRFS(const char *format, ...);
 /*!
     @function   KRSplitString
     @group      Game Foundation
+    @abstract   文字列を分割します。
     指定された区切り文字を使って文字列を分割し、分割された文字列を格納した vector をリターンします。
  */
 std::vector<std::string> KRSplitString(const std::string& str, const std::string& separators);

@@ -21,6 +21,7 @@ class KRFont;
     @group Game 2D Graphics
     <p>2次元のテクスチャを表すためのクラスです。</p>
     <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
+    <p><a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/texture.html" target="_top">テクスチャについて</a>も参照してください。</p>
  */
 class KRTexture2D : public KRObject {
     

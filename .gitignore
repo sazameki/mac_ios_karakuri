@@ -2,6 +2,7 @@
 .*
 !.git*
 Docs/*.docset
+Docs/document
  
 # Xcode Noise
 */build

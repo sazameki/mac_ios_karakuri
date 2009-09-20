@@ -18,7 +18,7 @@
 /*!
     @typedef KRMouseState
     @group Game Foundation
-    マウスの状態をビットフラグで管理するための型です。
+    @abstract マウスの状態をビットフラグで管理するための型です。
  */
 typedef unsigned int        KRMouseState;
 #endif
@@ -30,7 +30,7 @@ typedef unsigned int        KRMouseState;
 /*!
     @typedef KRKeyState
     @group Game Foundation
-    キーボードの状態をビットフラグで管理するための型です。
+    @abstract キーボードの状態をビットフラグで管理するための型です。
  */
 typedef unsigned long long  KRKeyState;
 #endif
@@ -43,14 +43,14 @@ typedef unsigned long long  KRKeyState;
 /*!
     @typedef KRTouchState
     @group Game Foundation
-    iPhone のタッチの状態をビットフラグで管理するための型です。
+    @abstract iPhone のタッチの状態をビットフラグで管理するための型です。
  */
 typedef int             KRTouchState;
 
 /*!
     @struct KRTouchInfo
     @group Game Foundation
-    iPhone のタッチ情報を表すために使われます。
+    @abstract iPhone のタッチ情報を表すための構造体です。
  */
 typedef struct KRTouchInfo {
     /*!
@@ -76,7 +76,8 @@ typedef struct KRTouchInfo {
 /*!
     @class  KRInput
     @group  Game Foundation
-    <p>Mac OS X 環境ではキーボードとマウスによる入力を、iPhone 環境ではマルチタッチと加速度センサによる入力をサポートするためのクラスです。</p>
+    @abstract 入力関係全般をサポートするためのクラスです。
+    <p>Mac OS X 環境ではキーボードとマウスによる入力を、iPhone 環境ではマルチタッチと加速度センサによる入力をサポートします。</p>
  */
 class KRInput : public KRObject {
 

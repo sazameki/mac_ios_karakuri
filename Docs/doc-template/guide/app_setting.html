@@ -1,0 +1,45 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - アプリケーションの設定</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>アプリケーションの設定</h1>
+
+<h2>アプリケーション名の設定</h2>
+
+<p>「Mac OS X」ターゲットあるいは「iPhone」ターゲットをダブルクリックして、「ビルド」設定で「プロダクト名」を変更してください。</p>
+
+<h2>識別子の設定</h2>
+
+<p>iPhone 実機で動作させるためには、使用するプロファイルに合致する識別子を設定しなければなりません。「iPhone」ターゲットをダブルクリックして、「プロパティ」設定で「識別子」を変更してください。</p>
+
+<h2>タイトルの設定（Mac OS X のみ）</h2>
+
+<p>GameMain クラスのコンストラクタで、setTitle() 関数の引数を変更してください。</p>
+
+<h2>アイコンの設定</h2>
+
+<p>Mac OS X 用のものは macosx_icon.icns を適切なアイコンファイルで置き換えてください。</p>
+
+<p>iPhone 用のものは iphone_icon.png を適切な PNG 画像で置き換えてください。画像サイズは 57×57 ピクセルである必要があります。</p>
+
+<h2>起動画面の設定</h2>
+
+<p>Default.png を適切な画像で置き換えてください。この画像は、480×320 ピクセルの画像を時計回りに90度回転させた PNG 画像である必要があります。</p>
+
+<div class="footer">
+	Copyright &copy; 2009 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>

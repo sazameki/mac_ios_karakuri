@@ -1,0 +1,60 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - デバッグについて</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>デバッグについて</h1>
+
+<h2>はじめに</h2>
+
+<p>Karakuri Framework では、以下のようなデバッグのための手法を提供しています。</p>
+
+<ul>
+	<li>デバッグ文字列の出力</li>
+	<li>ゲーム実行時の例外処理</li>
+	<li>FPS 情報の表示</li>
+</ul>
+
+<h2>デバッグ文字列の出力</h2>
+
+<p>Karakuri Framework に用意されているすべてのクラスは、<a href="../referencelibrary/Game Foundation/Classes/KRObject/index.html#//apple_ref/cpp/instm/KRObject/c_str/const_char_*c_str()_const">const char *c_str()</a> 関数および <a href="../referencelibrary/Game Foundation/Classes/KRObject/index.html#//apple_ref/cpp/instm/KRObject/to_s/virtual_std::string_to_s()_const">std::string to_s()</a> 関数をもっています。printf() 関数や std::cout でデバッグ出力を行ってください。</p>
+
+<h2>ゲーム実行時の例外処理</h2>
+
+<p>ゲーム実行時に何らかのエラーが起きた場合には、<a href="../referencelibrary/Game Foundation/Classes/KRGameError/index.html#//apple_ref/cpp/cl/KRGameError">KRGameError</a> 例外をスローしてください。この例外はフレームワークによってキャッチされ、メッセージボックスやメッセージシートに適切に表示されます。</p>
+
+<blockquote class="code"><pre>if (error) {
+    throw KRGameError("エラーの内容を示す文字列");
+}</pre></blockquote>
+
+<h2>FPS 情報の表示</h2>
+
+<p>GameMain クラスのコンストラクタで <a href="../referencelibrary/Game Foundation/Classes/KarakuriGame/index.html#//apple_ref/cpp/instm/KarakuriGame/setShowsFPS/void_setShowsFPS(bool_flag)">setShowsFPS()</a> 関数を true を引数にして呼び出すことで、ゲームの実行中に、現在のフレームレートなどの情報を表示することができます。</p>
+
+<dl>
+	<dt>FPS</dt>
+	<dd>平均フレームレートです。1秒間に何フレーム描画できているかを表示します。</dd>
+
+	<dt>TPF</dt>
+	<dd>1フレーム当たりの平均のテクスチャ切り替え回数です。</dd>
+
+	<dt>BPF</dt>
+	<dd>1フレーム当たりの平均のテクスチャのバッチ処理回数です。</dd>
+</dl>
+
+<div class="footer">
+	Copyright &copy; 2009 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>

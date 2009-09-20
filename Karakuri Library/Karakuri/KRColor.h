@@ -16,7 +16,8 @@
 /*!
     @class KRColor
     @group  Game Foundation
-    色を表すためのクラスです。
+    @abstract 色を表すためのクラスです。
+    利用可能な色の定数の一覧については、<a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/color_chart.html" target="_top">カラーチャート</a>を参照してください。
  */
 class KRColor : public KRObject {
 public:
@@ -234,19 +235,19 @@ public:
     
     /*!
         @method operator=
-        与えられた色の情報をこのインスタンスにコピーします。
+        @abstract 与えられた色の情報をこのインスタンスにコピーします。
      */
     KRColor&    operator=(const KRColor &color);
     
     /*!
         @method operator==
-        与えられた色とこの色が等しいかどうかをリターンします。
+        @abstract 与えられた色とこの色が等しいかどうかをリターンします。
      */
     bool        operator==(const KRColor &color);
 
     /*!
         @method operator!=
-        与えられた色とこの色が等しくないかどうかをリターンします。
+        @abstract 与えられた色とこの色が等しくないかどうかをリターンします。
      */
     bool        operator!=(const KRColor &color);
     

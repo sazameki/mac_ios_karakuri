@@ -27,8 +27,8 @@
     @constant KRBlendModeScreen         スクリーン合成（glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE)）
     @constant KRBlendModeXOR            XOR合成（glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE_MINUS_SRC_COLOR)）
     @constant KRBlendModeCopy           コピー合成（単純な上書き）（glBlendFunc(GL_ONE, GL_ZERO)）
- 
-    ブレンドモードを示す列挙型です。
+    @abstract ブレンドモードを示す列挙型です。
+    <p><a href="../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../guide/blend_mode.html" target="_top">ブレンドモードについて</a>も参照してください。</p>
  */
 typedef enum {
     KRBlendModeAlpha,
@@ -44,7 +44,8 @@ typedef enum {
 /*!
     @class KRGraphics
     @group  Game Foundation
-    画面描画の基本設定の管理を行います。
+    @abstract 画面描画の基本設定の管理を行います。
+    <p><a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/blend_mode.html" target="_top">ブレンドモードについて</a>も参照してください。</p>
  */
 class KRGraphics : public KRObject {
 private:

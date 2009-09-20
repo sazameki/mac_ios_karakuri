@@ -1,0 +1,50 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - コントロールの使い方</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>コントロールの使い方</h1>
+
+<h2>基本的な使い方</h2>
+
+<p>Karakuri Framework 0.7.1 以降では、プッシュボタン、ON/OFF ボタン、スライダの3つのコントロールを利用することができます。基本的な利用手順は、次の通りです。</p>
+
+<ol>
+	<li>コントロールのインスタンスを作成する。</li>
+	<li>コントロールをワールドに追加する。</li>
+</ol>
+
+<p>あとは、コントロールは自動的に描画され、自動的にユーザからの入力を受け取るようになります。</p>
+
+<p>コントロールに対する入力は、あらゆる入力に優先して処理されます。</p>
+
+<h2>コントロールのための画像</h2>
+
+<p>各種コントロールは、位置と大きさを指定して new した直後に、画像を指定する必要があります。コントロールのための画像は、基本的に自分で用意していただきますが、iPhone のデザインをベースにした画像が /Developer/Karakuri/images/Control Images フォルダにあらかじめ用意してありますので、これを使うと簡単です。</p>
+
+<ul>
+	<li>ボタンには「通常時の画像」と「押した時の画像」が必要です（同一サイズ）。</li>
+	<li>スライダには「背景の画像」と「つまみの画像」が必要です。</li>
+	<li>スイッチには「ボタン全体の画像」と「つまみの画像」が必要です。</li>
+</ul>
+
+<h2>コントロールからの入力の受け取り</h2>
+
+<p>前述の通り、コントロールはワールドに追加しますが、コントロールの状態に変化があった場合、その変化はワールドに対して通知されます。コントロールの種類に応じて、<a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/cl/KarakuriWorld">KarakuriWorld</a> クラスの <a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/instm/KarakuriWorld/buttonPressed/virtual_void_buttonPressed(KRButton_*aButton)">buttonPressed()</a> 関数、<a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/instm/KarakuriWorld/sliderValueChanged/virtual_void_sliderValueChanged(KRSlider_*slider)">sliderValueChanged()</a> 関数、<a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/instm/KarakuriWorld/switchStateChanged/virtual_void_switchStateChanged(KRSwitch_*switcher)">switchStateChange()</a> 関数がそれぞれ呼ばれますので、必要な関数をオーバーライドして、その関数内で処理を行ってください。なお、これらの関数は、必ずワールドの updateModel() 関数が呼ばれる直前に呼ばれます。</p>
+
+<div class="footer">
+	Copyright &copy; 2009 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>
