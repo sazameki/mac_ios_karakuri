@@ -76,6 +76,13 @@ std::string KRLabel::getText() const
     return mText;
 }
 
+void KRLabel::setFont(const std::string& fontName, float size)
+{
+    delete mFont;
+    mFont = new KRFont(fontName, size);
+    mHasChangedText = true;
+}
+
 void KRLabel::setText(const std::string& text)
 {
     if (mText == text) {

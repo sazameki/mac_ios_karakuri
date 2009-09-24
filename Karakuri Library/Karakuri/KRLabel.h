@@ -87,6 +87,12 @@ public:
     KRTextAlignment getTextAlignment() const;
     
     /*!
+        @method setFont
+        @abstract テキストを描画するためのフォントを設定します。
+     */
+    void    setFont(const std::string& fontName, float size);
+    
+    /*!
         @method setTextAlignment
         横方向のテキスト配置方法を設定します。
      */
