@@ -23,7 +23,7 @@ void KRInitOpenAL()
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     NSString *categoryName = AVAudioSessionCategoryAmbient;
-    if (KRGame->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
+    if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         categoryName = AVAudioSessionCategorySoloAmbient;
     }
     

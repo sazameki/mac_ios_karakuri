@@ -11,7 +11,7 @@
 #include <Karakuri/Karakuri.h>
 
 
-class LogoWorld : public KarakuriWorld {
+class LogoWorld : public KRWorld {
 
     KRTexture2D     *mTex;
     int             mCount;

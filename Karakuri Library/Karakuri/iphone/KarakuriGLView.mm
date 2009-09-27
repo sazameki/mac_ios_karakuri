@@ -70,7 +70,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
             mTouchInfos[i].is_used = false;
         }
 
-        sPhoneOrientatilHorizontal = (KRGame->getScreenWidth() > KRGame->getScreenHeight())? true: false;
+        sPhoneOrientatilHorizontal = (gKRGameInst->getScreenWidth() > gKRGameInst->getScreenHeight())? true: false;
         
         [[KarakuriController sharedController] setKRGLContext:&mKRGLContext];
     }
@@ -190,10 +190,10 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
-    if (KRGame->getScreenWidth() > KRGame->getScreenHeight()) {
-        KRInputInst->setAcceleration(-acceleration.y, acceleration.x, acceleration.z);
+    if (gKRGameInst->getScreenWidth() > gKRGameInst->getScreenHeight()) {
+        gKRInputInst->setAcceleration(-acceleration.y, acceleration.x, acceleration.z);
     } else {
-        KRInputInst->setAcceleration(acceleration.x, acceleration.y, acceleration.z);
+        gKRInputInst->setAcceleration(acceleration.x, acceleration.y, acceleration.z);
     }
 }
 
@@ -213,9 +213,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 mTouchInfos[i].touch_pointer = aTouch;
 
                 if (sPhoneOrientatilHorizontal) {
-                    KRInputInst->startTouch(mTouchInfos[i].touch_id, pos.y, pos.x);
+                    gKRInputInst->startTouch(mTouchInfos[i].touch_id, pos.y, pos.x);
                 } else {
-                    KRInputInst->startTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y);
+                    gKRInputInst->startTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y);
                 }
                 break;
             }
@@ -232,9 +232,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 CGPoint& oldPos = mTouchInfos[i].pos;
                 mTouchInfos[i].pos = pos;
                 if (sPhoneOrientatilHorizontal) {
-                    KRInputInst->moveTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
+                    gKRInputInst->moveTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
                 } else {
-                    KRInputInst->moveTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, pos.x-oldPos.x, oldPos.y-pos.y);
+                    gKRInputInst->moveTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, pos.x-oldPos.x, oldPos.y-pos.y);
                 }
                 break;
             }
@@ -250,9 +250,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 CGPoint pos = [aTouch locationInView:nil];
                 CGPoint& oldPos = mTouchInfos[i].pos;
                 if (sPhoneOrientatilHorizontal) {
-                    KRInputInst->endTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
+                    gKRInputInst->endTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
                 } else {
-                    KRInputInst->endTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, oldPos.x-pos.x, oldPos.y-pos.y);
+                    gKRInputInst->endTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, oldPos.x-pos.x, oldPos.y-pos.y);
                 }
 
                 mTouchInfos[i].is_used = false;

@@ -18,7 +18,7 @@
     [KarakuriController new];
 }
 
-- (KarakuriGame *)createGameInstance
+- (KRGame *)createGameInstance
 {
     // Subclass should return an instance of the game 
     return nil;

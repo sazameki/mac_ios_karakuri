@@ -34,7 +34,7 @@ void LogoWorld::updateModel(KRInput *input)
 {
     mCount--;
     if (mCount == 0) {
-        KRGame->changeWorld("play");
+        gKRGameInst->changeWorld("play");
     }
 }
 
@@ -47,10 +47,10 @@ void LogoWorld::drawView(KRGraphics *g)
         alpha = 1.0f;
     }
     float angle = 0.0f;
-    if (KRScreenSize.x > KRScreenSize.y) {
+    if (gKRScreenSize.x > gKRScreenSize.y) {
         angle = M_PI / 2;
     }
-    mTex->draw(KRScreenSize/2, KRRect2DZero, angle, mTex->getCenterPos(), 1.0f, alpha);
+    mTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mTex->getCenterPos(), 1.0f, alpha);
 }
 
 

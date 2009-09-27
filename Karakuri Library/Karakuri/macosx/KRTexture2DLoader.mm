@@ -73,13 +73,13 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
     
     if (revisedSize.x > KRTextureMaxSize) {
         const char *errorFormat = "Failed to load \"%s\". Texture width should be equal to or lower than %d pixels.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの横幅は %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [imageName cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
     } else if (revisedSize.y > KRTextureMaxSize) {
         const char * errorFormat = "Failed to load \"%s\". Texture height should be equal to or lower than %d pixels.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの高さは %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [imageName cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
@@ -186,13 +186,13 @@ GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& 
     
     if (revisedSize.width > KRTextureMaxSize) {
         const char *errorFormat = "Failed to create a string texture (\"%s\"). Texture width should be equal to or lower than %d pixels.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "文字列テクスチャの生成に失敗しました（\"%s\"）。テクスチャの横幅は %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [str cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
     } else if (revisedSize.height > KRTextureMaxSize) {
         const char *errorFormat = "Failed to create a string texture (\"%s\"). Texture height should be equal to or lower than %d pixels.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "文字列テクスチャの生成に失敗しました（\"%s\"）。テクスチャの高さは %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [str cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);

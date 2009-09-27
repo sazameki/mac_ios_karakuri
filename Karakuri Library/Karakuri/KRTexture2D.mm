@@ -66,7 +66,7 @@ KRTexture2D::KRTexture2D(const std::string& filename)
     [filenameStr release];
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
         const char *errorFormat = "Failed to load \"%s\". Please confirm that the image file exists.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。画像ファイルが存在することを確認してください。";
         }
         throw KRRuntimeError(errorFormat, filename.c_str());
@@ -85,7 +85,7 @@ KRTexture2D::KRTexture2D(const std::string& str, KRFont *font)
     [strStr release];
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
         const char *errorFormat = "Failed to create a texture for a string: \"%s\"";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "文字列テクスチャの生成に失敗しました。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, str.c_str());

@@ -19,7 +19,7 @@ const KRVector2D    KRVector2DOne   = KRVector2D(1.0f, 1.0f);
 const KRVector3D    KRVector3DZero   = KRVector3D(0.0f, 0.0f, 0.0f);
 
 
-KRLanguageType KRLanguage   = KRLanguageEnglish;
+KRLanguageType gKRLanguage   = KRLanguageEnglish;
 
 
 #pragma mark -

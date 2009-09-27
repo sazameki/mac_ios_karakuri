@@ -14,6 +14,6 @@
 @interface KarakuriLibraryConnectorBase : NSObject {
 }
 
-- (KarakuriGame *)createGameInstance;
+- (KRGame *)createGameInstance;
 
 @end

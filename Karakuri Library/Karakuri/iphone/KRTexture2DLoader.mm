@@ -242,14 +242,14 @@ static GLuint _KRCreateGLTextureFromCGImage(CGImageRef imageRef, UIImageOrientat
 
 	if (width > KRTextureMaxSize) {
         const char *errorFormat = "Failed to load \"%s\". Texture width should be equal to or lower than %d pixels.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの横幅は %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [imageName cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
 	}
 	if (height > KRTextureMaxSize) {
         const char *errorFormat = "Failed to load \"%s\". Texture height should be equal to or lower than %d pixels.";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの高さは %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [imageName cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);

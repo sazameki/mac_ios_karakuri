@@ -21,12 +21,12 @@
     if (self) {
         self.title = @"Peer Picker";
         
-        BOOL isHorizontal = (KRScreenSize.x > KRScreenSize.y);
+        BOOL isHorizontal = (gKRScreenSize.x > gKRScreenSize.y);
 
-        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:KRGame->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
+        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameInst->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
         [mNetworkBrowser setDelegate:self];
 
-        NSString *ownName = [NSString stringWithCString:KRNetwork->getOwnName().c_str() encoding:NSUTF8StringEncoding];
+        NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
         
         UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPeerPicker:)];
         //UIBarButtonItem *bluetoothButton = [[UIBarButtonItem alloc] initWithTitle:@"Bluetooth" style:UIBarButtonItemStylePlain target:self action:@selector(changeToBluetoothMode:)];
@@ -36,7 +36,7 @@
         UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:ownName];
         navItem.leftBarButtonItem = closeButton;
         //navItem.rightBarButtonItem = bluetoothButton;
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             navItem.prompt = @"ネットワーク・ピアの一覧";
         } else {
             navItem.prompt = @"Network Peer List";
@@ -111,7 +111,7 @@
         return;
     }
     
-    KRNetwork->startInvitation(addressData, self);
+    gKRNetworkInst->startInvitation(addressData, self);
 }
 
 

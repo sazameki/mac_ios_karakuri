@@ -29,7 +29,7 @@ bool KRControl::contains(const KRVector2D& pos)
     return mFrame.contains(pos);
 }
 
-void KRControl::setWorld(KarakuriWorld *aWorld)
+void KRControl::setWorld(KRWorld *aWorld)
 {
     mWorld = aWorld;
 }

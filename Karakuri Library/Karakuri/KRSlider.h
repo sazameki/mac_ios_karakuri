@@ -77,7 +77,7 @@ public:
     /*!
         @method setValue
         @abstract スライダの現在の値を設定します。
-        この関数による値の設定では、KarakuriWorld クラスの sliderValueChanged() 関数は呼ばれません。
+        この関数による値の設定では、KRWorld クラスの sliderValueChanged() 関数は呼ばれません。
      */
     void    setValue(float value);
     

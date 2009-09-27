@@ -32,13 +32,13 @@ typedef enum KRAudioMixType {
 #pragma mark Game Class Declaration
 
 /*!
-    @class  KarakuriGame
+    @class  KRGame
     @group  Game Foundation
  
     <p>ゲームの実行を制御するための基本機能を提供するクラスです。</p>
     <p>このクラスのインスタンスは、グローバル変数の KRGame を使用して、どこからでもアクセスできます。</p>
  */
-class KarakuriGame : public KRObject {
+class KRGame : public KRObject {
     std::string     mTitle;
     float           mFrameRate;
     int             mScreenWidth;
@@ -58,7 +58,7 @@ class KarakuriGame : public KRObject {
 #pragma mark Constructor
 
 public:
-    KarakuriGame();
+    KRGame();
     
 public:
     /*!
@@ -201,7 +201,7 @@ protected:
         @method     addWorld
         @abstract   新しいワールドクラスのインスタンスを、名前を付けて登録します。
      */
-    void            addWorld(const std::string& name, KarakuriWorld *aWorld);
+    void            addWorld(const std::string& name, KRWorld *aWorld);
     
 public:
     /*!
@@ -216,13 +216,13 @@ public:
         @abstract   現在選択されているワールドを取得します。
         @return     現在選択されているワールド
      */
-    KarakuriWorld   *getCurrentWorld() const;
+    KRWorld         *getCurrentWorld() const;
 
     /*!
         @method getWorld
         @abstract 名前を指定して登録されたワールドを取得します。 
      */
-    KarakuriWorld   *getWorld(const std::string& name) const;
+    KRWorld         *getWorld(const std::string& name) const;
     
 public:
     /*!
@@ -252,17 +252,17 @@ public:
 };
 
 /*!
-    @var    KRGame
+    @var    gKRGameInst
     @group  Game Foundation
     @abstract ゲームのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KarakuriGame *KRGame;
+extern KRGame *gKRGameInst;
 
 /*!
-    @var    KRScreenSize
+    @var    gKRScreenSize
     @group  Game Foundation
     ゲームの画面サイズを示す変数です。
  */
-extern KRVector2D   KRScreenSize;
+extern KRVector2D   gKRScreenSize;
 

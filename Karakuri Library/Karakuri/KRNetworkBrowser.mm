@@ -50,7 +50,7 @@
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didRemoveService:(NSNetService *)service moreComing:(BOOL)moreComing
 {
     NSString *serviceName = [service name];
-    NSString *ownName = [NSString stringWithCString:KRNetwork->getOwnName().c_str() encoding:NSUTF8StringEncoding];
+    NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
     if (![serviceName isEqualToString:ownName]) {
         [mServices removeObject:service];
         if (mDelegate && [mDelegate respondsToSelector:@selector(networkBrowserDidUpdatePeerPist:)]) {
@@ -62,7 +62,7 @@
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)service moreComing:(BOOL)moreComing
 {
     NSString *serviceName = [service name];
-    NSString *ownName = [NSString stringWithCString:KRNetwork->getOwnName().c_str() encoding:NSUTF8StringEncoding];
+    NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
     if (![serviceName isEqualToString:ownName]) {
         [mServices addObject:service];
         if (mDelegate && [mDelegate respondsToSelector:@selector(networkBrowserDidUpdatePeerPist:)]) {

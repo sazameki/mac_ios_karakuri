@@ -61,7 +61,7 @@ public:
     /*!
         @method setOn
         @abstract スイッチを ON 状態 (true) あるいは OFF 状態 (false) にします。
-        なお、この関数で状態が変更された場合には、KarakuriWorld クラスの switchStateChanged() 関数は呼ばれません。
+        なお、この関数で状態が変更された場合には、KRWorld クラスの switchStateChanged() 関数は呼ばれません。
      */
     void    setOn(bool flag);
     

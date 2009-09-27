@@ -12,23 +12,23 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
-class KarakuriWorld;
+class KRWorld;
 
 class KarakuriWorldManager : public KRObject {
     
 private:
-    KarakuriWorld *mCurrentWorld;
-    std::map<std::string, KarakuriWorld *> mWorldMap;
+    KRWorld *mCurrentWorld;
+    std::map<std::string, KRWorld *> mWorldMap;
     
 public:
     KarakuriWorldManager();
     ~KarakuriWorldManager();
 
 public:
-    KarakuriWorld   *getCurrentWorld() const;
-    void            registerWorld(const std::string& name, KarakuriWorld *aWorld);
-    KarakuriWorld   *getWorldWithName(const std::string &name);
-    KarakuriWorld   *selectWorldWithName(const std::string &name, bool useLoadingThread);
+    KRWorld     *getCurrentWorld() const;
+    void        registerWorld(const std::string& name, KRWorld *aWorld);
+    KRWorld     *getWorldWithName(const std::string &name);
+    KRWorld     *selectWorldWithName(const std::string &name, bool useLoadingThread);
 
     
 #pragma mark -

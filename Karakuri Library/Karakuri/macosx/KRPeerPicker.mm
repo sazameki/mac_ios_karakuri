@@ -30,7 +30,7 @@
         [self setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0f alpha:0.8f]];
         [self setOpaque:NO];
         
-        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:KRGame->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
+        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameInst->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
         [mNetworkBrowser setDelegate:self];
 
         mTitleField = [[NSTextField alloc] initWithFrame:NSMakeRect(17, contentRect.size.height-30, contentRect.size.width-34, 18)];
@@ -39,7 +39,7 @@
         [mTitleField setSelectable:NO];
         [mTitleField setFont:[NSFont boldSystemFontOfSize:14.0f]];
         [mTitleField setTextColor:[NSColor whiteColor]];
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             [mTitleField setStringValue:@"ネットワーク・ピアの一覧"];
         } else {
             [mTitleField setStringValue:@"Network Peer List"];
@@ -47,7 +47,7 @@
         [[self contentView] addSubview:mTitleField];
         
         NSButton *cancelButton = [[[NSButton alloc] initWithFrame:NSMakeRect(contentRect.size.width-140*2-17*2, 12, 140, 32)] autorelease];
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             [cancelButton setTitle:@"キャンセル"];
         } else {
             [cancelButton setTitle:@"Cancel"];
@@ -58,7 +58,7 @@
         [[self contentView] addSubview:cancelButton];
 
         mInviteButton = [[NSButton alloc] initWithFrame:NSMakeRect(contentRect.size.width-140-17, 12, 140, 32)];
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             [mInviteButton setTitle:@"招待する"];
         } else {
             [mInviteButton setTitle:@"Invite"];
@@ -192,7 +192,7 @@
         return;
     }
 
-    KRNetwork->startInvitation(addressData, self);
+    gKRNetworkInst->startInvitation(addressData, self);
 }
 
 

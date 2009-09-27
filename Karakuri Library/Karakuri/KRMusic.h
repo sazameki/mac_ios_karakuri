@@ -17,7 +17,7 @@
     @group  Game Audio
     <p>10秒以上の長さのサウンドファイルを、ゲームの BGM として再生するためのクラスです。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/sound_format.html" target="_top">サウンド形式について</a>についてを参照してください。</p>
-    <p>基本的な使い方としては、<a href="../../../Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/cl/KarakuriWorld">KarakuriWorld</a> クラスの becameActive() 関数の最後で play() 関数を呼び出して BGM の再生を開始します。</p>
+    <p>基本的な使い方としては、<a href="../../../Game Foundation/Classes/KRWorld/index.html#//apple_ref/cpp/cl/KRWorld">KRWorld</a> クラスの becameActive() 関数の最後で play() 関数を呼び出して BGM の再生を開始します。</p>
  */
 class KRMusic : public KRObject {
     

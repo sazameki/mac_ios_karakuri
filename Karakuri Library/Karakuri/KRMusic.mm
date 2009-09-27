@@ -25,12 +25,12 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
     mImpl = nil;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    if (KRGame->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
+    if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
         mImpl = [[KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
         if (!mImpl) {
             const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
-            if (KRLanguage == KRLanguageJapanese) {
+            if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
             }
             throw KRRuntimeError(errorFormat, filename.c_str());
@@ -39,7 +39,7 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    if (KRGame->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
+    if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
         NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
         NSURL *fileURL = [NSURL fileURLWithPath:filepath];
@@ -48,7 +48,7 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
         mImpl = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
         if (error) {
             const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
-            if (KRLanguage == KRLanguageJapanese) {
+            if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
             }
             throw KRRuntimeError(errorFormat, filename.c_str());

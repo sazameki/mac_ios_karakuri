@@ -12,17 +12,17 @@
 #include <Karakuri/KRPrimitive2D.h>
 
 
-KRGraphics *KRGraphicsInst = NULL;
+KRGraphics *gKRGraphicsInst = NULL;
 
 KRGraphics::KRGraphics()
 {
-    KRGraphicsInst = this;
+    gKRGraphicsInst = this;
 }
 
 void KRGraphics::clear(const KRColor& color) const
 {
     if (_KRIsFullScreen) {
-        KRPrimitive2D::fillQuad(KRRect2D(0, 0, KRScreenSize.x, KRScreenSize.y), color);
+        KRPrimitive2D::fillQuad(KRRect2D(0, 0, gKRScreenSize.x, gKRScreenSize.y), color);
     } else {
         color.setAsClearColor();
         glClear(GL_COLOR_BUFFER_BIT/* | GL_DEPTH_BUFFER_BIT*/);

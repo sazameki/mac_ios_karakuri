@@ -11,7 +11,7 @@
 #include <Karakuri/Karakuri.h>
 
 
-class PlayWorld : public KarakuriWorld {
+class PlayWorld : public KRWorld {
     
     KRTexture2D     *mTex;
     KRVector2D      mPos;

@@ -541,17 +541,17 @@ typedef enum KRLanguageType {
 } KRLanguageType;
 
 /*!
-    @var    KRLanguage
+    @var    gKRLanguage
     @group  Game Foundation
     @abstract 現在の言語環境を表す変数です。
     <p>該当する環境定数が KRLanguageType 列挙型に見つからない場合には、自動的に KRLanguageEnglish が設定されます。</p>
     <p>以下のようにして利用します。</p>
     <blockquote class="code"><pre>std::string text = "English Text";<br />
-    if (KRLanguage == KRLanguageJapanese) {<br />
+    if (gKRLanguage == KRLanguageJapanese) {<br />
     &nbsp;&nbsp;&nbsp;&nbsp;text = "日本語のテキスト";<br />
     }</pre></blockquote>
  */
-extern KRLanguageType   KRLanguage;
+extern KRLanguageType   gKRLanguage;
 
 
 

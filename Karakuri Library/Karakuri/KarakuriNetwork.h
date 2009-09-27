@@ -17,19 +17,19 @@
 
 
 /*!
-    @class KarakuriNetwork
+    @class KRNetwork
     @group Game Network
     <p>ネットワークを介して、1対1の通信をサポートするためのクラスです。</p>
-    <p>KRNetwork 変数を使ってアクセスしてください。</p>
+    <p>gKRNetworkInst 変数を使ってアクセスしてください。</p>
  */
-class KarakuriNetwork : public KRObject {
+class KRNetwork : public KRObject {
     
 private:
     void    *mImpl;
     
 public:
-    KarakuriNetwork(const std::string& gameID);
-    virtual ~KarakuriNetwork();
+    KRNetwork(const std::string& gameID);
+    virtual ~KRNetwork();
     
 public:
     /*!
@@ -53,7 +53,7 @@ public:
     /*!
         @method sendMessage
         @abstract 通信中のピアに対して、1行分のメッセージを送信します。
-        メッセージの終端を示す「\r\n」は不要です。メッセージの最大長は128バイトです。ASCII 文字コード以外は送信しないでください。
+        メッセージの終端を示す「\\r\\n」は不要です。メッセージの最大長は128バイトです。ASCII 文字コード以外は送信しないでください。
      */
     int                     sendMessage(const std::string& str) throw(KRNetworkError, KRRuntimeError);
     
@@ -79,11 +79,11 @@ public:
 
 
 /*!
-    @var KRNetwork
+    @var gKRNetworkInst
     @group Game Network
     @abstract 通信クラスのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KarakuriNetwork *KRNetwork;
+extern KRNetwork *gKRNetworkInst;
 
 

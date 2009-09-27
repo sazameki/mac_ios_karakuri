@@ -22,7 +22,7 @@
 class KRControl : public KRObject {
     
 protected:
-    KarakuriWorld   *mWorld;
+    KRWorld     *mWorld;
 
     bool        mEnabled;
     bool        mSelected;
@@ -53,9 +53,9 @@ public:
     bool    contains(const KRVector2D& pos);
     
 public:
-    void            setWorld(KarakuriWorld *aWorld);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual bool    update(KRInput *input) = 0;         KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual void    draw(KRGraphics *g) = 0;            KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    void            setWorld(KRWorld *aWorld);      KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual bool    update(KRInput *input) = 0;     KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics *g) = 0;        KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 };
 

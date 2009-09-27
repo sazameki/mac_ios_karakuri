@@ -9,7 +9,7 @@
 #include <Karakuri/Karakuri.h>
 
 
-class GameMain : public KarakuriGame {
+class GameMain : public KRGame {
     
 public:
     GameMain();

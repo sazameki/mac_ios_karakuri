@@ -54,7 +54,7 @@ void KRParticle2DSystem::init()
             sPointSpriteCoordReplaceName = GL_COORD_REPLACE_ARB;
         } else {
             std::string errorFormat = "This computer does not support point sprite.";
-            if (KRLanguage == KRLanguageJapanese) {
+            if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "このコンピュータはポイントスプライトをサポートしていません。";
             }
             throw KRRuntimeError(errorFormat);
@@ -68,7 +68,7 @@ void KRParticle2DSystem::init()
     }
 #endif  // #if KR_PARTICLE2D_USE_POINT_SPRITE
     
-    mStartPos = KRScreenSize / 2;
+    mStartPos = gKRScreenSize / 2;
     
     mColor = KRColor::White;
     
@@ -348,12 +348,12 @@ void KRParticle2DSystem::step()
         if (mGenerateCount >= 0) {
             unsigned count = 0;
             while (mParticles.size() < mParticleCount) {
-                KRVector2D theV(KRRand->nextInt(mMaxV.x - mMinV.x) + mMinV.x, KRRand->nextInt(mMaxV.y - mMinV.y) + mMinV.y);
+                KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
                 
     #if KR_PARTICLE2D_USE_POINT_SPRITE
                 float theSize = mSize;
     #else
-                float theSize = KRRand->nextFloat() * (mMaxSize - mMinSize) + mMinSize;
+                float theSize = KRRandFloat() * (mMaxSize - mMinSize) + mMinSize;
     #endif
                 
                 KRParticle2D *particle = new KRParticle2D(mLife, mStartPos, theV, mGravity, mColor, theSize,
@@ -374,11 +374,11 @@ void KRParticle2DSystem::step()
             if (mGenInfos[i].count > 0) {
                 unsigned createCount = KRMin(mGenerateCount, mGenInfos[i].count);
                 for (int j = 0; j < createCount; j++) {
-                    KRVector2D theV(KRRand->nextInt(mMaxV.x - mMinV.x) + mMinV.x, KRRand->nextInt(mMaxV.y - mMinV.y) + mMinV.y);
+                    KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
 #if KR_PARTICLE2D_USE_POINT_SPRITE
                     float theSize = mSize;
 #else
-                    float theSize = KRRand->nextFloat() * (mMaxSize - mMinSize) + mMinSize;
+                    float theSize = KRRandFloat() * (mMaxSize - mMinSize) + mMinSize;
 #endif
                     KRParticle2D *particle = new KRParticle2D(mLife, mGenInfos[i].centerPos, theV, mGravity, mColor, theSize,
                                                               mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize);
@@ -416,7 +416,7 @@ void KRParticle2DSystem::draw()
     glTexEnvi(sPointSpriteName, sPointSpriteCoordReplaceName, GL_TRUE);
     glEnable(sPointSpriteName);
     
-    KRGraphicsInst->setBlendMode(mBlendMode);
+    gKRGraphicsInst->setBlendMode(mBlendMode);
     
     mTexture->set();
     
@@ -459,7 +459,7 @@ void KRParticle2DSystem::draw()
 #else // #if KR_PARTICLE2D_USE_POINT_SPRITE
 void KRParticle2DSystem::draw()
 {
-    KRGraphicsInst->setBlendMode(mBlendMode);
+    gKRGraphicsInst->setBlendMode(mBlendMode);
     
     KRVector2D centerPos = mTexture->getCenterPos();
     for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {

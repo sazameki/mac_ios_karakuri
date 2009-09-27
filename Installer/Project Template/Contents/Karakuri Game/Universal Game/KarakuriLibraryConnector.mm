@@ -8,7 +8,7 @@
 
 @implementation KarakuriLibraryConnector
 
-- (KarakuriGame *)createGameInstance { return new GameMain(); }
+- (KRGame *)createGameInstance { return new GameMain(); }
 
 @end
 

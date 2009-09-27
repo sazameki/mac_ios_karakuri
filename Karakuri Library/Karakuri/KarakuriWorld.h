@@ -23,14 +23,14 @@ class KRSwitch;
 
 
 /*!
-    @class KarakuriWorld
+    @class KRWorld
     @group  Game Foundation
  
     <p>ロゴ画面、タイトル画面、プレイ画面といった各画面に対応したクラスです。Karakuri Framework では、これを「ワールド」と呼びます。</p>
-    <p>現在のワールドから他のワールドに移動する場合には、KarakuriGame クラスの changeWorld() 関数を使ってください。KarakuriGame クラスのインスタンスには、KRGame 変数を使ってアクセスできます。</p>
+    <p>現在のワールドから他のワールドに移動する場合には、KRGame クラスの changeWorld() 関数を使ってください。KRGame クラスのインスタンスには、gKRGameInst 変数を使ってアクセスできます。</p>
     <p>なお、他のワールドへの移動は、updateModel() 関数の処理中にのみ実行できます。</p>
  */
-class KarakuriWorld : public KRObject {
+class KRWorld : public KRObject {
     
 private:
     std::string         mName;

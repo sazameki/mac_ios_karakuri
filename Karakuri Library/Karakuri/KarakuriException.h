@@ -73,7 +73,7 @@ public:
 /*!
     @class KRNetworkError
     @group Game Network
-    <p>KarakuriNetwork クラスでピアとの通信時に起きたエラーを表すための例外クラスです。</p>
+    <p>KRNetwork クラスでピアとの通信時に起きたエラーを表すための例外クラスです。</p>
  */
 class KRNetworkError : public KRRuntimeError {
 

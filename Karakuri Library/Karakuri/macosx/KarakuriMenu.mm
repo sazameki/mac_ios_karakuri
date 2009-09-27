@@ -28,14 +28,14 @@
 
 - (NSMenu *)makeAppleMenu {
     KarakuriController *controller = [KarakuriController sharedController];
-    KarakuriGame *game = [controller game];
+    KRGame *game = [controller game];
     NSString *appName = [NSString stringWithCString:game->getTitle().c_str() encoding:NSUTF8StringEncoding];
 
     NSMenu *appleMenu = [[NSMenu alloc] initWithTitle:@"AppleMenu"];
     
     {
         NSString *titleFormat = @"About %@";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             titleFormat = @"%@ について";
         }
         NSString *title = [NSString stringWithFormat:titleFormat, appName];
@@ -49,7 +49,7 @@
     
     {
         NSString *titleFormat = @"Hide %@";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             titleFormat = @"%@ を隠す";
         }
         NSString *title = [NSString stringWithFormat:titleFormat, appName];
@@ -57,7 +57,7 @@
     }
     {
         NSString *title = @"Hide Others";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             title = @"ほかを隠す";
         }
         NSMenuItem *menuItem = (NSMenuItem *)[appleMenu addItemWithTitle:title action:@selector(hideOtherApplications:) keyEquivalent:@"h"];
@@ -65,7 +65,7 @@
     }
     {
         NSString *title = @"Show All";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             title = @"すべてを表示";
         }
         [appleMenu addItemWithTitle:title action:@selector(unhideAllApplications:) keyEquivalent:@""];
@@ -75,7 +75,7 @@
     
     {
         NSString *titleFormat = @"Quit %@";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             titleFormat = @"%@ を終了";
         }
         NSString *title = [NSString stringWithFormat:titleFormat, appName];
@@ -89,7 +89,7 @@
 - (NSMenu *)makeWindowMenu
 {
     NSString *menuTitle = @"Window";
-    if (KRLanguage == KRLanguageJapanese) {
+    if (gKRLanguage == KRLanguageJapanese) {
         menuTitle = @"ウィンドウ";
     }
     NSMenu *windowMenu = [[[NSMenu alloc] initWithTitle:menuTitle] autorelease];
@@ -98,7 +98,7 @@
 
     {
         NSString *title = @"Minimize";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             title = @"しまう";
         }
         NSMenuItem *menuItem = [windowMenu addItemWithTitle:title action:@selector(minimizeWindow:) keyEquivalent:@"m"];
@@ -110,7 +110,7 @@
 #if KR_MACOSX
     {
         NSString *title = @"Full Screen";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             title = @"フルスクリーン";
         }
         NSMenuItem *menuItem = [windowMenu addItemWithTitle:title action:@selector(toggleFullScreen:) keyEquivalent:@"f"];

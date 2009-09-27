@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark Pre-process World Management
 
-void KarakuriWorld::startBecameActive()
+void KRWorld::startBecameActive()
 {
     mIsControlProcessEnabled = true;
 
@@ -25,7 +25,7 @@ void KarakuriWorld::startBecameActive()
     becameActive();
 }
 
-void KarakuriWorld::startResignedActive()
+void KRWorld::startResignedActive()
 {    
     resignedActive();
 
@@ -33,7 +33,7 @@ void KarakuriWorld::startResignedActive()
     mControlManager = NULL;
 }
 
-void KarakuriWorld::startUpdateModel(KRInput *input)
+void KRWorld::startUpdateModel(KRInput *input)
 {
     mHasProcessedControl = false;
     if (mIsControlProcessEnabled && mControlManager->updateControls(input)) {
@@ -43,7 +43,7 @@ void KarakuriWorld::startUpdateModel(KRInput *input)
     updateModel(input);
 }
 
-void KarakuriWorld::startDrawView(KRGraphics *g)
+void KRWorld::startDrawView(KRGraphics *g)
 {
     drawView(g);
     
@@ -53,12 +53,12 @@ void KarakuriWorld::startDrawView(KRGraphics *g)
 
 #pragma mark -
 
-std::string KarakuriWorld::getLoadingScreenWorldName() const
+std::string KRWorld::getLoadingScreenWorldName() const
 {
     return "";
 }
 
-void KarakuriWorld::saveForEmergency(KRSaveBox *saveBox)
+void KRWorld::saveForEmergency(KRSaveBox *saveBox)
 {
     // Do nothing
 }
@@ -66,44 +66,44 @@ void KarakuriWorld::saveForEmergency(KRSaveBox *saveBox)
 
 #pragma mark -
 
-void KarakuriWorld::addControl(KRControl *aControl)
+void KRWorld::addControl(KRControl *aControl)
 {
     aControl->setWorld(this);
     mControlManager->addControl(aControl);
 }
 
-void KarakuriWorld::removeControl(KRControl *aControl)
+void KRWorld::removeControl(KRControl *aControl)
 {
     mControlManager->removeControl(aControl);
     aControl->setWorld(NULL);
 }
 
-bool KarakuriWorld::hasProcessedControl() const
+bool KRWorld::hasProcessedControl() const
 {
     return mHasProcessedControl;
 }
 
-void KarakuriWorld::startControlProcess()
+void KRWorld::startControlProcess()
 {
     mIsControlProcessEnabled = true;
 }
 
-void KarakuriWorld::stopControlProcess()
+void KRWorld::stopControlProcess()
 {
     mIsControlProcessEnabled = false;
 }
 
-void KarakuriWorld::buttonPressed(KRButton *aButton)
+void KRWorld::buttonPressed(KRButton *aButton)
 {
     // Do nothing
 }
 
-void KarakuriWorld::sliderValueChanged(KRSlider *slider)
+void KRWorld::sliderValueChanged(KRSlider *slider)
 {
     // Do nothing
 }
 
-void KarakuriWorld::switchStateChanged(KRSwitch *switcher)
+void KRWorld::switchStateChanged(KRSwitch *switcher)
 {
     // Do nothing
 }
@@ -112,17 +112,17 @@ void KarakuriWorld::switchStateChanged(KRSwitch *switcher)
 #pragma mark -
 #pragma mark Debug Support
 
-std::string KarakuriWorld::getName() const
+std::string KRWorld::getName() const
 {
     return mName;
 }
 
-void KarakuriWorld::setName(const std::string& str)
+void KRWorld::setName(const std::string& str)
 {
     mName = str;
 }
 
-std::string KarakuriWorld::to_s() const
+std::string KRWorld::to_s() const
 {
     return "<world>(name=\"" + mName + "\")";
 }

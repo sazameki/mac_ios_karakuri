@@ -20,7 +20,7 @@
 #endif
 
 
-KRInput *KRInputInst = NULL;
+KRInput *gKRInputInst = NULL;
 
 
 #if KR_IPHONE
@@ -34,7 +34,7 @@ static float TouchPadButtonThresholdY = 130.0f;
 
 KRInput::KRInput()
 {
-    KRInputInst = this;
+    gKRInputInst = this;
 
     // Full Screen Support
 #if KR_MACOSX
@@ -103,8 +103,8 @@ KRVector2D KRInput::getMouseLocation()
     if (_KRIsFullScreen) {
         NSPoint location = [NSEvent mouseLocation];
         NSSize screenSize = [[NSScreen mainScreen] frame].size;
-        ret.x = (location.x / screenSize.width) * KRGame->getScreenWidth();
-        ret.y = (location.y / screenSize.height) * KRGame->getScreenHeight();
+        ret.x = (location.x / screenSize.width) * gKRGameInst->getScreenWidth();
+        ret.y = (location.y / screenSize.height) * gKRGameInst->getScreenHeight();
     } else {
         NSPoint location = [KRWindowInst convertScreenToBase:[NSEvent mouseLocation]];
         ret.x = location.x;
@@ -611,9 +611,9 @@ void KRInput::startTouch(unsigned touchID, float x, float y)
     mTouchState |= TouchMask;
     
     // Game Pad Support (Supported only under the horizontal environment)
-    if (KRScreenSize.x > KRScreenSize.y) {
+    if (gKRScreenSize.x > gKRScreenSize.y) {
         // Arrow Support
-        if (x <= KRScreenSize.x / 2) {
+        if (x <= gKRScreenSize.x / 2) {
             mTouchArrow_touchID = touchID;
             mTouchArrowCenterPos = newInfo.pos;
             mTouchArrowOldPos = mTouchArrowCenterPos;

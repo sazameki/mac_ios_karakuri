@@ -11,7 +11,7 @@
 #include <Karakuri/Karakuri.h>
 
 
-class «FILEBASENAMEASIDENTIFIER» : public KarakuriWorld {
+class «FILEBASENAMEASIDENTIFIER» : public KRWorld {
     
 public:
     //virtual std::string getLoadingScreenWorldName() const;

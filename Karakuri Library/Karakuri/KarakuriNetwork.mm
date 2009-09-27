@@ -107,7 +107,7 @@ const int KRNetworkBufferSize = 2048;
 @end
 
 
-KarakuriNetwork *KRNetwork = NULL;
+KRNetwork *gKRNetworkInst = NULL;
 
 
 NSString * const KRTCPServerErrorDomain = @"KRTCPServerErrorDomain";
@@ -704,9 +704,9 @@ static BOOL isFDReady(int fd)
 #pragma mark -
 #pragma mark Karakuri Network
 
-KarakuriNetwork::KarakuriNetwork(const std::string& gameID)
+KRNetwork::KRNetwork(const std::string& gameID)
 {
-    KRNetwork = this;
+    gKRNetworkInst = this;
     if (gameID.length() > 0) {
         mImpl = (KarakuriNetworkImpl *)[[KarakuriNetworkImpl alloc] initWithGameID:[NSString stringWithCString:gameID.c_str() encoding:NSUTF8StringEncoding]];
     } else {
@@ -714,19 +714,19 @@ KarakuriNetwork::KarakuriNetwork(const std::string& gameID)
     }
 }
 
-KarakuriNetwork::~KarakuriNetwork()
+KRNetwork::~KRNetwork()
 {
     if (mImpl != NULL) {
         [(KarakuriNetworkImpl *)mImpl release];
     }
 }
 
-std::list<std::string> KarakuriNetwork::getMessages() throw(KRNetworkError, KRRuntimeError)
+std::list<std::string> KRNetwork::getMessages() throw(KRNetworkError, KRRuntimeError)
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KarakuriNetwork::getMessages() without setting the game ID.";
-        if (KRLanguage == KRLanguageJapanese) {
-            errorFormat = "ゲームIDが設定されていない環境で、KarakuriNetwork::getMessages() 関数が呼ばれました。";
+        std::string errorFormat = "You have tried to invoke KRNetwork::getMessages() without setting the game ID.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::getMessages() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
@@ -736,7 +736,7 @@ std::list<std::string> KarakuriNetwork::getMessages() throw(KRNetworkError, KRRu
     return [(KarakuriNetworkImpl *)mImpl receivedMessages];
 }
 
-bool KarakuriNetwork::isConnected()
+bool KRNetwork::isConnected()
 {
     if (mImpl == NULL) {
         return false;
@@ -744,7 +744,7 @@ bool KarakuriNetwork::isConnected()
     return ([(KarakuriNetworkImpl *)mImpl isConnected]? true: false);
 }
 
-void KarakuriNetwork::reset()
+void KRNetwork::reset()
 {
     if (mImpl == NULL) {
         return;
@@ -752,12 +752,12 @@ void KarakuriNetwork::reset()
     return [(KarakuriNetworkImpl *)mImpl reset];
 }
 
-std::string KarakuriNetwork::getOwnName() const
+std::string KRNetwork::getOwnName() const
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KarakuriNetwork::getOwnName() without setting the game ID.";
-        if (KRLanguage == KRLanguageJapanese) {
-            errorFormat = "ゲームIDが設定されていない環境で、KarakuriNetwork::getOwnName() 関数が呼ばれました。";
+        std::string errorFormat = "You have tried to invoke KRNetwork::getOwnName() without setting the game ID.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::getOwnName() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
@@ -765,12 +765,12 @@ std::string KarakuriNetwork::getOwnName() const
     return std::string([ownName cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
-int KarakuriNetwork::sendMessage(const std::string& str) throw(KRNetworkError, KRRuntimeError)
+int KRNetwork::sendMessage(const std::string& str) throw(KRNetworkError, KRRuntimeError)
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KarakuriNetwork::sendMessage() without setting the game ID.";
-        if (KRLanguage == KRLanguageJapanese) {
-            errorFormat = "ゲームIDが設定されていない環境で、KarakuriNetwork::sendMessage() 関数が呼ばれました。";
+        std::string errorFormat = "You have tried to invoke KRNetwork::sendMessage() without setting the game ID.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::sendMessage() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
@@ -780,12 +780,12 @@ int KarakuriNetwork::sendMessage(const std::string& str) throw(KRNetworkError, K
     return [(KarakuriNetworkImpl *)mImpl sendMessage:str.c_str()];
 }
 
-void KarakuriNetwork::showPeerPicker() throw(KRRuntimeError)
+void KRNetwork::showPeerPicker() throw(KRRuntimeError)
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KarakuriNetwork::showPeerPicker() without setting the game ID.";
-        if (KRLanguage == KRLanguageJapanese) {
-            errorFormat = "ゲームIDが設定されていない環境で、KarakuriNetwork::showPeerPicker() 関数が呼ばれました。";
+        std::string errorFormat = "You have tried to invoke KRNetwork::showPeerPicker() without setting the game ID.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::showPeerPicker() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
@@ -793,21 +793,21 @@ void KarakuriNetwork::showPeerPicker() throw(KRRuntimeError)
     [(KarakuriNetworkImpl *)mImpl showPeerPicker];
 }
 
-void KarakuriNetwork::doAccept() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRNetwork::doAccept() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
         [(KarakuriNetworkImpl *)mImpl doAccept];
     }
 }
 
-void KarakuriNetwork::doReject() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRNetwork::doReject() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
         [(KarakuriNetworkImpl *)mImpl doReject];
     }
 }
 
-void KarakuriNetwork::startInvitation(void *peerAddressData, void *peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRNetwork::startInvitation(void *peerAddressData, void *peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
         [(KarakuriNetworkImpl *)mImpl startInvitation:(NSData *)peerAddressData peerPickerUI:peerPickerUI];

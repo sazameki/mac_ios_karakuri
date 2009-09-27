@@ -25,7 +25,7 @@ static volatile BOOL    sIsReady = NO;
 - (id)init
 {
     KarakuriController *controller = [KarakuriController sharedController];
-    KarakuriGame *game = [controller game];
+    KRGame *game = [controller game];
 
     NSOpenGLPixelFormatAttribute attrs[] = {
         NSOpenGLPFAWindow,
@@ -104,14 +104,14 @@ static volatile BOOL    sIsReady = NO;
     glOrtho(0.0, (double)mKRGLContext.backingWidth, 0.0, (double)mKRGLContext.backingHeight, -1.0, 1.0);
 
     float angle = 0.0f;
-    if (KRScreenSize.x > KRScreenSize.y) {
+    if (gKRScreenSize.x > gKRScreenSize.y) {
         angle = M_PI / 2;
     }
-    mDefaultTex->draw(KRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
+    mDefaultTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
     KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);
 
-    mDefaultTex->draw(KRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
+    mDefaultTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
     KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);    
 
@@ -185,7 +185,7 @@ static volatile BOOL    sIsReady = NO;
     }
     
     // Hide mouse cursor
-    if (!KRGame->getShowsMouseCursor()) {
+    if (!gKRGameInst->getShowsMouseCursor()) {
         CGDisplayHideCursor(kCGDirectMainDisplay);
     }
     
@@ -265,7 +265,7 @@ static volatile BOOL    sIsReady = NO;
 {
 #if KR_MACOSX
     unsigned short keyCode = [theEvent keyCode];
-    KRInputInst->processKeyDownCode(keyCode);
+    gKRInputInst->processKeyDownCode(keyCode);
 #endif
 }
 
@@ -273,14 +273,14 @@ static volatile BOOL    sIsReady = NO;
 {
 #if KR_MACOSX
     unsigned short keyCode = [theEvent keyCode];
-    KRInputInst->processKeyUpCode(keyCode);
+    gKRInputInst->processKeyUpCode(keyCode);
 #endif
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
     // Hide mouse cursor
-    if (!KRGame->getShowsMouseCursor()) {
+    if (!gKRGameInst->getShowsMouseCursor()) {
         CGDisplayHideCursor(kCGDirectMainDisplay);
     }
 }
@@ -294,7 +294,7 @@ static volatile BOOL    sIsReady = NO;
 - (void)mouseDown:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    KRInputInst->processMouseDown(KRInput::MouseButtonLeft);
+    gKRInputInst->processMouseDown(KRInput::MouseButtonLeft);
 #endif
     
 #if KR_IPHONE_MACOSX_EMU
@@ -307,7 +307,7 @@ static volatile BOOL    sIsReady = NO;
     touchPos[1].x = -99999;
     touchPos[2].x = -99999;
     if (modifierFlags & NSAlternateKeyMask) {
-        touchPos[1] = NSMakePoint(KRScreenSize.x - pos.x, KRScreenSize.y - pos.y);
+        touchPos[1] = NSMakePoint(gKRScreenSize.x - pos.x, gKRScreenSize.y - pos.y);
     } else if (modifierFlags & NSCommandKeyMask) {
         touchPos[1] = NSMakePoint(pos.x + 40, pos.y + 40);
     } else if (modifierFlags & NSShiftKeyMask) {
@@ -323,15 +323,15 @@ static volatile BOOL    sIsReady = NO;
         }
         if (pos.x < 0.0f) {
             pos.x = 0.0f;
-        } else if (pos.x >= KRScreenSize.x) {
-            pos.x = KRScreenSize.x - 1.0f;
+        } else if (pos.x >= gKRScreenSize.x) {
+            pos.x = gKRScreenSize.x - 1.0f;
         }
         if (pos.y < 0.0f) {
             pos.y = 0.0f;
-        } else if (pos.y >= KRScreenSize.y) {
-            pos.y = KRScreenSize.y - 1.0f;
+        } else if (pos.y >= gKRScreenSize.y) {
+            pos.y = gKRScreenSize.y - 1.0f;
         }
-        KRInputInst->startTouch(i, pos.x, pos.y);
+        gKRInputInst->startTouch(i, pos.x, pos.y);
         [self addTouch:KRVector2D(pos.x, pos.y)];
     }
 #endif
@@ -340,7 +340,7 @@ static volatile BOOL    sIsReady = NO;
 - (void)mouseUp:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    KRInputInst->processMouseUp(KRInput::MouseButtonLeft);
+    gKRInputInst->processMouseUp(KRInput::MouseButtonLeft);
 #endif
 
 #if KR_IPHONE_MACOSX_EMU
@@ -353,7 +353,7 @@ static volatile BOOL    sIsReady = NO;
     touchPos[1].x = -99999;
     touchPos[2].x = -99999;
     if (modifierFlags & NSAlternateKeyMask) {
-        touchPos[1] = NSMakePoint(KRScreenSize.x - pos.x, KRScreenSize.y - pos.y);
+        touchPos[1] = NSMakePoint(gKRScreenSize.x - pos.x, gKRScreenSize.y - pos.y);
     } else if (modifierFlags & NSCommandKeyMask) {
         touchPos[1] = NSMakePoint(pos.x + 40, pos.y + 40);
     } else if (modifierFlags & NSShiftKeyMask) {
@@ -368,15 +368,15 @@ static volatile BOOL    sIsReady = NO;
         }
         if (pos.x < 0.0f) {
             pos.x = 0.0f;
-        } else if (pos.x >= KRScreenSize.x) {
-            pos.x = KRScreenSize.x - 1.0f;
+        } else if (pos.x >= gKRScreenSize.x) {
+            pos.x = gKRScreenSize.x - 1.0f;
         }
         if (pos.y < 0.0f) {
             pos.y = 0.0f;
-        } else if (pos.y >= KRScreenSize.y) {
-            pos.y = KRScreenSize.y - 1.0f;
+        } else if (pos.y >= gKRScreenSize.y) {
+            pos.y = gKRScreenSize.y - 1.0f;
         }
-        KRInputInst->endTouch(i, pos.x, pos.y, 0, 0);
+        gKRInputInst->endTouch(i, pos.x, pos.y, 0, 0);
     }
     [self clearTouches];
 #endif
@@ -394,7 +394,7 @@ static volatile BOOL    sIsReady = NO;
     touchPos[1].x = -99999;
     touchPos[2].x = -99999;
     if (modifierFlags & NSAlternateKeyMask) {
-        touchPos[1] = NSMakePoint(KRScreenSize.x - pos.x, KRScreenSize.y - pos.y);
+        touchPos[1] = NSMakePoint(gKRScreenSize.x - pos.x, gKRScreenSize.y - pos.y);
     } else if (modifierFlags & NSCommandKeyMask) {
         touchPos[1] = NSMakePoint(pos.x + 40, pos.y + 40);
     } else if (modifierFlags & NSShiftKeyMask) {
@@ -410,15 +410,15 @@ static volatile BOOL    sIsReady = NO;
         }
         if (pos.x < 0.0f) {
             pos.x = 0.0f;
-        } else if (pos.x >= KRScreenSize.x) {
-            pos.x = KRScreenSize.x - 1.0f;
+        } else if (pos.x >= gKRScreenSize.x) {
+            pos.x = gKRScreenSize.x - 1.0f;
         }
         if (pos.y < 0.0f) {
             pos.y = 0.0f;
-        } else if (pos.y >= KRScreenSize.y) {
-            pos.y = KRScreenSize.y - 1.0f;
+        } else if (pos.y >= gKRScreenSize.y) {
+            pos.y = gKRScreenSize.y - 1.0f;
         }
-        KRInputInst->moveTouch(i, pos.x, pos.y, 0, 0);
+        gKRInputInst->moveTouch(i, pos.x, pos.y, 0, 0);
         [self addTouch:KRVector2D(pos.x, pos.y)];
     }
 }
@@ -427,14 +427,14 @@ static volatile BOOL    sIsReady = NO;
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    KRInputInst->processMouseDown(KRInput::MouseButtonRight);
+    gKRInputInst->processMouseDown(KRInput::MouseButtonRight);
 #endif
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    KRInputInst->processMouseUp(KRInput::MouseButtonRight);
+    gKRInputInst->processMouseUp(KRInput::MouseButtonRight);
 #endif
 }
 
@@ -469,8 +469,8 @@ static volatile BOOL    sIsReady = NO;
 
 - (void)drawTouches
 {
-    KRBlendMode oldBlendMode = KRGraphicsInst->getBlendMode();
-    KRGraphicsInst->setBlendMode(KRBlendModeAlpha);
+    KRBlendMode oldBlendMode = gKRGraphicsInst->getBlendMode();
+    gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
 
     for (int i = 0; i < 5; i++) {
         if (mTouchPos[i].x >= 0) {
@@ -478,7 +478,7 @@ static volatile BOOL    sIsReady = NO;
         }
     }
     
-    KRGraphicsInst->setBlendMode(oldBlendMode);
+    gKRGraphicsInst->setBlendMode(oldBlendMode);
 }
 
 - (void)addTouch:(KRVector2D)pos

@@ -22,7 +22,7 @@ static KRVector3D   sAcc;
 
 - (id)init {
     KarakuriController *controller = [KarakuriController sharedController];
-    KarakuriGame *game = [controller game];
+    KRGame *game = [controller game];
 
     int styleMask = (NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask);
     NSRect windowRect = NSMakeRect(0, 0, game->getScreenWidth(), game->getScreenHeight());
@@ -84,7 +84,7 @@ static KRVector3D   sAcc;
         
         mMotionSensorButton = [[NSButton alloc] initWithFrame:NSMakeRect(10, 5, 150, 18)];
         NSString *motionSensorButtonTitle = @"SMS Emulation";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             motionSensorButtonTitle = @"SMS エミュレーション";
         }
         [mMotionSensorButton setTitle:motionSensorButtonTitle];
@@ -125,7 +125,7 @@ static KRVector3D   sAcc;
     } else {
         sAcc.y = value * 0.8f;
     }
-    KRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
+    gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
 }
 
 - (void)changedMotionSensorButtonState:(id)sender
@@ -135,7 +135,7 @@ static KRVector3D   sAcc;
         [mAccVerticalSlider setEnabled:NO];
     } else {
         sAcc.x = sAcc.y = sAcc.z = 0.0f;
-        KRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
+        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         [mAccHorizontalSlider setEnabled:YES];
         [mAccVerticalSlider setEnabled:YES];
     }
@@ -145,13 +145,13 @@ static KRVector3D   sAcc;
 {
     if (!mSMSEnabled || [mMotionSensorButton state] != NSOnState) {
         sAcc.x = sAcc.y = sAcc.z = 0.0f;
-        KRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
+        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;
     }
 
     if (![KRGLViewInst isAccelerometerEnabled]) {
         sAcc.x = sAcc.y = sAcc.z = 0.0f;
-        KRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
+        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;
     }
  
@@ -163,7 +163,7 @@ static KRVector3D   sAcc;
         sAcc.x = -(x / 0xff);
         sAcc.y = -(y / 0xff);
         sAcc.z = -(z / 0xff);
-        KRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
+        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
     }
 }
 

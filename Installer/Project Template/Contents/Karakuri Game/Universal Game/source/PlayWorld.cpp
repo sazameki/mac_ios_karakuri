@@ -18,10 +18,10 @@ void PlayWorld::becameActive()
 {
     mTex = new KRTexture2D("chara.png");
 
-    mPos = (KRScreenSize - mTex->getSize()) / 2;
+    mPos = (gKRScreenSize - mTex->getSize()) / 2;
     
 #if KR_IPHONE
-    KRInputInst->enableAccelerometer(true);
+    gKRInputInst->enableAccelerometer(true);
 #endif
 }
 
@@ -30,7 +30,7 @@ void PlayWorld::resignedActive()
     delete mTex;
     
 #if KR_IPHONE
-    KRInputInst->enableAccelerometer(false);
+    gKRInputInst->enableAccelerometer(false);
 #endif
 }
 
@@ -65,14 +65,14 @@ void PlayWorld::updateModel(KRInput *input)
     
     if (mPos.x < 0.0f) {
         mPos.x = 0.0f;
-    } else if (mPos.x >= KRScreenSize.x - mTex->getWidth()) {
-        mPos.x = KRScreenSize.x - 1.0f - mTex->getWidth();
+    } else if (mPos.x >= gKRScreenSize.x - mTex->getWidth()) {
+        mPos.x = gKRScreenSize.x - 1.0f - mTex->getWidth();
     }
 
     if (mPos.y < 0.0f) {
         mPos.y = 0.0f;
-    } else if (mPos.y >= KRScreenSize.y - mTex->getHeight()) {
-        mPos.y = KRScreenSize.y - 1.0f - mTex->getHeight();
+    } else if (mPos.y >= gKRScreenSize.y - mTex->getHeight()) {
+        mPos.y = gKRScreenSize.y - 1.0f - mTex->getHeight();
     }
 }
 

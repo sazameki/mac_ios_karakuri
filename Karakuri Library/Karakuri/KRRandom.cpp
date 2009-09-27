@@ -13,7 +13,7 @@
 static unsigned sGeneratedCount = 0;
 
 
-KRRandom *KRRand = new KRRandom();
+static KRRandom *sKRRandInst = new KRRandom();
 
 
 /*!
@@ -70,6 +70,26 @@ double KRRandom::nextDouble()
 std::string KRRandom::to_s() const
 {
     return KRFS("<rand>(generated=%u)", sGeneratedCount);
+}
+
+int KRRandInt()
+{
+    return sKRRandInst->nextInt();
+}
+
+int KRRandInt(int upper)
+{
+    return sKRRandInst->nextInt(upper);
+}
+
+float KRRandFloat()
+{
+    return sKRRandInst->nextFloat();
+}
+
+double KRRandDouble()
+{
+    return sKRRandInst->nextDouble();
 }
 
 

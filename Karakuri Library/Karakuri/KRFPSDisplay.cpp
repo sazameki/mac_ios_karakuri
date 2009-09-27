@@ -45,12 +45,12 @@ KRFPSDisplay::~KRFPSDisplay()
 
 void KRFPSDisplay::drawFPS(float x, float y, float fps)
 {
-    KRGraphicsInst->setBlendMode(KRBlendModeAlpha);
+    gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
 
     std::string str = KRFS("%3.1f", fps);
     
     float width = 0.0f;
-    if (x > KRScreenSize.x/2) {
+    if (x > gKRScreenSize.x/2) {
         width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
     }
     
@@ -72,12 +72,12 @@ void KRFPSDisplay::drawFPS(float x, float y, float fps)
 
 void KRFPSDisplay::drawTPF(float x, float y, float tpf)
 {
-    KRGraphicsInst->setBlendMode(KRBlendModeAlpha);
+    gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
 
     std::string str = KRFS("%3.1f", tpf);
     
     float width = 0.0f;
-    if (x > KRScreenSize.x/2) {
+    if (x > gKRScreenSize.x/2) {
         width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
     }
     
@@ -99,12 +99,12 @@ void KRFPSDisplay::drawTPF(float x, float y, float tpf)
 
 void KRFPSDisplay::drawBPF(float x, float y, float bpf)
 {
-    KRGraphicsInst->setBlendMode(KRBlendModeAlpha);
+    gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
     
     std::string str = KRFS("%3.1f", bpf);
     
     float width = 0.0f;
-    if (x > KRScreenSize.x/2) {
+    if (x > gKRScreenSize.x/2) {
         width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
     }
     

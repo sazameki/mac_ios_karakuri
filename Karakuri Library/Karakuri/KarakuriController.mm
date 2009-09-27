@@ -98,7 +98,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         
         NSString *currentLangCode = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
         if ([currentLangCode isEqualToString:@"ja"]) {
-            KRLanguage = KRLanguageJapanese;            
+            gKRLanguage = KRLanguageJapanese;            
         }
         
         KRSetupSaveBox();
@@ -222,7 +222,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     _KROpenGLVersionValue = (float)atof(first3.c_str());
 }
 
-- (void)startChaningWorld:(KarakuriWorld *)world
+- (void)startChaningWorld:(KRWorld *)world
 {
     mIsWorldLoading = YES;
     mLoadingWorld = world;
@@ -253,7 +253,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 }
 
-- (KarakuriGame *)game
+- (KRGame *)game
 {
     return mGame;
 }
@@ -265,7 +265,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 - (void)startNetworkServer
 {
     std::string gameID = mGame->getGameIDForNetwork();
-    mNetworkServer = new KarakuriNetwork(gameID);
+    mNetworkServer = new KRNetwork(gameID);
 }
 
 - (void)processNetworkRequest:(NSString *)name
@@ -277,7 +277,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     NSString *rejectLabel = @"Reject";
     NSString *messageFormat = @"%@ is inviting you to join a new game. Do you want to accept the invitation?";
     
-    if (KRLanguage == KRLanguageJapanese) {
+    if (gKRLanguage == KRLanguageJapanese) {
         title = @"ネットワーク・プレイの招待";
         acceptLabel = @"招待を受ける";
         rejectLabel = @"拒否する";
@@ -313,10 +313,10 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [sheet orderOut:self];
     if (returnCode == NSAlertDefaultReturn) {
         mHasAcceptedNetworkPeer = YES;
-        KRNetwork->doAccept();
+        gKRNetworkInst->doAccept();
     } else {
         mHasAcceptedNetworkPeer = NO;
-        KRNetwork->doReject();
+        gKRNetworkInst->doReject();
     }
     mNetworkPeerName = nil;
 }
@@ -331,10 +331,10 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     else if (alertView == mNetworkAcceptAlertView) {
         if (buttonIndex == 1) {
             mHasAcceptedNetworkPeer = YES;
-            KRNetwork->doAccept();
+            gKRNetworkInst->doAccept();
         } else {
             mHasAcceptedNetworkPeer = NO;
-            KRNetwork->doReject();
+            gKRNetworkInst->doReject();
         }
         mNetworkPeerName = nil;
         mNetworkAcceptAlertView = nil;
@@ -360,7 +360,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     mPeerPickerController = [KRPeerPickerController new];
     mPeerPickerController.delegate = self;
     
-    BOOL isHorizontal = (KRScreenSize.x > KRScreenSize.y);
+    BOOL isHorizontal = (gKRScreenSize.x > gKRScreenSize.y);
     
     if (isHorizontal) {
         mPeerPickerController.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI_2);
@@ -413,7 +413,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [UIView beginAnimations:@"Picker Out" context:nil];
     [UIView setAnimationDuration:0.5];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    if (KRScreenSize.x > KRScreenSize.y) {
+    if (gKRScreenSize.x > gKRScreenSize.y) {
         mPeerPickerController.view.frame = CGRectMake(-320, 0, 320, 480);
     } else {
         mPeerPickerController.view.frame = CGRectMake(0, 480, 320, 480);
@@ -441,7 +441,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [UIView beginAnimations:@"Picker Out" context:nil];
     [UIView setAnimationDuration:0.5];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    if (KRScreenSize.x > KRScreenSize.y) {
+    if (gKRScreenSize.x > gKRScreenSize.y) {
         mPeerPickerController.view.frame = CGRectMake(-320, 0, 320, 480);
     } else {
         mPeerPickerController.view.frame = CGRectMake(0, 480, 320, 480);
@@ -544,7 +544,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             NSBeep();
             
             NSString *alertTitle = @"Karakuri Runtime Error";
-            if (KRLanguage == KRLanguageJapanese) {
+            if (gKRLanguage == KRLanguageJapanese) {
                 alertTitle = @"Karakuri ランタイムエラー";
             }
             NSString *message = [NSString stringWithCString:mLastErrorMessage->c_str() encoding:NSUTF8StringEncoding];
@@ -579,7 +579,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    if (KRScreenSize.x > KRScreenSize.y) {
+    if (gKRScreenSize.x > gKRScreenSize.y) {
         [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
     }
 
@@ -675,7 +675,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 if (loadingScreenWorldName.length() > 0) {
                     mLoadingScreenWorld = mGame->getWorld(loadingScreenWorldName);
                     if (mLoadingScreenWorld == NULL) {
-                        if (KRLanguage == KRLanguageJapanese) {
+                        if (gKRLanguage == KRLanguageJapanese) {
                             std::string errorFormat = "\"" + mLoadingWorld->getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingScreenWorldName + "\" は見つかりませんでした。";
                             throw KRRuntimeError(errorFormat);
                         } else {
@@ -753,9 +753,9 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mTextureBatchProcessCountPos = 0;
                 }
                 mFrameCount++;
-                mFPSDisplay->drawFPS(KRScreenSize.x-10, KRScreenSize.y-30, mCurrentFPS);
-                mFPSDisplay->drawTPF(KRScreenSize.x-10, KRScreenSize.y-30*2, mCurrentTPF);
-                mFPSDisplay->drawBPF(KRScreenSize.x-10, KRScreenSize.y-30*3, mCurrentBPF);
+                mFPSDisplay->drawFPS(gKRScreenSize.x-10, gKRScreenSize.y-30, mCurrentFPS);
+                mFPSDisplay->drawTPF(gKRScreenSize.x-10, gKRScreenSize.y-30*2, mCurrentTPF);
+                mFPSDisplay->drawBPF(gKRScreenSize.x-10, gKRScreenSize.y-30*3, mCurrentBPF);
                 KRTexture2D::processBatchedTexture2DDraws();
             }
 #endif
@@ -778,7 +778,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
             if (_KRMatrixPushCount != 0) {
                 std::string message = "KRPushMatrix() call count and KRPopMatrix() call count do not match.";
-                if (KRLanguage == KRLanguageJapanese) {
+                if (gKRLanguage == KRLanguageJapanese) {
                     message = "KRPushMatrix() 関数と KRPopMatrix() 関数の呼び出し回数が一致しませんでした。";
                 }
                 throw KRRuntimeError(message);
@@ -845,7 +845,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                         if (loadingScreenWorldName.length() > 0) {
                             mLoadingScreenWorld = mGame->getWorld(loadingScreenWorldName);
                             if (mLoadingScreenWorld == NULL) {
-                                if (KRLanguage == KRLanguageJapanese) {
+                                if (gKRLanguage == KRLanguageJapanese) {
                                     std::string errorFormat = "\"" + mLoadingWorld->getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingScreenWorldName + "\" は見つかりませんでした。";
                                     throw KRRuntimeError(errorFormat);
                                 } else {
@@ -906,12 +906,12 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     } catch (KRRuntimeError &e) {
         mGameIsAborted = YES;
         NSString *alertTitle = @"Karakuri Runtime Error";
-        if (KRLanguage == KRLanguageJapanese) {
+        if (gKRLanguage == KRLanguageJapanese) {
             alertTitle = @"Karakuri ランタイムエラー";
         }
         if (dynamic_cast<KRGameError *>(&e)) {
             alertTitle = @"Game Execution Error";
-            if (KRLanguage == KRLanguageJapanese) {
+            if (gKRLanguage == KRLanguageJapanese) {
                 alertTitle = @"ゲーム実行エラー";
             }
         }
@@ -1009,21 +1009,21 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     KRRect2D blackBox[2];
 
     float width = 480.0f, height = 320.0f;
-    if (KRScreenSize.x / KRScreenSize.y < fullScreenSize.width / fullScreenSize.height) {
+    if (gKRScreenSize.x / gKRScreenSize.y < fullScreenSize.width / fullScreenSize.height) {
         height = fullScreenSize.height;
-        width = height * KRScreenSize.x / KRScreenSize.y;
+        width = height * gKRScreenSize.x / gKRScreenSize.y;
         blackBox[0] = KRRect2D(0, 0, (fullScreenSize.width - width) / 2, height);
         blackBox[1] = KRRect2D(fullScreenSize.width-blackBox[0].width, 0, blackBox[0].width, height);
     } else {
         width = fullScreenSize.width;
-        height = width * KRScreenSize.x / KRScreenSize.y;
+        height = width * gKRScreenSize.x / gKRScreenSize.y;
         blackBox[0] = KRRect2D(0, 0, width, (fullScreenSize.height - height) / 2);
         blackBox[1] = KRRect2D(0, fullScreenSize.height-blackBox[0].height, width, blackBox[0].height);
     }
     KRRect2D viewRect((fullScreenSize.width - width) / 2, (fullScreenSize.height - height) / 2, width, height);
 
     glViewport(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
-    glOrtho(0.0, KRScreenSize.x, 0.0, KRScreenSize.y, -1.0, 1.0);    
+    glOrtho(0.0, gKRScreenSize.x, 0.0, gKRScreenSize.y, -1.0, 1.0);    
 
     volatile bool isRunning = YES;
     
@@ -1059,9 +1059,9 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mTextureBatchProcessCountPos = 0;
                 }
                 mFrameCount++;
-                mFPSDisplay->drawFPS(KRScreenSize.x-10, KRScreenSize.y-30, mCurrentFPS);
-                mFPSDisplay->drawTPF(KRScreenSize.x-10, KRScreenSize.y-30*2, mCurrentTPF);
-                mFPSDisplay->drawBPF(KRScreenSize.x-10, KRScreenSize.y-30*3, mCurrentBPF);
+                mFPSDisplay->drawFPS(gKRScreenSize.x-10, gKRScreenSize.y-30, mCurrentFPS);
+                mFPSDisplay->drawTPF(gKRScreenSize.x-10, gKRScreenSize.y-30*2, mCurrentTPF);
+                mFPSDisplay->drawBPF(gKRScreenSize.x-10, gKRScreenSize.y-30*3, mCurrentBPF);
                 KRTexture2D::processBatchedTexture2DDraws();
             }
 #endif
@@ -1070,7 +1070,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
             if (_KRMatrixPushCount != 0) {
                 std::string message = "KRPushMatrix() call count and KRPopMatrix() call count do not match.";
-                if (KRLanguage == KRLanguageJapanese) {
+                if (gKRLanguage == KRLanguageJapanese) {
                     message = "KRPushMatrix() 関数と KRPopMatrix() 関数の呼び出し回数が一致しませんでした。";
                 }
                 throw KRRuntimeError(message);
@@ -1151,7 +1151,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                         if (loadingScreenWorldName.length() > 0) {
                             mLoadingScreenWorld = mGame->getWorld(loadingScreenWorldName);
                             if (mLoadingScreenWorld == NULL) {
-                                if (KRLanguage == KRLanguageJapanese) {
+                                if (gKRLanguage == KRLanguageJapanese) {
                                     std::string errorFormat = "\"" + mLoadingWorld->getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingScreenWorldName + "\" は見つかりませんでした。";
                                     throw KRRuntimeError(errorFormat);
                                 } else {

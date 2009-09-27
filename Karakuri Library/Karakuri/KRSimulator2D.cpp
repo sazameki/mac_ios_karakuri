@@ -146,7 +146,7 @@ std::list<KRCollisionInfo2D> *KRSimulator2D::getCollisions()
 
 void KRSimulator2D::step()
 {
-    step(1.0f / KRGame->getFrameRate());    
+    step(1.0f / gKRGameInst->getFrameRate());    
 }
 
 void KRSimulator2D::step(float time)

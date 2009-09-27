@@ -37,7 +37,7 @@
 @interface KarakuriController : NSObject<KRPeerPickerDelegate> {
     KarakuriWindow      *mWindow;
     KarakuriGLContext   *mKRGLContext;
-    KarakuriGame        *mGame;
+    KRGame              *mGame;
     
     KRGraphics          *mGraphics;
     KRInput             *mInput;
@@ -52,15 +52,15 @@
     
     uint64_t            mMCFrameInterval;
     
-    KarakuriWorld       *mLoadingWorld;
+    KRWorld             *mLoadingWorld;
     volatile BOOL       mIsWorldLoading;
-    KarakuriWorld       *mLoadingScreenWorld;
+    KRWorld             *mLoadingScreenWorld;
     
     BOOL                mIsInFullScreenMode;
     BOOL                mHasMetEmergency;
     BOOL                mTerminatedByUser;
     
-    KarakuriNetwork     *mNetworkServer;
+    KRNetwork           *mNetworkServer;
     NSString            *mNetworkPeerName;
     BOOL                mHasAcceptedNetworkPeer;
     volatile BOOL       mIsInvitingNetworkPeer;
@@ -106,8 +106,8 @@
 
 + (KarakuriController *)sharedController;
 
-//- (void)startLoadingScreenThreadForWorld:(KarakuriWorld *)world;
-- (void)startChaningWorld:(KarakuriWorld *)world;
+//- (void)startLoadingScreenThreadForWorld:(KRWorld *)world;
+- (void)startChaningWorld:(KRWorld *)world;
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 - (EAGLSharegroup *)eaglSharegroup;
@@ -120,7 +120,7 @@
 - (void)fullScreenGameProc;
 #endif
 
-- (KarakuriGame *)game;
+- (KRGame *)game;
 
 - (void)processNetworkRequest:(NSString *)name;
 - (void)showNetworkPeerPicker;
