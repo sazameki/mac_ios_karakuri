@@ -119,7 +119,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         
 #if __DEBUG__
         mFPSDisplay = NULL;
-        mCurrentFPS = 60.0f;
+        mCurrentFPS = 60.0;
         mFrameCount = 0;
         for (int i = 0; i < KR_FRAME_COUNT_HISTORY_SIZE; i++) {
             mFrameCounts[i] = 60;
@@ -129,10 +129,10 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         }
         mFrameCountPos = 0;
 
-        mCurrentTPF = 1.0f;
+        mCurrentTPF = 1.0;
         mTextureChangeCountPos = 0;
 
-        mCurrentBPF = 1.0f;
+        mCurrentBPF = 1.0;
         mTextureBatchProcessCountPos = 0;
 #endif
         
@@ -219,7 +219,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     std::string first3 = _KROpenGLVersionStr.substr(0, 3);
     
-    _KROpenGLVersionValue = (float)atof(first3.c_str());
+    _KROpenGLVersionValue = atof(first3.c_str());
 }
 
 - (void)startChaningWorld:(KRWorld *)world
@@ -429,7 +429,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [UIView beginAnimations:@"Picker Out" context:nil];
     [UIView setAnimationDuration:0.5];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    mPeerPickerController.view.alpha = 0.0f;
+    mPeerPickerController.view.alpha = 0.0;
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(pickerOutAnimationFinished:finished:context:)];
     [UIView commitAnimations];
@@ -527,15 +527,15 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     _KRTexture2DEnabled = false;
     _KRTexture2DName = GL_INVALID_VALUE;
-    _KRColorRed = _KRColorGreen = _KRColorBlue = _KRColorAlpha = -1.0f;
-    _KRClearColorRed = _KRClearColorGreen = _KRClearColorBlue = _KRClearColorAlpha = -1.0f;
+    _KRColorRed = _KRColorGreen = _KRColorBlue = _KRColorAlpha = -1.0;
+    _KRClearColorRed = _KRClearColorGreen = _KRClearColorBlue = _KRClearColorAlpha = -1.0;
 
     [KRGLViewInst toggleFullScreen];
 
     _KRTexture2DEnabled = false;
     _KRTexture2DName = GL_INVALID_VALUE;
-    _KRColorRed = _KRColorGreen = _KRColorBlue = _KRColorAlpha = -1.0f;
-    _KRClearColorRed = _KRClearColorGreen = _KRClearColorBlue = _KRClearColorAlpha = -1.0f;
+    _KRColorRed = _KRColorGreen = _KRColorBlue = _KRColorAlpha = -1.0;
+    _KRClearColorRed = _KRClearColorGreen = _KRClearColorBlue = _KRClearColorAlpha = -1.0;
 
     if (!mGameIsFinished) {
         if (mGameIsAborted) {
@@ -721,7 +721,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             glOrtho(0.0, (double)mKRGLContext->backingWidth, 0.0, (double)mKRGLContext->backingHeight, -1.0, 1.0);
 #endif
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-            glOrthof(0.0f, mKRGLContext->backingWidth, 0.0f, mKRGLContext->backingHeight, -1.0f, 1.0f);
+            glOrthof(0.0f, (float)mKRGLContext->backingWidth, 0.0f, (float)mKRGLContext->backingHeight, -1.0f, 1.0f);
             // If Horizontal
             if (mGame->getScreenWidth() > mGame->getScreenHeight()) {
                 glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
@@ -874,20 +874,20 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mFrameCountPos = 0;
                 }
 
-                mCurrentFPS = 0.0f;
+                mCurrentFPS = 0.0;
                 for (int i = 0; i < KR_FRAME_COUNT_HISTORY_SIZE; i++) {
                     mCurrentFPS += mFrameCounts[i];
                 }
                 mCurrentFPS /= KR_FRAME_COUNT_HISTORY_SIZE;
                 mFrameCount = 0;
                 
-                mCurrentTPF = 0.0f;
+                mCurrentTPF = 0.0;
                 for (int i = 0; i < KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE; i++) {
                     mCurrentTPF += mTextureChangeCounts[i];
                 }
                 mCurrentTPF /= KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE;
 
-                mCurrentBPF = 0.0f;
+                mCurrentBPF = 0.0;
                 for (int i = 0; i < KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE; i++) {
                     mCurrentBPF += mTextureBatchProcessCounts[i];
                 }
@@ -1008,7 +1008,8 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     KRRect2D blackBox[2];
 
-    float width = 480.0f, height = 320.0f;
+    double width = 480.0;
+    double height = 320.0;
     if (gKRScreenSize.x / gKRScreenSize.y < fullScreenSize.width / fullScreenSize.height) {
         height = fullScreenSize.height;
         width = height * gKRScreenSize.x / gKRScreenSize.y;
@@ -1179,20 +1180,20 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mFrameCountPos = 0;
                 }
 
-                mCurrentFPS = 0.0f;
+                mCurrentFPS = 0.0;
                 for (int i = 0; i < KR_FRAME_COUNT_HISTORY_SIZE; i++) {
                     mCurrentFPS += mFrameCounts[i];
                 }
                 mCurrentFPS /= KR_FRAME_COUNT_HISTORY_SIZE;
                 mFrameCount = 0;
 
-                mCurrentTPF = 0.0f;
+                mCurrentTPF = 0.0;
                 for (int i = 0; i < KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE; i++) {
                     mCurrentTPF += mTextureChangeCounts[i];
                 }
                 mCurrentTPF /= KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE;
 
-                mCurrentBPF = 0.0f;
+                mCurrentBPF = 0.0;
                 for (int i = 0; i < KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE; i++) {
                     mCurrentBPF += mTextureBatchProcessCounts[i];
                 }

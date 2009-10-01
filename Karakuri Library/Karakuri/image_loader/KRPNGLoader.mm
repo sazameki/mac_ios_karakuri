@@ -1358,8 +1358,8 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
                 imageSize->x = image_width;
                 imageSize->y = image_height;
                 
-                textureSize->x = (float)imageSize->x / rwidth;
-                textureSize->y = (float)imageSize->y / rheight;
+                textureSize->x = imageSize->x / rwidth;
+                textureSize->y = imageSize->y / rheight;
             } else {
                 textureName = GL_INVALID_VALUE;
             }

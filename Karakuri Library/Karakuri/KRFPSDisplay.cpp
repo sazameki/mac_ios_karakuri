@@ -17,7 +17,7 @@
  */
 KRFPSDisplay::KRFPSDisplay()
 {
-    mFont = new KRFont("Helvetica-Bold", 24.0f);
+    mFont = new KRFont("Helvetica-Bold", 24.0);
 
     mNumberTex = mFont->createStringTexture("0123456789");
     mNumberAtlas = new KRTexture2DAtlas(mNumberTex, KRVector2DZero, KRVector2D(mNumberTex->getWidth()/10, mNumberTex->getHeight()));
@@ -43,13 +43,13 @@ KRFPSDisplay::~KRFPSDisplay()
     delete mBPFTex;
 }
 
-void KRFPSDisplay::drawFPS(float x, float y, float fps)
+void KRFPSDisplay::drawFPS(double x, double y, double fps)
 {
     gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
 
     std::string str = KRFS("%3.1f", fps);
     
-    float width = 0.0f;
+    double width = 0.0;
     if (x > gKRScreenSize.x/2) {
         width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
     }
@@ -70,13 +70,13 @@ void KRFPSDisplay::drawFPS(float x, float y, float fps)
     mFPSTex->draw(x + i * mNumberTex->getWidth()/10 + 5 - width, y);
 }
 
-void KRFPSDisplay::drawTPF(float x, float y, float tpf)
+void KRFPSDisplay::drawTPF(double x, double y, double tpf)
 {
     gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
 
     std::string str = KRFS("%3.1f", tpf);
     
-    float width = 0.0f;
+    double width = 0.0;
     if (x > gKRScreenSize.x/2) {
         width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
     }
@@ -97,13 +97,13 @@ void KRFPSDisplay::drawTPF(float x, float y, float tpf)
     mTPFTex->draw(x + i * mNumberTex->getWidth()/10 + 5 - width, y);
 }
 
-void KRFPSDisplay::drawBPF(float x, float y, float bpf)
+void KRFPSDisplay::drawBPF(double x, double y, double bpf)
 {
     gKRGraphicsInst->setBlendMode(KRBlendModeAlpha);
     
     std::string str = KRFS("%3.1f", bpf);
     
-    float width = 0.0f;
+    double width = 0.0;
     if (x > gKRScreenSize.x/2) {
         width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
     }

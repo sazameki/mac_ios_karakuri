@@ -78,17 +78,17 @@
 #if __DEBUG__
     KRFPSDisplay        *mFPSDisplay;
 
-    float               mCurrentFPS;
+    double              mCurrentFPS;
     int                 mFrameCount;
     int                 mFrameCounts[KR_FRAME_COUNT_HISTORY_SIZE];
     int                 mFrameCountPos;
     double              mPrevFPSUpdateTime;
     
-    float               mCurrentTPF;
+    double              mCurrentTPF;
     int                 mTextureChangeCounts[KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE];
     int                 mTextureChangeCountPos;
 
-    float               mCurrentBPF;
+    double              mCurrentBPF;
     int                 mTextureBatchProcessCounts[KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE];
     int                 mTextureBatchProcessCountPos;
 #endif

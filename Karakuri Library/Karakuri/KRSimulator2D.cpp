@@ -80,12 +80,12 @@ std::list<KRJoint2D *> *KRSimulator2D::getAllJoints()
     return &mJoints;
 }
 
-float KRSimulator2D::getBodyAngle() const
+double KRSimulator2D::getBodyAngle() const
 {
     return ((cpBody *)mCPStaticBody)->a;
 }
 
-void KRSimulator2D::setBodyAngle(float angle)
+void KRSimulator2D::setBodyAngle(double angle)
 {
     mNextAngle = angle;
     mHasChangedAngle = true;
@@ -146,10 +146,10 @@ std::list<KRCollisionInfo2D> *KRSimulator2D::getCollisions()
 
 void KRSimulator2D::step()
 {
-    step(1.0f / gKRGameInst->getFrameRate());    
+    step(1.0 / gKRGameInst->getFrameRate());    
 }
 
-void KRSimulator2D::step(float time)
+void KRSimulator2D::step(double time)
 {
     mCollisions.clear();
 

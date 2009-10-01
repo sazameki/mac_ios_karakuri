@@ -121,9 +121,9 @@ static KRVector3D   sAcc;
     }
     float value = [sender floatValue];
     if (sender == mAccHorizontalSlider) {
-        sAcc.x = value * 0.8f;
+        sAcc.x = value * 0.8;
     } else {
-        sAcc.y = value * 0.8f;
+        sAcc.y = value * 0.8;
     }
     gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
 }
@@ -134,7 +134,7 @@ static KRVector3D   sAcc;
         [mAccHorizontalSlider setEnabled:NO];
         [mAccVerticalSlider setEnabled:NO];
     } else {
-        sAcc.x = sAcc.y = sAcc.z = 0.0f;
+        sAcc.x = sAcc.y = sAcc.z = 0.0;
         gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         [mAccHorizontalSlider setEnabled:YES];
         [mAccVerticalSlider setEnabled:YES];
@@ -143,14 +143,19 @@ static KRVector3D   sAcc;
 
 - (void)fetchSMSData
 {
-    if (!mSMSEnabled || [mMotionSensorButton state] != NSOnState) {
-        sAcc.x = sAcc.y = sAcc.z = 0.0f;
+    if (!mSMSEnabled) {
+        sAcc.x = sAcc.y = sAcc.z = 0.0;
+        return;
+    }
+
+    if ([mMotionSensorButton state] != NSOnState) {
+        sAcc.x = sAcc.y = sAcc.z = 0.0;
         gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;
     }
 
     if (![KRGLViewInst isAccelerometerEnabled]) {
-        sAcc.x = sAcc.y = sAcc.z = 0.0f;
+        sAcc.x = sAcc.y = sAcc.z = 0.0;
         gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;
     }

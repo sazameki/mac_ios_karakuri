@@ -261,10 +261,10 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
 /* pitch can be between 0.5-2.0. Default 1.0. */
 - (void)setPitch:(float)pitch
 {
-    /*if (pitch > 2.0f) {
-        pitch = 2.0f;
-    } else if (pitch < 0.5f) {
-        pitch = 0.5f;
+    /*if (pitch > 2.0) {
+        pitch = 2.0;
+    } else if (pitch < 0.5) {
+        pitch = 0.5;
     }*/
     if (mPitch == pitch) {
         return;

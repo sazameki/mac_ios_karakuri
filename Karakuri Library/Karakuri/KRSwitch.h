@@ -28,8 +28,8 @@ protected:
     std::string     mThumbTextureName;
     KRTexture2D     *mThumbTexture;
 
-    float           mTextureEdgeSize;
-    float           mTextureThumbX;
+    double          mTextureEdgeSize;
+    double          mTextureThumbX;
     
 public:
     /*!
@@ -73,7 +73,7 @@ public:
         @method setTextureNames
         スイッチの背景とつまみに使用するテクスチャの名前を設定します。
      */
-    void    setTextureNames(const std::string& backName, float edgeSize, const std::string& thumbName, float thumbX);
+    void    setTextureNames(const std::string& backName, double edgeSize, const std::string& thumbName, double thumbX);
 
 };
 

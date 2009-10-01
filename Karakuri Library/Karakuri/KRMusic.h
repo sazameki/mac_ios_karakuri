@@ -67,13 +67,13 @@ public:
         @abstract   BGM の現在の音量を取得します。
         @return BGM の現在の音量
      */    
-    float   getVolume() const;
+    double  getVolume() const;
 
     /*!
         @method setVolume
         @abstract   BGM の音量を設定します。
      */    
-    void    setVolume(float value);
+    void    setVolume(double value);
 
     
 #pragma mark -

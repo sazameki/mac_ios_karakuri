@@ -103,7 +103,7 @@ static volatile BOOL    sIsReady = NO;
 
     glOrtho(0.0, (double)mKRGLContext.backingWidth, 0.0, (double)mKRGLContext.backingHeight, -1.0, 1.0);
 
-    float angle = 0.0f;
+    double angle = 0.0;
     if (gKRScreenSize.x > gKRScreenSize.y) {
         angle = M_PI / 2;
     }

@@ -31,7 +31,7 @@ protected:
     std::string mTextureNameHighlighted;
     KRTexture2D *mTextureHighlighted;
     
-    float       mTextureEdgeSize;
+    double      mTextureEdgeSize;
 
 public:
     /*!
@@ -75,7 +75,7 @@ public:
         @abstract ボタンの描画に使用するテクスチャの名前を指定します（通常時とハイライト（押されている）時）。
         ボタンの画像は、横方向に可変サイズになるようにデザインされている必要があります。左端と右端のサイズを textureEdgeSize 引数で指定してください。
      */
-    void        setTextureNames(const std::string& normalName, const std::string& highlightedName, float textureEdgeSize);
+    void        setTextureNames(const std::string& normalName, const std::string& highlightedName, double textureEdgeSize);
     
     /*!
         @method setTitleColors

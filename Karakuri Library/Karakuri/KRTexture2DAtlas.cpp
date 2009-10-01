@@ -44,23 +44,23 @@ KRVector2D KRTexture2DAtlas::getCenterPos() const
 }
 
 
-void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& pos, float alpha)
+void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& pos, double alpha)
 {
-    draw(row, column, pos, 0.0f, KRVector2DZero, KRVector2DOne, alpha);
+    draw(row, column, pos, 0.0, KRVector2DZero, KRVector2DOne, alpha);
 }
 
-void KRTexture2DAtlas::draw(int row, int column, const KRRect2D& rect, float alpha)
+void KRTexture2DAtlas::draw(int row, int column, const KRRect2D& rect, double alpha)
 {
     KRVector2D scale(rect.width / mOneSize.x, rect.height / mOneSize.y);
-    draw(row, column, rect.getOrigin(), 0.0f, KRVector2DZero, scale, alpha);
+    draw(row, column, rect.getOrigin(), 0.0, KRVector2DZero, scale, alpha);
 }
 
-void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, float scale, float alpha)
+void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, double scale, double alpha)
 {
     draw(row, column, centerPos, rotation, origin, KRVector2D(scale, scale), alpha);
 }
 
-void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, const KRVector2D &scale, float alpha)
+void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, double alpha)
 {
     KRRect2D srcRect(mLeftBottomPos.x + mOneSize.x * column, mLeftBottomPos.y + mOneSize.y * row, mOneSize.x, mOneSize.y);
     mTexture->draw(centerPos, srcRect, rotation, origin, scale, alpha);
@@ -68,21 +68,21 @@ void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, fl
 
 void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& pos, const KRColor& color)
 {
-    draw(row, column, pos, 0.0f, KRVector2DZero, KRVector2DOne, color);
+    draw(row, column, pos, 0.0, KRVector2DZero, KRVector2DOne, color);
 }
 
 void KRTexture2DAtlas::draw(int row, int column, const KRRect2D& rect, const KRColor& color)
 {
     KRVector2D scale(rect.width / mOneSize.x, rect.height / mOneSize.y);
-    draw(row, column, rect.getOrigin(), 0.0f, KRVector2DZero, scale, color);
+    draw(row, column, rect.getOrigin(), 0.0, KRVector2DZero, scale, color);
 }
 
-void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, float scale, const KRColor& color)
+void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, double scale, const KRColor& color)
 {
     draw(row, column, centerPos, rotation, origin, KRVector2D(scale, scale), color);
 }
 
-void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, const KRVector2D &scale, const KRColor& color)
+void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, const KRColor& color)
 {
     KRRect2D srcRect(mLeftBottomPos.x + mOneSize.x * column, mLeftBottomPos.y + mOneSize.y * row, mOneSize.x, mOneSize.y);
     mTexture->draw(centerPos, srcRect, rotation, origin, scale, color);

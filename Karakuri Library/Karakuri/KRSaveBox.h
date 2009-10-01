@@ -75,6 +75,12 @@ public:
     bool        getBoolValue(const std::string &key) const;
 
     /*!
+        @method getDoubleValue
+        名前を指定して double 値を取得します。
+     */
+    double      getDoubleValue(const std::string &key) const;
+    
+    /*!
         @method getFloatValue
         名前を指定して float 値を取得します。
      */
@@ -104,6 +110,13 @@ public:
         名前を指定して bool 値を保存します。
      */
     void        setBoolValue(const std::string &key, bool boolValue);
+
+    /*!
+        @method setDoubleValue
+        名前を指定して double 値を保存します。
+     */
+    void        setDoubleValue(const std::string &key, double doubleValue);
+    
     /*!
         @method setFloatValue
         名前を指定して float 値を保存します。

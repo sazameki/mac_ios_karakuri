@@ -14,12 +14,12 @@
 #import <Foundation/Foundation.h>
 
 
-void KRSleep(float interval)
+void KRSleep(double interval)
 {
     [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:interval]];
 }
 
-float KRCurrentTime()
+double KRCurrentTime()
 {
     return [NSDate timeIntervalSinceReferenceDate];
 }

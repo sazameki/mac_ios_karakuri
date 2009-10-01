@@ -59,7 +59,7 @@ void *KRJoint2D::getRepresentedObject() const
     return mRepresentedObject;
 }
 
-void KRJoint2D::setRepresentedObject(float *anObj)
+void KRJoint2D::setRepresentedObject(void *anObj)
 {
     mRepresentedObject = anObj;
 }
@@ -136,7 +136,7 @@ std::string KRJoint2DPivot::to_s() const
 #pragma mark Spring Joint
 
 KRJoint2DSpring::KRJoint2DSpring(KRShape2D *shape, const KRVector2D& anchor, const KRVector2D& staticAnchor)
-    : KRJoint2D(shape, anchor, staticAnchor), mDamping(1.0f), mRestLength(0.0f), mStiffness(100.0f)
+    : KRJoint2D(shape, anchor, staticAnchor), mDamping(1.0), mRestLength(0.0), mStiffness(100.0)
 {
 }
 
@@ -145,7 +145,7 @@ KRJoint2DSpring::KRJoint2DSpring(KRShape2D *shape, const KRVector2D& anchor, con
     Constructor
  */
 KRJoint2DSpring::KRJoint2DSpring(KRShape2D *shape1, const KRVector2D& anchor1,  KRShape2D *shape2, const KRVector2D& anchor2)
-    : KRJoint2D(shape1, anchor1, shape2, anchor2), mDamping(1.0f), mRestLength(0.0f), mStiffness(100.0f)
+    : KRJoint2D(shape1, anchor1, shape2, anchor2), mDamping(1.0), mRestLength(0.0), mStiffness(100.0)
 {
 }
 
@@ -157,31 +157,31 @@ KRJoint2DSpring::~KRJoint2DSpring()
 {
 }
 
-float KRJoint2DSpring::getDamping() const
+double KRJoint2DSpring::getDamping() const
 {
     if (mConstraint != NULL) {
-        return ((cpDampedSpring *)mConstraint)->damping;
+        return (double)(((cpDampedSpring *)mConstraint)->damping);
     }
     return mDamping;
 }
 
-float KRJoint2DSpring::getRestLength() const
+double KRJoint2DSpring::getRestLength() const
 {
     if (mConstraint != NULL) {
-        return ((cpDampedSpring *)mConstraint)->restLength;
+        return (double)(((cpDampedSpring *)mConstraint)->restLength);
     }
     return mRestLength;
 }
 
-float KRJoint2DSpring::getStiffness() const
+double KRJoint2DSpring::getStiffness() const
 {
     if (mConstraint != NULL) {
-        return ((cpDampedSpring *)mConstraint)->stiffness;
+        return (double)(((cpDampedSpring *)mConstraint)->stiffness);
     }
     return mStiffness;
 }
 
-void KRJoint2DSpring::setDamping(float value)
+void KRJoint2DSpring::setDamping(double value)
 {
     mDamping = value;
     if (mConstraint != NULL) {
@@ -189,7 +189,7 @@ void KRJoint2DSpring::setDamping(float value)
     }
 }
 
-void KRJoint2DSpring::setRestLength(float value)
+void KRJoint2DSpring::setRestLength(double value)
 {
     mRestLength = value;
     if (mConstraint != NULL) {
@@ -197,7 +197,7 @@ void KRJoint2DSpring::setRestLength(float value)
     }
 }
 
-void KRJoint2DSpring::setStiffness(float value)
+void KRJoint2DSpring::setStiffness(double value)
 {
     mStiffness = value;
     if (mConstraint != NULL) {
@@ -207,7 +207,7 @@ void KRJoint2DSpring::setStiffness(float value)
 
 static cpFloat springForce(cpConstraint *spring, cpFloat dist)
 {
-	cpFloat clamp = 20.0f;
+	cpFloat clamp = 20.0;
 	return cpfclamp(cpDampedSpringGetRestLength(spring) - dist, -clamp, clamp)*cpDampedSpringGetStiffness(spring);
 }
 

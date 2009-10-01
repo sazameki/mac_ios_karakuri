@@ -153,31 +153,31 @@ const KRColor &KRColor::WhiteSmoke              = KRColor(0xF5F5F5);
 const KRColor &KRColor::Yellow                  = KRColor(0xFFFF00);
 const KRColor &KRColor::YellowGreen             = KRColor(0x9ACD32);
 
-const KRColor &KRColor::ClearColor              = KRColor(1.0f, 1.0f, 1.0f, 0.0f);
+const KRColor &KRColor::ClearColor              = KRColor(1.0, 1.0, 1.0, 0.0);
 
 
 #pragma mark -
 #pragma mark Constructor
 
 KRColor::KRColor()
-    : r(0.0f), g(0.0f), b(0.0f), a(1.0f)
+    : r(0.0), g(0.0), b(0.0), a(1.0)
 {
 }
 
 KRColor::KRColor(int rgb)
-    : r((float)((rgb >> 16) & 0xff) / 255.0f),
-      g((float)((rgb >> 8) & 0xff) / 255.0f),
-      b((float)(rgb & 0xff) / 255.0f),
-      a(1.0f)
+    : r((double)((rgb >> 16) & 0xff) / 255.0),
+      g((double)((rgb >> 8) & 0xff) / 255.0),
+      b((double)(rgb & 0xff) / 255.0),
+      a(1.0)
 {
 }
 
-KRColor::KRColor(float _r, float _g, float _b)
-    : r(_r), g(_g), b(_b), a(1.0f)
+KRColor::KRColor(double _r, double _g, double _b)
+    : r(_r), g(_g), b(_b), a(1.0)
 {
 }
 
-KRColor::KRColor(float _r, float _g, float _b, float _a)
+KRColor::KRColor(double _r, double _g, double _b, double _a)
     : r(_r), g(_g), b(_b), a(_a)
 {
 }
@@ -194,7 +194,11 @@ void KRColor::set() const
         _KRColorGreen = g;
         _KRColorBlue = b;
         _KRColorAlpha = a;
-        glColor4f(r, g, b, a);
+#if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
+        glColor4f((float)r, (float)g, (float)b, (float)a);
+#else
+        glColor4d(r, g, b, a);
+#endif
     }
 }
 

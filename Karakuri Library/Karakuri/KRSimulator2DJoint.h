@@ -111,7 +111,7 @@ public:
         @method setRepresentedObject
         このジョイントに関連付けて管理するオブジェクトのポインタを指定します。
      */
-    void    setRepresentedObject(float *anObj);
+    void    setRepresentedObject(void *anObj);
 
     /*!
         @method setTag
@@ -168,9 +168,9 @@ public:
  */
 class KRJoint2DSpring : public KRJoint2D {
 
-    float       mDamping;
-    float       mRestLength;
-    float       mStiffness;
+    double      mDamping;
+    double      mRestLength;
+    double      mStiffness;
     
 public:
     /*!
@@ -202,19 +202,19 @@ public:
         @method getDamping
         バネの振幅の減衰度を取得します。
      */
-    float   getDamping() const;
+    double   getDamping() const;
     
     /*!
         @method getRestLength
         バネの最小の長さを取得します。
      */
-    float   getRestLength() const;
+    double   getRestLength() const;
 
     /*!
         @method getStiffness
         バネの強度を取得します。
      */
-    float   getStiffness() const;
+    double   getStiffness() const;
     
 public:
     /*!
@@ -225,19 +225,19 @@ public:
         @method setDamping
         バネの振幅の減衰度を設定します。
      */
-    void    setDamping(float value);
+    void    setDamping(double value);
     
     /*!
         @method setRestLength
         バネの最小の長さを設定します。
      */
-    void    setRestLength(float value);
+    void    setRestLength(double value);
     
     /*!
         @method setStiffness
         バネの強度を設定します。
      */
-    void    setStiffness(float value);
+    void    setStiffness(double value);
 
 public:
     virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

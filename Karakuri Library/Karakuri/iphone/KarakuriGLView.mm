@@ -103,7 +103,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
-    glOrthof(0.0f, mKRGLContext.backingWidth, 0.0f, mKRGLContext.backingHeight, -1.0f, 1.0f);
+    glOrthof(0.0f, (float)mKRGLContext.backingWidth, 0.0f, (float)mKRGLContext.backingHeight, -1.0f, 1.0f);
     
     mDefaultTex->draw(KRRect2D(0, 0, 320, 480));
     KRTexture2D::processBatchedTexture2DDraws();

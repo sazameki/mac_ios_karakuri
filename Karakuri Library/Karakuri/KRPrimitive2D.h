@@ -34,13 +34,13 @@ public:
         @method drawLine
         始点から終点まで、指定された色で線分を描画します。
      */
-    static void drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& color, float width = 1.0f);
+    static void drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& color, double width = 1.0);
 
     /*!
         @method drawLine
         始点から終点まで、指定された2色の色で線分を描画します。
      */
-    static void drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& c1, const KRColor& c2, float width = 1.0f);    
+    static void drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& c1, const KRColor& c2, double width = 1.0);
     
 #pragma mark ---- 四角形 ----
     /*!

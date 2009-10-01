@@ -15,12 +15,12 @@
 static KRVector3D   sListenerPos            = KRVector3DZero;
 
 
-float KRSound::getListenerHorizontalOrientation()
+double KRSound::getListenerHorizontalOrientation()
 {
     return [KarakuriSound listenerHorizontalOrientation];
 }
 
-void KRSound::setListenerHorizontalOrientation(float radAngle)
+void KRSound::setListenerHorizontalOrientation(double radAngle)
 {
     [KarakuriSound setListenerHorizontalOrientation:radAngle];
 }
@@ -30,7 +30,7 @@ KRVector3D KRSound::getListenerPos()
     return sListenerPos;
 }
 
-void KRSound::setListenerPos(float x, float y, float z)
+void KRSound::setListenerPos(double x, double y, double z)
 {
     sListenerPos.x = x;
     sListenerPos.y = y;
@@ -86,24 +86,24 @@ void KRSound::setSourcePos(const KRVector3D &vec3)
     [(KarakuriSound *)mSoundImpl setSourceX:vec3.x y:vec3.y z:vec3.z];
 }
 
-float KRSound::getPitch() const
+double KRSound::getPitch() const
 {
-    return [(KarakuriSound *)mSoundImpl pitch];
+    return (double)[(KarakuriSound *)mSoundImpl pitch];
 }
 
-void KRSound::setPitch(float value)
+void KRSound::setPitch(double value)
 {
-    [(KarakuriSound *)mSoundImpl setPitch:value];
+    [(KarakuriSound *)mSoundImpl setPitch:(float)value];
 }
 
-float KRSound::getVolume() const
+double KRSound::getVolume() const
 {
-    return [(KarakuriSound *)mSoundImpl volume];
+    return (double)[(KarakuriSound *)mSoundImpl volume];
 }
 
-void KRSound::setVolume(float value)
+void KRSound::setVolume(double value)
 {
-    [(KarakuriSound *)mSoundImpl setVolume:value];
+    [(KarakuriSound *)mSoundImpl setVolume:(float)value];
 }
 
 std::string KRSound::to_s() const

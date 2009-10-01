@@ -35,7 +35,7 @@ public:
         @method KRFont
         @abstract フォント名とサイズを指定して、このクラスのインスタンスを生成します。
      */
-	KRFont(const std::string& fontName, float size);
+	KRFont(const std::string& fontName, double size);
 
 	virtual ~KRFont();
     

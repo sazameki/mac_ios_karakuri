@@ -40,7 +40,7 @@ typedef enum KRAudioMixType {
  */
 class KRGame : public KRObject {
     std::string     mTitle;
-    float           mFrameRate;
+    double          mFrameRate;
     int             mScreenWidth;
     int             mScreenHeight;
     bool            mWasChangingWorld;
@@ -86,7 +86,7 @@ public:
         @method getFrameRate
         @abstract ゲームに設定されたフレームレートを取得します。
      */
-    float           getFrameRate() const;
+    double          getFrameRate() const;
     
     /*!
         @method getGameIDForNetwork
@@ -151,7 +151,7 @@ protected:
         @abstract   ゲーム実行のフレームレートを設定します。
         デフォルトのフレームレートは、60.0 fps に設定されています。
      */
-    void            setFrameRate(float value);
+    void            setFrameRate(double value);
     
     /*!
         @method setNetworkGameID

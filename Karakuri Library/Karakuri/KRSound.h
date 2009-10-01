@@ -54,7 +54,7 @@ public:
         @method getVolume
         現在設定されている音量を取得します。
      */
-    float       getVolume() const;
+    double      getVolume() const;
 
     /*!
         @method isPlaying
@@ -79,21 +79,21 @@ public:
         @method getPitch
         @abstract 現在設定されているピッチを取得します。
      */
-    float       getPitch() const;
+    double      getPitch() const;
     
     /*!
         @method setPitch
         @abstract ピッチを設定します。
-        <p>動作が保証されている値の範囲は、0.5f〜2.0f です。</p>
-        <p>デフォルトで設定されている値は 1.0f で、これが通常の再生速度となります。</p>
+        <p>動作が保証されている値の範囲は、0.5〜2.0 です。</p>
+        <p>デフォルトで設定されている値は 1.0 で、これが通常の再生速度となります。</p>
      */
-    void        setPitch(float value);
+    void        setPitch(double value);
     
     /*!
         @method setVolume
         音量を設定します。
      */
-    void        setVolume(float value);
+    void        setVolume(double value);
     
     /*!
         @task 3次元音場の操作（ソースの操作）
@@ -113,36 +113,36 @@ public:
     
 public:
     /*!
-     @task 3次元音場の操作（リスナの操作）
+        @task 3次元音場の操作（リスナの操作）
      */
     
     /*!
-     @method getListenerHorizontalOrientation
-     水平線上でのリスナの向きを取得します。
+        @method getListenerHorizontalOrientation
+        水平線上でのリスナの向きを取得します。
      */
-    static  float       getListenerHorizontalOrientation();
+    static  double      getListenerHorizontalOrientation();
     
     /*!
-     @method getListenerPos
-     3次元空間上でのリスナの現在位置を取得します。
+        @method getListenerPos
+        3次元空間上でのリスナの現在位置を取得します。
      */
     static  KRVector3D  getListenerPos();
     
     /*!
-     @method setListenerHorizontalOrientation
-     水平線上でのリスナの向きを設定します。
+        @method setListenerHorizontalOrientation
+        水平線上でのリスナの向きを設定します。
      */
-    static  void        setListenerHorizontalOrientation(float radAngle);
+    static  void        setListenerHorizontalOrientation(double radAngle);
     
     /*!
-     @method setListenerPos
-     3次元空間上でのリスナの現在位置を設定します。
+        @method setListenerPos
+        3次元空間上でのリスナの現在位置を設定します。
      */
-    static  void        setListenerPos(float x, float y, float z);
+    static  void        setListenerPos(double x, double y, double z);
     
     /*!
-     @method setListenerPos
-     3次元空間上でのリスナの現在位置を設定します。
+        @method setListenerPos
+        3次元空間上でのリスナの現在位置を設定します。
      */
     static  void        setListenerPos(const KRVector3D &vec3);
         

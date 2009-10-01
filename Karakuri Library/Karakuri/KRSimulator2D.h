@@ -27,7 +27,7 @@ public:
 private:
     void        *mCPSpace;
     void        *mCPStaticBody;
-    float       mNextAngle;
+    double      mNextAngle;
     bool        mHasChangedAngle;
     KRVector2D  mGravity;
     std::list<KRShape2D *>  mShapes;
@@ -62,7 +62,7 @@ public:
         @method step
         シミュレータを秒数を指定してステップ実行します。
      */
-    void    step(float time);
+    void    step(double time);
 
 public:
     /*!
@@ -126,7 +126,7 @@ public:
         @method getBodyAngle
         @abstract 現在のボディの角度を取得します。
      */
-    float   getBodyAngle() const;
+    double  getBodyAngle() const;
 
     /*!
         @method getGravity
@@ -138,7 +138,7 @@ public:
         @method setBodyAngle
         ボディの角度を設定します。
      */
-    void    setBodyAngle(float angle);
+    void    setBodyAngle(double angle);
     
     /*!
         @method setGravity

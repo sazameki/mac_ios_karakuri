@@ -7,12 +7,12 @@
 #include "KRPrimitive2D.h"
 
 
-void KRPrimitive2D::drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& color, float width)
+void KRPrimitive2D::drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& color, double width)
 {
     drawLine(p1, p2, color, color, width);
 }
 
-void KRPrimitive2D::drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& c1, const KRColor& c2, float width)
+void KRPrimitive2D::drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& c1, const KRColor& c2, double width)
 {
     KRTexture2D::processBatchedTexture2DDraws();
 

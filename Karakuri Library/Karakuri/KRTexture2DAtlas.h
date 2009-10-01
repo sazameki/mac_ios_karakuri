@@ -71,25 +71,25 @@ public:
         @method draw
         部品の列 (row) を指定して、column 番目の部品を座標 pos に描画します（透明度 alpha）。
      */
-    void    draw(int row, int column, const KRVector2D& pos, float alpha = 1.0f);
+    void    draw(int row, int column, const KRVector2D& pos, double alpha = 1.0);
 
     /*!
         @method draw
         部品の列 (row) を指定して、column 番目の部品を矩形 rect の中に描画します（透明度 alpha）。
      */
-    void    draw(int row, int column, const KRRect2D& rect, float alpha = 1.0f);
+    void    draw(int row, int column, const KRRect2D& rect, double alpha = 1.0);
 
     /*!
         @method draw
         部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として描画します（透明度 alpha）。この際、部品の origin を中心として、ラジアン単位で rotation だけ回転させ、縦横ともに scale 倍して描画を行います。
      */
-    void    draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, float scale=1.0f, float alpha=1.0f);
+    void    draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, double scale=1.0, double alpha=1.0);
 
     /*!
         @method draw
         部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として描画します（透明度 alpha）。この際、部品の origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
      */
-    void    draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, const KRVector2D &scale, float alpha = 1.0f);
+    void    draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, double alpha = 1.0);
 
 public:
     /*!
@@ -114,13 +114,13 @@ public:
         @method draw
         部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として、指定された色で描画します。この際、部品の origin を中心として、ラジアン単位で rotation だけ回転させ、縦横ともに scale 倍して描画を行います。
      */
-    void    draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, float scale, const KRColor& color);
+    void    draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, double scale, const KRColor& color);
 
     /*!
         @method draw
         部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として、指定された色で描画します。この際、部品の origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
      */
-    void    draw(int row, int column, const KRVector2D& centerPos, float rotation, const KRVector2D& origin, const KRVector2D &scale, const KRColor& color);
+    void    draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, const KRColor& color);
     
 public:
     virtual std::string to_s() const;

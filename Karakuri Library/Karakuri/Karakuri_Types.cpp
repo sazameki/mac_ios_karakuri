@@ -10,13 +10,13 @@
 #include "Karakuri_Types.h"
 
 
-#define KR_MATH_DIFF   0.0000001f
+#define KR_MATH_DIFF   0.0000001
 
 
-const KRRect2D      KRRect2DZero    = KRRect2D(0.0f, 0.0f, 0.0f, 0.0f);
-const KRVector2D    KRVector2DZero  = KRVector2D(0.0f, 0.0f);
-const KRVector2D    KRVector2DOne   = KRVector2D(1.0f, 1.0f);
-const KRVector3D    KRVector3DZero   = KRVector3D(0.0f, 0.0f, 0.0f);
+const KRRect2D      KRRect2DZero    = KRRect2D(0.0, 0.0, 0.0, 0.0);
+const KRVector2D    KRVector2DZero  = KRVector2D(0.0, 0.0);
+const KRVector2D    KRVector2DOne   = KRVector2D(1.0, 1.0);
+const KRVector3D    KRVector3DZero   = KRVector3D(0.0, 0.0, 0.0);
 
 
 KRLanguageType gKRLanguage   = KRLanguageEnglish;
@@ -44,11 +44,11 @@ std::string KRObject::to_s() const
 #pragma mark KRRect2D Class Implementation
 
 KRRect2D::KRRect2D()
-: x(0.0f), y(0.0f), width(0.0f), height(0.0f)
+: x(0.0), y(0.0), width(0.0), height(0.0)
 {
 }
 
-KRRect2D::KRRect2D(float _x, float _y, float _width, float _height)
+KRRect2D::KRRect2D(double _x, double _y, double _width, double _height)
 : x(_x), y(_y), width(_width), height(_height)
 {
 }
@@ -63,22 +63,22 @@ KRRect2D::KRRect2D(const KRRect2D& _rect)
 {
 }
 
-float KRRect2D::getMinX() const
+double KRRect2D::getMinX() const
 {
     return x;
 }
 
-float KRRect2D::getMinY() const
+double KRRect2D::getMinY() const
 {
     return y;
 }
 
-float KRRect2D::getMaxX() const
+double KRRect2D::getMaxX() const
 {
     return x + width;
 }
 
-float KRRect2D::getMaxY() const
+double KRRect2D::getMaxY() const
 {
     return y + height;
 }
@@ -108,7 +108,7 @@ KRRect2D KRRect2D::getUnion(const KRRect2D& rect) const
     return KRRect2D::makeUnion(*this, rect);
 }
 
-bool KRRect2D::contains(float _x, float _y) const
+bool KRRect2D::contains(double _x, double _y) const
 {
     return (_x >= x &&
             _y >= y &&
@@ -121,9 +121,9 @@ bool KRRect2D::contains(const KRVector2D& pos) const
     return contains(pos.x, pos.y);
 }
 
-bool KRRect2D::contains(float _x, float _y, float _width, float _height) const
+bool KRRect2D::contains(double _x, double _y, double _width, double _height) const
 {
-    if (width <= 0.0f || height <= 0.0f || _width <= 0.0f || height <= 0.0f) {
+    if (width <= 0.0 || height <= 0.0 || _width <= 0.0 || height <= 0.0) {
         return false;
     }
     
@@ -138,9 +138,9 @@ bool KRRect2D::contains(const KRRect2D& rect) const
     return contains(rect.x, rect.y, rect.width, rect.height);
 }
 
-bool KRRect2D::intersects(float _x, float _y, float _width, float _height) const
+bool KRRect2D::intersects(double _x, double _y, double _width, double _height) const
 {
-    if (width <= 0.0f || height <= 0.0f || _width <= 0.0f || height <= 0.0f) {
+    if (width <= 0.0 || height <= 0.0 || _width <= 0.0 || height <= 0.0) {
         return false;
     }
     
@@ -157,44 +157,44 @@ bool KRRect2D::intersects(const KRRect2D& rect) const
 
 bool KRRect2D::operator==(const KRRect2D& rect) const
 {
-    return (fabsf(x - rect.x) < KR_MATH_DIFF &&
-            fabsf(y - rect.y) < KR_MATH_DIFF &&
-            fabsf(width - rect.width) < KR_MATH_DIFF &&
-            fabsf(height - rect.height) < KR_MATH_DIFF);
+    return (fabs(x - rect.x) < KR_MATH_DIFF &&
+            fabs(y - rect.y) < KR_MATH_DIFF &&
+            fabs(width - rect.width) < KR_MATH_DIFF &&
+            fabs(height - rect.height) < KR_MATH_DIFF);
 }
 
 bool KRRect2D::operator!=(const KRRect2D& rect) const
 {
-    return (fabsf(x - rect.x) >= KR_MATH_DIFF ||
-            fabsf(y - rect.y) >= KR_MATH_DIFF ||
-            fabsf(width - rect.width) >= KR_MATH_DIFF ||
-            fabsf(height - rect.height) >= KR_MATH_DIFF);
+    return (fabs(x - rect.x) >= KR_MATH_DIFF ||
+            fabs(y - rect.y) >= KR_MATH_DIFF ||
+            fabs(width - rect.width) >= KR_MATH_DIFF ||
+            fabs(height - rect.height) >= KR_MATH_DIFF);
 }
 
 KRRect2D KRRect2D::makeIntersection(const KRRect2D& src1, const KRRect2D& src2)
 {
-    float x1 = std::max(src1.getMinX(), src2.getMinX());
-	float y1 = std::max(src1.getMinY(), src2.getMinY());
-	float x2 = std::min(src1.getMaxX(), src2.getMaxX());
-	float y2 = std::min(src1.getMaxY(), src2.getMaxY());
+    double x1 = std::max(src1.getMinX(), src2.getMinX());
+	double y1 = std::max(src1.getMinY(), src2.getMinY());
+	double x2 = std::min(src1.getMaxX(), src2.getMaxX());
+	double y2 = std::min(src1.getMaxY(), src2.getMaxY());
     
     return KRRect2D(x1, y1, x2 - x1, y2 - y1);
 }
 
 KRRect2D KRRect2D::makeUnion(const KRRect2D& src1, const KRRect2D& src2)
 {
-    float x1 = std::min(src1.getMinX(), src2.getMinX());
-	float y1 = std::min(src1.getMinY(), src2.getMinY());
-	float x2 = std::max(src1.getMaxX(), src2.getMaxX());
-	float y2 = std::max(src1.getMaxY(), src2.getMaxY());
+    double x1 = std::min(src1.getMinX(), src2.getMinX());
+	double y1 = std::min(src1.getMinY(), src2.getMinY());
+	double x2 = std::max(src1.getMaxX(), src2.getMaxX());
+	double y2 = std::max(src1.getMaxY(), src2.getMaxY());
     
     if (x2 < x1) {
-	    float t = x1;
+	    double t = x1;
 	    x1 = x2;
 	    x2 = t;
 	}
 	if (y2 < y1) {
-	    float t = y1;
+	    double t = y1;
 	    y1 = y2;
 	    y2 = t;
 	}
@@ -212,11 +212,11 @@ std::string KRRect2D::to_s() const
 #pragma mark KRVector2D Class Implementation
 
 KRVector2D::KRVector2D()
-    : x(0.0f), y(0.0f)
+    : x(0.0), y(0.0)
 {
 }
 
-KRVector2D::KRVector2D(float _x, float _y)
+KRVector2D::KRVector2D(double _x, double _y)
     : x(_x), y(_y)
 {
 }
@@ -250,24 +250,24 @@ KRVector2D& KRVector2D::operator-=(const KRVector2D &vec)
     return *this;
 }
 
-KRVector2D KRVector2D::operator*(float value) const
+KRVector2D KRVector2D::operator*(double value) const
 {
     return KRVector2D(x * value, y * value);
 }
 
-KRVector2D& KRVector2D::operator*=(float value)
+KRVector2D& KRVector2D::operator*=(double value)
 {
     x *= value;
     y *= value;
     return *this;
 }
 
-KRVector2D KRVector2D::operator/(float value) const
+KRVector2D KRVector2D::operator/(double value) const
 {
     return KRVector2D(x / value, y / value);
 }
 
-KRVector2D& KRVector2D::operator/=(float value)
+KRVector2D& KRVector2D::operator/=(double value)
 {
     x /= value;
     y /= value;
@@ -276,14 +276,14 @@ KRVector2D& KRVector2D::operator/=(float value)
 
 bool KRVector2D::operator==(const KRVector2D &vec) const
 {
-    return (fabsf(x - vec.x) < KR_MATH_DIFF &&
-            fabsf(y - vec.y) < KR_MATH_DIFF);
+    return (fabs(x - vec.x) < KR_MATH_DIFF &&
+            fabs(y - vec.y) < KR_MATH_DIFF);
 }
 
 bool KRVector2D::operator!=(const KRVector2D &vec) const
 {
-    return (fabsf(x - vec.x) >= KR_MATH_DIFF ||
-            fabsf(y - vec.y) >= KR_MATH_DIFF);
+    return (fabs(x - vec.x) >= KR_MATH_DIFF ||
+            fabs(y - vec.y) >= KR_MATH_DIFF);
 }
 
 KRVector2D KRVector2D::operator-() const
@@ -291,35 +291,35 @@ KRVector2D KRVector2D::operator-() const
     return KRVector2D(-x, -y);
 }
 
-float KRVector2D::length() const
+double KRVector2D::length() const
 {
-    return sqrtf(x * x + y * y);
+    return sqrt(x * x + y * y);
 }
 
-float KRVector2D::lengthSq() const
+double KRVector2D::lengthSq() const
 {
     return (x * x + y * y);
 }
 
 KRVector2D &KRVector2D::normalize()
 {
-    float theLength = sqrtf(x * x + y * y);
+    double theLength = sqrt(x * x + y * y);
     x /= theLength;
     y /= theLength;
     return *this;
 }
 
-float KRVector2D::angle(const KRVector2D &vec) const
+double KRVector2D::angle(const KRVector2D &vec) const
 {
-    return atan2f(vec.y - y, vec.x - x);
+    return atan2(vec.y - y, vec.x - x);
 }
 
-float KRVector2D::innerProduct(const KRVector2D &vec) const
+double KRVector2D::innerProduct(const KRVector2D &vec) const
 {
     return x * vec.x + y * vec.y;
 }
 
-float KRVector2D::outerProduct(const KRVector2D &vec) const
+double KRVector2D::outerProduct(const KRVector2D &vec) const
 {
     return x * vec.y - y * vec.x;
 }
@@ -335,11 +335,11 @@ std::string KRVector2D::to_s() const
 #pragma mark KRVector3D Class Implementation
 
 KRVector3D::KRVector3D()
-    : x(0.0f), y(0.0f), z(0.0f)
+    : x(0.0), y(0.0), z(0.0)
 {
 }
 
-KRVector3D::KRVector3D(float _x, float _y, float _z)
+KRVector3D::KRVector3D(double _x, double _y, double _z)
     : x(_x), y(_y), z(_z)
 {
 }
@@ -375,12 +375,12 @@ KRVector3D& KRVector3D::operator-=(const KRVector3D &vec)
     return *this;
 }
 
-KRVector3D KRVector3D::operator*(float value) const
+KRVector3D KRVector3D::operator*(double value) const
 {
     return KRVector3D(x * value, y * value, z * value);
 }
 
-KRVector3D& KRVector3D::operator*=(float value)
+KRVector3D& KRVector3D::operator*=(double value)
 {
     x *= value;
     y *= value;
@@ -388,12 +388,12 @@ KRVector3D& KRVector3D::operator*=(float value)
     return *this;
 }
 
-KRVector3D KRVector3D::operator/(float value) const
+KRVector3D KRVector3D::operator/(double value) const
 {
     return KRVector3D(x / value, y / value, z / value);
 }
 
-KRVector3D& KRVector3D::operator/=(float value)
+KRVector3D& KRVector3D::operator/=(double value)
 {
     x /= value;
     y /= value;
@@ -403,16 +403,16 @@ KRVector3D& KRVector3D::operator/=(float value)
 
 bool KRVector3D::operator==(const KRVector3D &vec) const
 {
-    return (fabsf(x - vec.x) < KR_MATH_DIFF &&
-            fabsf(y - vec.y) < KR_MATH_DIFF &&
-            fabsf(z - vec.z) < KR_MATH_DIFF);
+    return (fabs(x - vec.x) < KR_MATH_DIFF &&
+            fabs(y - vec.y) < KR_MATH_DIFF &&
+            fabs(z - vec.z) < KR_MATH_DIFF);
 }
 
 bool KRVector3D::operator!=(const KRVector3D &vec) const
 {
-    return (fabsf(x - vec.x) >= KR_MATH_DIFF ||
-            fabsf(y - vec.y) >= KR_MATH_DIFF ||
-            fabsf(z - vec.z) >= KR_MATH_DIFF);
+    return (fabs(x - vec.x) >= KR_MATH_DIFF ||
+            fabs(y - vec.y) >= KR_MATH_DIFF ||
+            fabs(z - vec.z) >= KR_MATH_DIFF);
 }
 
 KRVector3D KRVector3D::operator-() const
@@ -420,26 +420,26 @@ KRVector3D KRVector3D::operator-() const
     return KRVector3D(-x, -y, -z);
 }
 
-float KRVector3D::length() const
+double KRVector3D::length() const
 {
-    return sqrtf(x * x + y * y + z * z);
+    return sqrt(x * x + y * y + z * z);
 }
 
-float KRVector3D::lengthSq() const
+double KRVector3D::lengthSq() const
 {
     return (x * x + y * y + z * z);
 }
 
 KRVector3D &KRVector3D::normalize()
 {
-    float theLength = sqrtf(x * x + y * y + z * z);
+    double theLength = sqrt(x * x + y * y + z * z);
     x /= theLength;
     y /= theLength;
     z /= theLength;
     return *this;
 }
 
-float KRVector3D::innerProduct(const KRVector3D& vec) const
+double KRVector3D::innerProduct(const KRVector3D& vec) const
 {
     return (x * vec.x + y * vec.y + z * vec.z);
 }

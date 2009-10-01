@@ -460,9 +460,9 @@ public:
 
 #if KR_IPHONE
 public:
-    void    startTouch(unsigned touchID, float x, float y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    moveTouch(unsigned touchID, float x, float y, float dx, float dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    endTouch(unsigned touchID, float x, float y, float dx, float dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    startTouch(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    moveTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    endTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
     
     
@@ -472,7 +472,7 @@ public:
 #if KR_IPHONE
 public:
     // These methods are intended to be used with KarakuriGLView class.
-    void    setAcceleration(float x, float y, float z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    setAcceleration(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
 
 

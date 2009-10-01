@@ -45,8 +45,8 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
 
     imageSize->x = CGImageGetWidth(imageRef);
     imageSize->y = CGImageGetHeight(imageRef);
-    textureSize->x = 1.0f;
-    textureSize->y = 1.0f;
+    textureSize->x = 1.0;
+    textureSize->y = 1.0;
     
     // Adjust image size for texture
     KRVector2D revisedSize = *imageSize;

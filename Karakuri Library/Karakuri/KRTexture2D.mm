@@ -105,12 +105,12 @@ KRTexture2D::~KRTexture2D()
 #pragma mark -
 #pragma mark Status Getting Functions
 
-float KRTexture2D::getWidth() const
+double KRTexture2D::getWidth() const
 {
     return mImageSize.x;
 }
 
-float KRTexture2D::getHeight() const
+double KRTexture2D::getHeight() const
 {
     return mImageSize.y;
 }
@@ -129,91 +129,91 @@ KRVector2D KRTexture2D::getCenterPos() const
 #pragma mark -
 #pragma mark Drawing Functions
 
-void KRTexture2D::draw(float x, float y, float alpha)
+void KRTexture2D::draw(double x, double y, double alpha)
 {
     draw(KRRect2D(KRVector2D(x, y), mImageSize), alpha);
 }
 
-void KRTexture2D::draw(float x, float y, const KRColor& color)
+void KRTexture2D::draw(double x, double y, const KRColor& color)
 {
     draw(KRRect2D(KRVector2D(x, y), mImageSize), color);
 }
 
-void KRTexture2D::draw(const KRVector2D& pos, float alpha)
+void KRTexture2D::draw(const KRVector2D& pos, double alpha)
 {
     draw(KRRect2D(pos, mImageSize), alpha);
 }
 
 void KRTexture2D::draw(const KRVector2D& pos, const KRColor& color)
 {
-    draw(pos, KRRect2DZero, 0.0f, KRVector2DZero, KRVector2D(1.0f, 1.0f), color);
+    draw(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
 }
 
-void KRTexture2D::draw(const KRRect2D& rect, float alpha)
+void KRTexture2D::draw(const KRRect2D& rect, double alpha)
 {
     KRVector2D scale(rect.width / mImageSize.x, rect.height / mImageSize.y);
-    draw(rect.getOrigin(), KRRect2DZero, 0.0f, KRVector2DZero, scale, KRColor(1.0f, 1.0f, 1.0f, alpha));
+    draw(rect.getOrigin(), KRRect2DZero, 0.0, KRVector2DZero, scale, KRColor(1.0, 1.0, 1.0, alpha));
 }
 
 void KRTexture2D::draw(const KRRect2D& rect, const KRColor& color)
 {
-    draw(rect.getOrigin(), KRRect2DZero, 0.0f, KRVector2DZero, KRVector2D(rect.width / mImageSize.x, rect.height / mImageSize.y), color);
+    draw(rect.getOrigin(), KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(rect.width / mImageSize.x, rect.height / mImageSize.y), color);
 }
 
-void KRTexture2D::draw(const KRVector2D& pos, const KRRect2D& srcRect, float alpha)
+void KRTexture2D::draw(const KRVector2D& pos, const KRRect2D& srcRect, double alpha)
 {
-    draw(pos, srcRect, 0.0f, KRVector2DZero, KRVector2D(1.0f, 1.0f), KRColor(1.0f, 1.0f, 1.0f, alpha));
+    draw(pos, srcRect, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), KRColor(1.0, 1.0, 1.0, alpha));
 }
 
 void KRTexture2D::draw(const KRVector2D& pos, const KRRect2D& srcRect, const KRColor& color)
 {
-    draw(pos, srcRect, 0.0f, KRVector2DZero, KRVector2D(1.0f, 1.0f), color);
+    draw(pos, srcRect, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
 }
 
-void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D& origin, float scale, float alpha)
+void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D& origin, double scale, double alpha)
 {
-    draw(centerPos, srcRect, rotation, origin, KRVector2D(scale, scale), KRColor(1.0f, 1.0f, 1.0f, alpha));
+    draw(centerPos, srcRect, rotation, origin, KRVector2D(scale, scale), KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D& origin, float scale, const KRColor& color)
+void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D& origin, double scale, const KRColor& color)
 {
     draw(centerPos, srcRect, rotation, origin, KRVector2D(scale, scale), color);
 }
 
-void KRTexture2D::draw(const KRRect2D& destRect, const KRRect2D& srcRect, float alpha)
+void KRTexture2D::draw(const KRRect2D& destRect, const KRRect2D& srcRect, double alpha)
 {
     KRRect2D theSrcRect = srcRect;
-    if (srcRect.width == 0.0f && srcRect.height == 0.0f) {
-        theSrcRect.x = 0.0f;
-        theSrcRect.y = 0.0f;
+    if (srcRect.width == 0.0 && srcRect.height == 0.0) {
+        theSrcRect.x = 0.0;
+        theSrcRect.y = 0.0;
         theSrcRect.width = mImageSize.x;
         theSrcRect.height = mImageSize.y;
     }
     
     KRVector2D scale(destRect.width / theSrcRect.width, destRect.height / theSrcRect.height);
-    draw(destRect.getOrigin(), srcRect, 0.0f, KRVector2DZero, scale, KRColor(1.0f, 1.0f, 1.0f, alpha));
+    draw(destRect.getOrigin(), srcRect, 0.0, KRVector2DZero, scale, KRColor(1.0, 1.0, 1.0, alpha));
 }
 
 void KRTexture2D::draw(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color)
 {
     KRRect2D theSrcRect = srcRect;
-    if (srcRect.width == 0.0f && srcRect.height == 0.0f) {
-        theSrcRect.x = 0.0f;
-        theSrcRect.y = 0.0f;
+    if (srcRect.width == 0.0 && srcRect.height == 0.0) {
+        theSrcRect.x = 0.0;
+        theSrcRect.y = 0.0;
         theSrcRect.width = mImageSize.x;
         theSrcRect.height = mImageSize.y;
     }
     
     KRVector2D scale(destRect.width / theSrcRect.width, destRect.height / theSrcRect.height);
-    draw(destRect.getOrigin(), srcRect, 0.0f, KRVector2DZero, scale, color);
+    draw(destRect.getOrigin(), srcRect, 0.0, KRVector2DZero, scale, color);
 }
 
-void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D &origin, const KRVector2D &scale, float alpha)
+void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha)
 {
-    draw(centerPos, srcRect, rotation, origin, scale, KRColor(1.0f, 1.0f, 1.0f, alpha));
+    draw(centerPos, srcRect, rotation, origin, scale, KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
+void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
 {
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
@@ -233,9 +233,9 @@ void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, flo
     }
         
     KRRect2D theSrcRect = srcRect;
-    if (srcRect.width == 0.0f && srcRect.height == 0.0f) {
-        theSrcRect.x = 0.0f;
-        theSrcRect.y = 0.0f;
+    if (srcRect.width == 0.0 && srcRect.height == 0.0) {
+        theSrcRect.x = 0.0;
+        theSrcRect.y = 0.0;
         theSrcRect.width = mImageSize.x;
         theSrcRect.height = mImageSize.y;
     }
@@ -285,9 +285,9 @@ void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, flo
     }
     
     // Rotate the 4 coord points
-    if (rotation != 0.0f) {
-        float cos_value = cosf(rotation);
-        float sin_value = sinf(rotation);
+    if (rotation != 0.0) {
+        double cos_value = cos(rotation);
+        double sin_value = sin(rotation);
         float p1_x2 = p1_x * cos_value - p1_y * sin_value;
         float p2_x2 = p2_x * cos_value - p2_y * sin_value;
         float p3_x2 = p3_x * cos_value - p3_y * sin_value;

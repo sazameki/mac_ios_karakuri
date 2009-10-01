@@ -33,9 +33,9 @@ public:
 	virtual ~KRFPSDisplay();
     
 public:
-    void    drawFPS(float x, float y, float fps);
-    void    drawTPF(float x, float y, float tpf);
-    void    drawBPF(float x, float y, float bpf);
+    void    drawFPS(double x, double y, double fps);
+    void    drawTPF(double x, double y, double tpf);
+    void    drawBPF(double x, double y, double bpf);
 
 public:
     virtual std::string to_s() const;

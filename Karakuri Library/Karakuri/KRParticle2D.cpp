@@ -17,8 +17,8 @@ static GLenum sPointSpriteCoordReplaceName = 0;
     @method KRParticle2D
     Constructor
  */
-KRParticle2D::KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, float size,
-                           float deltaRed, float deltaGreen, float deltaBlue, float deltaAlpha, float deltaSize)
+KRParticle2D::KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
+                           double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize)
     : mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mColor(color), mSize(size),
       mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaSize(deltaSize)
 {
@@ -73,22 +73,22 @@ void KRParticle2DSystem::init()
     mColor = KRColor::White;
     
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-    mSize = 64.0f;
+    mSize = 64.0;
 #else
-    mMinSize = 1.0f;
-    mMaxSize = 64.0f;
+    mMinSize = 1.0;
+    mMaxSize = 64.0;
 #endif
     
-    mMinV = KRVector2D(-8.0f, -8.0f);
-    mMaxV = KRVector2D(8.0f, 8.0f);
+    mMinV = KRVector2D(-8.0, -8.0);
+    mMaxV = KRVector2D(8.0, 8.0);
     
     mGravity = KRVector2DZero;
     
-    mDeltaSize = 0.0f;
-    mDeltaRed = 0.0f;
-    mDeltaGreen = 0.0f;
-    mDeltaBlue = 0.0f;
-    mDeltaAlpha = -2.0f;
+    mDeltaSize = 0.0;
+    mDeltaRed = 0.0;
+    mDeltaGreen = 0.0;
+    mDeltaBlue = 0.0;
+    mDeltaAlpha = -2.0;
     
     mBlendMode = KRBlendModeAddition;
     
@@ -187,22 +187,22 @@ KRColor KRParticle2DSystem::getColor() const
     return mColor;
 }
 
-float KRParticle2DSystem::getDeltaRed() const
+double KRParticle2DSystem::getDeltaRed() const
 {
     return mDeltaRed;
 }
 
-float KRParticle2DSystem::getDeltaGreen() const
+double KRParticle2DSystem::getDeltaGreen() const
 {
     return mDeltaGreen;
 }
 
-float KRParticle2DSystem::getDeltaBlue() const
+double KRParticle2DSystem::getDeltaBlue() const
 {
     return mDeltaBlue;
 }
 
-float KRParticle2DSystem::getDeltaAlpha() const
+double KRParticle2DSystem::getDeltaAlpha() const
 {
     return mDeltaAlpha;
 }
@@ -236,7 +236,7 @@ void KRParticle2DSystem::setColor(const KRColor& color)
     mColor = color;
 }
 
-void KRParticle2DSystem::setColorDelta(float red, float green, float blue, float alpha)
+void KRParticle2DSystem::setColorDelta(double red, double green, double blue, double alpha)
 {
     mDeltaRed = red;
     mDeltaGreen = green;
@@ -261,47 +261,47 @@ void KRParticle2DSystem::setGenerateCount(int count)
 
 #if KR_PARTICLE2D_USE_POINT_SPRITE
 
-float KRParticle2DSystem::getSize() const
+double KRParticle2DSystem::getSize() const
 {
     return mSize;
 }
 
-void KRParticle2DSystem::setSize(float size)
+void KRParticle2DSystem::setSize(double size)
 {
     // We limit the size to 64 pixels, because the size of point sprite is limited to 64 pixels on iPhone
-    if (size < 0.0f) {
-        size = 0.0f;
-    } else if (size > 64.0f) {
-        size = 64.0f;
+    if (size < 0.0) {
+        size = 0.0;
+    } else if (size > 64.0) {
+        size = 64.0;
     }
     mSize = size;
 }
 
 #else
 
-float KRParticle2DSystem::getMinSize() const
+double KRParticle2DSystem::getMinSize() const
 {
     return mMinSize;
 }
 
-float KRParticle2DSystem::getMaxSize() const
+double KRParticle2DSystem::getMaxSize() const
 {
     return mMaxSize;
 }
 
-void KRParticle2DSystem::setMinSize(float size)
+void KRParticle2DSystem::setMinSize(double size)
 {
     mMinSize = size;
 }
 
-void KRParticle2DSystem::setMaxSize(float size)
+void KRParticle2DSystem::setMaxSize(double size)
 {
     mMaxSize = size;
 }
 
 #endif
 
-void KRParticle2DSystem::setSizeDelta(float value)
+void KRParticle2DSystem::setSizeDelta(double value)
 {
     mDeltaSize = value;
 }
@@ -351,9 +351,9 @@ void KRParticle2DSystem::step()
                 KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
                 
     #if KR_PARTICLE2D_USE_POINT_SPRITE
-                float theSize = mSize;
+                double theSize = mSize;
     #else
-                float theSize = KRRandFloat() * (mMaxSize - mMinSize) + mMinSize;
+                double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
     #endif
                 
                 KRParticle2D *particle = new KRParticle2D(mLife, mStartPos, theV, mGravity, mColor, theSize,
@@ -376,9 +376,9 @@ void KRParticle2DSystem::step()
                 for (int j = 0; j < createCount; j++) {
                     KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-                    float theSize = mSize;
+                    double theSize = mSize;
 #else
-                    float theSize = KRRandFloat() * (mMaxSize - mMinSize) + mMinSize;
+                    double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
 #endif
                     KRParticle2D *particle = new KRParticle2D(mLife, mGenInfos[i].centerPos, theV, mGravity, mColor, theSize,
                                                               mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize);
@@ -424,10 +424,10 @@ void KRParticle2DSystem::draw()
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     
-    //float constant = 0.0f;
-    //float linear = 0.002f;
-    //float quadratic = 0.00001f;
-    //float coefficients[] = { constant, linear, quadratic };
+    //double constant = 0.0;
+    //double linear = 0.002;
+    //double quadratic = 0.00001;
+    //double coefficients[] = { constant, linear, quadratic };
     //glPointParameterfv(GL_POINT_DISTANCE_ATTENUATION, coefficients);    
 	//glPointParameterf(GL_POINT_FADE_THRESHOLD_SIZE, 60.0f);
 	glPointParameterf(GL_POINT_SIZE_MIN, 0.0f);
@@ -439,14 +439,14 @@ void KRParticle2DSystem::draw()
     GLfloat *p = data;
     
     for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
-        float ratio = (1.0f - (float)((*it)->mLife) / (*it)->mBaseLife);
+        double ratio = (1.0 - (*it)->mLife / (*it)->mBaseLife);
         //float ratio2 = ratio * ratio;
         *(p++) = (*it)->mPos.x;
         *(p++) = (*it)->mPos.y;
-        *(p++) = KRMax((*it)->mColor.r + (*it)->mDeltaRed * ratio, 0.0f);
-        *(p++) = KRMax((*it)->mColor.g + (*it)->mDeltaGreen * ratio, 0.0f);
-        *(p++) = KRMax((*it)->mColor.b + (*it)->mDeltaBlue * ratio, 0.0f);
-        *(p++) = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0f);
+        *(p++) = KRMax((*it)->mColor.r + (*it)->mDeltaRed * ratio, 0.0);
+        *(p++) = KRMax((*it)->mColor.g + (*it)->mDeltaGreen * ratio, 0.0);
+        *(p++) = KRMax((*it)->mColor.b + (*it)->mDeltaBlue * ratio, 0.0);
+        *(p++) = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0);
     }
     glVertexPointer(2, GL_FLOAT, 6 * sizeof(GLfloat), data);  
     glColorPointer(4, GL_FLOAT, 6 * sizeof(GLfloat), data + 2);  
@@ -463,13 +463,13 @@ void KRParticle2DSystem::draw()
     
     KRVector2D centerPos = mTexture->getCenterPos();
     for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
-        float ratio = (1.0f - (float)((*it)->mLife) / (*it)->mBaseLife);
-        float size = KRMax((*it)->mSize + (*it)->mDeltaSize * ratio, 0.0f);
+        double ratio = (1.0 - (*it)->mLife / (*it)->mBaseLife);
+        double size = KRMax((*it)->mSize + (*it)->mDeltaSize * ratio, 0.0);
         KRColor color;
-        color.r = KRMax((*it)->mColor.r + (*it)->mDeltaRed * ratio, 0.0f);
-        color.g = KRMax((*it)->mColor.g + (*it)->mDeltaGreen * ratio, 0.0f);
-        color.b = KRMax((*it)->mColor.b + (*it)->mDeltaBlue * ratio, 0.0f);
-        color.a = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0f);
+        color.r = KRMax((*it)->mColor.r + (*it)->mDeltaRed * ratio, 0.0);
+        color.g = KRMax((*it)->mColor.g + (*it)->mDeltaGreen * ratio, 0.0);
+        color.b = KRMax((*it)->mColor.b + (*it)->mDeltaBlue * ratio, 0.0);
+        color.a = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0);
         
         mTexture->draw(KRRect2D((*it)->mPos.x-size/2, (*it)->mPos.y-size/2, size, size), color);
     }

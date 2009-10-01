@@ -20,16 +20,16 @@
 class KRSlider : public KRControl {
 
 protected:
-    float   mMaxValue;
-    float   mMinValue;
-    float   mValue;
+    double  mMaxValue;
+    double  mMinValue;
+    double  mValue;
     
     std::string     mThumbTextureName;
     KRTexture2D     *mThumbTexture;
 
     std::string     mBackTextureName;
     KRTexture2D     *mBackTexture;
-    float           mBackTextureEdgeSize;
+    double          mBackTextureEdgeSize;
 
 public:
 	KRSlider(const KRRect2D& frame);
@@ -48,38 +48,38 @@ public:
         @method getMaxValue
         スライダの最大値を取得します。
      */
-    float   getMaxValue() const;
+    double  getMaxValue() const;
 
     /*!
         @method getMinValue
         スライダの最小値を取得します。
      */
-    float   getMinValue() const;
+    double  getMinValue() const;
     
     /*!
         @method getValue
         スライダの現在の値を取得します。
      */
-    float   getValue() const;
+    double  getValue() const;
 
     /*!
         @method setMaxValue
         スライダの最大値を設定します。
      */
-    void    setMaxValue(float value);
+    void    setMaxValue(double value);
 
     /*!
         @method setMinValue
         スライダの最小値を設定します。
      */
-    void    setMinValue(float value);
+    void    setMinValue(double value);
     
     /*!
         @method setValue
         @abstract スライダの現在の値を設定します。
         この関数による値の設定では、KRWorld クラスの sliderValueChanged() 関数は呼ばれません。
      */
-    void    setValue(float value);
+    void    setValue(double value);
     
     /*!
         @task 見た目の設定
@@ -89,7 +89,7 @@ public:
         @method setTextureNames
         スライダの背景画像とつまみ画像に使用するテクスチャの名前を設定します。
      */
-    void    setTextureNames(const std::string& backName, float edgeSize, const std::string& thumbName);
+    void    setTextureNames(const std::string& backName, double edgeSize, const std::string& thumbName);
 
 };
 

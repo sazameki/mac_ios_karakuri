@@ -46,6 +46,20 @@ public:
 
 
 /*!
+    @function KRRandDouble
+    @group  Game Foundation
+    @abstract 0.0 ～ 1.0 の範囲で double 型の擬似乱数をリターンします。
+ */
+double  KRRandDouble();
+
+/*!
+    @function KRRandFloat
+    @group  Game Foundation
+    @abstract 0.0f ～ 1.0f の範囲で float 型の擬似乱数をリターンします。
+ */
+float   KRRandFloat();
+
+/*!
     @function KRRandInt
     @group  Game Foundation
     @abstract int 型の擬似乱数をリターンします。
@@ -60,21 +74,6 @@ int     KRRandInt();
     指定された範囲内で取り得るすべての値が、ほぼ均等な確率で生成されます。
  */
 int     KRRandInt(int upper);
-
-/*!
-    @function KRRandFloat
-    @group  Game Foundation
-    @abstract 0.0f ～ 1.0f の範囲で float 型の擬似乱数をリターンします。
- */
-float   KRRandFloat();
-
-/*!
-    @function KRRandDouble
-    @group  Game Foundation
-    @abstract 0.0 ～ 1.0 の範囲で double 型の擬似乱数をリターンします。
- */
-double  KRRandDouble();
-
 
 /*
     !@var    gKRRandInst

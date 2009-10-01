@@ -86,6 +86,20 @@ bool KRSaveBox::getBoolValue(const std::string &key) const
     return ret;
 }
 
+double KRSaveBox::getDoubleValue(const std::string &key) const
+{
+	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    double ret = [[defaults objectForKey:keyStr] doubleValue];
+    
+    [keyStr release];
+    [keyStrData release];
+    
+    return ret;
+}
+
 float KRSaveBox::getFloatValue(const std::string &key) const
 {
 	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
@@ -143,6 +157,18 @@ void KRSaveBox::setBoolValue(const std::string &key, bool boolValue)
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:boolValue forKey:keyStr];
+    
+    [keyStr release];
+    [keyStrData release];
+}
+
+void KRSaveBox::setDoubleValue(const std::string &key, double doubleValue)
+{
+	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithDouble:doubleValue] forKey:keyStr];
     
     [keyStr release];
     [keyStrData release];

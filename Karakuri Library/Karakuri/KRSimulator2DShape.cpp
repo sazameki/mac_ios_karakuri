@@ -14,7 +14,7 @@
 #pragma mark Shape Base
 
 KRShape2D::KRShape2D()
-    : mCPBody(NULL), mCPShape(NULL), mIsStatic(false), mMass(1.0f), mElasticity(0.0f), mFriction(1.0f),
+    : mCPBody(NULL), mCPShape(NULL), mIsStatic(false), mMass(1.0), mElasticity(0.0), mFriction(1.0),
       mIsRemovedFromSpace(true), mRepresentedObject(NULL), mSimulator(NULL), mCollisionID(0), mTag(0)
 {
     // Nothing to do.
@@ -48,17 +48,17 @@ void KRShape2D::setCollisionID(unsigned theID)
     }
 }
 
-void KRShape2D::setMass(float value)
+void KRShape2D::setMass(double value)
 {
     mMass = value;
 }
 
-void KRShape2D::setElasticity(float value)
+void KRShape2D::setElasticity(double value)
 {
     mElasticity = value;
 }
 
-void KRShape2D::setFriction(float value)
+void KRShape2D::setFriction(double value)
 {
     mFriction = value;
 }
@@ -71,18 +71,18 @@ KRVector2D KRShape2D::getCenterPos() const
     return KRVector2D(((cpBody *)mCPBody)->p.x, ((cpBody *)mCPBody)->p.y);
 }
 
-float KRShape2D::getAngle() const
+double KRShape2D::getAngle() const
 {
     if (mIsStatic) {
-        return 0.0f;
+        return 0.0;
     }    
     return ((cpBody *)mCPBody)->a;
 }
 
-float KRShape2D::getAngleVelocity() const
+double KRShape2D::getAngleVelocity() const
 {
     if (mIsStatic) {
-        return 0.0f;
+        return 0.0;
     }    
     return ((cpBody *)mCPBody)->w;
 }
@@ -95,7 +95,7 @@ KRVector2D KRShape2D::getVelocity() const
     return KRVector2D(((cpBody *)mCPBody)->v.x, ((cpBody *)mCPBody)->v.y);
 }
 
-void KRShape2D::setAngle(float angle)
+void KRShape2D::setAngle(double angle)
 {
     if (mIsStatic) {
         return;
@@ -119,7 +119,7 @@ void KRShape2D::setVelocity(const KRVector2D& v)
     cpBodySetVel((cpBody *)mCPBody, cpv(v.x, v.y));
 }
 
-void KRShape2D::setAngleVelocity(float w)
+void KRShape2D::setAngleVelocity(double w)
 {
     if (mIsStatic) {
         return;
@@ -132,7 +132,7 @@ void *KRShape2D::getRepresentedObject() const
     return mRepresentedObject;
 }
 
-void KRShape2D::setRepresentedObject(float *anObj)
+void KRShape2D::setRepresentedObject(void *anObj)
 {
     mRepresentedObject = anObj;
 }
@@ -190,7 +190,7 @@ std::string KRShape2D::to_s() const
 #pragma mark Line Shape
 
 KRShape2DLine::KRShape2DLine(const KRVector2D& p1, const KRVector2D& p2, bool isStatic)
-    : mP1(p1), mP2(p2), mLineWidth(0.0f)
+    : mP1(p1), mP2(p2), mLineWidth(0.0)
 {
     setStatic(isStatic);
 }
@@ -214,7 +214,7 @@ KRVector2D KRShape2DLine::getP2() const
     return KRVector2D(b.x, b.y);
 }
 
-void KRShape2DLine::setLineWidth(float width)
+void KRShape2DLine::setLineWidth(double width)
 {
     mLineWidth = width;
 }
@@ -365,7 +365,7 @@ std::string KRShape2DBox::to_s() const
 #pragma mark -
 #pragma mark Circle Shape
 
-KRShape2DCircle::KRShape2DCircle(const KRVector2D& centerPos, float radius, bool isStatic)
+KRShape2DCircle::KRShape2DCircle(const KRVector2D& centerPos, double radius, bool isStatic)
     : mRadius(radius)
 {
     setStatic(isStatic);

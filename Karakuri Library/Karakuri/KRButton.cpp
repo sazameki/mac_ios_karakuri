@@ -120,7 +120,7 @@ void KRButton::setTitle(const std::string& text)
     mLabel->setText(text);
 }
 
-void KRButton::setTextureNames(const std::string& normalName, const std::string& highlightedName, float textureEdgeSize)
+void KRButton::setTextureNames(const std::string& normalName, const std::string& highlightedName, double textureEdgeSize)
 {
     mTextureNameNormal = normalName;
     mTextureNameHighlighted = highlightedName;

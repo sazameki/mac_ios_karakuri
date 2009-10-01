@@ -55,25 +55,25 @@ typedef struct KRRect2D : public KRObject {
         @var x
         矩形の位置のX座標です。
      */
-    float x;
+    double x;
 
     /*!
         @var y
         矩形の位置のY座標です。
      */
-    float y;
+    double y;
 
     /*!
         @var width
         矩形の横幅です。
      */
-    float width;
+    double width;
 
     /*!
         @var height
         矩形の高さです。
      */
-    float height;
+    double height;
     
     /*!
         @task コンストラクタ
@@ -89,7 +89,7 @@ typedef struct KRRect2D : public KRObject {
         @method KRRect2D
         位置と幅と高さを指定してこの矩形を作成します。
      */
-    KRRect2D(float _x, float _y, float _width, float _height);
+    KRRect2D(double _x, double _y, double _width, double _height);
     
     /*!
         @method KRRect2D
@@ -112,7 +112,7 @@ typedef struct KRRect2D : public KRObject {
         @method contains
         この矩形が与えられた座標を含むかどうかをリターンします。
      */
-    bool    contains(float _x, float _y) const;
+    bool    contains(double _x, double _y) const;
 
     /*!
         @method contains
@@ -124,7 +124,7 @@ typedef struct KRRect2D : public KRObject {
         @method contains
         この矩形が、与えられた位置座標とサイズを元にした矩形を完全に含むかどうかをリターンします。
      */
-    bool    contains(float _x, float _y, float _width, float _height) const;
+    bool    contains(double _x, double _y, double _width, double _height) const;
 
     /*!
         @method contains
@@ -136,7 +136,7 @@ typedef struct KRRect2D : public KRObject {
         @method intersects
         与えられた位置座標とサイズを元にした矩形とこの矩形が重なっているかどうかをリターンします。
      */
-    bool    intersects(float _x, float _y, float _width, float _height) const;
+    bool    intersects(double _x, double _y, double _width, double _height) const;
     
     /*!
         @method intersects
@@ -165,25 +165,25 @@ typedef struct KRRect2D : public KRObject {
         @method getMaxX
         この矩形を構成する最大のX座標をリターンします。
      */
-    float getMaxX() const;
+    double getMaxX() const;
     
     /*!
         @method getMaxY
         この矩形を構成する最大のY座標をリターンします。
      */
-    float getMaxY() const;
+    double getMaxY() const;
 
     /*!
         @method getMinX
         この矩形を構成する最小のX座標をリターンします。
      */
-    float getMinX() const;
+    double getMinX() const;
 
     /*!
         @method getMinY
         この矩形を構成する最小のY座標をリターンします。
      */
-    float getMinY() const;
+    double getMinY() const;
     
     /*!
         @method getOrigin
@@ -237,13 +237,13 @@ typedef struct KRVector2D : public KRObject {
         @var    x
         @abstract   このベクトルのX成分を表す数値です。
      */
-    float   x;
+    double   x;
 
     /*!
         @var    y
         @abstract   このベクトルのY成分を表す数値です。
      */
-    float   y;
+    double   y;
 
     /*!
         @task コンストラクタ
@@ -251,7 +251,7 @@ typedef struct KRVector2D : public KRObject {
     
     /*!
         @method KRVector2D
-        このベクトルを、x=0.0f, y=0.0f で初期化します。
+        このベクトルを、x=0.0, y=0.0 で初期化します。
      */
     KRVector2D();
 
@@ -261,7 +261,7 @@ typedef struct KRVector2D : public KRObject {
         @param _y   Y成分
         このベクトルを、与えられた2つの数値で初期化します。
      */
-    KRVector2D(float _x, float _y);
+    KRVector2D(double _x, double _y);
     
     /*!
         @method KRVector2D
@@ -277,25 +277,25 @@ typedef struct KRVector2D : public KRObject {
         @method angle
         このベクトルと与えられたベクトルが成す角度をリターンします。
      */
-    float   angle(const KRVector2D &vec) const;    
+    double   angle(const KRVector2D &vec) const;    
     
     /*!
         @method innerProduct
         与えられたベクトルを右辺値として、このベクトルとの内積を計算します。
      */
-    float innerProduct(const KRVector2D& vec) const;
+    double innerProduct(const KRVector2D& vec) const;
 
     /*!
         @method length
         このベクトルの長さをリターンします。
      */
-    float   length() const;
+    double   length() const;
 
     /*!
         @method lengthSq
         このベクトルの長さの2乗をリターンします。
      */
-    float   lengthSq() const;
+    double   lengthSq() const;
     
     /*!
         @method normalize
@@ -307,7 +307,7 @@ typedef struct KRVector2D : public KRObject {
         @method outerProduct
         与えられたベクトルを右辺値として、このベクトルとの外積を計算します。
      */
-    float outerProduct(const KRVector2D& vec) const;
+    double outerProduct(const KRVector2D& vec) const;
     
     
     /*!
@@ -337,22 +337,22 @@ typedef struct KRVector2D : public KRObject {
     /*!
         @method operator/
      */
-    KRVector2D operator/(float value) const;
+    KRVector2D operator/(double value) const;
 
     /*!
         @method operator/=
      */
-    KRVector2D& operator/=(float value);
+    KRVector2D& operator/=(double value);
 
     /*!
         @method operator*
      */
-    KRVector2D operator*(float value) const;
+    KRVector2D operator*(double value) const;
 
     /*!
         @method operator*=
      */
-    KRVector2D& operator*=(float value);
+    KRVector2D& operator*=(double value);
     
     /*!
         @method operator==
@@ -386,19 +386,19 @@ typedef struct KRVector3D : public KRObject {
         @var x
         このベクトルのX成分を表す数値です。
      */
-    float   x;
+    double   x;
     
     /*!
         @var y
         このベクトルのY成分を表す数値です。
      */    
-    float   y;
+    double   y;
 
     /*!
         @var z
         このベクトルのZ成分を表す数値です。
      */    
-    float   z;
+    double   z;
     
     /*!
         @task コンストラクタ
@@ -406,7 +406,7 @@ typedef struct KRVector3D : public KRObject {
     
     /*!
         @method KRVector3D
-        このベクトルを、x=0.0f, y=0.0f, z=0.0f で初期化します。
+        このベクトルを、x=0.0, y=0.0, z=0.0 で初期化します。
      */
     KRVector3D();
 
@@ -414,7 +414,7 @@ typedef struct KRVector3D : public KRObject {
         @method KRVector3D
         このベクトルを、与えられた3つの数値で初期化します。
      */
-    KRVector3D(float _x, float _y, float _z);
+    KRVector3D(double _x, double _y, double _z);
 
     /*!
         @method KRVector3D
@@ -430,19 +430,19 @@ typedef struct KRVector3D : public KRObject {
         @method innerProduct
         与えられたベクトルを右辺値として、このベクトルとの内積を計算します。
      */
-    float innerProduct(const KRVector3D& vec) const;
+    double innerProduct(const KRVector3D& vec) const;
 
     /*!
         @method length
         このベクトルの長さをリターンします。
      */
-    float   length() const;
+    double  length() const;
     
     /*!
         @method lengthSq
         このベクトルの長さの2乗をリターンします。
      */
-    float   lengthSq() const;
+    double  lengthSq() const;
     
     /*!
         @method normalize
@@ -484,22 +484,22 @@ typedef struct KRVector3D : public KRObject {
     /*!
         @method operator/
      */
-    KRVector3D operator/(float value) const;
+    KRVector3D operator/(double value) const;
 
     /*!
         @method operator/=
      */
-    KRVector3D& operator/=(float value);
+    KRVector3D& operator/=(double value);
     
     /*!
         @method operator*
      */
-    KRVector3D operator*(float value) const;
+    KRVector3D operator*(double value) const;
 
     /*!
         @method operator*=
      */
-    KRVector3D& operator*=(float value);
+    KRVector3D& operator*=(double value);
     
     /*!
         @method operator==

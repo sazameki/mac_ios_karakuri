@@ -169,25 +169,25 @@ public:
         @var r
         色の赤成分
      */
-    float r;
+    double r;
     
     /*!
         @var g
         色の緑成分
      */
-    float g;
+    double g;
     
     /*!
         @var b
         色の青成分
      */
-    float b;
+    double b;
     
     /*!
         @var a
         色のアルファ成分
      */
-    float a;
+    double a;
     
 public:
     /*!
@@ -196,7 +196,7 @@ public:
     
     /*!
         @method KRColor
-        @abstract 不透明な黒（r=0.0f, g=0.0f, b=0.0f, a=1.0f）を生成します。
+        @abstract 不透明な黒（r=0.0, g=0.0, b=0.0, a=1.0）を生成します。
      */
     KRColor();
     
@@ -208,15 +208,15 @@ public:
     
     /*!
         @method KRColor
-        @abstract 赤、緑、青の各要素を 0.0f〜1.0f で表して色を指定します。
+        @abstract 赤、緑、青の各要素を 0.0〜1.0 で表して色を指定します。
      */
-    KRColor(float r, float g, float b);
+    KRColor(double r, double g, double b);
     
     /*!
         @method KRColor
-        @abstract 赤、緑、青、アルファ値の各要素を 0.0f〜1.0f で表して色を指定します。
+        @abstract 赤、緑、青、アルファ値の各要素を 0.0〜1.0 で表して色を指定します。
      */
-    KRColor(float r, float g, float b, float a);
+    KRColor(double r, double g, double b, double a);
     
     /*!
         @method KRColor

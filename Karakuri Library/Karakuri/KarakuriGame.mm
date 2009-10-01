@@ -17,7 +17,7 @@ static BOOL sIsUpdatingModel = NO;
 
 
 KRGame::KRGame()
-    : mTitle("Karakuri Game"), mFrameRate(60.0f), mScreenWidth(480), mScreenHeight(320),
+    : mTitle("Karakuri Game"), mFrameRate(60.0), mScreenWidth(480), mScreenHeight(320),
       mAudioMixType(KRAudioMixTypeAmbientSolo), mShowsMouseCursor(false), mShowsFPS(false),
       mGameIDForNetwork("")
 {
@@ -38,12 +38,12 @@ void KRGame::setTitle(const std::string& str)
     mTitle = str;
 }
 
-float KRGame::getFrameRate() const
+double KRGame::getFrameRate() const
 {
     return mFrameRate;
 }
 
-void KRGame::setFrameRate(float value)
+void KRGame::setFrameRate(double value)
 {
     mFrameRate = value;
 }

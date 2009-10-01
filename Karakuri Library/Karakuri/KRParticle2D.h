@@ -34,17 +34,17 @@ public:
     KRVector2D  mV;
     KRVector2D  mGravity;
     KRColor     mColor;
-    float       mSize;
+    double      mSize;
     
-    float       mDeltaSize;
-    float       mDeltaRed;
-    float       mDeltaGreen;
-    float       mDeltaBlue;
-    float       mDeltaAlpha;
+    double      mDeltaSize;
+    double      mDeltaRed;
+    double      mDeltaGreen;
+    double      mDeltaBlue;
+    double      mDeltaAlpha;
     
 public:
-	KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, float size,
-                 float deltaRed, float deltaGreen, float deltaBlue, float deltaAlpha, float deltaSize);
+	KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
+                 double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize);
     
 public:
     bool    step();
@@ -80,21 +80,21 @@ class KRParticle2DSystem : public KRObject {
     KRBlendMode     mBlendMode;
     
     KRColor         mColor;
-    float           mDeltaSize;
-    float           mDeltaRed;
-    float           mDeltaGreen;
-    float           mDeltaBlue;
-    float           mDeltaAlpha;
+    double          mDeltaSize;
+    double          mDeltaRed;
+    double          mDeltaGreen;
+    double          mDeltaBlue;
+    double          mDeltaAlpha;
     
     bool            mDoLoop;
     KRParticle2DGenInfo mGenInfos[KRParticle2DGenMaxCount];
     int             mActiveGenCount;
     
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-    float           mSize;
+    double          mSize;
 #else
-    float           mMinSize;
-    float           mMaxSize;
+    double          mMinSize;
+    double          mMaxSize;
 #endif
     
 public:
@@ -189,7 +189,7 @@ public:
         @method setColorDelta
         パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、各色成分の変化の割り合いを設定します。
      */
-    void    setColorDelta(float red, float green, float blue, float alpha);
+    void    setColorDelta(double red, double green, double blue, double alpha);
     
     /*!
         @method setGenerateCount
@@ -201,7 +201,7 @@ public:
     /*!
         @method setGravity
         @abstract 各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を設定します。
-        デフォルトでは加速度は (0.0f, 0.0f) に設定されています。
+        デフォルトでは加速度は (0.0, 0.0) に設定されています。
      */
     void    setGravity(const KRVector2D& a);
     
@@ -235,22 +235,22 @@ public:
         @method setSizeDelta
         パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、サイズの変化の割り合いを設定します。
      */
-    void    setSizeDelta(float value);
+    void    setSizeDelta(double value);
     
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-    void    setSize(float size);
+    void    setSize(double size);
 #else
     /*!
         @method setMaxSize
         各パーティクルの生成時の最大サイズを設定します。
      */
-    void    setMaxSize(float size);
+    void    setMaxSize(double size);
 
     /*!
         @method setMinSize
         各パーティクルの生成時の最小サイズを設定します。
      */
-    void    setMinSize(float size);    
+    void    setMinSize(double size);    
 #endif
     
 public:
@@ -274,31 +274,31 @@ public:
         @method getDeltaAlpha
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたアルファ成分の変化の割り合いを取得します。
      */
-    float       getDeltaAlpha() const;
+    double      getDeltaAlpha() const;
 
     /*!
         @method getDeltaBlue
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた青成分の変化の割り合いを取得します。
      */
-    float       getDeltaBlue() const;
+    double      getDeltaBlue() const;
 
     /*!
         @method getDeltaGreen
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた緑成分の変化の割り合いを取得します。
      */
-    float       getDeltaGreen() const;
+    double      getDeltaGreen() const;
 
     /*!
         @method getDeltaRed
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた赤成分の変化の割り合いを取得します。
      */
-    float       getDeltaRed() const;
+    double      getDeltaRed() const;
     
     /*!
         @method getDeltaSize
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたサイズの変化の割り合いを取得します。
      */
-    float       getDeltaSize() const;
+    double      getDeltaSize() const;
     
     /*!
         @method getGenerateCount
@@ -344,19 +344,19 @@ public:
     
 public:
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-    float   getSize() const;
+    double      getSize() const;
 #else
     /*!
         @method getMaxSize
         @abstract 各パーティクルの生成時の最大サイズを取得します。
      */
-    float   getMaxSize() const;
+    double      getMaxSize() const;
     
     /*!
         @method getMinSize
         @abstract 各パーティクルの生成時の最小サイズを取得します。
      */
-    float   getMinSize() const;
+    double      getMinSize() const;
 #endif
     
 public:

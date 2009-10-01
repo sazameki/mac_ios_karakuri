@@ -69,8 +69,8 @@ void KRSwitch::draw(KRGraphics *g)
     }
     
     if (mBackTexture != NULL) {
-        float indicatorWidth = mFrame.width - mTextureEdgeSize * 2;
-        float indicatorX = (mIsOn? 0.0f: mTextureThumbX) + mTextureEdgeSize;
+        double indicatorWidth = mFrame.width - mTextureEdgeSize * 2;
+        double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;
         
         // Indicator
         mBackTexture->draw(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
@@ -108,7 +108,7 @@ void KRSwitch::setOn(bool flag)
     mIsOn = flag;
 }
 
-void KRSwitch::setTextureNames(const std::string& backName, float edgeSize, const std::string& thumbName, float thumbX)
+void KRSwitch::setTextureNames(const std::string& backName, double edgeSize, const std::string& thumbName, double thumbX)
 {
     mBackTextureName = backName;
     mTextureEdgeSize = edgeSize;

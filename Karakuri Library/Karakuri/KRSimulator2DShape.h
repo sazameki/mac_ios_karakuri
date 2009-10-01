@@ -30,9 +30,9 @@ protected:
     void    *mCPBody;
     void    *mCPShape;
     bool    mIsStatic;
-    float   mMass;
-    float   mElasticity;
-    float   mFriction;
+    double  mMass;
+    double  mElasticity;
+    double  mFriction;
     KRVector2D  mCenterPos;
     
     KRSimulator2D   *mSimulator;
@@ -59,13 +59,13 @@ public:
         @method getAngle
         現在の角度を取得します。
      */
-    float       getAngle() const;
+    double      getAngle() const;
     
     /*!
         @method getAngleVelocity
         現在の角速度を取得します。
      */
-    float       getAngleVelocity() const;
+    double      getAngleVelocity() const;
     
     /*!
         @method getCenterPos
@@ -99,13 +99,13 @@ public:
         @method setAngle
         この図形の角度を設定します。
      */
-    void    setAngle(float angle);
+    void    setAngle(double angle);
     
     /*!
         @method setAngleVelocity
         この図形の角速度を設定します。
      */
-    void    setAngleVelocity(float w);
+    void    setAngleVelocity(double w);
     
     /*!
         @method setCenterPos
@@ -117,19 +117,19 @@ public:
         @method setElasticity
         この図形の弾力を設定します。
      */
-    void    setElasticity(float value);
+    void    setElasticity(double value);
     
     /*!
         @method setFriction
         この図形の摩擦を設定します。
      */
-    void    setFriction(float value);
+    void    setFriction(double value);
     
     /*!
         @method setMass
         この図形の質量を設定します。
      */
-    void    setMass(float value);
+    void    setMass(double value);
     
     /*!
         @method setVelocity
@@ -159,7 +159,7 @@ public:
         @method setRepresentedObject
         この図形に関連付けて管理するオブジェクトのポインタを指定します。
      */
-    void    setRepresentedObject(float *anObj);
+    void    setRepresentedObject(void *anObj);
     
     /*!
         @method setTag
@@ -207,7 +207,7 @@ class KRShape2DLine : public KRShape2D {
     
     KRVector2D  mP1;
     KRVector2D  mP2;
-    float       mLineWidth;
+    double      mLineWidth;
     
 public:
     /*!
@@ -242,9 +242,9 @@ public:
     /*!
         @method setLineWidth
         @abstract この線分の線幅を設定します。
-        この関数は、KRSimulator2D クラスのインスタンスに図形を追加するよりも前に呼び出してください。デフォルトの線幅は 0.0f に指定されています。
+        この関数は、KRSimulator2D クラスのインスタンスに図形を追加するよりも前に呼び出してください。デフォルトの線幅は 0.0 に指定されています。
      */
-    void    setLineWidth(float width);
+    void    setLineWidth(double width);
     
 public:
     virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
@@ -337,7 +337,7 @@ public:
 class KRShape2DCircle : public KRShape2D {
     
 protected:
-    float           mRadius;
+    double          mRadius;
 
 public:
     /*!
@@ -345,7 +345,7 @@ public:
         @abstract 中心位置と半径の長さを設定して、この図形を初期化します。
         isStatic 引数を true に指定することで、他の図形に影響を与えても自分は影響を受けない static な図形を作成することができます。
      */
-    KRShape2DCircle(const KRVector2D& centerPos, float radius, bool isStatic=false);
+    KRShape2DCircle(const KRVector2D& centerPos, double radius, bool isStatic=false);
     
 public:
     virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

@@ -48,13 +48,13 @@ public:
         @method getWidth
         テクスチャの横幅をリターンします（ピクセル単位）。
      */
-    float       getWidth() const;
+    double      getWidth() const;
     
     /*!
         @method getHeight
         テクスチャの高さをリターンします（ピクセル単位）。
      */
-    float       getHeight() const;
+    double      getHeight() const;
     
     /*!
         @method getSize
@@ -80,7 +80,7 @@ public:
         @param alpha    アルファ値
         指定された座標にこのテクスチャを描画します。透明度も指定できます。
      */
-    void    draw(float x, float y, float alpha=1.0f);
+    void    draw(double x, double y, double alpha=1.0);
     
     /*!
         @method draw
@@ -88,7 +88,7 @@ public:
         @param alpha    アルファ値
         指定された座標にこのテクスチャを描画します。透明度も指定できます。
      */
-    void    draw(const KRVector2D& pos, float alpha=1.0f);
+    void    draw(const KRVector2D& pos, double alpha=1.0);
 
     /*!
         @method draw
@@ -96,7 +96,7 @@ public:
         @param alpha    アルファ値
         指定された矩形内にこのテクスチャを描画します（透明度 alpha）。
      */
-    void    draw(const KRRect2D& rect, float alpha=1.0f);
+    void    draw(const KRRect2D& rect, double alpha=1.0);
 
     /*!
         @method draw
@@ -105,24 +105,24 @@ public:
         @param alpha    アルファ値
         指定された領域を、指定された座標に描画します（透明度 alpha）。
      */
-    void    draw(const KRVector2D& pos, const KRRect2D& srcRect, float alpha=1.0f);
+    void    draw(const KRVector2D& pos, const KRRect2D& srcRect, double alpha=1.0);
     
     /*!
         @method draw
      */
-    void    draw(const KRRect2D& destRect, const KRRect2D& srcRect, float alpha=1.0f);
+    void    draw(const KRRect2D& destRect, const KRRect2D& srcRect, double alpha=1.0);
     
     /*!
         @method draw
         指定された座標を中心点として、指定された領域を描画します（透明度 alpha）。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横ともに scale 倍して描画を行います。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D& origin, float scale=1.0f, float alpha=1.0f);
+    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D& origin, double scale=1.0, double alpha=1.0);
 
     /*!
         @method draw
         指定された座標を中心点として、指定された領域を描画します（透明度 alpha）。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D &origin, const KRVector2D &scale, float alpha = 1.0f);
+    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha = 1.0);
 
     
     /*!
@@ -133,7 +133,7 @@ public:
         @method draw
         指定された座標に指定された色でこのテクスチャを描画します。
      */
-    void    draw(float x, float y, const KRColor& color);
+    void    draw(double x, double y, const KRColor& color);
     
     /*!
         @method draw
@@ -162,13 +162,13 @@ public:
         @method draw
         指定された座標を中心点として、指定された色で指定された領域を描画します。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横ともに scale 倍して描画を行います。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D& origin, float scale, const KRColor& color);
+    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D& origin, double scale, const KRColor& color);
 
     /*!
         @method draw
         指定された座標を中心点として、指定された色で指定された領域を描画します。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, float rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color);
+    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color);
     
 public:
     GLuint  getTextureName() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

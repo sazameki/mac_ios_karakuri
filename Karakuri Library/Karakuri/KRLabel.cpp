@@ -59,7 +59,7 @@ void KRLabel::draw(KRGraphics *g)
         mHasChangedText = false;
     }
     if (mTextTexture != NULL) {
-        float drawX = mFrame.x;
+        double drawX = mFrame.x;
         if (mTextAlignment == KRTextAlignmentCenter) {
             drawX = mFrame.x + mFrame.width/2 - mTextTexture->getWidth()/2;
         } else if (mTextAlignment == KRTextAlignmentRight) {
@@ -76,7 +76,7 @@ std::string KRLabel::getText() const
     return mText;
 }
 
-void KRLabel::setFont(const std::string& fontName, float size)
+void KRLabel::setFont(const std::string& fontName, double size)
 {
     delete mFont;
     mFont = new KRFont(fontName, size);

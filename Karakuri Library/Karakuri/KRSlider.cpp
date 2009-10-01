@@ -13,7 +13,7 @@
     Constructor
  */
 KRSlider::KRSlider(const KRRect2D& frame)
-    : KRControl(frame), mValue(0.0f), mMinValue(0.0f), mMaxValue(1.0f)
+    : KRControl(frame), mValue(0.0), mMinValue(0.0), mMaxValue(1.0)
 {
     mThumbTexture = NULL;
     mThumbTextureName = "";
@@ -62,9 +62,9 @@ bool KRSlider::update(KRInput *input)
 #if KR_IPHONE
             KRVector2D pos = input->getTouchLocation();
 #endif
-            float thumbWidth = 20.0f;
+            double thumbWidth = 20.0;
 
-            float value = (pos.x - mFrame.x - thumbWidth/2) / (mFrame.width - thumbWidth);
+            double value = (pos.x - mFrame.x - thumbWidth/2) / (mFrame.width - thumbWidth);
             if (value < mMinValue) {
                 value = mMinValue;
             } else if (value > mMaxValue) {
@@ -90,13 +90,13 @@ void KRSlider::draw(KRGraphics *g)
     }
     
     
-    float thumbWidth = 20.0f;
+    double thumbWidth = 20.0;
 
     if (mThumbTexture != NULL) {
         thumbWidth = mThumbTexture->getWidth();
     }
     
-    float centerX = mFrame.x + (mFrame.width - thumbWidth) * (mValue / (mMaxValue - mMinValue)) + thumbWidth/2;
+    double centerX = mFrame.x + (mFrame.width - thumbWidth) * (mValue / (mMaxValue - mMinValue)) + thumbWidth/2;
     
     if (mBackTexture != NULL) {
         // Left Edge
@@ -131,37 +131,37 @@ void KRSlider::draw(KRGraphics *g)
 #pragma mark -
 #pragma mark Slider Implementation
 
-float KRSlider::getMaxValue() const
+double KRSlider::getMaxValue() const
 {
     return mMaxValue;
 }
 
-float KRSlider::getMinValue() const
+double KRSlider::getMinValue() const
 {
     return mMinValue;
 }
 
-float KRSlider::getValue() const
+double KRSlider::getValue() const
 {
     return mValue;
 }
 
-void KRSlider::setMaxValue(float value)
+void KRSlider::setMaxValue(double value)
 {
     mMaxValue = value;
 }
 
-void KRSlider::setMinValue(float value)
+void KRSlider::setMinValue(double value)
 {
     mMinValue = value;
 }
 
-void KRSlider::setValue(float value)
+void KRSlider::setValue(double value)
 {
     mValue = value;
 }
 
-void KRSlider::setTextureNames(const std::string& backName, float edgeSize, const std::string& thumbName)
+void KRSlider::setTextureNames(const std::string& backName, double edgeSize, const std::string& thumbName)
 {
     mBackTextureName = backName;
     mBackTextureEdgeSize = edgeSize;

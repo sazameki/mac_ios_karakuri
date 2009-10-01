@@ -90,7 +90,7 @@ public:
         @method setFont
         @abstract テキストを描画するためのフォントを設定します。
      */
-    void    setFont(const std::string& fontName, float size);
+    void    setFont(const std::string& fontName, double size);
     
     /*!
         @method setTextAlignment

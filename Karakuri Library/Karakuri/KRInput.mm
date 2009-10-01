@@ -26,7 +26,7 @@ KRInput *gKRInputInst = NULL;
 #if KR_IPHONE
 static NSLock   *sTouchLock = nil;
 
-static float TouchPadButtonThresholdY = 130.0f;
+static double TouchPadButtonThresholdY = 130.0;
 #endif
 
 
@@ -597,7 +597,7 @@ void KRInput::processKeyUpCode(unsigned short keyCode)
 
 #if KR_IPHONE
 
-void KRInput::startTouch(unsigned touchID, float x, float y)
+void KRInput::startTouch(unsigned touchID, double x, double y)
 {
     KRTouchInfo newInfo;
     
@@ -634,7 +634,7 @@ void KRInput::startTouch(unsigned touchID, float x, float y)
     [sTouchLock unlock];
 }
 
-void KRInput::moveTouch(unsigned touchID, float x, float y, float dx, float dy)
+void KRInput::moveTouch(unsigned touchID, double x, double y, double dx, double dy)
 {
     [sTouchLock lock];
 
@@ -655,7 +655,7 @@ void KRInput::moveTouch(unsigned touchID, float x, float y, float dx, float dy)
     [sTouchLock unlock];
 }
 
-void KRInput::endTouch(unsigned touchID, float x, float y, float dx, float dy)
+void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double dy)
 {
     [sTouchLock lock];
 
@@ -700,7 +700,7 @@ void KRInput::endTouch(unsigned touchID, float x, float y, float dx, float dy)
 
 #if KR_IPHONE
 
-void KRInput::setAcceleration(float x, float y, float z)
+void KRInput::setAcceleration(double x, double y, double z)
 {
     mAcceleration.x = x;
     mAcceleration.y = y;

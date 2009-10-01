@@ -149,36 +149,36 @@ void KRMusic::stop()
 #endif
 }
 
-float KRMusic::getVolume() const
+double KRMusic::getVolume() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        return [(KarakuriSound *)mImpl volume];
+        return (double)[(KarakuriSound *)mImpl volume];
         //return [(NSSound *)mImpl volume];
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        return [(AVAudioPlayer *)mImpl volume];
+        return (double)[(AVAudioPlayer *)mImpl volume];
     }
 #endif
 
-    return 0.0f;
+    return 0.0;
 }
 
-void KRMusic::setVolume(float value)
+void KRMusic::setVolume(double value)
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(KarakuriSound *)mImpl setVolume:value];
+        [(KarakuriSound *)mImpl setVolume:(float)value];
         //[(NSSound *)mImpl setVolume:value];
     }
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl setVolume:value];
+        [(AVAudioPlayer *)mImpl setVolume:(float)value];
     }
 #endif
 }
