@@ -1,13 +1,17 @@
 #!/bin/bash
 
+echo File Tempaltes
 cd File\ Template
 ./set_permission.sh
 
+echo Project Tempaltes
 cd ../Project\ Template
 ./set_permission.sh
 
-cd ../Project\ Template\ \(Xcode\ 2.5\)
+echo Karakuri Library
+cd ../Karakuri\ Library
 ./set_permission.sh
 
-cd ../Karakuri\ Library
+echo Scripts
+cd ../Scripts
 ./set_permission.sh
