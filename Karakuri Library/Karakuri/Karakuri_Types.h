@@ -15,7 +15,6 @@
 
 
 struct KRVector2D;
-struct KRSize2D;
 
 
 /*!
@@ -228,7 +227,7 @@ typedef struct KRRect2D : public KRObject {
 /*!
     @struct KRVector2D
     @group  Game Foundation
-    @abstract 2次元ベクトルを表すための構造体です。
+    @abstract double 型の2次元ベクトルを表すための構造体です。
     点情報、サイズ情報を表すためにも使われます。
  */
 typedef struct KRVector2D : public KRObject {
@@ -375,9 +374,159 @@ typedef struct KRVector2D : public KRObject {
 
 
 /*!
+    @struct KRVector2DInt
+    @group  Game Foundation
+    @abstract int 型の2次元ベクトルを表すための構造体です。
+    点情報、サイズ情報を表すためにも使われます。
+ */
+typedef struct KRVector2DInt : public KRObject {
+    
+    /*!
+        @var    x
+        @abstract   このベクトルのX成分を表す数値です。
+     */
+    int     x;
+
+    /*!
+        @var    y
+        @abstract   このベクトルのY成分を表す数値です。
+     */
+    int     y;
+
+    /*!
+        @task コンストラクタ
+     */
+    
+    /*!
+        @method KRVector2DInt
+        このベクトルを、x=0, y=0 で初期化します。
+     */
+    KRVector2DInt();
+
+    /*!
+        @method KRVector2DInt
+        @param _x   X成分
+        @param _y   Y成分
+        このベクトルを、与えられた2つの数値で初期化します。
+     */
+    KRVector2DInt(int _x, int _y);
+    
+    /*!
+        @method KRVector2DInt
+        与えられたベクトルをコピーして、このベクトルを初期化します。
+     */
+    KRVector2DInt(const KRVector2DInt& vec);
+    
+    /*!
+        @task 幾何計算のための関数
+     */
+    
+    /*!
+        @method angle
+        このベクトルと与えられたベクトルが成す角度をリターンします。
+     */
+    double   angle(const KRVector2DInt &vec) const;    
+    
+    /*!
+        @method innerProduct
+        与えられたベクトルを右辺値として、このベクトルとの内積を計算します。
+     */
+    int innerProduct(const KRVector2DInt& vec) const;
+
+    /*!
+        @method length
+        このベクトルの長さをリターンします。
+     */
+    double   length() const;
+
+    /*!
+        @method lengthSq
+        このベクトルの長さの2乗をリターンします。
+     */
+    int     lengthSq() const;
+    
+    /*!
+        @method normalize
+        @abstract このベクトルを、長さ1のベクトルに正規化したベクトルを生成します。
+        正規化したベクトルは、KRVector2D 型になります。
+     */
+    KRVector2D normalize() const;
+    
+    /*!
+        @method outerProduct
+        与えられたベクトルを右辺値として、このベクトルとの外積を計算します。
+     */
+    int outerProduct(const KRVector2DInt& vec) const;
+    
+    
+    /*!
+        @task 演算子のオーバーライド
+     */
+    
+    /*!
+        @method operator+
+     */
+    KRVector2DInt operator+(const KRVector2DInt& vec) const;
+
+    /*!
+        @method operator+=
+     */
+    KRVector2DInt& operator+=(const KRVector2DInt& vec);
+
+    /*!
+        @method operator-
+     */
+    KRVector2DInt operator-(const KRVector2DInt& vec) const;
+
+    /*!
+        @method operator-=
+     */
+    KRVector2DInt& operator-=(const KRVector2DInt& vec);
+
+    /*!
+        @method operator/
+     */
+    KRVector2DInt operator/(int value) const;
+
+    /*!
+        @method operator/=
+     */
+    KRVector2DInt& operator/=(int value);
+
+    /*!
+        @method operator*
+     */
+    KRVector2DInt operator*(int value) const;
+
+    /*!
+        @method operator*=
+     */
+    KRVector2DInt& operator*=(int value);
+    
+    /*!
+        @method operator==
+     */
+    bool operator==(const KRVector2DInt& vec) const;
+
+    /*!
+        @method operator!=
+     */
+    bool operator!=(const KRVector2DInt& vec) const;
+    
+    /*!
+        @method operator-
+     */
+    KRVector2DInt operator-() const;
+
+    virtual std::string to_s() const;
+
+} KRVector2DInt;
+
+
+/*!
     @struct KRVector3D
     @group  Game Foundation
-    @abstract 3次元ベクトルを表すための構造体です。
+    @abstract double 型の3次元ベクトルを表すための構造体です。
     点情報、サイズ情報を表すためにも使われます。
  */
 typedef struct KRVector3D : public KRObject {
@@ -521,10 +670,202 @@ typedef struct KRVector3D : public KRObject {
 } KRVector3D;
 
 
-extern const KRRect2D         KRRect2DZero;
-extern const KRVector2D       KRVector2DZero;
-extern const KRVector2D       KRVector2DOne;
-extern const KRVector3D       KRVector3DZero;
+/*!
+    @struct KRVector3DInt
+    @group  Game Foundation
+    @abstract int 型の3次元ベクトルを表すための構造体です。
+    点情報、サイズ情報を表すためにも使われます。
+ */
+typedef struct KRVector3DInt : public KRObject {
+    
+    /*!
+        @var x
+        このベクトルのX成分を表す数値です。
+     */
+    int     x;
+    
+    /*!
+        @var y
+        このベクトルのY成分を表す数値です。
+     */    
+    int     y;
+
+    /*!
+        @var z
+        このベクトルのZ成分を表す数値です。
+     */    
+    int     z;
+    
+    /*!
+        @task コンストラクタ
+     */
+    
+    /*!
+        @method KRVector3DInt
+        このベクトルを、x=0, y=0, z=0 で初期化します。
+     */
+    KRVector3DInt();
+
+    /*!
+        @method KRVector3DInt
+        このベクトルを、与えられた3つの数値で初期化します。
+     */
+    KRVector3DInt(int _x, int _y, int _z);
+
+    /*!
+        @method KRVector3DInt
+        与えられたベクトルをコピーして、このベクトルを初期化します。
+     */
+    KRVector3DInt(const KRVector3D& vec);
+    
+    /*!
+        @task 幾何計算のための関数
+     */    
+    
+    /*!
+        @method innerProduct
+        与えられたベクトルを右辺値として、このベクトルとの内積を計算します。
+     */
+    int innerProduct(const KRVector3DInt& vec) const;
+
+    /*!
+        @method length
+        このベクトルの長さをリターンします。
+     */
+    double  length() const;
+    
+    /*!
+        @method lengthSq
+        このベクトルの長さの2乗をリターンします。
+     */
+    int     lengthSq() const;
+    
+    /*!
+        @method normalize
+        @abstract このベクトルを、長さ1のベクトルに正規化したベクトルを生成します。
+        生成されるベクトルは、KRVector3D 型になります。
+     */
+    KRVector3D normalize() const;
+    
+    /*!
+        @method outerProduct
+        与えられたベクトルを右辺値として、このベクトルとの外積を計算します。
+     */
+    KRVector3DInt outerProduct(const KRVector3D& vec) const;
+    
+    
+    /*!
+        @task 演算子のオーバーライド
+     */
+    
+    /*!
+        @method operator+
+     */
+    KRVector3DInt operator+(const KRVector3DInt& vec) const;
+
+    /*!
+        @method operator+=
+     */
+    KRVector3DInt& operator+=(const KRVector3DInt& vec);
+    
+    /*!
+        @method operator-
+     */
+    KRVector3DInt operator-(const KRVector3DInt& vec) const;
+
+    /*!
+        @method operator-=
+     */
+    KRVector3DInt& operator-=(const KRVector3DInt& vec);
+    
+    /*!
+        @method operator/
+     */
+    KRVector3DInt operator/(int value) const;
+
+    /*!
+        @method operator/=
+     */
+    KRVector3DInt& operator/=(int value);
+    
+    /*!
+        @method operator*
+     */
+    KRVector3DInt operator*(int value) const;
+
+    /*!
+        @method operator*=
+     */
+    KRVector3DInt& operator*=(int value);
+    
+    /*!
+        @method operator==
+     */
+    bool operator==(const KRVector3DInt& vec) const;
+
+    /*!
+        @method operator!=
+     */
+    bool operator!=(const KRVector3DInt& vec) const;
+    
+    /*!
+        @method operator-
+     */
+    KRVector3DInt operator-() const;
+    
+    virtual std::string to_s() const;
+
+} KRVector3DInt;
+
+
+/*!
+    @const  KRRect2DZero
+    @group  Game Foundation
+    @abstract x, y, width, height のすべての成分が 0.0 となっている KRRect2D 構造体の定数です。
+ */
+extern const KRRect2D       KRRect2DZero;
+
+/*!
+    @const  KRVector2DOne
+    @group  Game Foundation
+    @abstract x成分とy成分がどちらも 1.0 となっている KRVector2D 構造体の定数です。
+ */
+extern const KRVector2D     KRVector2DOne;
+
+/*!
+    @const  KRVector2DZero
+    @group  Game Foundation
+    @abstract x成分とy成分がどちらも 0.0 となっている KRVector2D 構造体の定数です。
+ */
+extern const KRVector2D     KRVector2DZero;
+
+/*!
+    @const  KRVector2DIntZero
+    @group  Game Foundation
+    @abstract x成分とy成分がどちらも 0 となっている KRVector2DInt 構造体の定数です。
+ */
+extern const KRVector2DInt  KRVector2DIntZero;
+
+/*!
+    @const  KRVector3DOne
+    @group  Game Foundation
+    @abstract x成分、y成分、z成分がすべて 1.0 となっている KRVector3D 構造体の定数です。
+ */
+extern const KRVector3D     KRVector3DOne;
+
+/*!
+    @const  KRVector3DZero
+    @group  Game Foundation
+    @abstract x成分、y成分、z成分がすべて 0.0 となっている KRVector3D 構造体の定数です。
+ */
+extern const KRVector3D     KRVector3DZero;
+
+/*!
+    @const  KRVector3DIntZero
+    @group  Game Foundation
+    @abstract x成分、y成分、z成分がすべて 0 となっている KRVector3DInt 構造体の定数です。
+ */
+extern const KRVector2DInt  KRVector2DIntZero;
 
 
 /*!

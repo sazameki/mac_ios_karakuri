@@ -73,6 +73,14 @@
 					<% end %>
 					</ul>
 				<% end %>
+				<% if (group.d_constants.size > 0) %>
+					<h3>Constants</h3>
+					<ul>
+					<% group.d_constants.each do |a_var| %>
+						<li><a href="<%= a_var.d_href %>"><%= a_var.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
 				<% if (group.d_macros.size > 0) %>
 					<h3>Macros</h3>
 					<ul>

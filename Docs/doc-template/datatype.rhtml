@@ -80,6 +80,24 @@
 		<% end %>
 	<% end %>
 
+	<% if $the_group.d_constants.size() > 0 %>
+		<h2>Constants</h2>
+		<% $the_group.d_constants.each do |an_elem| %>
+			<a name="<%= an_elem.d_tag %>"></a>
+			<h3><%= an_elem.d_name %></h3>
+			<div class="declare"><%= an_elem.d_declare %></div>
+			<% if an_elem.d_abstract %>
+				<div class="abstract"><%= an_elem.d_abstract %></div>
+			<% end %>
+			<% if an_elem.d_discussion %>
+				<div class="discussion">
+					<h4>Discussion</h4>
+					<%= an_elem.d_discussion %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+
 	<% if $the_group.d_macros.size() > 0 %>
 		<h2>Macros</h2>
 		<% $the_group.d_macros.each do |an_elem| %>
