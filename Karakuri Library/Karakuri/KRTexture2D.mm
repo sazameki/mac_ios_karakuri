@@ -330,8 +330,20 @@ void KRTexture2D::drawAtPoint(const KRVector2D& pos, double alpha)
     drawInRect(KRRect2D(pos, mImageSize), alpha);
 }
 
+void KRTexture2D::drawAtPointCenter(const KRVector2D& centerPos, double alpha)
+{
+    KRVector2D pos = centerPos - getSize() / 2;
+    drawC(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), KRColor(1.0, 1.0, 1.0, alpha));
+}
+
 void KRTexture2D::drawAtPointC(const KRVector2D& pos, const KRColor& color)
 {
+    drawC(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
+}
+
+void KRTexture2D::drawAtPointCenterC(const KRVector2D& centerPos, const KRColor& color)
+{
+    KRVector2D pos = centerPos - getSize() / 2;
     drawC(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
 }
 
@@ -410,6 +422,7 @@ void KRTexture2D::drawAtlasC(int row, int column, const KRVector2D& centerPos, d
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
+    ((KRTexture2DAtlas *)mAtlas)->drawC(row, column, centerPos, rotation, origin, scale, color);
 }
 
 void KRTexture2D::drawAtlasAtPoint(int row, int column, const KRVector2D& pos, double alpha)
@@ -422,6 +435,35 @@ void KRTexture2D::drawAtlasAtPoint(int row, int column, const KRVector2D& pos, d
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
+    ((KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
+}
+
+void KRTexture2D::drawAtlasAtPointCenter(int row, int column, const KRVector2D& centerPos, double alpha)
+{
+    if (mAtlas == NULL) {
+        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenter(): \"%s\"";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "drawAtlasAtPointCenter() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
+        }
+        throw KRRuntimeError(errorFormat, mFileName.c_str());
+    }
+    
+    KRVector2D pos = centerPos - ((KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
+    ((KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
+}
+
+void KRTexture2D::drawAtlasAtPointCenterC(int row, int column, const KRVector2D& centerPos, const KRColor& color)
+{
+    if (mAtlas == NULL) {
+        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenterC(): \"%s\"";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "drawAtlasAtPointCenterC() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
+        }
+        throw KRRuntimeError(errorFormat, mFileName.c_str());
+    }
+
+    KRVector2D pos = centerPos - ((KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
+    ((KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
 }
 
 void KRTexture2D::drawAtlasAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color)
@@ -434,6 +476,7 @@ void KRTexture2D::drawAtlasAtPointC(int row, int column, const KRVector2D& pos, 
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
+    ((KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
 }
 
 void KRTexture2D::drawAtlasInRect(int row, int column, const KRRect2D& rect, double alpha)
@@ -445,7 +488,8 @@ void KRTexture2D::drawAtlasInRect(int row, int column, const KRRect2D& rect, dou
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
-    
+ 
+    ((KRTexture2DAtlas *)mAtlas)->drawInRect(row, column, rect, alpha);
 }
 
 void KRTexture2D::drawAtlasInRectC(int row, int column, const KRRect2D& rect, const KRColor& color)
@@ -458,6 +502,7 @@ void KRTexture2D::drawAtlasInRectC(int row, int column, const KRRect2D& rect, co
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
+    ((KRTexture2DAtlas *)mAtlas)->drawInRectC(row, column, rect, color);
 }
 
 

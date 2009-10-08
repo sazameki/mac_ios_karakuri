@@ -99,6 +99,14 @@ public:
 
     /*!
         @method drawAtPoint
+        @param centerPos  座標
+        @param alpha    アルファ値
+        指定された座標を中心点としてこのテクスチャを描画します。透明度も指定できます。
+     */    
+    void    drawAtPointCenter(const KRVector2D& centerPos, double alpha=1.0);
+
+    /*!
+        @method drawAtPoint
         @param pos  描画先の座標
         @param src  描画元の矩形。KRRect2DZero を指定した場合には、テクスチャ全体が描画対象となります。
         @param alpha    アルファ値
@@ -149,6 +157,14 @@ public:
     void    drawAtPointC(const KRVector2D& pos, const KRColor& color=KRColor::White);
 
     /*!
+        @method drawAtPointCenterC
+        @param pos  座標
+        @param alpha    アルファ値
+        指定された座標を中心点としてこのテクスチャを描画します。色の指定ができます。
+     */
+    void    drawAtPointCenterC(const KRVector2D& centerPos, const KRColor& color=KRColor::White);
+
+    /*!
         @method drawAtPoint
         @param pos  描画先の座標
         @param src  描画元の矩形。KRRect2DZero を指定した場合には、テクスチャ全体が描画対象となります。
@@ -190,6 +206,12 @@ public:
     void    drawAtlasAtPoint(int row, int column, const KRVector2D& pos, double alpha=1.0);
     
     /*!
+        @method drawAtlasAtPointCenter
+        部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として描画します（透明度 alpha）。
+     */
+    void    drawAtlasAtPointCenter(int row, int column, const KRVector2D& pos, double alpha=1.0);
+    
+    /*!
         @method drawAtlasInRect
         部品の列 (row) を指定して、column 番目の部品を矩形 rect の中に描画します（透明度 alpha）。
      */
@@ -211,7 +233,13 @@ public:
         @method drawAtlasAtPointC
         部品の列 (row) を指定して、column 番目の部品を座標 pos に描画します。色の指定ができます。
      */
-    void    drawAtlasAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color=KRColor::White);
+    void    drawAtlasAtPointC(int row, int column, const KRVector2D& centerPos, const KRColor& color=KRColor::White);
+
+    /*!
+        @method drawAtlasAtPointCenterC
+        部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として描画します。色の指定ができます。
+     */
+    void    drawAtlasAtPointCenterC(int row, int column, const KRVector2D& centerPos, const KRColor& color=KRColor::White);
 
     /*!
         @method drawAtlasInRectC
