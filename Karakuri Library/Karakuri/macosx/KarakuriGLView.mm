@@ -474,7 +474,7 @@ static volatile BOOL    sIsReady = NO;
 
     for (int i = 0; i < 5; i++) {
         if (mTouchPos[i].x >= 0) {
-            mTouchTex->draw(mTouchPos[i].x-mTouchTex->getWidth()/2, mTouchPos[i].y-mTouchTex->getHeight()/2);
+            mTouchTex->drawAtPoint(mTouchPos[i].x-mTouchTex->getWidth()/2, mTouchPos[i].y-mTouchTex->getHeight()/2);
         }
     }
     

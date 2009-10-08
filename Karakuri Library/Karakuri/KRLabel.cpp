@@ -65,9 +65,9 @@ void KRLabel::draw(KRGraphics *g)
         } else if (mTextAlignment == KRTextAlignmentRight) {
             drawX = mFrame.x + mFrame.width - mTextTexture->getWidth();
         }
-        mTextTexture->draw(drawX,
-                           mFrame.y + mFrame.height/2 - mTextTexture->getHeight()/2,
-                           mTextColor);
+        mTextTexture->drawAtPointC(drawX,
+                                   mFrame.y + mFrame.height/2 - mTextTexture->getHeight()/2,
+                                   mTextColor);
     }
 }
 

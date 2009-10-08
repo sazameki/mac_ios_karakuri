@@ -23,7 +23,7 @@ GameMain::GameMain()
     setScreenSize(480, 320);
 
     // Set up the refresh rate.
-    setFrameRate(60.0f);
+    setFrameRate(60.0);
     
     // Set up whether mouse cursor should be shown
     setShowsMouseCursor(true);

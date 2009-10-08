@@ -100,18 +100,18 @@ void KRSlider::draw(KRGraphics *g)
     
     if (mBackTexture != NULL) {
         // Left Edge
-        mBackTexture->draw(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mBackTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mBackTextureEdgeSize, mFrame.height));
         
         // Left Background
-        mBackTexture->draw(KRRect2D(mFrame.x+mBackTextureEdgeSize, mFrame.y, (centerX-(mFrame.x+mBackTextureEdgeSize)), mFrame.height),
-                           KRRect2D(mBackTexture->getWidth()/2-1, 0, 1, mFrame.height));
+        mBackTexture->drawInRect(KRRect2D(mFrame.x+mBackTextureEdgeSize, mFrame.y, (centerX-(mFrame.x+mBackTextureEdgeSize)), mFrame.height),
+                                 KRRect2D(mBackTexture->getWidth()/2-1, 0, 1, mFrame.height));
         
         // Right Background
-        mBackTexture->draw(KRRect2D(centerX, mFrame.y, mFrame.x+mFrame.width-centerX-mBackTextureEdgeSize, mFrame.height),
-                           KRRect2D(mBackTexture->getWidth()/2, 0, 1, mFrame.height));
+        mBackTexture->drawInRect(KRRect2D(centerX, mFrame.y, mFrame.x+mFrame.width-centerX-mBackTextureEdgeSize, mFrame.height),
+                                 KRRect2D(mBackTexture->getWidth()/2, 0, 1, mFrame.height));
         
         // Right Edge
-        mBackTexture->draw(KRVector2D(mFrame.x+mFrame.width-mBackTextureEdgeSize, mFrame.y), KRRect2D(mBackTexture->getWidth()-mBackTextureEdgeSize, 0, mBackTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mBackTextureEdgeSize, mFrame.y), KRRect2D(mBackTexture->getWidth()-mBackTextureEdgeSize, 0, mBackTextureEdgeSize, mFrame.height));
     } else {
         if (mSelected) {
             KRPrimitive2D::fillQuad(mFrame, KRColor::Red);
@@ -121,7 +121,7 @@ void KRSlider::draw(KRGraphics *g)
     }
     
     if (mThumbTexture != NULL) {
-        mThumbTexture->draw(centerX-thumbWidth/2, mFrame.y);
+        mThumbTexture->drawAtPoint(centerX-thumbWidth/2, mFrame.y);
     } else {
         KRPrimitive2D::fillQuad(KRRect2D(centerX-thumbWidth/2, mFrame.y, thumbWidth, mFrame.height), KRColor::Yellow);
     }

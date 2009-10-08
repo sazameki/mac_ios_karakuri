@@ -89,13 +89,13 @@ void KRButton::draw(KRGraphics *g)
         KRTexture2D *tex = mSelected? mTextureHighlighted: mTextureNormal;
         
         // Body
-        tex->draw(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, mFrame.width-mTextureEdgeSize*2, mFrame.height), KRRect2D(mTextureEdgeSize, 0, 1, tex->getHeight()));
+        tex->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, mFrame.width-mTextureEdgeSize*2, mFrame.height), KRRect2D(mTextureEdgeSize, 0, 1, tex->getHeight()));
         
         // Left Edge
-        tex->draw(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, tex->getHeight()));
+        tex->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, tex->getHeight()));
 
         // Right Edge
-        tex->draw(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y), KRRect2D(tex->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, tex->getHeight()));
+        tex->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y), KRRect2D(tex->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, tex->getHeight()));
     }
     
     if (mSelected) {

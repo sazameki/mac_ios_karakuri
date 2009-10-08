@@ -471,7 +471,7 @@ void KRParticle2DSystem::draw()
         color.b = KRMax((*it)->mColor.b + (*it)->mDeltaBlue * ratio, 0.0);
         color.a = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0);
         
-        mTexture->draw(KRRect2D((*it)->mPos.x-size/2, (*it)->mPos.y-size/2, size, size), color);
+        mTexture->drawInRectC(KRRect2D((*it)->mPos.x-size/2, (*it)->mPos.y-size/2, size, size), color);
     }
 }
 #endif  // #if KR_PARTICLE2D_USE_POINT_SPRITE

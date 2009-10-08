@@ -73,18 +73,18 @@ void KRSwitch::draw(KRGraphics *g)
         double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;
         
         // Indicator
-        mBackTexture->draw(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
-                           KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()));
+        mBackTexture->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
+                                 KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()));
         
         // Left Edge
-        mBackTexture->draw(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height));
 
         // Right Edge
-        mBackTexture->draw(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
-                       KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
+                                  KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height));
 
         // Thumb
-        mThumbTexture->draw((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y);
+        mThumbTexture->drawAtPoint((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y);
     } else {
         if (mSelected) {
             KRPrimitive2D::fillQuad(mFrame, KRColor::Red);

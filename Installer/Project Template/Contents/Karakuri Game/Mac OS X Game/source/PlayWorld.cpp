@@ -63,16 +63,16 @@ void PlayWorld::updateModel(KRInput *input)
     mPos.y += acc.y * 8;
 #endif
     
-    if (mPos.x < 0.0f) {
-        mPos.x = 0.0f;
+    if (mPos.x < 0.0) {
+        mPos.x = 0.0;
     } else if (mPos.x >= gKRScreenSize.x - mTex->getWidth()) {
-        mPos.x = gKRScreenSize.x - 1.0f - mTex->getWidth();
+        mPos.x = gKRScreenSize.x - 1.0 - mTex->getWidth();
     }
 
-    if (mPos.y < 0.0f) {
-        mPos.y = 0.0f;
+    if (mPos.y < 0.0) {
+        mPos.y = 0.0;
     } else if (mPos.y >= gKRScreenSize.y - mTex->getHeight()) {
-        mPos.y = gKRScreenSize.y - 1.0f - mTex->getHeight();
+        mPos.y = gKRScreenSize.y - 1.0 - mTex->getHeight();
     }
 }
 
@@ -80,7 +80,7 @@ void PlayWorld::drawView(KRGraphics *g)
 {
     g->clear(KRColor::CornflowerBlue);
     
-    mTex->draw(mPos);
+    mTex->drawAtPoint(mPos);
 }
 
 

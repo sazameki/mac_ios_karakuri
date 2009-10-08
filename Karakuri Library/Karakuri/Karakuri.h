@@ -61,7 +61,7 @@
 
 // 2D Graphics Classes
 #include <Karakuri/KRTexture2D.h>
-#include <Karakuri/KRTexture2DAtlas.h>
+//#include <Karakuri/KRTexture2DAtlas.h>
 #include <Karakuri/KRFont.h>
 #include <Karakuri/KRParticle2D.h>
 #include <Karakuri/KRPrimitive2D.h>

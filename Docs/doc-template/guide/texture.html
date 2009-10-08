@@ -24,7 +24,7 @@
 
 <p>Karakuri Framework は OpenGL をベースに構築されていますが、OpenGL では（DirectX でも同様ですが）、使用するテクスチャを切り替える度に一定のコストが発生します。そのため、複数の素材画像を1枚の画像にまとめて保存しておき、その画像をテクスチャとして読み込んで、部分部分を描画に使用するといった使い方が効率的です。</p>
 
-<p>Karakuri Framework では、これを実現するために、<a href="../referencelibrary/Game 2D Graphics/Classes/KRTexture2D/index.html#//apple_ref/cpp/cl/KRTexture2D">KRTexture2D</a> というテクスチャクラスに加えて、<a href="../referencelibrary/Game 2D Graphics/Classes/KRTexture2DAtlas/index.html#//apple_ref/cpp/cl/KRTexture2DAtlas">KRTexture2DAtlas</a> というクラスを提供しています。</p>
+<p>Karakuri Framework では、これを実現するために、テクスチャを扱うクラス <a href="../referencelibrary/Game 2D Graphics/Classes/KRTexture2D/index.html#//apple_ref/cpp/cl/KRTexture2D">KRTexture2D</a> クラスのコンストラクタで、ひとつあたりの部品のサイズを指定することで、部分のみの描画を行なうことができます。</p>
 
 <div class="footer">
 	Copyright &copy; 2009 Satoshi Numata Ph.D.

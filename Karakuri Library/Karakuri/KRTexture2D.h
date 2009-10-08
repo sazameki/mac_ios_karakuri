@@ -33,9 +33,10 @@ private:
     KRVector2D  mTextureSize;       //!< Full size of the area used as a texture.
     
     void        *mTexture2DImpl;
+    void        *mAtlas;
     
 public:
-    KRTexture2D(const std::string& filename);
+    KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
     KRTexture2D(const std::string& str, KRFont *font);
     ~KRTexture2D();
     
@@ -72,103 +73,152 @@ public:
     /*!
         @task 描画のための関数
      */
-    
-    /*!
-        @method draw
-        @param x    X座標
-        @param y    Y座標
-        @param alpha    アルファ値
-        指定された座標にこのテクスチャを描画します。透明度も指定できます。
-     */
-    void    draw(double x, double y, double alpha=1.0);
-    
-    /*!
-        @method draw
-        @param pos  座標
-        @param alpha    アルファ値
-        指定された座標にこのテクスチャを描画します。透明度も指定できます。
-     */
-    void    draw(const KRVector2D& pos, double alpha=1.0);
-
-    /*!
-        @method draw
-        @param rect  描画先の矩形
-        @param alpha    アルファ値
-        指定された矩形内にこのテクスチャを描画します（透明度 alpha）。
-     */
-    void    draw(const KRRect2D& rect, double alpha=1.0);
-
-    /*!
-        @method draw
-        @param pos  描画先の座標
-        @param src  描画元の矩形。KRRect2DZero を指定した場合には、テクスチャ全体が描画対象となります。
-        @param alpha    アルファ値
-        指定された領域を、指定された座標に描画します（透明度 alpha）。
-     */
-    void    draw(const KRVector2D& pos, const KRRect2D& srcRect, double alpha=1.0);
-    
-    /*!
-        @method draw
-     */
-    void    draw(const KRRect2D& destRect, const KRRect2D& srcRect, double alpha=1.0);
-    
-    /*!
-        @method draw
-        指定された座標を中心点として、指定された領域を描画します（透明度 alpha）。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横ともに scale 倍して描画を行います。
-     */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D& origin, double scale=1.0, double alpha=1.0);
 
     /*!
         @method draw
         指定された座標を中心点として、指定された領域を描画します（透明度 alpha）。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha = 1.0);
+    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale=KRVector2DOne, double alpha=1.0);
+    
+    /*!
+        @method drawAtPoint
+        @param x    X座標
+        @param y    Y座標
+        @param alpha    アルファ値
+        指定された座標にこのテクスチャを描画します。透明度も指定できます。
+     */
+    void    drawAtPoint(double x, double y, double alpha=1.0);
+    
+    /*!
+        @method drawAtPoint
+        @param pos  座標
+        @param alpha    アルファ値
+        指定された座標にこのテクスチャを描画します。透明度も指定できます。
+     */
+    void    drawAtPoint(const KRVector2D& pos, double alpha=1.0);
 
+    /*!
+        @method drawAtPoint
+        @param pos  描画先の座標
+        @param src  描画元の矩形。KRRect2DZero を指定した場合には、テクスチャ全体が描画対象となります。
+        @param alpha    アルファ値
+        指定された領域を、指定された座標に描画します（透明度 alpha）。
+     */
+    void    drawAtPoint(const KRVector2D& pos, const KRRect2D& srcRect, double alpha=1.0);
+    
+    /*!
+        @method drawInRect
+        @param rect  描画先の矩形
+        @param alpha    アルファ値
+        指定された矩形内にこのテクスチャを描画します（透明度 alpha）。
+     */
+    void    drawInRect(const KRRect2D& rect, double alpha=1.0);
+
+    
+    /*!
+        @method drawInRect
+     */
+    void    drawInRect(const KRRect2D& destRect, const KRRect2D& srcRect, double alpha=1.0);
+    
     
     /*!
         @task 描画のための関数（色付き）
      */
-    
-    /*!
-        @method draw
-        指定された座標に指定された色でこのテクスチャを描画します。
-     */
-    void    draw(double x, double y, const KRColor& color);
-    
-    /*!
-        @method draw
-        指定された座標に指定された色でこのテクスチャを描画します。
-     */
-    void    draw(const KRVector2D& pos, const KRColor& color);
-    
-    /*!
-        @method draw
-        指定された矩形内に指定された色でこのテクスチャを描画します。
-     */
-    void    draw(const KRRect2D& rect, const KRColor& color);
-    
-    /*!
-        @method draw
-        指定された領域を、指定された色で指定された座標に描画します。
-     */
-    void    draw(const KRVector2D& pos, const KRRect2D& srcRect, const KRColor& color);
 
     /*!
-        @method draw
+        @method drawC
+        指定された座標を中心点として、指定された領域を描画します。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。色の指定ができます。
      */
-    void    draw(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color);
+    void    drawC(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale=KRVector2DOne, const KRColor& color=KRColor::White);
+    
+    /*!
+        @method drawAtPointC
+        @param x    X座標
+        @param y    Y座標
+        @param alpha    アルファ値
+        指定された座標にこのテクスチャを描画します。色の指定ができます。
+     */
+    void    drawAtPointC(double x, double y, const KRColor& color=KRColor::White);
+    
+    /*!
+        @method drawAtPointC
+        @param pos  座標
+        @param alpha    アルファ値
+        指定された座標にこのテクスチャを描画します。色の指定ができます。
+     */
+    void    drawAtPointC(const KRVector2D& pos, const KRColor& color=KRColor::White);
 
     /*!
-        @method draw
-        指定された座標を中心点として、指定された色で指定された領域を描画します。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横ともに scale 倍して描画を行います。
+        @method drawAtPoint
+        @param pos  描画先の座標
+        @param src  描画元の矩形。KRRect2DZero を指定した場合には、テクスチャ全体が描画対象となります。
+        @param alpha    アルファ値
+        指定された領域を、指定された座標に描画します。色の指定ができます。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D& origin, double scale, const KRColor& color);
+    void    drawAtPointC(const KRVector2D& pos, const KRRect2D& srcRect, const KRColor& color=KRColor::White);
+    
+    /*!
+        @method drawInRectC
+        @param rect  描画先の矩形
+        @param alpha    アルファ値
+        指定された矩形内にこのテクスチャを描画します。色の指定ができます。
+     */
+    void    drawInRectC(const KRRect2D& rect, const KRColor& color=KRColor::White);
+
+    
+    /*!
+        @method drawInRectC
+        指定された矩形内にこのテクスチャを描画します。色の指定ができます。
+     */
+    void    drawInRectC(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color=KRColor::White);
+
+public:
+    /*!
+        @task アトラス描画のための関数
+     */
 
     /*!
-        @method draw
-        指定された座標を中心点として、指定された色で指定された領域を描画します。この際、テクスチャの origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
+        @method drawAtlas
+        部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として描画します（透明度 alpha）。この際、部品の origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。
      */
-    void    draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color);
+    void    drawAtlas(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale=KRVector2DOne, double alpha=1.0);
+
+    /*!
+        @method drawAtlasAtPoint
+        部品の列 (row) を指定して、column 番目の部品を座標 pos に描画します（透明度 alpha）。
+     */
+    void    drawAtlasAtPoint(int row, int column, const KRVector2D& pos, double alpha=1.0);
+    
+    /*!
+        @method drawAtlasInRect
+        部品の列 (row) を指定して、column 番目の部品を矩形 rect の中に描画します（透明度 alpha）。
+     */
+    void    drawAtlasInRect(int row, int column, const KRRect2D& rect, double alpha=1.0);
+    
+
+public:
+    /*!
+        @task アトラス描画のための関数（色付き）
+     */
+    
+    /*!
+        @method drawAtlasC
+        部品の列 (row) を指定して、column 番目の部品を座標 centerPos を中心点として描画します。この際、部品の origin を中心として、ラジアン単位で rotation だけ回転させ、縦横に scale 倍して描画を行います。色の指定ができます。
+     */
+    void    drawAtlasC(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale=KRVector2DOne, const KRColor& color=KRColor::White);
+
+    /*!
+        @method drawAtlasAtPointC
+        部品の列 (row) を指定して、column 番目の部品を座標 pos に描画します。色の指定ができます。
+     */
+    void    drawAtlasAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color=KRColor::White);
+
+    /*!
+        @method drawAtlasInRectC
+        部品の列 (row) を指定して、column 番目の部品を矩形 rect の中に描画します。色の指定ができます。
+     */
+    void    drawAtlasInRectC(int row, int column, const KRRect2D& rect, const KRColor& color=KRColor::White);
+
     
 public:
     GLuint  getTextureName() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

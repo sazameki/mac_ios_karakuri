@@ -42,15 +42,15 @@ void LogoWorld::drawView(KRGraphics *g)
 {
     g->clear(KRColor::White);
     
-    float alpha = (float)mCount / 100;
-    if (alpha > 1.0f) {
-        alpha = 1.0f;
+    double alpha = (double)mCount / 100;
+    if (alpha > 1.0) {
+        alpha = 1.0;
     }
-    float angle = 0.0f;
+    double angle = 0.0;
     if (gKRScreenSize.x > gKRScreenSize.y) {
         angle = M_PI / 2;
     }
-    mTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mTex->getCenterPos(), 1.0f, alpha);
+    mTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mTex->getCenterPos(), KRVector2DOne, alpha);
 }
 
 
