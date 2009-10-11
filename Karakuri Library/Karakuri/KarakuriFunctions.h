@@ -112,14 +112,21 @@ void    KRSleep(double interval);
  */
 double  KRCurrentTime();
 
-bool    KRCheckOpenGLExtensionSupported(const std::string& extensionName);
-
 /*!
     @function   KRGetKarakuriVersion
     @group      Game Foundation
     @abstract   Karakuri Framework の現在のバージョンを取得します。
  */
 std::string KRGetKarakuriVersion();
+
+/*!
+    @function   KRChangeWorld
+    @group      Game Foundation
+    @abstract   ワールドを切り替えます。
+ */
+void    KRChangeWorld(const std::string& worldName);
+
+bool    KRCheckOpenGLExtensionSupported(const std::string& extensionName);
 
 
 

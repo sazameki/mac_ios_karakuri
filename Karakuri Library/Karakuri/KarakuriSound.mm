@@ -116,6 +116,14 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
         
         NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:nil];
         
+        if (!path) {
+            const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
+            if (gKRLanguage == KRLanguageJapanese) {
+                errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
+            }
+            throw KRRuntimeError(errorFormat, [name cStringUsingEncoding:NSUTF8StringEncoding]);
+        }
+        
         OSStatus    err;
         UInt32      size;
         
@@ -131,7 +139,7 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
         err = ExtAudioFileOpenURL((CFURLRef)url, &audioFile);
 #endif
         if (err != noErr) {
-            NSLog(@"Failed to open an audio file.");
+            NSLog(@"Failed to open an audio file: %@(%@)", name, [path lastPathComponent]);
         }
         
         // オーディオデータフォーマットを取得する

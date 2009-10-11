@@ -9,6 +9,7 @@
 #import "KarakuriFunctions.h"
 #import "Karakuri_Defines.h"
 
+#include "KarakuriGame.h"
 #include <string>
 
 #import <Foundation/Foundation.h>
@@ -22,6 +23,11 @@ void KRSleep(double interval)
 double KRCurrentTime()
 {
     return [NSDate timeIntervalSinceReferenceDate];
+}
+
+void KRChangeWorld(const std::string& worldName)
+{
+    gKRGameInst->changeWorld(worldName);
 }
 
 bool KRCheckOpenGLExtensionSupported(const std::string& extensionName)

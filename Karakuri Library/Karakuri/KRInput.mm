@@ -92,7 +92,7 @@ KRMouseState KRInput::getMouseState()
 KRMouseState KRInput::getMouseStateOnce()
 {
 	KRMouseState ret = (mMouseState ^ mOldMouseState) & mMouseState;
-	mOldMouseState = mMouseState;
+	mOldMouseState |= mMouseState;
 	return ret;
 }
 
@@ -128,7 +128,7 @@ KRKeyState KRInput::getKeyState()
 KRKeyState KRInput::getKeyStateOnce()
 {
 	KRKeyState ret = (mKeyState ^ mOldKeyState) & mKeyState;
-	mOldKeyState = mKeyState;
+	mOldKeyState |= mKeyState;
 	return ret;
 }
 #endif
@@ -283,7 +283,7 @@ void KRInput::processMouseDown(KRMouseState mouseMask)
 void KRInput::processMouseUp(KRMouseState mouseMask)
 {
     mMouseState &= ~mouseMask;
-    mOldMouseState = 0;
+    mOldMouseState &= ~mouseMask;
 }
 
 #endif
@@ -302,7 +302,7 @@ void KRInput::processKeyDown(KRKeyState keyMask)
 void KRInput::processKeyUp(KRKeyState keyMask)
 {
     mKeyState &= ~keyMask;
-    mOldKeyState = 0;
+    mOldKeyState &= ~keyMask;
 }
 
 void KRInput::processKeyDownCode(unsigned short keyCode)

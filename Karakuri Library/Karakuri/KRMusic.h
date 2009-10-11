@@ -27,6 +27,15 @@ private:
     bool        mDoLoop;
     
 public:
+    /*!
+        @task コンストラクタ
+     */
+    
+    /*!
+        @method KRMusic
+        @abstract ファイル名（拡張子含む）を指定して、BGM再生用のインスタンスを作成します。
+        デフォルトではループ再生しますが、第2引数に false を指定するとループ再生しないようになります。
+     */
     KRMusic(const std::string& filename, bool loop=true);
     ~KRMusic();
     

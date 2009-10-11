@@ -40,6 +40,8 @@ public:
     
     /*!
         @method KRSound
+        @abstract ファイル名（拡張子含む）を指定して、効果音再生用のインスタンスを作成します。
+        デフォルトではループ再生しませんが、第2引数に true を指定するとループ再生するようになります。
      */
     KRSound(const std::string& filename, bool doLoop = false);
     ~KRSound();

@@ -18,7 +18,7 @@ void PlayWorld::becameActive()
 {
     mTex = new KRTexture2D("chara.png");
 
-    mPos = (gKRScreenSize - mTex->getSize()) / 2;
+    mPos = gKRScreenSize / 2;
     
 #if KR_IPHONE
     gKRInputInst->enableAccelerometer(true);
@@ -53,7 +53,7 @@ void PlayWorld::updateModel(KRInput *input)
     }
     
     if (input->getMouseState() & KRInput::MouseButtonAny) {
-        mPos = input->getMouseLocation() - mTex->getCenterPos();
+        mPos = input->getMouseLocation();
     }
 #endif
     
@@ -63,16 +63,16 @@ void PlayWorld::updateModel(KRInput *input)
     mPos.y += acc.y * 8;
 #endif
     
-    if (mPos.x < 0.0) {
-        mPos.x = 0.0;
+    if (mPos.x < mTex->getWidth() / 2) {
+        mPos.x = mTex->getWidth() / 2;
     } else if (mPos.x >= gKRScreenSize.x - mTex->getWidth()) {
-        mPos.x = gKRScreenSize.x - 1.0 - mTex->getWidth();
+        mPos.x = gKRScreenSize.x - 1.0 - mTex->getWidth() / 2;
     }
 
-    if (mPos.y < 0.0) {
-        mPos.y = 0.0;
+    if (mPos.y < mTex->getWidth() / 2) {
+        mPos.y = mTex->getWidth() / 2;
     } else if (mPos.y >= gKRScreenSize.y - mTex->getHeight()) {
-        mPos.y = gKRScreenSize.y - 1.0 - mTex->getHeight();
+        mPos.y = gKRScreenSize.y - 1.0 - mTex->getHeight() / 2;
     }
 }
 
@@ -80,7 +80,7 @@ void PlayWorld::drawView(KRGraphics *g)
 {
     g->clear(KRColor::CornflowerBlue);
     
-    mTex->drawAtPoint(mPos);
+    mTex->drawAtPointCenter(mPos);
 }
 
 

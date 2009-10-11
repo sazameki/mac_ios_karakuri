@@ -34,7 +34,7 @@ void LogoWorld::updateModel(KRInput *input)
 {
     mCount--;
     if (mCount == 0) {
-        gKRGameInst->changeWorld("play");
+        KRChangeWorld("play");
     }
 }
 

@@ -56,6 +56,7 @@ void KRTexture2D::processBatchedTexture2DDraws()
 #pragma mark Constructor / Destructor
 
 KRTexture2D::KRTexture2D(const std::string& filename, const KRVector2D& atlasSize)
+    : mAtlasSize(atlasSize)
 {
     if (sTexture2DBatchCount > 0) {
         KRTexture2D::processBatchedTexture2DDraws();
@@ -117,6 +118,11 @@ KRTexture2D::~KRTexture2D()
 
 #pragma mark -
 #pragma mark Status Getting Functions
+
+KRVector2D KRTexture2D::getAtlasSize() const
+{
+    return mAtlasSize;
+}
 
 double KRTexture2D::getWidth() const
 {

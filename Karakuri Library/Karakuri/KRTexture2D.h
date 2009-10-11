@@ -34,8 +34,18 @@ private:
     
     void        *mTexture2DImpl;
     void        *mAtlas;
-    
+    KRVector2D  mAtlasSize;
+
 public:
+    /*!
+        @task コンストラクタ
+     */
+
+    /*!
+        @method KRTexture2D
+        @abstract 画像ファイルの名前（拡張子を含む）を指定してテクスチャを生成します。
+        第2引数でアトラスのサイズを設定することで、簡単に部分描画を行なうことができます。
+     */
     KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
     KRTexture2D(const std::string& str, KRFont *font);
     ~KRTexture2D();
@@ -46,10 +56,16 @@ public:
      */
 
     /*!
-        @method getWidth
-        テクスチャの横幅をリターンします（ピクセル単位）。
+        @method getAtlasSize
+        アトラス機能を使用する際の各部品のサイズを取得します。
      */
-    double      getWidth() const;
+    KRVector2D  getAtlasSize() const;
+
+    /*!
+        @method getCenterPos
+        テクスチャの中心点をリターンします（ピクセル単位）。
+     */
+    KRVector2D  getCenterPos() const;    
     
     /*!
         @method getHeight
@@ -64,10 +80,11 @@ public:
     KRVector2D  getSize() const;
     
     /*!
-        @method getCenterPos
-        テクスチャの中心点をリターンします（ピクセル単位）。
+        @method getWidth
+        テクスチャの横幅をリターンします（ピクセル単位）。
      */
-    KRVector2D  getCenterPos() const;
+    double      getWidth() const;
+    
     
 public:
     /*!
