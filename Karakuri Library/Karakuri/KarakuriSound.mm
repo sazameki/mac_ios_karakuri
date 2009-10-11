@@ -178,11 +178,11 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
         dataBuffer.mBuffers[0].mData = mAudioBuffer;
         
         // バッファにデータを読み込む
-        err = ExtAudioFileRead(audioFile, (UInt32*)&fileLengthFrames, &dataBuffer);
+        UInt32 theFileLengthFrames = (UInt32)fileLengthFrames;
+        err = ExtAudioFileRead(audioFile, &theFileLengthFrames, &dataBuffer);
         
         // オーディオファイルを破棄する
         ExtAudioFileDispose(audioFile);
-        
         
         // バッファとソースを作成する
         alGenBuffers(1, &mALBuffer);
