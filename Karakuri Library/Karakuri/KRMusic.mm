@@ -17,6 +17,12 @@
 #endif
 
 
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+static BOOL sHasOSVersionChecked = NO;
+static BOOL sCanUseNSSound = NO;
+#endif
+
+
 KRMusic::KRMusic(const std::string& filename, bool loop)
 {
     mFileName = filename;
@@ -25,15 +31,35 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
     mImpl = nil;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    if (!sHasOSVersionChecked) {
+        if ([NSSound instancesRespondToSelector:@selector(setVolume:)]) {
+            sCanUseNSSound = YES;
+        }
+        sHasOSVersionChecked = YES;
+    }
     if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-        mImpl = [[KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
+        if (sCanUseNSSound) {
+            NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+            mImpl = [[NSSound alloc] initWithContentsOfFile:filepath byReference:YES];
+        } else {
+            mImpl = [[KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
+        }
         if (!mImpl) {
             const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
             if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
             }
             throw KRRuntimeError(errorFormat, filename.c_str());
+        }
+        if (sCanUseNSSound && loop) {
+            NSMethodSignature *sig = [(NSSound *)mImpl methodSignatureForSelector:@selector(setLoops:)];
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+            [invocation setSelector:@selector(setLoops:)];
+            [invocation setTarget:(NSSound *)mImpl];
+            BOOL boolValue = YES;
+            [invocation setArgument:&boolValue atIndex:2];
+            [invocation invokeWithTarget:(NSSound *)mImpl];
         }
     }
 #endif
@@ -67,7 +93,11 @@ KRMusic::~KRMusic()
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(NSSound *)mImpl release];
+        if (sCanUseNSSound) {
+            [(NSSound *)mImpl release];
+        } else {
+            [(KarakuriSound *)mImpl release];
+        }
     }
 #endif
     
@@ -91,7 +121,11 @@ bool KRMusic::isPlaying() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        return [(NSSound *)mImpl isPlaying];
+        if (sCanUseNSSound) {
+            return [(NSSound *)mImpl isPlaying];
+        } else {
+            return [(KarakuriSound *)mImpl isPlaying];
+        }
     }
     return false;
 #endif
@@ -108,7 +142,11 @@ void KRMusic::play()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(NSSound *)mImpl play];
+        if (sCanUseNSSound) {
+            [(NSSound *)mImpl play];
+        } else {
+            [(KarakuriSound *)mImpl play];
+        }
     }
 #endif
 
@@ -123,7 +161,11 @@ void KRMusic::pause()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(NSSound *)mImpl pause];
+        if (sCanUseNSSound) {
+            [(NSSound *)mImpl pause];
+        } else {
+            [(KarakuriSound *)mImpl pause];
+        }
     }
 #endif
     
@@ -138,7 +180,11 @@ void KRMusic::stop()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(NSSound *)mImpl stop];
+        if (sCanUseNSSound) {
+            [(NSSound *)mImpl stop];
+        } else {
+            [(KarakuriSound *)mImpl stop];
+        }
     }
 #endif
     
@@ -153,8 +199,18 @@ double KRMusic::getVolume() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        return (double)[(KarakuriSound *)mImpl volume];
-        //return [(NSSound *)mImpl volume];
+        if (sCanUseNSSound) {
+            NSMethodSignature *sig = [(NSSound *)mImpl methodSignatureForSelector:@selector(volume)];
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+            [invocation setSelector:@selector(volume)];
+            [invocation setTarget:(NSSound *)mImpl];
+            [invocation invokeWithTarget:(NSSound *)mImpl];
+            float value;
+            [invocation getReturnValue:&value];
+            return (double)value;
+        } else {
+            return (double)[(KarakuriSound *)mImpl volume];
+        }
     }
 #endif
     
@@ -171,8 +227,17 @@ void KRMusic::setVolume(double value)
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(KarakuriSound *)mImpl setVolume:(float)value];
-        //[(NSSound *)mImpl setVolume:value];
+        if (sCanUseNSSound) {
+            NSMethodSignature *sig = [(NSSound *)mImpl methodSignatureForSelector:@selector(setVolume:)];
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+            [invocation setSelector:@selector(setVolume:)];
+            [invocation setTarget:(NSSound *)mImpl];
+            float floatValue = (float)value;
+            [invocation setArgument:&floatValue atIndex:2];
+            [invocation invokeWithTarget:(NSSound *)mImpl];
+        } else {
+            [(KarakuriSound *)mImpl setVolume:(float)value];
+        }
     }
 #endif
 
