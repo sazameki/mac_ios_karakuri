@@ -12,6 +12,9 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
+struct KRInputSourceData;
+
+
 #pragma mark Mask Type for Mouse Input (Mac OS X)
 
 #if KR_MACOSX
@@ -205,8 +208,11 @@ public:
 
 #if KR_MACOSX
 private:
+    KRVector2DInt   mOldMouseLocationForInputLog;
     KRMouseState    mMouseState;
     KRMouseState    mOldMouseState;
+    KRMouseState    mMouseStateAgainstDummy;
+    KRVector2D      mMouseLocationForDummy;
     //bool            mIsFullScreen;
 #endif
 
@@ -218,6 +224,7 @@ private:
 private:
     KRKeyState      mKeyState;
     KRKeyState      mOldKeyState;
+    KRKeyState      mKeyStateAgainstDummy;
 #endif
 
 
@@ -228,6 +235,7 @@ private:
 private:
     KRTouchState                mTouchState;
     KRTouchState                mTouchStateOld;
+    int                         mTouchCountAgainstDummy;
     std::vector<KRTouchInfo>    mTouchInfos;
 
     unsigned                    mTouchArrow_touchID;
@@ -252,7 +260,13 @@ private:
     KRVector3D      mAcceleration;
     bool            mIsAccelerometerEnabled;
 #endif
+
     
+#pragma mark -
+#pragma Dummy Input Support
+private:
+    bool            mHasDummySource;
+
     
 #pragma mark -
 #pragma mark Constructor
@@ -276,6 +290,13 @@ public:
         左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
      */
     KRMouseState    getMouseState();
+
+    /*!
+        @method getMouseStateAgainstDummy
+        @abstract ダミー入力が設定されている際に、ユーザからの現在のマウス押下状態を取得します。
+        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
+     */
+    KRMouseState    getMouseStateAgainstDummy();
     
     /*!
         @method getMouseStateOnce
@@ -284,6 +305,11 @@ public:
         左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
      */
     KRMouseState    getMouseStateOnce();
+
+    /*!
+        @method getMouseLocation
+        @abstract 現在のマウスのカーソル位置を取得します。
+     */
     KRVector2D      getMouseLocation();
 #endif
 
@@ -303,7 +329,14 @@ public:
         すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
      */
     KRKeyState      getKeyState();
-    
+
+    /*!
+        @method getKeyStateAgainstDummy
+        @abstract ダミー入力が設定されている際に、ユーザからの現在のキー入力状態を取得します。
+        すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
+     */
+    KRKeyState      getKeyStateAgainstDummy();
+
     /*!
         @method getKeyStateOnce
         @abstract 現在のキー入力状態を取得します。
@@ -329,6 +362,12 @@ public:
      */
     bool            getTouch();
     
+    /*!
+        @method getTouchAgainstDummy
+        @abstract ダミー入力が設定されている際に、現在画面がタッチされているかどうかを取得します。
+     */
+    bool            getTouchAgainstDummy();
+
     /*!
         @method getTouchOnce
         @abstract 現在画面がタッチされているかどうかを取得します。
@@ -439,7 +478,15 @@ public:
 public:
     // These methods are intended to be used with KarakuriGLView class.
     void    processMouseDown(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processMouseDrag() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void    processMouseUp(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    
+private:
+    void    processMouseDownImpl(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processMouseDragImpl(const KRVector2D& pos=KRVector2DZero) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processMouseUpImpl(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processMouseDownImplAgainstDummy(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processMouseUpImplAgainstDummy(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
 
     
@@ -448,10 +495,14 @@ public:
 
 #if KR_MACOSX
 public:
-    void    processKeyDown(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processKeyUp(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void    processKeyDownCode(unsigned short keyCode) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void    processKeyUpCode(unsigned short keyCode) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    
+private:
+    void    processKeyDown(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processKeyUp(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processKeyDownAgainstDummy(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processKeyUpAgainstDummy(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
     
 
@@ -463,6 +514,13 @@ public:
     void    startTouch(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void    moveTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void    endTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+
+private:
+    void    startTouchImpl(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    moveTouchImpl(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    endTouchImpl(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;    
+    void    startTouchImplAgainstDummy(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    endTouchImplAgainstDummy(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;    
 #endif
     
     
@@ -473,8 +531,25 @@ public:
 public:
     // These methods are intended to be used with KarakuriGLView class.
     void    setAcceleration(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+
+private:
+    void    setAccelerationImpl(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
 
+    
+#pragma mark -
+#pragma mark Dummy Input Support
+    
+public:
+    void    plugDummySourceIn() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    pullDummySourceOut() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    processDummyData(KRInputSourceData& data) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+
+    
+#pragma mark -
+#pragma mark Debug Support
+public:
+    void    resetAllInputs() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 #pragma mark -
 #pragma mark Debug Support

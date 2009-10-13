@@ -22,6 +22,20 @@ class KRSlider;
 class KRSwitch;
 
 
+typedef struct KRInputSourceData {
+    unsigned        frame;
+    unsigned char   command[2];
+    
+    unsigned long long  data_mask;
+#if KR_MACOSX
+    KRVector2D          location;
+#endif
+#if KR_IPHONE
+    KRVector3D          location;
+#endif
+} KRInputSourceData;
+
+
 /*!
     @class KRWorld
     @group  Game Foundation
@@ -37,8 +51,13 @@ private:
     KRControlManager    *mControlManager;
     bool                mHasProcessedControl;
     bool                mIsControlProcessEnabled;
-    
+    bool                mIsLoadingWorld;
+    bool                mHasDummyInputSource;
+    unsigned                            mDummyInputSourceDataPos;
+    std::vector<KRInputSourceData>      mDummyInputSourceDataList;
+
 public:
+    KRWorld();
     
     /*!
         @task 読み込み中画面の処理のためのオーバーライド関数
@@ -154,13 +173,65 @@ public:
      */
     virtual void    switchStateChanged(KRSwitch *switcher);
 
+
+#pragma mark -
+#pragma mark Dummy Input Support
+protected:
+    /*!
+        @task ダミー入力のサポートのための関数
+     */
+    
+    /*!
+        @method hasDummyInputSource
+        ダミーの入力ソースが設定されているかどうかをリターンします。
+     */
+    bool    hasDummyInputSource() const;
+    
+    /*!
+        @method hasMoreDummyInputData
+        ダミーの入力データが残っているかどうかをリターンします。
+     */
+    bool    hasMoreDummyInputData() const;
+    
+    /*!
+        @method setDummyInputSource
+        @abstract このワールドの実行中に使用する入力ソースのファイルを設定します。
+        <p>この関数は、becameActive() 関数の中でのみ使用できます。</p>
+        <p>ダミーの入力ソースが設定されている間は、ユーザの入力は通常の方法では取得できなくなります。</p>
+        <p>入力ソースのファイルは、次のいずれかの場所にある必要があります。</p>
+        <ul>
+            <li>アプリケーション・バンドルの Resources フォルダ (Mac OS X / iPhone / iPhone エミュレータ)</li>
+            <li>"~/Library/Application Support/Karakuri/&lt;アプリケーション識別子&gt;/&lt;ゲームのタイトル&gt;/Input Log" フォルダ (Mac OS X / iPhone エミュレータ)</li>
+            <li>"&lt;Application_Home&gt;/Documents/Input Log" フォルダ(iPhone)</li>
+        </ul>
+     */
+    void    setDummyInputSource(const std::string& filename);
+
+    /*!
+        @method startInputLog
+        @abstract ユーザ入力のログファイルへの書き出しを開始します。
+        <p>ログファイルの名前がリターンされます。ログファイルの名前は、システムによって自動的に決定されます。ログファイルの書き出しは、ワールドが切り替わる時点で終了します。</p>
+        <p>ログファイルは、環境に応じて次の場所に格納されます。</p>
+        <ul>
+            <li>"~/Library/Application Support/Karakuri/&lt;アプリケーション識別子&gt;/&lt;ゲームのタイトル&gt;/Input Log" フォルダ (Mac OS X / iPhone エミュレータ)</li>
+            <li>"&lt;Application_Home&gt;/Documents/Input Log" フォルダ(iPhone)</li>
+        </ul>
+        <p>読み込み中画面に使用しているワールドでは、ログファイルへのユーザ入力書き出しはできません。</p>
+     */
+    std::string startInputLog();
+    
+    
 #pragma mark -
 #pragma mark Debug Support
 
 public:
     std::string     getName() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void            setName(const std::string& str) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void            setLoadingWorld() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     std::string     to_s() const;
 
 };
+
+extern void     *gInputLogHandle KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+extern unsigned gInputLogFrameCounter KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 

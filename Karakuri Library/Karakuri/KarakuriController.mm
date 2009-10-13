@@ -286,7 +286,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     NSString *message = [NSString stringWithFormat:messageFormat, mNetworkPeerName];
     
-#if KR_MACOSX || KR_MACPHONE_EMU    
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU    
     NSBeginAlertSheet(title,
                       acceptLabel,
                       rejectLabel,
@@ -294,9 +294,9 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                       mWindow,
                       self, @selector(networkInvitationSheetDidEnd:returnCode:contextInfo:), nil, nil,
                       message, nil);
-#endif  // #if KR_MACOSX || KR_MACPHONE_EMU
+#endif  // #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     
-#if KR_IPHONE && !KR_MACPHONE_EMU
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     mNetworkAcceptAlertView = [[UIAlertView alloc] initWithTitle:title
                                                         message:message
                                                        delegate:self
@@ -304,10 +304,10 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                                               otherButtonTitles:acceptLabel, nil];
     [mNetworkAcceptAlertView show];
     [mNetworkAcceptAlertView release];
-#endif  // #if KR_IPHONE && !KR_MACPHONE_EMU
+#endif  // #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 }
 
-#if KR_MACOSX || KR_MACPHONE_EMU
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 - (void)networkInvitationSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     [sheet orderOut:self];
@@ -322,7 +322,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 }
 #endif
 
-#if KR_IPHONE && !KR_MACPHONE_EMU
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView == mErrorAlertView) {
@@ -340,7 +340,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         mNetworkAcceptAlertView = nil;
     }
 }
-#endif  // #if KR_IPHONE && !KR_MACPHONE_EMU
+#endif  // #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 
 
 #pragma mark -
@@ -350,13 +350,13 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 {
     mIsInvitingNetworkPeer = YES;
 
-#if KR_MACOSX || KR_MACPHONE_EMU
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     mPeerPickerWindow = [[KRPeerPickerWindow alloc] initWithMainWindow:mWindow];
     [mPeerPickerWindow setDelegate:self];
     [mPeerPickerWindow makeKeyAndOrderFront:self];
 #endif
     
-#if KR_IPHONE && !KR_MACPHONE_EMU    
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU    
     mPeerPickerController = [KRPeerPickerController new];
     mPeerPickerController.delegate = self;
     
@@ -385,7 +385,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 }
 
-#if KR_MACOSX || KR_MACPHONE_EMU
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 - (void)peerPickerCanceled:(KRPeerPickerWindow *)pickerWindow
 {
     mPeerPickerWindow = nil;
@@ -407,7 +407,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 }
 #endif
 
-#if KR_IPHONE && !KR_MACPHONE_EMU
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 - (void)peerPickerCanceled:(KRPeerPickerController *)pickerController
 {
     [UIView beginAnimations:@"Picker Out" context:nil];
@@ -683,6 +683,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                             throw KRRuntimeError(errorFormat);
                         }
                     }
+                    mLoadingScreenWorld->setLoadingWorld();
                     mLoadingScreenWorld->startBecameActive();
                     [NSThread detachNewThreadSelector:@selector(worldLoadingProc:) toTarget:self withObject:nil];
                 } else {
@@ -853,6 +854,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                                     throw KRRuntimeError(errorFormat);
                                 }
                             }
+                            mLoadingScreenWorld->setLoadingWorld();
                             mLoadingScreenWorld->startBecameActive();
                             [NSThread detachNewThreadSelector:@selector(worldLoadingProc:) toTarget:self withObject:nil];
                         } else {
@@ -1160,6 +1162,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                                     throw KRRuntimeError(errorFormat);
                                 }
                             }
+                            mLoadingScreenWorld->setLoadingWorld();
                             mLoadingScreenWorld->startBecameActive();
                             [NSThread detachNewThreadSelector:@selector(worldLoadingProc:) toTarget:self withObject:nil];
                         } else {

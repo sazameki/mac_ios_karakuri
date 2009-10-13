@@ -10,6 +10,7 @@
 #include <Karakuri/KRInput.h>
 
 #include <karakuri/KarakuriGame.h>
+#include <Karakuri/KarakuriWorld.h>
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 #import <Karakuri/macosx/KarakuriWindow.h>
@@ -41,40 +42,17 @@ KRInput::KRInput()
     //mIsFullScreen = false;
 #endif
 
-    // Mouse Input Support
-#if KR_MACOSX
-    mMouseState = 0;
-    mOldMouseState = 0;
-#endif
+    resetAllInputs();
 
-    // Keyboard Input Support
-#if KR_MACOSX
-    mKeyState = 0;
-    mOldKeyState = 0;
-#endif
-    
     // Touch Input Support
 #if KR_IPHONE
     sTouchLock = [NSLock new];
-
-    mTouchState = 0;
-    mTouchStateOld = 0;
-
-    mTouchArrow_touchID = 99999;
-    
-    mTouchButton1_touchID = 99999;
-    mTouchButton1State = 0;
-    mTouchButton1StateOld = 0;
-
-    mTouchButton2_touchID = 99999;
-    mTouchButton2State = 0;
-    mTouchButton2StateOld = 0;
 #endif
-
+    
     // Accelerometer Support
 #if KR_IPHONE
     mIsAccelerometerEnabled = false;
-#endif
+#endif    
 }
 
 
@@ -89,6 +67,11 @@ KRMouseState KRInput::getMouseState()
     return mMouseState;
 }
 
+KRMouseState KRInput::getMouseStateAgainstDummy()
+{
+    return mMouseStateAgainstDummy;
+}
+
 KRMouseState KRInput::getMouseStateOnce()
 {
 	KRMouseState ret = (mMouseState ^ mOldMouseState) & mMouseState;
@@ -98,6 +81,10 @@ KRMouseState KRInput::getMouseStateOnce()
 
 KRVector2D KRInput::getMouseLocation()
 {
+    if (mHasDummySource) {
+        return mMouseLocationForDummy;
+    }
+    
     KRVector2D ret;
     
     if (_KRIsFullScreen) {
@@ -131,6 +118,11 @@ KRKeyState KRInput::getKeyStateOnce()
 	mOldKeyState |= mKeyState;
 	return ret;
 }
+
+KRKeyState KRInput::getKeyStateAgainstDummy()
+{
+    return mKeyStateAgainstDummy;
+}
 #endif
 
 
@@ -141,6 +133,11 @@ KRKeyState KRInput::getKeyStateOnce()
 bool KRInput::getTouch()
 {
     return (mTouchInfos.size() > 0);
+}
+
+bool KRInput::getTouchAgainstDummy()
+{
+    return (mTouchCountAgainstDummy > 0);
 }
 
 bool KRInput::getTouchOnce()
@@ -275,15 +272,84 @@ void KRInput::enableAccelerometer(bool flag)
 
 #if KR_MACOSX
 
-void KRInput::processMouseDown(KRMouseState mouseMask)
+void KRInput::processMouseDownImpl(KRMouseState mouseMask)
 {
     mMouseState |= mouseMask;
+
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        KRVector2D locationDouble = getMouseLocation();
+        KRVector2DInt location((int)locationDouble.x, (int)locationDouble.y);
+        mOldMouseLocationForInputLog = location;
+        NSString *dataStr = [NSString stringWithFormat:@"%u:MD%X(%d,%d)\n", gInputLogFrameCounter, mouseMask, mOldMouseLocationForInputLog.x, mOldMouseLocationForInputLog.y];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+}
+
+void KRInput::processMouseDragImpl(const KRVector2D& pos)
+{
+    if (mHasDummySource) {
+        mMouseLocationForDummy = pos;
+    }
+    
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        KRVector2D locationDouble = getMouseLocation();
+        KRVector2DInt location((int)locationDouble.x, (int)locationDouble.y);
+        if (location != mOldMouseLocationForInputLog) {
+            NSString *dataStr = [NSString stringWithFormat:@"%u:MM(%d,%d)\n", gInputLogFrameCounter, location.x, location.y];
+            [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+            mOldMouseLocationForInputLog = location;
+        }
+    }
+}
+
+void KRInput::processMouseUpImpl(KRMouseState mouseMask)
+{
+    mMouseState &= ~mouseMask;
+    mOldMouseState &= ~mouseMask;
+
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        KRVector2D locationDouble = getMouseLocation();
+        KRVector2DInt location((int)locationDouble.x, (int)locationDouble.y);
+        NSString *dataStr = [NSString stringWithFormat:@"%u:MU%X(%d,%d)\n", gInputLogFrameCounter, mouseMask, location.x, location.y];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+}
+
+void KRInput::processMouseDownImplAgainstDummy(KRMouseState mouseMask)
+{
+    mMouseStateAgainstDummy |= mouseMask;
+}
+
+void KRInput::processMouseUpImplAgainstDummy(KRMouseState mouseMask)
+{
+    mMouseStateAgainstDummy &= ~mouseMask;
+}
+
+void KRInput::processMouseDown(KRMouseState mouseMask)
+{
+    if (mHasDummySource) {
+        processMouseDownImplAgainstDummy(mouseMask);
+    } else {
+        processMouseDownImpl(mouseMask);
+    }
+}
+
+void KRInput::processMouseDrag()
+{
+    if (mHasDummySource) {
+        // Do nothing
+    } else {
+        processMouseDragImpl();
+    }
 }
 
 void KRInput::processMouseUp(KRMouseState mouseMask)
 {
-    mMouseState &= ~mouseMask;
-    mOldMouseState &= ~mouseMask;
+    if (mHasDummySource) {
+        processMouseUpImplAgainstDummy(mouseMask);
+    } else {
+        processMouseUpImpl(mouseMask);
+    }
 }
 
 #endif
@@ -297,296 +363,328 @@ void KRInput::processMouseUp(KRMouseState mouseMask)
 void KRInput::processKeyDown(KRKeyState keyMask)
 {
     mKeyState |= keyMask;
+    
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        NSString *dataStr = [NSString stringWithFormat:@"%u:KD%qX\n", gInputLogFrameCounter, keyMask];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+}
+
+void KRInput::processKeyDownAgainstDummy(KRKeyState keyMask)
+{
+    mKeyStateAgainstDummy |= keyMask;
 }
 
 void KRInput::processKeyUp(KRKeyState keyMask)
 {
     mKeyState &= ~keyMask;
     mOldKeyState &= ~keyMask;
+
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        NSString *dataStr = [NSString stringWithFormat:@"%u:KU%qX\n", gInputLogFrameCounter, keyMask];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+}
+
+void KRInput::processKeyUpAgainstDummy(KRKeyState keyMask)
+{
+    mKeyStateAgainstDummy &= ~keyMask;
 }
 
 void KRInput::processKeyDownCode(unsigned short keyCode)
 {
+    void (KRInput::*processFunc)(KRKeyState) = &KRInput::processKeyDown;
+
+    if (mHasDummySource) {
+        processFunc = &KRInput::processKeyDownAgainstDummy;
+    }
+
     if (keyCode == 0x1d || keyCode == 0x52) {
-        processKeyDown(KRInput::Key0);
+        (this->*processFunc)(KRInput::Key0);
     }
     else if (keyCode == 0x12 || keyCode == 0x53) {
-        processKeyDown(KRInput::Key1);
+        (this->*processFunc)(KRInput::Key1);
     }
     else if (keyCode == 0x13 || keyCode == 0x54) {
-        processKeyDown(KRInput::Key2);
+        (this->*processFunc)(KRInput::Key2);
     }
     else if (keyCode == 0x14 || keyCode == 0x55) {
-        processKeyDown(KRInput::Key3);
+        (this->*processFunc)(KRInput::Key3);
     }
     else if (keyCode == 0x15 || keyCode == 0x56) {
-        processKeyDown(KRInput::Key4);
+        (this->*processFunc)(KRInput::Key4);
     }
     else if (keyCode == 0x17 || keyCode == 0x57) {
-        processKeyDown(KRInput::Key5);
+        (this->*processFunc)(KRInput::Key5);
     }
     else if (keyCode == 0x16 || keyCode == 0x58) {
-        processKeyDown(KRInput::Key6);
+        (this->*processFunc)(KRInput::Key6);
     }
     else if (keyCode == 0x1a || keyCode == 0x59) {
-        processKeyDown(KRInput::Key7);
+        (this->*processFunc)(KRInput::Key7);
     }
     else if (keyCode == 0x1c || keyCode == 0x5b) {
-        processKeyDown(KRInput::Key8);
+        (this->*processFunc)(KRInput::Key8);
     }
     else if (keyCode == 0x19 || keyCode == 0x5c) {
-        processKeyDown(KRInput::Key9);
+        (this->*processFunc)(KRInput::Key9);
     }
     else if (keyCode == 0x00) {
-        processKeyDown(KRInput::KeyA);
+        (this->*processFunc)(KRInput::KeyA);
     }
     else if (keyCode == 0x0b) {
-        processKeyDown(KRInput::KeyB);
+        (this->*processFunc)(KRInput::KeyB);
     }
     else if (keyCode == 0x08) {
-        processKeyDown(KRInput::KeyC);
+        (this->*processFunc)(KRInput::KeyC);
     }
     else if (keyCode == 0x02) {
-        processKeyDown(KRInput::KeyD);
+        (this->*processFunc)(KRInput::KeyD);
     }
     else if (keyCode == 0x0e) {
-        processKeyDown(KRInput::KeyE);
+        (this->*processFunc)(KRInput::KeyE);
     }
     else if (keyCode == 0x03) {
-        processKeyDown(KRInput::KeyF);
+        (this->*processFunc)(KRInput::KeyF);
     }
     else if (keyCode == 0x05) {
-        processKeyDown(KRInput::KeyG);
+        (this->*processFunc)(KRInput::KeyG);
     }
     else if (keyCode == 0x04) {
-        processKeyDown(KRInput::KeyH);
+        (this->*processFunc)(KRInput::KeyH);
     }
     else if (keyCode == 0x22) {
-        processKeyDown(KRInput::KeyI);
+        (this->*processFunc)(KRInput::KeyI);
     }
     else if (keyCode == 0x26) {
-        processKeyDown(KRInput::KeyJ);
+        (this->*processFunc)(KRInput::KeyJ);
     }
     else if (keyCode == 0x28) {
-        processKeyDown(KRInput::KeyK);
+        (this->*processFunc)(KRInput::KeyK);
     }
     else if (keyCode == 0x25) {
-        processKeyDown(KRInput::KeyL);
+        (this->*processFunc)(KRInput::KeyL);
     }
     else if (keyCode == 0x2e) {
-        processKeyDown(KRInput::KeyM);
+        (this->*processFunc)(KRInput::KeyM);
     }
     else if (keyCode == 0x2d) {
-        processKeyDown(KRInput::KeyN);
+        (this->*processFunc)(KRInput::KeyN);
     }
     else if (keyCode == 0x1f) {
-        processKeyDown(KRInput::KeyO);
+        (this->*processFunc)(KRInput::KeyO);
     }
     else if (keyCode == 0x23) {
-        processKeyDown(KRInput::KeyP);
+        (this->*processFunc)(KRInput::KeyP);
     }
     else if (keyCode == 0x0c) {
-        processKeyDown(KRInput::KeyQ);
+        (this->*processFunc)(KRInput::KeyQ);
     }
     else if (keyCode == 0x0f) {
-        processKeyDown(KRInput::KeyR);
+        (this->*processFunc)(KRInput::KeyR);
     }
     else if (keyCode == 0x01) {
-        processKeyDown(KRInput::KeyS);
+        (this->*processFunc)(KRInput::KeyS);
     }
     else if (keyCode == 0x11) {
-        processKeyDown(KRInput::KeyT);
+        (this->*processFunc)(KRInput::KeyT);
     }
     else if (keyCode == 0x20) {
-        processKeyDown(KRInput::KeyU);
+        (this->*processFunc)(KRInput::KeyU);
     }
     else if (keyCode == 0x09) {
-        processKeyDown(KRInput::KeyV);
+        (this->*processFunc)(KRInput::KeyV);
     }
     else if (keyCode == 0x0d) {
-        processKeyDown(KRInput::KeyW);
+        (this->*processFunc)(KRInput::KeyW);
     }
     else if (keyCode == 0x07) {
-        processKeyDown(KRInput::KeyX);
+        (this->*processFunc)(KRInput::KeyX);
     }
     else if (keyCode == 0x10) {
-        processKeyDown(KRInput::KeyY);
+        (this->*processFunc)(KRInput::KeyY);
     }
     else if (keyCode == 0x06) {
-        processKeyDown(KRInput::KeyZ);
+        (this->*processFunc)(KRInput::KeyZ);
     }
     else if (keyCode == 0x7e) {
-        processKeyDown(KRInput::KeyUp);
+        (this->*processFunc)(KRInput::KeyUp);
     }
     else if (keyCode == 0x7d) {
-        processKeyDown(KRInput::KeyDown);
+        (this->*processFunc)(KRInput::KeyDown);
     }
     else if (keyCode == 0x7b) {
-        processKeyDown(KRInput::KeyLeft);
+        (this->*processFunc)(KRInput::KeyLeft);
     }
     else if (keyCode == 0x7c) {
-        processKeyDown(KRInput::KeyRight);
+        (this->*processFunc)(KRInput::KeyRight);
     }
     else if (keyCode == 0x24 || keyCode == 0x4c) {
-        processKeyDown(KRInput::KeyReturn);
+        (this->*processFunc)(KRInput::KeyReturn);
     }
     else if (keyCode == 0x30) {
-        processKeyDown(KRInput::KeyTab);
+        (this->*processFunc)(KRInput::KeyTab);
     }
     else if (keyCode == 0x31) {
-        processKeyDown(KRInput::KeySpace);
+        (this->*processFunc)(KRInput::KeySpace);
     }
     else if (keyCode == 0x33) {
-        processKeyDown(KRInput::KeyBackspace);
+        (this->*processFunc)(KRInput::KeyBackspace);
     }
     else if (keyCode == 0x75) {
-        processKeyDown(KRInput::KeyDelete);
+        (this->*processFunc)(KRInput::KeyDelete);
     }
     else if (keyCode == 0x35) {
-        processKeyDown(KRInput::KeyEscape);
+        (this->*processFunc)(KRInput::KeyEscape);
     }
 }
 
 void KRInput::processKeyUpCode(unsigned short keyCode)
 {
+    void (KRInput::*processFunc)(KRKeyState) = &KRInput::processKeyUp;
+    
+    if (mHasDummySource) {
+        processFunc = &KRInput::processKeyUpAgainstDummy;
+    }
+    
     if (keyCode == 0x1d || keyCode == 0x52) {
-        processKeyUp(KRInput::Key0);
+        (this->*processFunc)(KRInput::Key0);
     }
     else if (keyCode == 0x12 || keyCode == 0x53) {
-        processKeyUp(KRInput::Key1);
+        (this->*processFunc)(KRInput::Key1);
     }
     else if (keyCode == 0x13 || keyCode == 0x54) {
-        processKeyUp(KRInput::Key2);
+        (this->*processFunc)(KRInput::Key2);
     }
     else if (keyCode == 0x14 || keyCode == 0x55) {
-        processKeyUp(KRInput::Key3);
+        (this->*processFunc)(KRInput::Key3);
     }
     else if (keyCode == 0x15 || keyCode == 0x56) {
-        processKeyUp(KRInput::Key4);
+        (this->*processFunc)(KRInput::Key4);
     }
     else if (keyCode == 0x17 || keyCode == 0x57) {
-        processKeyUp(KRInput::Key5);
+        (this->*processFunc)(KRInput::Key5);
     }
     else if (keyCode == 0x16 || keyCode == 0x58) {
-        processKeyUp(KRInput::Key6);
+        (this->*processFunc)(KRInput::Key6);
     }
     else if (keyCode == 0x1a || keyCode == 0x59) {
-        processKeyUp(KRInput::Key7);
+        (this->*processFunc)(KRInput::Key7);
     }
     else if (keyCode == 0x1c || keyCode == 0x5b) {
-        processKeyUp(KRInput::Key8);
+        (this->*processFunc)(KRInput::Key8);
     }
     else if (keyCode == 0x19 || keyCode == 0x5c) {
-        processKeyUp(KRInput::Key9);
+        (this->*processFunc)(KRInput::Key9);
     }
     else if (keyCode == 0x00) {
-        processKeyUp(KRInput::KeyA);
+        (this->*processFunc)(KRInput::KeyA);
     }
     else if (keyCode == 0x0b) {
-        processKeyUp(KRInput::KeyB);
+        (this->*processFunc)(KRInput::KeyB);
     }
     else if (keyCode == 0x08) {
-        processKeyUp(KRInput::KeyC);
+        (this->*processFunc)(KRInput::KeyC);
     }
     else if (keyCode == 0x02) {
-        processKeyUp(KRInput::KeyD);
+        (this->*processFunc)(KRInput::KeyD);
     }
     else if (keyCode == 0x0e) {
-        processKeyUp(KRInput::KeyE);
+        (this->*processFunc)(KRInput::KeyE);
     }
     else if (keyCode == 0x03) {
-        processKeyUp(KRInput::KeyF);
+        (this->*processFunc)(KRInput::KeyF);
     }
     else if (keyCode == 0x05) {
-        processKeyUp(KRInput::KeyG);
+        (this->*processFunc)(KRInput::KeyG);
     }
     else if (keyCode == 0x04) {
-        processKeyUp(KRInput::KeyH);
+        (this->*processFunc)(KRInput::KeyH);
     }
     else if (keyCode == 0x22) {
-        processKeyUp(KRInput::KeyI);
+        (this->*processFunc)(KRInput::KeyI);
     }
     else if (keyCode == 0x26) {
-        processKeyUp(KRInput::KeyJ);
+        (this->*processFunc)(KRInput::KeyJ);
     }
     else if (keyCode == 0x28) {
-        processKeyUp(KRInput::KeyK);
+        (this->*processFunc)(KRInput::KeyK);
     }
     else if (keyCode == 0x25) {
-        processKeyUp(KRInput::KeyL);
+        (this->*processFunc)(KRInput::KeyL);
     }
     else if (keyCode == 0x2e) {
-        processKeyUp(KRInput::KeyM);
+        (this->*processFunc)(KRInput::KeyM);
     }
     else if (keyCode == 0x2d) {
-        processKeyUp(KRInput::KeyN);
+        (this->*processFunc)(KRInput::KeyN);
     }
     else if (keyCode == 0x1f) {
-        processKeyUp(KRInput::KeyO);
+        (this->*processFunc)(KRInput::KeyO);
     }
     else if (keyCode == 0x23) {
-        processKeyUp(KRInput::KeyP);
+        (this->*processFunc)(KRInput::KeyP);
     }
     else if (keyCode == 0x0c) {
-        processKeyUp(KRInput::KeyQ);
+        (this->*processFunc)(KRInput::KeyQ);
     }
     else if (keyCode == 0x0f) {
-        processKeyUp(KRInput::KeyR);
+        (this->*processFunc)(KRInput::KeyR);
     }
     else if (keyCode == 0x01) {
-        processKeyUp(KRInput::KeyS);
+        (this->*processFunc)(KRInput::KeyS);
     }
     else if (keyCode == 0x11) {
-        processKeyUp(KRInput::KeyT);
+        (this->*processFunc)(KRInput::KeyT);
     }
     else if (keyCode == 0x20) {
-        processKeyUp(KRInput::KeyU);
+        (this->*processFunc)(KRInput::KeyU);
     }
     else if (keyCode == 0x09) {
-        processKeyUp(KRInput::KeyV);
+        (this->*processFunc)(KRInput::KeyV);
     }
     else if (keyCode == 0x0d) {
-        processKeyUp(KRInput::KeyW);
+        (this->*processFunc)(KRInput::KeyW);
     }
     else if (keyCode == 0x07) {
-        processKeyUp(KRInput::KeyX);
+        (this->*processFunc)(KRInput::KeyX);
     }
     else if (keyCode == 0x10) {
-        processKeyUp(KRInput::KeyY);
+        (this->*processFunc)(KRInput::KeyY);
     }
     else if (keyCode == 0x06) {
-        processKeyUp(KRInput::KeyZ);
+        (this->*processFunc)(KRInput::KeyZ);
     }
     else if (keyCode == 0x7e) {
-        processKeyUp(KRInput::KeyUp);
+        (this->*processFunc)(KRInput::KeyUp);
     }
     else if (keyCode == 0x7d) {
-        processKeyUp(KRInput::KeyDown);
+        (this->*processFunc)(KRInput::KeyDown);
     }
     else if (keyCode == 0x7b) {
-        processKeyUp(KRInput::KeyLeft);
+        (this->*processFunc)(KRInput::KeyLeft);
     }
     else if (keyCode == 0x7c) {
-        processKeyUp(KRInput::KeyRight);
+        (this->*processFunc)(KRInput::KeyRight);
     }
     else if (keyCode == 0x24 || keyCode == 0x4c) {
-        processKeyUp(KRInput::KeyReturn);
+        (this->*processFunc)(KRInput::KeyReturn);
     }
     else if (keyCode == 0x30) {
-        processKeyUp(KRInput::KeyTab);
+        (this->*processFunc)(KRInput::KeyTab);
     }
     else if (keyCode == 0x31) {
-        processKeyUp(KRInput::KeySpace);
+        (this->*processFunc)(KRInput::KeySpace);
     }
     else if (keyCode == 0x33) {
-        processKeyUp(KRInput::KeyBackspace);
+        (this->*processFunc)(KRInput::KeyBackspace);
     }
     else if (keyCode == 0x75) {
-        processKeyUp(KRInput::KeyDelete);
+        (this->*processFunc)(KRInput::KeyDelete);
     }
     else if (keyCode == 0x35) {
-        processKeyUp(KRInput::KeyEscape);
-    }    
+        (this->*processFunc)(KRInput::KeyEscape);
+    }
 }
 
 #endif
@@ -597,7 +695,7 @@ void KRInput::processKeyUpCode(unsigned short keyCode)
 
 #if KR_IPHONE
 
-void KRInput::startTouch(unsigned touchID, double x, double y)
+void KRInput::startTouchImpl(unsigned touchID, double x, double y)
 {
     KRTouchInfo newInfo;
     
@@ -634,7 +732,7 @@ void KRInput::startTouch(unsigned touchID, double x, double y)
     [sTouchLock unlock];
 }
 
-void KRInput::moveTouch(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::moveTouchImpl(unsigned touchID, double x, double y, double dx, double dy)
 {
     [sTouchLock lock];
 
@@ -655,7 +753,7 @@ void KRInput::moveTouch(unsigned touchID, double x, double y, double dx, double 
     [sTouchLock unlock];
 }
 
-void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::endTouchImpl(unsigned touchID, double x, double y, double dx, double dy)
 {
     [sTouchLock lock];
 
@@ -691,6 +789,58 @@ void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double d
     [sTouchLock unlock];
 }
 
+void KRInput::startTouchImplAgainstDummy(unsigned touchID, double x, double y)
+{
+    mTouchCountAgainstDummy++;
+}
+
+void KRInput::endTouchImplAgainstDummy(unsigned touchID, double x, double y, double dx, double dy)
+{
+    mTouchCountAgainstDummy--;
+}
+
+void KRInput::startTouch(unsigned touchID, double x, double y)
+{
+    if (mHasDummySource) {
+        startTouchImplAgainstDummy(touchID, x, y);
+    } else {
+        startTouchImpl(touchID, x, y);
+    }
+    
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        NSString *dataStr = [NSString stringWithFormat:@"%u:TD%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+}
+
+void KRInput::moveTouch(unsigned touchID, double x, double y, double dx, double dy)
+{
+    if (mHasDummySource) {
+        // Do nothing
+    } else {
+        moveTouchImpl(touchID, x, y, dx, dy);
+    }
+    
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        NSString *dataStr = [NSString stringWithFormat:@"%u:TM%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }    
+}
+
+void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double dy)
+{
+    if (mHasDummySource) {
+        endTouchImplAgainstDummy(touchID, x, y, dx, dy);
+    } else {
+        endTouchImpl(touchID, x, y, dx, dy);
+    }
+    
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        NSString *dataStr = [NSString stringWithFormat:@"%u:TU%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }    
+}
+
 #endif
 
 
@@ -700,14 +850,141 @@ void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double d
 
 #if KR_IPHONE
 
-void KRInput::setAcceleration(double x, double y, double z)
+void KRInput::setAccelerationImpl(double x, double y, double z)
 {
     mAcceleration.x = x;
     mAcceleration.y = y;
     mAcceleration.z = z;
 }
 
+void KRInput::setAcceleration(double x, double y, double z)
+{
+    if (mHasDummySource) {
+        // Do nothing
+    } else {
+        setAccelerationImpl(x, y, z);
+    }
+
+    if ((NSFileHandle *)gInputLogHandle != nil) {
+        NSString *dataStr = [NSString stringWithFormat:@"%u:AC(%f,%f,%f)\n", gInputLogFrameCounter, x, y, z];
+        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    }    
+}
+
 #endif
+
+
+#pragma mark -
+#pragma mark Dummy Input Support
+
+void KRInput::plugDummySourceIn()
+{
+    mHasDummySource = true;
+}
+
+void KRInput::pullDummySourceOut()
+{
+    mHasDummySource = false;
+}
+
+void KRInput::processDummyData(KRInputSourceData& data)
+{
+#if KR_MACOSX
+    // Keyboard
+    if (data.command[0] == 'K') {
+        // Key Down
+        if (data.command[1] == 'D') {
+            processKeyDown(data.data_mask);
+        }
+        // Key Up
+        else if (data.command[1] == 'U') {
+            processKeyUp(data.data_mask);
+        }
+    }
+    // Mouse
+    else if (data.command[0] == 'M') {
+        // Mouse Down
+        if (data.command[1] == 'D') {
+            processMouseDownImpl((KRMouseState)data.data_mask);
+        }
+        // Mouse Drag
+        else if (data.command[1] == 'M') {
+            processMouseDragImpl(data.location);
+        }
+        // Mouse Up
+        else if (data.command[1] == 'U') {
+            processMouseUpImpl((KRMouseState)data.data_mask);
+        }
+    }
+#endif
+    
+#if KR_IPHONE
+    // Touch
+    if (data.command[0] == 'T') {
+        // Touch Start
+        if (data.command[1] == 'D') {
+            startTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y);
+        }
+        // Touch Move
+        else if (data.command[1] == 'M') {
+            moveTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y, 0.0, 0.0);
+        }
+        // Touch End
+        else if (data.command[1] == 'U') {
+            endTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y, 0.0, 0.0);
+        }
+    }
+    // Acceleration
+    else if (data.command[0] == 'A') {
+        setAccelerationImpl(data.location.x, data.location.y, data.location.z);
+    }
+#endif
+}
+
+
+#pragma mark -
+#pragma mark Debug Support
+
+void KRInput::resetAllInputs()
+{
+    mHasDummySource = NO;
+    
+    // Mouse Input Support
+#if KR_MACOSX
+    mMouseState = 0;
+    mOldMouseState = 0;
+    mMouseStateAgainstDummy = 0;
+    mMouseLocationForDummy = KRVector2DZero;
+#endif
+    
+    // Keyboard Input Support
+#if KR_MACOSX
+    mKeyState = 0;
+    mOldKeyState = 0;
+    mKeyStateAgainstDummy = 0;
+#endif
+    
+    // Touch Input Support
+#if KR_IPHONE
+    mTouchState = 0;
+    mTouchStateOld = 0;
+    mTouchCountAgainstDummy = 0;
+    
+    mTouchArrow_touchID = 99999;
+    
+    mTouchButton1_touchID = 99999;
+    mTouchButton1State = 0;
+    mTouchButton1StateOld = 0;
+    
+    mTouchButton2_touchID = 99999;
+    mTouchButton2State = 0;
+    mTouchButton2StateOld = 0;
+#endif
+}
+
+
+#pragma mark -
+#pragma mark Debug Support
 
 std::string KRInput::to_s() const
 {

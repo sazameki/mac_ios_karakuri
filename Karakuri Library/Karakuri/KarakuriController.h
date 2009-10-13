@@ -65,7 +65,7 @@
     BOOL                mHasAcceptedNetworkPeer;
     volatile BOOL       mIsInvitingNetworkPeer;
     
-#if KR_MACOSX || KR_MACPHONE_EMU
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     KRPeerPickerWindow  *mPeerPickerWindow;
 #endif
     

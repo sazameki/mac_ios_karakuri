@@ -83,54 +83,54 @@ public:
     KRAudioMixType  getAudioMixType() const;
 
     /*!
-        @method getFrameRate
-        @abstract ゲームに設定されたフレームレートを取得します。
+        @method     getFrameRate
+        @abstract   ゲームに設定されたフレームレートを取得します。
      */
     double          getFrameRate() const;
     
     /*!
-        @method getGameIDForNetwork
+        @method     getGameIDForNetwork
      */
     std::string     getGameIDForNetwork() const;
     
     /*!
-        @method getNetworkStartWorldName
+        @method     getNetworkStartWorldName
      */
     std::string     getNetworkStartWorldName() const;
     
     /*!
-        @method getScreenHeight
-        @abstract ゲームに設定された画面サイズの高さを取得します。
+        @method     getScreenHeight
+        @abstract   ゲームに設定された画面サイズの高さを取得します。
      */
     int             getScreenHeight() const;
 
     /*!
-        @method getScreenSize
-        @abstract ゲームに設定された画面サイズを取得します。
+        @method     getScreenSize
+        @abstract   ゲームに設定された画面サイズを取得します。
      */
     KRVector2D      getScreenSize() const;
 
     /*!
-        @method getScreenWidth
-        @abstract ゲームに設定された画面サイズの横幅を取得します。
+        @method     getScreenWidth
+        @abstract   ゲームに設定された画面サイズの横幅を取得します。
      */
     int             getScreenWidth() const;
 
     /*!
-        @method getShowsFPS
-        @abstract 現在の FPS 情報をデバッグ用に表示するようになっているかどうかを取得します。
+        @method     getShowsFPS
+        @abstract   現在の FPS 情報をデバッグ用に表示するようになっているかどうかを取得します。
      */
     bool            getShowsFPS() const;
 
     /*!
-        @method getShowsMouseCursor
-        @abstract ゲームウィンドウ内にマウスカーソルが乗っているときに、Mac OS X 標準のマウスカーソルを表示するかどうかを取得します。
+        @method     getShowsMouseCursor
+        @abstract   ゲームウィンドウ内にマウスカーソルが乗っているときに、Mac OS X 標準のマウスカーソルを表示するかどうかを取得します。
      */
     bool            getShowsMouseCursor() const;
 
     /*!
-        @method getTitle
-        @abstract ゲームに設定されたタイトル文字列を取得します。
+        @method     getTitle
+        @abstract   ゲームに設定されたタイトル文字列を取得します。
      */
     std::string     getTitle() const;
 
@@ -140,50 +140,50 @@ protected:
      */
 
     /*!
-        @method setAudioMixType
-        @abstract オーディオ再生の方法を設定します。
+        @method		setAudioMixType
+        @abstract	オーディオ再生の方法を設定します。
         デフォルトでは KRAudioMixTypeAmbientSolo が設定されています。
      */
     void            setAudioMixType(KRAudioMixType type);
     
     /*!
-        @method setFrameRate
-        @abstract   ゲーム実行のフレームレートを設定します。
+        @method		setFrameRate
+        @abstract	ゲーム実行のフレームレートを設定します。
         デフォルトのフレームレートは、60.0 fps に設定されています。
      */
     void            setFrameRate(double value);
     
     /*!
-        @method setNetworkGameID
+        @method		setNetworkGameID
         @abstract   ネットワーク対応のための識別子を設定します。
         ネットワーク上でこのゲームを識別するための識別子と、ネットワークのピア通信開始時にアクティブになるワールドの名前を指定します。識別子には、英数字（a-zA-Z0-9）とアンダーバー (_) のみを用いてください。
      */
     void            setNetworkGameID(const std::string& gameID, const std::string& startWorldName);
     
     /*!
-        @method setScreenSize
+        @method     setScreenSize
         @abstract   ゲーム画面のサイズを設定します。
         iPhone 環境では、(480, 320) あるいは (320, 480) のみが指定できます。(480, 320) を指定した場合には横方向で使用するモードになり、(320, 480) を指定した場合には縦方向で使用するモードになります。
      */
     void            setScreenSize(int width, int height);
     
     /*!
-     @method setShowsFPS
-     @abstract デバッグ用の FPS 情報の表示／非表示を設定します。
-     FPS 情報は、Debug ビルドの環境でのみ表示されます。
+        @method     setShowsFPS
+        @abstract   デバッグ用の FPS 情報の表示／非表示を設定します。
+        FPS 情報は、Debug ビルドの環境でのみ表示されます。
      */
     void            setShowsFPS(bool flag);
     
     /*!
-        @method setShowsMouseCursor
-        @abstract マウスカーソルの表示／非表示を設定します。
+        @method		setShowsMouseCursor
+        @abstract	マウスカーソルの表示／非表示を設定します。
         Mac OS X 環境での実行にのみ影響します。
      */
     void            setShowsMouseCursor(bool flag);
     
     /*!
-        @method setTitle
-        @abstract ゲームのタイトルを設定します。
+        @method     setTitle
+        @abstract   ゲームのタイトルを設定します。
         設定されたタイトルは、Mac OS X 環境のウィンドウのタイトルバーや、警告メッセージのタイトルなどに使用されます。
      */
     void            setTitle(const std::string& str);

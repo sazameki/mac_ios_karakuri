@@ -16,20 +16,45 @@
  */
 KRTextReader::KRTextReader(const std::string& filename)
 {
-	NSData *strData = [[NSData alloc] initWithBytes:filename.data() length:filename.length()];
-	NSString *str = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
-	NSString *path = [[NSBundle mainBundle] pathForResource:str ofType:nil];
+    NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+	NSString *path = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+
+    // 
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    if (!path) {
+        NSMutableString *titleName = [NSString stringWithCString:gKRGameInst->getTitle().c_str() encoding:NSUTF8StringEncoding];
+        NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+        NSString *baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
+        NSString *thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thePath]) {
+            path = thePath;
+        }
+    }
+#endif
+    
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+    if (!path) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *baseDirPath = [documentsDirectory stringByAppendingPathComponent:@"Input Log"];
+        NSString *thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:thePath]) {
+            path = thePath;
+        }
+    }
+#endif
+    
     if (!path) {
         throw KRRuntimeError("KRTextReader() failed to load text named \"%s\".", filename.c_str());
     }
+
 	mFileData = nil;
 	if (path) {
 		mFileData = [[NSData alloc] initWithContentsOfMappedFile:path];
 		mLength = [(NSData *)mFileData length];
 	}
 	mPos = 0;
-	[str release];
-	[strData release];
+	[filenameStr release];
 }
 
 /*!

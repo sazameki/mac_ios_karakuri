@@ -37,7 +37,13 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
         }
         sHasOSVersionChecked = YES;
     }
-    if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
+    
+    bool soloPlayEnabled = true;
+#if KR_IPHONE_MACOSX_EMU
+    soloPlayEnabled = (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo);
+#endif
+
+    if (soloPlayEnabled) {
         NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
         if (sCanUseNSSound) {
             NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];

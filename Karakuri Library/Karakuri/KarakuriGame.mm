@@ -128,7 +128,7 @@ void KRGame::drawView(KRGraphics *g)
     KRWorld *currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
         currentWorld->startDrawView(g);
-    }    
+    }
 }
 
 void KRGame::addWorld(const std::string& name, KRWorld *aWorld)
