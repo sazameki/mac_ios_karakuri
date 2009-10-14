@@ -296,7 +296,7 @@ void KRWorld::setDummyInputSource(const std::string& filename)
             // Mouse
             else if (aData.command[0] == 'M') {
                 if (aData.command[1] == 'D' || aData.command[1] == 'U') {
-                    unsigned char mouseMaskC = aLine[pos];
+                    unsigned char mouseMaskC = aLine[pos++];
                     if (mouseMaskC == '1') {
                         aData.data_mask = KRInput::MouseButtonLeft;
                     } else {

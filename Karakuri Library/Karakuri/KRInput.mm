@@ -905,6 +905,7 @@ void KRInput::processDummyData(KRInputSourceData& data)
     else if (data.command[0] == 'M') {
         // Mouse Down
         if (data.command[1] == 'D') {
+            mMouseLocationForDummy = data.location;
             processMouseDownImpl((KRMouseState)data.data_mask);
         }
         // Mouse Drag
@@ -913,6 +914,7 @@ void KRInput::processDummyData(KRInputSourceData& data)
         }
         // Mouse Up
         else if (data.command[1] == 'U') {
+            mMouseLocationForDummy = data.location;
             processMouseUpImpl((KRMouseState)data.data_mask);
         }
     }
