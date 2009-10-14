@@ -41,7 +41,7 @@ typedef struct KRInputSourceData {
     @group  Game Foundation
  
     <p>ロゴ画面、タイトル画面、プレイ画面といった各画面に対応したクラスです。Karakuri Framework では、これを「ワールド」と呼びます。</p>
-    <p>現在のワールドから他のワールドに移動する場合には、KRGame クラスの changeWorld() 関数を使ってください。KRGame クラスのインスタンスには、gKRGameInst 変数を使ってアクセスできます。</p>
+    <p>現在のワールドから他のワールドに移動する場合には、KRChangeWorld() 関数を使ってください。</p>
     <p>なお、他のワールドへの移動は、updateModel() 関数の処理中にのみ実行できます。</p>
  */
 class KRWorld : public KRObject {
@@ -192,6 +192,17 @@ protected:
         ダミーの入力データが残っているかどうかをリターンします。
      */
     bool    hasMoreDummyInputData() const;
+    
+    /*!
+        @method     listAllInputLogFiles
+        @abstract   使用可能なすべてのユーザ入力ログのファイルの一覧を取得します。
+        <p>ユーザ入力ログのファイルは、以下の場所から検索されます。</p>
+        <ul>
+            <li>"~/Library/Application Support/Karakuri/&lt;アプリケーション識別子&gt;/&lt;ゲームのタイトル&gt;/Input Log" フォルダ (Mac OS X / iPhone エミュレータ)</li>
+            <li>"&lt;Application_Home&gt;/Documents/Input Log" フォルダ(iPhone)</li>
+        </ul>
+     */
+    std::vector<std::string>    listAllInputLogFiles() const;
     
     /*!
         @method setDummyInputSource

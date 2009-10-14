@@ -29,6 +29,7 @@ KRWorld::KRWorld()
 void KRWorld::startBecameActive()
 {
     gKRInputInst->resetAllInputs();
+    gKRRandInst->resetSeed();
     
     mHasDummyInputSource = false;
     mDummyInputSourceDataPos = 0;
@@ -159,6 +160,43 @@ void KRWorld::switchStateChanged(KRSwitch *switcher)
 #pragma mark -
 #pragma mark Dummy Input Support
 
+std::vector<std::string> KRWorld::listAllInputLogFiles() const
+{
+    std::vector<std::string> ret;
+
+    NSString *baseDirPath = nil;
+    
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    NSMutableString *titleName = [NSString stringWithCString:gKRGameInst->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
+#else
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    baseDirPath = [documentsDirectory stringByAppendingPathComponent:@"Input Log"];
+#endif
+    
+    NSMutableArray *logFiles = [NSMutableArray array];
+    
+    NSArray *filesInDir = [[NSFileManager defaultManager] directoryContentsAtPath:baseDirPath];
+    for (unsigned i = 0; i < [filesInDir count]; i++) {
+        NSString *aFileName = [filesInDir objectAtIndex:i];
+        if ([[[aFileName pathExtension] lowercaseString] isEqualToString:@"log"]) {
+            [logFiles addObject:aFileName];
+        }
+    }
+    
+    [logFiles sortUsingSelector:@selector(compare:)];
+    
+    for (unsigned i = 0; i < [logFiles count]; i++) {
+        NSString *aFileName = [logFiles objectAtIndex:i];
+        std::string theStr = [aFileName cStringUsingEncoding:NSUTF8StringEncoding];
+        ret.push_back(theStr);
+    }
+
+    return ret;
+}
+
 bool KRWorld::hasDummyInputSource() const
 {
     return mHasDummyInputSource;
@@ -248,6 +286,11 @@ std::string KRWorld::startInputLog()
     [(NSFileHandle *)gInputLogHandle writeData:[@"# @target iPhone\n" dataUsingEncoding:NSUTF8StringEncoding]];
 #endif
 
+    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_x %qX\n", gKRRandInst->getX()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_y %qX\n", gKRRandInst->getY()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_z %qX\n", gKRRandInst->getZ()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_w %qX\n", gKRRandInst->getW()] dataUsingEncoding:NSUTF8StringEncoding]];
+
     [calendar release];
     
     std::string ret = [(NSString *)filename cStringUsingEncoding:NSUTF8StringEncoding];
@@ -263,9 +306,24 @@ void KRWorld::setDummyInputSource(const std::string& filename)
     try {
         KRTextReader reader(filename);
         
+        unsigned rand_x = 0, rand_y = 0, rand_z = 0, rand_w = 0;
+        
         std::string aLine;
         while (reader.readLine(&aLine)) {
             if (aLine.length() == 0 || aLine[0] == '#') {
+                if (aLine.substr(2, 7) == "@rand_x") {
+                    std::string xStr = aLine.substr(10);
+                    rand_x = strtoul(xStr.c_str(), NULL, 16);
+                } else if (aLine.substr(2, 7) == "@rand_y") {
+                    std::string yStr = aLine.substr(10);
+                    rand_y = strtoul(yStr.c_str(), NULL, 16);
+                } else if (aLine.substr(2, 7) == "@rand_z") {
+                    std::string zStr = aLine.substr(10);
+                    rand_z = strtoul(zStr.c_str(), NULL, 16);
+                } else if (aLine.substr(2, 7) == "@rand_w") {
+                    std::string wStr = aLine.substr(10);
+                    rand_w = strtoul(wStr.c_str(), NULL, 16);
+                }
                 continue;
             }
 
@@ -421,7 +479,10 @@ void KRWorld::setDummyInputSource(const std::string& filename)
                 mDummyInputSourceDataList.push_back(aData);                
             }
 #endif
-
+        }
+        
+        if (rand_x != 0 && rand_y != 0 && rand_z != 0 && rand_w != 0) {
+            gKRRandInst->setXYZW(rand_x, rand_y, rand_z, rand_w);
         }
         
         mHasDummyInputSource = true;

@@ -39,5 +39,3 @@ public:
 
 };
 
-extern KarakuriWorldManager *KRWorldManagerInst;
-

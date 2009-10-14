@@ -36,6 +36,6 @@
 @end
 
 
-extern KarakuriWindow *KRWindowInst;
+extern KarakuriWindow *gKRWindowInst;
 
 

@@ -11,23 +11,23 @@
 #import <Foundation/Foundation.h>
 
 
-KRSaveBox *KRSaveBoxInst = NULL;
+KRSaveBox *gKRSaveBoxInst = NULL;
 
 
 #pragma mark Save Box のセットアップ
 
 void KRSetupSaveBox()
 {
-    if (KRSaveBoxInst == NULL) {
-        KRSaveBoxInst = new KRSaveBox();
+    if (gKRSaveBoxInst == NULL) {
+        gKRSaveBoxInst = new KRSaveBox();
     }
 }
 
 void KRCleanUpSaveBox()
 {
-    if (KRSaveBoxInst != NULL) {
-        delete KRSaveBoxInst;
-        KRSaveBoxInst = NULL;
+    if (gKRSaveBoxInst != NULL) {
+        delete gKRSaveBoxInst;
+        gKRSaveBoxInst = NULL;
     }
 }
 

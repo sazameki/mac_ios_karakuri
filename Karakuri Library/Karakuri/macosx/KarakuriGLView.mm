@@ -13,7 +13,7 @@
 #include <Karakuri/KRGraphics.h>
 
 
-KarakuriGLView   *KRGLViewInst = nil;
+KarakuriGLView   *gKRGLViewInst = nil;
 
 static volatile BOOL    sIsReady = NO;
 
@@ -63,7 +63,7 @@ static volatile BOOL    sIsReady = NO;
                     pixelFormat:pixelFormat];
     [pixelFormat release];
     if (self) {
-        KRGLViewInst = self;
+        gKRGLViewInst = self;
         mKRGLContext.isFullScreen = NO;
         mKRGLContext.oldScreenModeRef = nil;        
     }

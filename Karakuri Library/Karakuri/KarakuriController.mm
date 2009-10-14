@@ -369,7 +369,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         mPeerPickerController.view.frame = CGRectMake(0, 480, 320, 480);
     }
 
-    [KRWindowInst addSubview:mPeerPickerController.view];
+    [gKRWindowInst addSubview:mPeerPickerController.view];
     
     [UIView beginAnimations:@"Picker In" context:nil];
     [UIView setAnimationDuration:0.5];
@@ -512,7 +512,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     }
     
 #if KR_IPHONE_MACOSX_EMU
-    [KRWindowInst cleanUpSMS];
+    [gKRWindowInst cleanUpSMS];
 #endif
 }
 #endif
@@ -530,7 +530,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     _KRColorRed = _KRColorGreen = _KRColorBlue = _KRColorAlpha = -1.0;
     _KRClearColorRed = _KRClearColorGreen = _KRClearColorBlue = _KRClearColorAlpha = -1.0;
 
-    [KRGLViewInst toggleFullScreen];
+    [gKRGLViewInst toggleFullScreen];
 
     _KRTexture2DEnabled = false;
     _KRTexture2DName = GL_INVALID_VALUE;
@@ -539,7 +539,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
     if (!mGameIsFinished) {
         if (mGameIsAborted) {
-            [KRGLViewInst clearMouseTrackingRect];
+            [gKRGLViewInst clearMouseTrackingRect];
             CGDisplayShowCursor(kCGDirectMainDisplay);
             NSBeep();
             
@@ -636,7 +636,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 {
     NSAutoreleasePool *pool = [NSAutoreleasePool new];
 
-    [KRGLViewInst waitForReady];
+    [gKRGLViewInst waitForReady];
     
     mGameIsRunning = YES;
     mGameIsFinished = NO;
@@ -762,7 +762,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
             
 #if KR_IPHONE_MACOSX_EMU
-            [KRGLViewInst drawTouches];
+            [gKRGLViewInst drawTouches];
             KRTexture2D::processBatchedTexture2DDraws();
 #endif
 
@@ -813,7 +813,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 } else {
                     for (int i = 0; i < modelUpdateCount; i++) {
 #if KR_IPHONE_MACOSX_EMU
-                        [KRWindowInst fetchSMSData];
+                        [gKRWindowInst fetchSMSData];
 #endif
                         mLoadingScreenWorld->startUpdateModel(mInput);
                     }
@@ -821,7 +821,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             } else {
                 for (int i = 0; i < modelUpdateCount; i++) {
 #if KR_IPHONE_MACOSX_EMU
-                    [KRWindowInst fetchSMSData];
+                    [gKRWindowInst fetchSMSData];
 #endif
                     mGame->updateModel(mInput);
                     
@@ -920,7 +920,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         NSString *message = [NSString stringWithCString:e.what() encoding:NSUTF8StringEncoding];
         std::cerr << "[Karakuri Runtime Error] " << e.what() << std::endl;
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-        [KRGLViewInst clearMouseTrackingRect];
+        [gKRGLViewInst clearMouseTrackingRect];
         CGDisplayShowCursor(kCGDirectMainDisplay);
         NSBeep();
         NSBeginCriticalAlertSheet(alertTitle,

@@ -93,7 +93,7 @@ KRVector2D KRInput::getMouseLocation()
         ret.x = (location.x / screenSize.width) * gKRGameInst->getScreenWidth();
         ret.y = (location.y / screenSize.height) * gKRGameInst->getScreenHeight();
     } else {
-        NSPoint location = [KRWindowInst convertScreenToBase:[NSEvent mouseLocation]];
+        NSPoint location = [gKRWindowInst convertScreenToBase:[NSEvent mouseLocation]];
         ret.x = location.x;
         ret.y = location.y;
     }
@@ -242,11 +242,11 @@ void KRInput::enableAccelerometer(bool flag)
     // Enable accelerometer
     if (flag) {
         mAcceleration = KRVector3DZero;
-        [KRGLViewInst enableAccelerometer];
+        [gKRGLViewInst enableAccelerometer];
     }
     // Disable accelerometer
     else {
-        [KRGLViewInst disableAccelerometer];
+        [gKRGLViewInst disableAccelerometer];
     }
 
     mIsAccelerometerEnabled = flag;

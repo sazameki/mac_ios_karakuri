@@ -44,5 +44,5 @@ typedef struct _KRTouchInfo {
 
 @end
 
-extern KarakuriGLView   *KRGLViewInst;
+extern KarakuriGLView   *gKRGLViewInst;
 

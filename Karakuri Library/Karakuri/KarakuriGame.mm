@@ -189,8 +189,8 @@ void KRGame::saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     KRWorld *currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
-        currentWorld->saveForEmergency(KRSaveBoxInst);
-        KRSaveBoxInst->save();
+        currentWorld->saveForEmergency(gKRSaveBoxInst);
+        gKRSaveBoxInst->save();
     }    
 }
 

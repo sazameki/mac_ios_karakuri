@@ -9,7 +9,7 @@
 #import "KarakuriWindow.h"
 
 
-KarakuriWindow *KRWindowInst = nil;
+KarakuriWindow *gKRWindowInst = nil;
 
 
 @implementation KarakuriWindow
@@ -18,7 +18,7 @@ KarakuriWindow *KRWindowInst = nil;
 {
     self = [super initWithFrame:[[UIScreen mainScreen] bounds]];
     if (self) {
-        KRWindowInst = self;
+        gKRWindowInst = self;
 
         self.backgroundColor = [UIColor whiteColor];
         

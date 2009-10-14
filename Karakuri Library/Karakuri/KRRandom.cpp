@@ -14,6 +14,7 @@ static unsigned sGeneratedCount = 0;
 
 
 static KRRandom *sKRRandInst = new KRRandom();
+KRRandom *gKRRandInst = NULL;
 
 
 /*!
@@ -21,6 +22,13 @@ static KRRandom *sKRRandInst = new KRRandom();
     Constructor
  */
 KRRandom::KRRandom()
+{
+    gKRRandInst = this;
+
+    resetSeed();
+}
+
+void KRRandom::resetSeed()
 {
     unsigned the_time = (unsigned)(time(NULL));
     unsigned pid = (unsigned)getpid();
@@ -34,6 +42,34 @@ KRRandom::KRRandom()
     z = seed;
     seed = 1812433253U * (seed ^ (seed >> 30)) + 4;
     w = seed;
+}
+
+unsigned KRRandom::getX() const
+{
+    return x;
+}
+
+unsigned KRRandom::getY() const
+{
+    return y;
+}
+
+unsigned KRRandom::getZ() const
+{
+    return z;
+}
+
+unsigned KRRandom::getW() const
+{
+    return w;
+}
+
+void KRRandom::setXYZW(unsigned _x, unsigned _y, unsigned _z, unsigned _w)
+{
+    x = _x;
+    y = _y;
+    z = _z;
+    w = _w;
 }
 
 unsigned KRRandom::xor128()

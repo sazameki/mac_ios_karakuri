@@ -13,7 +13,7 @@
 #import "KarakuriEmulatorBackView.h"
 #endif
 
-KarakuriWindow *KRWindowInst = nil;
+KarakuriWindow *gKRWindowInst = nil;
 
 static KRVector3D   sAcc;
 
@@ -43,7 +43,7 @@ static KRVector3D   sAcc;
                               backing:NSBackingStoreBuffered
                                 defer:NO];
     if (self) {
-        KRWindowInst = self;
+        gKRWindowInst = self;
         
         [self setDelegate:[KarakuriController sharedController]];
         
@@ -116,7 +116,7 @@ static KRVector3D   sAcc;
 #if KR_IPHONE_MACOSX_EMU
 - (void)changedAccValue:(NSSlider *)sender
 {
-    if (![KRGLViewInst isAccelerometerEnabled]) {
+    if (![gKRGLViewInst isAccelerometerEnabled]) {
         return;
     }
     float value = [sender floatValue];
@@ -154,7 +154,7 @@ static KRVector3D   sAcc;
         return;
     }
 
-    if (![KRGLViewInst isAccelerometerEnabled]) {
+    if (![gKRGLViewInst isAccelerometerEnabled]) {
         sAcc.x = sAcc.y = sAcc.z = 0.0;
         gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;

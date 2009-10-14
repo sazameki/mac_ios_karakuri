@@ -26,18 +26,23 @@ class KRRandom : public KRObject {
 
 public:
 	KRRandom();
+    void    resetSeed();
 
 private:
     unsigned xor128() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     int     nextInt();
-
     int     nextInt(int upper);
-
     float   nextFloat();
-
     double  nextDouble();
+    
+public:
+    unsigned    getX() const;
+    unsigned    getY() const;
+    unsigned    getZ() const;
+    unsigned    getW() const;
+    void        setXYZW(unsigned x, unsigned y, unsigned z, unsigned w);
     
 public:
     virtual std::string to_s() const;
@@ -81,5 +86,5 @@ int     KRRandInt(int upper);
     !@abstract 乱数生成器のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-//extern KRRandom *gKRRandInst;
+extern KRRandom *gKRRandInst;
 

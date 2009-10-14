@@ -13,7 +13,7 @@
 #define USE_DEPTH_BUFFER 0
 
 
-KarakuriGLView   *KRGLViewInst = nil;
+KarakuriGLView   *gKRGLViewInst = nil;
 
 static volatile BOOL    sIsReady = NO;
 static BOOL sPhoneOrientatilHorizontal = YES;
@@ -39,7 +39,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 - (id)init {
     self = [super initWithFrame:CGRectMake(0, 0, 320, 480)];
     if (self) {
-        KRGLViewInst = self;
+        gKRGLViewInst = self;
 
         self.multipleTouchEnabled = YES;
 

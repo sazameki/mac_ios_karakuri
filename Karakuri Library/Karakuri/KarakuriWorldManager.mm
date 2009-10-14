@@ -15,13 +15,13 @@
 #import "KarakuriController.h"
 
 
-KarakuriWorldManager *KRWorldManagerInst = NULL;
+KarakuriWorldManager *gKRWorldManagerInst = NULL;
 
 
 KarakuriWorldManager::KarakuriWorldManager()
     : mCurrentWorld(NULL)
 {
-    KRWorldManagerInst = this;
+    gKRWorldManagerInst = this;
 }
 
 
