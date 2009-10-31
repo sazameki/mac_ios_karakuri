@@ -69,8 +69,8 @@ void PlayWorld::updateModel(KRInput *input)
         mPos.x = gKRScreenSize.x - 1.0 - mTex->getWidth() / 2;
     }
 
-    if (mPos.y < mTex->getWidth() / 2) {
-        mPos.y = mTex->getWidth() / 2;
+    if (mPos.y < mTex->getHeight() / 2) {
+        mPos.y = mTex->getHeight() / 2;
     } else if (mPos.y >= gKRScreenSize.y - mTex->getHeight() / 2) {
         mPos.y = gKRScreenSize.y - 1.0 - mTex->getHeight() / 2;
     }
