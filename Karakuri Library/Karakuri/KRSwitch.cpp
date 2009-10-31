@@ -39,8 +39,12 @@ KRSwitch::~KRSwitch()
 
 bool KRSwitch::update(KRInput *input)
 {
-    if (!mSelected) {
-        mSelected = true;
+    if (!mIsEnabled) {
+        return false;
+    }
+    
+    if (!mIsSelected) {
+        mIsSelected = true;
         mIsOn = !mIsOn;
         mWorld->switchStateChanged(this);
         return true;
@@ -53,7 +57,7 @@ bool KRSwitch::update(KRInput *input)
 #endif
         
         if (!inputOn) {
-            mSelected = false;
+            mIsSelected = false;
             return false;
         } else {
             return true;
@@ -68,29 +72,29 @@ void KRSwitch::draw(KRGraphics *g)
         mThumbTexture = new KRTexture2D(mThumbTextureName);
     }
     
+    double alpha = (mIsEnabled? 1.0: 0.4);
+
     if (mBackTexture != NULL) {
         double indicatorWidth = mFrame.width - mTextureEdgeSize * 2;
-        double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;
+        double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;        
         
         // Indicator
         mBackTexture->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
-                                 KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()));
+                                 KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()), alpha);
         
         // Left Edge
-        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height), alpha);
 
         // Right Edge
         mBackTexture->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
-                                  KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height));
+                                  KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height), alpha);
 
         // Thumb
-        mThumbTexture->drawAtPoint((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y);
+        mThumbTexture->drawAtPoint((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y, alpha);
     } else {
-        if (mSelected) {
-            KRPrimitive2D::fillQuad(mFrame, KRColor::Red);
-        } else {
-            KRPrimitive2D::fillQuad(mFrame, KRColor::Blue);
-        }
+        KRColor drawColor = (mIsOn? KRColor::Blue: KRColor::Red);
+        drawColor.a = alpha;
+        KRPrimitive2D::fillQuad(mFrame, drawColor);
     }
 }
 

@@ -118,10 +118,12 @@ int KRRandInt(int upper)
     return sKRRandInst->nextInt(upper);
 }
 
+/*
 float KRRandFloat()
 {
     return sKRRandInst->nextFloat();
 }
+*/
 
 double KRRandDouble()
 {

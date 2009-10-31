@@ -7,26 +7,41 @@
 #include "KRControl.h"
 
 
-/*!
-    @method KRControl
-    Constructor
- */
 KRControl::KRControl(const KRRect2D& frame)
-    : mWorld(NULL), mFrame(frame), mEnabled(true), mSelected(false)
+    : mWorld(NULL), mFrame(frame), mIsEnabled(true), mIsSelected(false), mIsHidden(false)
 {
 }
 
-/*!
-    @method ~KRControl
-    Destructor
- */
 KRControl::~KRControl()
 {
 }
 
 bool KRControl::contains(const KRVector2D& pos)
 {
+    if (mIsHidden || !mIsEnabled) {
+        return false;
+    }
     return mFrame.contains(pos);
+}
+
+bool KRControl::isEnabled() const
+{
+    return mIsEnabled;
+}
+
+bool KRControl::isHidden() const
+{
+    return mIsHidden;
+}
+
+void KRControl::setEnabled(bool flag)
+{
+    mIsEnabled = flag;
+}
+
+void KRControl::setHidden(bool flag)
+{
+    mIsHidden = flag;
 }
 
 void KRControl::setWorld(KRWorld *aWorld)

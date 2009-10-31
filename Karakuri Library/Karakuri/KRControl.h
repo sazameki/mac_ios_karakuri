@@ -24,8 +24,9 @@ class KRControl : public KRObject {
 protected:
     KRWorld     *mWorld;
 
-    bool        mEnabled;
-    bool        mSelected;
+    bool        mIsEnabled;
+    bool        mIsHidden;
+    bool        mIsSelected;
     KRRect2D    mFrame;
 
 public:
@@ -51,6 +52,30 @@ public:
         与えられた座標がこのコントロールの領域内に含まれているかどうかをリターンします。
      */
     bool    contains(const KRVector2D& pos);
+    
+    /*!
+        @method isEnabled
+        このコントロールが使用可能かどうかをリターンします。
+     */
+    bool    isEnabled() const;
+    
+    /*!
+        @method isHidden
+        このコントロールが不可視状態かどうかをリターンします。
+     */
+    bool    isHidden() const;
+    
+    /*!
+        @method setEnabled
+        このコントロールを使用可能または使用不可能な状態にします。
+     */
+    void    setEnabled(bool flag);
+    
+    /*!
+        @method setHidden
+        このコントロールを不可視状態または可視状態に設定します。
+     */
+    void    setHidden(bool flag);
     
 public:
     void            setWorld(KRWorld *aWorld);      KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY

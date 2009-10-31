@@ -53,8 +53,8 @@ KRButton::~KRButton()
 
 bool KRButton::update(KRInput *input)
 {
-    if (!mSelected) {
-        mSelected = true;
+    if (!mIsSelected) {
+        mIsSelected = true;
         return true;
     } else {
 #if KR_MACOSX
@@ -65,7 +65,7 @@ bool KRButton::update(KRInput *input)
 #endif
         if (!inputOn) {
             mWorld->buttonPressed(this);
-            mSelected = false;
+            mIsSelected = false;
             return false;
         }
         return true;
@@ -74,31 +74,33 @@ bool KRButton::update(KRInput *input)
 
 void KRButton::draw(KRGraphics *g)
 {
+    double alpha = (mIsEnabled? 1.0: 0.4);
+    
     if (mTextureNormal == NULL && mTextureNameNormal.length() > 0 && mTextureNameHighlighted.length() > 0) {
         mTextureNormal = new KRTexture2D(mTextureNameNormal);
         mTextureHighlighted = new KRTexture2D(mTextureNameHighlighted);
     }
 
     if (mTextureNormal == NULL) {
-        if (mSelected) {
-            KRPrimitive2D::fillQuad(mFrame, KRColor::Red);
-        } else {
-            KRPrimitive2D::fillQuad(mFrame, KRColor::Blue);
-        }
+        KRColor drawColor = (mIsSelected? KRColor::Red: KRColor::Blue);
+        drawColor.a = alpha;
+        KRPrimitive2D::fillQuad(mFrame, drawColor);
     } else {
-        KRTexture2D *tex = mSelected? mTextureHighlighted: mTextureNormal;
+        KRTexture2D *tex = mIsSelected? mTextureHighlighted: mTextureNormal;
         
         // Body
-        tex->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, mFrame.width-mTextureEdgeSize*2, mFrame.height), KRRect2D(mTextureEdgeSize, 0, 1, tex->getHeight()));
+        tex->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, mFrame.width-mTextureEdgeSize*2, mFrame.height),
+                        KRRect2D(mTextureEdgeSize, 0, 1, tex->getHeight()), alpha);
         
         // Left Edge
-        tex->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, tex->getHeight()));
+        tex->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, tex->getHeight()), alpha);
 
         // Right Edge
-        tex->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y), KRRect2D(tex->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, tex->getHeight()));
+        tex->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
+                         KRRect2D(tex->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, tex->getHeight()), alpha);
     }
     
-    if (mSelected) {
+    if (mIsSelected) {
         mLabel->setTextColor(mTitleColorHighlighted);
     } else {
         mLabel->setTextColor(mTitleColorNormal);

@@ -41,8 +41,12 @@ KRSlider::~KRSlider()
 
 bool KRSlider::update(KRInput *input)
 {
-    if (!mSelected) {
-        mSelected = true;
+    if (!mIsEnabled) {
+        return false;
+    }
+    
+    if (!mIsSelected) {
+        mIsSelected = true;
         return true;
     } else {
 #if KR_MACOSX
@@ -53,7 +57,7 @@ bool KRSlider::update(KRInput *input)
 #endif
         
         if (!inputOn) {
-            mSelected = false;
+            mIsSelected = false;
             return false;
         } else {
 #if KR_MACOSX
@@ -89,6 +93,7 @@ void KRSlider::draw(KRGraphics *g)
         mBackTexture = new KRTexture2D(mBackTextureName);
     }
     
+    double alpha = (mIsEnabled? 1.0: 0.4);
     
     double thumbWidth = 20.0;
 
@@ -100,30 +105,33 @@ void KRSlider::draw(KRGraphics *g)
     
     if (mBackTexture != NULL) {
         // Left Edge
-        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mBackTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mBackTextureEdgeSize, mFrame.height), alpha);
         
         // Left Background
         mBackTexture->drawInRect(KRRect2D(mFrame.x+mBackTextureEdgeSize, mFrame.y, (centerX-(mFrame.x+mBackTextureEdgeSize)), mFrame.height),
-                                 KRRect2D(mBackTexture->getWidth()/2-1, 0, 1, mFrame.height));
+                                 KRRect2D(mBackTexture->getWidth()/2-1, 0, 1, mFrame.height), alpha);
         
         // Right Background
         mBackTexture->drawInRect(KRRect2D(centerX, mFrame.y, mFrame.x+mFrame.width-centerX-mBackTextureEdgeSize, mFrame.height),
-                                 KRRect2D(mBackTexture->getWidth()/2, 0, 1, mFrame.height));
+                                 KRRect2D(mBackTexture->getWidth()/2, 0, 1, mFrame.height), alpha);
         
         // Right Edge
-        mBackTexture->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mBackTextureEdgeSize, mFrame.y), KRRect2D(mBackTexture->getWidth()-mBackTextureEdgeSize, 0, mBackTextureEdgeSize, mFrame.height));
+        mBackTexture->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mBackTextureEdgeSize, mFrame.y),
+                                  KRRect2D(mBackTexture->getWidth()-mBackTextureEdgeSize, 0, mBackTextureEdgeSize, mFrame.height), alpha);
     } else {
-        if (mSelected) {
-            KRPrimitive2D::fillQuad(mFrame, KRColor::Red);
-        } else {
-            KRPrimitive2D::fillQuad(mFrame, KRColor::Blue);
-        }
+        KRColor drawColor = (mIsSelected? KRColor::Red: KRColor::Blue);
+        drawColor.a = alpha;
+        KRPrimitive2D::fillQuad(mFrame, drawColor);
     }
     
     if (mThumbTexture != NULL) {
-        mThumbTexture->drawAtPoint(centerX-thumbWidth/2, mFrame.y);
+        mThumbTexture->drawAtPoint(centerX-thumbWidth/2, mFrame.y, alpha);
     } else {
-        KRPrimitive2D::fillQuad(KRRect2D(centerX-thumbWidth/2, mFrame.y, thumbWidth, mFrame.height), KRColor::Yellow);
+        KRColor drawColor = KRColor::Yellow;
+        if (!mIsEnabled) {
+            drawColor.a = alpha;
+        }
+        KRPrimitive2D::fillQuad(KRRect2D(centerX-thumbWidth/2, mFrame.y, thumbWidth, mFrame.height), drawColor);
     }
 }
 

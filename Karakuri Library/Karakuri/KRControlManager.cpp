@@ -87,7 +87,10 @@ void KRControlManager::drawAllControls(KRGraphics *g)
     g->setBlendMode(KRBlendModeAlpha);
     
     for (std::vector<KRControl *>::reverse_iterator it = mControls.rbegin(); it != mControls.rend(); it++) {
-        (*it)->draw(g);
+        KRControl *theControl = *it;
+        if (!theControl->isHidden()) {
+            theControl->draw(g);
+        }
     }
 }
 

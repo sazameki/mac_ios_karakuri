@@ -57,12 +57,12 @@ public:
  */
 double  KRRandDouble();
 
-/*!
+/*
     @function KRRandFloat
     @group  Game Foundation
     @abstract 0.0f ～ 1.0f の範囲で float 型の擬似乱数をリターンします。
  */
-float   KRRandFloat();
+//float   KRRandFloat();
 
 /*!
     @function KRRandInt
