@@ -150,7 +150,6 @@ static KRVector3D   sAcc;
 
     if ([mMotionSensorButton state] != NSOnState) {
         sAcc.x = sAcc.y = sAcc.z = 0.0;
-        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;
     }
 
