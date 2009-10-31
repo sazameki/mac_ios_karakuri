@@ -439,7 +439,7 @@ void KRParticle2DSystem::draw()
     GLfloat *p = data;
     
     for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
-        double ratio = (1.0 - (*it)->mLife / (*it)->mBaseLife);
+        double ratio = (1.0 - (double)((*it)->mLife) / (*it)->mBaseLife);
         //float ratio2 = ratio * ratio;
         *(p++) = (*it)->mPos.x;
         *(p++) = (*it)->mPos.y;
@@ -463,14 +463,13 @@ void KRParticle2DSystem::draw()
     
     KRVector2D centerPos = mTexture->getCenterPos();
     for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
-        double ratio = (1.0 - (*it)->mLife / (*it)->mBaseLife);
+        double ratio = (1.0 - (double)((*it)->mLife) / (*it)->mBaseLife);
         double size = KRMax((*it)->mSize + (*it)->mDeltaSize * ratio, 0.0);
         KRColor color;
         color.r = KRMax((*it)->mColor.r + (*it)->mDeltaRed * ratio, 0.0);
         color.g = KRMax((*it)->mColor.g + (*it)->mDeltaGreen * ratio, 0.0);
         color.b = KRMax((*it)->mColor.b + (*it)->mDeltaBlue * ratio, 0.0);
         color.a = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0);
-        
         mTexture->drawInRectC(KRRect2D((*it)->mPos.x-size/2, (*it)->mPos.y-size/2, size, size), color);
     }
 }
