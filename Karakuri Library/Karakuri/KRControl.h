@@ -82,20 +82,20 @@ public:
         このコントロールのフレーム枠を設定します。
         実際のコントロールの種類によっては、縦方向あるいは横方向のサイズ変更に対応できない場合があることに注意してください。
      */
-    void    setFrame(const KRRect2D& rect);
+    virtual void    setFrame(const KRRect2D& rect);
 
     /*!
         @method setFrameOrigin
         このコントロールのフレーム枠の開始位置を設定します。
      */
-    void    setFrameOrigin(const KRVector2D& pos);
+    virtual void    setFrameOrigin(const KRVector2D& pos);
 
     /*!
         @method setFrameSize
         このコントロールのフレーム枠のサイズを設定します。
         実際のコントロールの種類によっては、縦方向あるいは横方向のサイズ変更に対応できない場合があることに注意してください。
      */
-    void    setFrameSize(const KRVector2D& size);
+    virtual void    setFrameSize(const KRVector2D& size);
 
     /*!
         @method setHidden

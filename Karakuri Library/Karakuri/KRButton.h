@@ -61,6 +61,26 @@ public:
     std::string getTitle() const;
     
     /*!
+        @method setFrame
+        このコントロールのフレーム枠を設定します。
+        実際のコントロールの種類によっては、縦方向あるいは横方向のサイズ変更に対応できない場合があることに注意してください。
+     */
+    virtual void    setFrame(const KRRect2D& rect);
+    
+    /*!
+        @method setFrameOrigin
+        このコントロールのフレーム枠の開始位置を設定します。
+     */
+    virtual void    setFrameOrigin(const KRVector2D& pos);
+    
+    /*!
+        @method setFrameSize
+        このコントロールのフレーム枠のサイズを設定します。
+        実際のコントロールの種類によっては、縦方向あるいは横方向のサイズ変更に対応できない場合があることに注意してください。
+     */
+    virtual void    setFrameSize(const KRVector2D& size);
+    
+    /*!
         @method setTitle
         このボタンのタイトルを設定します。
      */

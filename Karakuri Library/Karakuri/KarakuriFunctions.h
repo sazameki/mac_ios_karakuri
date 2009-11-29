@@ -13,13 +13,16 @@
 #include <Karakuri/Karakuri_Globals.h>
 
 
+struct KRVector2D;
+
+
 /*!
     @function   KRMin
     @group      Game Foundation
     @abstract   与えられた2数の最小値を求めます。
     マクロ関数なので、任意の型に対して使用できます。
  */
-#define KRMin(a, b)  ((a) < (b))? (a): (b);
+#define KRMin(a, b)  (((a) < (b))? (a): (b));
 
 /*!
     @function   KRMax
@@ -27,7 +30,7 @@
     @abstract   与えられた2数の最大値を求めます。
     マクロ関数なので、任意の型に対して使用できます。
  */
-#define KRMax(a, b)  ((a) > (b))? (a): (b);
+#define KRMax(a, b)  (((a) > (b))? (a): (b));
 
 /*!
     @function   KRPushMatrix
@@ -54,46 +57,42 @@
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面を回転させます。
  */
-#if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
-#define KRRotate2D(angle)       glRotatef(((float)(angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);
-#else
-#define KRRotate2D(angle)       glRotated(((angle)*180)/M_PI, 0.0, 0.0, 1.0);
-#endif
+inline void KRRotate2D(double angle);
 
 /*!
-    @function   KRRotateScreen2D
+    @function   KRRotate2D
     @group      Game 2D Graphics
     @abstract   中心点と角度を指定して、2次元的に（Z軸を中心として）画面を回転させます。
  */
-#if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
-#define KRRotateScreen2D(angle, centerPos)     glTranslatef((float)((centerPos).x), (float)((centerPos).y), 0.0f);glRotatef(((float)(angle)*180)/M_PI, 0.0f, 0.0f, 1.0f);glTranslatef((float)(-((centerPos).x)), (float)(-((centerPos).y)), 0.0f);
-#else
-#define KRRotateScreen2D(angle, centerPos)     glTranslated(((centerPos).x), ((centerPos).y), 0.0);glRotated(((angle)*180)/M_PI, 0.0, 0.0, 1.0);glTranslated(-((centerPos).x), -((centerPos).y), 0.0);
-#endif
-
+inline void KRRotate2D(double angle, const KRVector2D& centerPos);
 
 /*!
     @function   KRScale2D
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面をスケーリングさせます。
  */
-#if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
-#define KRScale2D(x, y)         glScalef((float)(x), (float)(y), 1.0f);
-#else
-#define KRScale2D(x, y)         glScaled((x), (y), 1.0);
-#endif
+inline void KRScale2D(double x, double y);
+
+/*!
+    @function   KRScale2D
+    @group      Game 2D Graphics
+    @abstract   2次元的に（Z軸を中心として）画面をスケーリングさせます。
+ */
+inline void KRScale2D(const KRVector2D& scale);
 
 /*!
     @function   KRTranslate2D
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面を平行移動させます。
  */
-#if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
-#define KRTranslate2D(x, y)     glTranslatef((float)(x), (float)(y), 0.0f);
-#else
-#define KRTranslate2D(x, y)     glTranslated((x), (y), 0.0);
-#endif
+inline void KRTranslate2D(double x, double y);
 
+/*!
+    @function   KRTranslate2D
+    @group      Game 2D Graphics
+    @abstract   2次元的に（Z軸を中心として）画面を平行移動させます。
+ */
+inline void KRTranslate2D(const KRVector2D& size);
 
 /*!
     @function   KRSleep

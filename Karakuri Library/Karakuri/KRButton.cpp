@@ -51,6 +51,24 @@ KRButton::~KRButton()
 #pragma mark -
 #pragma mark Control Implementation
 
+void KRButton::setFrame(const KRRect2D& rect)
+{
+    KRControl::setFrame(rect);
+    mLabel->setFrame(rect);
+}
+
+void KRButton::setFrameOrigin(const KRVector2D& pos)
+{
+    KRControl::setFrameOrigin(pos);
+    mLabel->setFrameOrigin(pos);
+}
+
+void KRButton::setFrameSize(const KRVector2D& size)
+{
+    KRControl::setFrameSize(size);
+    mLabel->setFrameSize(size);
+}
+
 bool KRButton::update(KRInput *input)
 {
     if (!mIsSelected) {
