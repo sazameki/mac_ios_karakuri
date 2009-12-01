@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 
 
-inline void KRRotate2D(double angle)
+void KRRotate2D(double angle)
 {
 #if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
     glRotatef(((float)angle * 180) / M_PI, 0.0f, 0.0f, 1.0f);
@@ -24,7 +24,7 @@ inline void KRRotate2D(double angle)
 #endif    
 }
 
-inline void KRRotate2D(double angle, const KRVector2D& centerPos)
+void KRRotate2D(double angle, const KRVector2D& centerPos)
 {
 #if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
     glTranslatef((float)centerPos.x, (float)centerPos.y, 0.0f);
@@ -37,7 +37,7 @@ inline void KRRotate2D(double angle, const KRVector2D& centerPos)
 #endif    
 }
 
-inline void KRScale2D(double x, double y)
+void KRScale2D(double x, double y)
 {
 #if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
     glScalef((float)x, (float)y, 1.0f);
@@ -46,12 +46,12 @@ inline void KRScale2D(double x, double y)
 #endif
 }
 
-inline void KRScale2D(const KRVector2D& scale)
+void KRScale2D(const KRVector2D& scale)
 {
     KRScale2D(scale.x, scale.y);
 }
 
-inline void KRTranslate2D(double x, double y)
+void KRTranslate2D(double x, double y)
 {
 #if defined(KR_IPHONE) && !defined(KR_IPHONE_MACOSX_EMU)
     glTranslatef((float)x, (float)y, 0.0f);
@@ -60,7 +60,7 @@ inline void KRTranslate2D(double x, double y)
 #endif    
 }
 
-inline void KRTranslate2D(const KRVector2D& size)
+void KRTranslate2D(const KRVector2D& size)
 {
     KRTranslate2D(size.x, size.y);
 }

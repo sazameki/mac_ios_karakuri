@@ -57,42 +57,42 @@ struct KRVector2D;
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面を回転させます。
  */
-inline void KRRotate2D(double angle);
+void    KRRotate2D(double angle);
 
 /*!
     @function   KRRotate2D
     @group      Game 2D Graphics
     @abstract   中心点と角度を指定して、2次元的に（Z軸を中心として）画面を回転させます。
  */
-inline void KRRotate2D(double angle, const KRVector2D& centerPos);
+void    KRRotate2D(double angle, const KRVector2D& centerPos);
 
 /*!
     @function   KRScale2D
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面をスケーリングさせます。
  */
-inline void KRScale2D(double x, double y);
+void    KRScale2D(double x, double y);
 
 /*!
     @function   KRScale2D
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面をスケーリングさせます。
  */
-inline void KRScale2D(const KRVector2D& scale);
+void    KRScale2D(const KRVector2D& scale);
 
 /*!
     @function   KRTranslate2D
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面を平行移動させます。
  */
-inline void KRTranslate2D(double x, double y);
+void    KRTranslate2D(double x, double y);
 
 /*!
     @function   KRTranslate2D
     @group      Game 2D Graphics
     @abstract   2次元的に（Z軸を中心として）画面を平行移動させます。
  */
-inline void KRTranslate2D(const KRVector2D& size);
+void    KRTranslate2D(const KRVector2D& size);
 
 /*!
     @function   KRSleep
