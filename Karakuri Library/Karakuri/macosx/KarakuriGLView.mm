@@ -8,7 +8,7 @@
 
 #import "KarakuriGLView.h"
 
-#import <Karakuri/KarakuriController.h>
+#import <Karakuri/KRGameController.h>
 #include <Karakuri/KRInput.h>
 #include <Karakuri/KRGraphics.h>
 
@@ -24,7 +24,7 @@ static volatile BOOL    sIsReady = NO;
 
 - (id)init
 {
-    KarakuriController *controller = [KarakuriController sharedController];
+    KRGameController *controller = [KRGameController sharedController];
     KRGame *game = [controller game];
 
     NSOpenGLPixelFormatAttribute attrs[] = {
@@ -115,7 +115,7 @@ static volatile BOOL    sIsReady = NO;
     KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);    
 
-    [[KarakuriController sharedController] setKRGLContext:&mKRGLContext];
+    [[KRGameController sharedController] setKRGLContext:&mKRGLContext];
     
     sIsReady = YES;
 }
@@ -203,7 +203,7 @@ static volatile BOOL    sIsReady = NO;
     [fullScreenContext setFullScreen];
     [fullScreenContext makeCurrentContext];
 
-    [[KarakuriController sharedController] fullScreenGameProc];
+    [[KRGameController sharedController] fullScreenGameProc];
     
     {
         CGDisplayFadeReservationToken newToken;

@@ -6,7 +6,7 @@
 
 #include "KRSimulator2D.h"
 
-#include <Karakuri/KarakuriGame.h>
+#include <Karakuri/KRGame.h>
 #include "KRSimulator2DCollision.h"
 
 #include <Karakuri/chipmunk/chipmunk.h>

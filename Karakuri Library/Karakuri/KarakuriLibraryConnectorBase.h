@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <Karakuri/KarakuriGame.h>
+#import <Karakuri/KRGame.h>
 
 
 @interface KarakuriLibraryConnectorBase : NSObject {

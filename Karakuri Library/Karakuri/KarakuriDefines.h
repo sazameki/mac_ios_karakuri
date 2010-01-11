@@ -1,5 +1,5 @@
 /*
- *  Karakuri_Defines.h
+ *  KarakuriDefines.h
  *  Karakuri Prototype
  *
  *  Created by numata on 09/07/18.
@@ -12,7 +12,7 @@
 #include <TargetConditionals.h>
 
 
-#define KARAKURI_FRAMEWORK_VERSION  "0.8.9"
+#define KARAKURI_FRAMEWORK_VERSION  "0.9.0"
 
 
 #if TARGET_OS_IPHONE

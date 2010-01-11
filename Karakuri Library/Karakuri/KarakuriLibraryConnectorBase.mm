@@ -8,14 +8,14 @@
 
 #import "KarakuriLibraryConnectorBase.h"
 
-#import "KarakuriController.h"
+#import "KRGameController.h"
 
 
 @implementation KarakuriLibraryConnectorBase
 
 - (void)registerClassesInNib
 {
-    [KarakuriController new];
+    [KRGameController new];
 }
 
 - (KRGame *)createGameInstance

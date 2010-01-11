@@ -43,6 +43,10 @@ protected:
     bool            mHasChangedText;
     KRTextAlignment mTextAlignment;
     
+    KRColor         mTextShadowColor;
+    KRVector2D      mTextShadowOffset;
+    bool            mHasTextShadow;
+    
 public:
     /*!
         @task コンストラクタ
@@ -93,16 +97,27 @@ public:
     void    setFont(const std::string& fontName, double size);
     
     /*!
+        @method setHasTextShadow
+        @abstract テキストに影を付けるかどうかを設定します。
+     */
+    void    setHasTextShadow(bool flag);
+    
+    void    setTextShadowColor(const KRColor& color);
+    void    setTextShadowOffset(const KRVector2D& offset);
+    
+    /*!
         @method setTextAlignment
         横方向のテキスト配置方法を設定します。
      */
-    void            setTextAlignment(KRTextAlignment alignment);
+    void    setTextAlignment(KRTextAlignment alignment);
     
     /*!
         @method setTextColor
         このラベルのテキスト描画色を設定します。
      */
-    void            setTextColor(const KRColor& color);
+    void    setTextColor(const KRColor& color);
     
+    virtual bool    _isUpdatableControl() const; KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+
 };
 

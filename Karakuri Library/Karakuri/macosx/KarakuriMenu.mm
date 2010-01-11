@@ -7,7 +7,7 @@
 //
 
 #import "KarakuriMenu.h"
-#import "KarakuriController.h"
+#import "KRGameController.h"
 
 
 @interface NSApplication(Boohoo)
@@ -27,7 +27,7 @@
 }
 
 - (NSMenu *)makeAppleMenu {
-    KarakuriController *controller = [KarakuriController sharedController];
+    KRGameController *controller = [KRGameController sharedController];
     KRGame *game = [controller game];
     NSString *appName = [NSString stringWithCString:game->getTitle().c_str() encoding:NSUTF8StringEncoding];
 
@@ -94,7 +94,7 @@
     }
     NSMenu *windowMenu = [[[NSMenu alloc] initWithTitle:menuTitle] autorelease];
 
-    KarakuriController *controller = [KarakuriController sharedController];
+    KRGameController *controller = [KRGameController sharedController];
 
     {
         NSString *title = @"Minimize";

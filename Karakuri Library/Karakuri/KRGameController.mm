@@ -1,12 +1,12 @@
 //
-//  KarakuriController.mm
+//  KRGameController.mm
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/17.
 //  Copyright 2009 Satoshi Numata. All rights reserved.
 //
 
-#import "KarakuriController.h"
+#import "KRGameController.h"
 
 #import "KarakuriLibraryConnector.h"
 
@@ -27,15 +27,16 @@
 #import "KarakuriSound.h"
 #import "KRSaveBox.h"
 #import "KarakuriFunctions.h"
-#import "KarakuriWorld.h"
+#import "KRWorld.h"
 #import "KRRandom.h"
 #import "KRSimulator2D.h"
+#import "KRControlManager.h"
 
 
 #define KRMaxFrameSkipCount     5
 
 
-static KarakuriController *sInstance = nil;
+static KRGameController *sInstance = nil;
 
 
 #if __DEBUG__
@@ -61,21 +62,22 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 }
 
 
-@interface KarakuriController (Private)
+@interface KRGameController (Private)
 
 - (void)setupApplication;
 
 @end
 
 
-@implementation KarakuriController
+@implementation KRGameController
 
-+ (KarakuriController *)sharedController
++ (KRGameController *)sharedController
 {
     return sInstance;
 }
 
-- (id)init {
+- (id)init
+{
     self = [super init];
     if (self) {
         sInstance = self;
@@ -106,6 +108,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         mGame = [mLibraryConnector createGameInstance];
         mGraphics = new KRGraphics();
         mInput = new KRInput();
+        mCharacterAnime = new KRAnime2D();
         
         mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGame->getFrameRate()));
         
@@ -119,6 +122,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         
 #if __DEBUG__
         mFPSDisplay = NULL;
+        mDebugControlManager = NULL;
         mCurrentFPS = 60.0;
         mFrameCount = 0;
         for (int i = 0; i < KR_FRAME_COUNT_HISTORY_SIZE; i++) {
@@ -159,6 +163,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     delete mGraphics;
     delete mGame;
     delete mInput;
+    delete mCharacterAnime;
     
 #if __DEBUG__
     if (mFPSDisplay != NULL) {
@@ -257,6 +262,35 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 {
     return mGame;
 }
+
+#if __DEBUG__
+- (void)addDebugString:(const std::string&)str
+{
+    mDebugControlManager->scrollUpAllDebugLabels();
+
+    timeval tp;
+    gettimeofday(&tp, NULL);
+    
+    time_t theTime = time(NULL);
+    tm *date = localtime(&theTime);
+    
+    static char dateBuffer[16];
+    strftime(dateBuffer, 15, "%H:%M:%S", date);
+    
+    KRLabel *aLabel = new KRLabel(KRRect2D(10, 1, gKRScreenSize.x-10*2, 20));
+    aLabel->setFont("Courier", 12.0);
+    aLabel->setTextColor(KRColor::White);
+    aLabel->setTextShadowColor(KRColor::Black);
+    aLabel->setHasTextShadow(true);
+    aLabel->setText(KRFS("[%s.%02d] %s", dateBuffer, tp.tv_usec / 10000, str.c_str()));
+    mDebugControlManager->addControl(aLabel, 0);
+}
+
+- (void)removeDebugStrings
+{
+    mDebugControlManager->removeAllControls();
+}
+#endif
 
 
 #pragma mark -
@@ -644,7 +678,13 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     mGameIsChaningScreenMode = NO;
 #endif
-
+    
+#if __DEBUG__
+    if (mDebugControlManager == NULL) {
+        mDebugControlManager = new KRControlManager();
+    }
+#endif
+    
     try {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
         CGLContextObj cglContext = (mKRGLContext->isFullScreen)? mKRGLContext->cglFullScreenContext: mKRGLContext->cglContext;
@@ -742,6 +782,9 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             } else {
                 mGame->drawView(mGraphics);
             }
+#if __DEBUG__
+            mDebugControlManager->drawAllControls(gKRGraphicsInst, 0);
+#endif
             KRTexture2D::processBatchedTexture2DDraws();
 #if __DEBUG__
             if (mFPSDisplay != NULL) {

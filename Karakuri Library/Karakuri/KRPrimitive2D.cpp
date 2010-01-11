@@ -82,12 +82,12 @@ void KRPrimitive2D::fillQuad(const KRVector2D& p1, const KRVector2D& p2, const K
     };
     
     GLfloat colors[] = {
-        c1.r, c1.g, c1.b, c1.a,
-        c2.r, c2.g, c2.b, c2.a,
-        c3.r, c3.g, c3.b, c3.a,
-        c1.r, c1.g, c1.b, c1.a,
-        c3.r, c3.g, c3.b, c3.a,
-        c4.r, c4.g, c4.b, c4.a,
+        (GLfloat)c1.r, (GLfloat)c1.g, (GLfloat)c1.b, (GLfloat)c1.a,
+        (GLfloat)c2.r, (GLfloat)c2.g, (GLfloat)c2.b, (GLfloat)c2.a,
+        (GLfloat)c3.r, (GLfloat)c3.g, (GLfloat)c3.b, (GLfloat)c3.a,
+        (GLfloat)c1.r, (GLfloat)c1.g, (GLfloat)c1.b, (GLfloat)c1.a,
+        (GLfloat)c3.r, (GLfloat)c3.g, (GLfloat)c3.b, (GLfloat)c3.a,
+        (GLfloat)c4.r, (GLfloat)c4.g, (GLfloat)c4.b, (GLfloat)c4.a,
     };
     
     glVertexPointer(2, GL_SHORT, 0, vertices);

@@ -21,9 +21,12 @@ KRLabel::KRLabel(const KRRect2D& frame)
     
     mFont = new KRFont("Helvetica-Bold", 20);
     
-    mTextColor = KRColor::Black;
+    mTextColor = KRColor::White;
+    mTextAlignment = KRTextAlignmentLeft;
 
-    mTextAlignment = KRTextAlignmentCenter;
+    mTextShadowColor = KRColor::Black;
+    mHasTextShadow = false;
+    mTextShadowOffset = KRVector2D(1, -1);
 }
 
 /*!
@@ -65,9 +68,13 @@ void KRLabel::draw(KRGraphics *g)
         } else if (mTextAlignment == KRTextAlignmentRight) {
             drawX = mFrame.x + mFrame.width - mTextTexture->getWidth();
         }
-        mTextTexture->drawAtPointC(drawX,
-                                   mFrame.y + mFrame.height/2 - mTextTexture->getHeight()/2,
-                                   mTextColor);
+        
+        KRVector2D drawPos(drawX, mFrame.y + mFrame.height/2 - mTextTexture->getHeight()/2);
+        if (mHasTextShadow) {
+            KRVector2D shadowPos = drawPos + mTextShadowOffset;
+            mTextTexture->drawAtPointC(shadowPos, mTextShadowColor);
+        }
+        mTextTexture->drawAtPointC(drawPos, mTextColor);
     }
 }
 
@@ -113,5 +120,30 @@ void KRLabel::setTextColor(const KRColor& color)
     mTextColor = color;
 }
 
+bool KRLabel::_isUpdatableControl() const
+{
+    return false;
+}
+
+
+#pragma mark -
+
+void KRLabel::setHasTextShadow(bool flag)
+{
+    mHasTextShadow = flag;
+}
+
+void KRLabel::setTextShadowColor(const KRColor& color)
+{
+    if (mTextShadowColor == color) {
+        return;
+    }
+    mTextShadowColor = color;
+}
+
+void KRLabel::setTextShadowOffset(const KRVector2D& offset)
+{
+    mTextShadowOffset = offset;
+}
 
 

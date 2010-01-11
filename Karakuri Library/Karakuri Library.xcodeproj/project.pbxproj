@@ -74,25 +74,25 @@
 		8E1B938F101F9E7500D643AA /* KRTextReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B938B101F9E7500D643AA /* KRTextReader.mm */; };
 		8E1B9390101F9E7500D643AA /* KRTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B938A101F9E7500D643AA /* KRTextReader.h */; };
 		8E1B9391101F9E7500D643AA /* KRTextReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B938B101F9E7500D643AA /* KRTextReader.mm */; };
-		8E2A1AF91025A1E700B5DD4C /* Karakuri_Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* Karakuri_Globals.h */; };
-		8E2A1AFA1025A1E700B5DD4C /* Karakuri_Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* Karakuri_Globals.cpp */; };
-		8E2A1AFB1025A1E700B5DD4C /* Karakuri_Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* Karakuri_Globals.h */; };
-		8E2A1AFC1025A1E700B5DD4C /* Karakuri_Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* Karakuri_Globals.cpp */; };
-		8E2A1AFD1025A1E700B5DD4C /* Karakuri_Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* Karakuri_Globals.h */; };
-		8E2A1AFE1025A1E700B5DD4C /* Karakuri_Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* Karakuri_Globals.cpp */; };
+		8E2A1AF91025A1E700B5DD4C /* KarakuriGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */; };
+		8E2A1AFA1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
+		8E2A1AFB1025A1E700B5DD4C /* KarakuriGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */; };
+		8E2A1AFC1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
+		8E2A1AFD1025A1E700B5DD4C /* KarakuriGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */; };
+		8E2A1AFE1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
 		8E4050571029C9A400615B74 /* Karakuri.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F2C101B1FD100DDA881 /* Karakuri.h */; };
 		8E4050581029C9A400615B74 /* KarakuriLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */; };
 		8E4050591029C9A400615B74 /* Karakuri_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */; };
-		8E40505A1029C9A400615B74 /* Karakuri_Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* Karakuri_Defines.h */; };
-		8E40505B1029C9A400615B74 /* Karakuri_Types.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* Karakuri_Types.h */; };
+		8E40505A1029C9A400615B74 /* KarakuriDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* KarakuriDefines.h */; };
+		8E40505B1029C9A400615B74 /* KarakuriTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* KarakuriTypes.h */; };
 		8E40505C1029C9A400615B74 /* KarakuriException.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F39101B200000DDA881 /* KarakuriException.h */; };
 		8E40505D1029C9A400615B74 /* KarakuriString.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3B101B200000DDA881 /* KarakuriString.h */; };
 		8E40505E1029C9A400615B74 /* KarakuriGLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3D101B200000DDA881 /* KarakuriGLContext.h */; };
 		8E40505F1029C9A400615B74 /* KarakuriFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3F101B200000DDA881 /* KarakuriFunctions.h */; };
-		8E4050601029C9A400615B74 /* KarakuriGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KarakuriGame.h */; };
-		8E4050611029C9A400615B74 /* KarakuriController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KarakuriController.h */; };
-		8E4050621029C9A400615B74 /* KarakuriWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KarakuriWorld.h */; };
-		8E4050631029C9A400615B74 /* KarakuriWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KarakuriWorldManager.h */; };
+		8E4050601029C9A400615B74 /* KRGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KRGame.h */; };
+		8E4050611029C9A400615B74 /* KRGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KRGameController.h */; };
+		8E4050621029C9A400615B74 /* KRWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KRWorld.h */; };
+		8E4050631029C9A400615B74 /* KRWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KRWorldManager.h */; };
 		8E4050641029C9A400615B74 /* KarakuriLibraryConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F74101B205C00DDA881 /* KarakuriLibraryConnector.h */; };
 		8E4050651029C9A400615B74 /* KarakuriLibraryConnectorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F75101B205C00DDA881 /* KarakuriLibraryConnectorBase.h */; };
 		8E4050661029C9A400615B74 /* KRSaveBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F78101B205C00DDA881 /* KRSaveBox.h */; };
@@ -111,17 +111,17 @@
 		8E4050731029C9A400615B74 /* KRTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B938A101F9E7500D643AA /* KRTextReader.h */; };
 		8E4050741029C9A400615B74 /* KRFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E9792681020C00700E3EC7A /* KRFont.h */; };
 		8E4050751029C9A400615B74 /* KRPrimitive2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E946906102265240073A4FD /* KRPrimitive2D.h */; };
-		8E4050761029C9A400615B74 /* Karakuri_Globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* Karakuri_Globals.h */; };
+		8E4050761029C9A400615B74 /* KarakuriGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */; };
 		8E4050771029C9A400615B74 /* KRRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBE81371028988800F77A39 /* KRRandom.h */; };
-		8E4050791029C9A400615B74 /* Karakuri_Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* Karakuri_Types.cpp */; };
+		8E4050791029C9A400615B74 /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* KarakuriTypes.cpp */; };
 		8E40507A1029C9A400615B74 /* KarakuriException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3A101B200000DDA881 /* KarakuriException.cpp */; };
 		8E40507B1029C9A400615B74 /* KarakuriString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3C101B200000DDA881 /* KarakuriString.cpp */; };
 		8E40507C1029C9A400615B74 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3E101B200000DDA881 /* main.mm */; };
 		8E40507D1029C9A400615B74 /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */; };
-		8E40507E1029C9A400615B74 /* KarakuriGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KarakuriGame.mm */; };
-		8E40507F1029C9A400615B74 /* KarakuriController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KarakuriController.mm */; };
-		8E4050801029C9A400615B74 /* KarakuriWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KarakuriWorld.mm */; };
-		8E4050811029C9A400615B74 /* KarakuriWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KarakuriWorldManager.mm */; };
+		8E40507E1029C9A400615B74 /* KRGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KRGame.mm */; };
+		8E40507F1029C9A400615B74 /* KRGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KRGameController.mm */; };
+		8E4050801029C9A400615B74 /* KRWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KRWorld.mm */; };
+		8E4050811029C9A400615B74 /* KRWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KRWorldManager.mm */; };
 		8E4050821029C9A400615B74 /* KarakuriLibraryConnectorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F76101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm */; };
 		8E4050831029C9A400615B74 /* KRSaveBox.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F79101B205C00DDA881 /* KRSaveBox.mm */; };
 		8E4050841029C9A400615B74 /* KRColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F7C101B205C00DDA881 /* KRColor.mm */; };
@@ -139,7 +139,7 @@
 		8E4050901029C9A400615B74 /* KRTextReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B938B101F9E7500D643AA /* KRTextReader.mm */; };
 		8E4050911029C9A400615B74 /* KRFont.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9792691020C00700E3EC7A /* KRFont.mm */; };
 		8E4050921029C9A400615B74 /* KRPrimitive2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E946907102265240073A4FD /* KRPrimitive2D.cpp */; };
-		8E4050931029C9A400615B74 /* Karakuri_Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* Karakuri_Globals.cpp */; };
+		8E4050931029C9A400615B74 /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
 		8E4050941029C9A400615B74 /* KRRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE81381028988900F77A39 /* KRRandom.cpp */; };
 		8E4050961029C9A400615B74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		8E4051EE1029DE2700615B74 /* KarakuriEmulatorBackView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E4051EC1029DE2700615B74 /* KarakuriEmulatorBackView.h */; };
@@ -162,6 +162,14 @@
 		8E423B51103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E423B4F103C8A2A00ED3880 /* KRPeerPicker.mm */; };
 		8E423B52103C8A2A00ED3880 /* KRPeerPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E423B4E103C8A2A00ED3880 /* KRPeerPicker.h */; };
 		8E423B53103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E423B4F103C8A2A00ED3880 /* KRPeerPicker.mm */; };
+		8E537E8D10FAA924003C76D0 /* KRAnime2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2D.h */; };
+		8E537E8E10FAA924003C76D0 /* KRAnime2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */; };
+		8E537E8F10FAA924003C76D0 /* KRAnime2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2D.h */; };
+		8E537E9010FAA924003C76D0 /* KRAnime2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */; };
+		8E537E9110FAA924003C76D0 /* KRAnime2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2D.h */; };
+		8E537E9210FAA924003C76D0 /* KRAnime2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */; };
+		8E537E9310FAA924003C76D0 /* KRAnime2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2D.h */; };
+		8E537E9410FAA924003C76D0 /* KRAnime2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */; };
 		8E60178A1031DCE70009C1F4 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E6017541031DCE70009C1F4 /* prime.h */; };
 		8E60178B1031DCE70009C1F4 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E6017551031DCE70009C1F4 /* cpVect.h */; };
 		8E60178C1031DCE70009C1F4 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8E6017561031DCE70009C1F4 /* cpVect.c */; };
@@ -428,9 +436,9 @@
 		8EAB5F2F101B1FD100DDA881 /* Karakuri.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F2C101B1FD100DDA881 /* Karakuri.h */; };
 		8EAB5F41101B200000DDA881 /* KarakuriLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */; };
 		8EAB5F42101B200000DDA881 /* Karakuri_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */; };
-		8EAB5F43101B200000DDA881 /* Karakuri_Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* Karakuri_Defines.h */; };
-		8EAB5F44101B200000DDA881 /* Karakuri_Types.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* Karakuri_Types.h */; };
-		8EAB5F45101B200000DDA881 /* Karakuri_Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* Karakuri_Types.cpp */; };
+		8EAB5F43101B200000DDA881 /* KarakuriDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* KarakuriDefines.h */; };
+		8EAB5F44101B200000DDA881 /* KarakuriTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* KarakuriTypes.h */; };
+		8EAB5F45101B200000DDA881 /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* KarakuriTypes.cpp */; };
 		8EAB5F46101B200000DDA881 /* KarakuriException.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F39101B200000DDA881 /* KarakuriException.h */; };
 		8EAB5F47101B200000DDA881 /* KarakuriException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3A101B200000DDA881 /* KarakuriException.cpp */; };
 		8EAB5F48101B200000DDA881 /* KarakuriString.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3B101B200000DDA881 /* KarakuriString.h */; };
@@ -441,9 +449,9 @@
 		8EAB5F4D101B200000DDA881 /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */; };
 		8EAB5F4E101B200000DDA881 /* KarakuriLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */; };
 		8EAB5F4F101B200000DDA881 /* Karakuri_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */; };
-		8EAB5F50101B200000DDA881 /* Karakuri_Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* Karakuri_Defines.h */; };
-		8EAB5F51101B200000DDA881 /* Karakuri_Types.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* Karakuri_Types.h */; };
-		8EAB5F52101B200000DDA881 /* Karakuri_Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* Karakuri_Types.cpp */; };
+		8EAB5F50101B200000DDA881 /* KarakuriDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* KarakuriDefines.h */; };
+		8EAB5F51101B200000DDA881 /* KarakuriTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* KarakuriTypes.h */; };
+		8EAB5F52101B200000DDA881 /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* KarakuriTypes.cpp */; };
 		8EAB5F53101B200000DDA881 /* KarakuriException.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F39101B200000DDA881 /* KarakuriException.h */; };
 		8EAB5F54101B200000DDA881 /* KarakuriException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3A101B200000DDA881 /* KarakuriException.cpp */; };
 		8EAB5F55101B200000DDA881 /* KarakuriString.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3B101B200000DDA881 /* KarakuriString.h */; };
@@ -454,9 +462,9 @@
 		8EAB5F5A101B200000DDA881 /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */; };
 		8EAB5F5B101B200000DDA881 /* KarakuriLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */; };
 		8EAB5F5C101B200000DDA881 /* Karakuri_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */; };
-		8EAB5F5D101B200000DDA881 /* Karakuri_Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* Karakuri_Defines.h */; };
-		8EAB5F5E101B200000DDA881 /* Karakuri_Types.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* Karakuri_Types.h */; };
-		8EAB5F5F101B200000DDA881 /* Karakuri_Types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* Karakuri_Types.cpp */; };
+		8EAB5F5D101B200000DDA881 /* KarakuriDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F36101B200000DDA881 /* KarakuriDefines.h */; };
+		8EAB5F5E101B200000DDA881 /* KarakuriTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F37101B200000DDA881 /* KarakuriTypes.h */; };
+		8EAB5F5F101B200000DDA881 /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F38101B200000DDA881 /* KarakuriTypes.cpp */; };
 		8EAB5F60101B200000DDA881 /* KarakuriException.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F39101B200000DDA881 /* KarakuriException.h */; };
 		8EAB5F61101B200000DDA881 /* KarakuriException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3A101B200000DDA881 /* KarakuriException.cpp */; };
 		8EAB5F62101B200000DDA881 /* KarakuriString.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3B101B200000DDA881 /* KarakuriString.h */; };
@@ -465,14 +473,14 @@
 		8EAB5F65101B200000DDA881 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F3E101B200000DDA881 /* main.mm */; };
 		8EAB5F66101B200000DDA881 /* KarakuriFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F3F101B200000DDA881 /* KarakuriFunctions.h */; };
 		8EAB5F67101B200000DDA881 /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */; };
-		8EAB5F8C101B205C00DDA881 /* KarakuriGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KarakuriGame.h */; };
-		8EAB5F8D101B205C00DDA881 /* KarakuriGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KarakuriGame.mm */; };
-		8EAB5F8E101B205C00DDA881 /* KarakuriController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KarakuriController.h */; };
-		8EAB5F8F101B205C00DDA881 /* KarakuriController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KarakuriController.mm */; };
-		8EAB5F90101B205C00DDA881 /* KarakuriWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KarakuriWorld.h */; };
-		8EAB5F91101B205C00DDA881 /* KarakuriWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KarakuriWorld.mm */; };
-		8EAB5F92101B205C00DDA881 /* KarakuriWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KarakuriWorldManager.h */; };
-		8EAB5F93101B205C00DDA881 /* KarakuriWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KarakuriWorldManager.mm */; };
+		8EAB5F8C101B205C00DDA881 /* KRGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KRGame.h */; };
+		8EAB5F8D101B205C00DDA881 /* KRGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KRGame.mm */; };
+		8EAB5F8E101B205C00DDA881 /* KRGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KRGameController.h */; };
+		8EAB5F8F101B205C00DDA881 /* KRGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KRGameController.mm */; };
+		8EAB5F90101B205C00DDA881 /* KRWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KRWorld.h */; };
+		8EAB5F91101B205C00DDA881 /* KRWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KRWorld.mm */; };
+		8EAB5F92101B205C00DDA881 /* KRWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KRWorldManager.h */; };
+		8EAB5F93101B205C00DDA881 /* KRWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KRWorldManager.mm */; };
 		8EAB5F94101B205C00DDA881 /* KarakuriLibraryConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F74101B205C00DDA881 /* KarakuriLibraryConnector.h */; };
 		8EAB5F95101B205C00DDA881 /* KarakuriLibraryConnectorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F75101B205C00DDA881 /* KarakuriLibraryConnectorBase.h */; };
 		8EAB5F96101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F76101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm */; };
@@ -493,14 +501,14 @@
 		8EAB5FA5101B205C00DDA881 /* KRSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F89101B205C00DDA881 /* KRSound.mm */; };
 		8EAB5FA6101B205C00DDA881 /* KarakuriSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F8A101B205C00DDA881 /* KarakuriSound.h */; };
 		8EAB5FA7101B205C00DDA881 /* KarakuriSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F8B101B205C00DDA881 /* KarakuriSound.mm */; };
-		8EAB5FA8101B205C00DDA881 /* KarakuriGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KarakuriGame.h */; };
-		8EAB5FA9101B205C00DDA881 /* KarakuriGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KarakuriGame.mm */; };
-		8EAB5FAA101B205C00DDA881 /* KarakuriController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KarakuriController.h */; };
-		8EAB5FAB101B205C00DDA881 /* KarakuriController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KarakuriController.mm */; };
-		8EAB5FAC101B205C00DDA881 /* KarakuriWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KarakuriWorld.h */; };
-		8EAB5FAD101B205C00DDA881 /* KarakuriWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KarakuriWorld.mm */; };
-		8EAB5FAE101B205C00DDA881 /* KarakuriWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KarakuriWorldManager.h */; };
-		8EAB5FAF101B205C00DDA881 /* KarakuriWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KarakuriWorldManager.mm */; };
+		8EAB5FA8101B205C00DDA881 /* KRGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KRGame.h */; };
+		8EAB5FA9101B205C00DDA881 /* KRGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KRGame.mm */; };
+		8EAB5FAA101B205C00DDA881 /* KRGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KRGameController.h */; };
+		8EAB5FAB101B205C00DDA881 /* KRGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KRGameController.mm */; };
+		8EAB5FAC101B205C00DDA881 /* KRWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KRWorld.h */; };
+		8EAB5FAD101B205C00DDA881 /* KRWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KRWorld.mm */; };
+		8EAB5FAE101B205C00DDA881 /* KRWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KRWorldManager.h */; };
+		8EAB5FAF101B205C00DDA881 /* KRWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KRWorldManager.mm */; };
 		8EAB5FB0101B205C00DDA881 /* KarakuriLibraryConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F74101B205C00DDA881 /* KarakuriLibraryConnector.h */; };
 		8EAB5FB1101B205C00DDA881 /* KarakuriLibraryConnectorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F75101B205C00DDA881 /* KarakuriLibraryConnectorBase.h */; };
 		8EAB5FB2101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F76101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm */; };
@@ -521,14 +529,14 @@
 		8EAB5FC1101B205C00DDA881 /* KRSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F89101B205C00DDA881 /* KRSound.mm */; };
 		8EAB5FC2101B205C00DDA881 /* KarakuriSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F8A101B205C00DDA881 /* KarakuriSound.h */; };
 		8EAB5FC3101B205C00DDA881 /* KarakuriSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F8B101B205C00DDA881 /* KarakuriSound.mm */; };
-		8EAB5FC4101B205C00DDA881 /* KarakuriGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KarakuriGame.h */; };
-		8EAB5FC5101B205C00DDA881 /* KarakuriGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KarakuriGame.mm */; };
-		8EAB5FC6101B205C00DDA881 /* KarakuriController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KarakuriController.h */; };
-		8EAB5FC7101B205C00DDA881 /* KarakuriController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KarakuriController.mm */; };
-		8EAB5FC8101B205C00DDA881 /* KarakuriWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KarakuriWorld.h */; };
-		8EAB5FC9101B205C00DDA881 /* KarakuriWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KarakuriWorld.mm */; };
-		8EAB5FCA101B205C00DDA881 /* KarakuriWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KarakuriWorldManager.h */; };
-		8EAB5FCB101B205C00DDA881 /* KarakuriWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KarakuriWorldManager.mm */; };
+		8EAB5FC4101B205C00DDA881 /* KRGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6B101B205C00DDA881 /* KRGame.h */; };
+		8EAB5FC5101B205C00DDA881 /* KRGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6C101B205C00DDA881 /* KRGame.mm */; };
+		8EAB5FC6101B205C00DDA881 /* KRGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6D101B205C00DDA881 /* KRGameController.h */; };
+		8EAB5FC7101B205C00DDA881 /* KRGameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F6E101B205C00DDA881 /* KRGameController.mm */; };
+		8EAB5FC8101B205C00DDA881 /* KRWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F6F101B205C00DDA881 /* KRWorld.h */; };
+		8EAB5FC9101B205C00DDA881 /* KRWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F70101B205C00DDA881 /* KRWorld.mm */; };
+		8EAB5FCA101B205C00DDA881 /* KRWorldManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F71101B205C00DDA881 /* KRWorldManager.h */; };
+		8EAB5FCB101B205C00DDA881 /* KRWorldManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F72101B205C00DDA881 /* KRWorldManager.mm */; };
 		8EAB5FCC101B205C00DDA881 /* KarakuriLibraryConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F74101B205C00DDA881 /* KarakuriLibraryConnector.h */; };
 		8EAB5FCD101B205C00DDA881 /* KarakuriLibraryConnectorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F75101B205C00DDA881 /* KarakuriLibraryConnectorBase.h */; };
 		8EAB5FCE101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5F76101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm */; };
@@ -589,13 +597,13 @@
 		8EEC34EB10396721009F9305 /* KRSimulator2DCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EEC34E310396721009F9305 /* KRSimulator2DCollision.h */; };
 		8EEC34EC10396721009F9305 /* KRSimulator2DCollision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EEC34E410396721009F9305 /* KRSimulator2DCollision.cpp */; };
 		8EF0565610470BE900CD7212 /* KRControlManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF0565410470BE900CD7212 /* KRControlManager.h */; };
-		8EF0565710470BE900CD7212 /* KRControlManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.cpp */; };
+		8EF0565710470BE900CD7212 /* KRControlManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.mm */; };
 		8EF0565810470BE900CD7212 /* KRControlManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF0565410470BE900CD7212 /* KRControlManager.h */; };
-		8EF0565910470BE900CD7212 /* KRControlManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.cpp */; };
+		8EF0565910470BE900CD7212 /* KRControlManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.mm */; };
 		8EF0565A10470BE900CD7212 /* KRControlManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF0565410470BE900CD7212 /* KRControlManager.h */; };
-		8EF0565B10470BE900CD7212 /* KRControlManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.cpp */; };
+		8EF0565B10470BE900CD7212 /* KRControlManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.mm */; };
 		8EF0565C10470BE900CD7212 /* KRControlManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF0565410470BE900CD7212 /* KRControlManager.h */; };
-		8EF0565D10470BE900CD7212 /* KRControlManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.cpp */; };
+		8EF0565D10470BE900CD7212 /* KRControlManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565510470BE900CD7212 /* KRControlManager.mm */; };
 		8EF0566010470BF600CD7212 /* KRControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF0565E10470BF600CD7212 /* KRControl.h */; };
 		8EF0566110470BF600CD7212 /* KRControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0565F10470BF600CD7212 /* KRControl.cpp */; };
 		8EF0566210470BF600CD7212 /* KRControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF0565E10470BF600CD7212 /* KRControl.h */; };
@@ -644,14 +652,30 @@
 		8EF5B14D102B242F004367D1 /* KRFPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5B147102B242F004367D1 /* KRFPSDisplay.cpp */; };
 		8EF5B14E102B242F004367D1 /* KRFPSDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5B146102B242F004367D1 /* KRFPSDisplay.h */; };
 		8EF5B14F102B242F004367D1 /* KRFPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5B147102B242F004367D1 /* KRFPSDisplay.cpp */; };
-		8EF5BF1F102D744F004367D1 /* KRParticle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2D.h */; };
-		8EF5BF20102D744F004367D1 /* KRParticle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2D.cpp */; };
-		8EF5BF21102D744F004367D1 /* KRParticle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2D.h */; };
-		8EF5BF22102D744F004367D1 /* KRParticle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2D.cpp */; };
-		8EF5BF23102D744F004367D1 /* KRParticle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2D.h */; };
-		8EF5BF24102D744F004367D1 /* KRParticle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2D.cpp */; };
-		8EF5BF25102D744F004367D1 /* KRParticle2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2D.h */; };
-		8EF5BF26102D744F004367D1 /* KRParticle2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2D.cpp */; };
+		8EF5BF1F102D744F004367D1 /* KRParticle2DSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */; };
+		8EF5BF20102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */; };
+		8EF5BF21102D744F004367D1 /* KRParticle2DSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */; };
+		8EF5BF22102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */; };
+		8EF5BF23102D744F004367D1 /* KRParticle2DSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */; };
+		8EF5BF24102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */; };
+		8EF5BF25102D744F004367D1 /* KRParticle2DSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */; };
+		8EF5BF26102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */; };
+		8EFCEAA410F9904500E9598B /* KarakuriDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAA210F9904500E9598B /* KarakuriDebug.h */; };
+		8EFCEAA510F9904500E9598B /* KarakuriDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */; };
+		8EFCEAA610F9904500E9598B /* KarakuriDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAA210F9904500E9598B /* KarakuriDebug.h */; };
+		8EFCEAA710F9904500E9598B /* KarakuriDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */; };
+		8EFCEAA810F9904500E9598B /* KarakuriDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAA210F9904500E9598B /* KarakuriDebug.h */; };
+		8EFCEAA910F9904500E9598B /* KarakuriDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */; };
+		8EFCEAAA10F9904500E9598B /* KarakuriDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAA210F9904500E9598B /* KarakuriDebug.h */; };
+		8EFCEAAB10F9904500E9598B /* KarakuriDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */; };
+		8EFCEADB10F9979900E9598B /* KRMemoryAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */; };
+		8EFCEADC10F9979900E9598B /* KRMemoryAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */; };
+		8EFCEADD10F9979900E9598B /* KRMemoryAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */; };
+		8EFCEADE10F9979900E9598B /* KRMemoryAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */; };
+		8EFCEADF10F9979900E9598B /* KRMemoryAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */; };
+		8EFCEAE010F9979900E9598B /* KRMemoryAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */; };
+		8EFCEAE110F9979900E9598B /* KRMemoryAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */; };
+		8EFCEAE210F9979900E9598B /* KRMemoryAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */; };
 		D2AAC088055469A000DB518D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -723,8 +747,8 @@
 		8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRTexture2DAtlas.cpp; sourceTree = "<group>"; };
 		8E1B938A101F9E7500D643AA /* KRTextReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRTextReader.h; sourceTree = "<group>"; };
 		8E1B938B101F9E7500D643AA /* KRTextReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTextReader.mm; sourceTree = "<group>"; };
-		8E2A1AF71025A1E700B5DD4C /* Karakuri_Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Globals.h; sourceTree = "<group>"; };
-		8E2A1AF81025A1E700B5DD4C /* Karakuri_Globals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Karakuri_Globals.cpp; sourceTree = "<group>"; };
+		8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGlobals.h; sourceTree = "<group>"; };
+		8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriGlobals.cpp; sourceTree = "<group>"; };
 		8E40509A1029C9A400615B74 /* libkarakuri-macphone-emu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-macphone-emu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4051EC1029DE2700615B74 /* KarakuriEmulatorBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriEmulatorBackView.h; sourceTree = "<group>"; };
 		8E4051ED1029DE2700615B74 /* KarakuriEmulatorBackView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriEmulatorBackView.mm; sourceTree = "<group>"; };
@@ -736,6 +760,8 @@
 		8E423397103BE99D00ED3880 /* KRPeerPicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRPeerPicker.mm; sourceTree = "<group>"; };
 		8E423B4E103C8A2A00ED3880 /* KRPeerPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRPeerPicker.h; sourceTree = "<group>"; };
 		8E423B4F103C8A2A00ED3880 /* KRPeerPicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRPeerPicker.mm; sourceTree = "<group>"; };
+		8E537E8B10FAA924003C76D0 /* KRAnime2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRAnime2D.h; sourceTree = "<group>"; };
+		8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRAnime2D.cpp; sourceTree = "<group>"; };
 		8E6017541031DCE70009C1F4 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		8E6017551031DCE70009C1F4 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		8E6017561031DCE70009C1F4 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
@@ -808,10 +834,10 @@
 		8EAB5EFA101B13C200DDA881 /* libkarakuri-iphone-dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-iphone-dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EAB5F2C101B1FD100DDA881 /* Karakuri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri.h; sourceTree = "<group>"; };
 		8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriLibrary.h; sourceTree = "<group>"; };
-		8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Prefix.pch; sourceTree = "<group>"; };
-		8EAB5F36101B200000DDA881 /* Karakuri_Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Defines.h; sourceTree = "<group>"; };
-		8EAB5F37101B200000DDA881 /* Karakuri_Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Types.h; sourceTree = "<group>"; };
-		8EAB5F38101B200000DDA881 /* Karakuri_Types.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Karakuri_Types.cpp; sourceTree = "<group>"; };
+		8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Karakuri_Prefix.pch; path = Karakuri/Karakuri_Prefix.pch; sourceTree = "<group>"; };
+		8EAB5F36101B200000DDA881 /* KarakuriDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriDefines.h; sourceTree = "<group>"; };
+		8EAB5F37101B200000DDA881 /* KarakuriTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriTypes.h; sourceTree = "<group>"; };
+		8EAB5F38101B200000DDA881 /* KarakuriTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriTypes.cpp; sourceTree = "<group>"; };
 		8EAB5F39101B200000DDA881 /* KarakuriException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriException.h; sourceTree = "<group>"; };
 		8EAB5F3A101B200000DDA881 /* KarakuriException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriException.cpp; sourceTree = "<group>"; };
 		8EAB5F3B101B200000DDA881 /* KarakuriString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriString.h; sourceTree = "<group>"; };
@@ -820,14 +846,14 @@
 		8EAB5F3E101B200000DDA881 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		8EAB5F3F101B200000DDA881 /* KarakuriFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriFunctions.h; sourceTree = "<group>"; };
 		8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriFunctions.mm; sourceTree = "<group>"; };
-		8EAB5F6B101B205C00DDA881 /* KarakuriGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGame.h; sourceTree = "<group>"; };
-		8EAB5F6C101B205C00DDA881 /* KarakuriGame.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriGame.mm; sourceTree = "<group>"; };
-		8EAB5F6D101B205C00DDA881 /* KarakuriController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriController.h; sourceTree = "<group>"; };
-		8EAB5F6E101B205C00DDA881 /* KarakuriController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriController.mm; sourceTree = "<group>"; };
-		8EAB5F6F101B205C00DDA881 /* KarakuriWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriWorld.h; sourceTree = "<group>"; };
-		8EAB5F70101B205C00DDA881 /* KarakuriWorld.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriWorld.mm; sourceTree = "<group>"; };
-		8EAB5F71101B205C00DDA881 /* KarakuriWorldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriWorldManager.h; sourceTree = "<group>"; };
-		8EAB5F72101B205C00DDA881 /* KarakuriWorldManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriWorldManager.mm; sourceTree = "<group>"; };
+		8EAB5F6B101B205C00DDA881 /* KRGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRGame.h; sourceTree = "<group>"; };
+		8EAB5F6C101B205C00DDA881 /* KRGame.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRGame.mm; sourceTree = "<group>"; };
+		8EAB5F6D101B205C00DDA881 /* KRGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRGameController.h; sourceTree = "<group>"; };
+		8EAB5F6E101B205C00DDA881 /* KRGameController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRGameController.mm; sourceTree = "<group>"; };
+		8EAB5F6F101B205C00DDA881 /* KRWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRWorld.h; sourceTree = "<group>"; };
+		8EAB5F70101B205C00DDA881 /* KRWorld.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRWorld.mm; sourceTree = "<group>"; };
+		8EAB5F71101B205C00DDA881 /* KRWorldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRWorldManager.h; sourceTree = "<group>"; };
+		8EAB5F72101B205C00DDA881 /* KRWorldManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRWorldManager.mm; sourceTree = "<group>"; };
 		8EAB5F74101B205C00DDA881 /* KarakuriLibraryConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriLibraryConnector.h; sourceTree = "<group>"; };
 		8EAB5F75101B205C00DDA881 /* KarakuriLibraryConnectorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriLibraryConnectorBase.h; sourceTree = "<group>"; };
 		8EAB5F76101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriLibraryConnectorBase.mm; sourceTree = "<group>"; };
@@ -867,7 +893,7 @@
 		8EEC34E310396721009F9305 /* KRSimulator2DCollision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRSimulator2DCollision.h; sourceTree = "<group>"; };
 		8EEC34E410396721009F9305 /* KRSimulator2DCollision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRSimulator2DCollision.cpp; sourceTree = "<group>"; };
 		8EF0565410470BE900CD7212 /* KRControlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRControlManager.h; sourceTree = "<group>"; };
-		8EF0565510470BE900CD7212 /* KRControlManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRControlManager.cpp; sourceTree = "<group>"; };
+		8EF0565510470BE900CD7212 /* KRControlManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRControlManager.mm; sourceTree = "<group>"; };
 		8EF0565E10470BF600CD7212 /* KRControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRControl.h; sourceTree = "<group>"; };
 		8EF0565F10470BF600CD7212 /* KRControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRControl.cpp; sourceTree = "<group>"; };
 		8EF0566810470C1300CD7212 /* KRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRButton.h; sourceTree = "<group>"; };
@@ -880,8 +906,12 @@
 		8EF05DC71048887400CD7212 /* KRLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRLabel.cpp; sourceTree = "<group>"; };
 		8EF5B146102B242F004367D1 /* KRFPSDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRFPSDisplay.h; sourceTree = "<group>"; };
 		8EF5B147102B242F004367D1 /* KRFPSDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRFPSDisplay.cpp; sourceTree = "<group>"; };
-		8EF5BF1D102D744F004367D1 /* KRParticle2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRParticle2D.h; sourceTree = "<group>"; };
-		8EF5BF1E102D744F004367D1 /* KRParticle2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRParticle2D.cpp; sourceTree = "<group>"; };
+		8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRParticle2DSystem.h; sourceTree = "<group>"; };
+		8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRParticle2DSystem.cpp; sourceTree = "<group>"; };
+		8EFCEAA210F9904500E9598B /* KarakuriDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriDebug.h; sourceTree = "<group>"; };
+		8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriDebug.mm; sourceTree = "<group>"; };
+		8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRMemoryAllocator.h; sourceTree = "<group>"; };
+		8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRMemoryAllocator.cpp; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libkarakuri-macosx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-macosx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -970,6 +1000,7 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */,
 				32DBCF5E0370ADEE00C91783 /* Karakuri Library_Prefix.pch */,
 			);
 			name = "Other Sources";
@@ -985,6 +1016,15 @@
 				8E4055081029F15D00615B74 /* KarakuriAccSlider.m */,
 			);
 			name = iphone_emu;
+			sourceTree = "<group>";
+		};
+		8E537E8910FAA7A6003C76D0 /* 2d_anime */ = {
+			isa = PBXGroup;
+			children = (
+				8E537E8B10FAA924003C76D0 /* KRAnime2D.h */,
+				8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */,
+			);
+			name = 2d_anime;
 			sourceTree = "<group>";
 		};
 		8E6017411031DCA00009C1F4 /* chipmunk 4.1.0 */ = {
@@ -1100,6 +1140,7 @@
 				8EAB5F7A101B205C00DDA881 /* foundation */,
 				8EAB5F77101B205C00DDA881 /* text */,
 				8EF0565310470BA100CD7212 /* control */,
+				8E537E8910FAA7A6003C76D0 /* 2d_anime */,
 				8EAB5F81101B205C00DDA881 /* 2d_draw */,
 				8E60188D1031E0420009C1F4 /* 2d_simulation */,
 				8EAB5F85101B205C00DDA881 /* audio */,
@@ -1114,21 +1155,24 @@
 		8EAB5F33101B200000DDA881 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				8EAB5F3E101B200000DDA881 /* main.mm */,
 				8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */,
-				8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */,
-				8EAB5F36101B200000DDA881 /* Karakuri_Defines.h */,
-				8EAB5F37101B200000DDA881 /* Karakuri_Types.h */,
-				8EAB5F38101B200000DDA881 /* Karakuri_Types.cpp */,
-				8E2A1AF71025A1E700B5DD4C /* Karakuri_Globals.h */,
-				8E2A1AF81025A1E700B5DD4C /* Karakuri_Globals.cpp */,
+				8EAB5F36101B200000DDA881 /* KarakuriDefines.h */,
+				8EAB5F37101B200000DDA881 /* KarakuriTypes.h */,
+				8EAB5F38101B200000DDA881 /* KarakuriTypes.cpp */,
+				8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */,
+				8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */,
 				8EAB5F39101B200000DDA881 /* KarakuriException.h */,
 				8EAB5F3A101B200000DDA881 /* KarakuriException.cpp */,
 				8EAB5F3B101B200000DDA881 /* KarakuriString.h */,
 				8EAB5F3C101B200000DDA881 /* KarakuriString.cpp */,
 				8EAB5F3D101B200000DDA881 /* KarakuriGLContext.h */,
-				8EAB5F3E101B200000DDA881 /* main.mm */,
 				8EAB5F3F101B200000DDA881 /* KarakuriFunctions.h */,
 				8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */,
+				8EFCEAA210F9904500E9598B /* KarakuriDebug.h */,
+				8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */,
+				8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */,
+				8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -1136,14 +1180,14 @@
 		8EAB5F6A101B205C00DDA881 /* game */ = {
 			isa = PBXGroup;
 			children = (
-				8EAB5F6B101B205C00DDA881 /* KarakuriGame.h */,
-				8EAB5F6C101B205C00DDA881 /* KarakuriGame.mm */,
-				8EAB5F6D101B205C00DDA881 /* KarakuriController.h */,
-				8EAB5F6E101B205C00DDA881 /* KarakuriController.mm */,
-				8EAB5F6F101B205C00DDA881 /* KarakuriWorld.h */,
-				8EAB5F70101B205C00DDA881 /* KarakuriWorld.mm */,
-				8EAB5F71101B205C00DDA881 /* KarakuriWorldManager.h */,
-				8EAB5F72101B205C00DDA881 /* KarakuriWorldManager.mm */,
+				8EAB5F6B101B205C00DDA881 /* KRGame.h */,
+				8EAB5F6C101B205C00DDA881 /* KRGame.mm */,
+				8EAB5F6D101B205C00DDA881 /* KRGameController.h */,
+				8EAB5F6E101B205C00DDA881 /* KRGameController.mm */,
+				8EAB5F71101B205C00DDA881 /* KRWorldManager.h */,
+				8EAB5F72101B205C00DDA881 /* KRWorldManager.mm */,
+				8EAB5F6F101B205C00DDA881 /* KRWorld.h */,
+				8EAB5F70101B205C00DDA881 /* KRWorld.mm */,
 				8EF5B146102B242F004367D1 /* KRFPSDisplay.h */,
 				8EF5B147102B242F004367D1 /* KRFPSDisplay.cpp */,
 			);
@@ -1192,8 +1236,8 @@
 				8EBB1D761034BF7200936E01 /* image_loader */,
 				8E9792681020C00700E3EC7A /* KRFont.h */,
 				8E9792691020C00700E3EC7A /* KRFont.mm */,
-				8EF5BF1D102D744F004367D1 /* KRParticle2D.h */,
-				8EF5BF1E102D744F004367D1 /* KRParticle2D.cpp */,
+				8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */,
+				8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */,
 				8E946906102265240073A4FD /* KRPrimitive2D.h */,
 				8E946907102265240073A4FD /* KRPrimitive2D.cpp */,
 				8EAB5F82101B205C00DDA881 /* KRTexture2D.h */,
@@ -1264,7 +1308,7 @@
 			isa = PBXGroup;
 			children = (
 				8EF0565410470BE900CD7212 /* KRControlManager.h */,
-				8EF0565510470BE900CD7212 /* KRControlManager.cpp */,
+				8EF0565510470BE900CD7212 /* KRControlManager.mm */,
 				8EF0565E10470BF600CD7212 /* KRControl.h */,
 				8EF0565F10470BF600CD7212 /* KRControl.cpp */,
 				8EF0566810470C1300CD7212 /* KRButton.h */,
@@ -1289,16 +1333,16 @@
 				8E4050571029C9A400615B74 /* Karakuri.h in Headers */,
 				8E4050581029C9A400615B74 /* KarakuriLibrary.h in Headers */,
 				8E4050591029C9A400615B74 /* Karakuri_Prefix.pch in Headers */,
-				8E40505A1029C9A400615B74 /* Karakuri_Defines.h in Headers */,
-				8E40505B1029C9A400615B74 /* Karakuri_Types.h in Headers */,
+				8E40505A1029C9A400615B74 /* KarakuriDefines.h in Headers */,
+				8E40505B1029C9A400615B74 /* KarakuriTypes.h in Headers */,
 				8E40505C1029C9A400615B74 /* KarakuriException.h in Headers */,
 				8E40505D1029C9A400615B74 /* KarakuriString.h in Headers */,
 				8E40505E1029C9A400615B74 /* KarakuriGLContext.h in Headers */,
 				8E40505F1029C9A400615B74 /* KarakuriFunctions.h in Headers */,
-				8E4050601029C9A400615B74 /* KarakuriGame.h in Headers */,
-				8E4050611029C9A400615B74 /* KarakuriController.h in Headers */,
-				8E4050621029C9A400615B74 /* KarakuriWorld.h in Headers */,
-				8E4050631029C9A400615B74 /* KarakuriWorldManager.h in Headers */,
+				8E4050601029C9A400615B74 /* KRGame.h in Headers */,
+				8E4050611029C9A400615B74 /* KRGameController.h in Headers */,
+				8E4050621029C9A400615B74 /* KRWorld.h in Headers */,
+				8E4050631029C9A400615B74 /* KRWorldManager.h in Headers */,
 				8E4050641029C9A400615B74 /* KarakuriLibraryConnector.h in Headers */,
 				8E4050651029C9A400615B74 /* KarakuriLibraryConnectorBase.h in Headers */,
 				8E4050661029C9A400615B74 /* KRSaveBox.h in Headers */,
@@ -1317,12 +1361,12 @@
 				8E4050731029C9A400615B74 /* KRTextReader.h in Headers */,
 				8E4050741029C9A400615B74 /* KRFont.h in Headers */,
 				8E4050751029C9A400615B74 /* KRPrimitive2D.h in Headers */,
-				8E4050761029C9A400615B74 /* Karakuri_Globals.h in Headers */,
+				8E4050761029C9A400615B74 /* KarakuriGlobals.h in Headers */,
 				8E4050771029C9A400615B74 /* KRRandom.h in Headers */,
 				8E4051EE1029DE2700615B74 /* KarakuriEmulatorBackView.h in Headers */,
 				8E4055091029F15D00615B74 /* KarakuriAccSlider.h in Headers */,
 				8EF5B148102B242F004367D1 /* KRFPSDisplay.h in Headers */,
-				8EF5BF1F102D744F004367D1 /* KRParticle2D.h in Headers */,
+				8EF5BF1F102D744F004367D1 /* KRParticle2DSystem.h in Headers */,
 				8E60178A1031DCE70009C1F4 /* prime.h in Headers */,
 				8E60178B1031DCE70009C1F4 /* cpVect.h in Headers */,
 				8E60178D1031DCE70009C1F4 /* cpSpaceHash.h in Headers */,
@@ -1367,6 +1411,9 @@
 				8EF0567E10470C6700CD7212 /* KRSlider.h in Headers */,
 				8EF05DC81048887400CD7212 /* KRLabel.h in Headers */,
 				8E75FE3A105288CE0012DAD3 /* KRBundle.h in Headers */,
+				8EFCEAA410F9904500E9598B /* KarakuriDebug.h in Headers */,
+				8EFCEADB10F9979900E9598B /* KRMemoryAllocator.h in Headers */,
+				8E537E9310FAA924003C76D0 /* KRAnime2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1377,16 +1424,16 @@
 				8EAB5F2F101B1FD100DDA881 /* Karakuri.h in Headers */,
 				8EAB5F5B101B200000DDA881 /* KarakuriLibrary.h in Headers */,
 				8EAB5F5C101B200000DDA881 /* Karakuri_Prefix.pch in Headers */,
-				8EAB5F5D101B200000DDA881 /* Karakuri_Defines.h in Headers */,
-				8EAB5F5E101B200000DDA881 /* Karakuri_Types.h in Headers */,
+				8EAB5F5D101B200000DDA881 /* KarakuriDefines.h in Headers */,
+				8EAB5F5E101B200000DDA881 /* KarakuriTypes.h in Headers */,
 				8EAB5F60101B200000DDA881 /* KarakuriException.h in Headers */,
 				8EAB5F62101B200000DDA881 /* KarakuriString.h in Headers */,
 				8EAB5F64101B200000DDA881 /* KarakuriGLContext.h in Headers */,
 				8EAB5F66101B200000DDA881 /* KarakuriFunctions.h in Headers */,
-				8EAB5FC4101B205C00DDA881 /* KarakuriGame.h in Headers */,
-				8EAB5FC6101B205C00DDA881 /* KarakuriController.h in Headers */,
-				8EAB5FC8101B205C00DDA881 /* KarakuriWorld.h in Headers */,
-				8EAB5FCA101B205C00DDA881 /* KarakuriWorldManager.h in Headers */,
+				8EAB5FC4101B205C00DDA881 /* KRGame.h in Headers */,
+				8EAB5FC6101B205C00DDA881 /* KRGameController.h in Headers */,
+				8EAB5FC8101B205C00DDA881 /* KRWorld.h in Headers */,
+				8EAB5FCA101B205C00DDA881 /* KRWorldManager.h in Headers */,
 				8EAB5FCC101B205C00DDA881 /* KarakuriLibraryConnector.h in Headers */,
 				8EAB5FCD101B205C00DDA881 /* KarakuriLibraryConnectorBase.h in Headers */,
 				8EAB5FCF101B205C00DDA881 /* KRSaveBox.h in Headers */,
@@ -1404,10 +1451,10 @@
 				8E1B9390101F9E7500D643AA /* KRTextReader.h in Headers */,
 				8E97926E1020C00700E3EC7A /* KRFont.h in Headers */,
 				8E946908102265240073A4FD /* KRPrimitive2D.h in Headers */,
-				8E2A1AFB1025A1E700B5DD4C /* Karakuri_Globals.h in Headers */,
+				8E2A1AFB1025A1E700B5DD4C /* KarakuriGlobals.h in Headers */,
 				8EBE813B1028988900F77A39 /* KRRandom.h in Headers */,
 				8EF5B14C102B242F004367D1 /* KRFPSDisplay.h in Headers */,
-				8EF5BF23102D744F004367D1 /* KRParticle2D.h in Headers */,
+				8EF5BF23102D744F004367D1 /* KRParticle2DSystem.h in Headers */,
 				8E6017F21031DCE70009C1F4 /* prime.h in Headers */,
 				8E6017F31031DCE70009C1F4 /* cpVect.h in Headers */,
 				8E6017F51031DCE70009C1F4 /* cpSpaceHash.h in Headers */,
@@ -1451,6 +1498,9 @@
 				8EF0567A10470C6000CD7212 /* KRSwitch.h in Headers */,
 				8EF0568410470C6700CD7212 /* KRSlider.h in Headers */,
 				8EF05DCE1048887400CD7212 /* KRLabel.h in Headers */,
+				8EFCEAAA10F9904500E9598B /* KarakuriDebug.h in Headers */,
+				8EFCEAE110F9979900E9598B /* KRMemoryAllocator.h in Headers */,
+				8E537E8F10FAA924003C76D0 /* KRAnime2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1461,16 +1511,16 @@
 				8EAB5F2E101B1FD100DDA881 /* Karakuri.h in Headers */,
 				8EAB5F4E101B200000DDA881 /* KarakuriLibrary.h in Headers */,
 				8EAB5F4F101B200000DDA881 /* Karakuri_Prefix.pch in Headers */,
-				8EAB5F50101B200000DDA881 /* Karakuri_Defines.h in Headers */,
-				8EAB5F51101B200000DDA881 /* Karakuri_Types.h in Headers */,
+				8EAB5F50101B200000DDA881 /* KarakuriDefines.h in Headers */,
+				8EAB5F51101B200000DDA881 /* KarakuriTypes.h in Headers */,
 				8EAB5F53101B200000DDA881 /* KarakuriException.h in Headers */,
 				8EAB5F55101B200000DDA881 /* KarakuriString.h in Headers */,
 				8EAB5F57101B200000DDA881 /* KarakuriGLContext.h in Headers */,
 				8EAB5F59101B200000DDA881 /* KarakuriFunctions.h in Headers */,
-				8EAB5FA8101B205C00DDA881 /* KarakuriGame.h in Headers */,
-				8EAB5FAA101B205C00DDA881 /* KarakuriController.h in Headers */,
-				8EAB5FAC101B205C00DDA881 /* KarakuriWorld.h in Headers */,
-				8EAB5FAE101B205C00DDA881 /* KarakuriWorldManager.h in Headers */,
+				8EAB5FA8101B205C00DDA881 /* KRGame.h in Headers */,
+				8EAB5FAA101B205C00DDA881 /* KRGameController.h in Headers */,
+				8EAB5FAC101B205C00DDA881 /* KRWorld.h in Headers */,
+				8EAB5FAE101B205C00DDA881 /* KRWorldManager.h in Headers */,
 				8EAB5FB0101B205C00DDA881 /* KarakuriLibraryConnector.h in Headers */,
 				8EAB5FB1101B205C00DDA881 /* KarakuriLibraryConnectorBase.h in Headers */,
 				8EAB5FB3101B205C00DDA881 /* KRSaveBox.h in Headers */,
@@ -1488,10 +1538,10 @@
 				8E1B938C101F9E7500D643AA /* KRTextReader.h in Headers */,
 				8E97926A1020C00700E3EC7A /* KRFont.h in Headers */,
 				8E94690C102265240073A4FD /* KRPrimitive2D.h in Headers */,
-				8E2A1AFD1025A1E700B5DD4C /* Karakuri_Globals.h in Headers */,
+				8E2A1AFD1025A1E700B5DD4C /* KarakuriGlobals.h in Headers */,
 				8EBE81391028988900F77A39 /* KRRandom.h in Headers */,
 				8EF5B14E102B242F004367D1 /* KRFPSDisplay.h in Headers */,
-				8EF5BF25102D744F004367D1 /* KRParticle2D.h in Headers */,
+				8EF5BF25102D744F004367D1 /* KRParticle2DSystem.h in Headers */,
 				8E6018261031DCE70009C1F4 /* prime.h in Headers */,
 				8E6018271031DCE70009C1F4 /* cpVect.h in Headers */,
 				8E6018291031DCE70009C1F4 /* cpSpaceHash.h in Headers */,
@@ -1535,6 +1585,9 @@
 				8EF0567810470C6000CD7212 /* KRSwitch.h in Headers */,
 				8EF0568210470C6700CD7212 /* KRSlider.h in Headers */,
 				8EF05DCC1048887400CD7212 /* KRLabel.h in Headers */,
+				8EFCEAA810F9904500E9598B /* KarakuriDebug.h in Headers */,
+				8EFCEADF10F9979900E9598B /* KRMemoryAllocator.h in Headers */,
+				8E537E9110FAA924003C76D0 /* KRAnime2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1545,16 +1598,16 @@
 				8EAB5F2D101B1FD100DDA881 /* Karakuri.h in Headers */,
 				8EAB5F41101B200000DDA881 /* KarakuriLibrary.h in Headers */,
 				8EAB5F42101B200000DDA881 /* Karakuri_Prefix.pch in Headers */,
-				8EAB5F43101B200000DDA881 /* Karakuri_Defines.h in Headers */,
-				8EAB5F44101B200000DDA881 /* Karakuri_Types.h in Headers */,
+				8EAB5F43101B200000DDA881 /* KarakuriDefines.h in Headers */,
+				8EAB5F44101B200000DDA881 /* KarakuriTypes.h in Headers */,
 				8EAB5F46101B200000DDA881 /* KarakuriException.h in Headers */,
 				8EAB5F48101B200000DDA881 /* KarakuriString.h in Headers */,
 				8EAB5F4A101B200000DDA881 /* KarakuriGLContext.h in Headers */,
 				8EAB5F4C101B200000DDA881 /* KarakuriFunctions.h in Headers */,
-				8EAB5F8C101B205C00DDA881 /* KarakuriGame.h in Headers */,
-				8EAB5F8E101B205C00DDA881 /* KarakuriController.h in Headers */,
-				8EAB5F90101B205C00DDA881 /* KarakuriWorld.h in Headers */,
-				8EAB5F92101B205C00DDA881 /* KarakuriWorldManager.h in Headers */,
+				8EAB5F8C101B205C00DDA881 /* KRGame.h in Headers */,
+				8EAB5F8E101B205C00DDA881 /* KRGameController.h in Headers */,
+				8EAB5F90101B205C00DDA881 /* KRWorld.h in Headers */,
+				8EAB5F92101B205C00DDA881 /* KRWorldManager.h in Headers */,
 				8EAB5F94101B205C00DDA881 /* KarakuriLibraryConnector.h in Headers */,
 				8EAB5F95101B205C00DDA881 /* KarakuriLibraryConnectorBase.h in Headers */,
 				8EAB5F97101B205C00DDA881 /* KRSaveBox.h in Headers */,
@@ -1573,10 +1626,10 @@
 				8E1B938E101F9E7500D643AA /* KRTextReader.h in Headers */,
 				8E97926C1020C00700E3EC7A /* KRFont.h in Headers */,
 				8E94690A102265240073A4FD /* KRPrimitive2D.h in Headers */,
-				8E2A1AF91025A1E700B5DD4C /* Karakuri_Globals.h in Headers */,
+				8E2A1AF91025A1E700B5DD4C /* KarakuriGlobals.h in Headers */,
 				8EBE813D1028988900F77A39 /* KRRandom.h in Headers */,
 				8EF5B14A102B242F004367D1 /* KRFPSDisplay.h in Headers */,
-				8EF5BF21102D744F004367D1 /* KRParticle2D.h in Headers */,
+				8EF5BF21102D744F004367D1 /* KRParticle2DSystem.h in Headers */,
 				8E6017BE1031DCE70009C1F4 /* prime.h in Headers */,
 				8E6017BF1031DCE70009C1F4 /* cpVect.h in Headers */,
 				8E6017C11031DCE70009C1F4 /* cpSpaceHash.h in Headers */,
@@ -1621,6 +1674,9 @@
 				8EF0568010470C6700CD7212 /* KRSlider.h in Headers */,
 				8EF05DCA1048887400CD7212 /* KRLabel.h in Headers */,
 				8E75FE38105288CE0012DAD3 /* KRBundle.h in Headers */,
+				8EFCEAA610F9904500E9598B /* KarakuriDebug.h in Headers */,
+				8EFCEADD10F9979900E9598B /* KRMemoryAllocator.h in Headers */,
+				8E537E8D10FAA924003C76D0 /* KRAnime2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1780,15 +1836,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E4050791029C9A400615B74 /* Karakuri_Types.cpp in Sources */,
+				8E4050791029C9A400615B74 /* KarakuriTypes.cpp in Sources */,
 				8E40507A1029C9A400615B74 /* KarakuriException.cpp in Sources */,
 				8E40507B1029C9A400615B74 /* KarakuriString.cpp in Sources */,
 				8E40507C1029C9A400615B74 /* main.mm in Sources */,
 				8E40507D1029C9A400615B74 /* KarakuriFunctions.mm in Sources */,
-				8E40507E1029C9A400615B74 /* KarakuriGame.mm in Sources */,
-				8E40507F1029C9A400615B74 /* KarakuriController.mm in Sources */,
-				8E4050801029C9A400615B74 /* KarakuriWorld.mm in Sources */,
-				8E4050811029C9A400615B74 /* KarakuriWorldManager.mm in Sources */,
+				8E40507E1029C9A400615B74 /* KRGame.mm in Sources */,
+				8E40507F1029C9A400615B74 /* KRGameController.mm in Sources */,
+				8E4050801029C9A400615B74 /* KRWorld.mm in Sources */,
+				8E4050811029C9A400615B74 /* KRWorldManager.mm in Sources */,
 				8E4050821029C9A400615B74 /* KarakuriLibraryConnectorBase.mm in Sources */,
 				8E4050831029C9A400615B74 /* KRSaveBox.mm in Sources */,
 				8E4050841029C9A400615B74 /* KRColor.mm in Sources */,
@@ -1806,12 +1862,12 @@
 				8E4050901029C9A400615B74 /* KRTextReader.mm in Sources */,
 				8E4050911029C9A400615B74 /* KRFont.mm in Sources */,
 				8E4050921029C9A400615B74 /* KRPrimitive2D.cpp in Sources */,
-				8E4050931029C9A400615B74 /* Karakuri_Globals.cpp in Sources */,
+				8E4050931029C9A400615B74 /* KarakuriGlobals.cpp in Sources */,
 				8E4050941029C9A400615B74 /* KRRandom.cpp in Sources */,
 				8E4051EF1029DE2700615B74 /* KarakuriEmulatorBackView.mm in Sources */,
 				8E40550A1029F15D00615B74 /* KarakuriAccSlider.m in Sources */,
 				8EF5B149102B242F004367D1 /* KRFPSDisplay.cpp in Sources */,
-				8EF5BF20102D744F004367D1 /* KRParticle2D.cpp in Sources */,
+				8EF5BF20102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */,
 				8E60178C1031DCE70009C1F4 /* cpVect.c in Sources */,
 				8E60178F1031DCE70009C1F4 /* cpArray.c in Sources */,
 				8E6017901031DCE70009C1F4 /* cpSpaceHash.c in Sources */,
@@ -1845,13 +1901,16 @@
 				8E87B6EE103A04F80010745C /* KarakuriNetwork.mm in Sources */,
 				8E422E47103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E42339B103BE99D00ED3880 /* KRPeerPicker.mm in Sources */,
-				8EF0565710470BE900CD7212 /* KRControlManager.cpp in Sources */,
+				8EF0565710470BE900CD7212 /* KRControlManager.mm in Sources */,
 				8EF0566110470BF600CD7212 /* KRControl.cpp in Sources */,
 				8EF0566B10470C1300CD7212 /* KRButton.cpp in Sources */,
 				8EF0567510470C6000CD7212 /* KRSwitch.cpp in Sources */,
 				8EF0567F10470C6700CD7212 /* KRSlider.cpp in Sources */,
 				8EF05DC91048887400CD7212 /* KRLabel.cpp in Sources */,
 				8E75FE3B105288CE0012DAD3 /* KRBundle.m in Sources */,
+				8EFCEAA510F9904500E9598B /* KarakuriDebug.mm in Sources */,
+				8EFCEADC10F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
+				8E537E9410FAA924003C76D0 /* KRAnime2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1859,15 +1918,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EAB5F5F101B200000DDA881 /* Karakuri_Types.cpp in Sources */,
+				8EAB5F5F101B200000DDA881 /* KarakuriTypes.cpp in Sources */,
 				8EAB5F61101B200000DDA881 /* KarakuriException.cpp in Sources */,
 				8EAB5F63101B200000DDA881 /* KarakuriString.cpp in Sources */,
 				8EAB5F65101B200000DDA881 /* main.mm in Sources */,
 				8EAB5F67101B200000DDA881 /* KarakuriFunctions.mm in Sources */,
-				8EAB5FC5101B205C00DDA881 /* KarakuriGame.mm in Sources */,
-				8EAB5FC7101B205C00DDA881 /* KarakuriController.mm in Sources */,
-				8EAB5FC9101B205C00DDA881 /* KarakuriWorld.mm in Sources */,
-				8EAB5FCB101B205C00DDA881 /* KarakuriWorldManager.mm in Sources */,
+				8EAB5FC5101B205C00DDA881 /* KRGame.mm in Sources */,
+				8EAB5FC7101B205C00DDA881 /* KRGameController.mm in Sources */,
+				8EAB5FC9101B205C00DDA881 /* KRWorld.mm in Sources */,
+				8EAB5FCB101B205C00DDA881 /* KRWorldManager.mm in Sources */,
 				8EAB5FCE101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm in Sources */,
 				8EAB5FD0101B205C00DDA881 /* KRSaveBox.mm in Sources */,
 				8EAB5FD2101B205C00DDA881 /* KRColor.mm in Sources */,
@@ -1884,10 +1943,10 @@
 				8E1B9391101F9E7500D643AA /* KRTextReader.mm in Sources */,
 				8E97926F1020C00700E3EC7A /* KRFont.mm in Sources */,
 				8E946909102265240073A4FD /* KRPrimitive2D.cpp in Sources */,
-				8E2A1AFC1025A1E700B5DD4C /* Karakuri_Globals.cpp in Sources */,
+				8E2A1AFC1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */,
 				8EBE813C1028988900F77A39 /* KRRandom.cpp in Sources */,
 				8EF5B14D102B242F004367D1 /* KRFPSDisplay.cpp in Sources */,
-				8EF5BF24102D744F004367D1 /* KRParticle2D.cpp in Sources */,
+				8EF5BF24102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */,
 				8E6017F41031DCE70009C1F4 /* cpVect.c in Sources */,
 				8E6017F71031DCE70009C1F4 /* cpArray.c in Sources */,
 				8E6017F81031DCE70009C1F4 /* cpSpaceHash.c in Sources */,
@@ -1920,12 +1979,15 @@
 				8E87B6EA103A04F80010745C /* KarakuriNetwork.mm in Sources */,
 				8E422E49103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E423B51103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */,
-				8EF0565D10470BE900CD7212 /* KRControlManager.cpp in Sources */,
+				8EF0565D10470BE900CD7212 /* KRControlManager.mm in Sources */,
 				8EF0566710470BF600CD7212 /* KRControl.cpp in Sources */,
 				8EF0567110470C1300CD7212 /* KRButton.cpp in Sources */,
 				8EF0567B10470C6000CD7212 /* KRSwitch.cpp in Sources */,
 				8EF0568510470C6700CD7212 /* KRSlider.cpp in Sources */,
 				8EF05DCF1048887400CD7212 /* KRLabel.cpp in Sources */,
+				8EFCEAAB10F9904500E9598B /* KarakuriDebug.mm in Sources */,
+				8EFCEAE210F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
+				8E537E9010FAA924003C76D0 /* KRAnime2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1933,15 +1995,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EAB5F52101B200000DDA881 /* Karakuri_Types.cpp in Sources */,
+				8EAB5F52101B200000DDA881 /* KarakuriTypes.cpp in Sources */,
 				8EAB5F54101B200000DDA881 /* KarakuriException.cpp in Sources */,
 				8EAB5F56101B200000DDA881 /* KarakuriString.cpp in Sources */,
 				8EAB5F58101B200000DDA881 /* main.mm in Sources */,
 				8EAB5F5A101B200000DDA881 /* KarakuriFunctions.mm in Sources */,
-				8EAB5FA9101B205C00DDA881 /* KarakuriGame.mm in Sources */,
-				8EAB5FAB101B205C00DDA881 /* KarakuriController.mm in Sources */,
-				8EAB5FAD101B205C00DDA881 /* KarakuriWorld.mm in Sources */,
-				8EAB5FAF101B205C00DDA881 /* KarakuriWorldManager.mm in Sources */,
+				8EAB5FA9101B205C00DDA881 /* KRGame.mm in Sources */,
+				8EAB5FAB101B205C00DDA881 /* KRGameController.mm in Sources */,
+				8EAB5FAD101B205C00DDA881 /* KRWorld.mm in Sources */,
+				8EAB5FAF101B205C00DDA881 /* KRWorldManager.mm in Sources */,
 				8EAB5FB2101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm in Sources */,
 				8EAB5FB4101B205C00DDA881 /* KRSaveBox.mm in Sources */,
 				8EAB5FB6101B205C00DDA881 /* KRColor.mm in Sources */,
@@ -1958,10 +2020,10 @@
 				8E1B938D101F9E7500D643AA /* KRTextReader.mm in Sources */,
 				8E97926B1020C00700E3EC7A /* KRFont.mm in Sources */,
 				8E94690D102265240073A4FD /* KRPrimitive2D.cpp in Sources */,
-				8E2A1AFE1025A1E700B5DD4C /* Karakuri_Globals.cpp in Sources */,
+				8E2A1AFE1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */,
 				8EBE813A1028988900F77A39 /* KRRandom.cpp in Sources */,
 				8EF5B14F102B242F004367D1 /* KRFPSDisplay.cpp in Sources */,
-				8EF5BF26102D744F004367D1 /* KRParticle2D.cpp in Sources */,
+				8EF5BF26102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */,
 				8E6018281031DCE70009C1F4 /* cpVect.c in Sources */,
 				8E60182B1031DCE70009C1F4 /* cpArray.c in Sources */,
 				8E60182C1031DCE70009C1F4 /* cpSpaceHash.c in Sources */,
@@ -1994,12 +2056,15 @@
 				8E87B6E8103A04F80010745C /* KarakuriNetwork.mm in Sources */,
 				8E422E45103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E423B53103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */,
-				8EF0565B10470BE900CD7212 /* KRControlManager.cpp in Sources */,
+				8EF0565B10470BE900CD7212 /* KRControlManager.mm in Sources */,
 				8EF0566510470BF600CD7212 /* KRControl.cpp in Sources */,
 				8EF0566F10470C1300CD7212 /* KRButton.cpp in Sources */,
 				8EF0567910470C6000CD7212 /* KRSwitch.cpp in Sources */,
 				8EF0568310470C6700CD7212 /* KRSlider.cpp in Sources */,
 				8EF05DCD1048887400CD7212 /* KRLabel.cpp in Sources */,
+				8EFCEAA910F9904500E9598B /* KarakuriDebug.mm in Sources */,
+				8EFCEAE010F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
+				8E537E9210FAA924003C76D0 /* KRAnime2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2007,15 +2072,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EAB5F45101B200000DDA881 /* Karakuri_Types.cpp in Sources */,
+				8EAB5F45101B200000DDA881 /* KarakuriTypes.cpp in Sources */,
 				8EAB5F47101B200000DDA881 /* KarakuriException.cpp in Sources */,
 				8EAB5F49101B200000DDA881 /* KarakuriString.cpp in Sources */,
 				8EAB5F4B101B200000DDA881 /* main.mm in Sources */,
 				8EAB5F4D101B200000DDA881 /* KarakuriFunctions.mm in Sources */,
-				8EAB5F8D101B205C00DDA881 /* KarakuriGame.mm in Sources */,
-				8EAB5F8F101B205C00DDA881 /* KarakuriController.mm in Sources */,
-				8EAB5F91101B205C00DDA881 /* KarakuriWorld.mm in Sources */,
-				8EAB5F93101B205C00DDA881 /* KarakuriWorldManager.mm in Sources */,
+				8EAB5F8D101B205C00DDA881 /* KRGame.mm in Sources */,
+				8EAB5F8F101B205C00DDA881 /* KRGameController.mm in Sources */,
+				8EAB5F91101B205C00DDA881 /* KRWorld.mm in Sources */,
+				8EAB5F93101B205C00DDA881 /* KRWorldManager.mm in Sources */,
 				8EAB5F96101B205C00DDA881 /* KarakuriLibraryConnectorBase.mm in Sources */,
 				8EAB5F98101B205C00DDA881 /* KRSaveBox.mm in Sources */,
 				8EAB5F9A101B205C00DDA881 /* KRColor.mm in Sources */,
@@ -2033,10 +2098,10 @@
 				8E1B938F101F9E7500D643AA /* KRTextReader.mm in Sources */,
 				8E97926D1020C00700E3EC7A /* KRFont.mm in Sources */,
 				8E94690B102265240073A4FD /* KRPrimitive2D.cpp in Sources */,
-				8E2A1AFA1025A1E700B5DD4C /* Karakuri_Globals.cpp in Sources */,
+				8E2A1AFA1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */,
 				8EBE813E1028988900F77A39 /* KRRandom.cpp in Sources */,
 				8EF5B14B102B242F004367D1 /* KRFPSDisplay.cpp in Sources */,
-				8EF5BF22102D744F004367D1 /* KRParticle2D.cpp in Sources */,
+				8EF5BF22102D744F004367D1 /* KRParticle2DSystem.cpp in Sources */,
 				8E6017C01031DCE70009C1F4 /* cpVect.c in Sources */,
 				8E6017C31031DCE70009C1F4 /* cpArray.c in Sources */,
 				8E6017C41031DCE70009C1F4 /* cpSpaceHash.c in Sources */,
@@ -2069,13 +2134,16 @@
 				8E87B6EC103A04F80010745C /* KarakuriNetwork.mm in Sources */,
 				8E422E4B103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E423399103BE99D00ED3880 /* KRPeerPicker.mm in Sources */,
-				8EF0565910470BE900CD7212 /* KRControlManager.cpp in Sources */,
+				8EF0565910470BE900CD7212 /* KRControlManager.mm in Sources */,
 				8EF0566310470BF600CD7212 /* KRControl.cpp in Sources */,
 				8EF0566D10470C1300CD7212 /* KRButton.cpp in Sources */,
 				8EF0567710470C6000CD7212 /* KRSwitch.cpp in Sources */,
 				8EF0568110470C6700CD7212 /* KRSlider.cpp in Sources */,
 				8EF05DCB1048887400CD7212 /* KRLabel.cpp in Sources */,
 				8E75FE39105288CE0012DAD3 /* KRBundle.m in Sources */,
+				8EFCEAA710F9904500E9598B /* KarakuriDebug.mm in Sources */,
+				8EFCEADE10F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
+				8E537E8E10FAA924003C76D0 /* KRAnime2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

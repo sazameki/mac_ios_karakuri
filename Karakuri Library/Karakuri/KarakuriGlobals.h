@@ -1,5 +1,5 @@
 /*!
-    @file   Karakuri_Globals.h
+    @file   KarakuriGlobals.h
     @author numata
     @date   09/08/02
     

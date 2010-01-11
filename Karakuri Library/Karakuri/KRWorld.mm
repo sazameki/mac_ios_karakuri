@@ -1,16 +1,16 @@
 //
-//  KarakuriWorld.cpp
+//  KRWorld.cpp
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/23.
 //  Copyright 2009 Satoshi Numata. All rights reserved.
 //
 
-#include <Karakuri/KarakuriWorld.h>
+#include <Karakuri/KRWorld.h>
 
 #include <Karakuri/KRControlManager.h>
 
-#import "KarakuriController.h"
+#import "KRGameController.h"
 #import "KRTextReader.h"
 
 
@@ -21,6 +21,7 @@ unsigned gInputLogFrameCounter = 0;
 KRWorld::KRWorld()
     : mIsLoadingWorld(false)
 {
+    // Do nothing
 }
 
 #pragma mark -
@@ -38,7 +39,8 @@ void KRWorld::startBecameActive()
     gInputLogHandle = nil;
     gInputLogFrameCounter = 0;
 
-    mIsControlProcessEnabled = true;
+    mIsControlProcessDisabled = false;
+    mIsManualControlManagementEnabled = false;
 
     mControlManager = new KRControlManager();
 
@@ -82,8 +84,8 @@ void KRWorld::startUpdateModel(KRInput *input)
     }
     
     mHasProcessedControl = false;
-    if (mIsControlProcessEnabled && mControlManager->updateControls(input)) {
-        mHasProcessedControl = true;
+    if (!mIsControlProcessDisabled && !mIsManualControlManagementEnabled) {
+        processControls(input);
     }
 
     updateModel(input);
@@ -95,7 +97,9 @@ void KRWorld::startDrawView(KRGraphics *g)
 {
     drawView(g);
     
-    mControlManager->drawAllControls(g);
+    if (!mIsManualControlManagementEnabled) {
+        drawControls(g);
+    }
 }
 
 
@@ -114,10 +118,10 @@ void KRWorld::saveForEmergency(KRSaveBox *saveBox)
 
 #pragma mark -
 
-void KRWorld::addControl(KRControl *aControl)
+void KRWorld::addControl(KRControl *aControl, int groupID)
 {
     aControl->setWorld(this);
-    mControlManager->addControl(aControl);
+    mControlManager->addControl(aControl, groupID);
 }
 
 void KRWorld::removeControl(KRControl *aControl)
@@ -131,14 +135,32 @@ bool KRWorld::hasProcessedControl() const
     return mHasProcessedControl;
 }
 
-void KRWorld::startControlProcess()
+void KRWorld::disableControlProcess(bool flag)
 {
-    mIsControlProcessEnabled = true;
+    mIsControlProcessDisabled = flag;
 }
 
-void KRWorld::stopControlProcess()
+bool KRWorld::processControls(KRInput *input, int groupID)
 {
-    mIsControlProcessEnabled = false;
+    if (mControlManager->updateControls(input, groupID)) {
+        mHasProcessedControl = true;
+    }
+    return mHasProcessedControl;
+}
+
+void KRWorld::enableManualControlManagement(bool flag)
+{
+    mIsManualControlManagementEnabled = flag;
+}
+
+bool KRWorld::isManualControlManagementEnabled() const
+{
+    return mIsManualControlManagementEnabled;
+}
+
+void KRWorld::drawControls(KRGraphics *g, int groupID)
+{
+    mControlManager->drawAllControls(g, groupID);
 }
 
 void KRWorld::buttonPressed(KRButton *aButton)

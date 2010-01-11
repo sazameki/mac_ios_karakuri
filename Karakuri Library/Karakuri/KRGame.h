@@ -1,5 +1,5 @@
 //
-//  KarakuriGame.h
+//  KRGame.h
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/17.
@@ -12,7 +12,10 @@
 
 #include <Karakuri/KRGraphics.h>
 #include <Karakuri/KRInput.h>
-#include <Karakuri/KarakuriWorldManager.h>
+#include <Karakuri/KRWorldManager.h>
+
+
+class KRControlManager;
 
 
 /*!
@@ -51,14 +54,15 @@ class KRGame : public KRObject {
     std::string     mGameIDForNetwork;
     std::string     mNetworkStartWorldName;
     
-    KarakuriWorldManager    *mWorldManager;
+    KRWorldManager    *mWorldManager;
 
-    
+
 #pragma mark -
 #pragma mark Constructor
 
 public:
     KRGame();
+    ~KRGame();
     
 public:
     /*!
@@ -242,7 +246,8 @@ public:
     
 public:
     void            saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    
+
+
 #pragma mark -
 #pragma mark Debug Support
 

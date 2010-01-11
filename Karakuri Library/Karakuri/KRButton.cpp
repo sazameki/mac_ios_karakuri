@@ -92,7 +92,7 @@ bool KRButton::update(KRInput *input)
 
 void KRButton::draw(KRGraphics *g)
 {
-    double alpha = (mIsEnabled? 1.0: 0.4);
+    double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
     
     if (mTextureNormal == NULL && mTextureNameNormal.length() > 0 && mTextureNameHighlighted.length() > 0) {
         mTextureNormal = new KRTexture2D(mTextureNameNormal);
@@ -105,7 +105,9 @@ void KRButton::draw(KRGraphics *g)
         KRPrimitive2D::fillQuad(mFrame, drawColor);
     } else {
         KRTexture2D *tex = mIsSelected? mTextureHighlighted: mTextureNormal;
+        tex->drawInRect(mFrame, alpha);
         
+        /*
         // Body
         tex->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, mFrame.width-mTextureEdgeSize*2, mFrame.height),
                         KRRect2D(mTextureEdgeSize, 0, 1, tex->getHeight()), alpha);
@@ -116,6 +118,7 @@ void KRButton::draw(KRGraphics *g)
         // Right Edge
         tex->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
                          KRRect2D(tex->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, tex->getHeight()), alpha);
+         */
     }
     
     if (mIsSelected) {

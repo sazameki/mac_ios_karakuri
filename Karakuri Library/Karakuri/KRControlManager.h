@@ -25,11 +25,14 @@ public:
 	virtual ~KRControlManager();
 
 public:
-    void    addControl(KRControl *aControl);
+    void    addControl(KRControl *aControl, int groupID);
+    void    removeAllControls();
     void    removeControl(KRControl *aControl);
 
-    bool    updateControls(KRInput *input);
-    void    drawAllControls(KRGraphics *g);
+    bool    updateControls(KRInput *input, int groupID);
+    void    drawAllControls(KRGraphics *g, int groupID);
+    
+    void    scrollUpAllDebugLabels();   KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 
 };
 

@@ -7,7 +7,7 @@
 //
 
 #import "KarakuriEmulatorBackView.h"
-#import <Karakuri/KarakuriGame.h>
+#import <Karakuri/KRGame.h>
 
 
 @implementation KarakuriEmulatorBackView

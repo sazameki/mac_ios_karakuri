@@ -1,10 +1,10 @@
 /*!
- @file   KRParticle2D.cpp
- @author numata
- @date   09/08/07
+    @file   KRParticle2DSystem.cpp
+    @author numata
+    @date   09/08/07
  */
 
-#include "KRParticle2D.h"
+#include "KRParticle2DSystem.h"
 
 
 #if KR_PARTICLE2D_USE_POINT_SPRITE
@@ -14,17 +14,18 @@ static GLenum sPointSpriteCoordReplaceName = 0;
 
 
 /*!
-    @method KRParticle2D
+    @method _KRParticle2D
     Constructor
  */
-KRParticle2D::KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
-                           double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize)
+_KRParticle2D::_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
+                             double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize)
     : mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mColor(color), mSize(size),
       mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaSize(deltaSize)
 {
+    // Do nothing
 }
 
-bool KRParticle2D::step()
+bool _KRParticle2D::step()
 {
     if (mLife == 0) {  
         return false;
@@ -35,7 +36,7 @@ bool KRParticle2D::step()
     return true;
 }
 
-std::string KRParticle2D::to_s() const
+std::string _KRParticle2D::to_s() const
 {
     return "<particle2>()";
 }
@@ -93,12 +94,12 @@ void KRParticle2DSystem::init()
     mBlendMode = KRBlendModeAddition;
     
     mParticleCount = 256;
-    mGenerateCount = 0;
+    mGenerateCount = 5;
     
     mLife = 60;
     
     mActiveGenCount = 0;
-    for (int i = 0; i < KRParticle2DGenMaxCount; i++) {
+    for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
         mGenInfos[i].count = 0;
     }
 }
@@ -138,7 +139,7 @@ KRParticle2DSystem::KRParticle2DSystem(KRTexture2D *texture, bool doLoop)
  */
 KRParticle2DSystem::~KRParticle2DSystem()
 {
-    for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
+    for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
         delete *it;
     }
     mParticles.clear();
@@ -328,10 +329,10 @@ void KRParticle2DSystem::setGravity(const KRVector2D& a)
 
 void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
 {
-    if (mActiveGenCount >= KRParticle2DGenMaxCount) {
+    if (mActiveGenCount >= _KRParticle2DGenMaxCount) {
         return;
     }
-    for (int i = 0; i < KRParticle2DGenMaxCount; i++) {
+    for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
         if (mGenInfos[i].count == 0) {
             mGenInfos[i].count = mGenerateCount;
             mGenInfos[i].centerPos = pos;
@@ -356,7 +357,7 @@ void KRParticle2DSystem::step()
                 double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
     #endif
                 
-                KRParticle2D *particle = new KRParticle2D(mLife, mStartPos, theV, mGravity, mColor, theSize,
+                _KRParticle2D *particle = new _KRParticle2D(mLife, mStartPos, theV, mGravity, mColor, theSize,
                                                           mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize);
                 mParticles.push_back(particle);
                 count++;
@@ -380,7 +381,7 @@ void KRParticle2DSystem::step()
 #else
                     double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
 #endif
-                    KRParticle2D *particle = new KRParticle2D(mLife, mGenInfos[i].centerPos, theV, mGravity, mColor, theSize,
+                    _KRParticle2D *particle = new _KRParticle2D(mLife, mGenInfos[i].centerPos, theV, mGravity, mColor, theSize,
                                                               mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize);
                     mParticles.push_back(particle);
                 }
@@ -398,7 +399,7 @@ void KRParticle2DSystem::step()
     }
     
     // Move all points 
-    for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end();) {
+    for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end();) {
         if ((*it)->step()) {
             it++;
         } else {
@@ -415,6 +416,8 @@ void KRParticle2DSystem::draw()
     // ポイントスプライトを有効化
     glTexEnvi(sPointSpriteName, sPointSpriteCoordReplaceName, GL_TRUE);
     glEnable(sPointSpriteName);
+    
+    KRBlendMode oldBlendMode = gKRGraphicsInst->getBlendMode();
     
     gKRGraphicsInst->setBlendMode(mBlendMode);
     
@@ -451,18 +454,22 @@ void KRParticle2DSystem::draw()
     glVertexPointer(2, GL_FLOAT, 6 * sizeof(GLfloat), data);  
     glColorPointer(4, GL_FLOAT, 6 * sizeof(GLfloat), data + 2);  
     glDrawArrays(GL_POINTS, 0, particleCount);
-    
+
+    gKRGraphicsInst->setBlendMode(oldBlendMode);
+
 #if __DEBUG__
     _KRTextureBatchProcessCount++;
-#endif    
+#endif
 }
 #else // #if KR_PARTICLE2D_USE_POINT_SPRITE
 void KRParticle2DSystem::draw()
 {
+    KRBlendMode oldBlendMode = gKRGraphicsInst->getBlendMode();
+
     gKRGraphicsInst->setBlendMode(mBlendMode);
     
     KRVector2D centerPos = mTexture->getCenterPos();
-    for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
+    for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
         double ratio = (1.0 - (double)((*it)->mLife) / (*it)->mBaseLife);
         double size = KRMax((*it)->mSize + (*it)->mDeltaSize * ratio, 0.0);
         KRColor color;
@@ -472,6 +479,8 @@ void KRParticle2DSystem::draw()
         color.a = KRMax((*it)->mColor.a + (*it)->mDeltaAlpha * ratio, 0.0);
         mTexture->drawInRectC(KRRect2D((*it)->mPos.x-size/2, (*it)->mPos.y-size/2, size, size), color);
     }
+    
+    gKRGraphicsInst->setBlendMode(oldBlendMode);
 }
 #endif  // #if KR_PARTICLE2D_USE_POINT_SPRITE
 

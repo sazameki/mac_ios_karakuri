@@ -9,8 +9,8 @@
 
 #include <Karakuri/KRInput.h>
 
-#include <karakuri/KarakuriGame.h>
-#include <Karakuri/KarakuriWorld.h>
+#include <karakuri/KRGame.h>
+#include <Karakuri/KRWorld.h>
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 #import <Karakuri/macosx/KarakuriWindow.h>

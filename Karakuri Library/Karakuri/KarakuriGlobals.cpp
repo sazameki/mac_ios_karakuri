@@ -1,10 +1,10 @@
 /*!
-    @file   Karakuri_Globals.cpp
+    @file   KarakuriGlobals.cpp
     @author numata
     @date   09/08/02
  */
 
-#include "Karakuri_Globals.h"
+#include "KarakuriGlobals.h"
 
 
 int     _KRMatrixPushCount = 0;

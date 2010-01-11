@@ -1,5 +1,5 @@
 /*
- *  Karakuri_Types.h
+ *  KarakuriTypes.h
  *  Karakuri Prototype
  *
  *  Created by numata on 09/07/18.
@@ -363,6 +363,8 @@ typedef struct KRVector2D : public KRObject {
      */
     bool operator!=(const KRVector2D& vec) const;
     
+    bool operator<(const KRVector2D& vec) const;
+    
     /*!
         @method operator-
      */
@@ -513,6 +515,8 @@ typedef struct KRVector2DInt : public KRObject {
      */
     bool operator!=(const KRVector2DInt& vec) const;
     
+    bool operator<(const KRVector2DInt& vec) const;
+
     /*!
         @method operator-
      */
@@ -660,6 +664,8 @@ typedef struct KRVector3D : public KRObject {
      */
     bool operator!=(const KRVector3D& vec) const;
     
+    bool operator<(const KRVector3D& vec) const;
+
     /*!
         @method operator-
      */
@@ -808,6 +814,8 @@ typedef struct KRVector3DInt : public KRObject {
      */
     bool operator!=(const KRVector3DInt& vec) const;
     
+    bool operator<(const KRVector3DInt& vec) const;
+
     /*!
         @method operator-
      */

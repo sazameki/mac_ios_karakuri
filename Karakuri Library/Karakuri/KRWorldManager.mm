@@ -1,5 +1,5 @@
 /*
- *  KarakuriWorldManager.cpp
+ *  KRWorldManager.cpp
  *  Karakuri Prototype
  *
  *  Created by numata on 09/07/23.
@@ -7,25 +7,25 @@
  *
  */
 
-#include "KarakuriWorldManager.h"
+#include "KRWorldManager.h"
 
-#include "KarakuriGame.h"
-#include "KarakuriWorld.h"
+#include "KRGame.h"
+#include "KRWorld.h"
 
-#import "KarakuriController.h"
-
-
-KarakuriWorldManager *gKRWorldManagerInst = NULL;
+#import "KRGameController.h"
 
 
-KarakuriWorldManager::KarakuriWorldManager()
+KRWorldManager *gKRWorldManagerInst = NULL;
+
+
+KRWorldManager::KRWorldManager()
     : mCurrentWorld(NULL)
 {
     gKRWorldManagerInst = this;
 }
 
 
-KarakuriWorldManager::~KarakuriWorldManager()
+KRWorldManager::~KRWorldManager()
 {
     if (mCurrentWorld != NULL) {
         mCurrentWorld->startResignedActive();
@@ -38,23 +38,23 @@ KarakuriWorldManager::~KarakuriWorldManager()
 	}
 }
 
-KRWorld *KarakuriWorldManager::getCurrentWorld() const
+KRWorld *KRWorldManager::getCurrentWorld() const
 {
     return mCurrentWorld;
 }
 
-void KarakuriWorldManager::registerWorld(const std::string& name, KRWorld *aWorld)
+void KRWorldManager::registerWorld(const std::string& name, KRWorld *aWorld)
 {
     aWorld->setName(name);
     mWorldMap[name] = aWorld;
 }
 
-KRWorld *KarakuriWorldManager::getWorldWithName(const std::string &name)
+KRWorld *KRWorldManager::getWorldWithName(const std::string &name)
 {
     return mWorldMap[name];
 }
 
-KRWorld *KarakuriWorldManager::selectWorldWithName(const std::string &name, bool useLoadingThread)
+KRWorld *KRWorldManager::selectWorldWithName(const std::string &name, bool useLoadingThread)
 {
     KRWorld *world = getWorldWithName(name);
     if (world == NULL) {
@@ -68,7 +68,7 @@ KRWorld *KarakuriWorldManager::selectWorldWithName(const std::string &name, bool
     mCurrentWorld = world;
     
     if (useLoadingThread) {
-        [[KarakuriController sharedController] startChaningWorld:mCurrentWorld];
+        [[KRGameController sharedController] startChaningWorld:mCurrentWorld];
     } else {
         mCurrentWorld->startBecameActive();
     }
@@ -76,7 +76,7 @@ KRWorld *KarakuriWorldManager::selectWorldWithName(const std::string &name, bool
     return world;
 }
 
-std::string KarakuriWorldManager::to_s() const
+std::string KRWorldManager::to_s() const
 {
     return "<wmanager>()";
 }

@@ -69,8 +69,7 @@ public:
         @method fillQuad
         指定された4点を結んでできる四角形を、指定された4色の色で塗り潰します。
      */
-    static void fillQuad(const KRVector2D& p1, const KRVector2D& p2, const KRVector2D& p3, const KRVector2D& p4,
-                         const KRColor& c1, const KRColor& c2, const KRColor& c3, const KRColor& c4);
+    static void fillQuad(const KRVector2D& p1, const KRVector2D& p2, const KRVector2D& p3, const KRVector2D& p4, const KRColor& c1, const KRColor& c2, const KRColor& c3, const KRColor& c4);
     
 };
 

@@ -93,7 +93,7 @@ void KRSlider::draw(KRGraphics *g)
         mBackTexture = new KRTexture2D(mBackTextureName);
     }
     
-    double alpha = (mIsEnabled? 1.0: 0.4);
+    double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
     
     double thumbWidth = 20.0;
 

@@ -8,7 +8,7 @@
 
 #import "KRNetworkBrowser.h"
 #import "KarakuriNetwork.h"
-#import "KarakuriController.h"
+#import "KRGameController.h"
 
 
 @implementation KRNetworkBrowser

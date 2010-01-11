@@ -8,12 +8,14 @@
 
 
 KRControl::KRControl(const KRRect2D& frame)
-    : mWorld(NULL), mFrame(frame), mIsEnabled(true), mIsSelected(false), mIsHidden(false)
+    : mWorld(NULL), mFrame(frame), mIsEnabled(true), mIsSelected(false), mIsHidden(false), mGroupID(0)
 {
+    // Do nothing
 }
 
 KRControl::~KRControl()
 {
+    // Do nothing
 }
 
 bool KRControl::contains(const KRVector2D& pos)
@@ -70,5 +72,21 @@ void KRControl::setWorld(KRWorld *aWorld)
 {
     mWorld = aWorld;
 }
+
+int KRControl::getGroupID() const
+{
+    return mGroupID;
+}
+
+void KRControl::setGroupID(int groupID)
+{
+    mGroupID = groupID;
+}
+
+bool KRControl::_isUpdatableControl() const
+{
+    return true;
+}
+
 
 

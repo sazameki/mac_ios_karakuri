@@ -8,7 +8,7 @@
 
 #import "KarakuriLibrary.h"
 
-#import "KarakuriController.h"
+#import "KRGameController.h"
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 #import "KRBundle.h"
@@ -24,12 +24,12 @@ int main(int argc, char *argv[])
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     [[KRBundle class] poseAsClass:[NSBundle class]];
 
-    KarakuriController *controller = [KarakuriController new];
+    KRGameController *controller = [KRGameController new];
     ret = NSApplicationMain(argc, (const char **)argv);
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    ret = UIApplicationMain(argc, (char **)argv, nil, @"KarakuriController");
+    ret = UIApplicationMain(argc, (char **)argv, nil, @"KRGameController");
 #endif
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU

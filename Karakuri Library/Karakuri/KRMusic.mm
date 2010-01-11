@@ -9,7 +9,7 @@
 
 #include "KRMusic.h"
 
-#import "KarakuriGame.h"
+#import "KRGame.h"
 #import "KarakuriSound.h"
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU

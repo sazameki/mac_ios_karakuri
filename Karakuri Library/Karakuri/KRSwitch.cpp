@@ -72,7 +72,7 @@ void KRSwitch::draw(KRGraphics *g)
         mThumbTexture = new KRTexture2D(mThumbTextureName);
     }
     
-    double alpha = (mIsEnabled? 1.0: 0.4);
+    double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
 
     if (mBackTexture != NULL) {
         double indicatorWidth = mFrame.width - mTextureEdgeSize * 2;

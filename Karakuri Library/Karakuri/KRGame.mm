@@ -1,13 +1,13 @@
 //
-//  KarakuriGame.mm
+//  KRGame.mm
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/17.
 //  Copyright 2009 Satoshi Numata. All rights reserved.
 //
 
-#include "KarakuriGame.h"
-#include "KarakuriWorld.h"
+#include "KRGame.h"
+#include "KRWorld.h"
 
 
 KRGame      *gKRGameInst = NULL;
@@ -25,7 +25,12 @@ KRGame::KRGame()
     
     mWasChangingWorld = false;
     
-    mWorldManager = new KarakuriWorldManager();
+    mWorldManager = new KRWorldManager();
+}
+
+KRGame::~KRGame()
+{
+    // Do nothing
 }
 
 std::string KRGame::getTitle() const
@@ -128,7 +133,7 @@ void KRGame::drawView(KRGraphics *g)
     KRWorld *currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
         currentWorld->startDrawView(g);
-    }
+    }    
 }
 
 void KRGame::addWorld(const std::string& name, KRWorld *aWorld)

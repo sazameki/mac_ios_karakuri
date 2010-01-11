@@ -10,8 +10,8 @@
 #pragma once
 
 
-#include <Karakuri/Karakuri_Defines.h>
-#include <Karakuri/Karakuri_Types.h>
+#include <Karakuri/KarakuriDefines.h>
+#include <Karakuri/KarakuriTypes.h>
 #include <Karakuri/KarakuriException.h>
 #include <Karakuri/KarakuriString.h>
 #include <Karakuri/KarakuriFunctions.h>
@@ -26,7 +26,7 @@
 #include <OpenGLES/ES1/glext.h>
 #endif
 
-#include <Karakuri/Karakuri_Globals.h>
+#include <Karakuri/KarakuriGlobals.h>
 
 #include <algorithm>
 #include <cmath>
@@ -39,14 +39,16 @@
 #include <vector>
 
 // Game Base Class
-#include <Karakuri/KarakuriGame.h>
+#include <Karakuri/KRGame.h>
 
 // Fundamental Classes
-#include <Karakuri/KarakuriWorld.h>
+#include <Karakuri/KarakuriDebug.h>
 #include <Karakuri/KRColor.h>
 #include <Karakuri/KRGraphics.h>
 #include <Karakuri/KRInput.h>
+#include <Karakuri/KRMemoryAllocator.h>
 #include <Karakuri/KRRandom.h>
+#include <Karakuri/KRWorld.h>
 
 // Text Support Classes
 #include <Karakuri/KRSaveBox.h>
@@ -61,9 +63,9 @@
 
 // 2D Graphics Classes
 #include <Karakuri/KRTexture2D.h>
-//#include <Karakuri/KRTexture2DAtlas.h>
+#include <Karakuri/KRAnime2D.h>
 #include <Karakuri/KRFont.h>
-#include <Karakuri/KRParticle2D.h>
+#include <Karakuri/KRParticle2DSystem.h>
 #include <Karakuri/KRPrimitive2D.h>
 
 // Audio Playback Classes

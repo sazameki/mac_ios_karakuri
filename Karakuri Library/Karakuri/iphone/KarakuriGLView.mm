@@ -7,7 +7,7 @@
 //
 
 #import "KarakuriGLView.h"
-#import "../KarakuriController.h"
+#import "../KRGameController.h"
 
 
 #define USE_DEPTH_BUFFER 0
@@ -51,7 +51,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                                         kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
                                         nil];
                 
-        //KarakuriController *controller = [KarakuriController sharedController];
+        //KRGameController *controller = [KRGameController sharedController];
         //EAGLSharegroup *sharegroup = [controller eaglSharegroup];
         //NSLog(@"%@", sharegroup);
 
@@ -72,7 +72,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 
         sPhoneOrientatilHorizontal = (gKRGameInst->getScreenWidth() > gKRGameInst->getScreenHeight())? true: false;
         
-        [[KarakuriController sharedController] setKRGLContext:&mKRGLContext];
+        [[KRGameController sharedController] setKRGLContext:&mKRGLContext];
     }
     return self;
 }

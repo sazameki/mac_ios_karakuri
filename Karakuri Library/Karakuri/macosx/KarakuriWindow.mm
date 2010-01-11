@@ -7,7 +7,7 @@
 //
 
 #import "KarakuriWindow.h"
-#import "KarakuriController.h"
+#import "KRGameController.h"
 
 #if KR_IPHONE_MACOSX_EMU
 #import "KarakuriEmulatorBackView.h"
@@ -21,7 +21,7 @@ static KRVector3D   sAcc;
 @implementation KarakuriWindow
 
 - (id)init {
-    KarakuriController *controller = [KarakuriController sharedController];
+    KRGameController *controller = [KRGameController sharedController];
     KRGame *game = [controller game];
 
     int styleMask = (NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask);
@@ -45,7 +45,7 @@ static KRVector3D   sAcc;
     if (self) {
         gKRWindowInst = self;
         
-        [self setDelegate:[KarakuriController sharedController]];
+        [self setDelegate:[KRGameController sharedController]];
         
 #if KR_IPHONE_MACOSX_EMU
         KarakuriEmulatorBackView *backView = [KarakuriEmulatorBackView new];

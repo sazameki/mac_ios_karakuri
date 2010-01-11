@@ -1,5 +1,5 @@
 //
-//  KarakuriWorld.h
+//  KRWorld.h
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/23.
@@ -50,7 +50,8 @@ private:
     std::string         mName;
     KRControlManager    *mControlManager;
     bool                mHasProcessedControl;
-    bool                mIsControlProcessEnabled;
+    bool                mIsControlProcessDisabled;
+    bool                mIsManualControlManagementEnabled;
     bool                mIsLoadingWorld;
     bool                mHasDummyInputSource;
     unsigned                            mDummyInputSourceDataPos;
@@ -123,9 +124,10 @@ public:
     
     /*!
         @method addControl
-        新しいコントロールをこのワールドに追加します。追加されたコントロールは、自動的に解放されます。自分では delete しないように注意してください。
+        @abstract 新しいコントロールをこのワールドに追加します。追加されたコントロールは、自動的に解放されます。自分では delete しないように注意してください。
+        groupID を指定することで、コントロールのグループを指定できます。デフォルトのグループIDは 0 です。0 以外のグループIDをもつコントロールは、自動的にはユーザ入力の受け付けや描画が行われません。
      */
-    void    addControl(KRControl *aControl);
+    void    addControl(KRControl *aControl, int groupID = 0);
     
     /*!
         @method removeControl
@@ -134,23 +136,48 @@ public:
     void    removeControl(KRControl *aControl);
     
     /*!
+        @method hasProcessedControl
         このワールドに登録されたいずれかのコントロールが、直前にユーザからの入力を受け付けたかどうかを取得します。
      */
     bool    hasProcessedControl() const;
     
     /*!
-        @method startControlProcess
-        @abstract コントロールのユーザ入力受け付けを行うようにします。
+        @method disableControlProcess
+        @abstract コントロールのユーザ入力受け付けを無効化（有効化）します。
         ワールドの開始時には、ユーザ入力受け付けが行われる状態になっています。
      */
-    void    startControlProcess();
+    void    disableControlProcess(bool flag);
+    
+    /*!
+        @method enableManualControlManagement
+        @abstract 手動でのコントロール処理を有効化（無効化）します。
+        手動でのコントロール処理を有効にすると、ユーザ入力の受け付けと描画が自動的に行われないようになります。
+        ワールドの開始時には、コントロールの処理が自動的に行われる状態になっています。
+     */
+    void    enableManualControlManagement(bool flag);
 
     /*!
-        @method stopControlProcess
-        @abstract コントロールのユーザ入力受け付けを行わないようにします。
+        @method isManualControlManagementEnabled
+        手動でのコントロール処理が有効化されているかどうかを取得します。
      */
-    void    stopControlProcess();
+    bool    isManualControlManagementEnabled() const;
+
+    /*!
+        @method drawControls
+        @abstract コントロールを手動で描画します。
+        <p>デフォルトでは groupID が 0 のコントロールを描画しますが、groupID を指定することで、そのグループのコントロールを描画します。</p>
+        <p>同じ groupID を共有するコントロールは、領域が重ならないことを前提としています。</p>
+     */
+    void    drawControls(KRGraphics *g, int groupID = 0);
     
+    /*!
+        @method processControls
+        @abstract コントロールのユーザ入力受け付けを行い、ユーザ入力が処理された場合には true を、そうでなければ false をリターンします。
+        <p>デフォルトでは groupID が 0 のコントロールを処理しますが、groupID を指定することで、そのグループのコントロールを処理します。</p>
+     */
+    bool    processControls(KRInput *input, int groupID = 0);
+
+
     /*!
         @task コントロールのサポートのためのオーバーライド関数
      */

@@ -10,7 +10,7 @@
 
 #include <Karakuri/KarakuriLibrary.h>
 
-#include <Karakuri/Karakuri_Globals.h>
+#include <Karakuri/KarakuriGlobals.h>
 
 
 struct KRVector2D;

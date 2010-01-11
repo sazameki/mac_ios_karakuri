@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <Karakuri/Karakuri_Defines.h>
+#include <Karakuri/KarakuriDefines.h>
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 #ifdef __OBJC__
@@ -37,9 +37,9 @@
 #import <OpenGLES/ES1/glext.h>
 #endif
 
-#include <Karakuri/Karakuri_Globals.h>
+#include <Karakuri/KarakuriGlobals.h>
 
-#include <Karakuri/Karakuri_Types.h>
+#include <Karakuri/KarakuriTypes.h>
 #include <Karakuri/KarakuriException.h>
 #include <Karakuri/KarakuriString.h>
 #include <Karakuri/KarakuriFunctions.h>

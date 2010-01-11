@@ -10,7 +10,7 @@
 #pragma once
 
 #include <Karakuri/KRColor.h>
-#include <Karakuri/Karakuri_Types.h>
+#include <Karakuri/KarakuriTypes.h>
 
 
 class KRFont;
@@ -47,6 +47,7 @@ public:
         第2引数でアトラスのサイズを設定することで、簡単に部分描画を行なうことができます。
      */
     KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
+
     KRTexture2D(const std::string& str, KRFont *font);
     ~KRTexture2D();
     

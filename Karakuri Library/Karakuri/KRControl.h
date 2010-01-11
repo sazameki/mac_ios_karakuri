@@ -11,7 +11,10 @@
 #include <Karakuri/KarakuriLibrary.h>
 #include <Karakuri/KRGraphics.h>
 #include <Karakuri/KRInput.h>
-#include <Karakuri/KarakuriWorld.h>
+#include <Karakuri/KRWorld.h>
+
+
+const double _gKRControlDisabledAlpha   = 0.1;
 
 
 /*!
@@ -28,6 +31,7 @@ protected:
     bool        mIsHidden;
     bool        mIsSelected;
     KRRect2D    mFrame;
+    int         mGroupID;
 
 public:
     /*!
@@ -102,6 +106,10 @@ public:
         このコントロールを不可視状態または可視状態に設定します。
      */
     void    setHidden(bool flag);
+    
+    int     getGroupID() const;                     KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    void    setGroupID(int groupID);                KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual bool    _isUpdatableControl() const;    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 public:
     void            setWorld(KRWorld *aWorld);      KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY

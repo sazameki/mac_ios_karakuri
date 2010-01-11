@@ -7,9 +7,9 @@
 //
 
 #import "KarakuriFunctions.h"
-#import "Karakuri_Defines.h"
+#import "KarakuriDefines.h"
 
-#include "KarakuriGame.h"
+#include "KRGame.h"
 #include <string>
 
 #import <Foundation/Foundation.h>

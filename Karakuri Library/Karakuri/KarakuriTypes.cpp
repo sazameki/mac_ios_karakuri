@@ -1,5 +1,5 @@
 /*
- *  Karakuri_Types.cpp
+ *  KarakuriTypes.cpp
  *  Karakuri Prototype
  *
  *  Created by numata on 09/07/18.
@@ -7,7 +7,7 @@
  *
  */
 
-#include "Karakuri_Types.h"
+#include "KarakuriTypes.h"
 
 
 #define KR_MATH_DIFF   0.0000001
@@ -294,6 +294,11 @@ KRVector2D KRVector2D::operator-() const
     return KRVector2D(-x, -y);
 }
 
+bool KRVector2D::operator<(const KRVector2D& vec) const
+{
+    return (x < vec.x || (x == vec.x && y < vec.y));
+}
+
 double KRVector2D::length() const
 {
     return sqrt(x * x + y * y);
@@ -439,7 +444,12 @@ bool KRVector2DInt::operator!=(const KRVector2DInt& vec) const
 {
     return (x != vec.x || y != vec.y);
 }
-    
+
+bool KRVector2DInt::operator<(const KRVector2DInt& vec) const
+{
+    return (x < vec.x || (x == vec.x && y < vec.y));
+}
+
 KRVector2DInt KRVector2DInt::operator-() const
 {
     return KRVector2DInt(-x, -y);
@@ -534,6 +544,13 @@ bool KRVector3D::operator!=(const KRVector3D &vec) const
     return (fabs(x - vec.x) >= KR_MATH_DIFF ||
             fabs(y - vec.y) >= KR_MATH_DIFF ||
             fabs(z - vec.z) >= KR_MATH_DIFF);
+}
+
+bool KRVector3D::operator<(const KRVector3D &vec) const
+{
+    return (x < vec.x ||
+            (x == vec.x && (y < vec.y ||
+             (y == vec.y && z < vec.z))));
 }
 
 KRVector3D KRVector3D::operator-() const
@@ -684,6 +701,13 @@ bool KRVector3DInt::operator==(const KRVector3DInt& vec) const
 bool KRVector3DInt::operator!=(const KRVector3DInt& vec) const
 {
     return (x != vec.x || y != vec.y || z != vec.z);
+}
+
+bool KRVector3DInt::operator<(const KRVector3DInt& vec) const
+{
+    return (x < vec.x ||
+            (x == vec.x && (y < vec.y ||
+             (y == vec.y && z < vec.z))));
 }
 
 KRVector3DInt KRVector3DInt::operator-() const

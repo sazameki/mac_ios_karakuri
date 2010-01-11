@@ -1,5 +1,5 @@
 /*
- *  KarakuriWorldManager.h
+ *  KRWorldManager.h
  *  Karakuri Prototype
  *
  *  Created by numata on 09/07/23.
@@ -14,15 +14,16 @@
 
 class KRWorld;
 
-class KarakuriWorldManager : public KRObject {
+
+class KRWorldManager : public KRObject {
     
 private:
     KRWorld *mCurrentWorld;
     std::map<std::string, KRWorld *> mWorldMap;
     
 public:
-    KarakuriWorldManager();
-    ~KarakuriWorldManager();
+    KRWorldManager();
+    ~KRWorldManager();
 
 public:
     KRWorld     *getCurrentWorld() const;

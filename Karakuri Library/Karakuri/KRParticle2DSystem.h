@@ -1,9 +1,9 @@
 /*!
- @file   KRParticle2D.h
- @author numata
- @date   09/08/07
+    @file   KRParticle2DSystem.h
+    @author numata
+    @date   09/08/07
  
- Please write the description of this class.
+    Please write the description of this class.
  */
 
 #pragma once
@@ -14,18 +14,16 @@
 #define KR_PARTICLE2D_USE_POINT_SPRITE  0
 
 
-struct KRParticle2DGenInfo {
-    
+struct _KRParticle2DGenInfo {
     KRVector2D  centerPos;
     int         count;
-    
 };
 
 
-const int KRParticle2DGenMaxCount = 20;
+const int _KRParticle2DGenMaxCount = 20;
 
 
-class KRParticle2D : public KRObject {
+class _KRParticle2D : public KRObject {
     
 public:
     unsigned    mLife;
@@ -43,8 +41,8 @@ public:
     double      mDeltaAlpha;
     
 public:
-	KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
-                 double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize);
+	_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
+                  double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize);
     
 public:
     bool    step();
@@ -62,7 +60,7 @@ public:
  */
 class KRParticle2DSystem : public KRObject {
     
-    std::list<KRParticle2D *>   mParticles;
+    std::list<_KRParticle2D *>   mParticles;
 
     unsigned        mLife;
     KRVector2D      mStartPos;
@@ -87,7 +85,7 @@ class KRParticle2DSystem : public KRObject {
     double          mDeltaAlpha;
     
     bool            mDoLoop;
-    KRParticle2DGenInfo mGenInfos[KRParticle2DGenMaxCount];
+    _KRParticle2DGenInfo    mGenInfos[_KRParticle2DGenMaxCount];
     int             mActiveGenCount;
     
 #if KR_PARTICLE2D_USE_POINT_SPRITE
@@ -105,17 +103,19 @@ public:
     /*!
         @method KRParticle2DSystem
         @abstract テクスチャに使用する画像ファイルの名前を指定して、このパーティクル・システムを生成します。
-        デフォルトでは無限にパーティクルを生成し続けるようになっていますが、doLoop 引数に false を指定することで、addGenerationPoint() 関数を用いた単発生成を行うモードに切り替わります。
+        <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
+        <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(const std::string& filename, bool doLoop=true);
+    KRParticle2DSystem(const std::string& filename, bool doLoop=false);
 
     /*!
         @method KRParticle2DSystem
         @abstract テクスチャを指定して、このパーティクル・システムを生成します。
         <p>このコンストラクタを利用することにより、同じテクスチャを異なる複数のパーティクル・システムで共有して効率的に使うことができます。同じ画像でサイズが異なるパーティクルを生成したい場合などに、このコンストラクタを利用してください。</p>
-        <p>デフォルトでは無限にパーティクルを生成し続けるようになっていますが、doLoop 引数に false を指定することで、addGenerationPoint() 関数を用いた単発生成を行うモードに切り替わります。</p>
+        <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
+        <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(KRTexture2D *texture, bool doLoop=true);
+    KRParticle2DSystem(KRTexture2D *texture, bool doLoop=false);
     virtual ~KRParticle2DSystem();
     
 private:

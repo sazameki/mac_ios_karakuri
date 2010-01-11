@@ -1,5 +1,5 @@
 //
-//  KarakuriController.h
+//  KRGameController.h
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/17.
@@ -18,13 +18,14 @@
 #import <Karakuri/iphone/KRPeerPicker.h>
 #endif
 
-#import <Karakuri/KarakuriGame.h>
+#import <Karakuri/KRGame.h>
 #import <Karakuri/KarakuriGLContext.h>
 #import <Karakuri/KarakuriLibraryConnectorBase.h>
 #import <Karakuri/KRGraphics.h>
 #import <Karakuri/KRInput.h>
 #import <Karakuri/KRFPSDisplay.h>
 #import <Karakuri/KarakuriNetwork.h>
+#import <Karakuri/KRAnime2D.h>
 
 
 #if __DEBUG__
@@ -34,7 +35,7 @@
 #endif
 
 
-@interface KarakuriController : NSObject<KRPeerPickerDelegate> {
+@interface KRGameController : NSObject<KRPeerPickerDelegate> {
     KarakuriWindow      *mWindow;
     KarakuriGLContext   *mKRGLContext;
     KRGame              *mGame;
@@ -60,6 +61,8 @@
     BOOL                mHasMetEmergency;
     BOOL                mTerminatedByUser;
     
+    KRAnime2D           *mCharacterAnime;
+    
     KRNetwork           *mNetworkServer;
     NSString            *mNetworkPeerName;
     BOOL                mHasAcceptedNetworkPeer;
@@ -77,6 +80,7 @@
     
 #if __DEBUG__
     KRFPSDisplay        *mFPSDisplay;
+    KRControlManager    *mDebugControlManager;
 
     double              mCurrentFPS;
     int                 mFrameCount;
@@ -104,7 +108,7 @@
 #endif
 }
 
-+ (KarakuriController *)sharedController;
++ (KRGameController *)sharedController;
 
 //- (void)startLoadingScreenThreadForWorld:(KRWorld *)world;
 - (void)startChaningWorld:(KRWorld *)world;
@@ -121,6 +125,11 @@
 #endif
 
 - (KRGame *)game;
+
+#if __DEBUG__
+- (void)addDebugString:(const std::string&)str;
+- (void)removeDebugStrings;
+#endif
 
 - (void)processNetworkRequest:(NSString *)name;
 - (void)showNetworkPeerPicker;

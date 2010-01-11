@@ -8,7 +8,7 @@
 
 #import "KarakuriSound.h"
 
-#import "KarakuriGame.h"
+#import "KRGame.h"
 
 
 static ALCdevice *sALDevice = NULL;

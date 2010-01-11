@@ -7,7 +7,7 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 #include "KarakuriNetwork.h"
-#include "KarakuriController.h"
+#include "KRGameController.h"
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
 #include <CFNetwork/CFSocketStream.h>
@@ -454,7 +454,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
 
 - (void)showPeerPicker
 {
-    [[KarakuriController sharedController] performSelectorOnMainThread:@selector(showNetworkPeerPicker) withObject:nil waitUntilDone:NO];
+    [[KRGameController sharedController] performSelectorOnMainThread:@selector(showNetworkPeerPicker) withObject:nil waitUntilDone:NO];
 }
 
 - (void)doAccept
@@ -602,7 +602,7 @@ static BOOL isFDReady(int fd)
         std::string nameMessage = *(mInMessages->begin());
         mInMessages->erase(mInMessages->begin());
         std::string name = nameMessage.substr(7, nameMessage.length()-7);
-        [[KarakuriController sharedController] processNetworkRequest:[NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding]];
+        [[KRGameController sharedController] processNetworkRequest:[NSString stringWithCString:name.c_str() encoding:NSUTF8StringEncoding]];
     } else if (mState == KRNetworkServerStateWaitForInviteReply && mInMessages->size() > 0) {
         std::string replyMessage = *(mInMessages->begin());
         mInMessages->erase(mInMessages->begin());

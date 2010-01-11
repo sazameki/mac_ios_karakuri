@@ -10,7 +10,7 @@
 #pragma once
 
 
-#include <Karakuri/Karakuri_Types.h>
+#include <Karakuri/KarakuriTypes.h>
 
 
 /*!

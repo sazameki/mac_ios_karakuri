@@ -5,6 +5,7 @@
  */
 
 #include "KRControlManager.h"
+#include "KRGame.h"
 
 
 /*!
@@ -22,16 +23,22 @@ KRControlManager::KRControlManager()
  */
 KRControlManager::~KRControlManager()
 {
+    removeAllControls();
+}
+
+void KRControlManager::addControl(KRControl *aControl, int groupID)
+{
+    aControl->setGroupID(groupID);
+    mControls.push_back(aControl);
+}
+
+void KRControlManager::removeAllControls()
+{
     for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end();) {
         KRControl *aControl = (KRControl *)(*it);
         it = mControls.erase(it);
         delete aControl;
-    }
-}
-
-void KRControlManager::addControl(KRControl *aControl)
-{
-    mControls.push_back(aControl);
+    }    
 }
 
 void KRControlManager::removeControl(KRControl *aControl)
@@ -45,7 +52,7 @@ void KRControlManager::removeControl(KRControl *aControl)
     }
 }
 
-bool KRControlManager::updateControls(KRInput *input)
+bool KRControlManager::updateControls(KRInput *input, int groupID)
 {    
     if (mSelectedControl != NULL) {
         if (!mSelectedControl->update(input)) {
@@ -69,7 +76,9 @@ bool KRControlManager::updateControls(KRInput *input)
         if (inputPos.x >= 0) {
             for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end(); it++) {
                 KRControl *theControl = *it;
-                if (theControl->contains(inputPos)) {
+                if (theControl->contains(inputPos) && theControl->getGroupID() == groupID &&
+                        !theControl->isHidden() && theControl->isEnabled() && theControl->_isUpdatableControl())
+                {
                     mSelectedControl = theControl;
                     mSelectedControl->update(input);
                     return true;
@@ -80,16 +89,31 @@ bool KRControlManager::updateControls(KRInput *input)
     return false;
 }
 
-void KRControlManager::drawAllControls(KRGraphics *g)
+void KRControlManager::drawAllControls(KRGraphics *g, int groupID)
 {
-    // TODO: カメラの設定 (3D)
-
     g->setBlendMode(KRBlendModeAlpha);
-    
+
     for (std::vector<KRControl *>::reverse_iterator it = mControls.rbegin(); it != mControls.rend(); it++) {
         KRControl *theControl = *it;
-        if (!theControl->isHidden()) {
+        if (!theControl->isHidden() && theControl->getGroupID() == groupID) {
             theControl->draw(g);
+        }
+    }
+}
+
+void KRControlManager::scrollUpAllDebugLabels()
+{
+    for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end();) {
+        KRControl *theControl = *it;
+        KRRect2D frame = theControl->getFrame();
+        frame.y += 16;
+        theControl->setFrame(frame);
+        
+        if (frame.y >= gKRScreenSize.y) {
+            it = mControls.erase(it);
+            delete theControl;
+        } else {
+            it++;
         }
     }
 }
