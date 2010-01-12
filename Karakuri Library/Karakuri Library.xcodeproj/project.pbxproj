@@ -1018,15 +1018,6 @@
 			name = iphone_emu;
 			sourceTree = "<group>";
 		};
-		8E537E8910FAA7A6003C76D0 /* 2d_anime */ = {
-			isa = PBXGroup;
-			children = (
-				8E537E8B10FAA924003C76D0 /* KRAnime2D.h */,
-				8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */,
-			);
-			name = 2d_anime;
-			sourceTree = "<group>";
-		};
 		8E6017411031DCA00009C1F4 /* chipmunk 4.1.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1140,7 +1131,6 @@
 				8EAB5F7A101B205C00DDA881 /* foundation */,
 				8EAB5F77101B205C00DDA881 /* text */,
 				8EF0565310470BA100CD7212 /* control */,
-				8E537E8910FAA7A6003C76D0 /* 2d_anime */,
 				8EAB5F81101B205C00DDA881 /* 2d_draw */,
 				8E60188D1031E0420009C1F4 /* 2d_simulation */,
 				8EAB5F85101B205C00DDA881 /* audio */,
@@ -1171,8 +1161,6 @@
 				8EAB5F40101B200000DDA881 /* KarakuriFunctions.mm */,
 				8EFCEAA210F9904500E9598B /* KarakuriDebug.h */,
 				8EFCEAA310F9904500E9598B /* KarakuriDebug.mm */,
-				8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */,
-				8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -1226,6 +1214,8 @@
 				8EAB5F80101B205C00DDA881 /* KRInput.mm */,
 				8EBE81371028988800F77A39 /* KRRandom.h */,
 				8EBE81381028988900F77A39 /* KRRandom.cpp */,
+				8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */,
+				8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */,
 			);
 			name = foundation;
 			sourceTree = "<group>";
@@ -1233,7 +1223,8 @@
 		8EAB5F81101B205C00DDA881 /* 2d_draw */ = {
 			isa = PBXGroup;
 			children = (
-				8EBB1D761034BF7200936E01 /* image_loader */,
+				8E537E8B10FAA924003C76D0 /* KRAnime2D.h */,
+				8E537E8C10FAA924003C76D0 /* KRAnime2D.cpp */,
 				8E9792681020C00700E3EC7A /* KRFont.h */,
 				8E9792691020C00700E3EC7A /* KRFont.mm */,
 				8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */,
@@ -1245,6 +1236,7 @@
 				8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */,
 				8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */,
 				8EAB5F84101B205C00DDA881 /* KRTexture2DLoader.h */,
+				8EBB1D761034BF7200936E01 /* image_loader */,
 			);
 			name = 2d_draw;
 			sourceTree = "<group>";

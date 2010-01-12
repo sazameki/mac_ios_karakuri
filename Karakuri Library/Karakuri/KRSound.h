@@ -16,7 +16,7 @@
     @class  KRSound
     @group  Game Audio
     <p>10秒以下の長さのサウンドファイルを、ゲームの効果音として再生するためのクラスです。</p>
-    <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/sound_format.html" target="_top">サウンド形式について</a>についてを参照してください。</p>
+    <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
  
     <h3>複数回の再生について</h3>
     <p>再生中に play() 関数を呼んだ場合、その再生は中断され、冒頭から再生が再開されます。</p>

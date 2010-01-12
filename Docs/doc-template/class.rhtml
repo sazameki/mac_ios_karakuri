@@ -55,7 +55,7 @@
 		<% end %>
 		</div>
 	<% end %>
-	
+
 	<% if $the_class.d_enums.size() > 0 %>
 		<h2>Enumerations</h2>		
 		<% $the_class.d_enums.each do |an_elem| %>
@@ -96,8 +96,26 @@
 		<% end %>
 	<% end %>
 
+	<% if $the_class.d_instant_variables.size() > 0 %>
+		<h2>Instant Variables</h2>
+		<% $the_class.d_instant_variables.each do |an_elem| %>
+			<a name="<%= an_elem.d_tag %>"></a>
+			<h3><%= an_elem.d_name %></h3>
+			<div class="declare"><%= an_elem.d_declare %></div>
+			<% if an_elem.d_abstract %>
+				<div class="abstract"><%= an_elem.d_abstract %></div>
+			<% end %>
+			<% if an_elem.d_discussion %>
+				<div class="discussion">
+					<h4>Discussion</h4>
+					<%= an_elem.d_discussion %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+
 	<% if $the_class.d_class_methods.size() > 0 %>
-		<h2>Class Methods</h2>		
+		<h2>Class Methods</h2>
 
 		<% $the_class.d_class_methods.each do |a_method| %>
 			<div class="one_info">
@@ -119,7 +137,7 @@
 
 	<% if $the_class.d_instant_methods.size() > 0 %>
 		<h2>Instant Methods</h2>
-		
+
 		<% $the_class.d_instant_methods.each do |a_method| %>
 			<div class="one_info">
 				<a name="<%= a_method.d_tag %>"></a>

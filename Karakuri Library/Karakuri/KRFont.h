@@ -18,7 +18,7 @@
     @class KRFont
     @group  Game 2D Graphics
     @abstract 文字列のテクスチャを生成するためのクラスです。
-    <p>利用可能なフォント名については、<a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/font_list.html" target="_top">フォント名の一覧</a>を参照してください。
+    <p>利用可能なフォント名については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/font_list.html">フォント名の一覧</a>」を参照してください。
     <p>文字列のテクスチャは、できるだけワールドの becameActive() 関数内で生成してください。ゲーム実行中の生成は強く推奨しません。</p>
  */
 class KRFont : public KRObject {

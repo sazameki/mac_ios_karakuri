@@ -17,7 +17,7 @@
     @class KRColor
     @group  Game Foundation
     @abstract 色を表すためのクラスです。
-    利用可能な色の定数の一覧については、<a href="../../../../guide/index.html" target="_top">開発ガイド</a>の<a href="../../../../guide/color_chart.html" target="_top">カラーチャート</a>を参照してください。
+    利用可能な色の定数の一覧については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/color_chart.html">カラーチャート</a>」を参照してください。
  */
 class KRColor : public KRObject {
 public:

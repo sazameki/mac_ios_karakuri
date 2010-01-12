@@ -12,7 +12,7 @@
 	<h1>Karakuri Framework Reference Library</h1>
 	<ul>
 		<li><a href="http://karakuri.designed.jp/" target="_top">Karakuri Framework ホームページ</a></li>
-		<li><a href="../guide/index.html" target="_top">Karakuri Framework 開発ガイド</a></li>
+		<li><a href="../guide/index.html">Karakuri Framework 開発ガイド</a></li>
 	</ul>
 	<% $groups.each do |group| %>
 		<h2><%= group.d_name %></h2>
@@ -25,6 +25,14 @@
 					<li><a href="<%= a_class.d_href %>"><%= a_class.d_name %></a></li>
 				<% end %>
 				</ul>
+				<% if (group.d_structs.size > 0) %>
+					<h3>Structs</h3>
+					<ul>
+					<% group.d_structs.each do |a_struct| %>
+						<li><a href="<%= a_struct.d_href %>"><%= a_struct.d_name %></a></li>
+					<% end %>
+					</ul>
+				<% end %>
 			</div>
 		<% end %>
 
@@ -41,14 +49,6 @@
 
 		<% if (group.d_structs.size > 0) || (group.d_enums.size > 0) || (group.d_typedefs.size > 0) || (group.d_variables.size > 0) || (group.d_macros.size > 0) %>
 			<div class="column">
-				<% if (group.d_structs.size > 0) %>
-					<h3>Structs</h3>
-					<ul>
-					<% group.d_structs.each do |a_struct| %>
-						<li><a href="<%= a_struct.d_href %>"><%= a_struct.d_name %></a></li>
-					<% end %>
-					</ul>
-				<% end %>
 				<% if (group.d_enums.size > 0) %>
 					<h3>Enums</h3>
 					<ul>

@@ -1,0 +1,265 @@
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="../css/main.css" type="text/css" />
+	<title>Karakuri Framework 開発ガイド - 多数インスタンスのメモリ管理</title>
+</head>
+
+<body class="guide">
+
+<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" /></a></div>
+
+<p><a href="index.html">目次に戻る</a></p>
+
+<div class="title">Karakuri Framework 開発ガイド</div>
+<h1>多数インスタンスのメモリ管理</h1>
+
+<h2>はじめに</h2>
+
+<p>敵や弾など、同じクラスのインスタンスが多数作成される場合には、あらかじめまとまった数のインスタンスのためのメモリを確保しておき、効率的なゲーム実行ができるようにしておきます。Karakuri Framework では、KRMemoryAllocator クラスがそのための機能を提供します。</p>
+
+
+<h2>主な使い方</h2>
+
+<p>ここでは、単一のクラスのインスタンスを複数個管理する場合について説明します。</p>
+<p>例として、次のような Bullet クラスを利用することを考えます。Bullet クラスの複数のインスタンスをまとめて管理するための BulletManager クラスも用意しています。</p>
+
+<p><strong>重要：</strong>アロケータの管理対象となるすべてのクラスは、<strong>明示的なデストラクタの実装が必要</strong>です。要・不要を問わず、管理対象の Bullet クラスにデストラクタを明示的に用意していることに注意してください。</p>
+
+<blockquote class="code"><pre>// Bullet.h
+
+#pragma once
+
+#include &lt;Karakuri/Karakuri.h&gt;
+
+class Bullet {
+    KRVector2D  mPos;
+
+public:
+    Bullet(const KRVector2D&amp; pos);
+    ~Bullet();  // 必ずデストラクタを用意すること。
+
+public:
+    void    move();
+    void    draw();
+};
+
+class BulletManager {
+    std::list&lt;Bullet*&gt;  mBullets;
+
+public:
+    BulletManager();
+    ~BulletManager();
+
+public:
+    Bullet* addBullet(const KRVector2D&amp; pos);
+};</pre></blockquote>
+
+
+<blockquote class="code"><pre>// Bullet.cpp
+
+#include "Bullet.h"
+
+Bullet::Bullet(const KRVector2D&amp; pos)
+    : mPos(pos)
+{
+    // Do nothing
+}
+
+Bullet::~Bullet()
+{
+    // Do nothing
+}
+
+void Bullet::move()
+{
+    mPos.x += 3;
+}
+
+void Bullet::draw()
+{
+    // テクスチャを使って描画
+}
+
+
+BulletManager::BulletManager()
+{
+    // Do nothing
+}
+
+BulletManager::~BulletManager()
+{
+    for (std::list&lt;Bullet*&gt;::iterator it = mBullets.begin(); it != mBullets.end(); it++) {
+        delete *it;
+    }
+}
+
+Bullet* BulletManager::addBullet(const KRVector2D&amp; pos)
+{
+    Bullet* newBullet = new Bullet(pos);
+    mBullets.push_back(newBullet);
+    return newBullet;
+}
+</pre></blockquote>
+
+
+<h3>1. アロケータの用意</h3>
+
+<p>まずは、Bullet.h にアロケータのための変数を宣言します。</p>
+
+<blockquote class="code"><pre>extern KRMemoryAllocator* bulletAllocator;</pre></blockquote>
+
+<p>Bullet.cpp に変数の実体を用意します。</p>
+
+<blockquote class="code"><pre>KRMemoryAllocator* bulletAllocator = NULL;</pre></blockquote>
+
+
+<h3>2. アロケータ使用の宣言</h3>
+
+<p>Bullet クラスの宣言部の先頭で KR_DECLARE_USE_ALLOCATOR() マクロを使って、上記のようにして用意した bulletAllocator の使用を宣言します。</p>
+
+<blockquote class="code"><pre>class Bullet {
+    KR_DECLARE_USE_ALLOCATOR(bulletAllocator)
+
+    KRVector2D  mPos;
+    ...
+</pre></blockquote>
+
+
+<h3>3. アロケータの生成</h3>
+
+<p>BulletManager クラスのコンストラクタで、Bullet クラスのサイズと、インスタンスの最大生成個数を指定して、アロケータを生成します。以下の例では、最大512個のインスタンスを作れるようにアロケータを生成しています。</p>
+
+<blockquote class="code"><pre>BulletManager::BulletManager()
+{
+    bulletAllocator = new KRMemoryAllocator(sizeof(Bullet), 512, "bullet-alloc");
+}</pre></blockquote>
+
+
+<h3>4. 完成</h3>
+
+<p>BulletManager クラスのデストラクタで、アロケータの解放を行うのを忘れないでください。</p>
+
+<blockquote class="code"><pre>BulletManager::~BulletManager()
+{
+    delete bulletAllocator;
+}</pre></blockquote>
+
+<p>以上で、ゲーム開始時にまとまったメモリを確保しておき、ゲーム実行時にそのメモリを使いながら効率的にインスタンスの作成ができるようになります。その他の部分は、いっさい変更する必要はありません。以下に、完成版のリストを掲載します。追加部分を強調表示しています。</p>
+
+<blockquote class="code"><pre>// Bullet.h
+
+#pragma once
+
+#include &lt;Karakuri/Karakuri.h&gt;
+
+<strong>extern KRMemoryAllocator* bulletAllocator;</strong>
+
+class Bullet {
+    <strong>KR_DECLARE_USE_ALLOCATOR(bulletAllocator)</strong>
+
+    KRVector2D  mPos;
+
+public:
+    Bullet(const KRVector2D&amp; pos);
+    ~Bullet();  // 必ずデストラクタを用意すること。
+
+public:
+    void    move();
+    void    draw();
+};
+
+class BulletManager {
+    std::list&lt;Bullet*&gt;  mBullets;
+
+public:
+    BulletManager();
+    ~BulletManager();
+
+public:
+    Bullet* addBullet(const KRVector2D&amp; pos);
+};</pre></blockquote>
+
+
+<blockquote class="code"><pre>// Bullet.cpp
+
+#include "Bullet.h"
+
+
+<strong>KRMemoryAllocator* bulletAllocator = NULL;</strong>
+
+
+Bullet::Bullet(const KRVector2D&amp; pos)
+    : mPos(pos)
+{
+    // Do nothing
+}
+
+Bullet::~Bullet()
+{
+    // Do nothing
+}
+
+void Bullet::move()
+{
+    mPos.x += 3;
+}
+
+void Bullet::draw()
+{
+    // テクスチャを使って描画
+}
+
+
+BulletManager::BulletManager()
+{
+    <strike>// Do nothing</strike>
+    <strong>bulletAllocator = new KRMemoryAllocator(sizeof(Bullet), 512, "bullet-alloc");</strong>
+}
+
+BulletManager::~BulletManager()
+{
+    <strong>// メモリの解放はアロケータで行われるので、厳密にはここの部分が不要になる。</strong>
+    <strike>for (std::list&lt;Bullet*&gt;::iterator it = mBullets.begin(); it != mBullets.end(); it++) {
+        delete *it;
+    }</strike>
+
+    <strong>delete bulletAllocator;</strong>
+}
+
+Bullet* BulletManager::addBullet(const KRVector2D&amp; pos)
+{
+    Bullet* newBullet = new Bullet(pos);
+    mBullets.push_back(newBullet);
+    return newBullet;
+}
+</pre></blockquote>
+
+
+<h2>複数の派生クラスを利用する場合</h2>
+
+<p>あるクラスから派生した複数のクラスのインスタンスを複数個管理する場合、基底クラスで KR_DECLARE_USE_ALLOCATOR() マクロを使ってアロケータの使用を宣言しておけば、派生クラスでアロケータの使用を宣言する必要はありません。</p>
+
+<p>ただし、各派生クラスが異なるサイズをもつ場合がありますので、以下のように、KR_UPDATE_MAX_CLASS_SIZE() マクロを使用してクラスの最大サイズを求めた上でアロケータを生成する点だけが、単一クラスを利用する場合と異なります。以下の例では、Bullet クラスからの派生クラスとして Bullet1, Bullet2, Bullet3 という3つのクラスがあることとしています。</p>
+
+<blockquote class="code"><pre>BulletManager::BulletManager()
+{
+    size_t maxBulletClassSize = 0;
+    
+    KR_UPDATE_MAX_CLASS_SIZE(maxBulletClassSize, Bullet1);
+    KR_UPDATE_MAX_CLASS_SIZE(maxBulletClassSize, Bullet2);
+    KR_UPDATE_MAX_CLASS_SIZE(maxBulletClassSize, Bullet3);
+    
+    bulletAllocator = new KRMemoryAllocator(maxBulletClassSize, 512, "bullet-alloc");
+}</pre></blockquote>
+
+<p><strong>重要</strong>：なお、単一のクラスを利用する場合と同様に、要・不要を問わず、基底クラスでも各派生クラスでも、<strong>明示的なデストラクタの実装が必要</strong>です。</p>
+
+
+<div class="footer">
+	Copyright &copy; 2010 Satoshi Numata Ph.D.
+</div>
+
+</body>
+
+<html>

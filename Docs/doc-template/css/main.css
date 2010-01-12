@@ -32,9 +32,10 @@ a:hover {
 	text-decoration: underline;
 }
 
-blockquote.code {
+blockquote.code pre {
 	border: 1px solid #aaa;
 	background-color: #eee;
+	font-size: 90%;
 	padding: 4px;
 	font-family: 'Menlo', 'Monaco', Arial, Helvetica, sans-serif;
 }
@@ -242,22 +243,36 @@ body.guide h2 {
 	border-bottom: 1px solid #aaa;
 }
 
-body.guide p {
+body.guide h3 {
+	margin-top: 30px;
 	margin-left: 20px;
 }
 
-body.guide dl {
+body.guide blockquote.code {
+	margin-left: 80px;
+	max-width: 700px;
+}
+
+body.guide p {
 	margin-left: 40px;
+	margin-right: 40px;
+}
+
+body.guide dl {
+	margin-left: 80px;
 }
 
 body.guide dl dt {
     display: list-item;
 	list-style: disc;
 	margin-left: 20px;
+	font-weight: bold;
+	margin-bottom: 0.3em;
 }
 
 body.guide dl dd {
 	margin-bottom: 4px;
+	margin-right: 60px;
 }
 
 body.guide .guide_toc dl {

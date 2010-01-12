@@ -11,10 +11,12 @@ KRAnime2D* gKRAnime2DInst = NULL;
 
 
 static bool     sHasLoadedTextures = true;
+static int      sTextureCountToBeLoaded = 0;
+static int      sLoadedTextureCount = 0;
 
 
 #pragma mark -
-#pragma mark キャラクタの特徴
+#pragma mark KRCharacter2DSpec の実装
 
 KRCharacter2DSpec::KRCharacter2DSpec(const std::string& textureName, const KRVector2D& atlasSize)
 {
@@ -83,6 +85,7 @@ void KRCharacter2DSpec::_setSpecID(int specID)
 
 
 #pragma mark -
+#pragma mark KRCharacter2D クラスの実装
 
 KRCharacter2D::KRCharacter2D(KRCharacter2DSpec *charaSpec, const KRVector2D& _centerPos, int zOrder, int firstState)
     : mCharaSpec(charaSpec), pos(_centerPos), mZOrder(zOrder), mState(-1)
@@ -301,6 +304,7 @@ void KRCharacter2D::_draw()
 
 
 #pragma mark -
+#pragma mark KRAnime2D クラスの実装
 
 KRAnime2D::KRAnime2D()
 {
@@ -356,8 +360,13 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
     while (reader.readLine(&str)) {
         lineCount++;
 
-        // 空行や「#」から始まる行はスキップ 
+        // 空行や「#」から始まる行はスキップ
         if (str.length() == 0 || str[0] == '#') {
+            continue;
+        }
+        
+        // 「@」から始まる行は、メタ情報の記述
+        if (str[0] == '@') {
             continue;
         }
         
@@ -381,6 +390,10 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
             int atlasHeight = atoi(vec[4].c_str());
             
             if (theSpec != NULL) {
+                if (theStateID < 0) {
+                    theSpec->addState(0, 1, 0, false, -1);
+                    theSpec->addStateImage(0, KRVector2DInt(0, 0), false);
+                }
                 gKRAnime2DInst->addCharacterSpec(theSpecID, theSpec);
                 theStateID = -1;
             }
@@ -424,6 +437,9 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
                 else if (paramElems[0] == "reverse") {
                     doReverse = (paramElems[1] == "true");
                 }
+                else if (paramElems[0] == "next") {
+                    nextState = atoi(paramElems[1].c_str());
+                }
             }
 
             theStateID = stateID;
@@ -466,6 +482,10 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
     }
 
     if (theSpec != NULL) {
+        if (theStateID < 0) {
+            theSpec->addState(0, 1, 0, false, -1);
+            theSpec->addStateImage(0, KRVector2DInt(0, 0), false);
+        }
         gKRAnime2DInst->addCharacterSpec(theSpecID, theSpec);
     }
 }
@@ -571,6 +591,7 @@ int KRAnime2D::_addTexture(const std::string& textureName, const KRVector2D& atl
     int ret = mTextureInfoMap.size();
     mTextureInfoMap[ret] = newInfo;
     
+    sTextureCountToBeLoaded++;
     sHasLoadedTextures = false;
     
     return ret;
@@ -599,22 +620,20 @@ KRTexture2D* KRAnime2D::_getTexture(int textureID)
 
 double KRAnime2D::getTextureLoadingProgress() const
 {
-    return 0.0;
-}
-
-bool KRAnime2D::isLoadingTextures() const
-{
-    return !sHasLoadedTextures;
+    if (sTextureCountToBeLoaded == 0) {
+        return 1.0;
+    }
+    return (double)sLoadedTextureCount / sTextureCountToBeLoaded;
 }
 
 void KRAnime2D::startLoadingTextures()
 {
-    // TODO: テクスチャ読み込み用スレッドで読み込む
     std::map<int, _KRTexture2DInfo*>::iterator it = mTextureInfoMap.begin();
 	while (it != mTextureInfoMap.end()) {
         _KRTexture2DInfo *texInfo = (*it).second;
         KRTexture2D *tex = new KRTexture2D(texInfo->textureName, texInfo->atlasSize);
         texInfo->textureObj = tex;
+        sLoadedTextureCount++;
 		it++;
 	}
     sHasLoadedTextures = true;

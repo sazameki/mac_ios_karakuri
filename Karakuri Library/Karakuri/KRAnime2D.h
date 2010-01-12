@@ -35,7 +35,8 @@ struct _KRTexture2DInfo {
 /*!
     @class KRCharacter2DSpec
     @group Game 2D Graphics
-    <p>キャラクタの特徴を表すためのクラスです。</p>
+    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
+    <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
 class KRCharacter2DSpec : public KRObject {
     std::map<int, _KRCharacter2DState*>     mStateMap;
@@ -82,7 +83,12 @@ public:
 /*!
     @class KRCharacter2D
     @group Game 2D Graphics
-    <p>個々のキャラクタを管理するためのクラスです。</p>
+    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
+    <p>このクラスのインスタンスは、グローバル変数 gKRAnime2DInst を使ってアクセスできる <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスの <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/createCharacter/KRCharacter2D*_createCharacter(int_specID,_const_KRVector2D@_centerPos,_int_zOrder_=_0,_int_firstState_=_0)">createCharacter</a> メソッドを使って作成します。</p>
+    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/removeCharacter/void_removeCharacter(KRCharacter2D_*chara)">removeCharacter</a> メソッドを使って削除してください。</p>
+    <p>キャラクタの現在位置は、テクスチャアトラス描画の中心点を示します。現在位置は、public な pos 変数を直接いじって変更してください。</p>
+    <p>キャラクタの描画色は、public な color 変数を直接いじって変更してください。</p>
+    <p>キャラクタのZオーダは、現在位置や描画色とは違い、setZOrder() メソッドを使って変更してください。</p>
  */
 class KRCharacter2D : public KRObject {
     
@@ -99,7 +105,16 @@ private:
     bool                mHasPassedHead;
     
 public:
+    /*!
+        @var    pos
+        キャラクタの現在の描画位置です。テクスチャアトラス描画の中心点を示します。
+     */
     KRVector2D          pos;
+
+    /*!
+        @var    color
+        キャラクタの現在の描画色です。
+     */
     KRColor             color;
 
 public:
@@ -111,7 +126,7 @@ public:
      */
     /*!
         @method getSize
-        キャラクタのサイズを取得します。
+        テクスチャ・アトラスの1コマあたりのサイズをリターンします。
      */
     KRVector2D  getSize() const;
     
@@ -156,6 +171,8 @@ public:
     @group Game 2D Graphics
     <p>キャラクタのアニメーションを管理するためのクラスです。</p>
     <p>このクラスのオブジェクトには、gKRAnime2DInst 変数を使ってアクセスしてください。</p>
+    <p>主な使い方は、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
+    <p>基本的には、<a href="#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">loadCharacterSpecs()</a> メソッドを使ってキャラクタの特徴記述ファイルを読み込み、<a href="#//apple_ref/cpp/instm/KRAnime2D/startLoadingTextures/void_startLoadingTextures()">startLoadingTextures()</a> メソッドを使ってテクスチャの読み込みを行います。その後、<a href="#//apple_ref/cpp/instm/KRAnime2D/createCharacter/KRCharacter2D*_createCharacter(int_specID,_const_KRVector2D@_centerPos,_int_zOrder_=_0,_int_firstState_=_0)">createCharacters()</a> メソッドを使ってキャラクタを生成してください。生成されたキャラクタは、<a href="../../Classes/KRCharacter2D/index.html#//apple_ref/cpp/cl/KRCharacter2D">KRCharacter2D</a> クラスのインスタンスとして参照できます。</p>
  */
 class KRAnime2D : public KRObject {
 
@@ -184,7 +201,7 @@ public:
     /*!
         @method loadCharacterSpecs
         @abstract ゲーム内で利用するキャラクタの特徴を、指定されたファイルから読み込みます。
-        <p>キャラクタの特徴記述の仕様は、開発ガイドの「キャラクタ・アニメーション」を参照してください。</p>
+        <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
      */
     void    loadCharacterSpecs(const std::string& specFileName);
 
@@ -239,15 +256,9 @@ public:
 
     /*!
         @method getTextureLoadingProgress
-        テクスチャ読み込みの進行度合いを取得します。
+        テクスチャ読み込みの進行度合いを、0.0 〜 1.0 で取得します。
      */
     double  getTextureLoadingProgress() const;
-    
-    /*!
-        @method isLoadingTextures
-        テクスチャ読み込みが行われているかどうかを取得します。
-     */
-    bool    isLoadingTextures() const;
     
     /*!
         @method startLoadingTextures
@@ -258,5 +269,11 @@ public:
 };
 
 
+/*!
+    @var    gKRAnime2DInst
+    @group  Game 2D Graphics
+    @abstract 2Dアニメーション管理機構のインスタンスを指す変数です。
+    この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
+ */
 extern KRAnime2D*   gKRAnime2DInst;
 
