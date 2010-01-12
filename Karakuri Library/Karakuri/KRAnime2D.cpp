@@ -53,8 +53,11 @@ void KRCharacter2DSpec::addStateImage(int state, const KRVector2DInt& atlasPos, 
 {
     _KRCharacter2DState* theState = mStateMap[state];
     if (theState == NULL) {
-        throw KRGameError("KRCharacter2DSpec::addStateImage() State %d is not registered.", state);
-        return;
+        const char *errorFormat = "KRCharacter2DSpec::addStateImage() State %d is not registered.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "KRCharacter2DSpec::addStateImage() 状態 %d は登録されていません。";
+        }        
+        throw KRRuntimeError(errorFormat, state);
     }
     
     if (isRepeatHead) {
@@ -123,7 +126,11 @@ void KRCharacter2D::changeState(int state)
 
     _KRCharacter2DState* theState = mCharaSpec->_getState(state);
     if (theState == NULL) {
-        throw KRRuntimeError("KRCharacter2D::changeState() State %d was not found for character spec %d.\n", state, mCharaSpec->_getSpecID());
+        if (gKRLanguage == KRLanguageJapanese) {
+            throw KRRuntimeError("KRCharacter2D::changeState() キャラクタ特徴 %d の 状態 %d は見つかりませんでした。\n", mCharaSpec->_getSpecID(), state);
+        } else {
+            throw KRRuntimeError("KRCharacter2D::changeState() State %d was not found for character spec %d.\n", state, mCharaSpec->_getSpecID());
+        }
         return;
     }
     
@@ -382,7 +389,11 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
         
         if (command == "chara") {
             if (elemCount < 5) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Too few parameters for chara command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Too few parameters for chara command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() chara 命令の引数が不足しています。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             int specID = atoi(vec[1].c_str());
             std::string textureName = vec[2];
@@ -403,15 +414,27 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
         }
         else if (command == "state") {
             if (theSpec == NULL) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() State command without chara command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() State command without chara command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() chara 命令なしに state 命令が呼び出されました。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             if (elemCount < 2) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() No state-id for state command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() No state-id for state command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() state 命令に状態IDがありません。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             int stateID = atoi(vec[1].c_str());
             
             if (stateID < 0) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() State-id should be greater than or equal to 0 (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() State-id should be greater than or equal to 0 (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() 状態IDは 0 以上でなければいけません。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             
             int interval = 1;
@@ -422,7 +445,11 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
             for (int i = 2; i < elemCount; i++) {
                 std::vector<std::string> paramElems = KRSplitString(vec[i], " \t=");
                 if (paramElems.size() != 2) {
-                    throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Invalid state command param: \"%s\" (file=%s, line=%d)", vec[i].c_str(), specFileName.c_str(), lineCount);
+                    const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Invalid state command param: \"%s\" (file=%s, line=%d)";
+                    if (gKRLanguage == KRLanguageJapanese) {
+                        errorFormat = "KRAnime2D::loadCharacterSpecs() state 命令のパラメータのフォーマットが不正です: \"%s\" (file=%s, line=%d)";
+                    }
+                    throw KRRuntimeError(errorFormat, vec[i].c_str(), specFileName.c_str(), lineCount);
                 }
                 if (paramElems[0] == "repeat") {
                     if (paramElems[1] == "ever") {
@@ -447,10 +474,18 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
         }
         else if (command == "back-to") {
             if (theSpec == NULL) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Back-to command without chara command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Back-to command without chara command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() chara 命令なしに back-to 命令が呼び出されました。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             if (theStateID < 0) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Back-to command without state command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Back-to command without state command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() state 命令なしに back-to 命令が呼び出されました。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             for (int i = 1; i < elemCount; i++) {
                 _KRCharacter2DState *theState = theSpec->_getState(theStateID);
@@ -459,13 +494,25 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
         }
         else if (command == "image") {
             if (theSpec == NULL) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Image command without chara command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Image command without chara command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() chara 命令なしに image 命令が呼び出されました。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             if (theStateID < 0) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Image command without state command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Image command without state command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() state 命令なしに image 命令が呼び出されました。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             if (elemCount < 3) {
-                throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Too few parameters for image command (file=%s, line=%d)", specFileName.c_str(), lineCount);
+                const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Too few parameters for image command (file=%s, line=%d)";
+                if (gKRLanguage == KRLanguageJapanese) {
+                    errorFormat = "KRAnime2D::loadCharacterSpecs() image 命令の引数が不足しています。 (file=%s, line=%d)";
+                }
+                throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             int atlasX = atoi(vec[1].c_str());
             int atlasY = atoi(vec[2].c_str());
@@ -477,7 +524,11 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
             theSpec->addStateImage(theStateID, KRVector2DInt(atlasX, atlasY), isRepeatHead);
         }
         else {
-            throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Unknown command: \"%s\" (file=%s, line=%d)", command.c_str(), specFileName.c_str(), lineCount);
+            const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Unknown command: \"%s\" (file=%s, line=%d)";
+            if (gKRLanguage == KRLanguageJapanese) {
+                errorFormat = "KRAnime2D::loadCharacterSpecs() 不明な命令: \"%s\" (file=%s, line=%d)";
+            }
+            throw KRRuntimeError(errorFormat, command.c_str(), specFileName.c_str(), lineCount);
         }
     }
 
@@ -497,6 +548,13 @@ void KRAnime2D::loadCharacterSpecs(const std::string& specFileName)
 KRCharacter2D* KRAnime2D::createCharacter(int specID, const KRVector2D& centerPos, int zOrder, int firstState)
 {
     KRCharacter2DSpec* theSpec = mCharaSpecMap[specID];
+    if (theSpec == NULL) {
+        const char *errorFormat = "KRAnime2D::createCharacter() Character spec was not found for spec-id %d.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "KRAnime2D::createCharacter() ID が %d のキャラクタ特徴は見つかりませんでした。";
+        }
+        throw KRRuntimeError(errorFormat, specID);
+    }
 
     KRCharacter2D *newChara = new KRCharacter2D(theSpec, centerPos, zOrder, firstState);
 
@@ -601,7 +659,11 @@ void KRAnime2D::_drawTexture(int textureID, const KRVector2DInt& atlasPos, const
 {
     _KRTexture2DInfo* texInfo = mTextureInfoMap[textureID];
     if (texInfo == NULL) {
-        throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Failed to find texture id %d.", textureID);
+        const char *errorFormat = "KRAnime2D::loadCharacterSpecs() Failed to find texture id %d.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "KRAnime2D::loadCharacterSpecs() ID が %d のテクスチャは見つかりませんでした。";
+        }
+        throw KRRuntimeError(errorFormat, textureID);
         return;
     }
 

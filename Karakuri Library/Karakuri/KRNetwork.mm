@@ -724,7 +724,7 @@ KRNetwork::~KRNetwork()
 std::list<std::string> KRNetwork::getMessages() throw(KRNetworkError, KRRuntimeError)
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KRNetwork::getMessages() without setting the game ID.";
+        const char *errorFormat = "You have tried to invoke KRNetwork::getMessages() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::getMessages() 関数が呼ばれました。";
         }
@@ -755,7 +755,7 @@ void KRNetwork::reset()
 std::string KRNetwork::getOwnName() const
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KRNetwork::getOwnName() without setting the game ID.";
+        const char *errorFormat = "You have tried to invoke KRNetwork::getOwnName() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::getOwnName() 関数が呼ばれました。";
         }
@@ -768,7 +768,7 @@ std::string KRNetwork::getOwnName() const
 int KRNetwork::sendMessage(const std::string& str) throw(KRNetworkError, KRRuntimeError)
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KRNetwork::sendMessage() without setting the game ID.";
+        const char *errorFormat = "You have tried to invoke KRNetwork::sendMessage() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::sendMessage() 関数が呼ばれました。";
         }
@@ -783,7 +783,7 @@ int KRNetwork::sendMessage(const std::string& str) throw(KRNetworkError, KRRunti
 void KRNetwork::showPeerPicker() throw(KRRuntimeError)
 {
     if (mImpl == NULL) {
-        std::string errorFormat = "You have tried to invoke KRNetwork::showPeerPicker() without setting the game ID.";
+        const char *errorFormat = "You have tried to invoke KRNetwork::showPeerPicker() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::showPeerPicker() 関数が呼ばれました。";
         }

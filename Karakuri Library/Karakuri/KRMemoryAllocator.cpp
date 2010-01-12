@@ -24,7 +24,11 @@ KRMemoryAllocator::KRMemoryAllocator(size_t maxClassSize, int maxCount, const st
     for (int i = 0; i < maxCount; i++) {
         KRMemoryElement *newElem = (KRMemoryElement *)malloc(maxClassSize + sizeof(KRMemoryElement));
         if (newElem == NULL) {
-            throw KRGameError("Failed to allocate enough memory (size=%d) <%s>.", allocateSize, mDebugName.c_str());
+            const char *errorFormat = "KRMemoryAllocator: Failed to allocate enough memory (size=%d) <%s>.";
+            if (gKRLanguage == KRLanguageJapanese) {
+                errorFormat = "KRMemoryAllocator: 十分なメモリを確保できませんでした。 (size=%d) <%s>.";
+            }
+            throw KRRuntimeError(errorFormat, allocateSize, mDebugName.c_str());
         }
         lastElem->next = newElem;
         newElem->prev = lastElem;
@@ -55,10 +59,18 @@ KRMemoryAllocator::~KRMemoryAllocator()
 void* KRMemoryAllocator::allocate(size_t size)
 {
     if (size > mMaxClassSize) {
-        throw KRGameError("Memory allocation size error (request=%dbytes, limit=%dbytes) <%s>.", (int)size, (int)mMaxClassSize, mDebugName.c_str());
+        const char *errorFormat = "KRMemoryAllocator: Memory allocation size error (request=%dbytes, limit=%dbytes) <%s>.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "KRMemoryAllocator: new で要求されたメモリサイズが、登録されたクラスの最大メモリサイズを超えました。 (request=%dbytes, limit=%dbytes) <%s>.";
+        }
+        throw KRRuntimeError(errorFormat, (int)size, (int)mMaxClassSize, mDebugName.c_str());
     }
     if (mAllocateCount >= mMaxCount) {
-        throw KRGameError("You tried to allocate memory fragments over max count %d <%s>.", mMaxCount, mDebugName.c_str());
+        const char *errorFormat = "KRMemoryAllocator: Tried to instantiate over max count %d <%s>.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "KRMemoryAllocator: 設定された最大数 %d を超えてインスタンスを作成しようとしました。 <%s>.";
+        }
+        throw KRRuntimeError(errorFormat, mMaxCount, mDebugName.c_str());
     }
     
     KRMemoryElement *theElem = mLastFreeElement;

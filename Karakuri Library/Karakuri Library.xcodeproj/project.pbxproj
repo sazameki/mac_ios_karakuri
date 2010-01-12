@@ -1212,10 +1212,10 @@
 				8EAB5F7E101B205C00DDA881 /* KRGraphics.cpp */,
 				8EAB5F7F101B205C00DDA881 /* KRInput.h */,
 				8EAB5F80101B205C00DDA881 /* KRInput.mm */,
-				8EBE81371028988800F77A39 /* KRRandom.h */,
-				8EBE81381028988900F77A39 /* KRRandom.cpp */,
 				8EFCEAD910F9979900E9598B /* KRMemoryAllocator.h */,
 				8EFCEADA10F9979900E9598B /* KRMemoryAllocator.cpp */,
+				8EBE81371028988800F77A39 /* KRRandom.h */,
+				8EBE81381028988900F77A39 /* KRRandom.cpp */,
 			);
 			name = foundation;
 			sourceTree = "<group>";

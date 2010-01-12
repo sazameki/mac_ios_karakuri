@@ -32,8 +32,8 @@ struct _KRTexture2DInfo {
 };
 
 
-/*!
-    @class KRCharacter2DSpec
+/*
+    @-class KRCharacter2DSpec
     @group Game 2D Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
     <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
@@ -192,7 +192,7 @@ public:
      */
 
     /*!
-        @method addCharacterSpec
+        @-method addCharacterSpec
         @abstract キャラクタの ID を指定して、新しいキャラクタの特徴を追加します。
         追加されたキャラクタの特徴は、ゲーム終了時に自動的に delete されます。
      */
@@ -217,12 +217,6 @@ public:
         キャラクタの特徴 ID を指定して、新しいキャラクタを生成します。
      */
     KRCharacter2D*  createCharacter(int specID, const KRVector2D& centerPos, int zOrder = 0, int firstState = 0);
-    
-    /*!
-        @method drawAllCharacters
-        すべてのキャラクタを描画します。重なって表示されるキャラクタには、Zオーダが適用されます。
-     */
-    void    drawAllCharacters();
 
     /*!
         @method removeAllCharacters
@@ -238,13 +232,25 @@ public:
 
     void    _reorderCharacter(KRCharacter2D *chara);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 
+
+#pragma mark ---- アニメーションの実行 ----
+
+    /*!
+        @task アニメーションの実行
+     */
+    /*!
+        @method drawAllCharacters
+        すべてのキャラクタを描画します。重なって表示されるキャラクタには、Zオーダが適用されます。
+     */
+    void    drawAllCharacters();
+    
     /*!
         @method stepAllCharacters
         すべてのキャラクタのアニメーションをステップ実行します。
      */
     void    stepAllCharacters();
 
-    
+
 #pragma mark ---- テクスチャの管理 ----
     /*!
         @task テクスチャの管理

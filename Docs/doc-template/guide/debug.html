@@ -26,7 +26,22 @@
 
 <h2>デバッグ文字列の出力</h2>
 
-<p>Karakuri Framework に用意されているすべてのクラスは、<a href="../referencelibrary/Game Foundation/Classes/KRObject/index.html#//apple_ref/cpp/instm/KRObject/c_str/const_char_*c_str()_const">const char *c_str()</a> 関数および <a href="../referencelibrary/Game Foundation/Classes/KRObject/index.html#//apple_ref/cpp/instm/KRObject/to_s/virtual_std::string_to_s()_const">std::string to_s()</a> 関数をもっています。printf() 関数や std::cout でデバッグ出力を行ってください。</p>
+<h3>デバッグ文字列の取得</h3>
+
+<p>Karakuri Framework に用意されているすべてのクラスは、KRObject クラスから継承しており、現在の状態を文字列として表すための <a href="../referencelibrary/Game Foundation/Classes/KRObject/index.html#//apple_ref/cpp/instm/KRObject/c_str/const_char_*c_str()_const">const char *c_str()</a> 関数をもっています。</p>
+
+<h3>KRDebug(): 標準出力へのデバッグ文字列の出力</h3>
+
+<p>KRDebug() 関数を使うことで、標準出力にデバッグ文字列を出力できます。</p>
+<p>KRDebug() 関数は、printf() 関数と同じ書式を使い、複数の引数を伴って呼び出すことができます。</p>
+<p>KRDebug() 関数は、Debug ビルドでのみ標準出力に文字列を出力します。Release ビルドでは何も行いません。</p>
+
+<h3>KRDebugScreen(): ゲーム画面へのデバッグ文字列の出力</h3>
+
+<p>KRDebug() 関数と同様に使えるのが、KRDebugScreen() 関数です。KRDebugScreen() 関数は、直接ゲーム画面の上に、影付きの白文字でデバッグ文字列を表示します。とくに iPhone 実機でのデバッグに有効な手段となります。</p>
+<p>デバッグ文字列が不要となった場合には、KRClearDebugScreen() 関数を使うことで、ゲーム画面上に表示されたデバッグ文字列を削除できます。iPhone 実機での開発時には、Debug ビルドの際に、指5本タッチで KRClearDebugScreen() 関数を呼び出すようにしておくと、デバッグ作業が行いやすくなります。</p>
+<p>KRDebugScreen() 関数は、printf() 関数と同じ書式を使い、複数の引数を伴って呼び出すことができます。</p>
+<p>KRDebugScreen() 関数は、Debug ビルドでのみ標準出力に文字列を出力します。Release ビルドでは何も行いません。</p>
 
 <h2>ゲーム実行時の例外処理</h2>
 

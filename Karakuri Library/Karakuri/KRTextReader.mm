@@ -45,7 +45,11 @@ KRTextReader::KRTextReader(const std::string& filename)
 #endif
     
     if (!path) {
-        throw KRRuntimeError("KRTextReader() failed to load text named \"%s\".", filename.c_str());
+        const char *errorFormat = "KRTextReader: Failed to load text named \"%s\". Please check the file existence.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "KRTextReader: テキストファイルの読み込みに失敗しました。ファイルの存在を確認してください。\"%s\".";
+        }        
+        throw KRRuntimeError(errorFormat, filename.c_str());
     }
 
 	mFileData = nil;

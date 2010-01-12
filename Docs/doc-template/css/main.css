@@ -204,6 +204,19 @@ body.list h1 {
 	color: yellow;
 }
 
+body.list h1 a {
+    text-decoration: none;
+	color: yellow;
+}
+
+body.list h2 {
+	font-size: 14px;
+	color: gold;
+	border-bottom: 1px solid gold;
+	padding-bottom: 0;
+	margin-bottom: 4px;
+}
+
 body.list ul {
 	margin: 0;
 	padding: 0;
@@ -231,6 +244,25 @@ body.list a:hover {
 	text-decoration: underline;
 }
 
+body.list h1 a {
+    text-decoration: none;
+	color: yellow;
+}
+
+body.list h1 a:link {
+    text-decoration: none;
+	color: yellow;
+}
+
+body.list h1 a:visited {
+    text-decoration: none;
+	color: yellow;
+}
+
+body.list h1 a:hover {
+    text-decoration: none;
+	color: yellow;
+}
 
 /* ===== Guide Book ===== */
 
@@ -260,6 +292,14 @@ body.guide p {
 
 body.guide dl {
 	margin-left: 80px;
+}
+
+body.guide ul {
+	margin-left: 80px;
+}
+
+body.guide ul.top {
+	margin-left: 20px;
 }
 
 body.guide dl dt {

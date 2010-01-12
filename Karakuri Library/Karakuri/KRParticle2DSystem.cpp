@@ -54,7 +54,7 @@ void KRParticle2DSystem::init()
             sPointSpriteName = GL_POINT_SPRITE_ARB;
             sPointSpriteCoordReplaceName = GL_COORD_REPLACE_ARB;
         } else {
-            std::string errorFormat = "This computer does not support point sprite.";
+            const char *errorFormat = "This computer does not support point sprite.";
             if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "このコンピュータはポイントスプライトをサポートしていません。";
             }
