@@ -76,6 +76,6 @@
 #include <Karakuri/KRSimulator2D.h>
 
 // Network Classes
-#include <Karakuri/KarakuriNetwork.h>
+#include <Karakuri/KRNetwork.h>
 
 

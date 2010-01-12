@@ -1,12 +1,12 @@
 /*!
-    @file   KarakuriNetwork.mm
+    @file   KRNetwork.mm
     @author numata
     @date   09/08/18
  */
 
 #include <Karakuri/KarakuriLibrary.h>
 
-#include "KarakuriNetwork.h"
+#include "KRNetwork.h"
 #include "KRGameController.h"
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
@@ -67,7 +67,7 @@ typedef enum {
 const int KRNetworkBufferSize = 2048;
 
 
-@interface KarakuriNetworkImpl : NSObject<KRTCPServerDelegate> {
+@interface KRNetworkImpl : NSObject<KRTCPServerDelegate> {
     KRTCPServer   *mTCPServer;
     
     NSInputStream       *mInStream;
@@ -339,7 +339,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
 
 #pragma mark -
 
-@implementation KarakuriNetworkImpl
+@implementation KRNetworkImpl
 
 - (id)initWithGameID:(NSString *)gameID
 {
@@ -488,7 +488,7 @@ static void InvitationCallBack(CFSocketRef socketRef,
                          const void *data,
                          void *info)
 {
-    KarakuriNetworkImpl *impl = (KarakuriNetworkImpl *)info;
+    KRNetworkImpl *impl = (KRNetworkImpl *)info;
     
     if (type == kCFSocketConnectCallBack) {
         [impl processConnectCallback];
@@ -634,7 +634,7 @@ static BOOL isFDReady(int fd)
 @end
 
 
-@implementation KarakuriNetworkImpl (NSStreamDelegate)
+@implementation KRNetworkImpl (NSStreamDelegate)
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
 {
@@ -673,7 +673,7 @@ static BOOL isFDReady(int fd)
 @end
 
 
-@implementation KarakuriNetworkImpl (KRTCPServerDelegate)
+@implementation KRNetworkImpl (KRTCPServerDelegate)
 
 - (void)serverDidEnableBonjour:(KRTCPServer *)server withName:(NSString *)string
 {
@@ -708,7 +708,7 @@ KRNetwork::KRNetwork(const std::string& gameID)
 {
     gKRNetworkInst = this;
     if (gameID.length() > 0) {
-        mImpl = (KarakuriNetworkImpl *)[[KarakuriNetworkImpl alloc] initWithGameID:[NSString stringWithCString:gameID.c_str() encoding:NSUTF8StringEncoding]];
+        mImpl = (KRNetworkImpl *)[[KRNetworkImpl alloc] initWithGameID:[NSString stringWithCString:gameID.c_str() encoding:NSUTF8StringEncoding]];
     } else {
         mImpl = NULL;
     }
@@ -717,7 +717,7 @@ KRNetwork::KRNetwork(const std::string& gameID)
 KRNetwork::~KRNetwork()
 {
     if (mImpl != NULL) {
-        [(KarakuriNetworkImpl *)mImpl release];
+        [(KRNetworkImpl *)mImpl release];
     }
 }
 
@@ -730,10 +730,10 @@ std::list<std::string> KRNetwork::getMessages() throw(KRNetworkError, KRRuntimeE
         }
         throw KRRuntimeError(errorFormat);
     }
-    if (![(KarakuriNetworkImpl *)mImpl isConnected]) {
+    if (![(KRNetworkImpl *)mImpl isConnected]) {
         throw KRNetworkError("No connection");
     }
-    return [(KarakuriNetworkImpl *)mImpl receivedMessages];
+    return [(KRNetworkImpl *)mImpl receivedMessages];
 }
 
 bool KRNetwork::isConnected()
@@ -741,7 +741,7 @@ bool KRNetwork::isConnected()
     if (mImpl == NULL) {
         return false;
     }
-    return ([(KarakuriNetworkImpl *)mImpl isConnected]? true: false);
+    return ([(KRNetworkImpl *)mImpl isConnected]? true: false);
 }
 
 void KRNetwork::reset()
@@ -749,7 +749,7 @@ void KRNetwork::reset()
     if (mImpl == NULL) {
         return;
     }
-    return [(KarakuriNetworkImpl *)mImpl reset];
+    return [(KRNetworkImpl *)mImpl reset];
 }
 
 std::string KRNetwork::getOwnName() const
@@ -761,7 +761,7 @@ std::string KRNetwork::getOwnName() const
         }
         throw KRRuntimeError(errorFormat);
     }
-    NSString *ownName = [(KarakuriNetworkImpl *)mImpl ownName];
+    NSString *ownName = [(KRNetworkImpl *)mImpl ownName];
     return std::string([ownName cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
@@ -774,10 +774,10 @@ int KRNetwork::sendMessage(const std::string& str) throw(KRNetworkError, KRRunti
         }
         throw KRRuntimeError(errorFormat);
     }
-    if (![(KarakuriNetworkImpl *)mImpl isConnected]) {
+    if (![(KRNetworkImpl *)mImpl isConnected]) {
         throw KRNetworkError("No connection");
     }
-    return [(KarakuriNetworkImpl *)mImpl sendMessage:str.c_str()];
+    return [(KRNetworkImpl *)mImpl sendMessage:str.c_str()];
 }
 
 void KRNetwork::showPeerPicker() throw(KRRuntimeError)
@@ -790,27 +790,27 @@ void KRNetwork::showPeerPicker() throw(KRRuntimeError)
         throw KRRuntimeError(errorFormat);
     }
     
-    [(KarakuriNetworkImpl *)mImpl showPeerPicker];
+    [(KRNetworkImpl *)mImpl showPeerPicker];
 }
 
 void KRNetwork::doAccept() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
-        [(KarakuriNetworkImpl *)mImpl doAccept];
+        [(KRNetworkImpl *)mImpl doAccept];
     }
 }
 
 void KRNetwork::doReject() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
-        [(KarakuriNetworkImpl *)mImpl doReject];
+        [(KRNetworkImpl *)mImpl doReject];
     }
 }
 
 void KRNetwork::startInvitation(void *peerAddressData, void *peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
-        [(KarakuriNetworkImpl *)mImpl startInvitation:(NSData *)peerAddressData peerPickerUI:peerPickerUI];
+        [(KRNetworkImpl *)mImpl startInvitation:(NSData *)peerAddressData peerPickerUI:peerPickerUI];
     }
 }
 

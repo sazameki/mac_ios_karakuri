@@ -6,6 +6,7 @@
 
 #include "KarakuriDebug.h"
 #import "KRGameController.h"
+#include <sys/time.h>
 
 
 void KRDebug(const char *format, ...)

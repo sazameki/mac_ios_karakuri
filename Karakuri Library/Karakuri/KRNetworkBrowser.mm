@@ -7,7 +7,7 @@
 //
 
 #import "KRNetworkBrowser.h"
-#import "KarakuriNetwork.h"
+#import "KRNetwork.h"
 #import "KRGameController.h"
 
 

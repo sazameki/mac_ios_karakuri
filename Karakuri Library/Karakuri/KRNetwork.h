@@ -1,5 +1,5 @@
 /*!
-    @file   KarakuriNetwork.h
+    @file   KRNetwork.h
     @author numata
     @date   09/08/18
     

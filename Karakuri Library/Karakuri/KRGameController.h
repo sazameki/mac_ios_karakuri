@@ -24,7 +24,7 @@
 #import <Karakuri/KRGraphics.h>
 #import <Karakuri/KRInput.h>
 #import <Karakuri/KRFPSDisplay.h>
-#import <Karakuri/KarakuriNetwork.h>
+#import <Karakuri/KRNetwork.h>
 #import <Karakuri/KRAnime2D.h>
 
 

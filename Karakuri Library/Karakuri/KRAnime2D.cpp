@@ -51,7 +51,7 @@ void KRCharacter2DSpec::addStateImage(int state, const KRVector2DInt& atlasPos, 
 {
     _KRCharacter2DState* theState = mStateMap[state];
     if (theState == NULL) {
-        // TODO: エラーの表示
+        throw KRGameError("KRCharacter2DSpec::addStateImage() State %d is not registered.", state);
         return;
     }
     
@@ -580,7 +580,7 @@ void KRAnime2D::_drawTexture(int textureID, const KRVector2DInt& atlasPos, const
 {
     _KRTexture2DInfo* texInfo = mTextureInfoMap[textureID];
     if (texInfo == NULL) {
-        // TODO: 警告の表示
+        throw KRRuntimeError("KRAnime2D::loadCharacterSpecs() Failed to find texture id %d.", textureID);
         return;
     }
 

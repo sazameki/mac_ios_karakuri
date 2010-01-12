@@ -7,7 +7,7 @@
 //
 
 #import "KRPeerPicker.h"
-#import "KarakuriNetwork.h"
+#import "KRNetwork.h"
 #import "KRGame.h"
 
 #include <sys/socket.h>

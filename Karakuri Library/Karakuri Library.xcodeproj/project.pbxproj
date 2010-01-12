@@ -411,14 +411,14 @@
 		8E75FE39105288CE0012DAD3 /* KRBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E75FE37105288CE0012DAD3 /* KRBundle.m */; };
 		8E75FE3A105288CE0012DAD3 /* KRBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E75FE36105288CE0012DAD3 /* KRBundle.h */; };
 		8E75FE3B105288CE0012DAD3 /* KRBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E75FE37105288CE0012DAD3 /* KRBundle.m */; };
-		8E87B6E7103A04F80010745C /* KarakuriNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KarakuriNetwork.h */; };
-		8E87B6E8103A04F80010745C /* KarakuriNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */; };
-		8E87B6E9103A04F80010745C /* KarakuriNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KarakuriNetwork.h */; };
-		8E87B6EA103A04F80010745C /* KarakuriNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */; };
-		8E87B6EB103A04F80010745C /* KarakuriNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KarakuriNetwork.h */; };
-		8E87B6EC103A04F80010745C /* KarakuriNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */; };
-		8E87B6ED103A04F80010745C /* KarakuriNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KarakuriNetwork.h */; };
-		8E87B6EE103A04F80010745C /* KarakuriNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */; };
+		8E87B6E7103A04F80010745C /* KRNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KRNetwork.h */; };
+		8E87B6E8103A04F80010745C /* KRNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KRNetwork.mm */; };
+		8E87B6E9103A04F80010745C /* KRNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KRNetwork.h */; };
+		8E87B6EA103A04F80010745C /* KRNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KRNetwork.mm */; };
+		8E87B6EB103A04F80010745C /* KRNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KRNetwork.h */; };
+		8E87B6EC103A04F80010745C /* KRNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KRNetwork.mm */; };
+		8E87B6ED103A04F80010745C /* KRNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E87B6E5103A04F80010745C /* KRNetwork.h */; };
+		8E87B6EE103A04F80010745C /* KRNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E87B6E6103A04F80010745C /* KRNetwork.mm */; };
 		8E946908102265240073A4FD /* KRPrimitive2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E946906102265240073A4FD /* KRPrimitive2D.h */; };
 		8E946909102265240073A4FD /* KRPrimitive2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E946907102265240073A4FD /* KRPrimitive2D.cpp */; };
 		8E94690A102265240073A4FD /* KRPrimitive2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E946906102265240073A4FD /* KRPrimitive2D.h */; };
@@ -824,8 +824,8 @@
 		8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRSimulator2DJoint.cpp; sourceTree = "<group>"; };
 		8E75FE36105288CE0012DAD3 /* KRBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRBundle.h; sourceTree = "<group>"; };
 		8E75FE37105288CE0012DAD3 /* KRBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRBundle.m; sourceTree = "<group>"; };
-		8E87B6E5103A04F80010745C /* KarakuriNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriNetwork.h; sourceTree = "<group>"; };
-		8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriNetwork.mm; sourceTree = "<group>"; };
+		8E87B6E5103A04F80010745C /* KRNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRNetwork.h; sourceTree = "<group>"; };
+		8E87B6E6103A04F80010745C /* KRNetwork.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRNetwork.mm; sourceTree = "<group>"; };
 		8E946906102265240073A4FD /* KRPrimitive2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRPrimitive2D.h; sourceTree = "<group>"; };
 		8E946907102265240073A4FD /* KRPrimitive2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRPrimitive2D.cpp; sourceTree = "<group>"; };
 		8E9792681020C00700E3EC7A /* KRFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRFont.h; sourceTree = "<group>"; };
@@ -1122,8 +1122,8 @@
 		8E87B6D6103A03D60010745C /* network */ = {
 			isa = PBXGroup;
 			children = (
-				8E87B6E5103A04F80010745C /* KarakuriNetwork.h */,
-				8E87B6E6103A04F80010745C /* KarakuriNetwork.mm */,
+				8E87B6E5103A04F80010745C /* KRNetwork.h */,
+				8E87B6E6103A04F80010745C /* KRNetwork.mm */,
 				8E422E42103B3C8500ED3880 /* KRNetworkBrowser.h */,
 				8E422E43103B3C8500ED3880 /* KRNetworkBrowser.mm */,
 			);
@@ -1401,7 +1401,7 @@
 				8E6023BD1032B0E20009C1F4 /* KRSimulator2DJoint.h in Headers */,
 				8EBB1D801034BFBE00936E01 /* KRPNGLoader.h in Headers */,
 				8EEC34E710396721009F9305 /* KRSimulator2DCollision.h in Headers */,
-				8E87B6ED103A04F80010745C /* KarakuriNetwork.h in Headers */,
+				8E87B6ED103A04F80010745C /* KRNetwork.h in Headers */,
 				8E422E46103B3C8500ED3880 /* KRNetworkBrowser.h in Headers */,
 				8E42339A103BE99D00ED3880 /* KRPeerPicker.h in Headers */,
 				8EF0565610470BE900CD7212 /* KRControlManager.h in Headers */,
@@ -1489,7 +1489,7 @@
 				8E6023BF1032B0E20009C1F4 /* KRSimulator2DJoint.h in Headers */,
 				8EBB1D7C1034BFBE00936E01 /* KRPNGLoader.h in Headers */,
 				8EEC34EB10396721009F9305 /* KRSimulator2DCollision.h in Headers */,
-				8E87B6E9103A04F80010745C /* KarakuriNetwork.h in Headers */,
+				8E87B6E9103A04F80010745C /* KRNetwork.h in Headers */,
 				8E422E48103B3C8500ED3880 /* KRNetworkBrowser.h in Headers */,
 				8E423B50103C8A2A00ED3880 /* KRPeerPicker.h in Headers */,
 				8EF0565C10470BE900CD7212 /* KRControlManager.h in Headers */,
@@ -1576,7 +1576,7 @@
 				8E6023BB1032B0E20009C1F4 /* KRSimulator2DJoint.h in Headers */,
 				8EBB1D7A1034BFBE00936E01 /* KRPNGLoader.h in Headers */,
 				8EEC34E510396721009F9305 /* KRSimulator2DCollision.h in Headers */,
-				8E87B6E7103A04F80010745C /* KarakuriNetwork.h in Headers */,
+				8E87B6E7103A04F80010745C /* KRNetwork.h in Headers */,
 				8E422E44103B3C8500ED3880 /* KRNetworkBrowser.h in Headers */,
 				8E423B52103C8A2A00ED3880 /* KRPeerPicker.h in Headers */,
 				8EF0565A10470BE900CD7212 /* KRControlManager.h in Headers */,
@@ -1664,7 +1664,7 @@
 				8E6023C11032B0E20009C1F4 /* KRSimulator2DJoint.h in Headers */,
 				8EBB1D7E1034BFBE00936E01 /* KRPNGLoader.h in Headers */,
 				8EEC34E910396721009F9305 /* KRSimulator2DCollision.h in Headers */,
-				8E87B6EB103A04F80010745C /* KarakuriNetwork.h in Headers */,
+				8E87B6EB103A04F80010745C /* KRNetwork.h in Headers */,
 				8E422E4A103B3C8500ED3880 /* KRNetworkBrowser.h in Headers */,
 				8E423398103BE99D00ED3880 /* KRPeerPicker.h in Headers */,
 				8EF0565810470BE900CD7212 /* KRControlManager.h in Headers */,
@@ -1898,7 +1898,7 @@
 				8E6023BE1032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */,
 				8EBB1D811034BFBE00936E01 /* KRPNGLoader.mm in Sources */,
 				8EEC34E810396721009F9305 /* KRSimulator2DCollision.cpp in Sources */,
-				8E87B6EE103A04F80010745C /* KarakuriNetwork.mm in Sources */,
+				8E87B6EE103A04F80010745C /* KRNetwork.mm in Sources */,
 				8E422E47103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E42339B103BE99D00ED3880 /* KRPeerPicker.mm in Sources */,
 				8EF0565710470BE900CD7212 /* KRControlManager.mm in Sources */,
@@ -1976,7 +1976,7 @@
 				8E6023C01032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */,
 				8EBB1D7D1034BFBE00936E01 /* KRPNGLoader.mm in Sources */,
 				8EEC34EC10396721009F9305 /* KRSimulator2DCollision.cpp in Sources */,
-				8E87B6EA103A04F80010745C /* KarakuriNetwork.mm in Sources */,
+				8E87B6EA103A04F80010745C /* KRNetwork.mm in Sources */,
 				8E422E49103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E423B51103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */,
 				8EF0565D10470BE900CD7212 /* KRControlManager.mm in Sources */,
@@ -2053,7 +2053,7 @@
 				8E6023BC1032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */,
 				8EBB1D7B1034BFBE00936E01 /* KRPNGLoader.mm in Sources */,
 				8EEC34E610396721009F9305 /* KRSimulator2DCollision.cpp in Sources */,
-				8E87B6E8103A04F80010745C /* KarakuriNetwork.mm in Sources */,
+				8E87B6E8103A04F80010745C /* KRNetwork.mm in Sources */,
 				8E422E45103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E423B53103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */,
 				8EF0565B10470BE900CD7212 /* KRControlManager.mm in Sources */,
@@ -2131,7 +2131,7 @@
 				8E6023C21032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */,
 				8EBB1D7F1034BFBE00936E01 /* KRPNGLoader.mm in Sources */,
 				8EEC34EA10396721009F9305 /* KRSimulator2DCollision.cpp in Sources */,
-				8E87B6EC103A04F80010745C /* KarakuriNetwork.mm in Sources */,
+				8E87B6EC103A04F80010745C /* KRNetwork.mm in Sources */,
 				8E422E4B103B3C8500ED3880 /* KRNetworkBrowser.mm in Sources */,
 				8E423399103BE99D00ED3880 /* KRPeerPicker.mm in Sources */,
 				8EF0565910470BE900CD7212 /* KRControlManager.mm in Sources */,
