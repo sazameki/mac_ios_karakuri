@@ -25,6 +25,7 @@ private:
     std::string mFileName;
     void        *mImpl;
     bool        mDoLoop;
+    bool        mIsPausing;
     
 public:
     /*!

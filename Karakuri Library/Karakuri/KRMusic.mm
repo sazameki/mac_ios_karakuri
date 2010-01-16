@@ -28,6 +28,8 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
     mFileName = filename;
     mDoLoop = loop;
     
+    mIsPausing = false;
+    
     mImpl = nil;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
@@ -149,7 +151,11 @@ void KRMusic::play()
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            [(NSSound *)mImpl play];
+            if (mIsPausing) {
+                [(NSSound *)mImpl resume];
+            } else {
+                [(NSSound *)mImpl play];
+            }
         } else {
             [(KarakuriSound *)mImpl play];
         }
@@ -161,6 +167,8 @@ void KRMusic::play()
         [(AVAudioPlayer *)mImpl play];
     }
 #endif
+
+    mIsPausing = false;
 }
 
 void KRMusic::pause()
@@ -180,6 +188,8 @@ void KRMusic::pause()
         [(AVAudioPlayer *)mImpl pause];
     }
 #endif
+    
+    mIsPausing = true;
 }
 
 void KRMusic::stop()
@@ -199,6 +209,8 @@ void KRMusic::stop()
         [(AVAudioPlayer *)mImpl stop];
     }
 #endif
+    
+    mIsPausing = false;
 }
 
 double KRMusic::getVolume() const
