@@ -50,6 +50,7 @@ class KRGame : public KRObject {
     KRAudioMixType  mAudioMixType;
     bool            mShowsMouseCursor;
     bool            mShowsFPS;
+    int             mMaxCharacter2DCount;
     
     std::string     mGameIDForNetwork;
     std::string     mNetworkStartWorldName;
@@ -96,6 +97,12 @@ public:
         @method     getGameIDForNetwork
      */
     std::string     getGameIDForNetwork() const;
+    
+    /*!
+        @method     getMaxCharacter2DCount
+        2Dアニメーション機構で使用する最大のキャラクタ個数を取得します。
+     */
+    int             getMaxCharacter2DCount() const;
     
     /*!
         @method     getNetworkStartWorldName
@@ -156,6 +163,12 @@ protected:
         デフォルトのフレームレートは、60.0 fps に設定されています。
      */
     void            setFrameRate(double value);
+    
+    /*!
+        @method     setMaxCharacter2DCount
+        2Dアニメーション機構で使用する最大のキャラクタ個数を設定します。デフォルトの個数は256個です。
+     */
+    void            setMaxCharacter2DCount(int count);
     
     /*!
         @method		setNetworkGameID

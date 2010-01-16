@@ -11,6 +11,8 @@
 #include <Karakuri/Karakuri.h>
 
 
+extern KRMemoryAllocator*   gKRCharacter2DAllocator;
+
 
 struct _KRCharacter2DState {
     int     state;
@@ -91,7 +93,9 @@ public:
     <p>キャラクタのZオーダは、現在位置や描画色とは違い、setZOrder() メソッドを使って変更してください。</p>
  */
 class KRCharacter2D : public KRObject {
-    
+
+    KR_DECLARE_USE_ALLOCATOR(gKRCharacter2DAllocator)
+
 private:
     KRCharacter2DSpec*  mCharaSpec;
     int                 mState;
@@ -181,7 +185,7 @@ class KRAnime2D : public KRObject {
     std::map<int, _KRTexture2DInfo*>    mTextureInfoMap;
     
 public:
-	KRAnime2D();
+	KRAnime2D(int maxCharacter2DSize);
 	virtual ~KRAnime2D();
 
 public:
@@ -281,5 +285,6 @@ public:
     @abstract 2Dアニメーション管理機構のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KRAnime2D*   gKRAnime2DInst;
+extern KRAnime2D*           gKRAnime2DInst;
+
 

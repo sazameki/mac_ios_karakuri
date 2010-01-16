@@ -8,6 +8,7 @@
 
 
 KRAnime2D* gKRAnime2DInst = NULL;
+KRMemoryAllocator*  gKRCharacter2DAllocator = NULL;
 
 
 static bool     sHasLoadedTextures = true;
@@ -313,9 +314,11 @@ void KRCharacter2D::_draw()
 #pragma mark -
 #pragma mark KRAnime2D クラスの実装
 
-KRAnime2D::KRAnime2D()
+KRAnime2D::KRAnime2D(int maxCharacter2DSize)
 {
     gKRAnime2DInst = this;
+    
+    gKRCharacter2DAllocator = new KRMemoryAllocator(sizeof(KRCharacter2D), maxCharacter2DSize, "kr-chara2d-alloc");
 }
 
 KRAnime2D::~KRAnime2D()
@@ -341,6 +344,9 @@ KRAnime2D::~KRAnime2D()
         }
         mTextureInfoMap.clear();
     }
+    
+    delete gKRCharacter2DAllocator;
+    gKRCharacter2DAllocator = NULL;
 }
 
 

@@ -17,12 +17,23 @@ static BOOL sIsUpdatingModel = NO;
 
 
 KRGame::KRGame()
-    : mTitle("Karakuri Game"), mFrameRate(60.0), mScreenWidth(480), mScreenHeight(320),
-      mAudioMixType(KRAudioMixTypeAmbientSolo), mShowsMouseCursor(false), mShowsFPS(false),
-      mGameIDForNetwork("")
 {
     gKRGameInst = this;
     
+    mTitle = "Karakuri Game";
+
+    mFrameRate = 60.0;
+    mScreenWidth = 480;
+    mScreenHeight = 320;
+
+    mAudioMixType = KRAudioMixTypeAmbientSolo;
+    mShowsMouseCursor = false;
+    mShowsFPS = false;
+    
+    mMaxCharacter2DCount = 256;
+
+    mGameIDForNetwork = "";
+
     mWasChangingWorld = false;
     
     mWorldManager = new KRWorldManager();
@@ -86,6 +97,16 @@ bool KRGame::getShowsFPS() const
 void KRGame::setShowsFPS(bool flag)
 {
     mShowsFPS = flag;
+}
+
+int KRGame::getMaxCharacter2DCount() const
+{
+    return mMaxCharacter2DCount;
+}
+
+void KRGame::setMaxCharacter2DCount(int count)
+{
+    mMaxCharacter2DCount = count;
 }
 
 void KRGame::setScreenSize(int width, int height)

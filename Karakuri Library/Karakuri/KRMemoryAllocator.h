@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <Karakuri/Karakuri.h>
+#include <Karakuri/KarakuriLibrary.h>
 
 
 /*!
