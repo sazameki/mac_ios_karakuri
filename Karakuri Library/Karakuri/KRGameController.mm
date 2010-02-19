@@ -109,7 +109,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         mGraphics = new KRGraphics();
         mInput = new KRInput();
         mTex2DManager = new KRTexture2DManager();
-        mAnime2DManager = new KRAnime2DManager(mGameManager->getMaxCharacter2DCount());
+        mAnime2DManager = new KRAnime2DManager(mGameManager->getMaxChara2DCount());
         mAudioManager = new KRAudioManager();
         
         mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGameManager->getFrameRate()));
@@ -145,6 +145,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         [self setupApplication];
     }
     return self;
+}
+
+- (BOOL)isGameInitialized
+{
+    return mGameIsInitialized;
 }
 
 - (void)cleanUpResources
@@ -265,6 +270,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 - (KRGameManager*)game
 {
     return mGameManager;
+}
+
+- (void)updateFrameRateSetting
+{
+    mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGameManager->getFrameRate()));
 }
 
 #if __DEBUG__

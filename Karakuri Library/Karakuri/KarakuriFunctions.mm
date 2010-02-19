@@ -67,12 +67,12 @@ void KRTranslate2D(const KRVector2D& size)
 
 void KRSleep(double interval)
 {
-    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:interval]];
+    gKRGameMan->sleep(interval);
 }
 
 double KRCurrentTime()
 {
-    return [NSDate timeIntervalSinceReferenceDate];
+    return gKRGameMan->getCurrentTime();
 }
 
 void KRChangeWorld(const std::string& worldName)

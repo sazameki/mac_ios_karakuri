@@ -11,10 +11,14 @@
 #include <Karakuri/Karakuri.h>
 
 
-extern KRMemoryAllocator*   gKRCharacter2DAllocator;
+class KRParticle2DSystem;
+class KRSimulator2D;
 
 
-struct _KRCharacter2DState {
+extern KRMemoryAllocator*   gKRChara2DAllocator;
+
+
+struct _KRChara2DState {
     int     state;
     int     repeatCount;
     bool    doReverse;
@@ -28,15 +32,15 @@ struct _KRCharacter2DState {
 
 
 /*
-    @-class KRCharacter2DSpec
+    @-class KRChara2DSpec
     @group Game 2D Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
     <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
-class KRCharacter2DSpec : public KRObject {
-    std::map<int, _KRCharacter2DState*>     mStateMap;
-    int                                     mTextureID;
-    int                                     mSpecID;
+class KRChara2DSpec : public KRObject {
+    std::map<int, _KRChara2DState*> mStateMap;
+    int                             mTextureID;
+    int                             mSpecID;
 
 public:
     /*!
@@ -44,12 +48,12 @@ public:
      */
 
     /*!
-        @method KRCharacter2DSpec
+        @method KRChara2DSpec
         テクスチャ名とアトラスのサイズを指定して、新しいキャラクタの特徴を生成します。
      */
-    KRCharacter2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize);
+    KRChara2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize);
     
-    ~KRCharacter2DSpec();
+    ~KRChara2DSpec();
     
 public:
     /*!
@@ -68,15 +72,16 @@ public:
      */
     void    addStateImage(int state, const KRVector2DInt& atlasPos, bool isRepeatHead = false);
     
-    _KRCharacter2DState*    _getState(int state);   KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    _KRChara2DState*        _getState(int state);   KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     int                     _getTextureID() const;  KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     int                     _getSpecID() const;     KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    bool                    _isTextureAtlased() const;  KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     void                    _setSpecID(int specID); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 };
 
 /*!
-    @class KRCharacter2D
+    @class KRChara2D
     @group Game 2D Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
     <p>このクラスのインスタンスは、グローバル変数 gKRAnime2DInst を使ってアクセスできる <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスの <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/createCharacter/KRCharacter2D*_createCharacter(int_specID,_const_KRVector2D@_centerPos,_int_zOrder_=_0,_int_firstState_=_0)">createCharacter</a> メソッドを使って作成します。</p>
@@ -85,12 +90,12 @@ public:
     <p>キャラクタの描画色は、public な color 変数を直接いじって変更してください。</p>
     <p>キャラクタのZオーダは、現在位置や描画色とは違い、setZOrder() メソッドを使って変更してください。</p>
  */
-class KRCharacter2D : public KRObject {
+class KRChara2D : public KRObject {
 
-    KR_DECLARE_USE_ALLOCATOR(gKRCharacter2DAllocator)
+    KR_DECLARE_USE_ALLOCATOR(gKRChara2DAllocator)
 
 private:
-    KRCharacter2DSpec*  mCharaSpec;
+    KRChara2DSpec*      mCharaSpec;
     int                 mState;
     int                 mImageInterval;
     int                 mZOrder;
@@ -105,19 +110,37 @@ private:
     
 public:
     /*!
-        @var    pos
-        キャラクタの現在の描画位置です。テクスチャアトラス描画の中心点を示します。
+        @var    angle
+        キャラクタの現在の角度です。
      */
-    KRVector2D          pos;
+    double              angle;
+    
+    /*!
+        @var    blendMode
+        キャラクタの現在の描画モードです。
+     */
+    KRBlendMode         blendMode;
 
     /*!
         @var    color
         キャラクタの現在の描画色です。
      */
     KRColor             color;
+    
+    /*!
+        @var    pos
+        キャラクタの現在の描画位置です。テクスチャアトラス描画の中心点を示します。
+     */
+    KRVector2D          pos;
+    
+    /*!
+        @var    scale
+        キャラクタの現在の拡大率です。
+     */
+    double              scale;
 
 public:
-    KRCharacter2D(KRCharacter2DSpec *charaSpec, const KRVector2D& centerPos, int zOrder, void *repObj = NULL);
+    KRChara2D(KRChara2DSpec *charaSpec, const KRVector2D& centerPos, int zOrder, void *repObj = NULL);
     
 public:
     /*!
@@ -125,10 +148,10 @@ public:
      */
 
     /*!
-        @method getRepresentedObject
+        @method getObject
         このキャラクタに関連付けられているオブジェクトのポインタを取得します。
      */
-    void    *getRepresentedObject() const;
+    void    *getObject() const;
 
     /*!
         @method getSize
@@ -161,10 +184,10 @@ public:
     void    changeState(int state);
 
     /*!
-        @method setRepresentedObject
+        @method setObject
         このキャラクタに関連付けるオブジェクトのポインタを指定します。
      */
-    void    setRepresentedObject(void *anObj);
+    void    setObject(void *anObj);
 
     /*!
         @method setZOrder
@@ -188,42 +211,21 @@ public:
  */
 class KRAnime2DManager : public KRObject {
 
-    std::map<int, KRCharacter2DSpec*>   mCharaSpecMap;
-    std::list<KRCharacter2D*>           mCharacters;
+    std::map<int, KRChara2DSpec*>   mCharaSpecMap;
+    std::list<KRChara2D*>           mCharas;
+    
+    std::map<int, KRParticle2DSystem*>  mParticleSystemMap;
+    std::map<int, KRSimulator2D*>       mSimulatorMap;
+    
+    int                             mNextInnerCharaSpecID;
+    int                             mNextSimulatorID;
 
 public:
-	KRAnime2DManager(int maxCharacter2DSize);
+	KRAnime2DManager(int maxChara2DSize);
 	virtual ~KRAnime2DManager();
 
 public:
     
-#pragma mark ---- キャラクタの特徴の管理 ----
-    /*!
-        @task キャラクタの特徴の管理
-     */
-
-    /*!
-        @-method _addCharacterSpec
-        @abstract キャラクタの ID を指定して、新しいキャラクタの特徴を追加します。
-        追加されたキャラクタの特徴は、ゲーム終了時に自動的に delete されます。
-     */
-    void    _addCharacterSpec(int specID, KRCharacter2DSpec *spec);
-    
-    /*!
-        @-method loadCharacterSpecs
-        @abstract ゲーム内で利用するキャラクタの特徴を、指定されたファイルから読み込みます。
-        <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
-     */
-    void    _loadCharacterSpecs(const std::string& specFileName);
-    
-    /*!
-        @method addCharacterSpecs
-        @abstract ゲーム内で利用するキャラクタの特徴ファイルを追加します。
-        <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
-     */
-    void    addCharacterSpecs(int groupID, const std::string& specFileName);
-
-
 #pragma mark ---- キャラクタの管理 ----
 
     /*!
@@ -231,42 +233,131 @@ public:
      */
 
     /*!
-        @method createCharacter
-        @abstract キャラクタの特徴 ID、最初の表示位置、状態を指定して、新しいキャラクタを生成します。
+        @-method _addCharaSpec
+        @abstract キャラクタの ID を指定して、新しいキャラクタの特徴を追加します。
+        追加されたキャラクタの特徴は、ゲーム終了時に自動的に delete されます。
      */
-    KRCharacter2D*  createCharacter(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
+    void    _addCharaSpec(int specID, KRChara2DSpec *spec);
+    
+    /*!
+        @-method loadCharaSpecs
+        @abstract ゲーム内で利用するキャラクタの特徴を、指定されたファイルから読み込みます。
+        <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
+     */
+    void    _loadCharaSpecs(const std::string& specFileName);
+    
+    /*!
+        @method addCharaSpecs
+        @abstract ゲーム内で利用するキャラクタの特徴ファイルを追加します。
+        <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
+     */
+    void    addCharaSpecs(int groupID, const std::string& specFileName);
+    
+    int     _addTexCharaSpec(int groupID, const std::string& imageFileName);
+    
 
     /*!
-        @method removeAllCharacters
+        @method createChara2D
+        @abstract キャラクタの特徴 ID、最初の表示位置、状態を指定して、新しいキャラクタを生成します。
+        オプションで、Zオーダと、このキャラクタに関連付けるオブジェクトも指定できます。
+     */
+    KRChara2D*  createChara2D(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
+
+    /*!
+        @method removeAllCharas
         生成されたすべてのキャラクタを削除します。
      */
-    void    removeAllCharacters();
+    void    removeAllCharas();
     
     /*!
-        @method removeCharacter
+        @method removeChara2D
         キャラクタを削除します。削除したキャラクタは、自動的に delete されます。
      */
-    void    removeCharacter(KRCharacter2D *chara);
+    void    removeChara2D(KRChara2D *chara);
 
-    void    _reorderCharacter(KRCharacter2D *chara);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    void    _reorderChara2D(KRChara2D *chara);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 
+    
+#pragma mark ---- 2Dシミュレータの管理 ----
 
-#pragma mark ---- アニメーションの実行 ----
+    int     addSimulator(const KRVector2D& gravity);
+    void    putCharaInSimulator(KRChara2D* aChara, int simulatorID);
+    
+
+#pragma mark ---- パーティクルの管理 ----
 
     /*!
-        @task アニメーションの実行
+        @task パーティクルの管理
      */
-    /*!
-        @method drawAllCharacters
-        すべてのキャラクタを描画します。重なって表示されるキャラクタには、Zオーダが適用されます。
-     */
-    void    drawAllCharacters();
+
     
     /*!
-        @method stepAllCharacters
+        @method addParticleSystem
+        @abstract 2次元の移動を行うパーティクル管理のシステムを生成します。火、爆発、煙、雲、霧などの表現に利用できます。
+     */
+    int     addParticleSystem(int groupID, const std::string& imageFileName, int zOrder);
+    
+    KRParticle2DSystem* _getParticleSystem(int particleID) const;
+
+    /*!
+        @method generateParticles
+        指定された座標に、新しいパーティクルを生成します。
+     */
+    void    generateParticles(int particleID, const KRVector2D& pos);
+    
+    void    stepParticles();
+    
+    KRBlendMode     getParticleBlendMode(int particleID) const;
+    KRColor         getParticleColor(int particleID) const;
+    int             getParticleCount(int particleID) const;
+    double          getParticleAlphaDelta(int particleID) const;
+    double          getParticleBlueDelta(int particleID) const;
+    double          getParticleGreenDelta(int particleID) const;
+    double          getParticleRedDelta(int particleID) const;
+    double          getParticleScaleDelta(int particleID) const;
+    int             getParticleGenerateCount(int particleID) const;
+    KRVector2D      getParticleGravity(int particleID) const;
+    int             getParticleLife(int particleID) const;
+    double          getParticleMaxAngleV(int particleID) const;
+    int             getParticleMaxCount(int particleID) const;
+    double          getParticleMaxScale(int particleID) const;
+    KRVector2D      getParticleMaxV(int particleID) const;
+    double          getParticleMinAngleV(int particleID) const;
+    double          getParticleMinScale(int particleID) const;
+    KRVector2D      getParticleMinV(int particleID) const;
+    
+    void    setParticleBlendMode(int particleID, KRBlendMode blendMode);
+    void    setParticleColor(int particleID, const KRColor& color);
+    void    setParticleColorDelta(int particleID, double red, double green, double blue, double alpha);
+    void    setParticleGenerateCount(int particleID, int count);
+    void    setParticleGravity(int particleID, const KRVector2D& a);
+    void    setParticleLife(int particleID, unsigned life);
+    void    setParticleMaxAngleV(int particleID, double angleV);
+    void    setParticleMaxCount(int particleID, unsigned count);
+    void    setParticleMaxScale(int particleID, double scale);
+    void    setParticleMaxV(int particleID, const KRVector2D& v);
+    void    setParticleMinAngleV(int particleID, double angleV);
+    void    setParticleMinScale(int particleID, double scale);
+    void    setParticleMinV(int particleID, const KRVector2D& v);
+    void    setParticleScaleDelta(int particleID, double value);
+
+#pragma mark ---- アニメーションの描画 ----
+
+    /*!
+        @task アニメーションの描画
+     */
+    /*!
+        @method draw
+        すべてのキャラクタを描画します。重なって表示されるキャラクタには、Zオーダが適用されます。
+     */
+    void    draw();
+
+    /*!
+        @-method stepAllCharas
         すべてのキャラクタのアニメーションをステップ実行します。
      */
-    void    stepAllCharacters();
+    void    stepAllCharas();
+
 };
 
 

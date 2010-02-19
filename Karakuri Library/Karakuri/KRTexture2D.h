@@ -23,7 +23,7 @@ typedef enum {
 
 
 /*!
-    @class KRTexture2D
+    @-class KRTexture2D
     @group Game 2D Graphics
     <p>2次元のテクスチャを表すためのクラスです。</p>
     <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>

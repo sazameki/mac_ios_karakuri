@@ -18,7 +18,7 @@ class KRWorld;
 
 /*!
     @class  KRAudioManager
-    @group  Game Audio
+    @group  Game System
     <p>ゲームの BGM と SE を管理するためのクラスです。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
  */
@@ -42,17 +42,26 @@ public:
 	KRAudioManager();
 	virtual ~KRAudioManager();
     
-#pragma mark ---- オーディオファイルの管理 ----
-public:
-    int     addBGM(int groupID, const std::string& audioFileName);
-    int     addSE(int groupID, const std::string& audioFileName);
-    
-#pragma mark ---- リソース管理 ----
+#pragma mark ---- リソースの追加 ----
 public:
     /*!
-        @task リソースの管理
+        @task リソースの追加
      */
+    
+    /*!
+        @method addBGM
+        グループIDを指定して、BGM として利用するオーディオファイルをゲーム・リソースとして追加します。
+     */
+    int     addBGM(int groupID, const std::string& audioFileName);
 
+    /*!
+        @method addSE
+        グループIDを指定して、SE として利用するオーディオファイルをゲーム・リソースとして追加します。
+     */
+    int     addSE(int groupID, const std::string& audioFileName);
+    
+#pragma mark ---- リソースの読み込み ----
+public:
     int     getResourceSize(int groupID);
     void    loadAudioFiles(int groupID, KRWorld* loaderWorld, double minDuration);
     void    unloadAudioFiles(int groupID);
@@ -60,19 +69,81 @@ public:
     
 #pragma mark ---- BGM 管理 ----
 public:
+    /*!
+        @task BGM の管理
+     */
+    
+    /*!
+        @method getBGMVolume
+        BGM の再生音量を取得します。
+     */
     double  getBGMVolume() const;
+
+    /*!
+        @method getPlayingBGM
+        現在再生している BGM の ID をリターンします。BGM を再生していない場合には、-1 をリターンします。
+     */
     int     getPlayingBGM() const;
+
+    /*!
+        @method isPlayingBGM
+        現在 BGM を再生しているかどうかをリターンします。
+     */
     bool    isPlayingBGM() const;
+
+    /*!
+        @method playBGM
+        ID を指定して、BGM を再生します。オプションで音量を指定できます。
+     */
     void    playBGM(int bgmID, double volume=1.0);
+
+    /*!
+        @method pauseBGM
+        BGM の再生を一時停止します。
+     */
     void    pauseBGM();
+    
+    /*!
+        @method resumeBGM
+        一時停止していた BGM の再生を再開します。
+     */
     void    resumeBGM();
+
+    /*!
+        @method setBGMVolume
+        現在再生している BGM の音量を設定します。
+     */
     void    setBGMVolume(double volume);
+
+    /*!
+        @method stopBGM
+        BGM の再生を中断します。
+     */
     void    stopBGM();
     
 #pragma mark ---- SE 管理 ----
 public:
+    /*!
+        @task SEの管理
+     */
+    
+    /*!
+        @method getSEListenerPos
+        SE の再生を聞く仮想リスナの3次元位置を取得します。
+     */
     KRVector3D  getSEListenerPos() const;
+    
+    /*!
+        @method playSE
+        @abstract ID を指定して、SE を再生します。オプションで音量と SE の再生位置を設定できます。
+        同じ SE が既に再生されている場合は、その SE の再生が中断され、新しい再生が開始されます。
+     */
     void        playSE(int seID, double volume=1.0, const KRVector3D& sourcePos=KRVector3DZero);
+
+    /*!
+        @method setSEListenerPos
+        SE の再生を聞く仮想リスナの3次元位置を設定します。
+     */
     void        setSEListenerPos(const KRVector3D& listenerPos);
     
 };
@@ -80,7 +151,7 @@ public:
 
 /*!
     @var    gKRAudioMan
-    @group  Game Audio
+    @group  Game System
     @abstract オーディオ管理機構のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */

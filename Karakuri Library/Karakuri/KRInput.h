@@ -19,8 +19,8 @@ struct KRInputSourceData;
 
 #if KR_MACOSX
 /*!
-    @typedef KRMouseState
-    @group Game Foundation
+    @-typedef KRMouseState
+    @group Game System
     @abstract マウスの状態をビットフラグで管理するための型です。
  */
 typedef unsigned int        KRMouseState;
@@ -32,7 +32,7 @@ typedef unsigned int        KRMouseState;
 #if KR_MACOSX
 /*!
     @typedef KRKeyInfo
-    @group Game Foundation
+    @group Game System
     @abstract キーボードの状態をビットフラグで管理するための型です。
  */
 typedef unsigned long long  KRKeyInfo;
@@ -45,7 +45,7 @@ typedef KRKeyInfo           KRKeyState;
 
 #if KR_IPHONE
 /*!
-    @typedef KRTouchState
+    @-typedef KRTouchState
     @group Game Foundation
     @abstract iPhone のタッチの状態をビットフラグで管理するための型です。
  */
@@ -79,7 +79,7 @@ typedef struct KRTouchInfo {
 
 /*!
     @class  KRInput
-    @group  Game Foundation
+    @group  Game System
     @abstract 入力関係全般をサポートするためのクラスです。
     <p>Mac OS X 環境ではキーボードとマウスによる入力を、iPhone 環境ではマルチタッチと加速度センサによる入力をサポートします。</p>
  */
@@ -92,19 +92,19 @@ class KRInput : public KRObject {
 #if KR_MACOSX
 public:
     /*!
-        @constant MouseButtonLeft
+        @-constant MouseButtonLeft
         マウスの左ボタンが押されていることを表すビットマスクです。
      */
     static const KRMouseState   MouseButtonLeft         = 0x01;
 
     /*!
-        @constant MouseButtonRight
+        @-constant MouseButtonRight
         マウスの右ボタンが押されていることを表すビットマスクです。
      */
     static const KRMouseState   MouseButtonRight        = 0x02;
 
     /*!
-        @constant MouseButtonAny
+        @-constant MouseButtonAny
         マウスの左ボタンまたは右ボタンが押されていることを表すビットマスクです。
      */
     static const KRMouseState   MouseButtonAny          = 0x03;
@@ -282,60 +282,6 @@ public:
 
     
 #pragma mark -
-#pragma mark Support for Mouse Input (Mac OS X)
-
-#if KR_MACOSX
-public:
-    /*!
-        @task マウス入力のサポート (Mac OS X)
-     */
-    
-    /*!
-        @method isMouseDown
-        @abstract   マウスが押されている状態かどうかを判定します。
-        この関数は、左ボタンと右ボタンを区別しません。
-     */
-    bool            isMouseDown() const;
-
-    /*!
-        @method isMouseDownOnce
-        @abstract   マウスが押されている状態かどうかを判定します。
-        <p>あるフレームでマウスが押されていると判定されると、それ以降のフレームでマウスが離されて押し直されるまで、この関数が true を返すことはありません。</p>
-        <p>この関数は、左ボタンと右ボタンを区別しません。</p>
-     */
-    bool            isMouseDownOnce() const;
-    
-    /*!
-        @method getMouseState
-        @abstract 現在のマウス押下状態を取得します。
-        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
-     */
-    KRMouseState    getMouseState();
-
-    /*!
-        @method getMouseStateAgainstDummy
-        @abstract ダミー入力が設定されている際に、ユーザからの現在のマウス押下状態を取得します。
-        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
-     */
-    KRMouseState    getMouseStateAgainstDummy();
-    
-    /*!
-        @method getMouseStateOnce
-        @abstract 現在のマウス押下状態を取得します。
-        この関数を一度呼び出すと、その時点で押されていたボタンは、いったん指が離されてもう一度押されるまで対応するビットが立つことはありません。
-        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
-     */
-    KRMouseState    getMouseStateOnce();
-
-    /*!
-        @method getMouseLocation
-        @abstract 現在のマウスのカーソル位置を取得します。
-     */
-    KRVector2D      getMouseLocation();
-#endif
-
-
-#pragma mark -
 #pragma mark Support for Keyboard Input (Mac OS X)
 
 #if KR_MACOSX
@@ -351,6 +297,12 @@ public:
     bool        isKeyDown(KRKeyInfo key) const;
 
     /*!
+        @method isKeyDownAgainstDummy
+        ダミー入力が設定されている際に、ユーザからの現在のキー入力が行われている状態かどうかを判定します。
+     */
+    bool        isKeyDownAgainstDummy(KRKeyInfo key) const;
+    
+    /*!
         @method isKeyDownOnce
         @abstract   キーが押されている状態かどうかを判定します。
         あるフレームで押されていると判定されたキーに対しては、それ以降のフレームでキーが離されて押し直されるまで、この関数が true を返すことはありません。
@@ -358,29 +310,91 @@ public:
     bool        isKeyDownOnce(KRKeyInfo key) const;
     
     /*!
-        @method getKeyState
+        @-method getKeyState
         @abstract 現在のキー入力状態を取得します。
         すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
      */
     KRKeyState      getKeyState();
 
     /*!
-        @method getKeyStateAgainstDummy
+        @-method getKeyStateAgainstDummy
         @abstract ダミー入力が設定されている際に、ユーザからの現在のキー入力状態を取得します。
         すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
      */
     KRKeyState      getKeyStateAgainstDummy();
 
     /*!
-        @method getKeyStateOnce
+        @-method getKeyStateOnce
         @abstract 現在のキー入力状態を取得します。
         この関数を一度呼び出すと、その時点で押されていたキーは、いったん指が離されてもう一度押されるまで対応するビットが立つことはありません。
         すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
      */
     KRKeyState      getKeyStateOnce();
+
 #endif
 
     
+#pragma mark -
+#pragma mark Support for Mouse Input (Mac OS X)
+
+#if KR_MACOSX
+public:
+    /*!
+        @task マウス入力のサポート (Mac OS X)
+     */
+
+    /*!
+        @method getMouseLocation
+        @abstract 現在のマウスのカーソル位置を取得します。
+     */
+    KRVector2D      getMouseLocation();
+
+    /*!
+        @method isMouseDown
+        @abstract   マウスが押されている状態かどうかを判定します。
+        この関数は、左ボタンと右ボタンを区別しません。
+     */
+    bool    isMouseDown() const;
+
+    /*!
+        @method isMouseDownAgainstDummy
+        <p>ダミー入力が設定されている際に、ユーザが現在マウスを押しているかどうかを判定します。</p>
+        <p>この関数は、左ボタンと右ボタンを区別しません。</p>
+     */
+    bool    isMouseDownAgainstDummy() const;
+    
+    /*!
+        @method isMouseDownOnce
+        @abstract   マウスが押されている状態かどうかを判定します。
+        <p>あるフレームでマウスが押されていると判定されると、それ以降のフレームでマウスが離されて押し直されるまで、この関数が true を返すことはありません。</p>
+        <p>この関数は、左ボタンと右ボタンを区別しません。</p>
+     */
+    bool    isMouseDownOnce() const;
+    
+    /*!
+        @-method getMouseState
+        @abstract 現在のマウス押下状態を取得します。
+        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
+     */
+    KRMouseState    getMouseState();
+
+    /*!
+        @-method getMouseStateAgainstDummy
+        @abstract ダミー入力が設定されている際に、ユーザからの現在のマウス押下状態を取得します。
+        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
+     */
+    KRMouseState    getMouseStateAgainstDummy();
+    
+    /*!
+        @-method getMouseStateOnce
+        @abstract 現在のマウス押下状態を取得します。
+        この関数を一度呼び出すと、その時点で押されていたボタンは、いったん指が離されてもう一度押されるまで対応するビットが立つことはありません。
+        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
+     */
+    KRMouseState    getMouseStateOnce();
+#endif
+
+
 #pragma mark -
 #pragma mark Support for Touch Input (iPhone)
 
@@ -430,36 +444,36 @@ public:
     const std::vector<KRTouchInfo> getTouchInfos() const;
     
     /*!
-        @task 仮想ゲームパッドのサポート (iPhone)
+        @-task 仮想ゲームパッドのサポート (iPhone)
      */
     
     /*!
-        @method getTouchArrowMotion
+        @-method getTouchArrowMotion
         @abstract iPhone の画面左側をタッチしてドラッグすることで、仮想的に操作された十字キーの移動量を取得します。
      */
     KRVector2D      getTouchArrowMotion();
 
     /*!
-        @method getTouchButton1
+        @-method getTouchButton1
         @abstract 仮想的に操作されたボタン1（iPhone の画面右下のタッチ）の状態を取得します。
      */
     bool            getTouchButton1();
     
     /*!
-        @method getTouchButton1Once
+        @-method getTouchButton1Once
         @abstract 仮想的に操作されたボタン1（iPhone の画面右下のタッチ）の状態を取得します。
         この関数を一度呼び出すと、もう一度タッチし直すまでこの関数が true をリターンすることはありません。
      */
     bool            getTouchButton1Once();
     
     /*!
-        @method getTouchButton2
+        @-method getTouchButton2
         @abstract 仮想的に操作されたボタン2（iPhone の画面右下のタッチ）の状態を取得します。
      */
     bool            getTouchButton2();
 
     /*!
-        @method getTouchButton2Once
+        @-method getTouchButton2Once
         @abstract 仮想的に操作されたボタン2（iPhone の画面右下のタッチ）の状態を取得します。
         この関数を一度呼び出すと、もう一度タッチし直すまでこの関数が true をリターンすることはありません。
      */
@@ -604,7 +618,7 @@ public:
 
 /*!
     @var gKRInputInst
-    @group Game Foundation
+    @group Game System
     @abstract 入力クラスのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */

@@ -11,7 +11,7 @@
 #include <Karakuri/Karakuri.h>
 
 
-#define KR_PARTICLE2D_USE_POINT_SPRITE  0
+class KRChara2D;
 
 
 struct _KRParticle2DGenInfo {
@@ -32,17 +32,28 @@ public:
     KRVector2D  mV;
     KRVector2D  mGravity;
     KRColor     mColor;
+    double      mScale;
     double      mSize;
+    double      mAngle;
+    double      mAngleV;
     
+    double      mDeltaScale;
     double      mDeltaSize;
     double      mDeltaRed;
     double      mDeltaGreen;
     double      mDeltaBlue;
     double      mDeltaAlpha;
     
+    KRChara2D*  mChara;
+    
 public:
-	_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity, const KRColor& color, double size,
-                  double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize);
+	_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
+                  double angleV, const KRColor& color, double size, double scale,
+                  double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale);
+    ~_KRParticle2D();
+    
+    KRChara2D*  getChara() const;
+    void        setChara(KRChara2D* theChara);
     
 public:
     bool    step();
@@ -53,14 +64,18 @@ public:
 };
 
 /*!
-    @class  KRParticle2DSystem
+    @-class  KRParticle2DSystem
     @group  Game 2D Graphics
     @abstract 2次元の移動を行うパーティクル群を生成し管理するための仕組みです。
     火、爆発、煙、雲、霧などの表現に利用できます。
  */
 class KRParticle2DSystem : public KRObject {
     
-    std::list<_KRParticle2D *>   mParticles;
+    std::list<_KRParticle2D *>  mParticles;
+    
+    int             mGroupID;
+    int             mZOrder;
+    int             mCharaSpecID;
 
     unsigned        mLife;
     KRVector2D      mStartPos;
@@ -72,12 +87,16 @@ class KRParticle2DSystem : public KRObject {
     KRVector2D      mMaxV;
     KRVector2D      mGravity;
     
+    double          mMinAngleV;
+    double          mMaxAngleV;
+    
     unsigned        mParticleCount;
     int             mGenerateCount;
     
     KRBlendMode     mBlendMode;
     
     KRColor         mColor;
+    double          mDeltaScale;
     double          mDeltaSize;
     double          mDeltaRed;
     double          mDeltaGreen;
@@ -87,18 +106,18 @@ class KRParticle2DSystem : public KRObject {
     bool            mDoLoop;
     _KRParticle2DGenInfo    mGenInfos[_KRParticle2DGenMaxCount];
     int             mActiveGenCount;
-    
-#if KR_PARTICLE2D_USE_POINT_SPRITE
-    double          mSize;
-#else
+
+    double          mMinScale;
+    double          mMaxScale;
     double          mMinSize;
     double          mMaxSize;
-#endif
     
 public:
     /*!
         @task コンストラクタ
      */
+    
+    KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder);
     
     /*!
         @method KRParticle2DSystem
@@ -213,11 +232,23 @@ public:
     void    setLife(unsigned life);
     
     /*!
+        @method setMaxAngleV
+        @abstract パーティクル生成時にランダムで設定される角速度の最大値を設定します。
+     */
+    void    setMaxAngleV(double angleV);
+    
+    /*!
         @method setMaxV
         @abstract パーティクル生成時にランダムで設定される移動速度の最大値を設定します。
      */
     void    setMaxV(const KRVector2D& v);
-    
+
+    /*!
+        @method setMinAngleV
+        @abstract パーティクル生成時にランダムで設定される角速度の最小値を設定します。
+     */
+    void    setMinAngleV(double angleV);
+
     /*!
         @method setMinV
         @abstract パーティクル生成時にランダムで設定される移動速度の最小値を設定します。
@@ -231,28 +262,31 @@ public:
      */
     void    setParticleCount(unsigned count);
     
+    void    setScaleDelta(double value);
+    
     /*!
         @method setSizeDelta
         パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、サイズの変化の割り合いを設定します。
      */
     void    setSizeDelta(double value);
     
-#if KR_PARTICLE2D_USE_POINT_SPRITE
-    void    setSize(double size);
-#else
     /*!
         @method setMaxSize
         各パーティクルの生成時の最大サイズを設定します。
      */
     void    setMaxSize(double size);
+    
+    void    setMaxScale(double scale);
+    
 
     /*!
         @method setMinSize
         各パーティクルの生成時の最小サイズを設定します。
      */
     void    setMinSize(double size);    
-#endif
     
+    void    setMinScale(double scale);
+
 public:
     /*!
         @task 現在の設定確認のための関数
@@ -294,6 +328,8 @@ public:
      */
     double      getDeltaRed() const;
     
+    double      getDeltaScale() const;
+    
     /*!
         @method getDeltaSize
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたサイズの変化の割り合いを取得します。
@@ -324,6 +360,9 @@ public:
      */
     unsigned    getLife() const;
     
+    double      getMaxAngleV() const;
+    double      getMinAngleV() const;
+    
     /*!
         @method getMaxV
         @abstract パーティクル生成時にランダムで設定される移動速度の最大値を取得します。
@@ -343,21 +382,19 @@ public:
     unsigned    getParticleCount() const;
     
 public:
-#if KR_PARTICLE2D_USE_POINT_SPRITE
-    double      getSize() const;
-#else
     /*!
         @method getMaxSize
         @abstract 各パーティクルの生成時の最大サイズを取得します。
      */
     double      getMaxSize() const;
+    double      getMaxScale() const;
     
     /*!
         @method getMinSize
         @abstract 各パーティクルの生成時の最小サイズを取得します。
      */
     double      getMinSize() const;
-#endif
+    double      getMinScale() const;
     
 public:
     virtual std::string to_s() const;

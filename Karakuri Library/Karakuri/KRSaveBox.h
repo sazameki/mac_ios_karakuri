@@ -19,7 +19,7 @@ void KRCleanUpSaveBox();
 
 /*!
     @class  KRSaveBox
-    @group  Game Text Processing
+    @group  Game Foundation
     @abstract ゲームの実行状態を保存し、読み込み直すためのクラスです。
     このクラスのインスタンスには、gKRSaveBoxInst 変数を利用してアクセスしてください。
  */
@@ -147,7 +147,7 @@ public:
 
 /*!
     @var gKRSaveBoxInst
-    @group Game Text Processing
+    @group Game Foundation
     @abstract ゲーム状態保存クラスのインスタンスを指す変数です。
  */
 extern KRSaveBox    *gKRSaveBoxInst;

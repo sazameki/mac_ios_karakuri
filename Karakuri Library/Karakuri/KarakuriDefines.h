@@ -67,7 +67,7 @@
 #ifndef KR_IPHONE
     /*!
         @define KR_MACOSX
-        @group  Game Foundation
+        @group  Game Types
         @abstract Mac OS X 用のビルドであることを示すマクロです。
      */
     #define KR_MACOSX           1

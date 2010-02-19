@@ -95,7 +95,7 @@ void    KRTranslate2D(double x, double y);
 void    KRTranslate2D(const KRVector2D& size);
 
 /*!
-    @function   KRSleep
+    @-function   KRSleep
     @group      Game Foundation
     @abstract   一定時間スリープさせます。
     @param  interval    スリープさせる時間（秒単位）。
@@ -103,7 +103,7 @@ void    KRTranslate2D(const KRVector2D& size);
 void    KRSleep(double interval);
 
 /*!
-    @function   KRCurrentTime
+    @-function   KRCurrentTime
     @group      Game Foundation
     @abstract   現在時刻を秒単位で表す数値をリターンします。
     @return     現在時刻
@@ -119,7 +119,7 @@ double  KRCurrentTime();
 std::string KRGetKarakuriVersion();
 
 /*!
-    @function   KRChangeWorld
+    @-function   KRChangeWorld
     @group      Game Foundation
     @abstract   ワールドを切り替えます。
  */

@@ -11,6 +11,13 @@
 #include <Karakuri/Karakuri.h>
 
 
+/*!
+    @class KRTexture2DManager
+    @group Game 2D Graphics
+    <p>2次元のテクスチャの管理を行うためのクラスです。</p>
+    <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
+    <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
+ */
 class KRTexture2DManager {
 
     std::map<int, std::vector<int> >    mGroupID_TexIDList_Map;
@@ -30,6 +37,8 @@ public:
     int     addTexture(int groupID, const std::string& imageFileName, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
     int     addTexture(int groupID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
 
+    int     addFont(int groupID, const std::string& fontName, double size);
+    
 #pragma mark ---- リソース管理 ----
 public:
     /*!
@@ -81,8 +90,17 @@ public:
     void    drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, double alpha=1.0);
     void    drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color);
 
+#pragma mark ---- フォントのサポート ----
+    int     createStringTexture(int fontID, const std::string& str);    
+    
 };
 
 
+/*!
+    @var    gKRTex2DMan
+    @group  Game 2D Graphics
+    @abstract テクスチャの管理を行うクラスのインスタンスを指す変数です。
+    この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
+ */
 extern KRTexture2DManager*  gKRTex2DMan;
 

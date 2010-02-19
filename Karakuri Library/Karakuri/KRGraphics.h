@@ -19,7 +19,7 @@
 
 /*!
     @enum KRBlendMode
-    @group  Game Foundation
+    @group  Game System
     @constant KRBlendModeAlpha          アルファ合成（glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)）
     @constant KRBlendModeAddition       加算合成（glBlendFunc(GL_SRC_ALPHA, GL_ONE)）
     @constant KRBlendModeMultiplication 乗算合成（glBlendFunc(GL_ZERO, GL_SRC_COLOR)）
@@ -43,7 +43,7 @@ typedef enum {
 
 /*!
     @class KRGraphics
-    @group  Game Foundation
+    @group  Game System
     @abstract 画面描画の基本設定の管理を行います。
  */
 class KRGraphics : public KRObject {
@@ -96,7 +96,7 @@ public:
 
 /*!
     @var gKRGraphicsInst
-    @group Game Foundation
+    @group Game System
     @abstract グラフィック設定のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */

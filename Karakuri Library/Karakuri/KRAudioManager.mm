@@ -189,6 +189,9 @@ double KRAudioManager::getBGMVolume() const
 
 int KRAudioManager::getPlayingBGM() const
 {
+    if (mCurrentBGM == NULL) {
+        return -1;
+    }
     return mCurrentBGM->_getBGMID();
 }
 

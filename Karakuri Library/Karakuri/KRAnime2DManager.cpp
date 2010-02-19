@@ -8,32 +8,32 @@
 
 
 KRAnime2DManager*   gKRAnime2DMan = NULL;
-KRMemoryAllocator*  gKRCharacter2DAllocator = NULL;
+KRMemoryAllocator*  gKRChara2DAllocator = NULL;
 
 
 #pragma mark -
-#pragma mark KRCharacter2DSpec の実装
+#pragma mark KRChara2DSpec の実装
 
-KRCharacter2DSpec::KRCharacter2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize)
+KRChara2DSpec::KRChara2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize)
 {
     mSpecID = -1;
     mTextureID = gKRTex2DMan->addTexture(texGroupID, textureName, atlasSize);
 }
 
-KRCharacter2DSpec::~KRCharacter2DSpec()
+KRChara2DSpec::~KRChara2DSpec()
 {
-    std::map<int, _KRCharacter2DState*>::iterator it = mStateMap.begin();
+    std::map<int, _KRChara2DState*>::iterator it = mStateMap.begin();
 	while (it != mStateMap.end()) {
         delete (*it).second;
 		it++;
 	}
 }
     
-void KRCharacter2DSpec::addState(int state, int imageInterval, int repeatCount, bool doReverse, int nextState)
+void KRChara2DSpec::addState(int state, int imageInterval, int repeatCount, bool doReverse, int nextState)
 {
-    _KRCharacter2DState* theState = mStateMap[state];
+    _KRChara2DState* theState = mStateMap[state];
     if (theState == NULL) {
-        theState = new _KRCharacter2DState();
+        theState = new _KRChara2DState();
         mStateMap[state] = theState;
     }
 
@@ -45,13 +45,13 @@ void KRCharacter2DSpec::addState(int state, int imageInterval, int repeatCount, 
     theState->repeatHeadIndex = 0;
 }
 
-void KRCharacter2DSpec::addStateImage(int state, const KRVector2DInt& atlasPos, bool isRepeatHead)
+void KRChara2DSpec::addStateImage(int state, const KRVector2DInt& atlasPos, bool isRepeatHead)
 {
-    _KRCharacter2DState* theState = mStateMap[state];
+    _KRChara2DState* theState = mStateMap[state];
     if (theState == NULL) {
-        const char *errorFormat = "KRCharacter2DSpec::addStateImage() State %d is not registered.";
+        const char *errorFormat = "KRChara2DSpec::addStateImage() State %d is not registered.";
         if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "KRCharacter2DSpec::addStateImage() 状態 %d は登録されていません。";
+            errorFormat = "KRChara2DSpec::addStateImage() 状態 %d は登録されていません。";
         }        
         throw KRRuntimeError(errorFormat, state);
     }
@@ -62,34 +62,42 @@ void KRCharacter2DSpec::addStateImage(int state, const KRVector2DInt& atlasPos, 
     theState->atlasPositions.push_back(atlasPos);
 }
 
-_KRCharacter2DState* KRCharacter2DSpec::_getState(int state)
+_KRChara2DState* KRChara2DSpec::_getState(int state)
 {
     return mStateMap[state];
 }
 
-int KRCharacter2DSpec::_getTextureID() const
+int KRChara2DSpec::_getTextureID() const
 {
     return mTextureID;
 }
 
-int KRCharacter2DSpec::_getSpecID() const
+int KRChara2DSpec::_getSpecID() const
 {
     return mSpecID;
 }
 
-void KRCharacter2DSpec::_setSpecID(int specID)
+bool KRChara2DSpec::_isTextureAtlased() const
+{
+    return (gKRTex2DMan->getAtlasSize(mTextureID).x > 0.0)? true: false;
+}
+
+void KRChara2DSpec::_setSpecID(int specID)
 {
     mSpecID = specID;
 }
 
 
 #pragma mark -
-#pragma mark KRCharacter2D クラスの実装
+#pragma mark KRChara2D クラスの実装
 
-KRCharacter2D::KRCharacter2D(KRCharacter2DSpec *charaSpec, const KRVector2D& _centerPos, int zOrder, void *repObj)
+KRChara2D::KRChara2D(KRChara2DSpec *charaSpec, const KRVector2D& _centerPos, int zOrder, void *repObj)
     : mCharaSpec(charaSpec), pos(_centerPos), mZOrder(zOrder), mRepresentedObject(repObj)
 {
+    angle = 0.0;
+    blendMode = KRBlendModeAlpha;
     color = KRColor(1.0, 1.0, 1.0, 1.0);
+    scale = 1.0;
     
     mState = -1;
     mNextState = -1;
@@ -99,17 +107,17 @@ KRCharacter2D::KRCharacter2D(KRCharacter2DSpec *charaSpec, const KRVector2D& _ce
     //changeState(firstState);
 }
 
-void* KRCharacter2D::getRepresentedObject() const
+void* KRChara2D::getObject() const
 {
     return mRepresentedObject;
 }
 
-KRVector2D KRCharacter2D::getSize() const
+KRVector2D KRChara2D::getSize() const
 {
     return gKRTex2DMan->getAtlasSize(mCharaSpec->_getTextureID());
 }
 
-int KRCharacter2D::getState() const
+int KRChara2D::getState() const
 {
     if (mNextState >= 0) {
         return mNextState;
@@ -117,28 +125,28 @@ int KRCharacter2D::getState() const
     return mState;
 }
 
-int KRCharacter2D::getZOrder() const
+int KRChara2D::getZOrder() const
 {
     return mZOrder;
 }
 
-void KRCharacter2D::changeState(int state)
+void KRChara2D::changeState(int state)
 {
     if (mNextState >= 0 || mState == state) {
         return;
     }
 
-    _KRCharacter2DState* theState = mCharaSpec->_getState(state);
+    _KRChara2DState* theState = mCharaSpec->_getState(state);
     if (theState == NULL) {
         if (gKRLanguage == KRLanguageJapanese) {
-            throw KRRuntimeError("KRCharacter2D::changeState() キャラクタ特徴 %d の 状態 %d は見つかりませんでした。\n", mCharaSpec->_getSpecID(), state);
+            throw KRRuntimeError("KRChara2D::changeState() キャラクタ特徴 %d の 状態 %d は見つかりませんでした。\n", mCharaSpec->_getSpecID(), state);
         } else {
-            throw KRRuntimeError("KRCharacter2D::changeState() State %d was not found for character spec %d.\n", state, mCharaSpec->_getSpecID());
+            throw KRRuntimeError("KRChara2D::changeState() State %d was not found for character spec %d.\n", state, mCharaSpec->_getSpecID());
         }
         return;
     }
     
-    _KRCharacter2DState* theCurrentState = mCharaSpec->_getState(mState);
+    _KRChara2DState* theCurrentState = mCharaSpec->_getState(mState);
     bool backToHead = false;
     if (theCurrentState != NULL) {
         if (std::find(theCurrentState->backToState.begin(), theCurrentState->backToState.end(), state) != theCurrentState->backToState.end()) {
@@ -165,21 +173,21 @@ void KRCharacter2D::changeState(int state)
     }
 }
 
-void KRCharacter2D::setRepresentedObject(void *anObj)
+void KRChara2D::setObject(void *anObj)
 {
     mRepresentedObject = anObj;
 }
 
-void KRCharacter2D::setZOrder(int zOrder)
+void KRChara2D::setZOrder(int zOrder)
 {
     if (mZOrder == zOrder) {
         return;
     }
     mZOrder = zOrder;
-    gKRAnime2DMan->_reorderCharacter(this);
+    gKRAnime2DMan->_reorderChara2D(this);
 }
 
-void KRCharacter2D::_step()
+void KRChara2D::_step()
 {
     if (mState < 0) {
         return;
@@ -198,15 +206,15 @@ void KRCharacter2D::_step()
                     mImageInc = 1;
                     mIsStateFinished = false;
 
-                    _KRCharacter2DState* theState = mCharaSpec->_getState(mState);
+                    _KRChara2DState* theState = mCharaSpec->_getState(mState);
                     mRepeatCount = theState->repeatCount;
                     mImageInterval = theState->imageInterval;
                 } else {
-                    _KRCharacter2DState* theState = mCharaSpec->_getState(mState);
+                    _KRChara2DState* theState = mCharaSpec->_getState(mState);
                     mImageInterval = theState->imageInterval;
                 }
             } else {
-                _KRCharacter2DState* theState = mCharaSpec->_getState(mState);
+                _KRChara2DState* theState = mCharaSpec->_getState(mState);
                 int imageCount = theState->atlasPositions.size();
                 mImageIndex++;
                 if (mImageIndex >= imageCount) {
@@ -227,7 +235,7 @@ void KRCharacter2D::_step()
     
     // ステップ実行処理
     if (mImageInterval == 0) {
-        _KRCharacter2DState* theState = mCharaSpec->_getState(mState);
+        _KRChara2DState* theState = mCharaSpec->_getState(mState);
         int imageCount = theState->atlasPositions.size();
         mImageIndex += mImageInc;
 
@@ -308,21 +316,26 @@ void KRCharacter2D::_step()
     }
 }
 
-void KRCharacter2D::_draw()
+void KRChara2D::_draw()
 {
     if (mState < 0) {
         return;
     }
     
-    _KRCharacter2DState* theState = mCharaSpec->_getState(mState);
+    _KRChara2DState* theState = mCharaSpec->_getState(mState);
     if (theState == NULL) {
         return;
     }
-
-    KRVector2DInt& atlasPos = theState->atlasPositions[mImageIndex];
-    int texID = mCharaSpec->_getTextureID();
     
-    gKRTex2DMan->drawAtlasAtPointCenter(texID, atlasPos, pos, color);
+    gKRGraphicsInst->setBlendMode(blendMode);
+    
+    int texID = mCharaSpec->_getTextureID();
+    if (mCharaSpec->_isTextureAtlased()) {
+        KRVector2DInt& atlasPos = theState->atlasPositions[mImageIndex];        
+        gKRTex2DMan->drawAtlasAtPointCenter(texID, atlasPos, pos, color);
+    } else {
+        gKRTex2DMan->drawAtPointCenterEx(texID, pos, angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
+    }
 }
 
 
@@ -334,16 +347,19 @@ KRAnime2DManager::KRAnime2DManager(int maxCharacter2DSize)
 {
     gKRAnime2DMan = this;
     
-    gKRCharacter2DAllocator = new KRMemoryAllocator(sizeof(KRCharacter2D), maxCharacter2DSize, "kr-chara2d-alloc");
+    mNextInnerCharaSpecID = 10000;
+    mNextSimulatorID = 10000;
+    
+    gKRChara2DAllocator = new KRMemoryAllocator(sizeof(KRChara2D), maxCharacter2DSize, "kr-chara2d-alloc");
 }
 
 KRAnime2DManager::~KRAnime2DManager()
 {
-    removeAllCharacters();
+    removeAllCharas();
 
     // キャラクタの特徴マップの削除
     {
-        std::map<int, KRCharacter2DSpec*>::iterator it = mCharaSpecMap.begin();
+        std::map<int, KRChara2DSpec*>::iterator it = mCharaSpecMap.begin();
         while (it != mCharaSpecMap.end()) {
             delete (*it).second;
             it++;
@@ -351,30 +367,30 @@ KRAnime2DManager::~KRAnime2DManager()
         mCharaSpecMap.clear();
     }
     
-    delete gKRCharacter2DAllocator;
-    gKRCharacter2DAllocator = NULL;
+    delete gKRChara2DAllocator;
+    gKRChara2DAllocator = NULL;
 }
 
 
 #pragma mark -
 #pragma mark キャラクタの特徴の管理
 
-void KRAnime2DManager::_addCharacterSpec(int specID, KRCharacter2DSpec *spec)
+void KRAnime2DManager::_addCharaSpec(int specID, KRChara2DSpec* spec)
 {
     mCharaSpecMap[specID] = spec;
     spec->_setSpecID(specID);
 }
 
-void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFileName)
+void KRAnime2DManager::addCharaSpecs(int groupID, const std::string& specFileName)
 {
     KRTextReader reader(specFileName);
     
     std::string str;
     int lineCount = 0;
     
-    int                 theSpecID = -1; 
-    KRCharacter2DSpec*  theSpec = NULL;
-    int                 theStateID = -1;
+    int             theSpecID = -1; 
+    KRChara2DSpec*  theSpec = NULL;
+    int             theStateID = -1;
     
     while (reader.readLine(&str)) {
         lineCount++;
@@ -417,12 +433,12 @@ void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFil
                     theSpec->addState(0, 1, 0, false, -1);
                     theSpec->addStateImage(0, KRVector2DInt(0, 0), false);
                 }
-                gKRAnime2DMan->_addCharacterSpec(theSpecID, theSpec);
+                gKRAnime2DMan->_addCharaSpec(theSpecID, theSpec);
                 theStateID = -1;
             }
             
             theSpecID = specID;
-            theSpec = new KRCharacter2DSpec(groupID, textureName, KRVector2D(atlasWidth, atlasHeight));
+            theSpec = new KRChara2DSpec(groupID, textureName, KRVector2D(atlasWidth, atlasHeight));
         }
         else if (command == "state") {
             if (theSpec == NULL) {
@@ -500,7 +516,7 @@ void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFil
                 throw KRRuntimeError(errorFormat, specFileName.c_str(), lineCount);
             }
             for (int i = 1; i < elemCount; i++) {
-                _KRCharacter2DState *theState = theSpec->_getState(theStateID);
+                _KRChara2DState *theState = theSpec->_getState(theStateID);
                 theState->backToState.push_back(atoi(vec[i].c_str()));
             }
         }
@@ -549,17 +565,57 @@ void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFil
             theSpec->addState(0, 1, 0, false, -1);
             theSpec->addStateImage(0, KRVector2DInt(0, 0), false);
         }
-        gKRAnime2DMan->_addCharacterSpec(theSpecID, theSpec);
+        gKRAnime2DMan->_addCharaSpec(theSpecID, theSpec);
     }
+}
+
+int KRAnime2DManager::addParticleSystem(int groupID, const std::string& imageFileName, int zOrder)
+{
+    int theParticleID = mParticleSystemMap.size();
+    
+    mParticleSystemMap[theParticleID] = new KRParticle2DSystem(groupID, imageFileName, zOrder);
+    
+    return theParticleID;
+}
+
+int KRAnime2DManager::_addTexCharaSpec(int groupID, const std::string& imageFileName)
+{
+    int theSpecID = mNextInnerCharaSpecID;
+    mNextInnerCharaSpecID++;
+    
+    KRChara2DSpec* theSpec = new KRChara2DSpec(groupID, imageFileName, KRVector2DZero);
+    theSpec->addState(0, 0, 0, false);
+    _addCharaSpec(theSpecID, theSpec);
+    
+    return theSpecID;
+}
+
+
+#pragma mark -
+#pragma mark シミュレータの管理
+
+int KRAnime2DManager::addSimulator(const KRVector2D& gravity)
+{
+    int theSimulatorID = mNextSimulatorID;
+    mNextSimulatorID++;
+    
+    KRSimulator2D* theSimulator = new KRSimulator2D(gravity);
+    mSimulatorMap[theSimulatorID] = theSimulator;
+    
+    return theSimulatorID;
+}
+
+void KRAnime2DManager::putCharaInSimulator(KRChara2D* aChara, int simulatorID)
+{
 }
 
 
 #pragma mark -
 #pragma mark キャラクタの管理
 
-KRCharacter2D* KRAnime2DManager::createCharacter(int specID, const KRVector2D& centerPos, int firstState, int zOrder, void *repObj)
+KRChara2D* KRAnime2DManager::createChara2D(int specID, const KRVector2D& centerPos, int firstState, int zOrder, void *repObj)
 {
-    KRCharacter2DSpec* theSpec = mCharaSpecMap[specID];
+    KRChara2DSpec* theSpec = mCharaSpecMap[specID];
     if (theSpec == NULL) {
         const char *errorFormat = "KRAnime2D::createCharacter() Character spec was not found for spec-id %d.";
         if (gKRLanguage == KRLanguageJapanese) {
@@ -568,20 +624,20 @@ KRCharacter2D* KRAnime2DManager::createCharacter(int specID, const KRVector2D& c
         throw KRRuntimeError(errorFormat, specID);
     }
 
-    KRCharacter2D *newChara = new KRCharacter2D(theSpec, centerPos, zOrder, repObj);
+    KRChara2D* newChara = new KRChara2D(theSpec, centerPos, zOrder, repObj);
 
     bool hasAdded = false;
-    for (std::list<KRCharacter2D*>::iterator it = mCharacters.begin(); it != mCharacters.end(); it++) {
-        KRCharacter2D* aChara = *it;
+    for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end(); it++) {
+        KRChara2D* aChara = *it;
         if (zOrder >= aChara->getZOrder()) {
-            mCharacters.insert(it, newChara);
+            mCharas.insert(it, newChara);
             hasAdded = true;
             break;
         }
     }
     
     if (!hasAdded) {
-        mCharacters.push_back(newChara);
+        mCharas.push_back(newChara);
     }
     
     newChara->changeState(firstState);
@@ -589,55 +645,257 @@ KRCharacter2D* KRAnime2DManager::createCharacter(int specID, const KRVector2D& c
     return newChara;
 }
 
-void KRAnime2DManager::removeAllCharacters()
+void KRAnime2DManager::removeAllCharas()
 {
-    for (std::list<KRCharacter2D*>::iterator it = mCharacters.begin(); it != mCharacters.end();) {
-        KRCharacter2D *aChara = *it;
-        it = mCharacters.erase(it);
+    for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end();) {
+        KRChara2D* aChara = *it;
+        it = mCharas.erase(it);
         delete aChara;
     }
-    mCharacters.clear();
+    mCharas.clear();
 }
 
-void KRAnime2DManager::removeCharacter(KRCharacter2D *chara)
+void KRAnime2DManager::removeChara2D(KRChara2D* chara)
 {
-    mCharacters.remove(chara);
+    mCharas.remove(chara);
     delete chara;
 }
 
-void KRAnime2DManager::_reorderCharacter(KRCharacter2D *chara)
+void KRAnime2DManager::_reorderChara2D(KRChara2D* chara)
 {
     int zOrder = chara->getZOrder();
     
-    mCharacters.remove(chara);
+    mCharas.remove(chara);
 
     bool hasAdded = false;
-    for (std::list<KRCharacter2D*>::iterator it = mCharacters.begin(); it != mCharacters.end(); it++) {
-        KRCharacter2D* aChara = *it;
+    for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end(); it++) {
+        KRChara2D* aChara = *it;
         if (zOrder >= aChara->getZOrder()) {
-            mCharacters.insert(it, chara);
+            mCharas.insert(it, chara);
             hasAdded = true;
             break;
         }
     }
     
     if (!hasAdded) {
-        mCharacters.push_back(chara);
+        mCharas.push_back(chara);
     }    
 }
 
-void KRAnime2DManager::stepAllCharacters()
+void KRAnime2DManager::stepAllCharas()
 {
-    for (std::list<KRCharacter2D*>::reverse_iterator it = mCharacters.rbegin(); it != mCharacters.rend(); it++) {
+    for (std::list<KRChara2D*>::reverse_iterator it = mCharas.rbegin(); it != mCharas.rend(); it++) {
         (*it)->_step();
+    }
+    
+    for (std::map<int, KRParticle2DSystem*>::iterator it = mParticleSystemMap.begin(); it != mParticleSystemMap.end(); it++) {
+        KRParticle2DSystem* theParticleSystem = it->second;
+        theParticleSystem->step();
     }
 }
 
-void KRAnime2DManager::drawAllCharacters()
+void KRAnime2DManager::draw()
 {
-    for (std::list<KRCharacter2D*>::reverse_iterator it = mCharacters.rbegin(); it != mCharacters.rend(); it++) {
+    KRBlendMode oldBlendMode = gKRGraphicsInst->getBlendMode();
+    
+    for (std::list<KRChara2D*>::reverse_iterator it = mCharas.rbegin(); it != mCharas.rend(); it++) {
         (*it)->_draw();
     }
+    
+    gKRGraphicsInst->setBlendMode(oldBlendMode);
 }
+
+
+#pragma mark -
+#pragma mark パーティクルシステム
+
+KRParticle2DSystem* KRAnime2DManager::_getParticleSystem(int particleID) const
+{
+    KRParticle2DSystem* theParticleSystem = NULL;
+
+    // IDからパーティクルシステムを引っ張ってくる。
+    std::map<int, KRParticle2DSystem*>::const_iterator theElem = mParticleSystemMap.find(particleID);
+    if (theElem != mParticleSystemMap.end()) {
+        theParticleSystem = theElem->second;
+    }
+    
+    // パーティクルシステムが見つからなかったときの処理。
+    if (theParticleSystem == NULL) {
+        const char *errorFormat = "Failed to find the particle system with ID %d.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "ID が %d のパーティクルシステムは見つかりませんでした。";
+        }
+        throw KRRuntimeError(errorFormat, particleID);
+    }
+    
+    // リターン
+    return theParticleSystem;    
+}
+
+void KRAnime2DManager::generateParticles(int particleID, const KRVector2D& pos)
+{
+    return _getParticleSystem(particleID)->addGenerationPoint(pos);
+}
+
+KRBlendMode KRAnime2DManager::getParticleBlendMode(int particleID) const
+{
+    return _getParticleSystem(particleID)->getBlendMode();
+}
+
+KRColor KRAnime2DManager::getParticleColor(int particleID) const
+{
+    return _getParticleSystem(particleID)->getColor();
+}
+
+int KRAnime2DManager::getParticleCount(int particleID) const
+{
+    return _getParticleSystem(particleID)->getGeneratedParticleCount();
+}
+
+double KRAnime2DManager::getParticleAlphaDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaAlpha();
+}
+
+double KRAnime2DManager::getParticleBlueDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaBlue();
+}
+
+double KRAnime2DManager::getParticleGreenDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaGreen();
+}
+
+double KRAnime2DManager::getParticleRedDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaRed();
+}
+
+double KRAnime2DManager::getParticleScaleDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaScale();
+}
+
+int KRAnime2DManager::getParticleGenerateCount(int particleID) const
+{
+    return _getParticleSystem(particleID)->getGenerateCount();
+}
+
+KRVector2D KRAnime2DManager::getParticleGravity(int particleID) const
+{
+    return _getParticleSystem(particleID)->getGravity();
+}
+
+int KRAnime2DManager::getParticleLife(int particleID) const
+{
+    return _getParticleSystem(particleID)->getLife();
+}
+
+double KRAnime2DManager::getParticleMaxAngleV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMaxAngleV();
+}
+
+int KRAnime2DManager::getParticleMaxCount(int particleID) const
+{
+    return _getParticleSystem(particleID)->getParticleCount();
+}
+
+double KRAnime2DManager::getParticleMaxScale(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMaxScale();
+}
+
+KRVector2D KRAnime2DManager::getParticleMaxV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMaxV();
+}
+
+double KRAnime2DManager::getParticleMinAngleV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMinAngleV();
+}
+
+double KRAnime2DManager::getParticleMinScale(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMinScale();
+}
+
+KRVector2D KRAnime2DManager::getParticleMinV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMinV();
+}
+
+void KRAnime2DManager::setParticleBlendMode(int particleID, KRBlendMode blendMode)
+{
+    _getParticleSystem(particleID)->setBlendMode(blendMode);
+}
+
+void KRAnime2DManager::setParticleColor(int particleID, const KRColor& color)
+{
+    _getParticleSystem(particleID)->setColor(color);
+}
+
+void KRAnime2DManager::setParticleColorDelta(int particleID, double red, double green, double blue, double alpha)
+{
+    _getParticleSystem(particleID)->setColorDelta(red, green, blue, alpha);
+}
+
+void KRAnime2DManager::setParticleGenerateCount(int particleID, int count)
+{
+    _getParticleSystem(particleID)->setGenerateCount(count);
+}
+
+void KRAnime2DManager::setParticleGravity(int particleID, const KRVector2D& a)
+{
+    _getParticleSystem(particleID)->setGravity(a);
+}
+
+void KRAnime2DManager::setParticleLife(int particleID, unsigned life)
+{
+    _getParticleSystem(particleID)->setLife(life);
+}
+
+void KRAnime2DManager::setParticleMaxAngleV(int particleID, double angleV)
+{
+    _getParticleSystem(particleID)->setMaxAngleV(angleV);
+}
+
+void KRAnime2DManager::setParticleMaxCount(int particleID, unsigned count)
+{
+    _getParticleSystem(particleID)->setParticleCount(count);
+}
+
+void KRAnime2DManager::setParticleMaxScale(int particleID, double scale)
+{
+    _getParticleSystem(particleID)->setMaxScale(scale);
+}
+
+void KRAnime2DManager::setParticleMaxV(int particleID, const KRVector2D& v)
+{
+    _getParticleSystem(particleID)->setMaxV(v);
+}
+
+void KRAnime2DManager::setParticleMinAngleV(int particleID, double angleV)
+{
+    _getParticleSystem(particleID)->setMinAngleV(angleV);
+}
+
+void KRAnime2DManager::setParticleMinScale(int particleID, double scale)
+{
+    _getParticleSystem(particleID)->setMinScale(scale);
+}
+
+void KRAnime2DManager::setParticleMinV(int particleID, const KRVector2D& v)
+{
+    _getParticleSystem(particleID)->setMinV(v);
+}
+
+void KRAnime2DManager::setParticleScaleDelta(int particleID, double value)
+{
+    _getParticleSystem(particleID)->setScaleDelta(value);
+}
+
 
 

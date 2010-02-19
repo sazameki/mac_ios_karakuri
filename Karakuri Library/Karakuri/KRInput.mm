@@ -128,6 +128,11 @@ bool KRInput::isKeyDownOnce(KRKeyInfo key) const
     return (mKeyStateOnce & key)? true: false;
 }
 
+bool KRInput::isKeyDownAgainstDummy(KRKeyInfo key) const
+{
+    return (mKeyStateAgainstDummy & key)? true: false;
+}
+
 KRKeyState KRInput::getKeyState()
 {
     return mKeyState;

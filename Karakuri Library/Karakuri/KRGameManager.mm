@@ -11,6 +11,8 @@
 #include "KRTexture2DManager.h"
 #include "KRAudioManager.h"
 
+#import "KRGameController.h"
+
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
 #import <Karakuri/macosx/KarakuriGLView.h>
 #endif
@@ -42,7 +44,7 @@ KRGameManager::KRGameManager()
     mShowsMouseCursor = false;
     mShowsFPS = false;
     
-    mMaxCharacter2DCount = 256;
+    mMaxChara2DCount = 256;
 
     mGameIDForNetwork = "";
 
@@ -56,6 +58,93 @@ KRGameManager::~KRGameManager()
     // Do nothing
 }
 
+
+#pragma mark -
+#pragma mark ゲーム実行に関する関数
+
+void KRGameManager::exitGame()
+{
+    throw KRGameExitError();
+}
+
+double KRGameManager::getCurrentTime()
+{
+    return (double)[NSDate timeIntervalSinceReferenceDate];
+}
+
+double KRGameManager::getFrameRate() const
+{
+    return mFrameRate;
+}
+
+void KRGameManager::setFrameRate(double value)
+{
+    if (value <= 0.0) {
+        const char *errorFormat = "Invalid frame rate %3.1f was set.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "不正なフレームレート %3.1f を設定しようとしました。";
+        }        
+        throw KRRuntimeError(errorFormat, value);
+    }
+
+    mFrameRate = value;
+
+    if ([[KRGameController sharedController] isGameInitialized]) {
+        [[KRGameController sharedController] updateFrameRateSetting];
+    }
+}
+
+void KRGameManager::sleep(double interval)
+{
+    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:interval]];
+}
+
+
+#pragma mark -
+#pragma mark ワールドに関する関数
+
+void KRGameManager::addWorld(const std::string& name, KRWorld *aWorld)
+{
+    mWorldManager->registerWorld(name, aWorld);
+}
+
+void KRGameManager::changeWorld(const std::string& name)
+{
+    changeWorldImpl(name, true);
+}
+
+void KRGameManager::changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
+{
+    if (!isFirstInitialization && useLoadingThread && !sIsUpdatingModel) {
+        const char *errorFormat = "Invalid world changing was performed. changeWorld() cannot be invoked outside updateModel().";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "不正なワールド変更処理が行われました。changeWorld() 関数は、updateModel() の中以外では呼び出せません。";
+        }
+        throw KRRuntimeError(errorFormat);
+    }
+    if (mWorldManager->selectWorldWithName(name, useLoadingThread) == NULL) {
+        const char *errorFormat = "Failed to find the world named \"%s\".";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "\"%s\" という名前のワールドは見つかりませんでした。";
+        }
+        throw KRRuntimeError(errorFormat, name.c_str());
+    }
+}
+
+KRWorld* KRGameManager::getCurrentWorld() const
+{
+    return mWorldManager->getCurrentWorld();
+}
+
+KRWorld* KRGameManager::getWorld(const std::string& name) const
+{
+    return mWorldManager->getWorldWithName(name);
+}
+
+
+#pragma mark -
+#pragma mark ゲームのセットアップ
+
 void KRGameManager::setupResources()
 {
     // Do nothing
@@ -67,6 +156,10 @@ void KRGameManager::loadResourceGroup(int groupID)
     gKRAudioMan->loadAudioFiles(groupID, NULL, 0.0);
 }
 
+
+#pragma mark -
+#pragma mark ゲームの各種設定
+
 std::string KRGameManager::getTitle() const
 {
     return mTitle;
@@ -75,16 +168,6 @@ std::string KRGameManager::getTitle() const
 void KRGameManager::setTitle(const std::string& str)
 {
     mTitle = str;
-}
-
-double KRGameManager::getFrameRate() const
-{
-    return mFrameRate;
-}
-
-void KRGameManager::setFrameRate(double value)
-{
-    mFrameRate = value;
 }
 
 bool KRGameManager::checkDeviceType(KRDeviceType type) const
@@ -124,17 +207,17 @@ bool KRGameManager::getShowsFPS() const
 
 void KRGameManager::setShowsFPS(bool flag)
 {
-    mShowsFPS = flag;
+    mShowsFPS = flag;    
 }
 
-int KRGameManager::getMaxCharacter2DCount() const
+int KRGameManager::getMaxChara2DCount() const
 {
-    return mMaxCharacter2DCount;
+    return mMaxChara2DCount;
 }
 
-void KRGameManager::setMaxCharacter2DCount(int count)
+void KRGameManager::setMaxChara2DCount(int count)
 {
-    mMaxCharacter2DCount = count;
+    mMaxChara2DCount = count;
 }
 
 void KRGameManager::setScreenSize(int width, int height)
@@ -195,44 +278,6 @@ void KRGameManager::drawView(KRGraphics* g)
     }    
 }
 
-void KRGameManager::addWorld(const std::string& name, KRWorld *aWorld)
-{
-    mWorldManager->registerWorld(name, aWorld);
-}
-
-KRWorld* KRGameManager::getWorld(const std::string& name) const
-{
-    return mWorldManager->getWorldWithName(name);
-}
-
-KRWorld* KRGameManager::getCurrentWorld() const
-{
-    return mWorldManager->getCurrentWorld();
-}
-
-void KRGameManager::changeWorld(const std::string& name)
-{
-    changeWorldImpl(name, true);
-}
-
-void KRGameManager::changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
-{
-    if (!isFirstInitialization && useLoadingThread && !sIsUpdatingModel) {
-        const char *errorFormat = "Invalid world changing was performed. changeWorld() cannot be invoked outside updateModel().";
-        if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "不正なワールド変更処理が行われました。changeWorld() 関数は、updateModel() の中以外では呼び出せません。";
-        }
-        throw KRRuntimeError(errorFormat);
-    }
-    if (mWorldManager->selectWorldWithName(name, useLoadingThread) == NULL) {
-        const char *errorFormat = "Failed to find the world named \"%s\".";
-        if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "\"%s\" という名前のワールドは見つかりませんでした。";
-        }
-        throw KRRuntimeError(errorFormat, name.c_str());
-    }
-}
-
 std::string KRGameManager::getGameIDForNetwork() const
 {
     return mGameIDForNetwork;
@@ -271,11 +316,6 @@ void KRGameManager::checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 #endif
 }
 
-void KRGameManager::exitGame()
-{
-    throw KRGameExitError();
-}
-
 KRAudioMixType KRGameManager::getAudioMixType() const
 {
     return mAudioMixType;
@@ -285,6 +325,10 @@ void KRGameManager::setAudioMixType(KRAudioMixType type)
 {
     mAudioMixType = type;
 }
+
+
+#pragma mark -
+#pragma mark デバッグサポート
 
 std::string KRGameManager::to_s() const
 {

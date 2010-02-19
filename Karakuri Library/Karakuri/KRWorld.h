@@ -38,7 +38,7 @@ typedef struct KRInputSourceData {
 
 /*!
     @class KRWorld
-    @group  Game Foundation
+    @group  Game System
  
     <p>ロゴ画面、タイトル画面、プレイ画面といった各画面に対応したクラスです。Karakuri Framework では、これを「ワールド」と呼びます。</p>
     <p>現在のワールドから他のワールドに移動する場合には、KRChangeWorld() 関数を使ってください。</p>
@@ -65,20 +65,56 @@ private:
 
 public:
     KRWorld();
+
+    /*!
+        @task リソースの読み込み
+     */
+
+    /*!
+        @method hasLoadedResourceGroup
+        指定されたグループIDをもつすべてのリソースが読み込まれているかどうかをチェックします。
+     */
+    bool    hasLoadedResourceGroup(int groupID);
+
+    /*!
+        @method loadResourceGroup
+        @abstract このワールド内のゲーム実行中に使用するリソースを読み込みます。
+        リソースの読み込みに1秒以上の時間がかかる場合には、この関数呼び出しの前後で startLoadingWorld() 関数と finishLoadingWorld() 関数を呼び出して、読み込み画面を表示してください。
+     */
+    void    loadResourceGroup(int groupID);
     
     /*!
-        @task 読み込み中画面の処理のための関数
+        @method unloadResourceGroup
+        @abstract このワールド内で使用したリソースを解放します。
+     */
+    void    unloadResourceGroup(int groupID);
+
+    /*!
+        @task 読み込み画面のサポートのための関数（起動側ワールド）
+     */
+        
+    /*!
+        @method finishLoadingWorld
+        @abstract 読み込み画面の表示を終了します。
+     */
+    void    finishLoadingWorld();
+    
+    /*!
+        @method startLoadingWorld
+        @abstract 読み込み画面の表示を開始します。この関数の呼び出し後は必ず finishLoadingWorld() 関数を呼び出し、その間では loadResourceGroup() 関数の呼び出し以外の処理は行わないでください。
+     */
+    void    startLoadingWorld(const std::string& loadingWorldName, double minDuration=2.0);
+
+    /*!
+        @task 読み込み画面のサポートのための関数（表示側ワールド）
      */
     
-    bool    hasLoadedResourceGroup(int groupID);
-    
+    /*!
+        @method getLoadingProgress
+        @abstract 現在のリソースの読み込みの進行度合い (0.0〜1.0) を取得します。読み込み画面を表示するためのワールドでのみ使用できます。
+     */
     double  getLoadingProgress() const;
-    void    startLoadingWorld(const std::string& loadingWorldName, double minDuration=2.0);
-    void    loadResourceGroup(int groupID);
-    void    setExtraLoad(double ratio);
-    void    setExtraLoadingProgress(double progress);
-    void    finishLoadingWorld();
-    void    unloadResourceGroup(int groupID);
+
     int     _getFinishedSize();
     void    _setFinishedSize(int size);
 

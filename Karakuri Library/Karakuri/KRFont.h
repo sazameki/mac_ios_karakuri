@@ -15,7 +15,7 @@
 
 
 /*!
-    @class KRFont
+    @-class KRFont
     @group  Game 2D Graphics
     @abstract 文字列のテクスチャを生成するためのクラスです。
     <p>利用可能なフォント名については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/font_list.html">フォント名の一覧</a>」を参照してください。

@@ -1,7 +1,6 @@
-Game Foundation
+Game System
 Game 2D Graphics
 Game Controls
-Game Audio
-Game Text Processing
-Game Network
 Game 2D Simulator
+Game Network
+Game Foundation

@@ -118,6 +118,9 @@
 
 + (KRGameController*)sharedController;
 
+- (BOOL)isGameInitialized;
+- (void)updateFrameRateSetting;
+
 //- (void)startLoadingScreenThreadForWorld:(KRWorld *)world;
 - (void)startChaningWorld:(KRWorld*)world;
 

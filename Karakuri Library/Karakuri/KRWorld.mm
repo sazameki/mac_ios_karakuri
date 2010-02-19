@@ -95,7 +95,7 @@ void KRWorld::startUpdateModel(KRInput *input)
 
     updateModel(input);
     
-    gKRAnime2DMan->stepAllCharacters();
+    gKRAnime2DMan->stepAllCharas();
 
     gInputLogFrameCounter++;
 }
@@ -175,14 +175,6 @@ void KRWorld::loadResourceGroup(int groupID)
         gKRTex2DMan->loadTextureFiles(groupID, NULL, 0.0);
         gKRAudioMan->loadAudioFiles(groupID, NULL, 0.0);
     }
-}
-
-void KRWorld::setExtraLoad(double ratio)
-{
-}
-
-void KRWorld::setExtraLoadingProgress(double progress)
-{
 }
 
 void KRWorld::finishLoadingWorld()
