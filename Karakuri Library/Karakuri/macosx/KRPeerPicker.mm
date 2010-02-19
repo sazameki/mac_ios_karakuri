@@ -8,7 +8,7 @@
 
 #import "KRPeerPicker.h"
 #import "KRNetwork.h"
-#import "KRGame.h"
+#import "KRGameManager.h"
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -30,7 +30,7 @@
         [self setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0f alpha:0.8f]];
         [self setOpaque:NO];
         
-        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameInst->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
+        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameMan->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
         [mNetworkBrowser setDelegate:self];
 
         mTitleField = [[NSTextField alloc] initWithFrame:NSMakeRect(17, contentRect.size.height-30, contentRect.size.width-34, 18)];

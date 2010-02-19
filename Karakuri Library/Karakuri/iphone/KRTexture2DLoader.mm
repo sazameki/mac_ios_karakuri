@@ -384,14 +384,14 @@ static GLuint _KRCreateGLTextureFromCGImage(CGImageRef imageRef, UIImageOrientat
 	return ret;
 }
 
-GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize)
+GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
     static BOOL hasFailedInternalPNGLoading = NO;
     
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:nil];
 
     if (!hasFailedInternalPNGLoading && [[imageName pathExtension] compare:@"png" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
-        GLuint textureName = KRCreatePNGGLTextureFromImageAtPath(imagePath, imageSize, textureSize);
+        GLuint textureName = KRCreatePNGGLTextureFromImageAtPath(imagePath, imageSize, textureSize, scalesLinear);
         if (textureName != GL_INVALID_VALUE) {
             *textureTarget = GL_TEXTURE_2D;
             return textureName;

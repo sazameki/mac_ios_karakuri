@@ -1,5 +1,5 @@
 //
-//  KRGame.h
+//  KRGameManager.h
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/17.
@@ -30,24 +30,31 @@ typedef enum KRAudioMixType {
     KRAudioMixTypeAmbientSolo,     //!< Play own background music and own sound effects
 } KRAudioMixType;
 
+typedef enum KRDeviceType {
+    KRDeviceTypeMac,
+    KRDeviceTypeIPhone,
+    KRDeviceTypeIPad,
+} KRDeviceType;
+
 
 #pragma mark -
 #pragma mark Game Class Declaration
 
 /*!
-    @class  KRGame
+    @class  KRGameManager
     @group  Game Foundation
  
     <p>ゲームの実行を制御するための基本機能を提供するクラスです。</p>
     <p>このクラスのインスタンスは、グローバル変数の KRGame を使用して、どこからでもアクセスできます。</p>
  */
-class KRGame : public KRObject {
+class KRGameManager : public KRObject {
     std::string     mTitle;
     double          mFrameRate;
     int             mScreenWidth;
     int             mScreenHeight;
     bool            mWasChangingWorld;
     KRAudioMixType  mAudioMixType;
+    KRDeviceType    mDeviceType;
     bool            mShowsMouseCursor;
     bool            mShowsFPS;
     int             mMaxCharacter2DCount;
@@ -62,31 +69,45 @@ class KRGame : public KRObject {
 #pragma mark Constructor
 
 public:
-    KRGame();
-    ~KRGame();
+    KRGameManager();
+    ~KRGameManager();
     
 public:
+    /*!
+        @method setupResources
+        @abstract ゲーム実行に必要なリソース（画像、音）を宣言するために、ゲーム起動直後に呼ばれます。
+     */
+    virtual void        setupResources();
+    
     /*!
         @method setupWorlds
         @abstract ゲーム実行に必要なワールドを追加するために、ゲーム起動直後に呼ばれます。
      */
     virtual std::string setupWorlds() = 0;
-    
+
     void    cleanUpGame();
     void    updateModel(KRInput *input);
     void    drawView(KRGraphics *g);
     
 public:
     /*!
+        @task リソースの管理
+     */
+    void    loadResourceGroup(int groupID);
+    
+public:
+    /*!
         @task 状態を取得するための関数
      */
+
+    bool            checkDeviceType(KRDeviceType type) const;    
 
     /*!
         @method getAudioMixType
         @abstract 設定されたオーディオ再生の方法を取得します。
      */
     KRAudioMixType  getAudioMixType() const;
-
+    
     /*!
         @method     getFrameRate
         @abstract   ゲームに設定されたフレームレートを取得します。
@@ -256,6 +277,7 @@ public:
 public:
     void            changeWorldImpl(const std::string& name, bool useLoadingThread = true, bool isFirstInitialization = false) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void            startWorldChanging() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void            checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
 public:
     void            saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
@@ -269,13 +291,23 @@ public:
 
 };
 
+
+class KRGame : public KRGameManager {
+};
+
+
 /*!
-    @var    gKRGameInst
+    @var    gKRGameMan
     @group  Game Foundation
     @abstract ゲームのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KRGame *gKRGameInst;
+extern KRGameManager*   gKRGameMan;
+
+
+// 後方互換のための以前のゲームマネージャ変数
+extern KRGameManager*   gKRGameInst;
+
 
 /*!
     @var    gKRScreenSize

@@ -9,7 +9,7 @@
 
 #include "KRWorldManager.h"
 
-#include "KRGame.h"
+#include "KRGameManager.h"
 #include "KRWorld.h"
 
 #import "KRGameController.h"
@@ -60,7 +60,7 @@ KRWorld *KRWorldManager::selectWorldWithName(const std::string &name, bool useLo
     if (world == NULL) {
         return NULL;
     }
-    gKRGameInst->startWorldChanging();
+    gKRGameMan->startWorldChanging();
     if (mCurrentWorld != NULL) {
         mCurrentWorld->startResignedActive();
     }

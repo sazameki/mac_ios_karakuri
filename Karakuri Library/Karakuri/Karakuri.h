@@ -39,7 +39,7 @@
 #include <vector>
 
 // Game Base Class
-#include <Karakuri/KRGame.h>
+#include <Karakuri/KRGameManager.h>
 
 // Fundamental Classes
 #include <Karakuri/KarakuriDebug.h>
@@ -62,13 +62,15 @@
 #include <Karakuri/KRSwitch.h>
 
 // 2D Graphics Classes
+#include <Karakuri/KRTexture2DManager.h>
 #include <Karakuri/KRTexture2D.h>
-#include <Karakuri/KRAnime2D.h>
+#include <Karakuri/KRAnime2DManager.h>
 #include <Karakuri/KRFont.h>
 #include <Karakuri/KRParticle2DSystem.h>
 #include <Karakuri/KRPrimitive2D.h>
 
 // Audio Playback Classes
+#include <Karakuri/KRAudioManager.h>
 #include <Karakuri/KRMusic.h>
 #include <Karakuri/KRSound.h>
 

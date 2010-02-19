@@ -16,6 +16,12 @@
 class KRFont;
 
 
+typedef enum {
+    KRTexture2DScaleModeNearest,
+    KRTexture2DScaleModeLinear,
+} KRTexture2DScaleMode;
+
+
 /*!
     @class KRTexture2D
     @group Game 2D Graphics
@@ -32,14 +38,21 @@ private:
     KRVector2D  mImageSize;         //!< The actual size of the image.
     KRVector2D  mTextureSize;       //!< Full size of the area used as a texture.
     
+    KRVector2D  mOrigin;
+    
     void        *mTexture2DImpl;
     void        *mAtlas;
     KRVector2D  mAtlasSize;
 
 public:
+    static int  getResourceSize(const std::string& filename);
+
+public:
     /*!
         @task コンストラクタ
      */
+    
+    KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode);
 
     /*!
         @method KRTexture2D
@@ -88,8 +101,25 @@ public:
     
     
 public:
+    void    setTextureAtlasSize(const KRVector2D& size);
+    void    setTextureOrigin(const KRVector2D& origin);    
+    
+public:
     /*!
-        @task 描画のための関数
+        @task 描画のための関数（1.0.0 で導入した新バージョン）
+     */
+    void    drawAtPoint_(const KRVector2D& pos, const KRColor& color);
+    void    drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
+    
+    void    drawAtPointCenter_(const KRVector2D& centerPos, const KRColor& color);
+    void    drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
+
+    void    drawInRect_(const KRRect2D& destRect, const KRColor& color);
+    void    drawInRect_(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color);
+
+    
+    /*!
+        @task 描画のための関数（1.0.0 より前のバージョン用の互換性維持）
      */
 
     /*!

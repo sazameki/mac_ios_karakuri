@@ -13,7 +13,7 @@
 #include <Karakuri/KRGraphics.h>
 
 
-KarakuriGLView   *gKRGLViewInst = nil;
+KarakuriGLView* gKRGLViewInst = nil;
 
 static volatile BOOL    sIsReady = NO;
 
@@ -24,8 +24,8 @@ static volatile BOOL    sIsReady = NO;
 
 - (id)init
 {
-    KRGameController *controller = [KRGameController sharedController];
-    KRGame *game = [controller game];
+    KRGameController* controller = [KRGameController sharedController];
+    KRGameManager* game = [controller game];
 
     NSOpenGLPixelFormatAttribute attrs[] = {
         NSOpenGLPFAWindow,
@@ -102,6 +102,9 @@ static volatile BOOL    sIsReady = NO;
     glLoadIdentity();
 
     glOrtho(0.0, (double)mKRGLContext.backingWidth, 0.0, (double)mKRGLContext.backingHeight, -1.0, 1.0);
+
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     double angle = 0.0;
     if (gKRScreenSize.x > gKRScreenSize.y) {
@@ -185,7 +188,7 @@ static volatile BOOL    sIsReady = NO;
     }
     
     // Hide mouse cursor
-    if (!gKRGameInst->getShowsMouseCursor()) {
+    if (!gKRGameMan->getShowsMouseCursor()) {
         CGDisplayHideCursor(kCGDirectMainDisplay);
     }
     
@@ -280,7 +283,7 @@ static volatile BOOL    sIsReady = NO;
 - (void)mouseEntered:(NSEvent *)theEvent
 {
     // Hide mouse cursor
-    if (!gKRGameInst->getShowsMouseCursor()) {
+    if (!gKRGameMan->getShowsMouseCursor()) {
         CGDisplayHideCursor(kCGDirectMainDisplay);
     }
 }

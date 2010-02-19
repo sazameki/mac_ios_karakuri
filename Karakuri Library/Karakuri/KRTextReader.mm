@@ -22,7 +22,7 @@ KRTextReader::KRTextReader(const std::string& filename)
     // 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (!path) {
-        NSMutableString *titleName = [NSString stringWithCString:gKRGameInst->getTitle().c_str() encoding:NSUTF8StringEncoding];
+        NSMutableString *titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
         NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
         NSString *baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
         NSString *thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];

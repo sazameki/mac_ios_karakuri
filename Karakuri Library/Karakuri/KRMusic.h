@@ -13,7 +13,7 @@
 
 
 /*!
-    @class  KRMusic
+    @-class  KRMusic
     @group  Game Audio
     <p>10秒以上の長さのサウンドファイルを、ゲームの BGM として再生するためのクラスです。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
@@ -23,9 +23,13 @@ class KRMusic : public KRObject {
     
 private:
     std::string mFileName;
-    void        *mImpl;
+    void*       mImpl;
     bool        mDoLoop;
     bool        mIsPausing;
+    int         mBGMID;
+    
+public:
+    static int  getResourceSize(const std::string& filename);
     
 public:
     /*!
@@ -84,6 +88,9 @@ public:
         @abstract   BGM の音量を設定します。
      */    
     void    setVolume(double value);
+    
+    int     _getBGMID() const;
+    void    _setBGMID(int bgmID);
 
     
 #pragma mark -

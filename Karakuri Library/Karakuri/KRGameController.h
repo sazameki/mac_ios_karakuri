@@ -18,14 +18,17 @@
 #import <Karakuri/iphone/KRPeerPicker.h>
 #endif
 
-#import <Karakuri/KRGame.h>
+#import <Karakuri/KRGameManager.h>
 #import <Karakuri/KarakuriGLContext.h>
 #import <Karakuri/KarakuriLibraryConnectorBase.h>
 #import <Karakuri/KRGraphics.h>
 #import <Karakuri/KRInput.h>
 #import <Karakuri/KRFPSDisplay.h>
 #import <Karakuri/KRNetwork.h>
-#import <Karakuri/KRAnime2D.h>
+#import <Karakuri/KRAnime2DManager.h>
+#import <Karakuri/KRAudioManager.h>
+#import <Karakuri/KRTexture2DManager.h>
+
 
 
 #if __DEBUG__
@@ -36,14 +39,14 @@
 
 
 @interface KRGameController : NSObject<KRPeerPickerDelegate> {
-    KarakuriWindow      *mWindow;
-    KarakuriGLContext   *mKRGLContext;
-    KRGame              *mGame;
+    KarakuriWindow*     mWindow;
+    KarakuriGLContext*  mKRGLContext;
+    KRGameManager*      mGameManager;
     
-    KRGraphics          *mGraphics;
-    KRInput             *mInput;
+    KRGraphics*         mGraphics;
+    KRInput*            mInput;
     
-    KarakuriLibraryConnectorBase    *mLibraryConnector;
+    KarakuriLibraryConnectorBase*   mLibraryConnector;
     
     volatile BOOL       mGameIsRunning;
     volatile BOOL       mGameIsFinished;
@@ -53,34 +56,39 @@
     
     uint64_t            mMCFrameInterval;
     
-    KRWorld             *mLoadingWorld;
+    // 読み込み画面ワールドの処理
+    KRWorld*            mLoadingWorld;
     volatile BOOL       mIsWorldLoading;
-    KRWorld             *mLoadingScreenWorld;
+    KRWorld*            mLoadingScreenWorld;
+    volatile BOOL       mIsShowingLoadingScreen;
+    std::string         mErrorStrInLoadingScreen;
     
     BOOL                mIsInFullScreenMode;
     BOOL                mHasMetEmergency;
     BOOL                mTerminatedByUser;
     
-    KRAnime2D           *mCharacterAnime;
+    KRTexture2DManager* mTex2DManager;
+    KRAnime2DManager*   mAnime2DManager;
+    KRAudioManager*     mAudioManager;
     
-    KRNetwork           *mNetworkServer;
-    NSString            *mNetworkPeerName;
+    KRNetwork*          mNetworkServer;
+    NSString*           mNetworkPeerName;
     BOOL                mHasAcceptedNetworkPeer;
     volatile BOOL       mIsInvitingNetworkPeer;
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    KRPeerPickerWindow  *mPeerPickerWindow;
+    KRPeerPickerWindow* mPeerPickerWindow;
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    KRPeerPickerController  *mPeerPickerController;
-    UIAlertView         *mErrorAlertView;
-    UIAlertView         *mNetworkAcceptAlertView;
+    KRPeerPickerController* mPeerPickerController;
+    UIAlertView*            mErrorAlertView;
+    UIAlertView*            mNetworkAcceptAlertView;
 #endif
     
 #if __DEBUG__
-    KRFPSDisplay        *mFPSDisplay;
-    KRControlManager    *mDebugControlManager;
+    KRFPSDisplay*       mFPSDisplay;
+    KRControlManager*   mDebugControlManager;
 
     double              mCurrentFPS;
     int                 mFrameCount;
@@ -97,41 +105,44 @@
     int                 mTextureBatchProcessCountPos;
 #endif
 
-    std::string         *mLastErrorMessage;
+    std::string*        mLastErrorMessage;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     volatile BOOL       mGameIsChaningScreenMode;
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    EAGLSharegroup      *mEAGLSharegroup;
+    EAGLSharegroup*     mEAGLSharegroup;
 #endif
 }
 
-+ (KRGameController *)sharedController;
++ (KRGameController*)sharedController;
 
 //- (void)startLoadingScreenThreadForWorld:(KRWorld *)world;
-- (void)startChaningWorld:(KRWorld *)world;
+- (void)startChaningWorld:(KRWorld*)world;
+
+- (void)startLoadingWorld:(KRWorld*)world;
+- (void)finishLoadingWorld;
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-- (EAGLSharegroup *)eaglSharegroup;
+- (EAGLSharegroup*)eaglSharegroup;
 #endif
 
-- (void)setKRGLContext:(KarakuriGLContext *)context;
+- (void)setKRGLContext:(KarakuriGLContext*)context;
 - (void)setupGLOptions;
 
 #if KR_MACOSX
 - (void)fullScreenGameProc;
 #endif
 
-- (KRGame *)game;
+- (KRGameManager*)game;
 
 #if __DEBUG__
 - (void)addDebugString:(const std::string&)str;
 - (void)removeDebugStrings;
 #endif
 
-- (void)processNetworkRequest:(NSString *)name;
+- (void)processNetworkRequest:(NSString*)name;
 - (void)showNetworkPeerPicker;
 
 @end

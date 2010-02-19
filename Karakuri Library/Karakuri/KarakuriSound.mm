@@ -8,7 +8,7 @@
 
 #import "KarakuriSound.h"
 
-#import "KRGame.h"
+#import "KRGameManager.h"
 
 
 static ALCdevice *sALDevice = NULL;
@@ -23,7 +23,7 @@ void KRInitOpenAL()
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     NSString *categoryName = AVAudioSessionCategoryAmbient;
-    if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
+    if (gKRGameMan->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         categoryName = AVAudioSessionCategorySoloAmbient;
     }
     

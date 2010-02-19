@@ -31,11 +31,12 @@ typedef unsigned int        KRMouseState;
 
 #if KR_MACOSX
 /*!
-    @typedef KRKeyState
+    @typedef KRKeyInfo
     @group Game Foundation
     @abstract キーボードの状態をビットフラグで管理するための型です。
  */
-typedef unsigned long long  KRKeyState;
+typedef unsigned long long  KRKeyInfo;
+typedef KRKeyInfo           KRKeyState;
 #endif
 
 
@@ -119,78 +120,78 @@ public:
         @constant Key0-Key9
         0〜9の数字キーの押下に対応したビットマスクです。このマスクは、テンキーを区別しません。
      */
-    static const KRKeyState     Key0           = 0x1LL;
-    static const KRKeyState     Key1           = (0x1LL << 1);
-    static const KRKeyState     Key2           = (0x1LL << 2);
-    static const KRKeyState     Key3           = (0x1LL << 3);
-    static const KRKeyState     Key4           = (0x1LL << 4);
-    static const KRKeyState     Key5           = (0x1LL << 5);
-    static const KRKeyState     Key6           = (0x1LL << 6);
-    static const KRKeyState     Key7           = (0x1LL << 7);
-    static const KRKeyState     Key8           = (0x1LL << 8);
-    static const KRKeyState     Key9           = (0x1LL << 9);
+    static const KRKeyInfo      Key0           = 0x1LL;
+    static const KRKeyInfo      Key1           = (0x1LL << 1);
+    static const KRKeyInfo      Key2           = (0x1LL << 2);
+    static const KRKeyInfo      Key3           = (0x1LL << 3);
+    static const KRKeyInfo      Key4           = (0x1LL << 4);
+    static const KRKeyInfo      Key5           = (0x1LL << 5);
+    static const KRKeyInfo      Key6           = (0x1LL << 6);
+    static const KRKeyInfo      Key7           = (0x1LL << 7);
+    static const KRKeyInfo      Key8           = (0x1LL << 8);
+    static const KRKeyInfo      Key9           = (0x1LL << 9);
     
     /*!
         @constant KeyA-KeyZ
         A〜Zの英字キーの押下に対応したビットマスクです。
      */
-    static const KRKeyState     KeyA           = (0x1LL << 10);
-    static const KRKeyState     KeyB           = (0x1LL << 11);
-    static const KRKeyState     KeyC           = (0x1LL << 12);
-    static const KRKeyState     KeyD           = (0x1LL << 13);
-    static const KRKeyState     KeyE           = (0x1LL << 14);
-    static const KRKeyState     KeyF           = (0x1LL << 15);
-    static const KRKeyState     KeyG           = (0x1LL << 16);
-    static const KRKeyState     KeyH           = (0x1LL << 17);
-    static const KRKeyState     KeyI           = (0x1LL << 18);
-    static const KRKeyState     KeyJ           = (0x1LL << 19);
-    static const KRKeyState     KeyK           = (0x1LL << 20);
-    static const KRKeyState     KeyL           = (0x1LL << 21);
-    static const KRKeyState     KeyM           = (0x1LL << 22);
-    static const KRKeyState     KeyN           = (0x1LL << 23);
-    static const KRKeyState     KeyO           = (0x1LL << 24);
-    static const KRKeyState     KeyP           = (0x1LL << 25);
-    static const KRKeyState     KeyQ           = (0x1LL << 26);
-    static const KRKeyState     KeyR           = (0x1LL << 27);
-    static const KRKeyState     KeyS           = (0x1LL << 28);
-    static const KRKeyState     KeyT           = (0x1LL << 29);
-    static const KRKeyState     KeyU           = (0x1LL << 30);
-    static const KRKeyState     KeyV           = (0x1LL << 31);
-    static const KRKeyState     KeyW           = (0x1LL << 32);
-    static const KRKeyState     KeyX           = (0x1LL << 33);
-    static const KRKeyState     KeyY           = (0x1LL << 34);
-    static const KRKeyState     KeyZ           = (0x1LL << 35);
+    static const KRKeyInfo      KeyA           = (0x1LL << 10);
+    static const KRKeyInfo      KeyB           = (0x1LL << 11);
+    static const KRKeyInfo      KeyC           = (0x1LL << 12);
+    static const KRKeyInfo      KeyD           = (0x1LL << 13);
+    static const KRKeyInfo      KeyE           = (0x1LL << 14);
+    static const KRKeyInfo      KeyF           = (0x1LL << 15);
+    static const KRKeyInfo      KeyG           = (0x1LL << 16);
+    static const KRKeyInfo      KeyH           = (0x1LL << 17);
+    static const KRKeyInfo      KeyI           = (0x1LL << 18);
+    static const KRKeyInfo      KeyJ           = (0x1LL << 19);
+    static const KRKeyInfo      KeyK           = (0x1LL << 20);
+    static const KRKeyInfo      KeyL           = (0x1LL << 21);
+    static const KRKeyInfo      KeyM           = (0x1LL << 22);
+    static const KRKeyInfo      KeyN           = (0x1LL << 23);
+    static const KRKeyInfo      KeyO           = (0x1LL << 24);
+    static const KRKeyInfo      KeyP           = (0x1LL << 25);
+    static const KRKeyInfo      KeyQ           = (0x1LL << 26);
+    static const KRKeyInfo      KeyR           = (0x1LL << 27);
+    static const KRKeyInfo      KeyS           = (0x1LL << 28);
+    static const KRKeyInfo      KeyT           = (0x1LL << 29);
+    static const KRKeyInfo      KeyU           = (0x1LL << 30);
+    static const KRKeyInfo      KeyV           = (0x1LL << 31);
+    static const KRKeyInfo      KeyW           = (0x1LL << 32);
+    static const KRKeyInfo      KeyX           = (0x1LL << 33);
+    static const KRKeyInfo      KeyY           = (0x1LL << 34);
+    static const KRKeyInfo      KeyZ           = (0x1LL << 35);
     
     /*!
         @constant KeyUp, KeyDown, KeyLeft, KeyRight
         矢印キーの押下に対応したビットマスクです。
      */
-    static const KRKeyState     KeyUp          = (0x1LL << 36);
-    static const KRKeyState     KeyDown        = (0x1LL << 37);
-    static const KRKeyState     KeyLeft        = (0x1LL << 38);
-    static const KRKeyState     KeyRight       = (0x1LL << 39);
+    static const KRKeyInfo      KeyUp          = (0x1LL << 36);
+    static const KRKeyInfo      KeyDown        = (0x1LL << 37);
+    static const KRKeyInfo      KeyLeft        = (0x1LL << 38);
+    static const KRKeyInfo      KeyRight       = (0x1LL << 39);
     
     /*!
         @constant KeyReturn, KeySpace
         @abstract スペースキーとリターンキーの押下に対応したビットマスクです。
         リターンキーとエンターキーは同一のキーとして判定されます。
      */
-    static const KRKeyState     KeyReturn      = (0x1LL << 40);
-    static const KRKeyState     KeySpace       = (0x1LL << 41);
+    static const KRKeyInfo      KeyReturn      = (0x1LL << 40);
+    static const KRKeyInfo      KeySpace       = (0x1LL << 41);
 
     /*!
         @constant KeyBackspace, KeyDelete
         バックスペースキーとデリートキーの押下に対応したビットマスクです。
      */
-    static const KRKeyState     KeyBackspace   = (0x1LL << 42);
-    static const KRKeyState     KeyDelete      = (0x1LL << 43);
+    static const KRKeyInfo      KeyBackspace   = (0x1LL << 42);
+    static const KRKeyInfo      KeyDelete      = (0x1LL << 43);
     
     /*!
         @constant KeyTab, KeyEscape
         エスケープキーとタブキーの押下に対応したビットマスクです。
      */
-    static const KRKeyState     KeyTab         = (0x1LL << 44);
-    static const KRKeyState     KeyEscape      = (0x1LL << 45);
+    static const KRKeyInfo      KeyTab         = (0x1LL << 44);
+    static const KRKeyInfo      KeyEscape      = (0x1LL << 45);
 #endif
 
 
@@ -208,9 +209,12 @@ public:
 
 #if KR_MACOSX
 private:
+    bool            mIsMouseDown;
+    bool            mIsMouseDownOld;
+    bool            mIsMouseDownOnce;
     KRVector2DInt   mOldMouseLocationForInputLog;
     KRMouseState    mMouseState;
-    KRMouseState    mOldMouseState;
+    KRMouseState    mMouseStateOld;
     KRMouseState    mMouseStateAgainstDummy;
     KRVector2D      mMouseLocationForDummy;
     //bool            mIsFullScreen;
@@ -222,9 +226,10 @@ private:
 
 #if KR_MACOSX
 private:
-    KRKeyState      mKeyState;
-    KRKeyState      mOldKeyState;
-    KRKeyState      mKeyStateAgainstDummy;
+    KRKeyInfo       mKeyState;
+    KRKeyInfo       mKeyStateOld;
+    KRKeyInfo       mKeyStateOnce;
+    KRKeyInfo       mKeyStateAgainstDummy;
 #endif
 
 
@@ -234,6 +239,7 @@ private:
 #if KR_IPHONE
 private:
     KRTouchState                mTouchState;
+    bool                        mIsTouchedOnce;
     KRTouchState                mTouchStateOld;
     int                         mTouchCountAgainstDummy;
     std::vector<KRTouchInfo>    mTouchInfos;
@@ -285,6 +291,21 @@ public:
      */
     
     /*!
+        @method isMouseDown
+        @abstract   マウスが押されている状態かどうかを判定します。
+        この関数は、左ボタンと右ボタンを区別しません。
+     */
+    bool            isMouseDown() const;
+
+    /*!
+        @method isMouseDownOnce
+        @abstract   マウスが押されている状態かどうかを判定します。
+        <p>あるフレームでマウスが押されていると判定されると、それ以降のフレームでマウスが離されて押し直されるまで、この関数が true を返すことはありません。</p>
+        <p>この関数は、左ボタンと右ボタンを区別しません。</p>
+     */
+    bool            isMouseDownOnce() const;
+    
+    /*!
         @method getMouseState
         @abstract 現在のマウス押下状態を取得します。
         左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
@@ -322,6 +343,19 @@ public:
     /*!
         @task キー入力のサポート (Mac OS X)
      */
+    
+    /*!
+        @method isKeyDown
+        @abstract   キーが押されている状態かどうかを判定します。
+     */
+    bool        isKeyDown(KRKeyInfo key) const;
+
+    /*!
+        @method isKeyDownOnce
+        @abstract   キーが押されている状態かどうかを判定します。
+        あるフレームで押されていると判定されたキーに対しては、それ以降のフレームでキーが離されて押し直されるまで、この関数が true を返すことはありません。
+     */
+    bool        isKeyDownOnce(KRKeyInfo key) const;
     
     /*!
         @method getKeyState
@@ -371,7 +405,8 @@ public:
     /*!
         @method getTouchOnce
         @abstract 現在画面がタッチされているかどうかを取得します。
-        この関数を一度呼び出すと、指が画面から離されてもう一度タッチされるまで、この関数が true を返すことはありません。
+        <p>あるフレームでタッチされていると判定されると、それ以降のフレームで指が離されてタッチし直されるまで、この関数が true を返すことはありません。</p>
+        <p>この関数は、複数のタッチを識別しません。</p>
      */
     bool            getTouchOnce();
     
@@ -547,7 +582,14 @@ public:
 
     
 #pragma mark -
+#pragma mark "Once" Support
+public:
+    void    _updateOnceInfo() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+
+    
+#pragma mark -
 #pragma mark Debug Support
+
 public:
     void    resetAllInputs() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 

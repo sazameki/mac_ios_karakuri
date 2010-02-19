@@ -105,12 +105,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         
         KRSetupSaveBox();
 
-        mGame = [mLibraryConnector createGameInstance];
+        mGameManager = [mLibraryConnector createGameInstance];
         mGraphics = new KRGraphics();
         mInput = new KRInput();
-        mCharacterAnime = new KRAnime2D(mGame->getMaxCharacter2DCount());
+        mTex2DManager = new KRTexture2DManager();
+        mAnime2DManager = new KRAnime2DManager(mGameManager->getMaxCharacter2DCount());
+        mAudioManager = new KRAudioManager();
         
-        mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGame->getFrameRate()));
+        mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGameManager->getFrameRate()));
         
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
         mGameIsChaningScreenMode = NO;
@@ -161,9 +163,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [mLibraryConnector release];
     
     delete mGraphics;
-    delete mGame;
+    delete mGameManager;
     delete mInput;
-    delete mCharacterAnime;
+    delete mAudioManager;
+    delete mAnime2DManager;
+    delete mTex2DManager;
     
 #if __DEBUG__
     if (mFPSDisplay != NULL) {
@@ -208,7 +212,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     mWindow = [KarakuriWindow new];
     
-    NSString *appName = [NSString stringWithCString:mGame->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSString *appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
     [mWindow setTitle:appName];
     [mWindow center];
 #endif
@@ -258,9 +262,9 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 }
 
-- (KRGame *)game
+- (KRGameManager*)game
 {
-    return mGame;
+    return mGameManager;
 }
 
 #if __DEBUG__
@@ -298,7 +302,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)startNetworkServer
 {
-    std::string gameID = mGame->getGameIDForNetwork();
+    std::string gameID = mGameManager->getGameIDForNetwork();
     mNetworkServer = new KRNetwork(gameID);
 }
 
@@ -505,6 +509,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    mGameManager->checkDeviceType();
     [mWindow makeKeyAndOrderFront:self];
     
     [self checkOpenGLVersion];
@@ -618,6 +623,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     }
 
     mWindow = [KarakuriWindow new];
+    mGameManager->checkDeviceType();
     [mWindow makeKeyAndVisible];
     
     [self checkOpenGLVersion];
@@ -666,6 +672,140 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [pool release];
 }
 
+- (void)loadingWorldProc:(id)dummy
+{
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    
+    try {
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+        CGLContextObj cglContext = (mKRGLContext->isFullScreen)? mKRGLContext->cglFullScreenContext: mKRGLContext->cglContext;
+        
+        CGLLockContext(cglContext);
+        CGLSetCurrentContext(cglContext);
+#endif
+    
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+        [EAGLContext setCurrentContext:mKRGLContext->eaglContext];
+#endif
+    
+        mLoadingScreenWorld->setLoadingWorld();
+        mLoadingScreenWorld->startBecameActive();
+    
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+        CGLUnlockContext(cglContext);
+#endif
+    
+        uint64_t mcPrevTime = mach_absolute_time();     // End time of the previous loop (Mach time)
+
+        while (mIsShowingLoadingScreen) {
+            // Set up the OpenGL context
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+            CGLLockContext(cglContext);
+            CGLSetCurrentContext(cglContext);
+#endif
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+            [EAGLContext setCurrentContext:mKRGLContext->eaglContext];
+            glBindFramebufferOES(GL_FRAMEBUFFER_OES, mKRGLContext->viewFramebuffer);
+#endif
+        
+            // Set the view port
+            glViewport(0, 0, mKRGLContext->backingWidth, mKRGLContext->backingHeight);
+            
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+        
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+            glOrtho(0.0, (double)mKRGLContext->backingWidth, 0.0, (double)mKRGLContext->backingHeight, -1.0, 1.0);
+#endif
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+            glOrthof(0.0f, (float)mKRGLContext->backingWidth, 0.0f, (float)mKRGLContext->backingHeight, -1.0f, 1.0f);
+            // If Horizontal
+            if (mGameManager->getScreenWidth() > mGameManager->getScreenHeight()) {
+                glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
+                glScalef(1.0f, 1.0f, 1.0f);
+                glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+            }
+#endif
+            glMatrixMode(GL_MODELVIEW);
+            
+            mGraphics->setupDefaultSetting();
+            
+            mLoadingScreenWorld->startDrawView(mGraphics);
+            
+            KRTexture2D::processBatchedTexture2DDraws();
+
+#if KR_IPHONE_MACOSX_EMU
+            [gKRGLViewInst drawTouches];
+            KRTexture2D::processBatchedTexture2DDraws();
+#endif
+        
+            // ダブルバッファのスワップ
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+            CGLFlushDrawable(cglContext);
+            CGLUnlockContext(cglContext);
+#endif
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+            glBindRenderbufferOES(GL_RENDERBUFFER_OES, mKRGLContext->viewRenderbuffer);
+            [mKRGLContext->eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
+#endif
+        
+            // Calculate the update count and sleep certain interval
+            uint64_t mcCurrentTime = mach_absolute_time();
+            int modelUpdateCount = (int)((mcCurrentTime - mcPrevTime) / mMCFrameInterval);
+            if (modelUpdateCount <= 0) {
+                modelUpdateCount = 1;               // Update once at least
+                mcPrevTime += mMCFrameInterval;     // Calc "next" prev time
+                mach_wait_until(mcPrevTime);        // Sleep until the "next" prev time
+            } else if (modelUpdateCount > KRMaxFrameSkipCount) {
+                modelUpdateCount = KRMaxFrameSkipCount;   // Drop the frame
+                mcPrevTime = mcCurrentTime;
+            } else {
+                mcPrevTime += mMCFrameInterval * modelUpdateCount;
+            }
+            
+            // Update Model
+            for (int i = 0; i < modelUpdateCount; i++) {
+                mLoadingScreenWorld->startUpdateModel(mInput);
+            }
+        }
+    
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+        CGLUnlockContext(cglContext);
+#endif
+    
+        mLoadingScreenWorld->startResignedActive();
+        mLoadingScreenWorld = NULL;
+    } catch (KRRuntimeError& e) {
+        mErrorStrInLoadingScreen = e.what();
+        mLoadingScreenWorld = NULL;
+    }
+    
+    [pool release];
+}
+
+- (void)startLoadingWorld:(KRWorld*)world
+{
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    CGLContextObj cglContext = (mKRGLContext->isFullScreen)? mKRGLContext->cglFullScreenContext: mKRGLContext->cglContext;
+    CGLUnlockContext(cglContext);
+#endif
+    
+    mLoadingScreenWorld = world;
+    mIsShowingLoadingScreen = YES;
+    mErrorStrInLoadingScreen = "";
+    
+    [NSThread detachNewThreadSelector:@selector(loadingWorldProc:) toTarget:self withObject:nil];
+}
+
+- (void)finishLoadingWorld
+{
+    mIsShowingLoadingScreen = NO;
+    
+    while (mLoadingScreenWorld != NULL) {
+        [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+    }    
+}
+
 - (void)gameThreadProc:(id)dummy
 {
     NSAutoreleasePool *pool = [NSAutoreleasePool new];
@@ -698,7 +838,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
         
 #if __DEBUG__
-        if (mFPSDisplay == NULL && mGame->getShowsFPS()) {
+        if (mFPSDisplay == NULL && mGameManager->getShowsFPS()) {
             mFPSDisplay = new KRFPSDisplay();
         }
         mPrevFPSUpdateTime = gettimeofday_sec();
@@ -708,28 +848,15 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         [self setupGLOptions];
 
         if (!mGameIsInitialized) {
-            std::string firstWorldName = mGame->setupWorlds();
-            mGame->changeWorldImpl(firstWorldName, true, true);
+            mGameManager->setupResources();
+            std::string firstWorldName = mGameManager->setupWorlds();
+            mGameManager->changeWorldImpl(firstWorldName, true, true);
             if (mLoadingWorld != NULL) {
-                std::string loadingScreenWorldName = mLoadingWorld->getLoadingScreenWorldName();
-                if (loadingScreenWorldName.length() > 0) {
-                    mLoadingScreenWorld = mGame->getWorld(loadingScreenWorldName);
-                    if (mLoadingScreenWorld == NULL) {
-                        if (gKRLanguage == KRLanguageJapanese) {
-                            std::string errorFormat = "\"" + mLoadingWorld->getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingScreenWorldName + "\" は見つかりませんでした。";
-                            throw KRRuntimeError(errorFormat);
-                        } else {
-                            std::string errorFormat = "World \"" + loadingScreenWorldName + "\" was not found for loading screen at \"" + mLoadingWorld->getName() + "\" world.";
-                            throw KRRuntimeError(errorFormat);
-                        }
-                    }
-                    mLoadingScreenWorld->setLoadingWorld();
-                    mLoadingScreenWorld->startBecameActive();
-                    [NSThread detachNewThreadSelector:@selector(worldLoadingProc:) toTarget:self withObject:nil];
-                } else {
-                    mLoadingWorld->startBecameActive();
-                    mLoadingWorld = NULL;
-                    mIsWorldLoading = NO;
+                mLoadingWorld->startBecameActive();
+                mLoadingWorld = NULL;
+                mIsWorldLoading = NO;
+                if (mErrorStrInLoadingScreen.length() > 0) {
+                    throw KRRuntimeError(mErrorStrInLoadingScreen);
                 }
             }
             mGameIsInitialized = YES;
@@ -764,7 +891,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
             glOrthof(0.0f, (float)mKRGLContext->backingWidth, 0.0f, (float)mKRGLContext->backingHeight, -1.0f, 1.0f);
             // If Horizontal
-            if (mGame->getScreenWidth() > mGame->getScreenHeight()) {
+            if (mGameManager->getScreenWidth() > mGameManager->getScreenHeight()) {
                 glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
                 glScalef(1.0f, 1.0f, 1.0f);
                 glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
@@ -780,7 +907,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             if (mLoadingScreenWorld != NULL) {
                 mLoadingScreenWorld->startDrawView(mGraphics);
             } else {
-                mGame->drawView(mGraphics);
+                mGameManager->drawView(mGraphics);
             }
 #if __DEBUG__
             mDebugControlManager->drawAllControls(gKRGraphicsInst, 0);
@@ -853,6 +980,9 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mLoadingScreenWorld->startResignedActive();
                     mLoadingWorld = NULL;
                     mLoadingScreenWorld = NULL;
+                    if (mErrorStrInLoadingScreen.length() > 0) {
+                        throw KRRuntimeError(mErrorStrInLoadingScreen);
+                    }
                 } else {
                     for (int i = 0; i < modelUpdateCount; i++) {
 #if KR_IPHONE_MACOSX_EMU
@@ -866,45 +996,30 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if KR_IPHONE_MACOSX_EMU
                     [gKRWindowInst fetchSMSData];
 #endif
-                    mGame->updateModel(mInput);
+                    mGameManager->updateModel(mInput);
                     
                     if (mNetworkPeerName) {
                         while (mNetworkPeerName) {
                             [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
                         }
                         if (mHasAcceptedNetworkPeer) {
-                            mGame->changeWorldImpl(mGame->getNetworkStartWorldName(), true, true);
+                            mGameManager->changeWorldImpl(mGameManager->getNetworkStartWorldName(), true, true);
                         }
                     } else if (mIsInvitingNetworkPeer) {
                         while (mIsInvitingNetworkPeer) {
                             [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
                         }
                         if (mHasAcceptedNetworkPeer) {
-                            mGame->changeWorldImpl(mGame->getNetworkStartWorldName(), true, true);
+                            mGameManager->changeWorldImpl(mGameManager->getNetworkStartWorldName(), true, true);
                         }
                     }
                     
                     if (mLoadingWorld != NULL) {
-                        std::string loadingScreenWorldName = mLoadingWorld->getLoadingScreenWorldName();
-                        if (loadingScreenWorldName.length() > 0) {
-                            mLoadingScreenWorld = mGame->getWorld(loadingScreenWorldName);
-                            if (mLoadingScreenWorld == NULL) {
-                                if (gKRLanguage == KRLanguageJapanese) {
-                                    std::string errorFormat = "\"" + mLoadingWorld->getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingScreenWorldName + "\" は見つかりませんでした。";
-                                    throw KRRuntimeError(errorFormat);
-                                } else {
-                                    std::string errorFormat = "World \"" + loadingScreenWorldName + "\" was not found for loading screen at \"" + mLoadingWorld->getName() + "\" world.";
-                                    throw KRRuntimeError(errorFormat);
-                                }
-                            }
-                            mLoadingScreenWorld->setLoadingWorld();
-                            mLoadingScreenWorld->startBecameActive();
-                            [NSThread detachNewThreadSelector:@selector(worldLoadingProc:) toTarget:self withObject:nil];
-                        } else {
-                            mLoadingWorld->startBecameActive();
-                            mLoadingWorld = NULL;
-                            mLoadingScreenWorld = NULL;
-                            mIsWorldLoading = NO;
+                        mLoadingWorld->startBecameActive();
+                        mLoadingWorld = NULL;
+                        mIsWorldLoading = NO;
+                        if (mErrorStrInLoadingScreen.length() > 0) {
+                            throw KRRuntimeError(mErrorStrInLoadingScreen);
                         }
                         break;
                     }
@@ -949,6 +1064,8 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
         }
     } catch (KRRuntimeError &e) {
+        gKRAudioMan->stopBGM();
+        
         mGameIsAborted = YES;
         NSString *alertTitle = @"Karakuri Runtime Error";
         if (gKRLanguage == KRLanguageJapanese) {
@@ -993,20 +1110,20 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
     if (mHasMetEmergency) {
         if (mLoadingWorld == NULL) {
-            mGame->saveForEmergency();
+            mGameManager->saveForEmergency();
         }
     }
     
     if (!mGameIsAborted) {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
         if (!mGameIsChaningScreenMode) {
-            mGame->cleanUpGame();
+            mGameManager->cleanUpGame();
             mGameIsFinished = YES;
         }
 #endif
             
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-        mGame->cleanUpGame();
+        mGameManager->cleanUpGame();
         mGameIsFinished = YES;
 #endif
     }
@@ -1037,10 +1154,10 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if KR_MACOSX
 - (void)fullScreenGameProc
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
     
 #if __DEBUG__
-    if (mFPSDisplay == NULL && mGame->getShowsFPS()) {
+    if (mFPSDisplay == NULL && mGameManager->getShowsFPS()) {
         mFPSDisplay = new KRFPSDisplay();
     }
     mPrevFPSUpdateTime = gettimeofday_sec();
@@ -1091,7 +1208,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             if (mLoadingScreenWorld != NULL) {
                 mLoadingScreenWorld->startDrawView(mGraphics);
             } else {
-                mGame->drawView(mGraphics);
+                mGameManager->drawView(mGraphics);
             }
             KRTexture2D::processBatchedTexture2DDraws();
 #if __DEBUG__
@@ -1191,28 +1308,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 }
             } else {
                 for (int i = 0; i < modelUpdateCount; i++) {
-                    mGame->updateModel(mInput);
+                    mGameManager->updateModel(mInput);
                     if (mLoadingWorld != NULL) {
-                        std::string loadingScreenWorldName = mLoadingWorld->getLoadingScreenWorldName();
-                        if (loadingScreenWorldName.length() > 0) {
-                            mLoadingScreenWorld = mGame->getWorld(loadingScreenWorldName);
-                            if (mLoadingScreenWorld == NULL) {
-                                if (gKRLanguage == KRLanguageJapanese) {
-                                    std::string errorFormat = "\"" + mLoadingWorld->getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingScreenWorldName + "\" は見つかりませんでした。";
-                                    throw KRRuntimeError(errorFormat);
-                                } else {
-                                    std::string errorFormat = "World \"" + loadingScreenWorldName + "\" was not found for loading screen at \"" + mLoadingWorld->getName() + "\" world.";
-                                    throw KRRuntimeError(errorFormat);
-                                }
-                            }
-                            mLoadingScreenWorld->setLoadingWorld();
-                            mLoadingScreenWorld->startBecameActive();
-                            [NSThread detachNewThreadSelector:@selector(worldLoadingProc:) toTarget:self withObject:nil];
-                        } else {
-                            mLoadingWorld->startBecameActive();
-                            mLoadingWorld = NULL;
-                            mIsWorldLoading = NO;
-                        }
+                        mLoadingWorld->startBecameActive();
+                        mLoadingWorld = NULL;
+                        mIsWorldLoading = NO;
                         break;
                     }
                 }
@@ -1250,14 +1350,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif            
         }
         if (mGameIsFinished) {
-            mGame->cleanUpGame();
+            mGameManager->cleanUpGame();
         }
     } catch (KRRuntimeError &e) {
         mGameIsAborted = YES;
         mLastErrorMessage = new std::string(e.what());
     } catch (KRGameExitError &e) {
         mGameIsFinished = YES;
-        mGame->cleanUpGame();
+        mGameManager->cleanUpGame();
     }
     
     //mInput->setFullScreenMode(false);

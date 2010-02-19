@@ -1,5 +1,5 @@
 /*!
-    @file   KRAnime2D.h
+    @file   KRAnime2DManager.h
     @author Satoshi Numata
     @date   10/01/11
     
@@ -27,13 +27,6 @@ struct _KRCharacter2DState {
 };
 
 
-struct _KRTexture2DInfo {
-    std::string     textureName;
-    KRVector2D      atlasSize;
-    KRTexture2D*    textureObj;
-};
-
-
 /*
     @-class KRCharacter2DSpec
     @group Game 2D Graphics
@@ -54,7 +47,7 @@ public:
         @method KRCharacter2DSpec
         テクスチャ名とアトラスのサイズを指定して、新しいキャラクタの特徴を生成します。
      */
-    KRCharacter2DSpec(const std::string& textureName, const KRVector2D& atlasSize);
+    KRCharacter2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize);
     
     ~KRCharacter2DSpec();
     
@@ -108,6 +101,8 @@ private:
     int                 mNextState;
     bool                mHasPassedHead;
     
+    void*               mRepresentedObject;
+    
 public:
     /*!
         @var    pos
@@ -122,12 +117,19 @@ public:
     KRColor             color;
 
 public:
-    KRCharacter2D(KRCharacter2DSpec *charaSpec, const KRVector2D& centerPos, int zOrder, int firstState);
+    KRCharacter2D(KRCharacter2DSpec *charaSpec, const KRVector2D& centerPos, int zOrder, void *repObj = NULL);
     
 public:
     /*!
         @task 状態の取得
      */
+
+    /*!
+        @method getRepresentedObject
+        このキャラクタに関連付けられているオブジェクトのポインタを取得します。
+     */
+    void    *getRepresentedObject() const;
+
     /*!
         @method getSize
         テクスチャ・アトラスの1コマあたりのサイズをリターンします。
@@ -159,6 +161,12 @@ public:
     void    changeState(int state);
 
     /*!
+        @method setRepresentedObject
+        このキャラクタに関連付けるオブジェクトのポインタを指定します。
+     */
+    void    setRepresentedObject(void *anObj);
+
+    /*!
         @method setZOrder
         キャラクタのZオーダを変更します。
      */
@@ -171,22 +179,21 @@ public:
 };
 
 /*!
-    @class KRAnime2D
+    @class KRAnime2DManager
     @group Game 2D Graphics
     <p>キャラクタのアニメーションを管理するためのクラスです。</p>
-    <p>このクラスのオブジェクトには、gKRAnime2DInst 変数を使ってアクセスしてください。</p>
+    <p>このクラスのオブジェクトには、gKRAnime2DMan 変数を使ってアクセスしてください。</p>
     <p>主な使い方は、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
     <p>基本的には、<a href="#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">loadCharacterSpecs()</a> メソッドを使ってキャラクタの特徴記述ファイルを読み込み、<a href="#//apple_ref/cpp/instm/KRAnime2D/startLoadingTextures/void_startLoadingTextures()">startLoadingTextures()</a> メソッドを使ってテクスチャの読み込みを行います。その後、<a href="#//apple_ref/cpp/instm/KRAnime2D/createCharacter/KRCharacter2D*_createCharacter(int_specID,_const_KRVector2D@_centerPos,_int_zOrder_=_0,_int_firstState_=_0)">createCharacters()</a> メソッドを使ってキャラクタを生成してください。生成されたキャラクタは、<a href="../../Classes/KRCharacter2D/index.html#//apple_ref/cpp/cl/KRCharacter2D">KRCharacter2D</a> クラスのインスタンスとして参照できます。</p>
  */
-class KRAnime2D : public KRObject {
+class KRAnime2DManager : public KRObject {
 
     std::map<int, KRCharacter2DSpec*>   mCharaSpecMap;
     std::list<KRCharacter2D*>           mCharacters;
-    std::map<int, _KRTexture2DInfo*>    mTextureInfoMap;
-    
+
 public:
-	KRAnime2D(int maxCharacter2DSize);
-	virtual ~KRAnime2D();
+	KRAnime2DManager(int maxCharacter2DSize);
+	virtual ~KRAnime2DManager();
 
 public:
     
@@ -196,18 +203,25 @@ public:
      */
 
     /*!
-        @-method addCharacterSpec
+        @-method _addCharacterSpec
         @abstract キャラクタの ID を指定して、新しいキャラクタの特徴を追加します。
         追加されたキャラクタの特徴は、ゲーム終了時に自動的に delete されます。
      */
-    void    addCharacterSpec(int specID, KRCharacter2DSpec *spec);
+    void    _addCharacterSpec(int specID, KRCharacter2DSpec *spec);
     
     /*!
-        @method loadCharacterSpecs
+        @-method loadCharacterSpecs
         @abstract ゲーム内で利用するキャラクタの特徴を、指定されたファイルから読み込みます。
         <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
      */
-    void    loadCharacterSpecs(const std::string& specFileName);
+    void    _loadCharacterSpecs(const std::string& specFileName);
+    
+    /*!
+        @method addCharacterSpecs
+        @abstract ゲーム内で利用するキャラクタの特徴ファイルを追加します。
+        <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
+     */
+    void    addCharacterSpecs(int groupID, const std::string& specFileName);
 
 
 #pragma mark ---- キャラクタの管理 ----
@@ -218,9 +232,9 @@ public:
 
     /*!
         @method createCharacter
-        キャラクタの特徴 ID を指定して、新しいキャラクタを生成します。
+        @abstract キャラクタの特徴 ID、最初の表示位置、状態を指定して、新しいキャラクタを生成します。
      */
-    KRCharacter2D*  createCharacter(int specID, const KRVector2D& centerPos, int zOrder = 0, int firstState = 0);
+    KRCharacter2D*  createCharacter(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
 
     /*!
         @method removeAllCharacters
@@ -253,38 +267,15 @@ public:
         すべてのキャラクタのアニメーションをステップ実行します。
      */
     void    stepAllCharacters();
-
-
-#pragma mark ---- テクスチャの管理 ----
-    /*!
-        @task テクスチャの管理
-     */
-    
-    int     _addTexture(const std::string& textureName, const KRVector2D& atlasSize);   KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    void    _drawTexture(int textureID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, const KRColor& color);  KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY    
-    KRTexture2D* _getTexture(int textureID);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-
-    /*!
-        @method getTextureLoadingProgress
-        テクスチャ読み込みの進行度合いを、0.0 〜 1.0 で取得します。
-     */
-    double  getTextureLoadingProgress() const;
-    
-    /*!
-        @method startLoadingTextures
-        テクスチャの読み込みを開始します。
-     */
-    void    startLoadingTextures();
-
 };
 
 
 /*!
-    @var    gKRAnime2DInst
+    @var    gKRAnime2DMan
     @group  Game 2D Graphics
     @abstract 2Dアニメーション管理機構のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KRAnime2D*           gKRAnime2DInst;
+extern KRAnime2DManager*    gKRAnime2DMan;
 
 

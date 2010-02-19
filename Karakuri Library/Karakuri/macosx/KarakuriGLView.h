@@ -45,6 +45,7 @@
 
 @end
 
+
 extern KarakuriGLView   *gKRGLViewInst;
 
 

@@ -37,6 +37,8 @@ typedef struct _KRTouchInfo {
     KRTexture2D *mDefaultTex;
 }
 
+- (id)initWithScreenSize:(CGSize)screenSize;
+
 - (void)waitForReady;
 
 - (void)enableAccelerometer;
@@ -44,5 +46,6 @@ typedef struct _KRTouchInfo {
 
 @end
 
-extern KarakuriGLView   *gKRGLViewInst;
+
+extern KarakuriGLView*  gKRGLViewInst;
 

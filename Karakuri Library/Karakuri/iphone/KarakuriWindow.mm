@@ -16,13 +16,14 @@ KarakuriWindow *gKRWindowInst = nil;
 
 - (id)init
 {
-    self = [super initWithFrame:[[UIScreen mainScreen] bounds]];
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    self = [super initWithFrame:bounds];
     if (self) {
         gKRWindowInst = self;
 
         self.backgroundColor = [UIColor whiteColor];
         
-        mGLView = [KarakuriGLView new];
+        mGLView = [[KarakuriGLView alloc] initWithScreenSize:bounds.size];
         [self addSubview:mGLView];
     }
     return self;

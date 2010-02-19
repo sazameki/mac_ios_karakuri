@@ -6,7 +6,7 @@
 
 #include "KRSimulator2D.h"
 
-#include <Karakuri/KRGame.h>
+#include <Karakuri/KRGameManager.h>
 #include "KRSimulator2DCollision.h"
 
 #include <Karakuri/chipmunk/chipmunk.h>
@@ -146,7 +146,7 @@ std::list<KRCollisionInfo2D> *KRSimulator2D::getCollisions()
 
 void KRSimulator2D::step()
 {
-    step(1.0 / gKRGameInst->getFrameRate());    
+    step(1.0 / gKRGameMan->getFrameRate());    
 }
 
 void KRSimulator2D::step(double time)

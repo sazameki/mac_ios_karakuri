@@ -13,7 +13,7 @@
 
 
 /*!
-    @class  KRSound
+    @-class  KRSound
     @group  Game Audio
     <p>10秒以下の長さのサウンドファイルを、ゲームの効果音として再生するためのクラスです。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
@@ -32,6 +32,9 @@ private:
     void        *mSoundImpl;
     KRVector3D  mSourcePos;
     bool        mDoLoop;
+
+public:
+    static int  getResourceSize(const std::string& filename);
 
 public:
     /*!

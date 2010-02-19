@@ -9,6 +9,8 @@
 #include <Karakuri/KRWorld.h>
 
 #include <Karakuri/KRControlManager.h>
+#include <Karakuri/KRAudioManager.h>
+#include <Karakuri/KRWorldManager.h>
 
 #import "KRGameController.h"
 #import "KRTextReader.h"
@@ -21,7 +23,7 @@ unsigned gInputLogFrameCounter = 0;
 KRWorld::KRWorld()
     : mIsLoadingWorld(false)
 {
-    // Do nothing
+    mResourceLoadingWorld = NULL;
 }
 
 #pragma mark -
@@ -41,6 +43,7 @@ void KRWorld::startBecameActive()
 
     mIsControlProcessDisabled = false;
     mIsManualControlManagementEnabled = false;
+    mIsShowingLoadingWorld = false;
 
     mControlManager = new KRControlManager();
 
@@ -83,6 +86,8 @@ void KRWorld::startUpdateModel(KRInput *input)
         }
     }
     
+    input->_updateOnceInfo();
+    
     mHasProcessedControl = false;
     if (!mIsControlProcessDisabled && !mIsManualControlManagementEnabled) {
         processControls(input);
@@ -90,6 +95,8 @@ void KRWorld::startUpdateModel(KRInput *input)
 
     updateModel(input);
     
+    gKRAnime2DMan->stepAllCharacters();
+
     gInputLogFrameCounter++;
 }
 
@@ -105,10 +112,120 @@ void KRWorld::startDrawView(KRGraphics *g)
 
 #pragma mark -
 
-std::string KRWorld::getLoadingScreenWorldName() const
+bool KRWorld::hasLoadedResourceGroup(int groupID)
 {
-    return "";
+    return false;
 }
+
+double KRWorld::getLoadingProgress() const
+{
+    if (mResourceLoadingWorld != NULL) {
+        return mResourceLoadingWorld->getLoadingProgress();
+    }
+    return (double)mLoadingResourceFinishedSize / mLoadingResourceAllSize;
+}
+
+void KRWorld::startLoadingWorld(const std::string& loadingWorldName, double minDuration)
+{
+    if (mResourceLoadingWorld != NULL) {
+        if (gKRLanguage == KRLanguageJapanese) {
+            std::string errorFormat = "読み込み画面用ワールド \"" + getName() + "\" の中で、別の読み込み画面を使うことはできません。";
+            throw KRRuntimeError(errorFormat);
+        } else {
+            std::string errorFormat = "You cannot use an extra loading screen in a loading screen world \"" + getName() + "\".";
+            throw KRRuntimeError(errorFormat);
+        }
+    }
+    
+    mIsShowingLoadingWorld = true;
+    mLoadingResourceGroupIDs.clear();
+    mLoadingResourceAllSize = 0;
+    mLoadingResourceFinishedSize = 0;
+    mLoadingResourceMinDuration = minDuration;
+
+    KRWorld* loadingWorld = gKRWorldManagerInst->getWorldWithName(loadingWorldName);
+
+    if (loadingWorld == NULL) {
+        if (gKRLanguage == KRLanguageJapanese) {
+            std::string errorFormat = "\"" + getName() + "\" ワールドのための読み込み画面用ワールド \"" + loadingWorldName + "\" は見つかりませんでした。";
+            throw KRRuntimeError(errorFormat);
+        } else {
+            std::string errorFormat = "World \"" + loadingWorldName + "\" was not found for loading screen at \"" + getName() + "\" world.";
+            throw KRRuntimeError(errorFormat);
+        }
+    }
+    
+    loadingWorld->setResourceLoadingWorld(this);
+    
+    [[KRGameController sharedController] startLoadingWorld:loadingWorld];    
+}
+
+void KRWorld::setResourceLoadingWorld(KRWorld* aWorld) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+{
+    mResourceLoadingWorld = aWorld;
+}
+
+void KRWorld::loadResourceGroup(int groupID)
+{
+    if (mIsShowingLoadingWorld) {
+        mLoadingResourceAllSize += gKRTex2DMan->getResourceSize(groupID);
+        mLoadingResourceAllSize += gKRAudioMan->getResourceSize(groupID);
+        mLoadingResourceGroupIDs.push_back(groupID);
+    } else {
+        gKRTex2DMan->loadTextureFiles(groupID, NULL, 0.0);
+        gKRAudioMan->loadAudioFiles(groupID, NULL, 0.0);
+    }
+}
+
+void KRWorld::setExtraLoad(double ratio)
+{
+}
+
+void KRWorld::setExtraLoadingProgress(double progress)
+{
+}
+
+void KRWorld::finishLoadingWorld()
+{
+    if (mIsShowingLoadingWorld) {
+        for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
+            int resourceSize = gKRTex2DMan->getResourceSize(*it);
+            double ratio = (double)resourceSize / mLoadingResourceAllSize;
+            double minDuration = ratio * mLoadingResourceMinDuration;
+            
+            gKRTex2DMan->loadTextureFiles(*it, this, minDuration);
+        }
+
+        for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
+            int resourceSize = gKRAudioMan->getResourceSize(*it);
+            double ratio = (double)resourceSize / mLoadingResourceAllSize;
+            double minDuration = ratio * mLoadingResourceMinDuration;
+
+            gKRAudioMan->loadAudioFiles(*it, this, minDuration);
+        }
+    }
+
+    [[KRGameController sharedController] finishLoadingWorld];
+    
+    mIsShowingLoadingWorld = false;
+}
+
+void KRWorld::unloadResourceGroup(int groupID)
+{
+}
+
+int KRWorld::_getFinishedSize()
+{
+    return mLoadingResourceFinishedSize;
+}
+
+void KRWorld::_setFinishedSize(int size)
+{
+    mLoadingResourceFinishedSize = size;
+}
+
+
+#pragma mark -
 
 void KRWorld::saveForEmergency(KRSaveBox *saveBox)
 {
@@ -189,7 +306,7 @@ std::vector<std::string> KRWorld::listAllInputLogFiles() const
     NSString *baseDirPath = nil;
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    NSMutableString *titleName = [NSString stringWithCString:gKRGameInst->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSMutableString *titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
     NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
     baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
 #else
@@ -281,7 +398,7 @@ std::string KRWorld::startInputLog()
     NSString *baseDirPath = nil;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    NSMutableString *titleName = [NSString stringWithCString:gKRGameInst->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSMutableString *titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
     NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
     baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
 #else

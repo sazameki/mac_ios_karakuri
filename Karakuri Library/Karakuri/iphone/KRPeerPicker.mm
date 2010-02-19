@@ -8,7 +8,7 @@
 
 #import "KRPeerPicker.h"
 #import "KRNetwork.h"
-#import "KRGame.h"
+#import "KRGameManager.h"
 
 
 @implementation KRPeerPickerController
@@ -23,7 +23,7 @@
         
         BOOL isHorizontal = (gKRScreenSize.x > gKRScreenSize.y);
 
-        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameInst->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
+        mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameMan->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
         [mNetworkBrowser setDelegate:self];
 
         NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];

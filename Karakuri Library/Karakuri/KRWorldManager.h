@@ -40,3 +40,7 @@ public:
 
 };
 
+
+extern KRWorldManager *gKRWorldManagerInst;
+
+

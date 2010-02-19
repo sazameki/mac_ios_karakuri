@@ -9,7 +9,7 @@
 #import "KarakuriFunctions.h"
 #import "KarakuriDefines.h"
 
-#include "KRGame.h"
+#include "KRGameManager.h"
 #include <string>
 
 #import <Foundation/Foundation.h>
@@ -77,7 +77,7 @@ double KRCurrentTime()
 
 void KRChangeWorld(const std::string& worldName)
 {
-    gKRGameInst->changeWorld(worldName);
+    gKRGameMan->changeWorld(worldName);
 }
 
 bool KRCheckOpenGLExtensionSupported(const std::string& extensionName)

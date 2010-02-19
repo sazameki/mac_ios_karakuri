@@ -56,20 +56,32 @@ private:
     bool                mHasDummyInputSource;
     unsigned                            mDummyInputSourceDataPos;
     std::vector<KRInputSourceData>      mDummyInputSourceDataList;
+    bool                mIsShowingLoadingWorld;
+    std::vector<int>    mLoadingResourceGroupIDs;
+    double              mLoadingResourceMinDuration;
+    int                 mLoadingResourceAllSize;
+    int                 mLoadingResourceFinishedSize;
+    KRWorld*            mResourceLoadingWorld;
 
 public:
     KRWorld();
     
     /*!
-        @task 読み込み中画面の処理のためのオーバーライド関数
+        @task 読み込み中画面の処理のための関数
      */
     
-    /*!
-        @method getLoadingScreenWorldName
-        <p>「読み込み中」画面のために使用する軽量の描画を行うワールドの名前（クラス名ではなく、GameMain.cpp で addWorld() 関数で登録した名前です）をリターンします。</p>
-        <p>この関数をオーバーライドして適切なワールド名をリターンすることで、このワールドのリソース読み込み時（becameActive() 関数の処理時）に、軽量の描画を行うワールドが表示されるようになります。</p>
-     */
-    virtual std::string getLoadingScreenWorldName() const;
+    bool    hasLoadedResourceGroup(int groupID);
+    
+    double  getLoadingProgress() const;
+    void    startLoadingWorld(const std::string& loadingWorldName, double minDuration=2.0);
+    void    loadResourceGroup(int groupID);
+    void    setExtraLoad(double ratio);
+    void    setExtraLoadingProgress(double progress);
+    void    finishLoadingWorld();
+    void    unloadResourceGroup(int groupID);
+    int     _getFinishedSize();
+    void    _setFinishedSize(int size);
+
 
     void    startBecameActive();
     void    startResignedActive();
@@ -258,14 +270,19 @@ protected:
      */
     std::string startInputLog();
     
+
+public:
+    void            setLoadingWorld() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
+private:
+    void            setResourceLoadingWorld(KRWorld* aWorld) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+
 #pragma mark -
 #pragma mark Debug Support
 
 public:
     std::string     getName() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void            setName(const std::string& str) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void            setLoadingWorld() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     std::string     to_s() const;
 
 };

@@ -15,7 +15,7 @@
 #define KRTextureMaxSize    1024
 
 
-GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize)
+GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
     static BOOL hasFailedInternalPNGLoading = NO;
 
@@ -28,7 +28,7 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
     }
     
     if (!hasFailedInternalPNGLoading && [[imageName pathExtension] compare:@"png" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
-        GLuint textureName = KRCreatePNGGLTextureFromImageAtPath(imagePath, imageSize, textureSize);
+        GLuint textureName = KRCreatePNGGLTextureFromImageAtPath(imagePath, imageSize, textureSize, scalesLinear);
         if (textureName != GL_INVALID_VALUE) {
             *textureTarget = GL_TEXTURE_2D;
             return textureName;
@@ -118,8 +118,13 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, revisedSize.x, revisedSize.y, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, imageData);
 #endif
             
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            if (scalesLinear) {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            } else {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            }
         } else {
             textureName = GL_INVALID_VALUE;
         }

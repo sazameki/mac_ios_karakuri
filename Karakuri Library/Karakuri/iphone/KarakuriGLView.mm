@@ -13,7 +13,7 @@
 #define USE_DEPTH_BUFFER 0
 
 
-KarakuriGLView   *gKRGLViewInst = nil;
+KarakuriGLView*     gKRGLViewInst = nil;
 
 static volatile BOOL    sIsReady = NO;
 static BOOL sPhoneOrientatilHorizontal = YES;
@@ -36,8 +36,16 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 }
 
 //The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-- (id)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 320, 480)];
+- (id)initWithScreenSize:(CGSize)screenSize
+{
+    // iPad
+    if (screenSize.width >= 768) {
+        self = [super initWithFrame:CGRectMake(0, 0, 768, 1024)];
+    }
+    // iPhone
+    else {
+        self = [super initWithFrame:CGRectMake(0, 0, 320, 480)];
+    }
     if (self) {
         gKRGLViewInst = self;
 
@@ -70,7 +78,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
             mTouchInfos[i].is_used = false;
         }
 
-        sPhoneOrientatilHorizontal = (gKRGameInst->getScreenWidth() > gKRGameInst->getScreenHeight())? true: false;
+        sPhoneOrientatilHorizontal = (gKRGameMan->getScreenWidth() > gKRGameMan->getScreenHeight())? true: false;
         
         [[KRGameController sharedController] setKRGLContext:&mKRGLContext];
     }
@@ -89,12 +97,17 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     [super dealloc];
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [EAGLContext setCurrentContext:mKRGLContext.eaglContext];
     [self destroyFramebuffer];
     [self createFramebuffer];
     
-    mDefaultTex = new KRTexture2D("Default.png");
+    if (mKRGLContext.backingWidth >= 768) {
+        mDefaultTex = new KRTexture2D("Default-Portrait.png");
+    } else {
+        mDefaultTex = new KRTexture2D("Default.png");
+    }
 
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, mKRGLContext.viewFramebuffer);
     
@@ -105,11 +118,11 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     
     glOrthof(0.0f, (float)mKRGLContext.backingWidth, 0.0f, (float)mKRGLContext.backingHeight, -1.0f, 1.0f);
     
-    mDefaultTex->drawInRect(KRRect2D(0, 0, 320, 480));
+    mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight));
     KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
-    mDefaultTex->drawInRect(KRRect2D(0, 0, 320, 480));
+    mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight));
     KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
@@ -190,7 +203,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
-    if (gKRGameInst->getScreenWidth() > gKRGameInst->getScreenHeight()) {
+    if (gKRGameMan->getScreenWidth() > gKRGameMan->getScreenHeight()) {
         gKRInputInst->setAcceleration(-acceleration.y, acceleration.x, acceleration.z);
     } else {
         gKRInputInst->setAcceleration(acceleration.x, acceleration.y, acceleration.z);

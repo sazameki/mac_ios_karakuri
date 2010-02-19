@@ -9,7 +9,7 @@
 
 #include <Karakuri/KRInput.h>
 
-#include <karakuri/KRGame.h>
+#include <karakuri/KRGameManager.h>
 #include <Karakuri/KRWorld.h>
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
@@ -62,6 +62,16 @@ KRInput::KRInput()
 
 #if KR_MACOSX
 
+bool KRInput::isMouseDown() const
+{
+    return mIsMouseDown;
+}
+
+bool KRInput::isMouseDownOnce() const
+{
+    return mIsMouseDownOnce;
+}
+
 KRMouseState KRInput::getMouseState()
 {
     return mMouseState;
@@ -74,8 +84,8 @@ KRMouseState KRInput::getMouseStateAgainstDummy()
 
 KRMouseState KRInput::getMouseStateOnce()
 {
-	KRMouseState ret = (mMouseState ^ mOldMouseState) & mMouseState;
-	mOldMouseState |= mMouseState;
+	KRMouseState ret = (mMouseState ^ mMouseStateOld) & mMouseState;
+	mMouseStateOld |= mMouseState;
 	return ret;
 }
 
@@ -90,8 +100,8 @@ KRVector2D KRInput::getMouseLocation()
     if (_KRIsFullScreen) {
         NSPoint location = [NSEvent mouseLocation];
         NSSize screenSize = [[NSScreen mainScreen] frame].size;
-        ret.x = (location.x / screenSize.width) * gKRGameInst->getScreenWidth();
-        ret.y = (location.y / screenSize.height) * gKRGameInst->getScreenHeight();
+        ret.x = (location.x / screenSize.width) * gKRGameMan->getScreenWidth();
+        ret.y = (location.y / screenSize.height) * gKRGameMan->getScreenHeight();
     } else {
         NSPoint location = [gKRWindowInst convertScreenToBase:[NSEvent mouseLocation]];
         ret.x = location.x;
@@ -107,6 +117,17 @@ KRVector2D KRInput::getMouseLocation()
 #pragma mark Support for Keyboard Input (Mac OS X)
 
 #if KR_MACOSX
+
+bool KRInput::isKeyDown(KRKeyInfo key) const
+{
+    return (mKeyState & key)? true: false;
+}
+
+bool KRInput::isKeyDownOnce(KRKeyInfo key) const
+{
+    return (mKeyStateOnce & key)? true: false;
+}
+
 KRKeyState KRInput::getKeyState()
 {
     return mKeyState;
@@ -114,8 +135,8 @@ KRKeyState KRInput::getKeyState()
 
 KRKeyState KRInput::getKeyStateOnce()
 {
-	KRKeyState ret = (mKeyState ^ mOldKeyState) & mKeyState;
-	mOldKeyState |= mKeyState;
+	KRKeyState ret = (mKeyState ^ mKeyStateOld) & mKeyState;
+	mKeyStateOld |= mKeyState;
 	return ret;
 }
 
@@ -305,7 +326,9 @@ void KRInput::processMouseDragImpl(const KRVector2D& pos)
 void KRInput::processMouseUpImpl(KRMouseState mouseMask)
 {
     mMouseState &= ~mouseMask;
-    mOldMouseState &= ~mouseMask;
+    mMouseStateOld &= ~mouseMask;
+    
+	mIsMouseDownOld = mIsMouseDownOld && ((mouseMask & (MouseButtonLeft | MouseButtonRight))? false: true);
 
     if ((NSFileHandle *)gInputLogHandle != nil) {
         KRVector2D locationDouble = getMouseLocation();
@@ -378,7 +401,7 @@ void KRInput::processKeyDownAgainstDummy(KRKeyState keyMask)
 void KRInput::processKeyUp(KRKeyState keyMask)
 {
     mKeyState &= ~keyMask;
-    mOldKeyState &= ~keyMask;
+    mKeyStateOld &= ~keyMask;
 
     if ((NSFileHandle *)gInputLogHandle != nil) {
         NSString *dataStr = [NSString stringWithFormat:@"%u:KU%qX\n", gInputLogFrameCounter, keyMask];
@@ -875,6 +898,25 @@ void KRInput::setAcceleration(double x, double y, double z)
 
 
 #pragma mark -
+#pragma mark "Once" Support
+
+void KRInput::_updateOnceInfo()
+{
+#if KR_MACOSX
+    mKeyStateOnce = getKeyStateOnce();
+
+    mIsMouseDown = (getMouseState() & (MouseButtonLeft | MouseButtonRight))? true: false;
+    mIsMouseDownOnce = (mIsMouseDown ^ mIsMouseDownOld) && mIsMouseDown;
+	mIsMouseDownOld = mIsMouseDownOld || mIsMouseDown;
+#endif
+
+#if KR_IPHONE
+    mIsTouchedOnce = getTouchOnce();
+#endif
+}
+
+
+#pragma mark -
 #pragma mark Dummy Input Support
 
 void KRInput::plugDummySourceIn()
@@ -953,8 +995,11 @@ void KRInput::resetAllInputs()
     
     // Mouse Input Support
 #if KR_MACOSX
+    mIsMouseDown = false;
+    mIsMouseDownOld = false;
+    mIsMouseDownOnce = false;
     mMouseState = 0;
-    mOldMouseState = 0;
+    mMouseStateOld = 0;
     mMouseStateAgainstDummy = 0;
     mMouseLocationForDummy = KRVector2DZero;
 #endif
@@ -962,13 +1007,15 @@ void KRInput::resetAllInputs()
     // Keyboard Input Support
 #if KR_MACOSX
     mKeyState = 0;
-    mOldKeyState = 0;
+    mKeyStateOld = 0;
+    mKeyStateOnce = 0;
     mKeyStateAgainstDummy = 0;
 #endif
     
     // Touch Input Support
 #if KR_IPHONE
     mTouchState = 0;
+    mIsTouchedOnce = false;
     mTouchStateOld = 0;
     mTouchCountAgainstDummy = 0;
     

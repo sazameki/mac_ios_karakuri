@@ -5,7 +5,7 @@
  */
 
 #include "KRControlManager.h"
-#include "KRGame.h"
+#include "KRGameManager.h"
 
 
 /*!

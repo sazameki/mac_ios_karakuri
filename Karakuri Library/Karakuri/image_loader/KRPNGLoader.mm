@@ -1286,7 +1286,7 @@ static BOOL stbi_png_info_from_memory(stbi_uc const *buffer, int len, int *x, in
 #pragma mark -
 #pragma mark PNG Loader Interface
 
-GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imageSize, KRVector2D *textureSize)
+GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
     GLuint textureName = GL_INVALID_VALUE;
     NSData *fileData = [[NSData alloc] initWithContentsOfFile:imagePath];
@@ -1352,8 +1352,13 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
                              image_buffer           // Pixel data on memory
                              );
                 
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                if (scalesLinear) {
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+                } else {
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                }
                 
                 imageSize->x = image_width;
                 imageSize->y = image_height;

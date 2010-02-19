@@ -19,16 +19,18 @@
 
 @implementation KarakuriMenu
 
-- (id)init {
+- (id)init
+{
     self = [super initWithTitle:@"MainMenu"];
     if (self) {
     }
     return self;
 }
 
-- (NSMenu *)makeAppleMenu {
+- (NSMenu *)makeAppleMenu
+{
     KRGameController *controller = [KRGameController sharedController];
-    KRGame *game = [controller game];
+    KRGameManager* game = [controller game];
     NSString *appName = [NSString stringWithCString:game->getTitle().c_str() encoding:NSUTF8StringEncoding];
 
     NSMenu *appleMenu = [[NSMenu alloc] initWithTitle:@"AppleMenu"];

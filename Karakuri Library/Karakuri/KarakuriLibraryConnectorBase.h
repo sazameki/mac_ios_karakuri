@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import <Karakuri/KRGame.h>
+#import <Karakuri/KRGameManager.h>
 
 
 @interface KarakuriLibraryConnectorBase : NSObject {
 }
 
-- (KRGame *)createGameInstance;
+- (KRGameManager*)createGameInstance;
 
 @end

@@ -20,9 +20,10 @@ static KRVector3D   sAcc;
 
 @implementation KarakuriWindow
 
-- (id)init {
-    KRGameController *controller = [KRGameController sharedController];
-    KRGame *game = [controller game];
+- (id)init
+{
+    KRGameController* controller = [KRGameController sharedController];
+    KRGameManager* game = [controller game];
 
     int styleMask = (NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask);
     NSRect windowRect = NSMakeRect(0, 0, game->getScreenWidth(), game->getScreenHeight());

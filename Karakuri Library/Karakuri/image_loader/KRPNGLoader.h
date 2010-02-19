@@ -11,6 +11,6 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
-GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imageSize, KRVector2D *textureSize);
+GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear);
 
 

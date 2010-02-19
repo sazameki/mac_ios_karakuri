@@ -7,7 +7,7 @@
 //
 
 #import "KarakuriEmulatorBackView.h"
-#import <Karakuri/KRGame.h>
+#import <Karakuri/KRGameManager.h>
 
 
 @implementation KarakuriEmulatorBackView
@@ -15,7 +15,7 @@
 - (id)init
 {
     NSRect frameRect = NSMakeRect(0, 0, 750+21, 414+21);
-    if (gKRGameInst->getScreenWidth() < gKRGameInst->getScreenHeight()) {
+    if (gKRGameMan->getScreenWidth() < gKRGameMan->getScreenHeight()) {
         frameRect = NSMakeRect(0, 0, 414+21, 750+21);
     }
     self = [super initWithFrame:frameRect];
@@ -23,7 +23,7 @@
         //[self setAlphaValue:0.0f];
         
         NSString *imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back.png";
-        if (gKRGameInst->getScreenWidth() < gKRGameInst->getScreenHeight()) {
+        if (gKRGameMan->getScreenWidth() < gKRGameMan->getScreenHeight()) {
             imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back2.png";
         }
         mBackgroundImage = [[NSImage alloc] initWithContentsOfFile:imageFilePath];
@@ -39,7 +39,7 @@
 
 - (void)drawRect:(NSRect)rect
 {
-    if (gKRGameInst->getScreenWidth() > gKRGameInst->getScreenHeight()) {
+    if (gKRGameMan->getScreenWidth() > gKRGameMan->getScreenHeight()) {
         [mBackgroundImage compositeToPoint:NSMakePoint(3, 21) operation:NSCompositeSourceOver];
     } else {
         [mBackgroundImage compositeToPoint:NSMakePoint(3, 3) operation:NSCompositeSourceOver];

@@ -15,6 +15,31 @@
 static KRVector3D   sListenerPos            = KRVector3DZero;
 
 
+int KRSound::getResourceSize(const std::string& filename)
+{
+    int ret = 0;
+
+    NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+    
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    if (filepath) {
+        NSDictionary *fileInfo = [[NSFileManager defaultManager] fileAttributesAtPath:filepath traverseLink:NO];
+        ret += (int)[fileInfo fileSize];
+    }
+#endif
+    
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+    if (filepath) {
+        NSDictionary *fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:filepath
+                                                                                  error:nil];
+        ret += (int)[fileInfo fileSize];
+    }
+#endif
+
+    return ret;
+}
+
 double KRSound::getListenerHorizontalOrientation()
 {
     return [KarakuriSound listenerHorizontalOrientation];

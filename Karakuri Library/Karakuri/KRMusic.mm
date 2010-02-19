@@ -9,7 +9,7 @@
 
 #include "KRMusic.h"
 
-#import "KRGame.h"
+#import "KRGameManager.h"
 #import "KarakuriSound.h"
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
@@ -23,6 +23,31 @@ static BOOL sCanUseNSSound = NO;
 #endif
 
 
+int KRMusic::getResourceSize(const std::string& filename)
+{
+    int ret = 0;
+
+    NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+    if (filepath) {
+        NSDictionary *fileInfo = [[NSFileManager defaultManager] fileAttributesAtPath:filepath traverseLink:NO];
+        ret += (int)[fileInfo fileSize];
+    }
+#endif
+
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+    if (filepath) {
+        NSDictionary *fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:filepath
+                                                                                  error:nil];
+        ret += (int)[fileInfo fileSize];
+    }
+#endif
+        
+    return ret;
+}
+
 KRMusic::KRMusic(const std::string& filename, bool loop)
 {
     mFileName = filename;
@@ -31,6 +56,8 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
     mIsPausing = false;
     
     mImpl = nil;
+    
+    mBGMID = -1;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (!sHasOSVersionChecked) {
@@ -42,14 +69,16 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
     
     bool soloPlayEnabled = true;
 #if KR_IPHONE_MACOSX_EMU
-    soloPlayEnabled = (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo);
+    soloPlayEnabled = (gKRGameMan->getAudioMixType() == KRAudioMixTypeAmbientSolo);
 #endif
 
     if (soloPlayEnabled) {
         NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
         if (sCanUseNSSound) {
             NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
-            mImpl = [[NSSound alloc] initWithContentsOfFile:filepath byReference:YES];
+            if (filepath) {
+                mImpl = [[NSSound alloc] initWithContentsOfFile:filepath byReference:YES];
+            }
         } else {
             mImpl = [[KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
         }
@@ -73,10 +102,14 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    if (gKRGameInst->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
+    if (gKRGameMan->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
         NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
-        NSURL *fileURL = [NSURL fileURLWithPath:filepath];
+        NSURL *fileURL = nil;
+        
+        if (filepath) {
+            fileURL = [NSURL fileURLWithPath:filepath];
+        }
         
         NSError *error = nil;
         mImpl = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
@@ -264,6 +297,16 @@ void KRMusic::setVolume(double value)
         [(AVAudioPlayer *)mImpl setVolume:(float)value];
     }
 #endif
+}
+
+int KRMusic::_getBGMID() const
+{
+    return mBGMID;
+}
+
+void KRMusic::_setBGMID(int bgmID)
+{
+    mBGMID = bgmID;
 }
 
 std::string KRMusic::to_s() const

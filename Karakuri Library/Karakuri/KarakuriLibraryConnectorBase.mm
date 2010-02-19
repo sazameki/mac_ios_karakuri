@@ -18,7 +18,7 @@
     [KRGameController new];
 }
 
-- (KRGame *)createGameInstance
+- (KRGameManager*)createGameInstance
 {
     // Subclass should return an instance of the game 
     return nil;

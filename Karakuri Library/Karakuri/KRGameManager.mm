@@ -1,23 +1,35 @@
 //
-//  KRGame.mm
+//  KRGameManager.mm
 //  Karakuri Prototype
 //
 //  Created by numata on 09/07/17.
 //  Copyright 2009 Satoshi Numata. All rights reserved.
 //
 
-#include "KRGame.h"
+#include "KRGameManager.h"
 #include "KRWorld.h"
+#include "KRTexture2DManager.h"
+#include "KRAudioManager.h"
+
+#if KR_MACOSX || KR_IPHONE_MACOSX_EMU
+#import <Karakuri/macosx/KarakuriGLView.h>
+#endif
+
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+#import <Karakuri/iphone/KarakuriGLView.h>
+#endif
 
 
-KRGame      *gKRGameInst = NULL;
-KRVector2D  gKRScreenSize;
+KRGameManager*  gKRGameMan = NULL;
+KRGameManager*  gKRGameInst = NULL;     // 後方互換のための以前のゲームマネージャ変数
+KRVector2D      gKRScreenSize;
 
 static BOOL sIsUpdatingModel = NO;
 
 
-KRGame::KRGame()
+KRGameManager::KRGameManager()
 {
+    gKRGameMan = this;
     gKRGameInst = this;
     
     mTitle = "Karakuri Game";
@@ -39,85 +51,111 @@ KRGame::KRGame()
     mWorldManager = new KRWorldManager();
 }
 
-KRGame::~KRGame()
+KRGameManager::~KRGameManager()
 {
     // Do nothing
 }
 
-std::string KRGame::getTitle() const
+void KRGameManager::setupResources()
+{
+    // Do nothing
+}
+
+void KRGameManager::loadResourceGroup(int groupID)
+{
+    gKRTex2DMan->loadTextureFiles(groupID, NULL, 0.0);
+    gKRAudioMan->loadAudioFiles(groupID, NULL, 0.0);
+}
+
+std::string KRGameManager::getTitle() const
 {
     return mTitle;
 }
 
-void KRGame::setTitle(const std::string& str)
+void KRGameManager::setTitle(const std::string& str)
 {
     mTitle = str;
 }
 
-double KRGame::getFrameRate() const
+double KRGameManager::getFrameRate() const
 {
     return mFrameRate;
 }
 
-void KRGame::setFrameRate(double value)
+void KRGameManager::setFrameRate(double value)
 {
     mFrameRate = value;
 }
 
-int KRGame::getScreenWidth() const
+bool KRGameManager::checkDeviceType(KRDeviceType type) const
+{
+    return (mDeviceType == type)? true: false;
+}
+
+int KRGameManager::getScreenWidth() const
 {
     return mScreenWidth;
 }
 
-int KRGame::getScreenHeight() const
+int KRGameManager::getScreenHeight() const
 {
     return mScreenHeight;
 }
 
-KRVector2D KRGame::getScreenSize() const
+KRVector2D KRGameManager::getScreenSize() const
 {
     return KRVector2D(mScreenWidth, mScreenHeight);
 }
 
-bool KRGame::getShowsMouseCursor() const
+bool KRGameManager::getShowsMouseCursor() const
 {
     return mShowsMouseCursor;
 }
 
-void KRGame::setShowsMouseCursor(bool flag)
+void KRGameManager::setShowsMouseCursor(bool flag)
 {
     mShowsMouseCursor = flag;
 }
 
-bool KRGame::getShowsFPS() const
+bool KRGameManager::getShowsFPS() const
 {
     return mShowsFPS;
 }
 
-void KRGame::setShowsFPS(bool flag)
+void KRGameManager::setShowsFPS(bool flag)
 {
     mShowsFPS = flag;
 }
 
-int KRGame::getMaxCharacter2DCount() const
+int KRGameManager::getMaxCharacter2DCount() const
 {
     return mMaxCharacter2DCount;
 }
 
-void KRGame::setMaxCharacter2DCount(int count)
+void KRGameManager::setMaxCharacter2DCount(int count)
 {
     mMaxCharacter2DCount = count;
 }
 
-void KRGame::setScreenSize(int width, int height)
+void KRGameManager::setScreenSize(int width, int height)
 {
 #if KR_IPHONE
+    
+    int longSide = 480;
+    int shortSide = 320;
+    
+#if !KR_IPHONE_MACOSX_EMU
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    longSide = bounds.size.height;
+    shortSide = bounds.size.width;
+#endif
+
     if (width > height) {
-        width = 480;
-        height = 320;
+        width = longSide;
+        height = shortSide;
     } else {
-        width = 320;
-        height = 480;
+        width = shortSide;
+        height = longSide;
     }
 #endif
     mScreenWidth = width;
@@ -126,22 +164,22 @@ void KRGame::setScreenSize(int width, int height)
     gKRScreenSize.y = height;
 }
 
-void KRGame::startWorldChanging()
+void KRGameManager::startWorldChanging()
 {
     mWasChangingWorld = true;
 }
 
-void KRGame::cleanUpGame()
+void KRGameManager::cleanUpGame()
 {
     delete mWorldManager;
     mWorldManager = NULL;
 }
 
-void KRGame::updateModel(KRInput *input)
+void KRGameManager::updateModel(KRInput *input)
 {
     sIsUpdatingModel = YES;
 
-    KRWorld *currentWorld = mWorldManager->getCurrentWorld();
+    KRWorld* currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
         currentWorld->startUpdateModel(input);
     }
@@ -149,7 +187,7 @@ void KRGame::updateModel(KRInput *input)
     sIsUpdatingModel = NO;
 }
 
-void KRGame::drawView(KRGraphics *g)
+void KRGameManager::drawView(KRGraphics* g)
 {
     KRWorld *currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
@@ -157,27 +195,27 @@ void KRGame::drawView(KRGraphics *g)
     }    
 }
 
-void KRGame::addWorld(const std::string& name, KRWorld *aWorld)
+void KRGameManager::addWorld(const std::string& name, KRWorld *aWorld)
 {
     mWorldManager->registerWorld(name, aWorld);
 }
 
-KRWorld *KRGame::getWorld(const std::string& name) const
+KRWorld* KRGameManager::getWorld(const std::string& name) const
 {
     return mWorldManager->getWorldWithName(name);
 }
 
-KRWorld *KRGame::getCurrentWorld() const
+KRWorld* KRGameManager::getCurrentWorld() const
 {
     return mWorldManager->getCurrentWorld();
 }
 
-void KRGame::changeWorld(const std::string& name)
+void KRGameManager::changeWorld(const std::string& name)
 {
     changeWorldImpl(name, true);
 }
 
-void KRGame::changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
+void KRGameManager::changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
 {
     if (!isFirstInitialization && useLoadingThread && !sIsUpdatingModel) {
         const char *errorFormat = "Invalid world changing was performed. changeWorld() cannot be invoked outside updateModel().";
@@ -195,23 +233,23 @@ void KRGame::changeWorldImpl(const std::string& name, bool useLoadingThread, boo
     }
 }
 
-std::string KRGame::getGameIDForNetwork() const
+std::string KRGameManager::getGameIDForNetwork() const
 {
     return mGameIDForNetwork;
 }
 
-std::string KRGame::getNetworkStartWorldName() const
+std::string KRGameManager::getNetworkStartWorldName() const
 {
     return mNetworkStartWorldName;
 }
 
-void KRGame::setNetworkGameID(const std::string& gameID, const std::string& startWorldName)
+void KRGameManager::setNetworkGameID(const std::string& gameID, const std::string& startWorldName)
 {
     mGameIDForNetwork = gameID;
     mNetworkStartWorldName = startWorldName;
 }
 
-void KRGame::saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRGameManager::saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     KRWorld *currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
@@ -220,22 +258,35 @@ void KRGame::saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     }    
 }
 
-void KRGame::exitGame()
+void KRGameManager::checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+{
+#if KR_MACOSX
+    mDeviceType = KRDeviceTypeMac;
+#else
+    if (gKRScreenSize.x >= 768) {
+        mDeviceType = KRDeviceTypeIPad;
+    } else {
+        mDeviceType = KRDeviceTypeIPhone;
+    }
+#endif
+}
+
+void KRGameManager::exitGame()
 {
     throw KRGameExitError();
 }
 
-KRAudioMixType KRGame::getAudioMixType() const
+KRAudioMixType KRGameManager::getAudioMixType() const
 {
     return mAudioMixType;
 }
 
-void KRGame::setAudioMixType(KRAudioMixType type)
+void KRGameManager::setAudioMixType(KRAudioMixType type)
 {
     mAudioMixType = type;
 }
 
-std::string KRGame::to_s() const
+std::string KRGameManager::to_s() const
 {
     std::string ret = "<game>(title=\"" + mTitle + "\", ";
     ret += KRFS("screen_size=(%d, %d), frame_rate=%3.2f)", mScreenWidth, mScreenHeight, mFrameRate);
