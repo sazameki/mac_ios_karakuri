@@ -49,7 +49,7 @@ bool _KRParticle2D::step()
     mPos += mV;
     if (mChara != NULL) {
         mChara->pos = mPos;
-        mChara->angle = mAngle;
+        mChara->_angle = mAngle;
 
         double ratio = 1.0 - (double)mLife / mBaseLife;
         mChara->scale = KRMax(mScale + mDeltaScale * ratio, 0.0);
@@ -427,7 +427,7 @@ void KRParticle2DSystem::step()
                     mParticles.push_back(particle);
 
                     if (mCharaSpecID >= 0) {
-                        KRChara2D* theChara = gKRAnime2DMan->createChara2D(mCharaSpecID, mGenInfos[i].centerPos, 0, mZOrder, particle);
+                        KRChara2D* theChara = gKRAnime2DMan->_createChara2DParticle(mCharaSpecID, mGenInfos[i].centerPos, 0, mZOrder, particle);
                         theChara->blendMode = mBlendMode;
                         particle->setChara(theChara);
                     }

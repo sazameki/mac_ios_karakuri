@@ -103,6 +103,8 @@ KRChara2D::KRChara2D(KRChara2DSpec *charaSpec, const KRVector2D& _centerPos, int
     mNextState = -1;
     
     mRepresentedObject = NULL;
+    
+    mIsParticle = false;
 
     //changeState(firstState);
 }
@@ -330,12 +332,22 @@ void KRChara2D::_draw()
     gKRGraphicsInst->setBlendMode(blendMode);
     
     int texID = mCharaSpec->_getTextureID();
-    if (mCharaSpec->_isTextureAtlased()) {
-        KRVector2DInt& atlasPos = theState->atlasPositions[mImageIndex];        
-        gKRTex2DMan->drawAtlasAtPointEx(texID, atlasPos, pos, _angle, gKRTex2DMan->getAtlasSize(texID)/2, KRVector2D(scale, scale), color);
+    
+    if (mIsParticle) {
+        if (mCharaSpec->_isTextureAtlased()) {
+            KRVector2DInt& atlasPos = theState->atlasPositions[mImageIndex];        
+            gKRTex2DMan->drawAtlasAtPointCenterEx(texID, atlasPos, pos, _angle, gKRTex2DMan->getAtlasSize(texID)/2, KRVector2D(scale, scale), color);
+        } else {
+            gKRTex2DMan->drawAtPointCenterEx(texID, pos, _angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
+        }
     } else {
-        gKRTex2DMan->drawAtPointEx(texID, pos, _angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
-    }
+        if (mCharaSpec->_isTextureAtlased()) {
+            KRVector2DInt& atlasPos = theState->atlasPositions[mImageIndex];        
+            gKRTex2DMan->drawAtlasAtPointEx(texID, atlasPos, pos, 0.0, KRVector2DZero, KRVector2D(scale, scale), color);
+        } else {
+            gKRTex2DMan->drawAtPointEx(texID, pos, 0.0, KRVector2DZero, KRVector2D(scale, scale), color);
+        }
+    }    
 }
 
 
@@ -643,6 +655,15 @@ KRChara2D* KRAnime2DManager::createChara2D(int specID, const KRVector2D& centerP
     newChara->changeState(firstState);
     
     return newChara;
+}
+
+KRChara2D* KRAnime2DManager::_createChara2DParticle(int specID, const KRVector2D& centerPos, int firstState, int zOrder, void *repObj)
+{
+    KRChara2D* ret = createChara2D(specID, centerPos, firstState, zOrder, repObj);
+    
+    ret->mIsParticle = true;
+    
+    return ret;
 }
 
 void KRAnime2DManager::removeAllCharas()

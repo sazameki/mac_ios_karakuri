@@ -92,6 +92,8 @@ public:
  */
 class KRChara2D : public KRObject {
 
+    friend class KRAnime2DManager;
+    
     KR_DECLARE_USE_ALLOCATOR(gKRChara2DAllocator)
 
 private:
@@ -107,6 +109,8 @@ private:
     bool                mHasPassedHead;
     
     void*               mRepresentedObject;
+    
+    bool                mIsParticle;
     
 public:
     /*!
@@ -262,6 +266,7 @@ public:
         オプションで、Zオーダと、このキャラクタに関連付けるオブジェクトも指定できます。
      */
     KRChara2D*  createChara2D(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
+    KRChara2D*  _createChara2DParticle(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
 
     /*!
         @method removeAllCharas

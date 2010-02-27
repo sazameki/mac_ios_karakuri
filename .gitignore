@@ -13,6 +13,7 @@ Docs/document
 
 # Karakuri Base Projects
 Karakuri Base Projects/*/build
+Karakuri Base Projects/*/build-emulator
 Karakuri Base Projects/*.pbxuser
 Karakuri Base Projects/*.mode1v3
 Karakuri Base Projects/*~.nib
