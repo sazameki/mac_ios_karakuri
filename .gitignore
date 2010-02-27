@@ -9,6 +9,14 @@ Docs/document
 *.pbxuser
 *.mode1v3
 *~.nib
+*~.xib
+
+# Karakuri Base Projects
+Karakuri Base Projects/*/build
+Karakuri Base Projects/*.pbxuser
+Karakuri Base Projects/*.mode1v3
+Karakuri Base Projects/*~.nib
+Karakuri Base Projects/*~.xib
 
 # Installer Noise
 Installer/Karakuri Library/Contents/*

@@ -94,7 +94,7 @@ void KRChara2DSpec::_setSpecID(int specID)
 KRChara2D::KRChara2D(KRChara2DSpec *charaSpec, const KRVector2D& _centerPos, int zOrder, void *repObj)
     : mCharaSpec(charaSpec), pos(_centerPos), mZOrder(zOrder), mRepresentedObject(repObj)
 {
-    angle = 0.0;
+    _angle = 0.0;
     blendMode = KRBlendModeAlpha;
     color = KRColor(1.0, 1.0, 1.0, 1.0);
     scale = 1.0;
@@ -332,9 +332,9 @@ void KRChara2D::_draw()
     int texID = mCharaSpec->_getTextureID();
     if (mCharaSpec->_isTextureAtlased()) {
         KRVector2DInt& atlasPos = theState->atlasPositions[mImageIndex];        
-        gKRTex2DMan->drawAtlasAtPointCenter(texID, atlasPos, pos, color);
+        gKRTex2DMan->drawAtlasAtPointEx(texID, atlasPos, pos, _angle, gKRTex2DMan->getAtlasSize(texID)/2, KRVector2D(scale, scale), color);
     } else {
-        gKRTex2DMan->drawAtPointCenterEx(texID, pos, angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
+        gKRTex2DMan->drawAtPointEx(texID, pos, _angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
     }
 }
 

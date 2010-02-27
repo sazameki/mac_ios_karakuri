@@ -110,10 +110,10 @@ private:
     
 public:
     /*!
-        @var    angle
+        @-var    _angle
         キャラクタの現在の角度です。
      */
-    double              angle;
+    double              _angle;
     
     /*!
         @var    blendMode
