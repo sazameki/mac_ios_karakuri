@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
+		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
+		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
+		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		8E62A58A113AE053005DC90E /* BXDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55D113AE053005DC90E /* BXDocument.mm */; };
+		8E62A58B113AE053005DC90E /* BXOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55F113AE053005DC90E /* BXOpenGLView.mm */; };
+		8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */; };
+		8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A564113AE053005DC90E /* BXResourceElement.mm */; };
+		8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A566113AE053005DC90E /* BXResourceGroup.mm */; };
+		8E62A58F113AE053005DC90E /* BXCharaSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A568113AE053005DC90E /* BXCharaSpec.mm */; };
+		8E62A590113AE053005DC90E /* BXParticleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56A113AE053005DC90E /* BXParticleSpec.mm */; };
+		8E62A591113AE053005DC90E /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56E113AE053005DC90E /* KarakuriTypes.cpp */; };
+		8E62A592113AE053005DC90E /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A570113AE053005DC90E /* KarakuriGlobals.cpp */; };
+		8E62A593113AE053005DC90E /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A572113AE053005DC90E /* KarakuriFunctions.mm */; };
+		8E62A594113AE053005DC90E /* KRRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A574113AE053005DC90E /* KRRandom.cpp */; };
+		8E62A595113AE053005DC90E /* KarakuriString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A576113AE053005DC90E /* KarakuriString.cpp */; };
+		8E62A596113AE053005DC90E /* KRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A578113AE053005DC90E /* KRGraphics.cpp */; };
+		8E62A597113AE053005DC90E /* KRColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A57B113AE053005DC90E /* KRColor.mm */; };
+		8E62A598113AE053005DC90E /* KRTexture2DLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */; };
+		8E62A599113AE053005DC90E /* KRTexture2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A57E113AE053005DC90E /* KRTexture2D.mm */; };
+		8E62A59A113AE053005DC90E /* KRPNGLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A581113AE053005DC90E /* KRPNGLoader.mm */; };
+		8E62A59B113AE053005DC90E /* KRParticle2DSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A584113AE053005DC90E /* KRParticle2DSystem.mm */; };
+		8E62A59C113AE053005DC90E /* SZSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A587113AE053005DC90E /* SZSplitView.m */; };
+		8E62A59D113AE053005DC90E /* SZStatusBarBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A589113AE053005DC90E /* SZStatusBarBackgroundView.m */; };
+		8E62A5AB113AE082005DC90E /* particle_circle_128.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A0113AE082005DC90E /* particle_circle_128.png */; };
+		8E62A5AC113AE082005DC90E /* particle_circle_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A1113AE082005DC90E /* particle_circle_64.png */; };
+		8E62A5AD113AE082005DC90E /* particle_circle_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A2113AE082005DC90E /* particle_circle_32.png */; };
+		8E62A5AE113AE082005DC90E /* particle_blur_128.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A3113AE082005DC90E /* particle_blur_128.png */; };
+		8E62A5AF113AE082005DC90E /* particle_blur_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A4113AE082005DC90E /* particle_blur_64.png */; };
+		8E62A5B0113AE082005DC90E /* particle_blur_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A5113AE082005DC90E /* particle_blur_32.png */; };
+		8E62A5B1113AE082005DC90E /* divider_back_horizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A7113AE082005DC90E /* divider_back_horizontal.png */; };
+		8E62A5B2113AE082005DC90E /* divider_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A8113AE082005DC90E /* divider_back.png */; };
+		8E62A5B3113AE082005DC90E /* divider_dip_horizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5A9113AE082005DC90E /* divider_dip_horizontal.png */; };
+		8E62A5B4113AE082005DC90E /* divider_dip.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5AA113AE082005DC90E /* divider_dip.png */; };
+		8E62A5B6113AE08F005DC90E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B5113AE08F005DC90E /* Localizable.strings */; };
+		8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B7113AE0BE005DC90E /* BXDocument.xib */; };
+		8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E62A5CA113AE18A005DC90E /* OpenGL.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2564AD2C0F5327BB00F57823 /* Karakuri_Box_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Box_Prefix.pch; sourceTree = "<group>"; };
+		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D15AC360486D014006FF6A4 /* Karakuri_Box-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Karakuri_Box-Info.plist"; sourceTree = "<group>"; };
+		8D15AC370486D014006FF6A4 /* Karakuri Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Karakuri Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E62A55C113AE053005DC90E /* BXDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXDocument.h; sourceTree = "<group>"; };
+		8E62A55D113AE053005DC90E /* BXDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXDocument.mm; sourceTree = "<group>"; };
+		8E62A55E113AE053005DC90E /* BXOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOpenGLView.h; sourceTree = "<group>"; };
+		8E62A55F113AE053005DC90E /* BXOpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXOpenGLView.mm; sourceTree = "<group>"; };
+		8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticleSimulatorView.h; sourceTree = "<group>"; };
+		8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticleSimulatorView.mm; sourceTree = "<group>"; };
+		8E62A563113AE053005DC90E /* BXResourceElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceElement.h; sourceTree = "<group>"; };
+		8E62A564113AE053005DC90E /* BXResourceElement.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceElement.mm; sourceTree = "<group>"; };
+		8E62A565113AE053005DC90E /* BXResourceGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceGroup.h; sourceTree = "<group>"; };
+		8E62A566113AE053005DC90E /* BXResourceGroup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceGroup.mm; sourceTree = "<group>"; };
+		8E62A567113AE053005DC90E /* BXCharaSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXCharaSpec.h; sourceTree = "<group>"; };
+		8E62A568113AE053005DC90E /* BXCharaSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXCharaSpec.mm; sourceTree = "<group>"; };
+		8E62A569113AE053005DC90E /* BXParticleSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticleSpec.h; sourceTree = "<group>"; };
+		8E62A56A113AE053005DC90E /* BXParticleSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticleSpec.mm; sourceTree = "<group>"; };
+		8E62A56D113AE053005DC90E /* KarakuriTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriTypes.h; sourceTree = "<group>"; };
+		8E62A56E113AE053005DC90E /* KarakuriTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriTypes.cpp; sourceTree = "<group>"; };
+		8E62A56F113AE053005DC90E /* KarakuriGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGlobals.h; sourceTree = "<group>"; };
+		8E62A570113AE053005DC90E /* KarakuriGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriGlobals.cpp; sourceTree = "<group>"; };
+		8E62A571113AE053005DC90E /* KarakuriFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriFunctions.h; sourceTree = "<group>"; };
+		8E62A572113AE053005DC90E /* KarakuriFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriFunctions.mm; sourceTree = "<group>"; };
+		8E62A573113AE053005DC90E /* KRRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRRandom.h; sourceTree = "<group>"; };
+		8E62A574113AE053005DC90E /* KRRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRRandom.cpp; sourceTree = "<group>"; };
+		8E62A575113AE053005DC90E /* KarakuriString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriString.h; sourceTree = "<group>"; };
+		8E62A576113AE053005DC90E /* KarakuriString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriString.cpp; sourceTree = "<group>"; };
+		8E62A577113AE053005DC90E /* KRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRGraphics.h; sourceTree = "<group>"; };
+		8E62A578113AE053005DC90E /* KRGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRGraphics.cpp; sourceTree = "<group>"; };
+		8E62A57A113AE053005DC90E /* KRColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRColor.h; sourceTree = "<group>"; };
+		8E62A57B113AE053005DC90E /* KRColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRColor.mm; sourceTree = "<group>"; };
+		8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTexture2DLoader.mm; sourceTree = "<group>"; };
+		8E62A57D113AE053005DC90E /* KRTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRTexture2D.h; sourceTree = "<group>"; };
+		8E62A57E113AE053005DC90E /* KRTexture2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTexture2D.mm; sourceTree = "<group>"; };
+		8E62A57F113AE053005DC90E /* KRTexture2DLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRTexture2DLoader.h; sourceTree = "<group>"; };
+		8E62A580113AE053005DC90E /* KRPNGLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRPNGLoader.h; sourceTree = "<group>"; };
+		8E62A581113AE053005DC90E /* KRPNGLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRPNGLoader.mm; sourceTree = "<group>"; };
+		8E62A583113AE053005DC90E /* KRParticle2DSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRParticle2DSystem.h; sourceTree = "<group>"; };
+		8E62A584113AE053005DC90E /* KRParticle2DSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRParticle2DSystem.mm; sourceTree = "<group>"; };
+		8E62A586113AE053005DC90E /* SZSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZSplitView.h; sourceTree = "<group>"; };
+		8E62A587113AE053005DC90E /* SZSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZSplitView.m; sourceTree = "<group>"; };
+		8E62A588113AE053005DC90E /* SZStatusBarBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SZStatusBarBackgroundView.h; sourceTree = "<group>"; };
+		8E62A589113AE053005DC90E /* SZStatusBarBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SZStatusBarBackgroundView.m; sourceTree = "<group>"; };
+		8E62A5A0113AE082005DC90E /* particle_circle_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_circle_128.png; sourceTree = "<group>"; };
+		8E62A5A1113AE082005DC90E /* particle_circle_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_circle_64.png; sourceTree = "<group>"; };
+		8E62A5A2113AE082005DC90E /* particle_circle_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_circle_32.png; sourceTree = "<group>"; };
+		8E62A5A3113AE082005DC90E /* particle_blur_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_blur_128.png; sourceTree = "<group>"; };
+		8E62A5A4113AE082005DC90E /* particle_blur_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_blur_64.png; sourceTree = "<group>"; };
+		8E62A5A5113AE082005DC90E /* particle_blur_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle_blur_32.png; sourceTree = "<group>"; };
+		8E62A5A7113AE082005DC90E /* divider_back_horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_back_horizontal.png; sourceTree = "<group>"; };
+		8E62A5A8113AE082005DC90E /* divider_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_back.png; sourceTree = "<group>"; };
+		8E62A5A9113AE082005DC90E /* divider_dip_horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_dip_horizontal.png; sourceTree = "<group>"; };
+		8E62A5AA113AE082005DC90E /* divider_dip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_dip.png; sourceTree = "<group>"; };
+		8E62A5B5113AE08F005DC90E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		8E62A5B8113AE0BE005DC90E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BXDocument.xib; sourceTree = "<group>"; };
+		8E62A5CA113AE18A005DC90E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D15AC330486D014006FF6A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
+				8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
+				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
+				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB0FE9D524F11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC370486D014006FF6A4 /* Karakuri Box.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A37F4AAFDCFA73011CA2CEA /* Karakuri Box */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4ABFDCFA73011CA2CEA /* Classes */,
+				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
+				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
+				19C28FB0FE9D524F11CA2CBB /* Products */,
+			);
+			name = "Karakuri Box";
+			sourceTree = "<group>";
+		};
+		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A55C113AE053005DC90E /* BXDocument.h */,
+				8E62A55D113AE053005DC90E /* BXDocument.mm */,
+				8E62A55E113AE053005DC90E /* BXOpenGLView.h */,
+				8E62A55F113AE053005DC90E /* BXOpenGLView.mm */,
+				8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */,
+				8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */,
+				8E62A562113AE053005DC90E /* Resource */,
+				8E62A56B113AE053005DC90E /* Karakuri */,
+				8E62A585113AE053005DC90E /* AppKit Ex */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2564AD2C0F5327BB00F57823 /* Karakuri_Box_Prefix.pch */,
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A59E113AE082005DC90E /* Images */,
+				8E62A5BE113AE111005DC90E /* Strings */,
+				8E62A5BA113AE0C3005DC90E /* XIBs */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A5CA113AE18A005DC90E /* OpenGL.framework */,
+				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
+				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E2AEDDB113AE35A00D32EFE /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A563113AE053005DC90E /* BXResourceElement.h */,
+				8E62A564113AE053005DC90E /* BXResourceElement.mm */,
+				8E62A565113AE053005DC90E /* BXResourceGroup.h */,
+				8E62A566113AE053005DC90E /* BXResourceGroup.mm */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		8E2AEDDC113AE36400D32EFE /* Chara */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A567113AE053005DC90E /* BXCharaSpec.h */,
+				8E62A568113AE053005DC90E /* BXCharaSpec.mm */,
+			);
+			name = Chara;
+			sourceTree = "<group>";
+		};
+		8E2AEDDD113AE36E00D32EFE /* Particle */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A569113AE053005DC90E /* BXParticleSpec.h */,
+				8E62A56A113AE053005DC90E /* BXParticleSpec.mm */,
+			);
+			name = Particle;
+			sourceTree = "<group>";
+		};
+		8E62A562113AE053005DC90E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8E2AEDDB113AE35A00D32EFE /* Base */,
+				8E2AEDDC113AE36400D32EFE /* Chara */,
+				8E2AEDDD113AE36E00D32EFE /* Particle */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		8E62A56B113AE053005DC90E /* Karakuri */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A56C113AE053005DC90E /* Base */,
+				8E62A579113AE053005DC90E /* Texture */,
+				8E62A582113AE053005DC90E /* Particle */,
+			);
+			name = Karakuri;
+			sourceTree = "<group>";
+		};
+		8E62A56C113AE053005DC90E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A56D113AE053005DC90E /* KarakuriTypes.h */,
+				8E62A56E113AE053005DC90E /* KarakuriTypes.cpp */,
+				8E62A56F113AE053005DC90E /* KarakuriGlobals.h */,
+				8E62A570113AE053005DC90E /* KarakuriGlobals.cpp */,
+				8E62A571113AE053005DC90E /* KarakuriFunctions.h */,
+				8E62A572113AE053005DC90E /* KarakuriFunctions.mm */,
+				8E62A573113AE053005DC90E /* KRRandom.h */,
+				8E62A574113AE053005DC90E /* KRRandom.cpp */,
+				8E62A575113AE053005DC90E /* KarakuriString.h */,
+				8E62A576113AE053005DC90E /* KarakuriString.cpp */,
+				8E62A577113AE053005DC90E /* KRGraphics.h */,
+				8E62A578113AE053005DC90E /* KRGraphics.cpp */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		8E62A579113AE053005DC90E /* Texture */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A57A113AE053005DC90E /* KRColor.h */,
+				8E62A57B113AE053005DC90E /* KRColor.mm */,
+				8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */,
+				8E62A57D113AE053005DC90E /* KRTexture2D.h */,
+				8E62A57E113AE053005DC90E /* KRTexture2D.mm */,
+				8E62A57F113AE053005DC90E /* KRTexture2DLoader.h */,
+				8E62A580113AE053005DC90E /* KRPNGLoader.h */,
+				8E62A581113AE053005DC90E /* KRPNGLoader.mm */,
+			);
+			name = Texture;
+			sourceTree = "<group>";
+		};
+		8E62A582113AE053005DC90E /* Particle */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A583113AE053005DC90E /* KRParticle2DSystem.h */,
+				8E62A584113AE053005DC90E /* KRParticle2DSystem.mm */,
+			);
+			name = Particle;
+			sourceTree = "<group>";
+		};
+		8E62A585113AE053005DC90E /* AppKit Ex */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A586113AE053005DC90E /* SZSplitView.h */,
+				8E62A587113AE053005DC90E /* SZSplitView.m */,
+				8E62A588113AE053005DC90E /* SZStatusBarBackgroundView.h */,
+				8E62A589113AE053005DC90E /* SZStatusBarBackgroundView.m */,
+			);
+			name = "AppKit Ex";
+			sourceTree = "<group>";
+		};
+		8E62A59E113AE082005DC90E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A5A6113AE082005DC90E /* SZSplitView */,
+				8E62A59F113AE082005DC90E /* Particle */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		8E62A59F113AE082005DC90E /* Particle */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A5A0113AE082005DC90E /* particle_circle_128.png */,
+				8E62A5A1113AE082005DC90E /* particle_circle_64.png */,
+				8E62A5A2113AE082005DC90E /* particle_circle_32.png */,
+				8E62A5A3113AE082005DC90E /* particle_blur_128.png */,
+				8E62A5A4113AE082005DC90E /* particle_blur_64.png */,
+				8E62A5A5113AE082005DC90E /* particle_blur_32.png */,
+			);
+			name = Particle;
+			sourceTree = "<group>";
+		};
+		8E62A5A6113AE082005DC90E /* SZSplitView */ = {
+			isa = PBXGroup;
+			children = (
+				8E62A5A7113AE082005DC90E /* divider_back_horizontal.png */,
+				8E62A5A8113AE082005DC90E /* divider_back.png */,
+				8E62A5A9113AE082005DC90E /* divider_dip_horizontal.png */,
+				8E62A5AA113AE082005DC90E /* divider_dip.png */,
+			);
+			name = SZSplitView;
+			sourceTree = "<group>";
+		};
+		8E62A5BA113AE0C3005DC90E /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+				8E62A5B7113AE0BE005DC90E /* BXDocument.xib */,
+			);
+			name = XIBs;
+			sourceTree = "<group>";
+		};
+		8E62A5BE113AE111005DC90E /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
+				8D15AC360486D014006FF6A4 /* Karakuri_Box-Info.plist */,
+				8E62A5B5113AE08F005DC90E /* Localizable.strings */,
+				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Strings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D15AC270486D014006FF6A4 /* Karakuri Box */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Karakuri Box" */;
+			buildPhases = (
+				8D15AC2B0486D014006FF6A4 /* Resources */,
+				8D15AC300486D014006FF6A4 /* Sources */,
+				8D15AC330486D014006FF6A4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Karakuri Box";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Karakuri Box";
+			productReference = 8D15AC370486D014006FF6A4 /* Karakuri Box.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Karakuri Box" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Karakuri Box */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D15AC270486D014006FF6A4 /* Karakuri Box */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D15AC2B0486D014006FF6A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
+				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
+				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
+				8E62A5AB113AE082005DC90E /* particle_circle_128.png in Resources */,
+				8E62A5AC113AE082005DC90E /* particle_circle_64.png in Resources */,
+				8E62A5AD113AE082005DC90E /* particle_circle_32.png in Resources */,
+				8E62A5AE113AE082005DC90E /* particle_blur_128.png in Resources */,
+				8E62A5AF113AE082005DC90E /* particle_blur_64.png in Resources */,
+				8E62A5B0113AE082005DC90E /* particle_blur_32.png in Resources */,
+				8E62A5B1113AE082005DC90E /* divider_back_horizontal.png in Resources */,
+				8E62A5B2113AE082005DC90E /* divider_back.png in Resources */,
+				8E62A5B3113AE082005DC90E /* divider_dip_horizontal.png in Resources */,
+				8E62A5B4113AE082005DC90E /* divider_dip.png in Resources */,
+				8E62A5B6113AE08F005DC90E /* Localizable.strings in Resources */,
+				8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D15AC300486D014006FF6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D15AC320486D014006FF6A4 /* main.m in Sources */,
+				8E62A58A113AE053005DC90E /* BXDocument.mm in Sources */,
+				8E62A58B113AE053005DC90E /* BXOpenGLView.mm in Sources */,
+				8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */,
+				8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */,
+				8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */,
+				8E62A58F113AE053005DC90E /* BXCharaSpec.mm in Sources */,
+				8E62A590113AE053005DC90E /* BXParticleSpec.mm in Sources */,
+				8E62A591113AE053005DC90E /* KarakuriTypes.cpp in Sources */,
+				8E62A592113AE053005DC90E /* KarakuriGlobals.cpp in Sources */,
+				8E62A593113AE053005DC90E /* KarakuriFunctions.mm in Sources */,
+				8E62A594113AE053005DC90E /* KRRandom.cpp in Sources */,
+				8E62A595113AE053005DC90E /* KarakuriString.cpp in Sources */,
+				8E62A596113AE053005DC90E /* KRGraphics.cpp in Sources */,
+				8E62A597113AE053005DC90E /* KRColor.mm in Sources */,
+				8E62A598113AE053005DC90E /* KRTexture2DLoader.mm in Sources */,
+				8E62A599113AE053005DC90E /* KRTexture2D.mm in Sources */,
+				8E62A59A113AE053005DC90E /* KRPNGLoader.mm in Sources */,
+				8E62A59B113AE053005DC90E /* KRParticle2DSystem.mm in Sources */,
+				8E62A59C113AE053005DC90E /* SZSplitView.m in Sources */,
+				8E62A59D113AE053005DC90E /* SZStatusBarBackgroundView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1660FE840EACC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD582A0DA1D0D100B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD582B0DA1D0D100B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A37F4BAFDCFA73011CA2CEA /* English */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		8E62A5B7113AE0BE005DC90E /* BXDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8E62A5B8113AE0BE005DC90E /* English */,
+			);
+			name = BXDocument.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C05733C808A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Karakuri_Box_Prefix.pch;
+				INFOPLIST_FILE = "Karakuri_Box-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Karakuri Box";
+			};
+			name = Debug;
+		};
+		C05733C908A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Karakuri_Box_Prefix.pch;
+				INFOPLIST_FILE = "Karakuri_Box-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Karakuri Box";
+			};
+			name = Release;
+		};
+		C05733CC08A9546B00998B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		C05733CD08A9546B00998B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.4;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Karakuri Box" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Karakuri Box" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+}
