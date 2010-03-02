@@ -45,6 +45,10 @@
 		8E62A5B6113AE08F005DC90E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B5113AE08F005DC90E /* Localizable.strings */; };
 		8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B7113AE0BE005DC90E /* BXDocument.xib */; };
 		8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E62A5CA113AE18A005DC90E /* OpenGL.framework */; };
+		8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */; };
+		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
+		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
+		8ED752FC113B9635004E78EB /* BXStageSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752FB113B9635004E78EB /* BXStageSpec.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,9 +113,17 @@
 		8E62A5A8113AE082005DC90E /* divider_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_back.png; sourceTree = "<group>"; };
 		8E62A5A9113AE082005DC90E /* divider_dip_horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_dip_horizontal.png; sourceTree = "<group>"; };
 		8E62A5AA113AE082005DC90E /* divider_dip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divider_dip.png; sourceTree = "<group>"; };
-		8E62A5B5113AE08F005DC90E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		8E62A5B5113AE08F005DC90E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		8E62A5B8113AE0BE005DC90E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BXDocument.xib; sourceTree = "<group>"; };
 		8E62A5CA113AE18A005DC90E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		8ED752A1113B8E2B004E78EB /* BXBGMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBGMResource.h; sourceTree = "<group>"; };
+		8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBGMResource.mm; sourceTree = "<group>"; };
+		8ED752A4113B8E49004E78EB /* BXSEResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXSEResource.h; sourceTree = "<group>"; };
+		8ED752A5113B8E49004E78EB /* BXSEResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXSEResource.mm; sourceTree = "<group>"; };
+		8ED752AA113B8F3F004E78EB /* BXBackgroundSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBackgroundSpec.h; sourceTree = "<group>"; };
+		8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBackgroundSpec.mm; sourceTree = "<group>"; };
+		8ED752FA113B9635004E78EB /* BXStageSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXStageSpec.h; sourceTree = "<group>"; };
+		8ED752FB113B9635004E78EB /* BXStageSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXStageSpec.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,8 +255,12 @@
 			isa = PBXGroup;
 			children = (
 				8E2AEDDB113AE35A00D32EFE /* Base */,
+				8ED752A9113B8EB2004E78EB /* Background */,
 				8E2AEDDC113AE36400D32EFE /* Chara */,
 				8E2AEDDD113AE36E00D32EFE /* Particle */,
+				8ED7529F113B8DE7004E78EB /* BGM */,
+				8ED752A0113B8DF3004E78EB /* SE */,
+				8ED752A8113B8E93004E78EB /* Stage */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -366,6 +382,42 @@
 			name = Strings;
 			sourceTree = "<group>";
 		};
+		8ED7529F113B8DE7004E78EB /* BGM */ = {
+			isa = PBXGroup;
+			children = (
+				8ED752A1113B8E2B004E78EB /* BXBGMResource.h */,
+				8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */,
+			);
+			name = BGM;
+			sourceTree = "<group>";
+		};
+		8ED752A0113B8DF3004E78EB /* SE */ = {
+			isa = PBXGroup;
+			children = (
+				8ED752A4113B8E49004E78EB /* BXSEResource.h */,
+				8ED752A5113B8E49004E78EB /* BXSEResource.mm */,
+			);
+			name = SE;
+			sourceTree = "<group>";
+		};
+		8ED752A8113B8E93004E78EB /* Stage */ = {
+			isa = PBXGroup;
+			children = (
+				8ED752FA113B9635004E78EB /* BXStageSpec.h */,
+				8ED752FB113B9635004E78EB /* BXStageSpec.mm */,
+			);
+			name = Stage;
+			sourceTree = "<group>";
+		};
+		8ED752A9113B8EB2004E78EB /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				8ED752AA113B8F3F004E78EB /* BXBackgroundSpec.h */,
+				8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */,
+			);
+			name = Background;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -455,6 +507,10 @@
 				8E62A59B113AE053005DC90E /* KRParticle2DSystem.mm in Sources */,
 				8E62A59C113AE053005DC90E /* SZSplitView.m in Sources */,
 				8E62A59D113AE053005DC90E /* SZStatusBarBackgroundView.m in Sources */,
+				8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */,
+				8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */,
+				8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */,
+				8ED752FC113B9635004E78EB /* BXStageSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

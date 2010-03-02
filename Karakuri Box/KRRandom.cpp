@@ -90,6 +90,9 @@ int KRRandom::nextInt()
 
 int KRRandom::nextInt(int upper)
 {
+    if (upper == 0) {
+        return 0;
+    }
     return (int)(xor128() % upper);
 }
 

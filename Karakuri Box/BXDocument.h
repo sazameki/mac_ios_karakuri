@@ -34,16 +34,40 @@
     IBOutlet NSTextField*               oParticleMaxAngleVField;
     IBOutlet NSSlider*                  oParticleMaxAngleVSlider;
     IBOutlet NSPopUpButton*             oParticleBlendModeButton;
-
+    IBOutlet NSTextField*               oParticleMinVXField;
+    IBOutlet NSTextField*               oParticleMinVYField;
+    IBOutlet NSSlider*                  oParticleMinVXSlider;
+    IBOutlet NSSlider*                  oParticleMinVYSlider;
+    IBOutlet NSTextField*               oParticleMaxVXField;
+    IBOutlet NSTextField*               oParticleMaxVYField;
+    IBOutlet NSSlider*                  oParticleMaxVXSlider;
+    IBOutlet NSSlider*                  oParticleMaxVYSlider;
+    IBOutlet NSTextField*               oParticleDeltaScaleField;
+    IBOutlet NSSlider*                  oParticleDeltaScaleSlider;
+    IBOutlet NSTextField*               oParticleDeltaAlphaField;
+    IBOutlet NSSlider*                  oParticleDeltaAlphaSlider;
+    IBOutlet NSTextField*               oParticleDeltaRedField;
+    IBOutlet NSSlider*                  oParticleDeltaRedSlider;
+    IBOutlet NSTextField*               oParticleDeltaGreenField;
+    IBOutlet NSSlider*                  oParticleDeltaGreenSlider;
+    IBOutlet NSTextField*               oParticleDeltaBlueField;
+    IBOutlet NSSlider*                  oParticleDeltaBlueSlider;
+    IBOutlet NSTextField*               oParticleGenerateCountField;
+    IBOutlet NSSlider*                  oParticleGenerateCountSlider;
+    IBOutlet NSTextField*               oParticleMaxParticleCountField;
+    IBOutlet NSSlider*                  oParticleMaxParticleCountSlider;
+    
     IBOutlet NSButton*                  oParticleLoopButton;
     IBOutlet NSColorWell*               oParticleBGColorWell1;
     
     NSMutableArray*     mRootElements;
     
+    BXResourceGroup*    mBackgroundGroup;
     BXResourceGroup*    mCharaGroup;
     BXResourceGroup*    mParticleGroup;
     BXResourceGroup*    mBGMGroup;
     BXResourceGroup*    mSEGroup;
+    BXResourceGroup*    mStageGroup;
 }
 
 ///// パーティクル設定アクション
@@ -56,7 +80,15 @@
 - (IBAction)changedParticleColor:(id)sender;
 - (IBAction)changedParticleMinAngleV:(id)sender;
 - (IBAction)changedParticleMaxAngleV:(id)sender;
+- (IBAction)changedParticleMaxVX:(id)sender;
+- (IBAction)changedParticleMaxVY:(id)sender;
+- (IBAction)changedParticleMinVX:(id)sender;
+- (IBAction)changedParticleMinVY:(id)sender;
 - (IBAction)changedParticleBlendMode:(id)sender;
+- (IBAction)changedParticleDeltaScale:(id)sender;
+- (IBAction)changedParticleDeltaColor:(id)sender;
+- (IBAction)changedParticleGenerateCount:(id)sender;
+- (IBAction)changedParticleMaxCount:(id)sender;
 
 - (IBAction)changedParticleLoopSetting:(id)sender;
 - (IBAction)changedParticleBGColor1:(id)sender;

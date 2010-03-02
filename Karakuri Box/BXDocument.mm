@@ -7,15 +7,21 @@
 //
 
 #import "BXDocument.h"
-#import "BXResourceElement.h"
+
+#import "BXBackgroundSpec.h"
 #import "BXCharaSpec.h"
 #import "BXParticleSpec.h"
+#import "BXBGMResource.h"
+#import "BXSEResource.h"
+#import "BXStageSpec.h"
 
 
+static NSString*    sKADocumentToolbarItemAddBackground  = @"KADocumentToolbarItemAddBackground";
 static NSString*    sKADocumentToolbarItemAddCharacter  = @"KADocumentToolbarItemAddCharacter";
 static NSString*    sKADocumentToolbarItemAddParticle   = @"KADocumentToolbarItemAddParticle";
 static NSString*    sKADocumentToolbarItemAddBGM        = @"KADocumentToolbarItemAddBGM";
 static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarItemAddSE";
+static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarItemAddStage";
 
 
 @interface BXDocument ()
@@ -43,14 +49,18 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
     if (self) {
         mRootElements = [[NSMutableArray array] retain];
         
+        mBackgroundGroup = [[[BXResourceGroup alloc] initWithName:@"*bg-group"] autorelease];
         mCharaGroup = [[[BXResourceGroup alloc] initWithName:@"*chara-group"] autorelease];
         mParticleGroup = [[[BXResourceGroup alloc] initWithName:@"*particle-group"] autorelease];
         mBGMGroup = [[[BXResourceGroup alloc] initWithName:@"*bgm-group"] autorelease];
         mSEGroup = [[[BXResourceGroup alloc] initWithName:@"*se-group"] autorelease];
+        mStageGroup = [[[BXResourceGroup alloc] initWithName:@"*stage-group"] autorelease];
+        [mRootElements addObject:mBackgroundGroup];
         [mRootElements addObject:mCharaGroup];
         [mRootElements addObject:mParticleGroup];
         [mRootElements addObject:mBGMGroup];
         [mRootElements addObject:mSEGroup];
+        [mRootElements addObject:mStageGroup];
     }
     return self;
 }
@@ -98,6 +108,18 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark アクション
 
+- (void)addBackground:(id)sender
+{
+    BXBackgroundSpec* newBGSpec = [[[BXCharaSpec alloc] initWithName:@"New BG"] autorelease];
+    [mBackgroundGroup addChild:newBGSpec];
+    
+    [oElementView reloadData];
+    [oElementView expandItem:mBackgroundGroup];
+    
+    int row = [oElementView rowForItem:newBGSpec];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
+
 - (void)addCharacter:(id)sender
 {
     BXCharaSpec* newCharaSpec = [[[BXCharaSpec alloc] initWithName:@"New Chara"] autorelease];
@@ -124,12 +146,38 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
 
 - (void)addBGM:(id)sender
 {
-    // TODO: Implement addBGM:
+    BXBGMResource* newBGM = [[[BXBGMResource alloc] initWithName:@"New BGM"] autorelease];
+    [mBGMGroup addChild:newBGM];
+    
+    [oElementView reloadData];
+    [oElementView expandItem:mBGMGroup];
+    
+    int row = [oElementView rowForItem:newBGM];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 
 - (void)addSE:(id)sender
 {
-    // TODO: Implement addSE:
+    BXSEResource* newSE = [[[BXSEResource alloc] initWithName:@"New SE"] autorelease];
+    [mSEGroup addChild:newSE];
+    
+    [oElementView reloadData];
+    [oElementView expandItem:mSEGroup];
+    
+    int row = [oElementView rowForItem:newSE];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
+
+- (void)addStage:(id)sender
+{
+    BXStageSpec* newStage = [[[BXStageSpec alloc] initWithName:@"New Stage"] autorelease];
+    [mStageGroup addChild:newStage];
+    
+    [oElementView reloadData];
+    [oElementView expandItem:mStageGroup];
+    
+    int row = [oElementView rowForItem:newStage];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 
 
@@ -280,6 +328,183 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
     [particleSpec setBGColor1:KRColor(r, g, b, a)];
 }
 
+- (IBAction)changedParticleMaxVX:(id)sender
+{
+    float maxVX = 0.0f;
+    if (sender == oParticleMaxVXSlider) {
+        maxVX = [oParticleMaxVXSlider floatValue];
+    } else {
+        maxVX = [oParticleMaxVXField floatValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setMaxVX:maxVX];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];    
+}
+
+- (IBAction)changedParticleMaxVY:(id)sender
+{
+    float maxVY = 0.0f;
+    if (sender == oParticleMaxVYSlider) {
+        maxVY = [oParticleMaxVYSlider floatValue];
+    } else {
+        maxVY = [oParticleMaxVYField floatValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setMaxVY:maxVY];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];    
+}
+
+- (IBAction)changedParticleDeltaScale:(id)sender
+{
+    float scale = 0.0f;
+    if (sender == oParticleDeltaScaleSlider) {
+        scale = [oParticleDeltaScaleSlider floatValue];
+    } else {
+        scale = [oParticleDeltaScaleField floatValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setDeltaScale:scale];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];    
+}
+
+- (IBAction)changedParticleDeltaColor:(id)sender
+{
+    float deltaRed = 0.0f;
+    float deltaGreen = 0.0f;
+    float deltaBlue = 0.0f;
+    float deltaAlpha = 0.0f;
+    if (sender == oParticleDeltaRedSlider) {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else if (sender == oParticleDeltaRedField) {
+        deltaRed = [oParticleDeltaRedField floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else if (sender == oParticleDeltaGreenSlider) {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else if (sender == oParticleDeltaGreenField) {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenField floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else if (sender == oParticleDeltaBlueSlider) {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else if (sender == oParticleDeltaBlueField) {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueField floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else if (sender == oParticleDeltaAlphaSlider) {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaSlider floatValue];
+    }
+    else {
+        deltaRed = [oParticleDeltaRedSlider floatValue];
+        deltaGreen = [oParticleDeltaGreenSlider floatValue];
+        deltaBlue = [oParticleDeltaBlueSlider floatValue];
+        deltaAlpha = [oParticleDeltaAlphaField floatValue];
+    }    
+
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setDeltaRed:deltaRed];
+    [particleSpec setDeltaGreen:deltaGreen];
+    [particleSpec setDeltaBlue:deltaBlue];
+    [particleSpec setDeltaAlpha:deltaAlpha];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];    
+}
+
+- (IBAction)changedParticleMinVX:(id)sender
+{
+    float minVX = 0.0f;
+    if (sender == oParticleMinVXSlider) {
+        minVX = [oParticleMinVXSlider floatValue];
+    } else {
+        minVX = [oParticleMinVXField floatValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setMinVX:minVX];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];    
+}
+
+- (IBAction)changedParticleMinVY:(id)sender
+{
+    float minVY = 0.0f;
+    if (sender == oParticleMinVYSlider) {
+        minVY = [oParticleMinVYSlider floatValue];
+    } else {
+        minVY = [oParticleMinVYField floatValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setMinVY:minVY];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];    
+}
+
+- (IBAction)changedParticleGenerateCount:(id)sender
+{
+    int count = 0;
+    if (sender == oParticleGenerateCountSlider) {
+        count = [oParticleGenerateCountSlider intValue];
+    } else {
+        count = [oParticleGenerateCountField intValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setGenerateCount:count];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];
+}
+
+- (IBAction)changedParticleMaxCount:(id)sender
+{
+    int count = 0;
+    if (sender == oParticleMaxParticleCountSlider) {
+        count = [oParticleMaxParticleCountSlider intValue];
+    } else {
+        count = [oParticleMaxParticleCountField intValue];
+    }
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setMaxParticleCount:count];
+    
+    [self setupEditorUIForSingleParticle:particleSpec];
+    [oParticleView rebuildParticleSystem];
+}
+
 
 #pragma mark -
 #pragma mark シリアライゼーション
@@ -330,6 +555,9 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
     [oParticleMaxAngleVField setIntValue:[theSpec maxAngleV]];
     [oParticleMaxAngleVSlider setIntValue:[theSpec maxAngleV]];
     
+    [oParticleMaxParticleCountField setIntValue:[theSpec maxParticleCount]];
+    [oParticleMaxParticleCountSlider setIntValue:[theSpec maxParticleCount]];
+
     [oParticleLoopButton setState:([theSpec doLoop]? NSOnState: NSOffState)];
     
     KRBlendMode blendMode = [theSpec blendMode];
@@ -340,6 +568,36 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
         blendModeTag = 2;
     }
     [oParticleBlendModeButton selectItemWithTag:blendModeTag];    
+
+    [oParticleMaxVXField setFloatValue:[theSpec maxV].x];
+    [oParticleMaxVXSlider setFloatValue:[theSpec maxV].x];
+    [oParticleMaxVYField setFloatValue:[theSpec maxV].y];
+    [oParticleMaxVYSlider setFloatValue:[theSpec maxV].y];
+
+    [oParticleMinVXField setFloatValue:[theSpec minV].x];
+    [oParticleMinVXSlider setFloatValue:[theSpec minV].x];
+    [oParticleMinVYField setFloatValue:[theSpec minV].y];
+    [oParticleMinVYSlider setFloatValue:[theSpec minV].y];
+    
+    [oParticleDeltaScaleField setFloatValue:[theSpec deltaScale]];
+    [oParticleDeltaScaleSlider setFloatValue:[theSpec deltaScale]];
+
+    [oParticleGenerateCountField setIntValue:[theSpec generateCount]];
+    [oParticleGenerateCountSlider setIntValue:[theSpec generateCount]];
+
+    double deltaRed = [theSpec deltaRed];
+    double deltaGreen = [theSpec deltaGreen];
+    double deltaBlue = [theSpec deltaBlue];
+    double deltaAlpha = [theSpec deltaAlpha];
+
+    [oParticleDeltaRedField setFloatValue:deltaRed];
+    [oParticleDeltaRedSlider setFloatValue:deltaRed];
+    [oParticleDeltaGreenField setFloatValue:deltaGreen];
+    [oParticleDeltaGreenSlider setFloatValue:deltaGreen];
+    [oParticleDeltaBlueField setFloatValue:deltaBlue];
+    [oParticleDeltaBlueSlider setFloatValue:deltaBlue];
+    [oParticleDeltaAlphaField setFloatValue:deltaAlpha];
+    [oParticleDeltaAlphaSlider setFloatValue:deltaAlpha];
 }
 
 
@@ -426,20 +684,24 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
+            sKADocumentToolbarItemAddBackground,
             sKADocumentToolbarItemAddCharacter,
             sKADocumentToolbarItemAddParticle,
             sKADocumentToolbarItemAddBGM,
             sKADocumentToolbarItemAddSE,
+            sKADocumentToolbarItemAddStage,
             nil];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
+            sKADocumentToolbarItemAddBackground,
             sKADocumentToolbarItemAddCharacter,
             sKADocumentToolbarItemAddParticle,
             sKADocumentToolbarItemAddBGM,
             sKADocumentToolbarItemAddSE,
+            sKADocumentToolbarItemAddStage,
             nil];
 }
 
@@ -450,7 +712,11 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
     [ret setLabel:NSLocalizedString(itemIdentifier, nil)];
     [ret setPaletteLabel:NSLocalizedString(itemIdentifier, nil)];
     
-    if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddCharacter]) {
+    if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddBackground]) {
+        [ret setTarget:self];
+        [ret setAction:@selector(addBackground:)];
+    }
+    else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddCharacter]) {
         [ret setTarget:self];
         [ret setAction:@selector(addCharacter:)];
     }
@@ -465,6 +731,10 @@ static NSString*    sKADocumentToolbarItemAddSE         = @"KADocumentToolbarIte
     else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddSE]) {
         [ret setTarget:self];
         [ret setAction:@selector(addSE:)];
+    }
+    else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddStage]) {
+        [ret setTarget:self];
+        [ret setAction:@selector(addStage:)];
     }
     
     return ret;
