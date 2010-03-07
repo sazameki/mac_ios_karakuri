@@ -55,12 +55,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         mBGMGroup = [[[BXResourceGroup alloc] initWithName:@"*bgm-group"] autorelease];
         mSEGroup = [[[BXResourceGroup alloc] initWithName:@"*se-group"] autorelease];
         mStageGroup = [[[BXResourceGroup alloc] initWithName:@"*stage-group"] autorelease];
-        [mRootElements addObject:mBackgroundGroup];
+        //[mRootElements addObject:mBackgroundGroup];
         [mRootElements addObject:mCharaGroup];
         [mRootElements addObject:mParticleGroup];
-        [mRootElements addObject:mBGMGroup];
-        [mRootElements addObject:mSEGroup];
-        [mRootElements addObject:mStageGroup];
+        //[mRootElements addObject:mBGMGroup];
+        //[mRootElements addObject:mSEGroup];
+        //[mRootElements addObject:mStageGroup];
     }
     return self;
 }
@@ -123,6 +123,14 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (void)addCharacter:(id)sender
 {
     BXCharaSpec* newCharaSpec = [[[BXCharaSpec alloc] initWithName:@"New Chara"] autorelease];
+
+    if ([mCharaGroup childCount] > 0) {
+        int lastID = [[mCharaGroup childAtIndex:[mCharaGroup childCount]-1] resourceID];
+        [newCharaSpec setResourceID:lastID+1];
+    } else {
+        [newCharaSpec setResourceID:1];
+    }
+    
     [mCharaGroup addChild:newCharaSpec];
     
     [oElementView reloadData];
@@ -135,6 +143,14 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (void)addParticle:(id)sender
 {
     BXSingleParticleSpec* newParticleSpec = [[[BXSingleParticleSpec alloc] initWithName:@"New Particle"] autorelease];
+    
+    if ([mParticleGroup childCount] > 0) {
+        int lastID = [[mParticleGroup childAtIndex:[mParticleGroup childCount]-1] resourceID];
+        [newParticleSpec setResourceID:lastID+1];
+    } else {
+        [newParticleSpec setResourceID:1];
+    }
+    
     [mParticleGroup addChild:newParticleSpec];
     
     [oElementView reloadData];
@@ -183,6 +199,29 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 #pragma mark -
 #pragma mark パーティクルの設定アクション
+
+- (IBAction)changedParticleResourceID:(id)sender
+{
+    int theID = [oParticleResourceIDField intValue];
+
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setResourceID:theID];
+    
+    [oElementView reloadData];
+    
+    int theRow = [oElementView rowForItem:particleSpec];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+}
+
+- (IBAction)changedParticleResourceName:(id)sender
+{
+    NSString* theName = [oParticleResourceNameField stringValue];
+    
+    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    [particleSpec setResourceName:theName];
+    
+    [oElementView reloadData];
+}
 
 - (IBAction)changedParticleImage:(id)sender
 {
@@ -253,7 +292,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (IBAction)changedParticleColor:(id)sender
 {
     NSColor* color = [oParticleColorWell color];
-    color = [color colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+    color = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 
     float r = [color redComponent];
     float g = [color greenComponent];
@@ -317,7 +356,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (IBAction)changedParticleBGColor1:(id)sender
 {
     NSColor* color = [oParticleBGColorWell1 color];
-    color = [color colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+    color = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
     
     float r = [color redComponent];
     float g = [color greenComponent];
@@ -535,6 +574,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec
 {
+    [oParticleResourceIDField setIntValue:[theSpec resourceID]];
+    [oParticleResourceNameField setStringValue:[theSpec resourceName]];
+
     [oParticleGravityFieldX setFloatValue:[theSpec gravity].x];
     [oParticleGravitySliderX setFloatValue:[theSpec gravity].x];
     
@@ -677,6 +719,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
 }
 
+- (BOOL)outlineView:(NSOutlineView*)outlineView shouldEditTableColumn:(NSTableColumn*)tableColumn item:(BXResourceElement*)item
+{
+    return NO;
+}
+
 
 #pragma mark -
 #pragma mark NSToolbar delegate
@@ -684,24 +731,24 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
-            sKADocumentToolbarItemAddBackground,
+            //sKADocumentToolbarItemAddBackground,
             sKADocumentToolbarItemAddCharacter,
             sKADocumentToolbarItemAddParticle,
-            sKADocumentToolbarItemAddBGM,
-            sKADocumentToolbarItemAddSE,
-            sKADocumentToolbarItemAddStage,
+            //sKADocumentToolbarItemAddBGM,
+            //sKADocumentToolbarItemAddSE,
+            //sKADocumentToolbarItemAddStage,
             nil];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
 {
     return [NSArray arrayWithObjects:
-            sKADocumentToolbarItemAddBackground,
+            //sKADocumentToolbarItemAddBackground,
             sKADocumentToolbarItemAddCharacter,
             sKADocumentToolbarItemAddParticle,
-            sKADocumentToolbarItemAddBGM,
-            sKADocumentToolbarItemAddSE,
-            sKADocumentToolbarItemAddStage,
+            //sKADocumentToolbarItemAddBGM,
+            //sKADocumentToolbarItemAddSE,
+            //sKADocumentToolbarItemAddStage,
             nil];
 }
 
@@ -744,14 +791,19 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark NSWindow delegate
 
-- (void)windowDidBecomeMain:(NSNotification *)notification
+- (void)windowDidBecomeMain:(NSNotification*)notification
 {
     [oStatusBarBGView setNeedsDisplay:YES];
 }
 
-- (void)windowDidResignMain:(NSNotification *)notification
+- (void)windowDidResignMain:(NSNotification*)notification
 {
     [oStatusBarBGView setNeedsDisplay:YES];
+}
+
+- (void)windowWillClose:(NSNotification*)notification
+{
+    [oParticleView releaseParticles];
 }
 
 @end

@@ -113,6 +113,7 @@ public:
     void    set();
 
 public:
+    static void initBatchedTexture2DDraws();
     static void processBatchedTexture2DDraws();
 
 };

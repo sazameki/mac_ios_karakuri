@@ -8,6 +8,15 @@
 
 #import "BXOpenGLView.h"
 
+#include "KRTexture2D.h"
+
+
+@interface BXOpenGLView ()
+
+- (void)glDrawMain;
+
+@end
+
 
 @implementation BXOpenGLView
 
@@ -45,9 +54,10 @@
  */
 - (void)prepareOpenGL
 {
-    mGraphics = new KRGraphics();
-    
+    CGLLockContext(mCGLContext);
     CGLSetCurrentContext(mCGLContext);
+
+    mGraphics = new KRGraphics();    
     
     // アルファブレンディングの設定
     glEnable(GL_BLEND);
@@ -55,21 +65,50 @@
     
     // このメソッド呼び出しの直後に、reshape メソッドが呼ばれます。
     // 最初のビューポートの設定はそこで行います。
+    
+    CGLUnlockContext(mCGLContext);
 }
 
+- (void)glDrawMain
+{
+    // Subclass should implement this method
+}
 
-- (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
+- (void)drawRect:(NSRect)dirtyRect
+{
+    ///// Start OpenGL Drawing
+    NSRect frame = [self frame];
+    
+    CGLLockContext(mCGLContext);
+    CGLSetCurrentContext(mCGLContext);
+    
+    glViewport(0, 0, frame.size.width, frame.size.height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, (double)frame.size.width, 0.0, (double)frame.size.height, -1.0, 1.0);
+    glMatrixMode(GL_MODELVIEW);
+    
+    KRTexture2D::initBatchedTexture2DDraws();
+
+    ///// OpenGL Drawing Main
+    [self glDrawMain];
+ 
+    ///// Finish OpenGL Drawing
+    KRTexture2D::processBatchedTexture2DDraws();
+    
+    CGLFlushDrawable(mCGLContext);
+    CGLUnlockContext(mCGLContext);
 }
 
 /*!
- @method     reshape
- @abstract   ビューのサイズが変更される度に呼ばれます。
- 起動時にも、prepareOpenGL メソッドの直後に1回呼ばれます。
+    @method     reshape
+    @abstract   ビューのサイズが変更される度に呼ばれます。
+    起動時にも、prepareOpenGL メソッドの直後に1回呼ばれます。
  */
 - (void)reshape
 {
-    [[self openGLContext] makeCurrentContext];
+    CGLLockContext(mCGLContext);
+    CGLSetCurrentContext(mCGLContext);
     
     // 描画対象の四角形のリセット
     NSRect frame = [self frame];
@@ -86,6 +125,8 @@
                frame.size.width,   // 右端のx座標
                0.0,     // 下端のy座標
                frame.size.height);  // 上端のy座標
+
+    CGLUnlockContext(mCGLContext);
 }
 
 

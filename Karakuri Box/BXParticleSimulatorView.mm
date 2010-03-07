@@ -23,6 +23,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [self releaseParticles]; 
+    
+    [super dealloc];
+}
+
 - (void)refreshProc:(NSTimer *)theTimer
 {
     if (mParticleSystem != NULL) {
@@ -70,23 +77,8 @@
     }
 }
 
-/*!
-    @method     drawRect:
-    @abstract   ビューの描画を行います。
- */
-- (void)drawRect:(NSRect)rect
+- (void)glDrawMain
 {
-    NSRect frame = [self frame];
-    
-    CGLLockContext(mCGLContext);
-    CGLSetCurrentContext(mCGLContext);
-
-    glViewport(0, 0, frame.size.width, frame.size.height);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0.0, (double)frame.size.width, 0.0, (double)frame.size.height, -1.0, 1.0);
-    glMatrixMode(GL_MODELVIEW);
-
     if (mTargetSpec != NULL) {
         mGraphics->clear([mTargetSpec bgColor1]);
     } else {
@@ -96,11 +88,6 @@
     if (mParticleSystem != NULL) {
         mParticleSystem->draw();
     }    
-    
-    KRTexture2D::processBatchedTexture2DDraws();
-
-    CGLFlushDrawable(mCGLContext);
-    CGLUnlockContext(mCGLContext);
 }
 
 - (void)mouseDown:(NSEvent *)theEvent

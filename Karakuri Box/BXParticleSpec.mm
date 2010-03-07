@@ -57,7 +57,7 @@
     delete mGenerationPos;
     delete mGravity;
     delete mMaxV;
-    delete mMaxV;
+    delete mMinV;
 
     [super dealloc];
 }

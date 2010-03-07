@@ -57,6 +57,9 @@
     IBOutlet NSTextField*               oParticleMaxParticleCountField;
     IBOutlet NSSlider*                  oParticleMaxParticleCountSlider;
     
+    IBOutlet NSTextField*               oParticleResourceIDField;
+    IBOutlet NSTextField*               oParticleResourceNameField;
+
     IBOutlet NSButton*                  oParticleLoopButton;
     IBOutlet NSColorWell*               oParticleBGColorWell1;
     
@@ -71,6 +74,9 @@
 }
 
 ///// パーティクル設定アクション
+
+- (IBAction)changedParticleResourceID:(id)sender;
+- (IBAction)changedParticleResourceName:(id)sender;
 
 - (IBAction)changedParticleImage:(id)sender;
 

@@ -12,6 +12,7 @@
 #include "KRColor.h"
 #include "KRPNGLoader.h"
 #include "KarakuriGlobals.h"
+#import <OpenGL/OpenGL.h>
 
 
 static const int KRTexture2DBatchSize = 1024;    // KRTexture2DBatchSize * 16 bytes will be used.
@@ -43,6 +44,12 @@ int KRTexture2D::getResourceSize(const std::string& filename)
     return ret;
 }
 
+void KRTexture2D::initBatchedTexture2DDraws()
+{
+    _KRTexture2DEnabled = NO;
+    _KRTexture2DName = GL_INVALID_VALUE;
+}
+
 void KRTexture2D::processBatchedTexture2DDraws()
 {
     if (sTexture2DBatchCount == 0) {
@@ -63,7 +70,7 @@ void KRTexture2D::processBatchedTexture2DDraws()
     
 #if __DEBUG__
     _KRTextureBatchProcessCount++;
-#endif    
+#endif
 }
 
 

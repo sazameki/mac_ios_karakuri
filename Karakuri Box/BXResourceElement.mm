@@ -26,7 +26,9 @@
     self = [super init];
     if (self) {
         mName = [name copy];
-        mChildElements = [[NSMutableArray array] retain];
+        mChildElements = [[NSMutableArray alloc] init];
+        
+        mResourceID = 99;   // TODO: リソースIDをちゃんと管理する。
     }
     return self;
 }
@@ -35,6 +37,7 @@
 {
     [mName release];
     [mChildElements release];
+
     [super dealloc];
 }
 
@@ -47,7 +50,7 @@
     if ([mName hasPrefix:@"*"]) {
         return NSLocalizedString(mName, nil);
     }
-    return mName;
+    return [NSString stringWithFormat:@"%d: %@", mResourceID, mName];
 }
 
 - (BOOL)isExpandable
@@ -58,6 +61,31 @@
 - (BOOL)isGroupItem
 {
     return NO;
+}
+
+- (int)resourceID
+{
+    return mResourceID;
+}
+
+- (NSString*)resourceName
+{
+    return mName;
+}
+
+- (void)setResourceID:(int)theID
+{
+    mResourceID = theID;
+    
+    if (mParentElement) {
+        [mParentElement sortChildrenByResourceID];
+    }
+}
+
+- (void)setResourceName:(NSString*)name
+{
+    [mName release];
+    mName = [name copy];
 }
 
 
@@ -89,6 +117,19 @@
 - (void)setParent:(BXResourceElement*)anElem
 {
     mParentElement = anElem;
+}
+
+- (void)sortChildrenByResourceID
+{
+    NSSortDescriptor* sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"resourceID"
+                                                              ascending:YES] autorelease];
+
+    [mChildElements sortUsingDescriptors:[NSArray arrayWithObject:sortDesc]];
+}
+
+- (NSString*)description
+{
+    return [self localizedName];
 }
 
 @end
