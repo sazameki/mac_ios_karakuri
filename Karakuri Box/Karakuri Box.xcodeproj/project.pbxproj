@@ -13,6 +13,11 @@
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		8E0D74271144A35000D4FEBF /* BXChara2DState.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D74261144A35000D4FEBF /* BXChara2DState.mm */; };
+		8E207CBF114622E000FA6B59 /* BXResourceFileManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E207CBE114622E000FA6B59 /* BXResourceFileManager.mm */; };
+		8E207CC5114623BF00FA6B59 /* BXChara2DImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E207CC4114623BF00FA6B59 /* BXChara2DImage.mm */; };
+		8E207DD0114637E200FA6B59 /* BXChara2DAtlasView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E207DCF114637E200FA6B59 /* BXChara2DAtlasView.mm */; };
+		8E207E931146550B00FA6B59 /* NSImage+BXEx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E207E921146550B00FA6B59 /* NSImage+BXEx.mm */; };
+		8E207F201146772E00FA6B59 /* BXGlobals.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E207F1F1146772E00FA6B59 /* BXGlobals.mm */; };
 		8E62A58A113AE053005DC90E /* BXDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55D113AE053005DC90E /* BXDocument.mm */; };
 		8E62A58B113AE053005DC90E /* BXOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55F113AE053005DC90E /* BXOpenGLView.mm */; };
 		8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */; };
@@ -46,6 +51,10 @@
 		8E62A5B6113AE08F005DC90E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B5113AE08F005DC90E /* Localizable.strings */; };
 		8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B7113AE0BE005DC90E /* BXDocument.xib */; };
 		8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E62A5CA113AE18A005DC90E /* OpenGL.framework */; };
+		8EA495DD1146AEF5002BEBA8 /* BXChara2DKoma.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */; };
+		8EA497151146CD0A002BEBA8 /* NSMutableArray+Moving.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */; };
+		8EA497E71146DC01002BEBA8 /* BXChara2DKomaCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA497E61146DC01002BEBA8 /* BXChara2DKomaCell.mm */; };
+		8EA4985C1146EE38002BEBA8 /* BXChara2DKomaListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */; };
 		8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */; };
 		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
 		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
@@ -66,6 +75,16 @@
 		8D15AC370486D014006FF6A4 /* Karakuri Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Karakuri Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0D74251144A35000D4FEBF /* BXChara2DState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DState.h; sourceTree = "<group>"; };
 		8E0D74261144A35000D4FEBF /* BXChara2DState.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DState.mm; sourceTree = "<group>"; };
+		8E207CBD114622E000FA6B59 /* BXResourceFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceFileManager.h; sourceTree = "<group>"; };
+		8E207CBE114622E000FA6B59 /* BXResourceFileManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceFileManager.mm; sourceTree = "<group>"; };
+		8E207CC3114623BF00FA6B59 /* BXChara2DImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DImage.h; sourceTree = "<group>"; };
+		8E207CC4114623BF00FA6B59 /* BXChara2DImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DImage.mm; sourceTree = "<group>"; };
+		8E207DCE114637E200FA6B59 /* BXChara2DAtlasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DAtlasView.h; sourceTree = "<group>"; };
+		8E207DCF114637E200FA6B59 /* BXChara2DAtlasView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DAtlasView.mm; sourceTree = "<group>"; };
+		8E207E911146550B00FA6B59 /* NSImage+BXEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+BXEx.h"; sourceTree = "<group>"; };
+		8E207E921146550B00FA6B59 /* NSImage+BXEx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSImage+BXEx.mm"; sourceTree = "<group>"; };
+		8E207F1E1146772E00FA6B59 /* BXGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXGlobals.h; sourceTree = "<group>"; };
+		8E207F1F1146772E00FA6B59 /* BXGlobals.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXGlobals.mm; sourceTree = "<group>"; };
 		8E62A55C113AE053005DC90E /* BXDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXDocument.h; sourceTree = "<group>"; };
 		8E62A55D113AE053005DC90E /* BXDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXDocument.mm; sourceTree = "<group>"; };
 		8E62A55E113AE053005DC90E /* BXOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOpenGLView.h; sourceTree = "<group>"; };
@@ -119,6 +138,14 @@
 		8E62A5B5113AE08F005DC90E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		8E62A5B8113AE0BE005DC90E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BXDocument.xib; sourceTree = "<group>"; };
 		8E62A5CA113AE18A005DC90E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		8EA495DB1146AEF5002BEBA8 /* BXChara2DKoma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKoma.h; sourceTree = "<group>"; };
+		8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKoma.mm; sourceTree = "<group>"; };
+		8EA497131146CD0A002BEBA8 /* NSMutableArray+Moving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Moving.h"; sourceTree = "<group>"; };
+		8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSMutableArray+Moving.mm"; sourceTree = "<group>"; };
+		8EA497E51146DC01002BEBA8 /* BXChara2DKomaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKomaCell.h; sourceTree = "<group>"; };
+		8EA497E61146DC01002BEBA8 /* BXChara2DKomaCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKomaCell.mm; sourceTree = "<group>"; };
+		8EA4985A1146EE38002BEBA8 /* BXChara2DKomaListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKomaListView.h; sourceTree = "<group>"; };
+		8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKomaListView.mm; sourceTree = "<group>"; };
 		8ED752A1113B8E2B004E78EB /* BXBGMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBGMResource.h; sourceTree = "<group>"; };
 		8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBGMResource.mm; sourceTree = "<group>"; };
 		8ED752A4113B8E49004E78EB /* BXSEResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXSEResource.h; sourceTree = "<group>"; };
@@ -183,12 +210,10 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8E207F1E1146772E00FA6B59 /* BXGlobals.h */,
+				8E207F1F1146772E00FA6B59 /* BXGlobals.mm */,
 				8E62A55C113AE053005DC90E /* BXDocument.h */,
 				8E62A55D113AE053005DC90E /* BXDocument.mm */,
-				8E62A55E113AE053005DC90E /* BXOpenGLView.h */,
-				8E62A55F113AE053005DC90E /* BXOpenGLView.mm */,
-				8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */,
-				8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */,
 				8E62A562113AE053005DC90E /* Resource */,
 				8E62A56B113AE053005DC90E /* Karakuri */,
 				8E62A585113AE053005DC90E /* AppKit Ex */,
@@ -228,23 +253,37 @@
 		8E2AEDDB113AE35A00D32EFE /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				8E207CBD114622E000FA6B59 /* BXResourceFileManager.h */,
+				8E207CBE114622E000FA6B59 /* BXResourceFileManager.mm */,
 				8E62A563113AE053005DC90E /* BXResourceElement.h */,
 				8E62A564113AE053005DC90E /* BXResourceElement.mm */,
 				8E62A565113AE053005DC90E /* BXResourceGroup.h */,
 				8E62A566113AE053005DC90E /* BXResourceGroup.mm */,
+				8E62A55E113AE053005DC90E /* BXOpenGLView.h */,
+				8E62A55F113AE053005DC90E /* BXOpenGLView.mm */,
 			);
 			name = Base;
 			sourceTree = "<group>";
 		};
-		8E2AEDDC113AE36400D32EFE /* Chara */ = {
+		8E2AEDDC113AE36400D32EFE /* Chara2D */ = {
 			isa = PBXGroup;
 			children = (
 				8E62A567113AE053005DC90E /* BXChara2DSpec.h */,
 				8E62A568113AE053005DC90E /* BXChara2DSpec.mm */,
 				8E0D74251144A35000D4FEBF /* BXChara2DState.h */,
 				8E0D74261144A35000D4FEBF /* BXChara2DState.mm */,
+				8E207CC3114623BF00FA6B59 /* BXChara2DImage.h */,
+				8E207CC4114623BF00FA6B59 /* BXChara2DImage.mm */,
+				8E207DCE114637E200FA6B59 /* BXChara2DAtlasView.h */,
+				8E207DCF114637E200FA6B59 /* BXChara2DAtlasView.mm */,
+				8EA495DB1146AEF5002BEBA8 /* BXChara2DKoma.h */,
+				8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */,
+				8EA497E51146DC01002BEBA8 /* BXChara2DKomaCell.h */,
+				8EA497E61146DC01002BEBA8 /* BXChara2DKomaCell.mm */,
+				8EA4985A1146EE38002BEBA8 /* BXChara2DKomaListView.h */,
+				8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */,
 			);
-			name = Chara;
+			name = Chara2D;
 			sourceTree = "<group>";
 		};
 		8E2AEDDD113AE36E00D32EFE /* Particle */ = {
@@ -252,6 +291,8 @@
 			children = (
 				8E62A569113AE053005DC90E /* BXParticleSpec.h */,
 				8E62A56A113AE053005DC90E /* BXParticleSpec.mm */,
+				8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */,
+				8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */,
 			);
 			name = Particle;
 			sourceTree = "<group>";
@@ -261,7 +302,7 @@
 			children = (
 				8E2AEDDB113AE35A00D32EFE /* Base */,
 				8ED752A9113B8EB2004E78EB /* Background */,
-				8E2AEDDC113AE36400D32EFE /* Chara */,
+				8E2AEDDC113AE36400D32EFE /* Chara2D */,
 				8E2AEDDD113AE36E00D32EFE /* Particle */,
 				8ED7529F113B8DE7004E78EB /* BGM */,
 				8ED752A0113B8DF3004E78EB /* SE */,
@@ -330,6 +371,10 @@
 				8E62A587113AE053005DC90E /* SZSplitView.m */,
 				8E62A588113AE053005DC90E /* SZStatusBarBackgroundView.h */,
 				8E62A589113AE053005DC90E /* SZStatusBarBackgroundView.m */,
+				8E207E911146550B00FA6B59 /* NSImage+BXEx.h */,
+				8E207E921146550B00FA6B59 /* NSImage+BXEx.mm */,
+				8EA497131146CD0A002BEBA8 /* NSMutableArray+Moving.h */,
+				8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */,
 			);
 			name = "AppKit Ex";
 			sourceTree = "<group>";
@@ -517,6 +562,15 @@
 				8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */,
 				8ED752FC113B9635004E78EB /* BXStageSpec.mm in Sources */,
 				8E0D74271144A35000D4FEBF /* BXChara2DState.mm in Sources */,
+				8E207CBF114622E000FA6B59 /* BXResourceFileManager.mm in Sources */,
+				8E207CC5114623BF00FA6B59 /* BXChara2DImage.mm in Sources */,
+				8E207DD0114637E200FA6B59 /* BXChara2DAtlasView.mm in Sources */,
+				8E207E931146550B00FA6B59 /* NSImage+BXEx.mm in Sources */,
+				8E207F201146772E00FA6B59 /* BXGlobals.mm in Sources */,
+				8EA495DD1146AEF5002BEBA8 /* BXChara2DKoma.mm in Sources */,
+				8EA497151146CD0A002BEBA8 /* NSMutableArray+Moving.mm in Sources */,
+				8EA497E71146DC01002BEBA8 /* BXChara2DKomaCell.mm in Sources */,
+				8EA4985C1146EE38002BEBA8 /* BXChara2DKomaListView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

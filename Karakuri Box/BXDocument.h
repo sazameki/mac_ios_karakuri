@@ -10,6 +10,9 @@
 #import "SZStatusBarBackgroundView.h"
 #import "BXResourceGroup.h"
 #import "BXParticleSimulatorView.h"
+#import "BXResourceFileManager.h"
+#import "BXChara2DAtlasView.h"
+#import "BXChara2DImage.h"
 
 
 @interface BXDocument : NSDocument
@@ -25,6 +28,11 @@
     IBOutlet NSTextField*               oChara2DResourceNameField;
     
     IBOutlet NSOutlineView*             oChara2DStateListView;
+    IBOutlet NSOutlineView*             oChara2DImageListView;
+    IBOutlet NSTextField*               oChara2DImageDivXField;
+    IBOutlet NSTextField*               oChara2DImageDivYField;
+    IBOutlet BXChara2DAtlasView*        oChara2DImageAtlasView;
+    IBOutlet NSOutlineView*             oChara2DKomaListView;
     
     ///// パーティクルの設定用アウトレット
     IBOutlet BXParticleSimulatorView*   oParticleView;
@@ -80,14 +88,20 @@
     BXResourceGroup*    mBGMGroup;
     BXResourceGroup*    mSEGroup;
     BXResourceGroup*    mStageGroup;
+    
+    BXResourceFileManager*  mFileManager;
 }
 
 
 ///// 2Dキャラクタ設定アクション
 
+- (IBAction)addChara2DImage:(id)sender;
+- (IBAction)addChara2DState:(id)sender;
+- (IBAction)changedChara2DImageDivX:(id)sender;
+- (IBAction)changedChara2DImageDivY:(id)sender;
 - (IBAction)changedChara2DResourceID:(id)sender;
 - (IBAction)changedChara2DResourceName:(id)sender;
-- (IBAction)addChara2DState:(id)sender;
+- (IBAction)removeChara2DState:(id)sender;
 
 
 ///// パーティクル設定アクション
@@ -117,9 +131,17 @@
 - (IBAction)changedParticleBGColor1:(id)sender;
 
 
+- (BXResourceFileManager*)fileManager;
+
+
 ///// 2Dキャラクタ設定に関するメソッド
 
-- (BOOL)canRemoteChara2DState;
+- (BOOL)canAddChara2DImage;
+- (BOOL)canRemoveChara2DImage;
+- (BOOL)canRemoveChara2DState;
+- (void)updateChara2DAtlasList;
+- (BXChara2DImage*)selectedChara2DImage;
+- (void)removeSelectedChara2DKoma;
 
 @end
 

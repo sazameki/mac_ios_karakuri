@@ -27,9 +27,14 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 @interface BXDocument ()
 
 - (BXChara2DSpec*)selectedChara2DSpec;
+- (BXChara2DState*)selectedChara2DState;
+- (BXChara2DKoma*)selectedChara2DKoma;
 - (BXSingleParticleSpec*)selectedSingleParticleSpec;
 - (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
 - (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec;
+- (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage;
+- (void)addChara2DImageFiles:(NSArray*)filepaths;
+- (void)updateChara2DAtlasList;
 
 @end
 
@@ -63,6 +68,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         //[mRootElements addObject:mBGMGroup];
         //[mRootElements addObject:mSEGroup];
         //[mRootElements addObject:mStageGroup];
+        
+        mFileManager = [[BXResourceFileManager alloc] init];
     }
     return self;
 }
@@ -80,17 +87,29 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     // カラーパネルの設定
     [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
+    
+    // 2Dキャラクタ設定関係のセットアップ
+    [oChara2DKomaListView registerForDraggedTypes:[NSArray arrayWithObjects:gChara2DImageAtlasDraggingPboardType, gChara2DKomaDraggingPboardType, nil]];
+    [oChara2DKomaListView setDraggingSourceOperationMask:(NSDragOperationMove | NSDragOperationCopy) forLocal:YES];
+    [oChara2DKomaListView setVerticalMotionCanBeginDrag:YES];
 }
 
 - (void)dealloc
 {
     [mRootElements release];
+    [mFileManager release];
+
     [super dealloc];
 }
 
 
 #pragma mark -
 #pragma mark アクセッサ
+
+- (BXResourceFileManager*)fileManager
+{
+    return mFileManager;
+}
 
 - (BXChara2DSpec*)selectedChara2DSpec
 {
@@ -115,6 +134,28 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
     return [selectedSpec stateAtIndex:selectedRow];
+}
+
+- (BXChara2DImage*)selectedChara2DImage
+{
+    int selectedRow = [oChara2DImageListView selectedRow];
+    if (selectedRow < 0) {
+        return nil;
+    }
+
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+    return [selectedSpec imageAtIndex:selectedRow];
+}
+
+- (BXChara2DKoma*)selectedChara2DKoma
+{
+    int selectedRow = [oChara2DKomaListView selectedRow];
+    if (selectedRow < 0) {
+        return nil;
+    }
+
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    return [selectedState komaAtIndex:selectedRow];
 }
 
 - (BXSingleParticleSpec*)selectedSingleParticleSpec;
@@ -225,7 +266,81 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 
 #pragma mark -
-#pragma mark 2Dキャラクタの設定アクション
+#pragma mark 2Dキャラクタの設定アクションbeginSheetForDirectory:path
+
+- (IBAction)addChara2DImage:(id)sender
+{
+    BXChara2DState* charaState = [self selectedChara2DState];
+    if (!charaState) {
+        return;
+    }
+    
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+    [openPanel setCanChooseDirectories:NO];
+    [openPanel setAllowsMultipleSelection:YES];
+    [openPanel beginSheetForDirectory:nil
+                                 file:nil
+                                types:[NSImage imageFileTypes]
+                       modalForWindow:oMainWindow
+                        modalDelegate:self
+                       didEndSelector:@selector(chara2DImageSheetDidEnd:returnCode:context:)
+                          contextInfo:nil];
+}
+
+- (void)chara2DImageSheetDidEnd:(NSOpenPanel*)panel
+                     returnCode:(int)returnCode
+                        context:(void*)context
+{
+    if (returnCode == NSOKButton) {
+        NSArray* filenames = [panel filenames];
+        [self addChara2DImageFiles:filenames];
+    }
+}
+
+- (IBAction)addChara2DState:(id)sender
+{
+    BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
+    if (!charaSpec) {
+        return;
+    }
+    
+    int stateCount = [charaSpec stateCount];
+    BXChara2DState* lastState = [charaSpec stateAtIndex:stateCount-1];
+    int nextID = [lastState stateID] + 1;
+    
+    BXChara2DState* newState = [charaSpec addNewState];
+    [newState setStateID:nextID];
+    
+    [oChara2DStateListView reloadData];
+    
+    int theRow = [oChara2DStateListView rowForItem:newState];
+    [oChara2DStateListView scrollRowToVisible:theRow];
+    [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+}
+
+- (IBAction)changedChara2DImageDivX:(id)sender
+{
+    BXChara2DImage* theImage = [self selectedChara2DImage];
+    if (!theImage) {
+        return;
+    }
+    
+    [theImage setDivX:[oChara2DImageDivXField intValue]];
+    
+    [self updateChara2DAtlasList];
+}
+
+- (IBAction)changedChara2DImageDivY:(id)sender
+{
+    BXChara2DImage* theImage = [self selectedChara2DImage];
+    if (!theImage) {
+        return;
+    }
+    
+    [theImage setDivY:[oChara2DImageDivYField intValue]];
+
+    [self updateChara2DAtlasList];
+}
 
 - (IBAction)changedChara2DResourceID:(id)sender
 {
@@ -250,32 +365,112 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oElementView reloadData];
 }
 
-- (IBAction)addChara2DState:(id)sender
+- (IBAction)removeChara2DState:(id)sender
 {
+    BXChara2DState* charaState = [self selectedChara2DState];
+    if (!charaState) {
+        return;
+    }
+
+    [self willChangeValueForKey:@"canRemoteChara2DState"];
+
     BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
-    
-    int stateCount = [charaSpec stateCount];
-    BXChara2DState* lastState = [charaSpec stateAtIndex:stateCount-1];
-    int nextID = [lastState stateID] + 1;
-    
-    BXChara2DState* newState = [charaSpec addNewState];
-    [newState setStateID:nextID];
+    [charaSpec removeState:charaState];
     
     [oChara2DStateListView reloadData];
     
-    int theRow = [oChara2DStateListView rowForItem:newState];
-    [oChara2DStateListView scrollRowToVisible:theRow];
-    [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+    [self didChangeValueForKey:@"canRemoteChara2DState"];
 }
 
 
 #pragma mark-
 #pragma mark 2Dキャラクタに関係する操作
 
-- (BOOL)canRemoteChara2DState
+- (void)addChara2DImageFiles:(NSArray*)filepaths
 {
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+    if (!selectedSpec) {
+        return;
+    }
+
+    BXChara2DImage* lastAddedImage = nil;
+    
+    for (int i = 0; i < [filepaths count]; i++) {
+        NSString* aPath = [filepaths objectAtIndex:i];
+        BXChara2DImage* anImage = [selectedSpec addImageAtPath:aPath document:self];
+        lastAddedImage = anImage;
+    }
+
+    if (lastAddedImage) {
+        [oChara2DImageListView reloadData];
+        
+        int lastAddedRow = [oChara2DImageListView rowForItem:lastAddedImage];
+        [oChara2DImageListView scrollRowToVisible:lastAddedRow];
+        [oChara2DImageListView selectRowIndexes:[NSIndexSet indexSetWithIndex:lastAddedRow] byExtendingSelection:NO];
+    }
+}
+
+- (BOOL)canAddChara2DImage
+{
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+
+    return (selectedSpec != nil)? YES: NO;
+}
+
+- (BOOL)canRemoveChara2DImage
+{
+    BXChara2DImage* selectedImage = [self selectedChara2DImage];
+    return (selectedImage && ![selectedImage isUsed])? YES: NO;
+}
+
+- (BOOL)canRemoveChara2DState
+{
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+    if ([selectedSpec stateCount] <= 1) {
+        return NO;
+    }
+    
     BXChara2DState* selectedState = [self selectedChara2DState];
     return (selectedState != nil)? YES: NO;
+}
+
+- (void)updateChara2DAtlasList
+{
+    BXChara2DImage* selectedImage = [self selectedChara2DImage];
+
+    if (selectedImage) {
+        [selectedImage updateAtlasImages];
+    }
+    
+    NSSize atlasViewSize = [oChara2DImageAtlasView minSize];
+
+    NSRect frame = [oChara2DImageAtlasView frame];
+    frame.size = atlasViewSize;
+    [oChara2DImageAtlasView setFrame:frame];
+    
+    [oChara2DImageAtlasView deselectAll];
+    
+    [oChara2DImageAtlasView setNeedsDisplay:YES];
+}
+
+- (void)removeSelectedChara2DKoma
+{
+    int selectedRow = [oChara2DKomaListView selectedRow];
+    if (selectedRow < 0) {
+        NSBeep();
+        return;
+    }
+    
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    BXChara2DKoma* theKoma = [selectedState komaAtIndex:selectedRow];
+    BXChara2DImage* theImage = [theKoma image];
+    [selectedState removeKomaAtIndex:selectedRow];
+
+    if (theImage == [self selectedChara2DImage]) {
+        [self setupEditorForChara2DImage:theImage];
+    }
+    
+    [oChara2DKomaListView reloadData];
 }
 
 
@@ -664,6 +859,25 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
+- (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage
+{
+    if (!theImage) {
+        [oChara2DImageDivXField setStringValue:@""];
+        [oChara2DImageDivYField setStringValue:@""];
+    } else {
+        [oChara2DImageDivXField setIntValue:[theImage divX]];
+        [oChara2DImageDivYField setIntValue:[theImage divY]];
+        
+        if ([theImage isUsed]) {
+            [oChara2DImageDivXField setEnabled:NO];
+            [oChara2DImageDivYField setEnabled:NO];
+        } else {
+            [oChara2DImageDivXField setEnabled:YES];
+            [oChara2DImageDivYField setEnabled:YES];
+        }
+    }
+}
+
 - (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec
 {
     [oParticleResourceIDField setIntValue:[theSpec resourceID]];
@@ -740,6 +954,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (int)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(id)item
 {
+    // 左の要素リスト
     if (outlineView == oElementView) {
         // Root
         if (!item) {
@@ -750,19 +965,46 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             return [item childCount];
         }
     }
+    // 2Dキャラクタの状態リスト
     else if (outlineView == oChara2DStateListView) {
         // Root
         if (!item) {
             BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+            if (!selectedSpec) {
+                return 0;
+            }
             return [selectedSpec stateCount];
         }
     }
-    
+    // 2Dキャラクタの画像リスト
+    else if (outlineView == oChara2DImageListView) {
+        // Root
+        if (!item) {
+            BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+            if (!selectedSpec) {
+                return 0;
+            }
+            return [selectedSpec imageCount];
+        }
+    }
+    // 2Dキャラクタのコマリスト
+    else if (outlineView == oChara2DKomaListView) {
+        // Root
+        if (!item) {
+            BXChara2DState* selectedState = [self selectedChara2DState];
+            if (!selectedState) {
+                return 0;
+            }
+            return [selectedState komaCount];
+        }
+    }
+
     return 0;
 }
 
 - (id)outlineView:(NSOutlineView*)outlineView child:(int)index ofItem:(id)item
 {
+    // 左の要素リスト
     if (outlineView == oElementView) {
         // Root
         if (!item) {
@@ -773,9 +1015,26 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             return [item childAtIndex:index];
         }
     }
+    // 2Dキャラクタの状態のリスト
     else if (outlineView == oChara2DStateListView) {
         BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
         return [selectedSpec stateAtIndex:index];
+    }
+    // 2Dキャラクタの画像リスト
+    else if (outlineView == oChara2DImageListView) {
+        // Root
+        if (!item) {
+            BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+            return [selectedSpec imageAtIndex:index];
+        }
+    }
+    // 2Dキャラクタのコマリスト
+    else if (outlineView == oChara2DKomaListView) {
+        // Root
+        if (!item) {
+            BXChara2DState* selectedState = [self selectedChara2DState];
+            return [selectedState komaAtIndex:index];
+        }
     }
     
     return nil;
@@ -783,22 +1042,66 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (id)outlineView:(NSOutlineView*)outlineView objectValueForTableColumn:(NSTableColumn*)tableColumn byItem:(id)item
 {
+    // 左の要素リスト
     if (outlineView == oElementView) {
         return [item localizedName];
     }
+    // 2Dキャラクタの状態のリスト
     else if (outlineView == oChara2DStateListView) {
         if ([[tableColumn identifier] isEqualToString:@"id"]) {
-            return [NSString stringWithFormat:@"%d", [(BXChara2DState*)item stateID]];
+            return [NSNumber numberWithInt:[(BXChara2DState*)item stateID]];
         } else if ([[tableColumn identifier] isEqualToString:@"name"]) {
             return [(BXChara2DState*)item name];
+        }
+    }
+    // 2Dキャラクタの画像リスト
+    else if (outlineView == oChara2DImageListView) {
+        return [(BXChara2DImage*)item imageName];
+    }
+    // 2Dキャラクタのコマリスト
+    else if (outlineView == oChara2DKomaListView) {
+        NSString* columnIdentifier = [tableColumn identifier];
+        
+        // コマ#
+        if ([columnIdentifier isEqualToString:@"koma_number"]) {
+            return [NSNumber numberWithInt:[(BXChara2DKoma*)item komaNumber]];
+        }
+        // コマ画像
+        else if ([columnIdentifier isEqualToString:@"koma_image"]) {
+            return [(BXChara2DKoma*)item nsImage];
+        }
+        // コマキャンセル禁止フラグ
+        else if ([columnIdentifier isEqualToString:@"koma_cancel"]) {
+            return [NSNumber numberWithBool:![(BXChara2DKoma*)item isCancelable]];
+        }
+        // コマ表示間隔
+        else if ([columnIdentifier isEqualToString:@"koma_interval"]) {
+            return [NSNumber numberWithInt:[(BXChara2DKoma*)item interval]];
         }
     }
 
     return @"????";
 }
 
+- (void)outlineView:(NSOutlineView*)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn*)tableColumn byItem:(id)item
+{
+    // 2Dキャラクタのコマリスト
+    if (outlineView == oChara2DKomaListView) {
+        NSString* columnIdentifier = [tableColumn identifier];
+        // コマキャンセル可能フラグ
+        if ([columnIdentifier isEqualToString:@"koma_cancel"]) {
+            [(BXChara2DKoma*)item setCancelable:![object boolValue]];
+        }
+        // コマ表示間隔
+        else if ([columnIdentifier isEqualToString:@"koma_interval"]) {
+            [(BXChara2DKoma*)item setInterval:[object intValue]];
+        }
+    }
+}
+
 - (BOOL)outlineView:(NSOutlineView*)outlineView isItemExpandable:(id)item
 {
+    // 左の要素リスト
     if (outlineView == oElementView) {
         return [item isExpandable];
     }
@@ -808,6 +1111,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (BOOL)outlineView:(NSOutlineView*)outlineView isGroupItem:(id)item
 {
+    // 左の要素リスト
     if (outlineView == oElementView) {
         return [item isGroupItem];
     }
@@ -823,6 +1127,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     NSOutlineView* outlineView = [notification object];
 
+    // 左の要素リスト
     if (outlineView == oElementView) {
         int selectedRow = [oElementView selectedRow];
         if (selectedRow < 0) {
@@ -855,23 +1160,153 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oEditorTabView selectTabViewItemWithIdentifier:@"no-selection"];
         }
     }
-    else if (outlineView == oChara2DStateListView) {
-        [self willChangeValueForKey:@"canRemoteChara2DState"];
-        [self didChangeValueForKey:@"canRemoteChara2DState"];
+    // 2Dキャラクタの状態のリスト
+    else if (outlineView == oChara2DStateListView) {        
+        [oChara2DKomaListView reloadData];
+        
+        [self willChangeValueForKey:@"canRemoveChara2DState"];
+        [self didChangeValueForKey:@"canRemoveChara2DState"];
+    }
+    // 2Dキャラクタの画像リスト
+    else if (outlineView == oChara2DImageListView) {
+        BXChara2DImage* theImage = [self selectedChara2DImage];
 
-        NSLog(@"State Changed");
+        [self setupEditorForChara2DImage:theImage];
+        [oChara2DImageAtlasView deselectAll];
+        [oChara2DImageAtlasView setNeedsDisplay:YES];
+        
+        [self willChangeValueForKey:@"canRemoveChara2DImage"];
+        [self didChangeValueForKey:@"canRemoveChara2DImage"];
     }
 }
 
-- (void)outlineView:(NSOutlineView*)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn*)tableColumn item:(BXResourceElement*)item
+- (void)changedChara2DKomaGotoTarget:(NSMenuItem*)menuItem
 {
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    BXChara2DKoma* selectedKoma = [self selectedChara2DKoma];
+    
+    int targetKomaNumber = [menuItem tag];
+    BXChara2DKoma* targetKoma = nil;
+    if (targetKomaNumber > 0) {
+        targetKoma = [selectedState komaAtIndex:targetKomaNumber-1];
+    }
+    [selectedKoma setGotoTarget:targetKoma];
 }
 
-- (BOOL)outlineView:(NSOutlineView*)outlineView shouldEditTableColumn:(NSTableColumn*)tableColumn item:(BXResourceElement*)item
+- (void)outlineView:(NSOutlineView*)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn*)tableColumn item:(id)item
 {
+    // 2Dキャラクタのコマリスト
+    if (outlineView == oChara2DKomaListView) {
+        NSString* columnIdentifier = [tableColumn identifier];
+        
+        if ([columnIdentifier isEqualToString:@"koma_goto"]) {
+            BXChara2DState* selectedState = [self selectedChara2DState];
+            NSMenu* gotoMenu = [selectedState makeKomaGotoMenuForKoma:item document:self];
+            [cell setMenu:gotoMenu];
+            [cell selectItemWithTag:[item gotoTargetNumber]];
+        }
+    }
+}
+
+- (BOOL)outlineView:(NSOutlineView*)outlineView shouldEditTableColumn:(NSTableColumn*)tableColumn item:(id)item
+{
+    // 2Dキャラクタの状態リスト
+    if (outlineView == oChara2DStateListView) {
+        return YES;
+    }
+    
     return NO;
 }
 
+- (BOOL)outlineView:(NSOutlineView*)outlineView writeItems:(NSArray*)items toPasteboard:(NSPasteboard*)pboard
+{
+    if (outlineView == oChara2DKomaListView) {
+        int theRow = [oChara2DKomaListView rowForItem:[items objectAtIndex:0]];
+        NSIndexSet* theIndex = [NSIndexSet indexSetWithIndex:theRow];
+        NSData* indexData = [NSArchiver archivedDataWithRootObject:theIndex];
+        
+        [pboard declareTypes:[NSArray arrayWithObject:gChara2DKomaDraggingPboardType] owner:oChara2DKomaListView];
+        [pboard setData:indexData forType:gChara2DKomaDraggingPboardType];
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)outlineView:(NSOutlineView*)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(int)index
+{
+    // 2Dキャラクタのコマリスト
+    if (outlineView == oChara2DKomaListView) {
+        if ([info draggingSource] == oChara2DKomaListView) {
+            NSPasteboard *pboard = [info draggingPasteboard];
+            NSData* indexData = [pboard dataForType:gChara2DKomaDraggingPboardType];
+            NSIndexSet* theIndex = [NSUnarchiver unarchiveObjectWithData:indexData];
+            int theRow = [theIndex firstIndex];
+            
+            BXChara2DState* currentState = [self selectedChara2DState];
+            int newRow = [currentState moveKomaFrom:theRow to:index];
+
+            [oChara2DKomaListView reloadData];
+            [oChara2DKomaListView scrollRowToVisible:newRow];
+            [oChara2DKomaListView selectRowIndexes:[NSIndexSet indexSetWithIndex:newRow] byExtendingSelection:NO];
+        } else {
+            [self willChangeValueForKey:@"canRemoveChara2DImage"];
+
+            BXChara2DState* currentState = [self selectedChara2DState];
+            BXChara2DImage* currentImage = [self selectedChara2DImage];
+            
+            NSPasteboard* pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+            NSData* indexesData = [pboard dataForType:gChara2DImageAtlasDraggingPboardType];
+            NSIndexSet* indexes = [NSUnarchiver unarchiveObjectWithData:indexesData];
+            
+            BXChara2DKoma* firstKoma = nil;
+            
+            int indexCount = [indexes count];
+            unsigned indexBuffer[indexCount];
+            [indexes getIndexes:indexBuffer maxCount:indexCount inIndexRange:nil];
+            for (int i = indexCount-1; i >= 0; i--) {
+                BXChara2DKoma* newKoma = [currentState insertKomaAtIndex:index];
+                [newKoma setImage:currentImage atlasAtIndex:indexBuffer[i]];
+                firstKoma = newKoma;
+            }
+            
+            [self setupEditorForChara2DImage:currentImage];
+
+            [oChara2DKomaListView reloadData];
+            
+            int theRow = [oChara2DKomaListView rowForItem:firstKoma];
+            [oChara2DKomaListView scrollRowToVisible:theRow];
+            [oChara2DKomaListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+            
+            [self didChangeValueForKey:@"canRemoveChara2DImage"];
+        }
+    }
+
+    return YES;
+}
+
+- (NSDragOperation)outlineView:(NSOutlineView*)outlineView
+                  validateDrop:(id<NSDraggingInfo>)info
+                  proposedItem:(id)item
+            proposedChildIndex:(int)index
+{
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    if (!selectedState) {
+        return NSDragOperationNone;
+    }
+    
+    if ([info draggingSource] == oChara2DKomaListView) {
+        if (index < 0) {
+            return NSDragOperationNone;
+        }
+        return NSDragOperationMove;
+    } else {
+        if (index < 0) {
+            return NSDragOperationNone;
+        }
+        return NSDragOperationCopy;
+    }
+}
 
 #pragma mark -
 #pragma mark NSToolbar delegate

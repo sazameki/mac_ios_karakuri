@@ -1,0 +1,122 @@
+//
+//  BXResourceFileManager.mm
+//  Karakuri Box
+//
+//  Created by numata on 10/03/09.
+//  Copyright 2010 Apple Inc. All rights reserved.
+//
+
+#import "BXResourceFileManager.h"
+
+
+@implementation BXResourceFileInfo
+
+- (id)initWithFileAtPath:(NSString*)filepath
+{
+    self = [self init];
+    if (self) {
+        mFilepath = [filepath copy];
+        [self setResourceName:[filepath lastPathComponent]];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [mResourceName release];
+    [mFilepath release];
+
+    [super dealloc];
+}
+
+- (NSString*)resourceName
+{
+    return mResourceName;
+}
+
+- (void)setResourceName:(NSString*)name
+{
+    [mResourceName release];
+    mResourceName = [name copy];
+}
+
+- (NSImage*)image72dpi
+{
+    NSImage* theImage = [[[NSImage alloc] initWithContentsOfFile:mFilepath] autorelease];
+    return theImage;
+}
+
+@end
+
+
+@interface BXResourceFileManager ()
+
+- (int)nextImageTicket;
+
+@end
+
+
+@implementation BXResourceFileManager
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        mImageInfoMap = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [mImageInfoMap release];
+
+    [super dealloc];
+}
+
+- (NSString*)imageNameForTicket:(int)ticket
+{
+    BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
+    return [theInfo resourceName];
+}
+
+- (int)nextImageTicket
+{
+    int ret = 0;
+    BOOL found = YES;
+
+    while ([mImageInfoMap objectForKey:[NSNumber numberWithInt:ret]]) {
+        ret++;
+        if (ret > 40000) {
+            found = NO;
+            break;
+        }
+    }
+    
+    if (!found) {
+        ret = -1;
+    }
+    return ret;
+}
+
+- (int)storeImageFileAtPath:(NSString*)filepath
+{
+    int imageTicket = [self nextImageTicket];
+    if (imageTicket < 0) {
+        return -1;
+    }
+
+    BXResourceFileInfo* theInfo = [[[BXResourceFileInfo alloc] initWithFileAtPath:filepath] autorelease];
+    [mImageInfoMap setObject:theInfo forKey:[NSNumber numberWithInt:imageTicket]];
+    
+    return imageTicket;
+}
+
+- (NSImage*)image72dpiForTicket:(int)ticket
+{
+    BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
+    return [theInfo image72dpi];
+}
+
+@end
+

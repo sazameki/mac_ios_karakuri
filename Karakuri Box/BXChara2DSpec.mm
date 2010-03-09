@@ -26,7 +26,8 @@
     self = [super initWithName:name];
     if (self) {
         mStates = [[NSMutableArray alloc] init];
-        
+        mImages = [[NSMutableArray alloc] init];
+
         [self addDefaultState];
     }
     return self;
@@ -35,9 +36,14 @@
 - (void)dealloc
 {
     [mStates release];
-    
+    [mImages release];
+
     [super dealloc];
 }
+
+
+#pragma mark -
+#pragma mark メインの操作
 
 - (void)addDefaultState
 {
@@ -62,6 +68,29 @@
 - (BXChara2DState*)stateAtIndex:(int)index
 {
     return [mStates objectAtIndex:index];
+}
+
+- (void)removeState:(BXChara2DState*)theState
+{
+    [mStates removeObject:theState];
+}
+
+
+- (BXChara2DImage*)addImageAtPath:(NSString*)path document:(BXDocument*)document
+{
+    BXChara2DImage* anImage = [[[BXChara2DImage alloc] initWithFilepath:path document:document] autorelease];
+    [mImages addObject:anImage];
+    return anImage;
+}
+
+- (int)imageCount
+{
+    return [mImages count];
+}
+
+- (BXChara2DImage*)imageAtIndex:(int)index
+{
+    return [mImages objectAtIndex:index];
 }
 
 @end
