@@ -12,6 +12,7 @@
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		8E0D74271144A35000D4FEBF /* BXChara2DState.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D74261144A35000D4FEBF /* BXChara2DState.mm */; };
 		8E62A58A113AE053005DC90E /* BXDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55D113AE053005DC90E /* BXDocument.mm */; };
 		8E62A58B113AE053005DC90E /* BXOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55F113AE053005DC90E /* BXOpenGLView.mm */; };
 		8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */; };
@@ -63,6 +64,8 @@
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D15AC360486D014006FF6A4 /* Karakuri_Box-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Karakuri_Box-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Karakuri Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Karakuri Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E0D74251144A35000D4FEBF /* BXChara2DState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DState.h; sourceTree = "<group>"; };
+		8E0D74261144A35000D4FEBF /* BXChara2DState.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DState.mm; sourceTree = "<group>"; };
 		8E62A55C113AE053005DC90E /* BXDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXDocument.h; sourceTree = "<group>"; };
 		8E62A55D113AE053005DC90E /* BXDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXDocument.mm; sourceTree = "<group>"; };
 		8E62A55E113AE053005DC90E /* BXOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOpenGLView.h; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 			children = (
 				8E62A567113AE053005DC90E /* BXCharaSpec.h */,
 				8E62A568113AE053005DC90E /* BXCharaSpec.mm */,
+				8E0D74251144A35000D4FEBF /* BXChara2DState.h */,
+				8E0D74261144A35000D4FEBF /* BXChara2DState.mm */,
 			);
 			name = Chara;
 			sourceTree = "<group>";
@@ -511,6 +516,7 @@
 				8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */,
 				8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */,
 				8ED752FC113B9635004E78EB /* BXStageSpec.mm in Sources */,
+				8E0D74271144A35000D4FEBF /* BXChara2DState.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,7 +26,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 @interface BXDocument ()
 
+- (BXCharaSpec*)selectedChara2DSpec;
 - (BXSingleParticleSpec*)selectedSingleParticleSpec;
+- (void)setupEditorUIForChara2D:(BXCharaSpec*)theSpec;
 - (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec;
 
 @end
@@ -90,6 +92,31 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark アクセッサ
 
+- (BXCharaSpec*)selectedChara2DSpec
+{
+    int selectedRow = [oElementView selectedRow];
+    if (selectedRow < 0) {
+        return nil;
+    }
+    
+    BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
+    if ([theElem isKindOfClass:[BXCharaSpec class]]) {
+        return (BXCharaSpec*)theElem;
+    }
+    return nil;
+}
+
+- (BXChara2DState*)selectedChara2DState
+{
+    int selectedRow = [oChara2DStateListView selectedRow];
+    if (selectedRow < 0) {
+        return nil;
+    }
+    
+    BXCharaSpec* selectedSpec = [self selectedChara2DSpec];
+    return [selectedSpec stateAtIndex:selectedRow];
+}
+
 - (BXSingleParticleSpec*)selectedSingleParticleSpec;
 {
     int selectedRow = [oElementView selectedRow];
@@ -134,7 +161,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [mCharaGroup addChild:newCharaSpec];
     
     [oElementView reloadData];
-    [oElementView expandItem:mCharaGroup];
+    [oElementView expandItem:mCharaGroup];    
 
     int row = [oElementView rowForItem:newCharaSpec];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
@@ -194,6 +221,61 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     int row = [oElementView rowForItem:newStage];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
+
+
+#pragma mark -
+#pragma mark 2Dキャラクタの設定アクション
+
+- (IBAction)changedChara2DResourceID:(id)sender
+{
+    int theID = [oChara2DResourceIDField intValue];
+    
+    BXCharaSpec* charaSpec = [self selectedChara2DSpec];
+    [charaSpec setResourceID:theID];
+    
+    [oElementView reloadData];
+    
+    int theRow = [oElementView rowForItem:charaSpec];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+}
+
+- (IBAction)changedChara2DResourceName:(id)sender
+{
+    NSString* theName = [oChara2DResourceNameField stringValue];
+    
+    BXCharaSpec* charaSpec = [self selectedChara2DSpec];
+    [charaSpec setResourceName:theName];
+    
+    [oElementView reloadData];
+}
+
+- (IBAction)addChara2DState:(id)sender
+{
+    BXCharaSpec* charaSpec = [self selectedChara2DSpec];
+    
+    int stateCount = [charaSpec stateCount];
+    BXChara2DState* lastState = [charaSpec stateAtIndex:stateCount-1];
+    int nextID = [lastState stateID] + 1;
+    
+    BXChara2DState* newState = [charaSpec addNewState];
+    [newState setStateID:nextID];
+    
+    [oChara2DStateListView reloadData];
+    
+    int theRow = [oChara2DStateListView rowForItem:newState];
+    [oChara2DStateListView scrollRowToVisible:theRow];
+    [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+}
+
+
+#pragma mark-
+#pragma mark 2Dキャラクタに関係する操作
+
+- (BOOL)canRemoteChara2DState
+{
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    return (selectedState != nil)? YES: NO;
 }
 
 
@@ -570,7 +652,17 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 
 #pragma mark -
-#pragma mark ???
+#pragma mark UIと内部データの同期
+
+- (void)setupEditorUIForChara2D:(BXCharaSpec*)theSpec
+{
+    [oChara2DResourceIDField setIntValue:[theSpec resourceID]];
+    [oChara2DResourceNameField setStringValue:[theSpec resourceName]];
+
+    [oChara2DStateListView reloadData];
+
+    [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+}
 
 - (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec
 {
@@ -646,43 +738,81 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark NSOutlineView DataSource
 
-- (int)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(BXResourceElement*)item
+- (int)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(id)item
 {
-    // Root
-    if (!item) {
-        return [mRootElements count];
+    if (outlineView == oElementView) {
+        // Root
+        if (!item) {
+            return [mRootElements count];
+        }
+        // Otherwise
+        else {
+            return [item childCount];
+        }
     }
-    // Otherwise
-    else {
-        return [item childCount];
+    else if (outlineView == oChara2DStateListView) {
+        // Root
+        if (!item) {
+            BXCharaSpec* selectedSpec = [self selectedChara2DSpec];
+            return [selectedSpec stateCount];
+        }
     }
+    
+    return 0;
 }
 
-- (id)outlineView:(NSOutlineView*)outlineView child:(int)index ofItem:(BXResourceElement*)item
+- (id)outlineView:(NSOutlineView*)outlineView child:(int)index ofItem:(id)item
 {
-    // Root
-    if (!item) {
-        return [mRootElements objectAtIndex:index];
+    if (outlineView == oElementView) {
+        // Root
+        if (!item) {
+            return [mRootElements objectAtIndex:index];
+        }
+        // Otherwise
+        else {
+            return [item childAtIndex:index];
+        }
     }
-    // Otherwise
-    else {
-        return [item childAtIndex:index];
+    else if (outlineView == oChara2DStateListView) {
+        BXCharaSpec* selectedSpec = [self selectedChara2DSpec];
+        return [selectedSpec stateAtIndex:index];
     }
+    
+    return nil;
 }
 
-- (id)outlineView:(NSOutlineView*)outlineView objectValueForTableColumn:(NSTableColumn*)tableColumn byItem:(BXResourceElement*)item
+- (id)outlineView:(NSOutlineView*)outlineView objectValueForTableColumn:(NSTableColumn*)tableColumn byItem:(id)item
 {
-    return [item localizedName];
+    if (outlineView == oElementView) {
+        return [item localizedName];
+    }
+    else if (outlineView == oChara2DStateListView) {
+        if ([[tableColumn identifier] isEqualToString:@"id"]) {
+            return [NSString stringWithFormat:@"%d", [(BXChara2DState*)item stateID]];
+        } else if ([[tableColumn identifier] isEqualToString:@"name"]) {
+            return [(BXChara2DState*)item name];
+        }
+    }
+
+    return @"????";
 }
 
-- (BOOL)outlineView:(NSOutlineView*)outlineView isItemExpandable:(BXResourceElement*)item
+- (BOOL)outlineView:(NSOutlineView*)outlineView isItemExpandable:(id)item
 {
-    return [item isExpandable];
+    if (outlineView == oElementView) {
+        return [item isExpandable];
+    }
+    
+    return NO;
 }
 
-- (BOOL)outlineView:(NSOutlineView*)outlineView isGroupItem:(BXResourceElement*)item
+- (BOOL)outlineView:(NSOutlineView*)outlineView isGroupItem:(id)item
 {
-    return [item isGroupItem];
+    if (outlineView == oElementView) {
+        return [item isGroupItem];
+    }
+    
+    return NO;
 }
 
 
@@ -691,27 +821,45 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)outlineViewSelectionDidChange:(NSNotification*)notification
 {
-    int selectedRow = [oElementView selectedRow];
-    if (selectedRow < 0) {
-        [oEditorTabView selectTabViewItemWithIdentifier:@"no-selection"];
-        return;
+    NSOutlineView* outlineView = [notification object];
+
+    if (outlineView == oElementView) {
+        int selectedRow = [oElementView selectedRow];
+        if (selectedRow < 0) {
+            [oEditorTabView selectTabViewItemWithIdentifier:@"no-selection"];
+            return;
+        }
+
+        [oParticleView releaseParticles];
+        
+        BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
+        
+        // キャラクタの編集
+        if ([theElem isKindOfClass:[BXCharaSpec class]]) {
+            [oEditorTabView selectTabViewItemWithIdentifier:@"chara-editor"];
+            BXCharaSpec* theCharaSpec = (BXCharaSpec*)theElem;
+
+            [self setupEditorUIForChara2D:theCharaSpec];
+        }
+        // パーティクルの編集
+        else if ([theElem isKindOfClass:[BXSingleParticleSpec class]]) {
+            BXSingleParticleSpec* theParticleSpec = (BXSingleParticleSpec*)theElem;
+
+            [self setupEditorUIForSingleParticle:theParticleSpec];
+
+            [oParticleView setupForParticleSpec:theParticleSpec];
+            [oEditorTabView selectTabViewItemWithIdentifier:@"particle-editor"];
+        }
+        // 選択なし
+        else {
+            [oEditorTabView selectTabViewItemWithIdentifier:@"no-selection"];
+        }
     }
+    else if (outlineView == oChara2DStateListView) {
+        [self willChangeValueForKey:@"canRemoteChara2DState"];
+        [self didChangeValueForKey:@"canRemoteChara2DState"];
 
-    [oParticleView releaseParticles];
-    
-    BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
-    if ([theElem isKindOfClass:[BXCharaSpec class]]) {
-        [oEditorTabView selectTabViewItemWithIdentifier:@"chara-editor"];
-    } else if ([theElem isKindOfClass:[BXSingleParticleSpec class]]) {
-        BXSingleParticleSpec* theParticleSpec = (BXSingleParticleSpec*)theElem;
-
-        [self setupEditorUIForSingleParticle:theParticleSpec];
-
-
-        [oParticleView setupForParticleSpec:theParticleSpec];
-        [oEditorTabView selectTabViewItemWithIdentifier:@"particle-editor"];
-    } else {
-        [oEditorTabView selectTabViewItemWithIdentifier:@"no-selection"];
+        NSLog(@"State Changed");
     }
 }
 

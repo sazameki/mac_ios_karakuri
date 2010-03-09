@@ -14,11 +14,23 @@
 
 @interface BXDocument : NSDocument
 {
+    ///// 各種エディタに共通のアウトレット
     IBOutlet NSWindow*                  oMainWindow;
     IBOutlet NSOutlineView*             oElementView;
     IBOutlet NSTabView*                 oEditorTabView;
-    IBOutlet BXParticleSimulatorView*   oParticleView;
     IBOutlet SZStatusBarBackgroundView* oStatusBarBGView;
+
+    ///// 2Dキャラクタの設定用アウトレット
+    IBOutlet NSTextField*               oChara2DResourceIDField;
+    IBOutlet NSTextField*               oChara2DResourceNameField;
+    
+    IBOutlet NSOutlineView*             oChara2DStateListView;
+    
+    ///// パーティクルの設定用アウトレット
+    IBOutlet BXParticleSimulatorView*   oParticleView;
+
+    IBOutlet NSTextField*               oParticleResourceIDField;
+    IBOutlet NSTextField*               oParticleResourceNameField;
 
     IBOutlet NSPopUpButton*             oParticleImageButton;
 
@@ -55,10 +67,7 @@
     IBOutlet NSTextField*               oParticleGenerateCountField;
     IBOutlet NSSlider*                  oParticleGenerateCountSlider;
     IBOutlet NSTextField*               oParticleMaxParticleCountField;
-    IBOutlet NSSlider*                  oParticleMaxParticleCountSlider;
-    
-    IBOutlet NSTextField*               oParticleResourceIDField;
-    IBOutlet NSTextField*               oParticleResourceNameField;
+    IBOutlet NSSlider*                  oParticleMaxParticleCountSlider;    
 
     IBOutlet NSButton*                  oParticleLoopButton;
     IBOutlet NSColorWell*               oParticleBGColorWell1;
@@ -72,6 +81,14 @@
     BXResourceGroup*    mSEGroup;
     BXResourceGroup*    mStageGroup;
 }
+
+
+///// 2Dキャラクタ設定アクション
+
+- (IBAction)changedChara2DResourceID:(id)sender;
+- (IBAction)changedChara2DResourceName:(id)sender;
+- (IBAction)addChara2DState:(id)sender;
+
 
 ///// パーティクル設定アクション
 
@@ -98,6 +115,11 @@
 
 - (IBAction)changedParticleLoopSetting:(id)sender;
 - (IBAction)changedParticleBGColor1:(id)sender;
+
+
+///// 2Dキャラクタ設定に関するメソッド
+
+- (BOOL)canRemoteChara2DState;
 
 @end
 
