@@ -1,22 +1,22 @@
 //
-//  BXCharaSpec.m
+//  BXChara2DSpec.m
 //  Karakuri Box
 //
 //  Created by numata on 10/02/28.
 //  Copyright 2010 Apple Inc. All rights reserved.
 //
 
-#import "BXCharaSpec.h"
+#import "BXChara2DSpec.h"
 
 
-@interface BXCharaSpec ()
+@interface BXChara2DSpec ()
 
 - (void)addDefaultState;
 
 @end
 
 
-@implementation BXCharaSpec
+@implementation BXChara2DSpec
 
 #pragma mark -
 #pragma mark 初期化・クリーンアップ

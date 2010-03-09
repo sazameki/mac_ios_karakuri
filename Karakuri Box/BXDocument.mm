@@ -9,7 +9,7 @@
 #import "BXDocument.h"
 
 #import "BXBackgroundSpec.h"
-#import "BXCharaSpec.h"
+#import "BXChara2DSpec.h"
 #import "BXParticleSpec.h"
 #import "BXBGMResource.h"
 #import "BXSEResource.h"
@@ -26,9 +26,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 @interface BXDocument ()
 
-- (BXCharaSpec*)selectedChara2DSpec;
+- (BXChara2DSpec*)selectedChara2DSpec;
 - (BXSingleParticleSpec*)selectedSingleParticleSpec;
-- (void)setupEditorUIForChara2D:(BXCharaSpec*)theSpec;
+- (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
 - (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec;
 
 @end
@@ -92,7 +92,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark アクセッサ
 
-- (BXCharaSpec*)selectedChara2DSpec
+- (BXChara2DSpec*)selectedChara2DSpec
 {
     int selectedRow = [oElementView selectedRow];
     if (selectedRow < 0) {
@@ -100,8 +100,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     
     BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
-    if ([theElem isKindOfClass:[BXCharaSpec class]]) {
-        return (BXCharaSpec*)theElem;
+    if ([theElem isKindOfClass:[BXChara2DSpec class]]) {
+        return (BXChara2DSpec*)theElem;
     }
     return nil;
 }
@@ -113,7 +113,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         return nil;
     }
     
-    BXCharaSpec* selectedSpec = [self selectedChara2DSpec];
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
     return [selectedSpec stateAtIndex:selectedRow];
 }
 
@@ -137,7 +137,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)addBackground:(id)sender
 {
-    BXBackgroundSpec* newBGSpec = [[[BXCharaSpec alloc] initWithName:@"New BG"] autorelease];
+    BXBackgroundSpec* newBGSpec = [[[BXBackgroundSpec alloc] initWithName:@"New BG"] autorelease];
     [mBackgroundGroup addChild:newBGSpec];
     
     [oElementView reloadData];
@@ -149,7 +149,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)addCharacter:(id)sender
 {
-    BXCharaSpec* newCharaSpec = [[[BXCharaSpec alloc] initWithName:@"New Chara"] autorelease];
+    BXChara2DSpec* newCharaSpec = [[[BXChara2DSpec alloc] initWithName:@"New Chara"] autorelease];
 
     if ([mCharaGroup childCount] > 0) {
         int lastID = [[mCharaGroup childAtIndex:[mCharaGroup childCount]-1] resourceID];
@@ -231,7 +231,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     int theID = [oChara2DResourceIDField intValue];
     
-    BXCharaSpec* charaSpec = [self selectedChara2DSpec];
+    BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
     [charaSpec setResourceID:theID];
     
     [oElementView reloadData];
@@ -244,7 +244,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     NSString* theName = [oChara2DResourceNameField stringValue];
     
-    BXCharaSpec* charaSpec = [self selectedChara2DSpec];
+    BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
     [charaSpec setResourceName:theName];
     
     [oElementView reloadData];
@@ -252,7 +252,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (IBAction)addChara2DState:(id)sender
 {
-    BXCharaSpec* charaSpec = [self selectedChara2DSpec];
+    BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
     
     int stateCount = [charaSpec stateCount];
     BXChara2DState* lastState = [charaSpec stateAtIndex:stateCount-1];
@@ -654,7 +654,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark UIと内部データの同期
 
-- (void)setupEditorUIForChara2D:(BXCharaSpec*)theSpec
+- (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec
 {
     [oChara2DResourceIDField setIntValue:[theSpec resourceID]];
     [oChara2DResourceNameField setStringValue:[theSpec resourceName]];
@@ -753,7 +753,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     else if (outlineView == oChara2DStateListView) {
         // Root
         if (!item) {
-            BXCharaSpec* selectedSpec = [self selectedChara2DSpec];
+            BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
             return [selectedSpec stateCount];
         }
     }
@@ -774,7 +774,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         }
     }
     else if (outlineView == oChara2DStateListView) {
-        BXCharaSpec* selectedSpec = [self selectedChara2DSpec];
+        BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
         return [selectedSpec stateAtIndex:index];
     }
     
@@ -835,9 +835,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
         
         // キャラクタの編集
-        if ([theElem isKindOfClass:[BXCharaSpec class]]) {
+        if ([theElem isKindOfClass:[BXChara2DSpec class]]) {
             [oEditorTabView selectTabViewItemWithIdentifier:@"chara-editor"];
-            BXCharaSpec* theCharaSpec = (BXCharaSpec*)theElem;
+            BXChara2DSpec* theCharaSpec = (BXChara2DSpec*)theElem;
 
             [self setupEditorUIForChara2D:theCharaSpec];
         }

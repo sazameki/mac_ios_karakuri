@@ -1,5 +1,5 @@
 //
-//  BXCharaSpec.h
+//  BXChara2DSpec.h
 //  Karakuri Box
 //
 //  Created by numata on 10/02/28.
@@ -10,7 +10,7 @@
 #import "BXChara2DState.h"
 
 
-@interface BXCharaSpec : BXResourceElement {
+@interface BXChara2DSpec : BXResourceElement {
     NSMutableArray*     mStates;
 }
 

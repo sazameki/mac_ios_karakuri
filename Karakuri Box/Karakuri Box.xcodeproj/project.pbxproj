@@ -18,7 +18,7 @@
 		8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */; };
 		8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A564113AE053005DC90E /* BXResourceElement.mm */; };
 		8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A566113AE053005DC90E /* BXResourceGroup.mm */; };
-		8E62A58F113AE053005DC90E /* BXCharaSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A568113AE053005DC90E /* BXCharaSpec.mm */; };
+		8E62A58F113AE053005DC90E /* BXChara2DSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A568113AE053005DC90E /* BXChara2DSpec.mm */; };
 		8E62A590113AE053005DC90E /* BXParticleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56A113AE053005DC90E /* BXParticleSpec.mm */; };
 		8E62A591113AE053005DC90E /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56E113AE053005DC90E /* KarakuriTypes.cpp */; };
 		8E62A592113AE053005DC90E /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A570113AE053005DC90E /* KarakuriGlobals.cpp */; };
@@ -76,8 +76,8 @@
 		8E62A564113AE053005DC90E /* BXResourceElement.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceElement.mm; sourceTree = "<group>"; };
 		8E62A565113AE053005DC90E /* BXResourceGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceGroup.h; sourceTree = "<group>"; };
 		8E62A566113AE053005DC90E /* BXResourceGroup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceGroup.mm; sourceTree = "<group>"; };
-		8E62A567113AE053005DC90E /* BXCharaSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXCharaSpec.h; sourceTree = "<group>"; };
-		8E62A568113AE053005DC90E /* BXCharaSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXCharaSpec.mm; sourceTree = "<group>"; };
+		8E62A567113AE053005DC90E /* BXChara2DSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DSpec.h; sourceTree = "<group>"; };
+		8E62A568113AE053005DC90E /* BXChara2DSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DSpec.mm; sourceTree = "<group>"; };
 		8E62A569113AE053005DC90E /* BXParticleSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticleSpec.h; sourceTree = "<group>"; };
 		8E62A56A113AE053005DC90E /* BXParticleSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticleSpec.mm; sourceTree = "<group>"; };
 		8E62A56D113AE053005DC90E /* KarakuriTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriTypes.h; sourceTree = "<group>"; };
@@ -239,8 +239,8 @@
 		8E2AEDDC113AE36400D32EFE /* Chara */ = {
 			isa = PBXGroup;
 			children = (
-				8E62A567113AE053005DC90E /* BXCharaSpec.h */,
-				8E62A568113AE053005DC90E /* BXCharaSpec.mm */,
+				8E62A567113AE053005DC90E /* BXChara2DSpec.h */,
+				8E62A568113AE053005DC90E /* BXChara2DSpec.mm */,
 				8E0D74251144A35000D4FEBF /* BXChara2DState.h */,
 				8E0D74261144A35000D4FEBF /* BXChara2DState.mm */,
 			);
@@ -497,7 +497,7 @@
 				8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */,
 				8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */,
 				8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */,
-				8E62A58F113AE053005DC90E /* BXCharaSpec.mm in Sources */,
+				8E62A58F113AE053005DC90E /* BXChara2DSpec.mm in Sources */,
 				8E62A590113AE053005DC90E /* BXParticleSpec.mm in Sources */,
 				8E62A591113AE053005DC90E /* KarakuriTypes.cpp in Sources */,
 				8E62A592113AE053005DC90E /* KarakuriGlobals.cpp in Sources */,
