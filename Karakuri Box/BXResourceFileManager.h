@@ -9,13 +9,21 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class BXDocument;
+
+
 @interface BXResourceFileInfo : NSObject {
+    BXDocument* mDocument;
+
     NSString*   mResourceName;
     
-    NSString*   mFilepath;  // TODO: テンポラリの保存場所のサポート
+    NSString*   mFileName;
 }
 
-- (id)initWithFileAtPath:(NSString*)filepath;
+- (id)initWithFileAtPath:(NSString*)filepath document:(BXDocument*)document;
+- (id)initWithFileName:(NSString*)fileName resourceName:(NSString*)resourceName document:(BXDocument*)document;
+
+- (NSString*)fileName;
 
 - (NSString*)resourceName;
 - (void)setResourceName:(NSString*)name;
@@ -26,12 +34,19 @@
 
 
 @interface BXResourceFileManager : NSObject {
+    BXDocument*             mDocument;
+    
     NSMutableDictionary*    mImageInfoMap;
 }
+
+- (id)initWithDocument:(BXDocument*)document;
 
 - (int)storeImageFileAtPath:(NSString*)filepath;
 - (NSString*)imageNameForTicket:(int)ticket;
 - (NSImage*)image72dpiForTicket:(int)ticket;
+
+- (NSData*)resourceMapData;
+- (void)restoreResourceMapData:(NSData*)data;
 
 @end
 

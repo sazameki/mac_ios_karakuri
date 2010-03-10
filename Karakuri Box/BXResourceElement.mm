@@ -25,7 +25,7 @@
 {
     self = [super init];
     if (self) {
-        mName = [name copy];
+        mResourceName = [name copy];
         mChildElements = [[NSMutableArray alloc] init];
         
         mResourceID = 99;   // TODO: リソースIDをちゃんと管理する。
@@ -35,7 +35,7 @@
 
 - (void)dealloc
 {
-    [mName release];
+    [mResourceName release];
     [mChildElements release];
 
     [super dealloc];
@@ -47,10 +47,10 @@
 
 - (NSString*)localizedName
 {
-    if ([mName hasPrefix:@"*"]) {
-        return NSLocalizedString(mName, nil);
+    if ([mResourceName hasPrefix:@"*"]) {
+        return NSLocalizedString(mResourceName, nil);
     }
-    return [NSString stringWithFormat:@"%d: %@", mResourceID, mName];
+    return [NSString stringWithFormat:@"%d: %@", mResourceID, mResourceName];
 }
 
 - (BOOL)isExpandable
@@ -70,7 +70,7 @@
 
 - (NSString*)resourceName
 {
-    return mName;
+    return mResourceName;
 }
 
 - (void)setResourceID:(int)theID
@@ -84,8 +84,8 @@
 
 - (void)setResourceName:(NSString*)name
 {
-    [mName release];
-    mName = [name copy];
+    [mResourceName release];
+    mResourceName = [name copy];
 }
 
 
@@ -130,6 +130,16 @@
 - (NSString*)description
 {
     return [self localizedName];
+}
+
+- (NSDictionary*)elementInfo
+{
+    return [NSDictionary dictionary];
+}
+
+- (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document
+{
+    // Do nothing
 }
 
 @end

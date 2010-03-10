@@ -24,7 +24,7 @@
 		8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A564113AE053005DC90E /* BXResourceElement.mm */; };
 		8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A566113AE053005DC90E /* BXResourceGroup.mm */; };
 		8E62A58F113AE053005DC90E /* BXChara2DSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A568113AE053005DC90E /* BXChara2DSpec.mm */; };
-		8E62A590113AE053005DC90E /* BXParticleSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56A113AE053005DC90E /* BXParticleSpec.mm */; };
+		8E62A590113AE053005DC90E /* BXParticle2DSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56A113AE053005DC90E /* BXParticle2DSpec.mm */; };
 		8E62A591113AE053005DC90E /* KarakuriTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A56E113AE053005DC90E /* KarakuriTypes.cpp */; };
 		8E62A592113AE053005DC90E /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A570113AE053005DC90E /* KarakuriGlobals.cpp */; };
 		8E62A593113AE053005DC90E /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A572113AE053005DC90E /* KarakuriFunctions.mm */; };
@@ -55,6 +55,9 @@
 		8EA497151146CD0A002BEBA8 /* NSMutableArray+Moving.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */; };
 		8EA497E71146DC01002BEBA8 /* BXChara2DKomaCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA497E61146DC01002BEBA8 /* BXChara2DKomaCell.mm */; };
 		8EA4985C1146EE38002BEBA8 /* BXChara2DKomaListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */; };
+		8EA498951146F598002BEBA8 /* BXChara2DKomaPreviewView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA498941146F598002BEBA8 /* BXChara2DKomaPreviewView.mm */; };
+		8EA499701147608A002BEBA8 /* BXAppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA4996F1147608A002BEBA8 /* BXAppController.mm */; };
+		8EA49CC91147B6DD002BEBA8 /* NSDictionary+LoadSave.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */; };
 		8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */; };
 		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
 		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
@@ -97,8 +100,8 @@
 		8E62A566113AE053005DC90E /* BXResourceGroup.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceGroup.mm; sourceTree = "<group>"; };
 		8E62A567113AE053005DC90E /* BXChara2DSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DSpec.h; sourceTree = "<group>"; };
 		8E62A568113AE053005DC90E /* BXChara2DSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DSpec.mm; sourceTree = "<group>"; };
-		8E62A569113AE053005DC90E /* BXParticleSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticleSpec.h; sourceTree = "<group>"; };
-		8E62A56A113AE053005DC90E /* BXParticleSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticleSpec.mm; sourceTree = "<group>"; };
+		8E62A569113AE053005DC90E /* BXParticle2DSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticle2DSpec.h; sourceTree = "<group>"; };
+		8E62A56A113AE053005DC90E /* BXParticle2DSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticle2DSpec.mm; sourceTree = "<group>"; };
 		8E62A56D113AE053005DC90E /* KarakuriTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriTypes.h; sourceTree = "<group>"; };
 		8E62A56E113AE053005DC90E /* KarakuriTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriTypes.cpp; sourceTree = "<group>"; };
 		8E62A56F113AE053005DC90E /* KarakuriGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGlobals.h; sourceTree = "<group>"; };
@@ -146,6 +149,12 @@
 		8EA497E61146DC01002BEBA8 /* BXChara2DKomaCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKomaCell.mm; sourceTree = "<group>"; };
 		8EA4985A1146EE38002BEBA8 /* BXChara2DKomaListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKomaListView.h; sourceTree = "<group>"; };
 		8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKomaListView.mm; sourceTree = "<group>"; };
+		8EA498931146F598002BEBA8 /* BXChara2DKomaPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKomaPreviewView.h; sourceTree = "<group>"; };
+		8EA498941146F598002BEBA8 /* BXChara2DKomaPreviewView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKomaPreviewView.mm; sourceTree = "<group>"; };
+		8EA4996E1147608A002BEBA8 /* BXAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXAppController.h; sourceTree = "<group>"; };
+		8EA4996F1147608A002BEBA8 /* BXAppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXAppController.mm; sourceTree = "<group>"; };
+		8EA49CC71147B6DD002BEBA8 /* NSDictionary+LoadSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+LoadSave.h"; sourceTree = "<group>"; };
+		8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSDictionary+LoadSave.mm"; sourceTree = "<group>"; };
 		8ED752A1113B8E2B004E78EB /* BXBGMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBGMResource.h; sourceTree = "<group>"; };
 		8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBGMResource.mm; sourceTree = "<group>"; };
 		8ED752A4113B8E49004E78EB /* BXSEResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXSEResource.h; sourceTree = "<group>"; };
@@ -212,6 +221,8 @@
 			children = (
 				8E207F1E1146772E00FA6B59 /* BXGlobals.h */,
 				8E207F1F1146772E00FA6B59 /* BXGlobals.mm */,
+				8EA4996E1147608A002BEBA8 /* BXAppController.h */,
+				8EA4996F1147608A002BEBA8 /* BXAppController.mm */,
 				8E62A55C113AE053005DC90E /* BXDocument.h */,
 				8E62A55D113AE053005DC90E /* BXDocument.mm */,
 				8E62A562113AE053005DC90E /* Resource */,
@@ -282,19 +293,21 @@
 				8EA497E61146DC01002BEBA8 /* BXChara2DKomaCell.mm */,
 				8EA4985A1146EE38002BEBA8 /* BXChara2DKomaListView.h */,
 				8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */,
+				8EA498931146F598002BEBA8 /* BXChara2DKomaPreviewView.h */,
+				8EA498941146F598002BEBA8 /* BXChara2DKomaPreviewView.mm */,
 			);
 			name = Chara2D;
 			sourceTree = "<group>";
 		};
-		8E2AEDDD113AE36E00D32EFE /* Particle */ = {
+		8E2AEDDD113AE36E00D32EFE /* Particle2D */ = {
 			isa = PBXGroup;
 			children = (
-				8E62A569113AE053005DC90E /* BXParticleSpec.h */,
-				8E62A56A113AE053005DC90E /* BXParticleSpec.mm */,
+				8E62A569113AE053005DC90E /* BXParticle2DSpec.h */,
+				8E62A56A113AE053005DC90E /* BXParticle2DSpec.mm */,
 				8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */,
 				8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */,
 			);
-			name = Particle;
+			name = Particle2D;
 			sourceTree = "<group>";
 		};
 		8E62A562113AE053005DC90E /* Resource */ = {
@@ -303,7 +316,7 @@
 				8E2AEDDB113AE35A00D32EFE /* Base */,
 				8ED752A9113B8EB2004E78EB /* Background */,
 				8E2AEDDC113AE36400D32EFE /* Chara2D */,
-				8E2AEDDD113AE36E00D32EFE /* Particle */,
+				8E2AEDDD113AE36E00D32EFE /* Particle2D */,
 				8ED7529F113B8DE7004E78EB /* BGM */,
 				8ED752A0113B8DF3004E78EB /* SE */,
 				8ED752A8113B8E93004E78EB /* Stage */,
@@ -375,6 +388,8 @@
 				8E207E921146550B00FA6B59 /* NSImage+BXEx.mm */,
 				8EA497131146CD0A002BEBA8 /* NSMutableArray+Moving.h */,
 				8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */,
+				8EA49CC71147B6DD002BEBA8 /* NSDictionary+LoadSave.h */,
+				8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */,
 			);
 			name = "AppKit Ex";
 			sourceTree = "<group>";
@@ -543,7 +558,7 @@
 				8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */,
 				8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */,
 				8E62A58F113AE053005DC90E /* BXChara2DSpec.mm in Sources */,
-				8E62A590113AE053005DC90E /* BXParticleSpec.mm in Sources */,
+				8E62A590113AE053005DC90E /* BXParticle2DSpec.mm in Sources */,
 				8E62A591113AE053005DC90E /* KarakuriTypes.cpp in Sources */,
 				8E62A592113AE053005DC90E /* KarakuriGlobals.cpp in Sources */,
 				8E62A593113AE053005DC90E /* KarakuriFunctions.mm in Sources */,
@@ -571,6 +586,9 @@
 				8EA497151146CD0A002BEBA8 /* NSMutableArray+Moving.mm in Sources */,
 				8EA497E71146DC01002BEBA8 /* BXChara2DKomaCell.mm in Sources */,
 				8EA4985C1146EE38002BEBA8 /* BXChara2DKomaListView.mm in Sources */,
+				8EA498951146F598002BEBA8 /* BXChara2DKomaPreviewView.mm in Sources */,
+				8EA499701147608A002BEBA8 /* BXAppController.mm in Sources */,
+				8EA49CC91147B6DD002BEBA8 /* NSDictionary+LoadSave.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

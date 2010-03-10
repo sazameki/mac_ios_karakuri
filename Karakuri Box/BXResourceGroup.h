@@ -9,8 +9,28 @@
 #import "BXResourceElement.h"
 
 
+@class BXDocument;
+
+
 @interface BXResourceGroup : BXResourceElement {
 }
 
+- (NSData*)groupData;
+
 @end
+
+
+@interface BXResourceGroup (Chara2DSerialization)
+
+- (void)readChara2DInfosData:(NSData*)data document:(BXDocument*)document;
+
+@end
+
+
+@interface BXResourceGroup (Particle2DSerialization)
+
+- (void)readParticle2DInfosData:(NSData*)data document:(BXDocument*)document;
+
+@end
+
 

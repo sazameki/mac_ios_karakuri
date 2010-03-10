@@ -1,5 +1,5 @@
 //
-//  BXParticleSpec.h
+//  BXParticle2DSpec.h
 //  Karakuri Box
 //
 //  Created by numata on 10/02/28.
@@ -16,19 +16,18 @@
 #import "KRParticle2DSystem.h"
 
 
-@interface BXParticleSpec : BXResourceElement {
+@interface BXParticle2DSpec : BXResourceElement {
 }
 @end
 
-@interface BXSingleParticleSpec : BXParticleSpec {
+@interface BXSingleParticle2DSpec : BXParticle2DSpec {
+    KRColor*    mColor;
     KRColor*    mBGColor1;
     KRBlendMode mBlendMode;
-    KRColor*    mColor;
     KRVector2D* mGravity;
-    int         mImageTag;
     int         mLife;
-    int         mMinAngleV;
     int         mMaxAngleV;
+    int         mMinAngleV;
     KRVector2D* mMaxV;
     KRVector2D* mMinV;
     double      mDeltaScale;
@@ -39,6 +38,8 @@
     int         mGenerateCount;
     int         mMaxParticleCount;
     
+    int         mImageTag;
+
     BOOL        mDoLoop;
     KRVector2D  *mGenerationPos;
 }
@@ -89,7 +90,7 @@
 
 @end
 
-@interface BXCompoundParticleSpec : BXParticleSpec {
+@interface BXCompoundParticle2DSpec : BXParticle2DSpec {
 }
 
 @end

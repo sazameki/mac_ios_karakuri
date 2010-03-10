@@ -13,6 +13,8 @@
 #import "BXResourceFileManager.h"
 #import "BXChara2DAtlasView.h"
 #import "BXChara2DImage.h"
+#import "BXChara2DKoma.h"
+#import "BXChara2DKomaPreviewView.h"
 
 
 @interface BXDocument : NSDocument
@@ -33,6 +35,10 @@
     IBOutlet NSTextField*               oChara2DImageDivYField;
     IBOutlet BXChara2DAtlasView*        oChara2DImageAtlasView;
     IBOutlet NSOutlineView*             oChara2DKomaListView;
+    IBOutlet BXChara2DKomaPreviewView*  oChara2DKomaPreviewView;
+    
+    IBOutlet NSPopUpButton*             oChara2DKomaDefaultIntervalButton;
+    IBOutlet NSPopUpButton*             oChara2DStateNextStateButton;
     
     ///// パーティクルの設定用アウトレット
     IBOutlet BXParticleSimulatorView*   oParticleView;
@@ -90,7 +96,14 @@
     BXResourceGroup*    mStageGroup;
     
     BXResourceFileManager*  mFileManager;
+    NSFileWrapper*          mRootWrapper;
 }
+
+
+///// 一般的な追加アクション
+
+- (void)addChara2D:(id)sender;
+- (void)addParticle2D:(id)sender;
 
 
 ///// 2Dキャラクタ設定アクション
@@ -102,6 +115,7 @@
 - (IBAction)changedChara2DResourceID:(id)sender;
 - (IBAction)changedChara2DResourceName:(id)sender;
 - (IBAction)removeChara2DState:(id)sender;
+- (IBAction)changedChara2DKomaDefaultInterval:(id)sender;
 
 
 ///// パーティクル設定アクション
@@ -131,17 +145,33 @@
 - (IBAction)changedParticleBGColor1:(id)sender;
 
 
-- (BXResourceFileManager*)fileManager;
-
-
 ///// 2Dキャラクタ設定に関するメソッド
 
 - (BOOL)canAddChara2DImage;
 - (BOOL)canRemoveChara2DImage;
 - (BOOL)canRemoveChara2DState;
-- (void)updateChara2DAtlasList;
-- (BXChara2DImage*)selectedChara2DImage;
 - (void)removeSelectedChara2DKoma;
+- (BXChara2DImage*)selectedChara2DImage;
+- (BXChara2DKoma*)selectedChara2DKoma;
+- (void)updateChara2DAtlasList;
+- (BOOL)isChara2DStateSelected;
+- (BOOL)isChara2DKomaSelected;
+- (BOOL)canChara2DStateSelectNextState;
+
+- (void)addChara2DWithInfo:(NSDictionary*)theInfo;
+
+
+///// 2Dパーティクル設定に関するメソッド
+
+- (void)addParticle2DWithInfo:(NSDictionary*)theInfo;
+
+
+///// その他のアクセッサ
+- (BXResourceFileManager*)fileManager;
+- (NSFileWrapper*)rootWrapper;
+- (NSFileWrapper*)contentsWrapper;
+- (NSFileWrapper*)resourcesWrapper;
+
 
 @end
 

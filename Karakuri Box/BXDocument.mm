@@ -10,7 +10,7 @@
 
 #import "BXBackgroundSpec.h"
 #import "BXChara2DSpec.h"
-#import "BXParticleSpec.h"
+#import "BXParticle2DSpec.h"
 #import "BXBGMResource.h"
 #import "BXSEResource.h"
 #import "BXStageSpec.h"
@@ -28,13 +28,14 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (BXChara2DSpec*)selectedChara2DSpec;
 - (BXChara2DState*)selectedChara2DState;
-- (BXChara2DKoma*)selectedChara2DKoma;
-- (BXSingleParticleSpec*)selectedSingleParticleSpec;
+- (BXSingleParticle2DSpec*)selectedSingleParticle2DSpec;
 - (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
-- (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec;
+- (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec;
+- (void)setupEditorForChara2DState:(BXChara2DState*)theState;
 - (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage;
 - (void)addChara2DImageFiles:(NSArray*)filepaths;
 - (void)updateChara2DAtlasList;
+- (void)updateChara2DAtlasListSize;
 
 @end
 
@@ -44,7 +45,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark 基本設定
 
-- (NSString *)windowNibName { return @"BXDocument"; }
+- (NSString*)windowNibName { return @"BXDocument"; }
 
 
 #pragma mark -
@@ -69,12 +70,46 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         //[mRootElements addObject:mSEGroup];
         //[mRootElements addObject:mStageGroup];
         
-        mFileManager = [[BXResourceFileManager alloc] init];
+        mFileManager = [[BXResourceFileManager alloc] initWithDocument:self];
     }
     return self;
 }
 
-- (void)windowControllerDidLoadNib:(NSWindowController *) aController
+- (void)loadResourceInfos
+{
+    NSFileWrapper* contentsWrapper = [[mRootWrapper fileWrappers] objectForKey:@"Contents"];
+    NSFileWrapper* resourcesWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Resources"];
+    
+    if (resourcesWrapper) {
+        NSFileWrapper* resouceMapWrapper = [[resourcesWrapper fileWrappers] objectForKey:@"ResourceMap.plist"];
+        if (resouceMapWrapper) {
+            NSData* resourceMapData = [resouceMapWrapper regularFileContents];
+            [mFileManager restoreResourceMapData:resourceMapData];
+        }
+    }
+    
+    if (contentsWrapper) {
+        NSFileWrapper* chara2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Chara2DInfos.plist"];
+        if (chara2DInfosWrapper) {
+            [mCharaGroup readChara2DInfosData:[chara2DInfosWrapper regularFileContents] document:self];
+        }
+
+        NSFileWrapper* particle2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Particle2DInfos.plist"];
+        if (particle2DInfosWrapper) {
+            [mParticleGroup readParticle2DInfosData:[particle2DInfosWrapper regularFileContents] document:self];
+        }
+    }
+    
+    [oElementView reloadData];
+    if ([mCharaGroup childCount] > 0) {
+        [oElementView expandItem:mCharaGroup];
+    }
+    if ([mParticleGroup childCount] > 0) {
+        [oElementView expandItem:mParticleGroup];
+    }
+}
+
+- (void)windowControllerDidLoadNib:(NSWindowController*) aController
 {
     [super windowControllerDidLoadNib:aController];
     
@@ -92,10 +127,22 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DKomaListView registerForDraggedTypes:[NSArray arrayWithObjects:gChara2DImageAtlasDraggingPboardType, gChara2DKomaDraggingPboardType, nil]];
     [oChara2DKomaListView setDraggingSourceOperationMask:(NSDragOperationMove | NSDragOperationCopy) forLocal:YES];
     [oChara2DKomaListView setVerticalMotionCanBeginDrag:YES];
+    
+    NSScrollView* chara2DImageAtlasScrollView = (NSScrollView*)[[oChara2DImageAtlasView superview] superview];
+    NSClipView* chara2DImageAtlasClipView = [chara2DImageAtlasScrollView contentView];
+    [chara2DImageAtlasClipView setBackgroundColor:[NSColor darkGrayColor]];
+    [chara2DImageAtlasClipView setNeedsDisplay:YES];
+    
+    [self setupEditorForChara2DState:nil];
+    
+    // データの読み込み
+    [self loadResourceInfos];
 }
 
 - (void)dealloc
 {
+    [mRootWrapper release];
+    
     [mRootElements release];
     [mFileManager release];
 
@@ -109,6 +156,35 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (BXResourceFileManager*)fileManager
 {
     return mFileManager;
+}
+
+- (NSFileWrapper*)rootWrapper
+{
+    return mRootWrapper;
+}
+
+- (NSFileWrapper*)contentsWrapper
+{
+    NSFileWrapper* rootWrapper = [self rootWrapper];
+    NSFileWrapper* contentsWrapper = [[rootWrapper fileWrappers] objectForKey:@"Contents"];
+    return contentsWrapper;
+}
+
+- (NSFileWrapper*)resourcesWrapper
+{
+    NSFileWrapper* contentsWrapper = [self contentsWrapper];
+    NSFileWrapper* resourcesWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Resources"];
+    if (!resourcesWrapper) {
+        resourcesWrapper = [[[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil] autorelease];
+        [resourcesWrapper setPreferredFilename:@"Resources"];
+        
+        NSDictionary* resourceMapDict = [NSDictionary dictionary];
+        NSData* resourceMapData = [NSPropertyListSerialization dataFromPropertyList:resourceMapDict format:NSPropertyListBinaryFormat_v1_0 errorDescription:nil];
+        [resourcesWrapper addRegularFileWithContents:resourceMapData preferredFilename:@"ResourceMap.plist"];
+
+        [contentsWrapper addFileWrapper:resourcesWrapper];
+    }
+    return resourcesWrapper;
 }
 
 - (BXChara2DSpec*)selectedChara2DSpec
@@ -158,7 +234,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     return [selectedState komaAtIndex:selectedRow];
 }
 
-- (BXSingleParticleSpec*)selectedSingleParticleSpec;
+- (BXSingleParticle2DSpec*)selectedSingleParticle2DSpec;
 {
     int selectedRow = [oElementView selectedRow];
     if (selectedRow < 0) {
@@ -166,8 +242,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     
     BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
-    if ([theElem isKindOfClass:[BXSingleParticleSpec class]]) {
-        return (BXSingleParticleSpec*)theElem;
+    if ([theElem isKindOfClass:[BXSingleParticle2DSpec class]]) {
+        return (BXSingleParticle2DSpec*)theElem;
     }
     return nil;
 }
@@ -188,9 +264,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 
-- (void)addCharacter:(id)sender
+- (void)addChara2D:(id)sender
 {
-    BXChara2DSpec* newCharaSpec = [[[BXChara2DSpec alloc] initWithName:@"New Chara"] autorelease];
+    BXChara2DSpec* newCharaSpec = [[[BXChara2DSpec alloc] initWithName:@"New Chara" defaultState:YES] autorelease];
 
     if ([mCharaGroup childCount] > 0) {
         int lastID = [[mCharaGroup childAtIndex:[mCharaGroup childCount]-1] resourceID];
@@ -206,11 +282,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
     int row = [oElementView rowForItem:newCharaSpec];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    
+    [self updateChangeCount:NSChangeUndone];
 }
 
-- (void)addParticle:(id)sender
+- (void)addParticle2D:(id)sender
 {
-    BXSingleParticleSpec* newParticleSpec = [[[BXSingleParticleSpec alloc] initWithName:@"New Particle"] autorelease];
+    BXSingleParticle2DSpec* newParticleSpec = [[[BXSingleParticle2DSpec alloc] initWithName:@"New Particle"] autorelease];
     
     if ([mParticleGroup childCount] > 0) {
         int lastID = [[mParticleGroup childAtIndex:[mParticleGroup childCount]-1] resourceID];
@@ -226,6 +304,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     int row = [oElementView rowForItem:newParticleSpec];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (void)addBGM:(id)sender
@@ -266,7 +346,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 
 #pragma mark -
-#pragma mark 2Dキャラクタの設定アクションbeginSheetForDirectory:path
+#pragma mark 2Dキャラクタの設定アクション
 
 - (IBAction)addChara2DImage:(id)sender
 {
@@ -316,6 +396,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     int theRow = [oChara2DStateListView rowForItem:newState];
     [oChara2DStateListView scrollRowToVisible:theRow];
     [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedChara2DImageDivX:(id)sender
@@ -328,6 +410,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [theImage setDivX:[oChara2DImageDivXField intValue]];
     
     [self updateChara2DAtlasList];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedChara2DImageDivY:(id)sender
@@ -340,6 +424,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [theImage setDivY:[oChara2DImageDivYField intValue]];
 
     [self updateChara2DAtlasList];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedChara2DResourceID:(id)sender
@@ -353,6 +439,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     int theRow = [oElementView rowForItem:charaSpec];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedChara2DResourceName:(id)sender
@@ -363,6 +451,22 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [charaSpec setResourceName:theName];
     
     [oElementView reloadData];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)changedChara2DStateNextState:(id)sender
+{
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    if (!selectedState) {
+        NSBeep();
+        return;
+    }
+    
+    int nextStateID = [oChara2DStateNextStateButton selectedTag];
+    [selectedState setNextStateID:nextStateID];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)removeChara2DState:(id)sender
@@ -380,11 +484,34 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DStateListView reloadData];
     
     [self didChangeValueForKey:@"canRemoteChara2DState"];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)changedChara2DKomaDefaultInterval:(id)sender
+{
+    BXChara2DState* charaState = [self selectedChara2DState];
+    if (!charaState) {
+        NSBeep();
+        return;
+    }
+    
+    int theInterval = [oChara2DKomaDefaultIntervalButton selectedTag];
+    [charaState setDefaultKomaInterval:theInterval];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 
 #pragma mark-
 #pragma mark 2Dキャラクタに関係する操作
+
+- (void)addChara2DWithInfo:(NSDictionary*)theInfo
+{
+    BXChara2DSpec* newCharaSpec = [[[BXChara2DSpec alloc] initWithName:@"New Chara" defaultState:NO] autorelease];
+    [newCharaSpec restoreElementInfo:theInfo document:self];
+    [mCharaGroup addChild:newCharaSpec];
+}
 
 - (void)addChara2DImageFiles:(NSArray*)filepaths
 {
@@ -407,6 +534,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         int lastAddedRow = [oChara2DImageListView rowForItem:lastAddedImage];
         [oChara2DImageListView scrollRowToVisible:lastAddedRow];
         [oChara2DImageListView selectRowIndexes:[NSIndexSet indexSetWithIndex:lastAddedRow] byExtendingSelection:NO];
+        
+        [self saveDocument:self];
     }
 }
 
@@ -434,6 +563,19 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     return (selectedState != nil)? YES: NO;
 }
 
+- (void)updateChara2DAtlasListSize
+{
+    NSSize atlasViewSize = [oChara2DImageAtlasView minSize];
+    
+    NSRect frame = [oChara2DImageAtlasView frame];
+    frame.size = atlasViewSize;
+    [oChara2DImageAtlasView setFrame:frame];
+    
+    [oChara2DImageAtlasView deselectAll];
+    
+    [oChara2DImageAtlasView setNeedsDisplay:YES];    
+}
+
 - (void)updateChara2DAtlasList
 {
     BXChara2DImage* selectedImage = [self selectedChara2DImage];
@@ -442,15 +584,27 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [selectedImage updateAtlasImages];
     }
     
-    NSSize atlasViewSize = [oChara2DImageAtlasView minSize];
+    [self updateChara2DAtlasListSize];    
+}
 
-    NSRect frame = [oChara2DImageAtlasView frame];
-    frame.size = atlasViewSize;
-    [oChara2DImageAtlasView setFrame:frame];
-    
-    [oChara2DImageAtlasView deselectAll];
-    
-    [oChara2DImageAtlasView setNeedsDisplay:YES];
+- (BOOL)isChara2DStateSelected
+{
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    return (selectedState? YES: NO);
+}
+
+- (BOOL)isChara2DKomaSelected
+{
+    BXChara2DKoma* selectedKoma = [self selectedChara2DKoma];
+    return (selectedKoma? YES: NO);
+}
+
+- (BOOL)canChara2DStateSelectNextState
+{
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+    BXChara2DState* selectedState = [self selectedChara2DState];
+
+    return (selectedState && [selectedSpec stateCount] > 1);
 }
 
 - (void)removeSelectedChara2DKoma
@@ -481,41 +635,49 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     int theID = [oParticleResourceIDField intValue];
 
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setResourceID:theID];
     
     [oElementView reloadData];
     
     int theRow = [oElementView rowForItem:particleSpec];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleResourceName:(id)sender
 {
     NSString* theName = [oParticleResourceNameField stringValue];
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setResourceName:theName];
     
     [oElementView reloadData];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleImage:(id)sender
 {
     int tag = [oParticleImageButton selectedTag];
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setImageTag:tag];
  
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleLoopSetting:(id)sender
 {
     BOOL doLoop = ([oParticleLoopButton state] == NSOnState);
  
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setDoLoop:doLoop];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleGravityX:(id)sender
@@ -527,11 +689,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         gravityX = [oParticleGravityFieldX floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setGravityX:gravityX];
 
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleGravityY:(id)sender
@@ -543,11 +707,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         gravityY = [oParticleGravityFieldY floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setGravityY:gravityY];
 
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleLife:(id)sender
@@ -559,11 +725,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         life = [oParticleLifeField intValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setLife:life];
 
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleColor:(id)sender
@@ -576,10 +744,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     float b = [color blueComponent];
     float a = [color alphaComponent];
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setColor:KRColor(r, g, b, a)];
 
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMinAngleV:(id)sender
@@ -591,11 +761,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         degree = [oParticleMinAngleVField intValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMinAngleV:degree];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMaxAngleV:(id)sender
@@ -607,11 +779,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         degree = [oParticleMaxAngleVField intValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMaxAngleV:degree];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleBlendMode:(id)sender
@@ -624,10 +798,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         blendMode = KRBlendModeScreen;
     }
 
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setBlendMode:blendMode];
     
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleBGColor1:(id)sender
@@ -640,8 +816,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     float b = [color blueComponent];
     float a = [color alphaComponent];
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setBGColor1:KRColor(r, g, b, a)];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMaxVX:(id)sender
@@ -653,11 +831,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         maxVX = [oParticleMaxVXField floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMaxVX:maxVX];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];    
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMaxVY:(id)sender
@@ -669,11 +849,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         maxVY = [oParticleMaxVYField floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMaxVY:maxVY];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];    
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleDeltaScale:(id)sender
@@ -685,11 +867,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         scale = [oParticleDeltaScaleField floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setDeltaScale:scale];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];    
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleDeltaColor:(id)sender
@@ -747,14 +931,16 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         deltaAlpha = [oParticleDeltaAlphaField floatValue];
     }    
 
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setDeltaRed:deltaRed];
     [particleSpec setDeltaGreen:deltaGreen];
     [particleSpec setDeltaBlue:deltaBlue];
     [particleSpec setDeltaAlpha:deltaAlpha];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];    
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMinVX:(id)sender
@@ -766,11 +952,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         minVX = [oParticleMinVXField floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMinVX:minVX];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];    
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMinVY:(id)sender
@@ -782,11 +970,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         minVY = [oParticleMinVYField floatValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMinVY:minVY];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];    
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleGenerateCount:(id)sender
@@ -798,11 +988,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         count = [oParticleGenerateCountField intValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setGenerateCount:count];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleMaxCount:(id)sender
@@ -814,35 +1006,66 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         count = [oParticleMaxParticleCountField intValue];
     }
     
-    BXSingleParticleSpec* particleSpec = [self selectedSingleParticleSpec];
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setMaxParticleCount:count];
     
-    [self setupEditorUIForSingleParticle:particleSpec];
+    [self setupEditorUIForSingleParticle2D:particleSpec];
     [oParticleView rebuildParticleSystem];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 
 #pragma mark -
-#pragma mark シリアライゼーション
+#pragma mark 2Dパーティクル設定に関するメソッド
 
-- (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
+- (void)addParticle2DWithInfo:(NSDictionary*)theInfo
 {
-    // Insert code here to write your document to data of the specified type. If the given outError != NULL, ensure that you set *outError when returning nil.
-
-    if (outError != NULL) {
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
-	return nil;
+    BXSingleParticle2DSpec* newParticleSpec = [[[BXSingleParticle2DSpec alloc] initWithName:@"New Particle"] autorelease];
+    [newParticleSpec restoreElementInfo:theInfo document:self];
+    [mParticleGroup addChild:newParticleSpec];
 }
 
-- (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
+
+#pragma mark -
+#pragma mark シリアライゼーション（読み込み）
+
+- (BOOL)readFromFileWrapper:(NSFileWrapper*)fileWrapper ofType:(NSString*)typeName error:(NSError**)outError
 {
-    // Insert code here to read your document from the given data of the specified type.  If the given outError != NULL, ensure that you set *outError when returning NO.
+    mRootWrapper = [fileWrapper retain];
     
-    if (outError != NULL) {
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
     return YES;
+}
+
+
+#pragma mark -
+#pragma mark シリアライゼーション（保存）
+
+- (NSFileWrapper*)fileWrapperOfType:(NSString*)typeName error:(NSError**)outError
+{
+    NSFileWrapper* contentsWrapper = [self contentsWrapper];    
+    NSFileWrapper* resourcesWrapper = [self resourcesWrapper];
+    
+    NSFileWrapper* resourceMapWrapper = [[resourcesWrapper fileWrappers] objectForKey:@"ResourceMap.plist"];
+    if (resourceMapWrapper) {
+        [resourcesWrapper removeFileWrapper:resourceMapWrapper];
+    }
+    [resourcesWrapper addRegularFileWithContents:[mFileManager resourceMapData] preferredFilename:@"ResourceMap.plist"];
+    
+    NSFileWrapper* chara2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Chara2DInfos.plist"];
+    if (chara2DInfosWrapper) {
+        [contentsWrapper removeFileWrapper:chara2DInfosWrapper];
+    }
+    
+    NSFileWrapper* particle2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Particle2DInfos.plist"];
+    if (particle2DInfosWrapper) {
+        [contentsWrapper removeFileWrapper:particle2DInfosWrapper];
+    }
+    
+    [contentsWrapper addRegularFileWithContents:[mCharaGroup groupData] preferredFilename:@"Chara2DInfos.plist"];
+    [contentsWrapper addRegularFileWithContents:[mParticleGroup groupData] preferredFilename:@"Particle2DInfos.plist"];
+    
+    return mRootWrapper;
 }
 
 
@@ -857,6 +1080,43 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DStateListView reloadData];
 
     [oChara2DStateListView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+}
+
+- (void)setupEditorForChara2DState:(BXChara2DState*)theState
+{
+    // 状態がない場合
+    if (!theState) {
+        [oChara2DKomaDefaultIntervalButton selectItemWithTag:1];
+
+        // 次の状態メニューをクリアする
+        [oChara2DStateNextStateButton removeAllItems];
+    }
+    // 状態がある場合
+    else {
+        [oChara2DKomaDefaultIntervalButton selectItemWithTag:[theState defaultKomaInterval]];
+        
+        // 次の状態メニューの再構築
+        NSMenu* menu = [[NSMenu alloc] initWithTitle:@"Next State Menu"];
+        
+        NSMenuItem* noneMenuItem = [menu addItemWithTitle:@"なし" action:@selector(changedChara2DStateNextState:) keyEquivalent:@""];
+        [noneMenuItem setTarget:self];
+        [noneMenuItem setTag:-1];
+
+        BXChara2DSpec* currentSpec = [self selectedChara2DSpec];
+        for (int i = 0; i < [currentSpec stateCount]; i++) {
+            BXChara2DState* aState = [currentSpec stateAtIndex:i];
+            if (aState == theState) {
+                continue;
+            }
+            NSString* title = [NSString stringWithFormat:@"%d: %@", [aState stateID], [aState stateName]];
+            NSMenuItem* aMenuItem = [menu addItemWithTitle:title action:@selector(changedChara2DStateNextState:) keyEquivalent:@""];
+            [aMenuItem setTarget:self];
+            [aMenuItem setTag:[aState stateID]];
+        }
+        
+        [oChara2DStateNextStateButton setMenu:menu];
+        [oChara2DStateNextStateButton selectItemWithTag:[theState nextStateID]];
+    }
 }
 
 - (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage
@@ -878,7 +1138,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
 }
 
-- (void)setupEditorUIForSingleParticle:(BXSingleParticleSpec*)theSpec
+- (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec
 {
     [oParticleResourceIDField setIntValue:[theSpec resourceID]];
     [oParticleResourceNameField setStringValue:[theSpec resourceName]];
@@ -1051,7 +1311,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         if ([[tableColumn identifier] isEqualToString:@"id"]) {
             return [NSNumber numberWithInt:[(BXChara2DState*)item stateID]];
         } else if ([[tableColumn identifier] isEqualToString:@"name"]) {
-            return [(BXChara2DState*)item name];
+            return [(BXChara2DState*)item stateName];
         }
     }
     // 2Dキャラクタの画像リスト
@@ -1085,16 +1345,40 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)outlineView:(NSOutlineView*)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn*)tableColumn byItem:(id)item
 {
-    // 2Dキャラクタのコマリスト
-    if (outlineView == oChara2DKomaListView) {
+    // 2Dキャラクタの状態のリスト
+    if (outlineView == oChara2DStateListView) {
         NSString* columnIdentifier = [tableColumn identifier];
+        
+        // 状態ID
+        if ([columnIdentifier isEqualToString:@"id"]) {
+            int oldStateID = [(BXChara2DState*)item stateID];
+            int newStateID = [object intValue];
+            [(BXChara2DState*)item setStateID:newStateID];
+            BXChara2DSpec* currentSpec = [self selectedChara2DSpec];
+            [currentSpec changeStateIDInAllKomaFrom:oldStateID to:newStateID];
+            [currentSpec sortStateList];
+            [oChara2DStateListView reloadData];
+            [self updateChangeCount:NSChangeUndone];
+        }
+        // 状態名
+        else if ([columnIdentifier isEqualToString:@"name"]) {
+            [(BXChara2DState*)item setStateName:object];
+            [self updateChangeCount:NSChangeUndone];
+        }
+    }
+    // 2Dキャラクタのコマリスト
+    else if (outlineView == oChara2DKomaListView) {
+        NSString* columnIdentifier = [tableColumn identifier];
+
         // コマキャンセル可能フラグ
         if ([columnIdentifier isEqualToString:@"koma_cancel"]) {
             [(BXChara2DKoma*)item setCancelable:![object boolValue]];
+            [self updateChangeCount:NSChangeUndone];
         }
         // コマ表示間隔
         else if ([columnIdentifier isEqualToString:@"koma_interval"]) {
             [(BXChara2DKoma*)item setInterval:[object intValue]];
+            [self updateChangeCount:NSChangeUndone];
         }
     }
 }
@@ -1145,12 +1429,15 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             BXChara2DSpec* theCharaSpec = (BXChara2DSpec*)theElem;
 
             [self setupEditorUIForChara2D:theCharaSpec];
+
+            [self willChangeValueForKey:@"canChara2DStateSelectNextState"];
+            [self didChangeValueForKey:@"canChara2DStateSelectNextState"];
         }
         // パーティクルの編集
-        else if ([theElem isKindOfClass:[BXSingleParticleSpec class]]) {
-            BXSingleParticleSpec* theParticleSpec = (BXSingleParticleSpec*)theElem;
+        else if ([theElem isKindOfClass:[BXSingleParticle2DSpec class]]) {
+            BXSingleParticle2DSpec* theParticleSpec = (BXSingleParticle2DSpec*)theElem;
 
-            [self setupEditorUIForSingleParticle:theParticleSpec];
+            [self setupEditorUIForSingleParticle2D:theParticleSpec];
 
             [oParticleView setupForParticleSpec:theParticleSpec];
             [oEditorTabView selectTabViewItemWithIdentifier:@"particle-editor"];
@@ -1158,11 +1445,19 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         // 選択なし
         else {
             [oEditorTabView selectTabViewItemWithIdentifier:@"no-selection"];
-        }
+        }        
     }
     // 2Dキャラクタの状態のリスト
-    else if (outlineView == oChara2DStateListView) {        
+    else if (outlineView == oChara2DStateListView) {
+        [self willChangeValueForKey:@"canChara2DStateSelectNextState"];
+        [self didChangeValueForKey:@"canChara2DStateSelectNextState"];
+        
+        [self setupEditorForChara2DState:[self selectedChara2DState]];
+        
         [oChara2DKomaListView reloadData];
+        
+        [self willChangeValueForKey:@"isChara2DStateSelected"];
+        [self didChangeValueForKey:@"isChara2DStateSelected"];
         
         [self willChangeValueForKey:@"canRemoveChara2DState"];
         [self didChangeValueForKey:@"canRemoveChara2DState"];
@@ -1170,6 +1465,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     // 2Dキャラクタの画像リスト
     else if (outlineView == oChara2DImageListView) {
         BXChara2DImage* theImage = [self selectedChara2DImage];
+        
+        [self updateChara2DAtlasListSize];
 
         [self setupEditorForChara2DImage:theImage];
         [oChara2DImageAtlasView deselectAll];
@@ -1177,6 +1474,14 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         [self willChangeValueForKey:@"canRemoveChara2DImage"];
         [self didChangeValueForKey:@"canRemoveChara2DImage"];
+    }
+    // 2Dキャラクタのコマリスト
+    else if (outlineView == oChara2DKomaListView) {
+        [oChara2DKomaPreviewView updateViewSize];
+        [oChara2DKomaPreviewView setNeedsDisplay:YES];
+
+        [self willChangeValueForKey:@"isChara2DKomaSelected"];
+        [self didChangeValueForKey:@"isChara2DKomaSelected"];
     }
 }
 
@@ -1249,6 +1554,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DKomaListView reloadData];
             [oChara2DKomaListView scrollRowToVisible:newRow];
             [oChara2DKomaListView selectRowIndexes:[NSIndexSet indexSetWithIndex:newRow] byExtendingSelection:NO];
+
+            [self updateChangeCount:NSChangeUndone];
         } else {
             [self willChangeValueForKey:@"canRemoveChara2DImage"];
 
@@ -1279,6 +1586,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DKomaListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
             
             [self didChangeValueForKey:@"canRemoveChara2DImage"];
+
+            [self updateChangeCount:NSChangeUndone];
         }
     }
 
@@ -1311,7 +1620,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark NSToolbar delegate
 
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
+- (NSArray*)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
     return [NSArray arrayWithObjects:
             //sKADocumentToolbarItemAddBackground,
@@ -1323,7 +1632,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             nil];
 }
 
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar
+- (NSArray*)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
 {
     return [NSArray arrayWithObjects:
             //sKADocumentToolbarItemAddBackground,
@@ -1335,7 +1644,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             nil];
 }
 
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+- (NSToolbarItem*)toolbar:(NSToolbar*)toolbar itemForItemIdentifier:(NSString*)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
     NSToolbarItem* ret = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
     
@@ -1348,11 +1657,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddCharacter]) {
         [ret setTarget:self];
-        [ret setAction:@selector(addCharacter:)];
+        [ret setAction:@selector(addChara2D:)];
     }
     else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddParticle]) {
         [ret setTarget:self];
-        [ret setAction:@selector(addParticle:)];
+        [ret setAction:@selector(addParticle2D:)];
     }
     else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddBGM]) {
         [ret setTarget:self];

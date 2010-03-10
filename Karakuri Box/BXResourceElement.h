@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class BXDocument;
+
+
 @interface BXResourceElement : NSObject {
-    NSString*           mName;
+    NSString*           mResourceName;
     
     int                 mResourceID;
 
@@ -35,6 +38,9 @@
 - (void)removeChild:(BXResourceElement*)anElem;
 
 - (void)sortChildrenByResourceID;
+
+- (NSDictionary*)elementInfo;
+- (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document;
 
 @end
 

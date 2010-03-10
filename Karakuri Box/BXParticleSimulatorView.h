@@ -8,13 +8,13 @@
 
 #import "BXOpenGLView.h"
 
-#import "BXParticleSpec.h"
+#import "BXParticle2DSpec.h"
 #import "KRTexture2D.h"
 #import "KRParticle2DSystem.h"
 
 
 @interface BXParticleSimulatorView : BXOpenGLView {
-    BXSingleParticleSpec*    mTargetSpec;
+    BXSingleParticle2DSpec*    mTargetSpec;
 
     KRParticle2DSystem*     mParticleSystem;    
     NSTimer*                mTimer;
@@ -23,7 +23,7 @@
     BOOL                    mForceGenerate;
 }
 
-- (void)setupForParticleSpec:(BXSingleParticleSpec*)aSpec;
+- (void)setupForParticleSpec:(BXSingleParticle2DSpec*)aSpec;
 - (void)releaseParticles;
 
 - (void)rebuildParticleSystem;

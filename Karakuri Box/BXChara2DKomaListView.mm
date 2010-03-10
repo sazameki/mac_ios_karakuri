@@ -11,7 +11,7 @@
 
 @implementation BXChara2DKomaListView
 
-- (void)keyDown:(NSEvent *)theEvent
+- (void)keyDown:(NSEvent*)theEvent
 {
     unsigned short keyCode = [theEvent keyCode];
     

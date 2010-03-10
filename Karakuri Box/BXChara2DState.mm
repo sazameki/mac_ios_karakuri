@@ -9,6 +9,7 @@
 #import "BXChara2DState.h"
 #import "BXDocument.h"
 #import "NSMutableArray+Moving.h"
+#import "NSDictionary+LoadSave.h"
 
 
 @interface BXChara2DState ()
@@ -20,25 +21,34 @@
 
 @implementation BXChara2DState
 
-- (id)initWithName:(NSString*)name
+- (id)initWithName:(NSString*)name chara2DSpec:(BXChara2DSpec*)chara2DSpec
 {
     self = [super init];
     if (self) {
-        mName = [name copy];
+        mParentSpec = chara2DSpec;
+        
+        mStateName = [name copy];
         mStateID = 1;
         mKomas = [[NSMutableArray alloc] init];
         
         mDefaultKomaInterval = 4;
+        
+        mNextStateID = -1;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [mName release];
+    [mStateName release];
     [mKomas release];
     
     [super dealloc];
+}
+
+- (BXChara2DSpec*)parentSpec
+{
+    return mParentSpec;
 }
 
 - (int)stateID
@@ -51,15 +61,15 @@
     mStateID = value;
 }
 
-- (NSString*)name
+- (NSString*)stateName
 {
-    return mName;
+    return mStateName;
 }
 
-- (void)setName:(NSString*)name
+- (void)setStateName:(NSString*)name
 {
-    [mName release];
-    mName = [name copy];
+    [mStateName release];
+    mStateName = [name copy];
 }
 
 - (void)renumberKomas
@@ -95,12 +105,30 @@
     return [mKomas objectAtIndex:index];
 }
 
+- (BXChara2DKoma*)komaWithNumber:(int)komaNumber
+{
+    for (int i = 0; i < [mKomas count]; i++) {
+        BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
+        if ([aKoma komaNumber] == komaNumber) {
+            return aKoma;
+        }
+    }
+    return nil;
+}
+
 - (void)removeKomaAtIndex:(int)index
 {
     BXChara2DKoma* theKoma = [mKomas objectAtIndex:index];
     BXChara2DImage* theImage = [theKoma image];
     [theImage decrementUsedCount];
     [mKomas removeObjectAtIndex:index];
+}
+
+- (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID
+{
+    if (mNextStateID == oldStateID) {
+        mNextStateID = newStateID;
+    }
 }
 
 - (NSMenu*)makeKomaGotoMenuForKoma:(BXChara2DKoma*)koma document:(id)document
@@ -131,6 +159,73 @@
 - (int)defaultKomaInterval
 {
     return mDefaultKomaInterval;
+}
+
+- (void)setDefaultKomaInterval:(int)interval
+{
+    mDefaultKomaInterval = interval;
+}
+
+- (int)nextStateID
+{
+    return mNextStateID;
+}
+
+- (void)setNextStateID:(int)stateID
+{
+    mNextStateID = stateID;
+}
+
+- (NSDictionary*)stateInfo
+{
+    NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
+    
+    // 基本情報
+    [theInfo setIntValue:mStateID forName:@"State ID"];
+    [theInfo setStringValue:mStateName forName:@"State Name"];
+    
+    // コマ情報
+    NSMutableArray* komaInfos = [NSMutableArray array];
+    for (int i = 0; i < [mKomas count]; i++) {
+        BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
+        [komaInfos addObject:[aKoma komaInfo]];
+    }
+    [theInfo setObject:komaInfos forKey:@"Koma Infos"];
+    
+    // デフォルトの間隔
+    [theInfo setIntValue:mDefaultKomaInterval forName:@"Default Interval"];
+    
+    // 次の状態ID
+    [theInfo setIntValue:mNextStateID forName:@"Next State ID"];
+    
+    return theInfo;
+}
+
+- (void)restoreStateInfo:(NSDictionary*)theInfo
+{
+    // 基本情報
+    mStateID = [theInfo intValueForName:@"State ID" currentValue:mStateID];
+    [self setStateName:[theInfo stringValueForName:@"State Name" currentValue:mStateName]];
+    
+    // コマ情報
+    NSArray* komaInfos = [theInfo objectForKey:@"Koma Infos"];
+    for (int i = 0; i < [komaInfos count]; i++) {
+        NSDictionary* aKomaInfo = [komaInfos objectAtIndex:i];
+        BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] initWithInfo:aKomaInfo chara2DSpec:mParentSpec] autorelease];
+        [mKomas addObject:aKoma];
+    }
+
+    // デフォルトの間隔
+    mDefaultKomaInterval = [theInfo intValueForName:@"Default Interval" currentValue:mDefaultKomaInterval];
+
+    // 次の状態ID
+    mNextStateID = [theInfo intValueForName:@"Next State ID" currentValue:mNextStateID];
+
+    // Gotoコマ情報をオブジェクトに置き換え
+    for (int i = 0; i < [mKomas count]; i++) {
+        BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
+        [aKoma replaceTempGotoInfoForState:self];
+    }
 }
 
 @end

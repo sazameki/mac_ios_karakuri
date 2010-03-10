@@ -7,16 +7,36 @@
 //
 
 #import "BXResourceFileManager.h"
+#import "BXDocument.h"
 
 
 @implementation BXResourceFileInfo
 
-- (id)initWithFileAtPath:(NSString*)filepath
+- (id)initWithFileAtPath:(NSString*)filepath document:(BXDocument*)document
 {
     self = [self init];
     if (self) {
-        mFilepath = [filepath copy];
+        mDocument = document;
+
+        NSFileWrapper* resourcesWrapper = [document resourcesWrapper];
+        
+        NSFileWrapper* resourceFileWrapper = [[[NSFileWrapper alloc] initWithPath:filepath] autorelease];
+        mFileName = [[resourcesWrapper addFileWrapper:resourceFileWrapper] copy];
+        
         [self setResourceName:[filepath lastPathComponent]];
+    }
+    return self;
+}
+
+- (id)initWithFileName:(NSString*)fileName resourceName:(NSString*)resourceName document:(BXDocument*)document
+{
+    self = [self init];
+    if (self) {
+        mDocument = document;
+        
+        mFileName = [fileName copy];
+
+        [self setResourceName:resourceName];
     }
     return self;
 }
@@ -24,9 +44,14 @@
 - (void)dealloc
 {
     [mResourceName release];
-    [mFilepath release];
+    [mFileName release];
 
     [super dealloc];
+}
+
+- (NSString*)fileName
+{
+    return mFileName;
 }
 
 - (NSString*)resourceName
@@ -42,7 +67,11 @@
 
 - (NSImage*)image72dpi
 {
-    NSImage* theImage = [[[NSImage alloc] initWithContentsOfFile:mFilepath] autorelease];
+    NSFileWrapper* resourcesWrapper = [mDocument resourcesWrapper];
+    NSFileWrapper* theWrapper = [[resourcesWrapper fileWrappers] objectForKey:mFileName];
+    NSData *contentsData = [theWrapper regularFileContents];
+    
+    NSImage* theImage = [[[NSImage alloc] initWithData:contentsData] autorelease];
     return theImage;
 }
 
@@ -58,10 +87,12 @@
 
 @implementation BXResourceFileManager
 
-- (id)init
+- (id)initWithDocument:(BXDocument*)document
 {
     self = [super init];
     if (self) {
+        mDocument = document;
+        
         mImageInfoMap = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -106,7 +137,7 @@
         return -1;
     }
 
-    BXResourceFileInfo* theInfo = [[[BXResourceFileInfo alloc] initWithFileAtPath:filepath] autorelease];
+    BXResourceFileInfo* theInfo = [[[BXResourceFileInfo alloc] initWithFileAtPath:filepath document:mDocument] autorelease];
     [mImageInfoMap setObject:theInfo forKey:[NSNumber numberWithInt:imageTicket]];
     
     return imageTicket;
@@ -116,6 +147,50 @@
 {
     BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
     return [theInfo image72dpi];
+}
+
+- (NSData*)resourceMapData
+{
+    NSMutableDictionary* mapInfo = [NSMutableDictionary dictionary];
+    
+    // 画像
+    NSMutableArray* imageInfos = [NSMutableArray array];
+    NSArray* tickets = [mImageInfoMap allKeys];
+    for (int i = 0; i < [tickets count]; i++) {
+        NSNumber* theTicketObj = [tickets objectAtIndex:i];
+        BXResourceFileInfo* theFileInfo = [mImageInfoMap objectForKey:theTicketObj];
+
+        NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
+        [theInfo setObject:theTicketObj forKey:@"Ticket"];
+        [theInfo setObject:[theFileInfo fileName] forKey:@"File Name"];
+        [theInfo setObject:[theFileInfo resourceName] forKey:@"Resource Name"];
+        [imageInfos addObject:theInfo];
+    }
+    [mapInfo setObject:imageInfos forKey:@"Image Infos"];
+    
+    return [NSPropertyListSerialization dataFromPropertyList:mapInfo format:NSPropertyListBinaryFormat_v1_0 errorDescription:nil];
+}
+
+- (void)restoreResourceMapData:(NSData*)data
+{
+    NSDictionary* mapInfo = [NSPropertyListSerialization propertyListFromData:data
+                                                             mutabilityOption:NSPropertyListImmutable
+                                                                       format:NULL
+                                                             errorDescription:nil];
+
+    // 画像
+    NSArray* imageInfos = [mapInfo objectForKey:@"Image Infos"];
+    for (int i = 0; i < [imageInfos count]; i++) {
+        NSDictionary* anImageInfo = [imageInfos objectAtIndex:i];
+        NSNumber* theTicketObj = [anImageInfo objectForKey:@"Ticket"];
+        NSString* fileName = [anImageInfo objectForKey:@"File Name"];
+        NSString* resourceName = [anImageInfo objectForKey:@"Resource Name"];
+        
+        BXResourceFileInfo* theInfo = [[[BXResourceFileInfo alloc] initWithFileName:fileName
+                                                                       resourceName:resourceName
+                                                                           document:mDocument] autorelease];
+        [mImageInfoMap setObject:theInfo forKey:theTicketObj];
+    }
 }
 
 @end

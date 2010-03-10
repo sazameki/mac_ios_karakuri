@@ -30,7 +30,7 @@
     [super dealloc];
 }
 
-- (void)refreshProc:(NSTimer *)theTimer
+- (void)refreshProc:(NSTimer*)theTimer
 {
     if (mParticleSystem != NULL) {
         if ([mTargetSpec doLoop] || !mHasGeneratedParticle || mForceGenerate) {
@@ -42,7 +42,7 @@
     [self setNeedsDisplay:YES];
 }
 
-- (void)setupForParticleSpec:(BXSingleParticleSpec*)aSpec
+- (void)setupForParticleSpec:(BXSingleParticle2DSpec*)aSpec
 {
     mTargetSpec = aSpec;
     
@@ -90,7 +90,7 @@
     }    
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent*)theEvent
 {
     if (mTargetSpec != NULL) {
         NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
@@ -101,7 +101,7 @@
     //mForceGenerate = YES;
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent
+- (void)mouseDragged:(NSEvent*)theEvent
 {
     if (mTargetSpec != NULL) {
         NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
@@ -111,7 +111,7 @@
     mHasGeneratedParticle = NO;  
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent*)theEvent
 {
     mForceGenerate = NO;
 }

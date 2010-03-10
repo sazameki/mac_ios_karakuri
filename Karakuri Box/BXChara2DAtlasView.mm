@@ -48,17 +48,20 @@
 }
 
 - (NSSize)minSize
-{
+{    
     NSSize ret = NSMakeSize(1, 1);
     
     int atlasCount = [[self selectedImage] atlasImageCount];
     
     ret.width = gChara2DImageDivCountX * gChara2DImageAtlasSizeX;
     ret.height = ((atlasCount + (gChara2DImageDivCountX-1)) / gChara2DImageDivCountX) * gChara2DImageAtlasSizeY;
-    
-    if (ret.height < 234) {
-        ret.height = 234;
-    }
+ 
+    /*NSScrollView* scrollView = (NSScrollView*)[[self superview] superview];
+    NSRect scrollViewFrame = [scrollView frame];
+
+    if (ret.height < scrollViewFrame.size.height-2) {
+        ret.height = scrollViewFrame.size.height-2;
+    }*/
     
     return ret;
 }
@@ -90,7 +93,7 @@
         return;
     }
  
-    [[NSGraphicsContext currentContext] saveGraphicsState];
+    [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];    
     
     for (int i = 0; i < [theImage atlasImageCount]; i++) {
@@ -110,7 +113,7 @@
         }        
     }
 
-    [[NSGraphicsContext currentContext] restoreGraphicsState];
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal

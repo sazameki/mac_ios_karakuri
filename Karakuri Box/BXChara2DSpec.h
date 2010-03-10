@@ -14,17 +14,22 @@
 @interface BXChara2DSpec : BXResourceElement {
     NSMutableArray*     mStates;
 
-    NSMutableArray* mImages;
+    NSMutableArray*     mImages;
 }
+
+- (id)initWithName:(NSString*)name defaultState:(BOOL)hasDefaultState;
 
 - (BXChara2DState*)addNewState;
 - (int)stateCount;
 - (BXChara2DState*)stateAtIndex:(int)index;
 - (void)removeState:(BXChara2DState*)theState;
+- (void)sortStateList;
+- (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID;
 
 - (BXChara2DImage*)addImageAtPath:(NSString*)path document:(BXDocument*)document;
 - (int)imageCount;
 - (BXChara2DImage*)imageAtIndex:(int)index;
+- (BXChara2DImage*)imageWithID:(int)imageID;
 
 @end
 

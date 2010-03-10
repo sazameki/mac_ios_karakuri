@@ -10,16 +10,24 @@
 #import "BXChara2DImage.h"
 
 
+@class BXChara2DSpec;
+@class BXChara2DState;
+
+
 @interface BXChara2DKoma : NSObject {
-    BXChara2DImage*     mImage;
-    int                 mImageAtlasIndex;
+    BXChara2DImage* mImage;
+    int             mImageAtlasIndex;
     
-    int     mKomaNumber;
-    BOOL    mIsCancelable;
-    int     mInterval;
+    int             mKomaNumber;
+    BOOL            mIsCancelable;
+    int             mInterval;
     
-    BXChara2DKoma*  mTargetKoma;
+    BXChara2DKoma*  mGotoTargetKoma;
+    
+    int             mTempGotoTargetKomaNumber;
 }
+
+- (id)initWithInfo:(NSDictionary*)info chara2DSpec:(BXChara2DSpec*)chara2DSpec;
 
 - (void)setImage:(BXChara2DImage*)image atlasAtIndex:(int)index;
 
@@ -35,6 +43,10 @@
 
 - (int)gotoTargetNumber;
 - (void)setGotoTarget:(BXChara2DKoma*)target;
+
+- (void)replaceTempGotoInfoForState:(BXChara2DState*)state;
+
+- (NSDictionary*)komaInfo;
 
 @end
 
