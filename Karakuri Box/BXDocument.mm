@@ -1455,6 +1455,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [self setupEditorUIForChara2D:theCharaSpec];
             
             [oChara2DKomaListView reloadData];
+            [oChara2DImageListView reloadData];
+            [oChara2DImageAtlasView setNeedsDisplay:YES];
             
             [self setupEditorForChara2DState:[self selectedChara2DState]];
 
