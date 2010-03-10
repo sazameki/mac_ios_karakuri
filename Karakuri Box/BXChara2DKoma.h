@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "BXChara2DImage.h"
+#import "KRTexture2D.h"
 
 
 @class BXChara2DSpec;
@@ -25,6 +26,7 @@
     BXChara2DKoma*  mGotoTargetKoma;
     
     int             mTempGotoTargetKomaNumber;
+    KRTexture2D*    mPreviewTex;
 }
 
 - (id)initWithInfo:(NSDictionary*)info chara2DSpec:(BXChara2DSpec*)chara2DSpec;
@@ -40,11 +42,16 @@
 - (void)setInterval:(int)interval;
 - (NSImage*)nsImage;
 - (BXChara2DImage*)image;
+- (int)atlasIndex;
 
+- (BXChara2DKoma*)gotoTarget;
 - (int)gotoTargetNumber;
 - (void)setGotoTarget:(BXChara2DKoma*)target;
 
 - (void)replaceTempGotoInfoForState:(BXChara2DState*)state;
+
+- (void)preparePreviewTexture;
+- (KRTexture2D*)previewTexture;
 
 - (NSDictionary*)komaInfo;
 

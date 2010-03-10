@@ -48,20 +48,27 @@
 }
 
 - (NSSize)minSize
-{    
+{
     NSSize ret = NSMakeSize(1, 1);
-    
+ 
+    NSScrollView* scrollView = (NSScrollView*)[[self superview] superview];
+    NSClipView* contentView = [scrollView contentView];
+    NSRect visibleRect = [contentView documentVisibleRect];
+
     int atlasCount = [[self selectedImage] atlasImageCount];
     
-    ret.width = gChara2DImageDivCountX * gChara2DImageAtlasSizeX;
-    ret.height = ((atlasCount + (gChara2DImageDivCountX-1)) / gChara2DImageDivCountX) * gChara2DImageAtlasSizeY;
+    mCurrentDivCountX = (int)visibleRect.size.width / gChara2DImageAtlasSizeX;
+    
+    ret.width = mCurrentDivCountX * gChara2DImageAtlasSizeX;
+    ret.height = ((atlasCount + (mCurrentDivCountX-1)) / mCurrentDivCountX) * gChara2DImageAtlasSizeY;
  
-    /*NSScrollView* scrollView = (NSScrollView*)[[self superview] superview];
-    NSRect scrollViewFrame = [scrollView frame];
-
-    if (ret.height < scrollViewFrame.size.height-2) {
-        ret.height = scrollViewFrame.size.height-2;
-    }*/
+    if (ret.width < visibleRect.size.width) {
+        ret.width = visibleRect.size.width;
+    }
+    
+    if (ret.height < visibleRect.size.height) {
+        ret.height = visibleRect.size.height;
+    }
     
     return ret;
 }
@@ -97,8 +104,8 @@
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];    
     
     for (int i = 0; i < [theImage atlasImageCount]; i++) {
-        int x = i % gChara2DImageDivCountX;
-        int y = i / gChara2DImageDivCountX;
+        int x = i % mCurrentDivCountX;
+        int y = i / mCurrentDivCountX;
         
         NSRect theRect = NSMakeRect(x * gChara2DImageAtlasSizeX, y * gChara2DImageAtlasSizeY, gChara2DImageAtlasSizeX, gChara2DImageAtlasSizeY);
         
@@ -134,7 +141,7 @@
     int x = (int)pos.x / gChara2DImageAtlasSizeX;
     int y = (int)pos.y / gChara2DImageAtlasSizeY;
     
-    int index = y * gChara2DImageDivCountX + x;
+    int index = y * mCurrentDivCountX + x;
     
     if (index < atlasCount) {
         // 追加の選択

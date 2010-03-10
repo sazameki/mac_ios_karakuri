@@ -21,6 +21,7 @@
 @implementation BXChara2DKomaPreviewView
 
 - (BOOL)acceptsFirstResponder { return YES; }
+- (BOOL)isFlipped { return YES; }
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -36,21 +37,25 @@
 }
 
 - (void)updateViewSize
-{
+{    
     BXChara2DKoma* theKoma = [self selectedKoma];
     NSImage* nsImage = [theKoma nsImage];
     NSSize imageSize = [nsImage size];
     
     NSSize theSize = NSZeroSize;
     
-    theSize.width = imageSize.width + 20*2;
-    theSize.height = imageSize.height + 20*2;
-    
-    if (theSize.width < 246) {
-        theSize.width = 246;
+    theSize.width = imageSize.width + gChara2DKomaPreviewPaddingX*2;
+    theSize.height = imageSize.height + gChara2DKomaPreviewPaddingY*2;
+
+    NSScrollView* scrollView = (NSScrollView*)[[self superview] superview];
+    NSClipView* contentView = [scrollView contentView];
+    NSRect visibleRect = [contentView documentVisibleRect];
+
+    if (theSize.width < visibleRect.size.width) {
+        theSize.width = visibleRect.size.width;
     }
-    if (theSize.height < 192) {
-        theSize.height = 192;
+    if (theSize.height < visibleRect.size.height) {
+        theSize.height = visibleRect.size.height;
     }
     
     NSRect frame = [self frame];
@@ -67,27 +72,28 @@
         NSRectFill(dirtyRect);
         return;
     }
-
-    [[NSColor whiteColor] set];
-    NSRectFill(dirtyRect);
     
-    [NSGraphicsContext saveGraphicsState];
-
     NSImage* nsImage = [theKoma nsImage];
     NSSize imageSize = [nsImage size];
 
-    NSAffineTransform* transform = [NSAffineTransform transform];
-    [transform scaleXBy:1.0 yBy:-1.0];
-    [transform translateXBy:0.0 yBy:-imageSize.height-20*2];
-    [transform concat];
+    NSSize frameSize = [self frame].size;
     
-    [nsImage setFlipped:NO];
-    [nsImage drawAtPoint:NSMakePoint(20, 20)
+    mStartX = (int)((frameSize.width - imageSize.width) / 2);
+    mStartY = (int)((frameSize.height - imageSize.height) / 2);
+
+    [[NSColor lightGrayColor] set];
+    NSRectFill(dirtyRect);    
+
+    for (int i = 1; i <= 3; i++) {
+        [[NSColor colorWithCalibratedWhite:0.3+i*0.12 alpha:1.0] set];
+        NSFrameRect(NSMakeRect(mStartX-i, mStartY-i, imageSize.width+i*2, imageSize.height+i*2));
+    }
+    
+    [nsImage setFlipped:YES];
+    [nsImage drawAtPoint:NSMakePoint(mStartX, mStartY)
                 fromRect:NSMakeRect(0, 0, imageSize.width, -imageSize.height)
                operation:NSCompositeSourceOver
                 fraction:1.0];
-
-    [NSGraphicsContext restoreGraphicsState];
 }
 
 @end

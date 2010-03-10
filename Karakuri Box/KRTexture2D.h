@@ -22,6 +22,9 @@ typedef enum {
 } KRTexture2DScaleMode;
 
 
+@class BXChara2DImage;
+
+
 /*!
     @-class KRTexture2D
     @group Game 2D Graphics
@@ -52,6 +55,7 @@ public:
     
     KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
     KRTexture2D(int imageTag, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
+    KRTexture2D(BXChara2DImage* charaImage, int index);
 
     ~KRTexture2D();
     

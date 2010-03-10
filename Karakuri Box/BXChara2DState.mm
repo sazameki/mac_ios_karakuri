@@ -176,6 +176,14 @@
     mNextStateID = stateID;
 }
 
+- (void)preparePreviewTextures
+{
+    for (int i = 0; i < [mKomas count]; i++) {
+        BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
+        [aKoma preparePreviewTexture];
+    }    
+}
+
 - (NSDictionary*)stateInfo
 {
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];

@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "SZStatusBarBackgroundView.h"
 #import "BXResourceGroup.h"
-#import "BXParticleSimulatorView.h"
+#import "BXParticle2DSimulatorView.h"
 #import "BXResourceFileManager.h"
 #import "BXChara2DAtlasView.h"
 #import "BXChara2DImage.h"
 #import "BXChara2DKoma.h"
 #import "BXChara2DKomaPreviewView.h"
+#import "BXChara2DSimulatorView.h"
 
 
 @interface BXDocument : NSDocument
@@ -36,12 +37,16 @@
     IBOutlet BXChara2DAtlasView*        oChara2DImageAtlasView;
     IBOutlet NSOutlineView*             oChara2DKomaListView;
     IBOutlet BXChara2DKomaPreviewView*  oChara2DKomaPreviewView;
+    IBOutlet BXChara2DSimulatorView*    oChara2DSimulatorView;
+    IBOutlet NSPopUpButtonCell*         oChara2DKomaIntervalButtonCell;
     
     IBOutlet NSPopUpButton*             oChara2DKomaDefaultIntervalButton;
     IBOutlet NSPopUpButton*             oChara2DStateNextStateButton;
     
+    IBOutlet NSPanel*                   oChara2DSimulatorPanel;
+    
     ///// パーティクルの設定用アウトレット
-    IBOutlet BXParticleSimulatorView*   oParticleView;
+    IBOutlet BXParticle2DSimulatorView* oParticleView;
 
     IBOutlet NSTextField*               oParticleResourceIDField;
     IBOutlet NSTextField*               oParticleResourceNameField;
@@ -116,6 +121,9 @@
 - (IBAction)changedChara2DResourceName:(id)sender;
 - (IBAction)removeChara2DState:(id)sender;
 - (IBAction)changedChara2DKomaDefaultInterval:(id)sender;
+
+- (IBAction)startChara2DSimulator:(id)sender;
+- (IBAction)stopChara2DSimulator:(id)sender;
 
 
 ///// パーティクル設定アクション

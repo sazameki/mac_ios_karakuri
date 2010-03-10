@@ -53,6 +53,8 @@
 - (int)nextStateID;
 - (void)setNextStateID:(int)stateID;
 
+- (void)preparePreviewTextures;
+
 - (NSDictionary*)stateInfo;
 - (void)restoreStateInfo:(NSDictionary*)theInfo;
 

@@ -20,7 +20,7 @@
 		8E207F201146772E00FA6B59 /* BXGlobals.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E207F1F1146772E00FA6B59 /* BXGlobals.mm */; };
 		8E62A58A113AE053005DC90E /* BXDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55D113AE053005DC90E /* BXDocument.mm */; };
 		8E62A58B113AE053005DC90E /* BXOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A55F113AE053005DC90E /* BXOpenGLView.mm */; };
-		8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */; };
+		8E62A58C113AE053005DC90E /* BXParticle2DSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A561113AE053005DC90E /* BXParticle2DSimulatorView.mm */; };
 		8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A564113AE053005DC90E /* BXResourceElement.mm */; };
 		8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A566113AE053005DC90E /* BXResourceGroup.mm */; };
 		8E62A58F113AE053005DC90E /* BXChara2DSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A568113AE053005DC90E /* BXChara2DSpec.mm */; };
@@ -30,7 +30,7 @@
 		8E62A593113AE053005DC90E /* KarakuriFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A572113AE053005DC90E /* KarakuriFunctions.mm */; };
 		8E62A594113AE053005DC90E /* KRRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A574113AE053005DC90E /* KRRandom.cpp */; };
 		8E62A595113AE053005DC90E /* KarakuriString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A576113AE053005DC90E /* KarakuriString.cpp */; };
-		8E62A596113AE053005DC90E /* KRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A578113AE053005DC90E /* KRGraphics.cpp */; };
+		8E62A596113AE053005DC90E /* KRGraphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A578113AE053005DC90E /* KRGraphics.mm */; };
 		8E62A597113AE053005DC90E /* KRColor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A57B113AE053005DC90E /* KRColor.mm */; };
 		8E62A598113AE053005DC90E /* KRTexture2DLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */; };
 		8E62A599113AE053005DC90E /* KRTexture2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E62A57E113AE053005DC90E /* KRTexture2D.mm */; };
@@ -58,6 +58,8 @@
 		8EA498951146F598002BEBA8 /* BXChara2DKomaPreviewView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA498941146F598002BEBA8 /* BXChara2DKomaPreviewView.mm */; };
 		8EA499701147608A002BEBA8 /* BXAppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA4996F1147608A002BEBA8 /* BXAppController.mm */; };
 		8EA49CC91147B6DD002BEBA8 /* NSDictionary+LoadSave.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */; };
+		8EA4A1F8114802DE002BEBA8 /* BXChara2DSimulatorView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA4A1F7114802DE002BEBA8 /* BXChara2DSimulatorView.mm */; };
+		8EA4A31F11481107002BEBA8 /* NSImage+CGImageConversion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA4A31E11481107002BEBA8 /* NSImage+CGImageConversion.mm */; };
 		8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */; };
 		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
 		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
@@ -92,8 +94,8 @@
 		8E62A55D113AE053005DC90E /* BXDocument.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXDocument.mm; sourceTree = "<group>"; };
 		8E62A55E113AE053005DC90E /* BXOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXOpenGLView.h; sourceTree = "<group>"; };
 		8E62A55F113AE053005DC90E /* BXOpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXOpenGLView.mm; sourceTree = "<group>"; };
-		8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticleSimulatorView.h; sourceTree = "<group>"; };
-		8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticleSimulatorView.mm; sourceTree = "<group>"; };
+		8E62A560113AE053005DC90E /* BXParticle2DSimulatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXParticle2DSimulatorView.h; sourceTree = "<group>"; };
+		8E62A561113AE053005DC90E /* BXParticle2DSimulatorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXParticle2DSimulatorView.mm; sourceTree = "<group>"; };
 		8E62A563113AE053005DC90E /* BXResourceElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceElement.h; sourceTree = "<group>"; };
 		8E62A564113AE053005DC90E /* BXResourceElement.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceElement.mm; sourceTree = "<group>"; };
 		8E62A565113AE053005DC90E /* BXResourceGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceGroup.h; sourceTree = "<group>"; };
@@ -113,7 +115,7 @@
 		8E62A575113AE053005DC90E /* KarakuriString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriString.h; sourceTree = "<group>"; };
 		8E62A576113AE053005DC90E /* KarakuriString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriString.cpp; sourceTree = "<group>"; };
 		8E62A577113AE053005DC90E /* KRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRGraphics.h; sourceTree = "<group>"; };
-		8E62A578113AE053005DC90E /* KRGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRGraphics.cpp; sourceTree = "<group>"; };
+		8E62A578113AE053005DC90E /* KRGraphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRGraphics.mm; sourceTree = "<group>"; };
 		8E62A57A113AE053005DC90E /* KRColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRColor.h; sourceTree = "<group>"; };
 		8E62A57B113AE053005DC90E /* KRColor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRColor.mm; sourceTree = "<group>"; };
 		8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTexture2DLoader.mm; sourceTree = "<group>"; };
@@ -155,6 +157,10 @@
 		8EA4996F1147608A002BEBA8 /* BXAppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXAppController.mm; sourceTree = "<group>"; };
 		8EA49CC71147B6DD002BEBA8 /* NSDictionary+LoadSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+LoadSave.h"; sourceTree = "<group>"; };
 		8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSDictionary+LoadSave.mm"; sourceTree = "<group>"; };
+		8EA4A1F6114802DE002BEBA8 /* BXChara2DSimulatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DSimulatorView.h; sourceTree = "<group>"; };
+		8EA4A1F7114802DE002BEBA8 /* BXChara2DSimulatorView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DSimulatorView.mm; sourceTree = "<group>"; };
+		8EA4A31D11481107002BEBA8 /* NSImage+CGImageConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+CGImageConversion.h"; sourceTree = "<group>"; };
+		8EA4A31E11481107002BEBA8 /* NSImage+CGImageConversion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSImage+CGImageConversion.mm"; sourceTree = "<group>"; };
 		8ED752A1113B8E2B004E78EB /* BXBGMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBGMResource.h; sourceTree = "<group>"; };
 		8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBGMResource.mm; sourceTree = "<group>"; };
 		8ED752A4113B8E49004E78EB /* BXSEResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXSEResource.h; sourceTree = "<group>"; };
@@ -295,6 +301,8 @@
 				8EA4985B1146EE38002BEBA8 /* BXChara2DKomaListView.mm */,
 				8EA498931146F598002BEBA8 /* BXChara2DKomaPreviewView.h */,
 				8EA498941146F598002BEBA8 /* BXChara2DKomaPreviewView.mm */,
+				8EA4A1F6114802DE002BEBA8 /* BXChara2DSimulatorView.h */,
+				8EA4A1F7114802DE002BEBA8 /* BXChara2DSimulatorView.mm */,
 			);
 			name = Chara2D;
 			sourceTree = "<group>";
@@ -304,8 +312,8 @@
 			children = (
 				8E62A569113AE053005DC90E /* BXParticle2DSpec.h */,
 				8E62A56A113AE053005DC90E /* BXParticle2DSpec.mm */,
-				8E62A560113AE053005DC90E /* BXParticleSimulatorView.h */,
-				8E62A561113AE053005DC90E /* BXParticleSimulatorView.mm */,
+				8E62A560113AE053005DC90E /* BXParticle2DSimulatorView.h */,
+				8E62A561113AE053005DC90E /* BXParticle2DSimulatorView.mm */,
 			);
 			name = Particle2D;
 			sourceTree = "<group>";
@@ -348,7 +356,7 @@
 				8E62A575113AE053005DC90E /* KarakuriString.h */,
 				8E62A576113AE053005DC90E /* KarakuriString.cpp */,
 				8E62A577113AE053005DC90E /* KRGraphics.h */,
-				8E62A578113AE053005DC90E /* KRGraphics.cpp */,
+				8E62A578113AE053005DC90E /* KRGraphics.mm */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -358,10 +366,10 @@
 			children = (
 				8E62A57A113AE053005DC90E /* KRColor.h */,
 				8E62A57B113AE053005DC90E /* KRColor.mm */,
-				8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */,
 				8E62A57D113AE053005DC90E /* KRTexture2D.h */,
 				8E62A57E113AE053005DC90E /* KRTexture2D.mm */,
 				8E62A57F113AE053005DC90E /* KRTexture2DLoader.h */,
+				8E62A57C113AE053005DC90E /* KRTexture2DLoader.mm */,
 				8E62A580113AE053005DC90E /* KRPNGLoader.h */,
 				8E62A581113AE053005DC90E /* KRPNGLoader.mm */,
 			);
@@ -390,6 +398,8 @@
 				8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */,
 				8EA49CC71147B6DD002BEBA8 /* NSDictionary+LoadSave.h */,
 				8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */,
+				8EA4A31D11481107002BEBA8 /* NSImage+CGImageConversion.h */,
+				8EA4A31E11481107002BEBA8 /* NSImage+CGImageConversion.mm */,
 			);
 			name = "AppKit Ex";
 			sourceTree = "<group>";
@@ -554,7 +564,7 @@
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				8E62A58A113AE053005DC90E /* BXDocument.mm in Sources */,
 				8E62A58B113AE053005DC90E /* BXOpenGLView.mm in Sources */,
-				8E62A58C113AE053005DC90E /* BXParticleSimulatorView.mm in Sources */,
+				8E62A58C113AE053005DC90E /* BXParticle2DSimulatorView.mm in Sources */,
 				8E62A58D113AE053005DC90E /* BXResourceElement.mm in Sources */,
 				8E62A58E113AE053005DC90E /* BXResourceGroup.mm in Sources */,
 				8E62A58F113AE053005DC90E /* BXChara2DSpec.mm in Sources */,
@@ -564,7 +574,7 @@
 				8E62A593113AE053005DC90E /* KarakuriFunctions.mm in Sources */,
 				8E62A594113AE053005DC90E /* KRRandom.cpp in Sources */,
 				8E62A595113AE053005DC90E /* KarakuriString.cpp in Sources */,
-				8E62A596113AE053005DC90E /* KRGraphics.cpp in Sources */,
+				8E62A596113AE053005DC90E /* KRGraphics.mm in Sources */,
 				8E62A597113AE053005DC90E /* KRColor.mm in Sources */,
 				8E62A598113AE053005DC90E /* KRTexture2DLoader.mm in Sources */,
 				8E62A599113AE053005DC90E /* KRTexture2D.mm in Sources */,
@@ -589,6 +599,8 @@
 				8EA498951146F598002BEBA8 /* BXChara2DKomaPreviewView.mm in Sources */,
 				8EA499701147608A002BEBA8 /* BXAppController.mm in Sources */,
 				8EA49CC91147B6DD002BEBA8 /* NSDictionary+LoadSave.mm in Sources */,
+				8EA4A1F8114802DE002BEBA8 /* BXChara2DSimulatorView.mm in Sources */,
+				8EA4A31F11481107002BEBA8 /* NSImage+CGImageConversion.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

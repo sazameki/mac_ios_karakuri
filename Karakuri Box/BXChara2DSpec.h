@@ -22,6 +22,7 @@
 - (BXChara2DState*)addNewState;
 - (int)stateCount;
 - (BXChara2DState*)stateAtIndex:(int)index;
+- (BXChara2DState*)stateWithID:(int)stateID;
 - (void)removeState:(BXChara2DState*)theState;
 - (void)sortStateList;
 - (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID;
@@ -30,6 +31,8 @@
 - (int)imageCount;
 - (BXChara2DImage*)imageAtIndex:(int)index;
 - (BXChara2DImage*)imageWithID:(int)imageID;
+
+- (void)preparePreviewTextures;
 
 @end
 

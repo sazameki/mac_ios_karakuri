@@ -502,6 +502,24 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self updateChangeCount:NSChangeUndone];
 }
 
+- (IBAction)startChara2DSimulator:(id)sender
+{
+    [oChara2DSimulatorView setupForChara2DSpec:[self selectedChara2DSpec]];
+    [oChara2DSimulatorView startAnimation];
+    [NSApp beginSheet:oChara2DSimulatorPanel
+       modalForWindow:oMainWindow
+        modalDelegate:self
+       didEndSelector:nil
+          contextInfo:nil];
+}
+
+- (IBAction)stopChara2DSimulator:(id)sender
+{
+    [oChara2DSimulatorView stopAnimation];
+    [oChara2DSimulatorPanel orderOut:self];
+    [NSApp endSheet:oChara2DSimulatorPanel returnCode:NSCancelButton];
+}
+     
 
 #pragma mark-
 #pragma mark 2Dキャラクタに関係する操作
@@ -1116,6 +1134,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         [oChara2DStateNextStateButton setMenu:menu];
         [oChara2DStateNextStateButton selectItemWithTag:[theState nextStateID]];
+        
+        int defaultKomaInterval = [theState defaultKomaInterval];
+        [oChara2DKomaDefaultIntervalButton selectItemWithTag:defaultKomaInterval];
     }
 }
 
@@ -1336,7 +1357,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         }
         // コマ表示間隔
         else if ([columnIdentifier isEqualToString:@"koma_interval"]) {
-            return [NSNumber numberWithInt:[(BXChara2DKoma*)item interval]];
+            int interval = [(BXChara2DKoma*)item interval];
+            int index = [oChara2DKomaIntervalButtonCell indexOfItemWithTag:interval];
+            return [NSNumber numberWithInt:index];
         }
     }
 
@@ -1377,7 +1400,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         }
         // コマ表示間隔
         else if ([columnIdentifier isEqualToString:@"koma_interval"]) {
-            [(BXChara2DKoma*)item setInterval:[object intValue]];
+            NSMenuItem* selectedItem = [oChara2DKomaIntervalButtonCell itemAtIndex:[object intValue]];
+            [(BXChara2DKoma*)item setInterval:[selectedItem tag]];
             [self updateChangeCount:NSChangeUndone];
         }
     }
@@ -1429,6 +1453,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             BXChara2DSpec* theCharaSpec = (BXChara2DSpec*)theElem;
 
             [self setupEditorUIForChara2D:theCharaSpec];
+            
+            [oChara2DKomaListView reloadData];
+            
+            [self setupEditorForChara2DState:[self selectedChara2DState]];
 
             [self willChangeValueForKey:@"canChara2DStateSelectNextState"];
             [self didChangeValueForKey:@"canChara2DStateSelectNextState"];
@@ -1455,6 +1483,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [self setupEditorForChara2DState:[self selectedChara2DState]];
         
         [oChara2DKomaListView reloadData];
+        [oChara2DKomaListView deselectAll:self];
         
         [self willChangeValueForKey:@"isChara2DStateSelected"];
         [self didChangeValueForKey:@"isChara2DStateSelected"];
@@ -1504,6 +1533,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     if (outlineView == oChara2DKomaListView) {
         NSString* columnIdentifier = [tableColumn identifier];
         
+        // Gotoメニュー
         if ([columnIdentifier isEqualToString:@"koma_goto"]) {
             BXChara2DState* selectedState = [self selectedChara2DState];
             NSMenu* gotoMenu = [selectedState makeKomaGotoMenuForKoma:item document:self];
@@ -1696,6 +1726,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (void)windowWillClose:(NSNotification*)notification
 {
     [oParticleView releaseParticles];
+}
+
+- (void)windowDidResize:(NSNotification*)notification
+{
+    [self updateChara2DAtlasListSize];
+    [oChara2DKomaPreviewView updateViewSize];
 }
 
 @end

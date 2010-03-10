@@ -9,11 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-extern const int gChara2DImageDivCountX;
-extern const int gChara2DImageAtlasSizeX;
-extern const int gChara2DImageAtlasSizeY;
-extern const int gChara2DImageAtlasDraggingCascadeSize;
+extern const int        gChara2DImageAtlasSizeX;
+extern const int        gChara2DImageAtlasSizeY;
+extern const int        gChara2DImageAtlasDraggingCascadeSize;
 extern const NSString*  gChara2DImageAtlasDraggingPboardType;
 extern const NSString*  gChara2DKomaDraggingPboardType;
+
+extern const int        gChara2DKomaPreviewPaddingX;
+extern const int        gChara2DKomaPreviewPaddingY;
 
 

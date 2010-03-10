@@ -73,6 +73,17 @@
     return [mStates objectAtIndex:index];
 }
 
+- (BXChara2DState*)stateWithID:(int)stateID
+{
+    for (int i = 0; i < [mStates count]; i++) {
+        BXChara2DState* aState = [mStates objectAtIndex:i];
+        if ([aState stateID] == stateID) {
+            return aState;
+        }
+    }
+    return nil;
+}
+
 - (void)removeState:(BXChara2DState*)theState
 {
     [mStates removeObject:theState];
@@ -146,6 +157,14 @@
         }
     }
     return nil;
+}
+
+- (void)preparePreviewTextures
+{
+    for (int i = 0; i < [mStates count]; i++) {
+        BXChara2DState* aState = (BXChara2DState*)[mStates objectAtIndex:i];
+        [aState preparePreviewTextures];
+    }
 }
 
 

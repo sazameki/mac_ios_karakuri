@@ -93,12 +93,22 @@
     return mImage;
 }
 
+- (int)atlasIndex
+{
+    return mImageAtlasIndex;
+}
+
 - (int)gotoTargetNumber
 {
     if (!mGotoTargetKoma) {
         return 0;
     }
     return [mGotoTargetKoma komaNumber];
+}
+
+- (BXChara2DKoma*)gotoTarget
+{
+    return mGotoTargetKoma;
 }
 
 - (void)setGotoTarget:(BXChara2DKoma*)target
@@ -114,6 +124,16 @@
     }
     
     mTempGotoTargetKomaNumber = -1;
+}
+
+- (void)preparePreviewTexture
+{
+    mPreviewTex = new KRTexture2D(mImage, mImageAtlasIndex);
+}
+
+- (KRTexture2D*)previewTexture
+{
+    return mPreviewTex;
 }
 
 - (NSDictionary*)komaInfo

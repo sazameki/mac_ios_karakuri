@@ -1,15 +1,15 @@
 //
-//  BXParticleSimulatorView.m
+//  BXParticle2DSimulatorView.m
 //  Karakuri Box
 //
 //  Created by numata on 10/02/28.
 //  Copyright 2010 Apple Inc. All rights reserved.
 //
 
-#import "BXParticleSimulatorView.h"
+#import "BXParticle2DSimulatorView.h"
 
 
-@implementation BXParticleSimulatorView
+@implementation BXParticle2DSimulatorView
 
 - (id)initWithFrame:(NSRect)frame
 {

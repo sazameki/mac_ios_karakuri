@@ -1,5 +1,5 @@
 //
-//  BXParticleSimulatorView.h
+//  BXParticle2DSimulatorView.h
 //  Karakuri Box
 //
 //  Created by numata on 10/02/28.
@@ -13,7 +13,7 @@
 #import "KRParticle2DSystem.h"
 
 
-@interface BXParticleSimulatorView : BXOpenGLView {
+@interface BXParticle2DSimulatorView : BXOpenGLView {
     BXSingleParticle2DSpec*    mTargetSpec;
 
     KRParticle2DSystem*     mParticleSystem;    

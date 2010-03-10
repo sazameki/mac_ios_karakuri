@@ -20,6 +20,8 @@
     int                     mLastSelectedIndex;
     
     BOOL                    mHasSelectedAtlasImage;
+    
+    int                     mCurrentDivCountX;
 }
 
 - (NSSize)minSize;

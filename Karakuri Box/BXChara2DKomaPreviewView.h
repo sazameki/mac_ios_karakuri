@@ -14,6 +14,9 @@
 
 @interface BXChara2DKomaPreviewView : NSView {
     IBOutlet BXDocument*    oDocument;
+    
+    int     mStartX;
+    int     mStartY;
 }
 
 - (void)updateViewSize;
