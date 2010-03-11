@@ -26,7 +26,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 @interface BXDocument ()
 
-- (BXChara2DSpec*)selectedChara2DSpec;
 - (BXChara2DState*)selectedChara2DState;
 - (BXSingleParticle2DSpec*)selectedSingleParticle2DSpec;
 - (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
@@ -498,6 +497,24 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     int theInterval = [oChara2DKomaDefaultIntervalButton selectedTag];
     [charaState setDefaultKomaInterval:theInterval];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)changedChara2DKomaPreviewScale:(id)sender
+{
+    BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
+    if (!selectedSpec) {
+        NSBeep();
+        return;
+    }
+    
+    int scaleInt = [oChara2DKomaPreviewScaleButton selectedTag];
+    double theScale = (double)scaleInt / 100;
+    [selectedSpec setKomaPreviewScale:theScale];
+    
+    [oChara2DKomaPreviewView updateViewSize];
+    [oChara2DKomaPreviewView setNeedsDisplay:YES];
 
     [self updateChangeCount:NSChangeUndone];
 }

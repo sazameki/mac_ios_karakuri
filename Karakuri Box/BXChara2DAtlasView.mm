@@ -101,7 +101,10 @@
     }
  
     [NSGraphicsContext saveGraphicsState];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];    
+    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+
+    float yOffset = NSMaxY([self convertRect:[self frame] toView:nil]);
+    [[NSGraphicsContext currentContext] setPatternPhase:NSMakePoint(0, yOffset-4)];
     
     for (int i = 0; i < [theImage atlasImageCount]; i++) {
         int x = i % mCurrentDivCountX;

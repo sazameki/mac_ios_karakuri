@@ -9,6 +9,7 @@
 #import "BXChara2DKomaPreviewView.h"
 #import "BXDocument.h"
 #import "BXChara2DKoma.h"
+#import "BXChara2DSpec.h"
 
 
 @interface BXChara2DKomaPreviewView ()
@@ -37,15 +38,18 @@
 }
 
 - (void)updateViewSize
-{    
+{
+    BXChara2DSpec* theSpec = [self selectedChara2DSpec];
+    double scale = [theSpec komaPreviewScale];
+    
     BXChara2DKoma* theKoma = [self selectedKoma];
     NSImage* nsImage = [theKoma nsImage];
     NSSize imageSize = [nsImage size];
     
     NSSize theSize = NSZeroSize;
     
-    theSize.width = imageSize.width + gChara2DKomaPreviewPaddingX*2;
-    theSize.height = imageSize.height + gChara2DKomaPreviewPaddingY*2;
+    theSize.width = imageSize.width * scale + gChara2DKomaPreviewPaddingX*2;
+    theSize.height = imageSize.height * scale + gChara2DKomaPreviewPaddingY*2;
 
     NSScrollView* scrollView = (NSScrollView*)[[self superview] superview];
     NSClipView* contentView = [scrollView contentView];
@@ -82,13 +86,20 @@
     mStartY = (int)((frameSize.height - imageSize.height) / 2);
 
     [[NSColor lightGrayColor] set];
-    NSRectFill(dirtyRect);    
-
-    for (int i = 1; i <= 3; i++) {
-        [[NSColor colorWithCalibratedWhite:0.3+i*0.12 alpha:1.0] set];
-        NSFrameRect(NSMakeRect(mStartX-i, mStartY-i, imageSize.width+i*2, imageSize.height+i*2));
-    }
+    NSRectFill(dirtyRect);
     
+    NSRect targetRect = NSMakeRect(mStartX, mStartY, imageSize.width, imageSize.height);
+
+    [[NSColor darkGrayColor] set];
+    NSFrameRect(NSInsetRect(targetRect, -1, -1));
+
+    NSImage* transpImage = [NSImage imageNamed:@"transparent_pattern.png"];
+    [[NSColor colorWithPatternImage:transpImage] set];
+    float xOffset = NSMinX([self convertRect:targetRect toView:nil]);
+    float yOffset = NSMaxY([self convertRect:targetRect toView:nil]);
+    [[NSGraphicsContext currentContext] setPatternPhase:NSMakePoint(xOffset, yOffset)];
+    NSRectFill(targetRect);
+     
     [nsImage setFlipped:YES];
     [nsImage drawAtPoint:NSMakePoint(mStartX, mStartY)
                 fromRect:NSMakeRect(0, 0, imageSize.width, -imageSize.height)

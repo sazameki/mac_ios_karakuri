@@ -28,6 +28,8 @@
     if (self) {
         mStates = [[NSMutableArray alloc] init];
         mImages = [[NSMutableArray alloc] init];
+        
+        mKomaPreviewScale = 1.0;
 
         if (hasDefaultState) {
             [self addDefaultState];
@@ -157,6 +159,16 @@
         }
     }
     return nil;
+}
+
+- (double)komaPreviewScale
+{
+    return mKomaPreviewScale;
+}
+
+- (void)setKomaPreviewScale:(double)value
+{
+    mKomaPreviewScale = value;
 }
 
 - (void)preparePreviewTextures

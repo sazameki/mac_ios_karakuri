@@ -15,6 +15,8 @@
     NSMutableArray*     mStates;
 
     NSMutableArray*     mImages;
+    
+    double              mKomaPreviewScale;
 }
 
 - (id)initWithName:(NSString*)name defaultState:(BOOL)hasDefaultState;
@@ -31,6 +33,9 @@
 - (int)imageCount;
 - (BXChara2DImage*)imageAtIndex:(int)index;
 - (BXChara2DImage*)imageWithID:(int)imageID;
+
+- (double)komaPreviewScale;
+- (void)setKomaPreviewScale:(double)value;
 
 - (void)preparePreviewTextures;
 

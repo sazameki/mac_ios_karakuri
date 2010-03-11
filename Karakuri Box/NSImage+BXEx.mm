@@ -34,8 +34,12 @@
     }
 
     if (drawsBG) {
-        [[NSColor whiteColor] set];
+        NSImage* transpImage = [NSImage imageNamed:@"transparent_pattern.png"];
+        [[NSColor colorWithPatternImage:transpImage] set];
+        //[[NSGraphicsContext currentContext] setPatternPhase:
+        //    NSMakePoint(theRect.origin.x, -(int)theRect.size.height % 8)];
         NSRectFill(theRect);
+        //[[NSBezierPath bezierPathWithRect:theRect] fill];
     }
 
     [self drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];

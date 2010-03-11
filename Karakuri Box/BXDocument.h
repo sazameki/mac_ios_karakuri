@@ -42,7 +42,9 @@
     
     IBOutlet NSPopUpButton*             oChara2DKomaDefaultIntervalButton;
     IBOutlet NSPopUpButton*             oChara2DStateNextStateButton;
-    
+
+    IBOutlet NSPopUpButton*             oChara2DKomaPreviewScaleButton;
+
     IBOutlet NSPanel*                   oChara2DSimulatorPanel;
     
     ///// パーティクルの設定用アウトレット
@@ -122,6 +124,8 @@
 - (IBAction)removeChara2DState:(id)sender;
 - (IBAction)changedChara2DKomaDefaultInterval:(id)sender;
 
+- (IBAction)changedChara2DKomaPreviewScale:(id)sender;
+
 - (IBAction)startChara2DSimulator:(id)sender;
 - (IBAction)stopChara2DSimulator:(id)sender;
 
@@ -159,6 +163,7 @@
 - (BOOL)canRemoveChara2DImage;
 - (BOOL)canRemoveChara2DState;
 - (void)removeSelectedChara2DKoma;
+- (BXChara2DSpec*)selectedChara2DSpec;
 - (BXChara2DImage*)selectedChara2DImage;
 - (BXChara2DKoma*)selectedChara2DKoma;
 - (void)updateChara2DAtlasList;
