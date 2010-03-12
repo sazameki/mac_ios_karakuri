@@ -215,16 +215,17 @@
 		2A37F4AAFDCFA73011CA2CEA /* Karakuri Box */ = {
 			isa = PBXGroup;
 			children = (
-				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
-				2A37F4B8FDCFA73011CA2CEA /* Resources */,
+				2A37F4ABFDCFA73011CA2CEA /* source */,
+				2A37F4B8FDCFA73011CA2CEA /* resource */,
+				8E8A4118114A3DCC004C96A6 /* settings */,
+				8E8A413A114A3E63004C96A6 /* other source */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 			);
 			name = "Karakuri Box";
 			sourceTree = "<group>";
 		};
-		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
+		2A37F4ABFDCFA73011CA2CEA /* source */ = {
 			isa = PBXGroup;
 			children = (
 				8E207F1E1146772E00FA6B59 /* BXGlobals.h */,
@@ -237,26 +238,17 @@
 				8E62A56B113AE053005DC90E /* Karakuri */,
 				8E62A585113AE053005DC90E /* AppKit Ex */,
 			);
-			name = Classes;
+			path = source;
 			sourceTree = "<group>";
 		};
-		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				2564AD2C0F5327BB00F57823 /* Karakuri_Box_Prefix.pch */,
-				2A37F4B0FDCFA73011CA2CEA /* main.m */,
-			);
-			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
+		2A37F4B8FDCFA73011CA2CEA /* resource */ = {
 			isa = PBXGroup;
 			children = (
 				8E62A59E113AE082005DC90E /* Images */,
 				8E62A5BE113AE111005DC90E /* Strings */,
 				8E62A5BA113AE0C3005DC90E /* XIBs */,
 			);
-			name = Resources;
+			path = resource;
 			sourceTree = "<group>";
 		};
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
@@ -453,11 +445,27 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
-				8D15AC360486D014006FF6A4 /* Karakuri_Box-Info.plist */,
 				8E62A5B5113AE08F005DC90E /* Localizable.strings */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 			);
 			name = Strings;
+			sourceTree = "<group>";
+		};
+		8E8A4118114A3DCC004C96A6 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				8D15AC360486D014006FF6A4 /* Karakuri_Box-Info.plist */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
+		8E8A413A114A3E63004C96A6 /* other source */ = {
+			isa = PBXGroup;
+			children = (
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+				2564AD2C0F5327BB00F57823 /* Karakuri_Box_Prefix.pch */,
+			);
+			name = "other source";
 			sourceTree = "<group>";
 		};
 		8ED7529F113B8DE7004E78EB /* BGM */ = {

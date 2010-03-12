@@ -12,13 +12,6 @@
 #import "BXChara2DSpec.h"
 
 
-@interface BXChara2DKomaPreviewView ()
-
-- (BXChara2DKoma*)selectedKoma;
-
-@end
-
-
 @implementation BXChara2DKomaPreviewView
 
 - (BOOL)acceptsFirstResponder { return YES; }
@@ -32,17 +25,13 @@
     return self;
 }
 
-- (BXChara2DKoma*)selectedKoma
-{
-    return [oDocument selectedChara2DKoma];
-}
-
 - (void)updateViewSize
 {
-    BXChara2DSpec* theSpec = [self selectedChara2DSpec];
+    BXChara2DSpec* theSpec = [oDocument selectedChara2DSpec];
+    BXChara2DKoma* theKoma = [oDocument selectedChara2DKoma];
+
     double scale = [theSpec komaPreviewScale];
     
-    BXChara2DKoma* theKoma = [self selectedKoma];
     NSImage* nsImage = [theKoma nsImage];
     NSSize imageSize = [nsImage size];
     
@@ -69,7 +58,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    BXChara2DKoma* theKoma = [self selectedKoma];
+    BXChara2DKoma* theKoma = [oDocument selectedChara2DKoma];
 
     if (!theKoma) {
         [[NSColor controlColor] set];
