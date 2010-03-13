@@ -95,7 +95,7 @@
     BXChara2DImage* theImage = [self selectedImage];
 
     if (!theImage) {
-        [[NSColor controlColor] set];
+        [[NSColor darkGrayColor] set];
         NSRectFill(dirtyRect);
         return;
     }

@@ -207,6 +207,9 @@
     }
     [theInfo setObject:stateInfos forKey:@"State Infos"];
     
+    // コマプレビューのスケール
+    [theInfo setDoubleValue:mKomaPreviewScale forName:@"Preview Scale"];
+    
     return theInfo;
 }
 
@@ -232,6 +235,9 @@
         [theState restoreStateInfo:aStateInfo];
         [mStates addObject:theState];
     }
+
+    // コマプレビューのスケール
+    mKomaPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mKomaPreviewScale];
 }
 
 @end

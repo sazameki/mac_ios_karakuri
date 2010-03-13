@@ -35,6 +35,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (void)addChara2DImageFiles:(NSArray*)filepaths;
 - (void)updateChara2DAtlasList;
 - (void)updateChara2DAtlasListSize;
+- (void)updateChara2DStateCancelKomaButtonMenu;
 
 @end
 
@@ -536,6 +537,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DSimulatorPanel orderOut:self];
     [NSApp endSheet:oChara2DSimulatorPanel returnCode:NSCancelButton];
 }
+
+- (IBAction)startChara2DKomaPreviewAnimation:(id)sender
+{
+    [oMainWindow makeFirstResponder:oChara2DKomaPreviewView];
+}
      
 
 #pragma mark-
@@ -652,6 +658,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     BXChara2DState* selectedState = [self selectedChara2DState];
     BXChara2DKoma* theKoma = [selectedState komaAtIndex:selectedRow];
+    
+    BXChara2DKoma* cancelKoma = [selectedState targetKomaForCancel];
+    if (theKoma == cancelKoma) {
+        [selectedState setTargetKomaForCancel:nil];
+    }
+    
     BXChara2DImage* theImage = [theKoma image];
     [selectedState removeKomaAtIndex:selectedRow];
 
@@ -660,6 +672,53 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     
     [oChara2DKomaListView reloadData];
+    
+    [self updateChara2DStateCancelKomaButtonMenu];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (void)changedChara2DStateCancelKoma:(id)sender
+{
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    if (!selectedState) {
+        return;
+    }
+    
+    int komaNumber = [oChara2DStateCancelKomaNumberButton selectedTag];
+    BXChara2DKoma* theKoma = [selectedState komaWithNumber:komaNumber];
+    [selectedState setTargetKomaForCancel:theKoma];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (void)updateChara2DStateCancelKomaButtonMenu
+{    
+    NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Cancel Koma Menu"] autorelease];
+    
+    NSMenuItem* noneItem = [theMenu addItemWithTitle:NSLocalizedString(@"Cancel Koma Menu None Item Title", nil)
+                                              action:@selector(changedChara2DStateCancelKoma:)
+                                       keyEquivalent:@""];
+    [noneItem setTag:0];
+    [noneItem setTarget:self];
+ 
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    if (selectedState) {
+        for (int i = 0; i < [selectedState komaCount]; i++) {
+            NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"#%d", i+1]
+                                                     action:@selector(changedChara2DStateCancelKoma:)
+                                              keyEquivalent:@""];
+            [theItem setTag:i+1];
+            [theItem setTarget:self];
+        }
+    }
+    
+    [oChara2DStateCancelKomaNumberButton setMenu:theMenu];
+    
+    if (selectedState) {
+        BXChara2DKoma* theKoma = [selectedState targetKomaForCancel];
+        [oChara2DStateCancelKomaNumberButton selectItemWithTag:[theKoma komaNumber]];
+    }    
 }
 
 
@@ -1122,6 +1181,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     // 状態がない場合
     if (!theState) {
         [oChara2DKomaDefaultIntervalButton selectItemWithTag:1];
+        [oChara2DStateCancelKomaNumberButton selectItemWithTag:0];
 
         // 次の状態メニューをクリアする
         [oChara2DStateNextStateButton removeAllItems];
@@ -1466,7 +1526,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         // キャラクタの編集
         if ([theElem isKindOfClass:[BXChara2DSpec class]]) {
-            [oEditorTabView selectTabViewItemWithIdentifier:@"chara-editor"];
+            [oEditorTabView selectTabViewItemWithIdentifier:@"chara2d-editor"];
             BXChara2DSpec* theCharaSpec = (BXChara2DSpec*)theElem;
 
             [self setupEditorUIForChara2D:theCharaSpec];
@@ -1476,6 +1536,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DImageAtlasView setNeedsDisplay:YES];
             
             [self setupEditorForChara2DState:[self selectedChara2DState]];
+            
+            [self updateChara2DStateCancelKomaButtonMenu];
+            
+            int theScaleTag = (int)([theCharaSpec komaPreviewScale] * 100);
+            [oChara2DKomaPreviewScaleButton selectItemWithTag:theScaleTag];
+            [oChara2DKomaPreviewView updateViewSize];
+            [oChara2DKomaPreviewView setNeedsDisplay:YES];
 
             [self willChangeValueForKey:@"canChara2DStateSelectNextState"];
             [self didChangeValueForKey:@"canChara2DStateSelectNextState"];
@@ -1487,7 +1554,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [self setupEditorUIForSingleParticle2D:theParticleSpec];
 
             [oParticleView setupForParticleSpec:theParticleSpec];
-            [oEditorTabView selectTabViewItemWithIdentifier:@"particle-editor"];
+            [oEditorTabView selectTabViewItemWithIdentifier:@"particle2d-editor"];
         }
         // 選択なし
         else {
@@ -1503,6 +1570,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         [oChara2DKomaListView reloadData];
         [oChara2DKomaListView deselectAll:self];
+        
+        [self updateChara2DStateCancelKomaButtonMenu];
         
         [self willChangeValueForKey:@"isChara2DStateSelected"];
         [self didChangeValueForKey:@"isChara2DStateSelected"];
@@ -1544,6 +1613,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         targetKoma = [selectedState komaAtIndex:targetKomaNumber-1];
     }
     [selectedKoma setGotoTarget:targetKoma];
+    
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (void)outlineView:(NSOutlineView*)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn*)tableColumn item:(id)item
@@ -1604,6 +1675,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DKomaListView scrollRowToVisible:newRow];
             [oChara2DKomaListView selectRowIndexes:[NSIndexSet indexSetWithIndex:newRow] byExtendingSelection:NO];
 
+            [self updateChara2DStateCancelKomaButtonMenu];
+
             [self updateChangeCount:NSChangeUndone];
         } else {
             [self willChangeValueForKey:@"canRemoveChara2DImage"];
@@ -1634,6 +1707,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DKomaListView scrollRowToVisible:theRow];
             [oChara2DKomaListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
             
+            [self updateChara2DStateCancelKomaButtonMenu];
+
             [self didChangeValueForKey:@"canRemoveChara2DImage"];
 
             [self updateChangeCount:NSChangeUndone];

@@ -17,6 +17,9 @@
     
     int     mStartX;
     int     mStartY;
+    int     mSizeX;
+    int     mSizeY;
+    double  mScale;
 }
 
 - (void)updateViewSize;

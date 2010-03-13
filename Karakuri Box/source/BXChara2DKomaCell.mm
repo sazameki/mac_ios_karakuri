@@ -20,6 +20,8 @@
     int width = cellFrame.size.height * imageSize.width / imageSize.height;
     NSRect theRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, width, cellFrame.size.height);
     
+    [NSGraphicsContext saveGraphicsState];
+
     NSImage* transpImage = [NSImage imageNamed:@"transparent_pattern.png"];
     [[NSColor colorWithPatternImage:transpImage] set];
     float xOffset = NSMinX([controlView convertRect:cellFrame toView:nil]);
@@ -27,10 +29,14 @@
     [[NSGraphicsContext currentContext] setPatternPhase:NSMakePoint(xOffset-3, yOffset-1)];
     NSRectFill(theRect);
     
+    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+
     [image drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f];
     
     [[NSColor blackColor] set];
     NSFrameRect(theRect);
+
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 @end

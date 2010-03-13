@@ -44,6 +44,7 @@
     IBOutlet NSPopUpButton*             oChara2DStateNextStateButton;
 
     IBOutlet NSPopUpButton*             oChara2DKomaPreviewScaleButton;
+    IBOutlet NSPopUpButton*             oChara2DStateCancelKomaNumberButton;
 
     IBOutlet NSPanel*                   oChara2DSimulatorPanel;
     
@@ -128,6 +129,8 @@
 
 - (IBAction)startChara2DSimulator:(id)sender;
 - (IBAction)stopChara2DSimulator:(id)sender;
+
+- (IBAction)startChara2DKomaPreviewAnimation:(id)sender;
 
 
 ///// パーティクル設定アクション

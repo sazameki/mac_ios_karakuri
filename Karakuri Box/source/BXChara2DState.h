@@ -17,6 +17,8 @@
 @interface BXChara2DState : NSObject {
     BXChara2DSpec*  mParentSpec;
     
+    BXChara2DKoma*  mTargetKomaForCancel;
+    
     int         mStateID;
     NSString*   mStateName;
     
@@ -28,6 +30,9 @@
 }
 
 - (id)initWithName:(NSString*)name chara2DSpec:(BXChara2DSpec*)chara2DSpec;
+
+- (BXChara2DKoma*)targetKomaForCancel;
+- (void)setTargetKomaForCancel:(BXChara2DKoma*)koma;
 
 - (BXChara2DSpec*)parentSpec;
 

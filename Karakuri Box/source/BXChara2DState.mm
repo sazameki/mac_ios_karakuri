@@ -27,6 +27,8 @@
     if (self) {
         mParentSpec = chara2DSpec;
         
+        mTargetKomaForCancel = nil;
+        
         mStateName = [name copy];
         mStateID = 1;
         mKomas = [[NSMutableArray alloc] init];
@@ -44,6 +46,16 @@
     [mKomas release];
     
     [super dealloc];
+}
+
+- (BXChara2DKoma*)targetKomaForCancel
+{
+    return mTargetKomaForCancel;
+}
+
+- (void)setTargetKomaForCancel:(BXChara2DKoma*)koma
+{
+    mTargetKomaForCancel = koma;
 }
 
 - (BXChara2DSpec*)parentSpec
@@ -122,6 +134,8 @@
     BXChara2DImage* theImage = [theKoma image];
     [theImage decrementUsedCount];
     [mKomas removeObjectAtIndex:index];
+
+    [self renumberKomas];
 }
 
 - (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID
@@ -206,6 +220,9 @@
     // 次の状態ID
     [theInfo setIntValue:mNextStateID forName:@"Next State ID"];
     
+    // キャンセル時の終了アニメーション開始コマ
+    [theInfo setIntValue:[mTargetKomaForCancel komaNumber] forName:@"Cancel Koma"];
+    
     return theInfo;
 }
 
@@ -228,6 +245,10 @@
 
     // 次の状態ID
     mNextStateID = [theInfo intValueForName:@"Next State ID" currentValue:mNextStateID];
+
+    // キャンセル時の終了アニメーション開始コマ
+    int theKomaNumber = [theInfo intValueForName:@"Cancel Koma" currentValue:0];
+    mTargetKomaForCancel = [self komaWithNumber:theKomaNumber];
 
     // Gotoコマ情報をオブジェクトに置き換え
     for (int i = 0; i < [mKomas count]; i++) {
