@@ -10,6 +10,7 @@
 
 
 @class BXDocument;
+@class BXChara2DKomaHitInfo;
 
 
 @interface BXChara2DKomaPreviewView : NSView {
@@ -20,8 +21,12 @@
     int     mSizeX;
     int     mSizeY;
     double  mScale;
+    
+    BXChara2DKomaHitInfo*   mResizingHitInfo;
 }
 
+- (void)selectHitInfo:(BXChara2DKomaHitInfo*)anInfo;
+- (void)deselectHitInfo;
 - (void)updateViewSize;
 
 @end

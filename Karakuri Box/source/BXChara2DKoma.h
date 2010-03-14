@@ -15,6 +15,36 @@
 @class BXChara2DState;
 
 
+enum {
+    BXChara2DKomaHitTypeRect    = 0,
+    BXChara2DKomaHitTypeOval    = 1,
+};
+
+
+@interface BXChara2DKomaHitInfo : NSObject {
+    int     mHitType;
+    int     mGroupIndex;
+    NSRect  mRect;
+}
+
+- (id)initWithType:(int)type group:(int)groupIndex rect:(NSRect)rect;
+- (id)initWithInfo:(NSDictionary*)infoDict;
+
+- (BOOL)contains:(NSPoint)pos;
+
+- (NSRect)rect;
+- (void)setRect:(NSRect)rect;
+
+- (void)drawInRect:(NSRect)targetRect scale:(double)scale isMain:(BOOL)isMain;
+- (void)drawResizeHandlesInRect:(NSRect)targetRect scale:(double)scale;
+
+- (int)groupIndex;
+
+- (NSDictionary*)infoDict;
+
+@end
+
+
 @interface BXChara2DKoma : NSObject {
     BXChara2DImage* mImage;
     int             mImageAtlasIndex;
@@ -27,11 +57,26 @@
     
     int             mTempGotoTargetKomaNumber;
     KRTexture2D*    mPreviewTex;
+    
+    NSMutableArray* mHitInfos;
+    BOOL            mShowsHitInfos;
+    int             mCurrentHitGroupIndex;
 }
 
 - (id)initWithInfo:(NSDictionary*)info chara2DSpec:(BXChara2DSpec*)chara2DSpec;
 
+- (void)drawHitInfosInRect:(NSRect)targetRect scale:(double)scale;
+
 - (void)setImage:(BXChara2DImage*)image atlasAtIndex:(int)index;
+
+- (int)hitInfoCount;
+- (BOOL)showsHitInfos;
+- (void)setShowsHitInfos:(BOOL)flag;
+- (int)currentHitGroupIndex;
+- (void)setCurrentHitGroupIndex:(int)index;
+- (BXChara2DKomaHitInfo*)addHitInfoOval;
+- (BXChara2DKomaHitInfo*)addHitInfoRect;
+- (BXChara2DKomaHitInfo*)hitInfoAtPoint:(NSPoint)pos;
 
 - (int)komaNumber;
 - (void)setKomaNumber:(int)number;

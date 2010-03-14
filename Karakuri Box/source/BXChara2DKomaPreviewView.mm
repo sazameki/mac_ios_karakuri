@@ -22,6 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         mScale = 1.0;
+        mResizingHitInfo = nil;
     }
     return self;
 }
@@ -106,6 +107,107 @@
                fraction:1.0];
 
     [NSGraphicsContext restoreGraphicsState];
+    
+    if ([theKoma showsHitInfos]) {
+        [theKoma drawHitInfosInRect:targetRect scale:mScale];
+    }
+    
+    if (mResizingHitInfo) {
+        [mResizingHitInfo drawResizeHandlesInRect:targetRect scale:mScale];
+    }
+}
+
+- (void)selectHitInfo:(BXChara2DKomaHitInfo*)anInfo
+{
+    mResizingHitInfo = anInfo;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)deselectHitInfo
+{
+    mResizingHitInfo = nil;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)keyDown:(NSEvent*)theEvent
+{
+    if (!mResizingHitInfo) {
+        return;
+    }
+    
+    unsigned short keyCode = [theEvent keyCode];
+    unsigned modifierFlags = [theEvent modifierFlags];
+    
+    int speed = (modifierFlags & NSShiftKeyMask)? 4: 1;
+    
+    if (keyCode == 0x7b) {
+        NSRect rect = [mResizingHitInfo rect];
+        rect.origin.x -= speed;
+        [mResizingHitInfo setRect:rect];
+    }
+    else if (keyCode == 0x7c) {
+        NSRect rect = [mResizingHitInfo rect];
+        rect.origin.x += speed;
+        [mResizingHitInfo setRect:rect];
+    }
+    else if (keyCode == 0x7e) {
+        NSRect rect = [mResizingHitInfo rect];
+        rect.origin.y += speed;
+        [mResizingHitInfo setRect:rect];
+    }
+    else if (keyCode == 0x7d) {
+        NSRect rect = [mResizingHitInfo rect];
+        rect.origin.y -= speed;
+        [mResizingHitInfo setRect:rect];
+    }
+    
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseDown:(NSEvent*)theEvent
+{
+    BXChara2DKoma* theKoma = [oDocument selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    NSImage* nsImage = [theKoma nsImage];
+    NSSize imageSize = [nsImage size];
+    
+    NSSize frameSize = [self frame].size;
+    
+    mSizeX = (int)(imageSize.width * mScale + 0.5);
+    mSizeY = (int)(imageSize.height * mScale + 0.5);
+    mStartX = (int)((frameSize.width - mSizeX) / 2);
+    mStartY = (int)((frameSize.height - mSizeY) / 2);
+    
+    NSRect targetRect = NSMakeRect(mStartX, mStartY, mSizeX, mSizeY);
+    
+    NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    
+    pos.x -= targetRect.origin.x;
+    pos.y -= targetRect.origin.y;
+    pos.x /= mScale;
+    pos.y /= mScale;
+    pos.y = imageSize.height - pos.y;
+    
+    mResizingHitInfo = [theKoma hitInfoAtPoint:pos];
+    
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseDragged:(NSEvent*)theEvent
+{
+    if (!mResizingHitInfo) {
+        return;
+    }
+
+    NSRect rect = [mResizingHitInfo rect];
+    rect.origin.x += [theEvent deltaX];
+    rect.origin.y -= [theEvent deltaY];
+    [mResizingHitInfo setRect:rect];
+
+    [self setNeedsDisplay:YES];
 }
 
 @end

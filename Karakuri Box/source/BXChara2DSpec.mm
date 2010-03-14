@@ -30,7 +30,58 @@
         mImages = [[NSMutableArray alloc] init];
         
         mKomaPreviewScale = 1.0;
+        
+        mFirstStateID = -1;
+        mFirstStateKomaNumber = 1;
+        mRevertToFirstState = YES;
+        mIgnoresCancelFlag = NO;
+        mSkipEndAnimation = NO;
 
+        mActionStateIDUp = -1;
+        mActionKomaNumberUp = 1;
+        mIgnoresCancelFlagUp = NO;
+        mSkipEndAnimationUp = NO;
+        mActionSpeedUp = 2;
+        
+        mActionStateIDDown = -1;
+        mActionKomaNumberDown = 1;
+        mIgnoresCancelFlagDown = NO;
+        mSkipEndAnimationDown = NO;
+        mActionSpeedDown = 2;
+        
+        mActionStateIDLeft = -1;
+        mActionKomaNumberLeft = 1;
+        mIgnoresCancelFlagLeft = NO;
+        mSkipEndAnimationLeft = NO;
+        mActionSpeedLeft = 2;
+        
+        mActionStateIDRight = -1;
+        mActionKomaNumberRight = 1;
+        mIgnoresCancelFlagRight = NO;
+        mSkipEndAnimationRight = NO;
+        mActionSpeedRight = 2;
+        
+        mActionStateIDZ = -1;
+        mActionKomaNumberZ = 1;
+        mIgnoresCancelFlagZ = NO;
+        mSkipEndAnimationZ = NO;
+        
+        mActionStateIDX = -1;
+        mActionKomaNumberX = 1;
+        mIgnoresCancelFlagX = NO;
+        mSkipEndAnimationX = NO;
+        
+        mActionStateIDC = -1;
+        mActionKomaNumberC = 1;
+        mIgnoresCancelFlagC = NO;
+        mSkipEndAnimationC = NO;
+        
+        mActionStateIDMouse = -1;
+        mActionKomaNumberMouse = 1;
+        mIgnoresCancelFlagMouse = NO;
+        mSkipEndAnimationMouse = NO;
+        mDoChangeMouseLocation = YES;
+        
         if (hasDefaultState) {
             [self addDefaultState];
         }
@@ -44,6 +95,452 @@
     [mImages release];
 
     [super dealloc];
+}
+
+
+#pragma mark -
+#pragma mark アクセッサ
+
+- (int)firstStateID
+{
+    return mFirstStateID;
+}
+
+- (void)setFirstStateID:(int)stateID
+{
+    mFirstStateID = stateID;
+}
+
+- (int)firstStateKomaNumber
+{
+    return mFirstStateKomaNumber;
+}
+
+- (void)setFirstStateKomaNumber:(int)komaNumber
+{
+    mFirstStateKomaNumber = komaNumber;
+}
+
+- (BOOL)revertToFirstState
+{
+    return mRevertToFirstState;
+}
+
+- (void)setRevertToFirstState:(BOOL)flag
+{
+    mRevertToFirstState = flag;
+}
+
+- (BOOL)ignoresCancelFlag
+{
+    return mIgnoresCancelFlag;
+}
+
+- (void)setIgnoresCancelFlag:(BOOL)flag
+{
+    mIgnoresCancelFlag = flag;
+}
+
+- (BOOL)skipEndAnimation
+{
+    return mSkipEndAnimation;
+}
+
+- (void)setSkipEndAnimation:(BOOL)flag
+{
+    mSkipEndAnimation = flag;
+}
+
+
+#pragma mark (KeyUp)
+
+- (int)actionStateIDUp
+{
+    return mActionStateIDUp;
+}
+
+- (void)setActionStateIDUp:(int)stateID
+{
+    mActionStateIDUp = stateID;
+}
+
+- (int)actionKomaNumberUp
+{
+    return mActionKomaNumberUp;
+}
+
+- (void)setActionKomaNumberUp:(int)komaNumber
+{
+    mActionKomaNumberUp = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagUp
+{
+    return mIgnoresCancelFlagUp;
+}
+
+- (void)setIgnoresCancelFlagUp:(BOOL)flag
+{
+    mIgnoresCancelFlagUp = flag;
+}
+
+- (BOOL)skipEndAnimationUp
+{
+    return mSkipEndAnimationUp;
+}
+
+- (void)setSkipEndAnimationUp:(BOOL)flag
+{
+    mSkipEndAnimationUp = flag;
+}
+
+- (int)actionSpeedUp
+{
+    return mActionSpeedUp;
+}
+
+- (void)setActionSpeedUp:(int)value
+{
+    mActionSpeedUp = value;
+}
+
+
+#pragma mark (KeyDown)
+
+- (int)actionStateIDDown
+{
+    return mActionStateIDDown;
+}
+
+- (void)setActionStateIDDown:(int)stateID
+{
+    mActionStateIDDown = stateID;
+}
+
+- (int)actionKomaNumberDown
+{
+    return mActionKomaNumberDown;
+}
+
+- (void)setActionKomaNumberDown:(int)komaNumber
+{
+    mActionKomaNumberDown = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagDown
+{
+    return mIgnoresCancelFlagDown;
+}
+
+- (void)setIgnoresCancelFlagDown:(BOOL)flag
+{
+    mIgnoresCancelFlagDown = flag;
+}
+
+- (BOOL)skipEndAnimationDown
+{
+    return mSkipEndAnimationDown;
+}
+
+- (void)setSkipEndAnimationDown:(BOOL)flag
+{
+    mSkipEndAnimationDown = flag;
+}
+
+- (int)actionSpeedDown
+{
+    return mActionSpeedDown;
+}
+
+- (void)setActionSpeedDown:(int)value
+{
+    mActionSpeedDown = value;
+}
+
+
+#pragma mark (KeyLeft)
+
+- (int)actionStateIDLeft
+{
+    return mActionStateIDLeft;
+}
+
+- (void)setActionStateIDLeft:(int)stateID
+{
+    mActionStateIDLeft = stateID;
+}
+
+- (int)actionKomaNumberLeft
+{
+    return mActionKomaNumberLeft;
+}
+
+- (void)setActionKomaNumberLeft:(int)komaNumber
+{
+    mActionKomaNumberLeft = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagLeft
+{
+    return mIgnoresCancelFlagLeft;
+}
+
+- (void)setIgnoresCancelFlagLeft:(BOOL)flag
+{
+    mIgnoresCancelFlagLeft = flag;
+}
+
+- (BOOL)skipEndAnimationLeft
+{
+    return mSkipEndAnimationLeft;
+}
+
+- (void)setSkipEndAnimationLeft:(BOOL)flag
+{
+    mSkipEndAnimationLeft = flag;
+}
+
+- (int)actionSpeedLeft
+{
+    return mActionSpeedLeft;
+}
+
+- (void)setActionSpeedLeft:(int)value
+{
+    mActionSpeedLeft = value;
+}
+
+
+#pragma mark (KeyRight)
+
+- (int)actionStateIDRight
+{
+    return mActionStateIDRight;
+}
+
+- (void)setActionStateIDRight:(int)stateID
+{
+    mActionStateIDRight = stateID;
+}
+
+- (int)actionKomaNumberRight
+{
+    return mActionKomaNumberRight;
+}
+
+- (void)setActionKomaNumberRight:(int)komaNumber
+{
+    mActionKomaNumberRight = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagRight
+{
+    return mIgnoresCancelFlagRight;
+}
+
+- (void)setIgnoresCancelFlagRight:(BOOL)flag
+{
+    mIgnoresCancelFlagRight = flag;
+}
+
+- (BOOL)skipEndAnimationRight
+{
+    return mSkipEndAnimationRight;
+}
+
+- (void)setSkipEndAnimationRight:(BOOL)flag
+{
+    mSkipEndAnimationRight = flag;
+}
+
+- (int)actionSpeedRight
+{
+    return mActionSpeedRight;
+}
+
+- (void)setActionSpeedRight:(int)value
+{
+    mActionSpeedRight = value;
+}
+
+
+#pragma mark (KeyZ)
+
+- (int)actionStateIDZ
+{
+    return mActionStateIDZ;
+}
+
+- (void)setActionStateIDZ:(int)stateID
+{
+    mActionStateIDZ = stateID;
+}
+
+- (int)actionKomaNumberZ
+{
+    return mActionKomaNumberZ;
+}
+
+- (void)setActionKomaNumberZ:(int)komaNumber
+{
+    mActionKomaNumberZ = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagZ
+{
+    return mIgnoresCancelFlagZ;
+}
+
+- (void)setIgnoresCancelFlagZ:(BOOL)flag
+{
+    mIgnoresCancelFlagZ = flag;
+}
+
+- (BOOL)skipEndAnimationZ
+{
+    return mSkipEndAnimationZ;
+}
+
+- (void)setSkipEndAnimationZ:(BOOL)flag
+{
+    mSkipEndAnimationZ = flag;
+}
+
+
+#pragma mark (KeyX)
+
+- (int)actionStateIDX
+{
+    return mActionStateIDX;
+}
+
+- (void)setActionStateIDX:(int)stateID
+{
+}
+
+- (int)actionKomaNumberX
+{
+    return mActionKomaNumberX;
+}
+
+- (void)setActionKomaNumberX:(int)komaNumber
+{
+    mActionKomaNumberX = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagX
+{
+    return mIgnoresCancelFlagX;
+}
+
+- (void)setIgnoresCancelFlagX:(BOOL)flag
+{
+    mIgnoresCancelFlagX = flag;
+}
+
+- (BOOL)skipEndAnimationX
+{
+    return mSkipEndAnimationX;
+}
+
+- (void)setSkipEndAnimationX:(BOOL)flag
+{
+    mSkipEndAnimationX = flag;
+}
+
+
+#pragma mark (KeyC)
+
+- (int)actionStateIDC
+{
+    return mActionStateIDC;
+}
+
+- (void)setActionStateIDC:(int)stateID
+{
+    mActionStateIDC = stateID;
+}
+
+- (int)actionKomaNumberC
+{
+    return mActionKomaNumberC;
+}
+
+- (void)setActionKomaNumberC:(int)komaNumber
+{
+    mActionKomaNumberC = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagC
+{
+    return mIgnoresCancelFlagC;
+}
+
+- (void)setIgnoresCancelFlagC:(BOOL)flag
+{
+    mIgnoresCancelFlagC = flag;
+}
+
+- (BOOL)skipEndAnimationC
+{
+    return mSkipEndAnimationC;
+}
+
+- (void)setSkipEndAnimationC:(BOOL)flag
+{
+    mSkipEndAnimationC = flag;
+}
+
+#pragma mark (Mouse)
+
+- (int)actionStateIDMouse
+{
+    return mActionStateIDMouse;
+}
+
+- (void)setActionStateIDMouse:(int)stateID
+{
+    mActionStateIDMouse = stateID;
+}
+
+- (int)actionKomaNumberMouse
+{
+    return mActionKomaNumberMouse;
+}
+
+- (void)setActionKomaNumberMouse:(int)komaNumber
+{
+    mActionKomaNumberMouse = komaNumber;
+}
+
+- (BOOL)ignoresCancelFlagMouse
+{
+    return mIgnoresCancelFlagMouse;
+}
+
+- (void)setIgnoresCancelFlagMouse:(BOOL)flag
+{
+    mIgnoresCancelFlagMouse = flag;
+}
+
+- (BOOL)skipEndAnimationMouse
+{
+    return mSkipEndAnimationMouse;
+}
+
+- (void)setSkipEndAnimationMouse:(BOOL)flag
+{
+    mSkipEndAnimationMouse = flag;
+}
+
+- (BOOL)doChangeMouseLocation
+{
+    return mDoChangeMouseLocation;
+}
+
+- (void)setDoChangeMouseLocation:(BOOL)flag
+{
+    mDoChangeMouseLocation = flag;
 }
 
 
@@ -210,6 +707,58 @@
     // コマプレビューのスケール
     [theInfo setDoubleValue:mKomaPreviewScale forName:@"Preview Scale"];
     
+    // シミュレーション用の設定
+    [theInfo setIntValue:mFirstStateID forName:@"SIM First State ID"];
+    [theInfo setIntValue:mFirstStateKomaNumber forName:@"SIM First Koma Number"];
+    [theInfo setBoolValue:mRevertToFirstState forName:@"SIM Revert To First State"];
+    [theInfo setBoolValue:mIgnoresCancelFlag forName:@"SIM Ignores Cancel Flag"];
+    [theInfo setBoolValue:mSkipEndAnimation forName:@"SIM Skip End Animation"];
+    
+    [theInfo setIntValue:mActionStateIDUp forName:@"SIM Action State ID Up"];
+    [theInfo setIntValue:mActionKomaNumberUp forName:@"SIM Action Koma Number Up"];
+    [theInfo setBoolValue:mIgnoresCancelFlagUp forName:@"SIM Action Ignores Cancel Flag Up"];
+    [theInfo setBoolValue:mSkipEndAnimationUp forName:@"SIM Action Skip End Animation Up"];
+    [theInfo setIntValue:mActionSpeedUp forName:@"SIM Action Speed Up"];
+    
+    [theInfo setIntValue:mActionStateIDDown forName:@"SIM Action State ID Down"];
+    [theInfo setIntValue:mActionKomaNumberDown forName:@"SIM Action Koma Number Down"];
+    [theInfo setBoolValue:mIgnoresCancelFlagDown forName:@"SIM Action Ignores Cancel Flag Down"];
+    [theInfo setBoolValue:mSkipEndAnimationDown forName:@"SIM Action Skip End Animation Down"];
+    [theInfo setIntValue:mActionSpeedDown forName:@"SIM Action Speed Down"];
+    
+    [theInfo setIntValue:mActionStateIDLeft forName:@"SIM Action State ID Left"];
+    [theInfo setIntValue:mActionKomaNumberLeft forName:@"SIM Action Koma Number Left"];
+    [theInfo setBoolValue:mIgnoresCancelFlagLeft forName:@"SIM Action Ignores Cancel Flag Left"];
+    [theInfo setBoolValue:mSkipEndAnimationLeft forName:@"SIM Action Skip End Animation Left"];
+    [theInfo setIntValue:mActionSpeedLeft forName:@"SIM Action Speed Left"];
+    
+    [theInfo setIntValue:mActionStateIDRight forName:@"SIM Action State ID Right"];
+    [theInfo setIntValue:mActionKomaNumberRight forName:@"SIM Action Koma Number Right"];
+    [theInfo setBoolValue:mIgnoresCancelFlagRight forName:@"SIM Action Ignores Cancel Flag Right"];
+    [theInfo setBoolValue:mSkipEndAnimationRight forName:@"SIM Action Skip End Animation Right"];
+    [theInfo setIntValue:mActionSpeedRight forName:@"SIM Action Speed Right"];
+    
+    [theInfo setIntValue:mActionStateIDZ forName:@"SIM Action State ID Z"];
+    [theInfo setIntValue:mActionKomaNumberZ forName:@"SIM Action Koma Number Z"];
+    [theInfo setBoolValue:mIgnoresCancelFlagZ forName:@"SIM Action Ignores Cancel Flag Z"];
+    [theInfo setBoolValue:mSkipEndAnimationZ forName:@"SIM Action Skip End Animation Z"];
+    
+    [theInfo setIntValue:mActionStateIDX forName:@"SIM Action State ID X"];
+    [theInfo setIntValue:mActionKomaNumberX forName:@"SIM Action Koma Number X"];
+    [theInfo setBoolValue:mIgnoresCancelFlagX forName:@"SIM Action Ignores Cancel Flag X"];
+    [theInfo setBoolValue:mSkipEndAnimationX forName:@"SIM Action Skip End Animation X"];
+    
+    [theInfo setIntValue:mActionStateIDC forName:@"SIM Action State ID C"];
+    [theInfo setIntValue:mActionKomaNumberC forName:@"SIM Action Koma Number C"];
+    [theInfo setBoolValue:mIgnoresCancelFlagC forName:@"SIM Action Ignores Cancel Flag C"];
+    [theInfo setBoolValue:mSkipEndAnimationC forName:@"SIM Action Skip End Animation C"];
+    
+    [theInfo setIntValue:mActionStateIDMouse forName:@"SIM Action State ID Mouse"];
+    [theInfo setIntValue:mActionKomaNumberMouse forName:@"SIM Action Koma Number Mouse"];
+    [theInfo setBoolValue:mIgnoresCancelFlagMouse forName:@"SIM Action Ignores Cancel Flag Mouse"];
+    [theInfo setBoolValue:mSkipEndAnimationMouse forName:@"SIM Action Skip End Animation Mouse"];
+    [theInfo setBoolValue:mDoChangeMouseLocation forName:@"SIM Do Change Mouse Location"];
+    
     return theInfo;
 }
 
@@ -238,6 +787,58 @@
 
     // コマプレビューのスケール
     mKomaPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mKomaPreviewScale];
+    
+    // シミュレーション用の設定
+    mFirstStateID = [theInfo intValueForName:@"SIM First State ID" currentValue:mFirstStateID];
+    mFirstStateKomaNumber = [theInfo intValueForName:@"SIM First Koma Number" currentValue:mFirstStateKomaNumber];
+    mRevertToFirstState = [theInfo boolValueForName:@"SIM Revert To First State" currentValue:mRevertToFirstState];
+    mIgnoresCancelFlag = [theInfo boolValueForName:@"SIM Ignores Cancel Flag" currentValue:mIgnoresCancelFlag];
+    mSkipEndAnimation = [theInfo boolValueForName:@"SIM Skip End Animation" currentValue:mSkipEndAnimation];
+    
+    mActionStateIDUp = [theInfo intValueForName:@"SIM Action State ID Up" currentValue:mActionStateIDUp];
+    mActionKomaNumberUp = [theInfo intValueForName:@"SIM Action Koma Number Up" currentValue:mActionKomaNumberUp];
+    mIgnoresCancelFlagUp = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Up" currentValue:mIgnoresCancelFlagUp];
+    mSkipEndAnimationUp = [theInfo boolValueForName:@"SIM Action Skip End Animation Up" currentValue:mSkipEndAnimationUp];
+    mActionSpeedUp = [theInfo intValueForName:@"SIM Action Speed Up" currentValue:mActionSpeedUp];
+    
+    mActionStateIDDown = [theInfo intValueForName:@"SIM Action State ID Down" currentValue:mActionStateIDDown];
+    mActionKomaNumberDown = [theInfo intValueForName:@"SIM Action Koma Number Down" currentValue:mActionKomaNumberDown];
+    mIgnoresCancelFlagDown = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Down" currentValue:mIgnoresCancelFlagDown];
+    mSkipEndAnimationDown = [theInfo boolValueForName:@"SIM Action Skip End Animation Down" currentValue:mSkipEndAnimationDown];
+    mActionSpeedDown = [theInfo intValueForName:@"SIM Action Speed Down" currentValue:mActionSpeedDown];
+    
+    mActionStateIDLeft = [theInfo intValueForName:@"SIM Action State ID Left" currentValue:mActionStateIDLeft];
+    mActionKomaNumberLeft = [theInfo intValueForName:@"SIM Action Koma Number Left" currentValue:mActionKomaNumberLeft];
+    mIgnoresCancelFlagLeft = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Left" currentValue:mIgnoresCancelFlagLeft];
+    mSkipEndAnimationLeft = [theInfo boolValueForName:@"SIM Action Skip End Animation Left" currentValue:mSkipEndAnimationLeft];
+    mActionSpeedLeft = [theInfo intValueForName:@"SIM Action Speed Left" currentValue:mActionSpeedLeft];
+    
+    mActionStateIDRight = [theInfo intValueForName:@"SIM Action State ID Right" currentValue:mActionStateIDRight];
+    mActionKomaNumberRight = [theInfo intValueForName:@"SIM Action Koma Number Right" currentValue:mActionKomaNumberRight];
+    mIgnoresCancelFlagRight = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Right" currentValue:mIgnoresCancelFlagRight];
+    mSkipEndAnimationRight = [theInfo boolValueForName:@"SIM Action Skip End Animation Right" currentValue:mSkipEndAnimationRight];
+    mActionSpeedRight = [theInfo intValueForName:@"SIM Action Speed Right" currentValue:mActionSpeedRight];
+    
+    mActionStateIDZ = [theInfo intValueForName:@"SIM Action State ID Z" currentValue:mActionStateIDZ];
+    mActionKomaNumberZ = [theInfo intValueForName:@"SIM Action Koma Number Z" currentValue:mActionKomaNumberZ];
+    mIgnoresCancelFlagZ = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Z" currentValue:mIgnoresCancelFlagZ];
+    mSkipEndAnimationZ = [theInfo boolValueForName:@"SIM Action Skip End Animation Z" currentValue:mSkipEndAnimationZ];
+    
+    mActionStateIDX = [theInfo intValueForName:@"SIM Action State ID X" currentValue:mActionStateIDX];
+    mActionKomaNumberX = [theInfo intValueForName:@"SIM Action Koma Number X" currentValue:mActionKomaNumberX];
+    mIgnoresCancelFlagX = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag X" currentValue:mIgnoresCancelFlagX];
+    mSkipEndAnimationX = [theInfo boolValueForName:@"SIM Action Skip End Animation X" currentValue:mSkipEndAnimationX];
+    
+    mActionStateIDC = [theInfo intValueForName:@"SIM Action State ID C" currentValue:mActionStateIDC];
+    mActionKomaNumberC = [theInfo intValueForName:@"SIM Action Koma Number C" currentValue:mActionKomaNumberC];
+    mIgnoresCancelFlagC = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag C" currentValue:mIgnoresCancelFlagC];
+    mSkipEndAnimationC = [theInfo boolValueForName:@"SIM Action Skip End Animation C" currentValue:mSkipEndAnimationC];
+    
+    mActionStateIDMouse = [theInfo intValueForName:@"SIM Action State ID Mouse" currentValue:mActionStateIDMouse];
+    mActionKomaNumberMouse = [theInfo intValueForName:@"SIM Action Koma Number Mouse" currentValue:mActionKomaNumberMouse];
+    mIgnoresCancelFlagMouse = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Mouse" currentValue:mIgnoresCancelFlagMouse];
+    mSkipEndAnimationMouse = [theInfo boolValueForName:@"SIM Action Skip End Animation Mouse" currentValue:mSkipEndAnimationMouse];
+    mDoChangeMouseLocation = [theInfo boolValueForName:@"SIM Do Change Mouse Location" currentValue:mDoChangeMouseLocation];
 }
 
 @end

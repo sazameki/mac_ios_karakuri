@@ -48,6 +48,23 @@
 
     IBOutlet NSPanel*                   oChara2DSimulatorPanel;
     
+    IBOutlet NSButton*                  oChara2DHitButtonAll;
+    IBOutlet NSButton*                  oChara2DHitButton1;
+    IBOutlet NSButton*                  oChara2DHitButton2;
+    IBOutlet NSButton*                  oChara2DHitButton3;
+    IBOutlet NSButton*                  oChara2DHitButton4;
+    IBOutlet NSButton*                  oChara2DHitButton5;
+    IBOutlet NSButton*                  oChara2DHitButton6;
+    IBOutlet NSButton*                  oChara2DHitButton7;
+    IBOutlet NSButton*                  oChara2DHitButton8;
+    IBOutlet NSButton*                  oChara2DHitButton9;
+    IBOutlet NSButton*                  oChara2DHitButton10;
+    IBOutlet NSButton*                  oChara2DHitButton11;
+    IBOutlet NSButton*                  oChara2DHitButton12;
+    IBOutlet NSButton*                  oChara2DHitButtonAddCircle;
+    IBOutlet NSButton*                  oChara2DHitButtonAddRect;
+    IBOutlet NSTextField*               oChara2DHitCountField;
+    
     ///// パーティクルの設定用アウトレット
     IBOutlet BXParticle2DSimulatorView* oParticleView;
 
@@ -89,7 +106,7 @@
     IBOutlet NSTextField*               oParticleGenerateCountField;
     IBOutlet NSSlider*                  oParticleGenerateCountSlider;
     IBOutlet NSTextField*               oParticleMaxParticleCountField;
-    IBOutlet NSSlider*                  oParticleMaxParticleCountSlider;    
+    IBOutlet NSSlider*                  oParticleMaxParticleCountSlider;
 
     IBOutlet NSButton*                  oParticleLoopButton;
     IBOutlet NSColorWell*               oParticleBGColorWell1;
@@ -131,6 +148,24 @@
 - (IBAction)stopChara2DSimulator:(id)sender;
 
 - (IBAction)startChara2DKomaPreviewAnimation:(id)sender;
+
+- (IBAction)changedChara2DShowsHitInfos:(id)sender;
+
+- (IBAction)activateChara2DHitButton1:(id)sender;
+- (IBAction)activateChara2DHitButton2:(id)sender;
+- (IBAction)activateChara2DHitButton3:(id)sender;
+- (IBAction)activateChara2DHitButton4:(id)sender;
+- (IBAction)activateChara2DHitButton5:(id)sender;
+- (IBAction)activateChara2DHitButton6:(id)sender;
+- (IBAction)activateChara2DHitButton7:(id)sender;
+- (IBAction)activateChara2DHitButton8:(id)sender;
+- (IBAction)activateChara2DHitButton9:(id)sender;
+- (IBAction)activateChara2DHitButton10:(id)sender;
+- (IBAction)activateChara2DHitButton11:(id)sender;
+- (IBAction)activateChara2DHitButton12:(id)sender;
+
+- (IBAction)addChara2DHitInfoOval:(id)sender;
+- (IBAction)addChara2DHitInfoRect:(id)sender;
 
 
 ///// パーティクル設定アクション

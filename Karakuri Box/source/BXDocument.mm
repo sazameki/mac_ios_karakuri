@@ -33,6 +33,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (void)setupEditorForChara2DState:(BXChara2DState*)theState;
 - (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage;
 - (void)addChara2DImageFiles:(NSArray*)filepaths;
+- (void)setupChara2DHitButtons;
 - (void)updateChara2DAtlasList;
 - (void)updateChara2DAtlasListSize;
 - (void)updateChara2DStateCancelKomaButtonMenu;
@@ -134,6 +135,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [chara2DImageAtlasClipView setNeedsDisplay:YES];
     
     [self setupEditorForChara2DState:nil];
+    [self setupChara2DHitButtons];
     
     // データの読み込み
     [self loadResourceInfos];
@@ -523,7 +525,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (IBAction)startChara2DSimulator:(id)sender
 {
     [oChara2DSimulatorView setupForChara2DSpec:[self selectedChara2DSpec]];
-    [oChara2DSimulatorView startAnimation];
     [NSApp beginSheet:oChara2DSimulatorPanel
        modalForWindow:oMainWindow
         modalDelegate:self
@@ -533,16 +534,222 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (IBAction)stopChara2DSimulator:(id)sender
 {
-    [oChara2DSimulatorView stopAnimation];
+    [oChara2DSimulatorView stopAnimation:self];
+    [oChara2DSimulatorView saveAnimationSettings];
     [oChara2DSimulatorPanel orderOut:self];
     [NSApp endSheet:oChara2DSimulatorPanel returnCode:NSCancelButton];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)startChara2DKomaPreviewAnimation:(id)sender
 {
     [oMainWindow makeFirstResponder:oChara2DKomaPreviewView];
 }
-     
+
+- (IBAction)changedChara2DShowsHitInfos:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+
+    [theKoma setShowsHitInfos:![theKoma showsHitInfos]];
+    if (![theKoma showsHitInfos]) {
+        [oChara2DKomaPreviewView deselectHitInfo];
+    } else {
+        [oChara2DKomaPreviewView setNeedsDisplay:YES];
+    }
+    
+    [self setupChara2DHitButtons];
+}
+
+- (IBAction)activateChara2DHitButton1:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:1];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton2:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:2];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton3:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:3];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton4:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:4];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton5:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:5];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton6:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:6];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton7:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:7];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton8:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:8];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton9:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:9];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton10:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:10];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton11:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:11];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)activateChara2DHitButton12:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    [theKoma setCurrentHitGroupIndex:12];
+    
+    [self setupChara2DHitButtons];
+    [oChara2DKomaPreviewView deselectHitInfo];
+}
+
+- (IBAction)addChara2DHitInfoOval:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    BXChara2DKomaHitInfo* theInfo = [theKoma addHitInfoOval];
+
+    [oChara2DKomaPreviewView selectHitInfo:theInfo];
+    [self setupChara2DHitButtons];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)addChara2DHitInfoRect:(id)sender
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    if (!theKoma) {
+        return;
+    }
+    
+    BXChara2DKomaHitInfo* theInfo = [theKoma addHitInfoRect];
+    
+    [oChara2DKomaPreviewView selectHitInfo:theInfo];
+    [self setupChara2DHitButtons];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
 
 #pragma mark-
 #pragma mark 2Dキャラクタに関係する操作
@@ -1306,6 +1513,108 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oParticleDeltaAlphaSlider setFloatValue:deltaAlpha];
 }
 
+- (void)setupChara2DHitButtons
+{
+    BXChara2DKoma* theKoma = [self selectedChara2DKoma];
+    
+    if (theKoma) {
+        [oChara2DHitButtonAll setEnabled:YES];
+        
+        if ([theKoma showsHitInfos]) {
+            [oChara2DHitButtonAll setState:NSOnState];
+            [oChara2DHitButton1 setEnabled:YES];
+            [oChara2DHitButton2 setEnabled:YES];
+            [oChara2DHitButton3 setEnabled:YES];
+            [oChara2DHitButton4 setEnabled:YES];
+            [oChara2DHitButton5 setEnabled:YES];
+            [oChara2DHitButton6 setEnabled:YES];
+            [oChara2DHitButton7 setEnabled:YES];
+            [oChara2DHitButton8 setEnabled:YES];
+            [oChara2DHitButton9 setEnabled:YES];
+            [oChara2DHitButton10 setEnabled:YES];
+            [oChara2DHitButton11 setEnabled:YES];
+            [oChara2DHitButton12 setEnabled:YES];
+
+            [oChara2DHitButton1 setState:([theKoma currentHitGroupIndex] == 1)? NSOnState: NSOffState];
+            [oChara2DHitButton2 setState:([theKoma currentHitGroupIndex] == 2)? NSOnState: NSOffState];
+            [oChara2DHitButton3 setState:([theKoma currentHitGroupIndex] == 3)? NSOnState: NSOffState];
+            [oChara2DHitButton4 setState:([theKoma currentHitGroupIndex] == 4)? NSOnState: NSOffState];
+            [oChara2DHitButton5 setState:([theKoma currentHitGroupIndex] == 5)? NSOnState: NSOffState];
+            [oChara2DHitButton6 setState:([theKoma currentHitGroupIndex] == 6)? NSOnState: NSOffState];
+            [oChara2DHitButton7 setState:([theKoma currentHitGroupIndex] == 7)? NSOnState: NSOffState];
+            [oChara2DHitButton8 setState:([theKoma currentHitGroupIndex] == 8)? NSOnState: NSOffState];
+            [oChara2DHitButton9 setState:([theKoma currentHitGroupIndex] == 9)? NSOnState: NSOffState];
+            [oChara2DHitButton10 setState:([theKoma currentHitGroupIndex] == 10)? NSOnState: NSOffState];
+            [oChara2DHitButton11 setState:([theKoma currentHitGroupIndex] == 11)? NSOnState: NSOffState];
+            [oChara2DHitButton12 setState:([theKoma currentHitGroupIndex] == 12)? NSOnState: NSOffState];
+            
+            [oChara2DHitButtonAddRect setEnabled:YES];
+            [oChara2DHitButtonAddCircle setEnabled:YES];
+        } else {
+            [oChara2DHitButtonAll setState:NSOffState];
+            [oChara2DHitButton1 setEnabled:NO];
+            [oChara2DHitButton2 setEnabled:NO];
+            [oChara2DHitButton3 setEnabled:NO];
+            [oChara2DHitButton4 setEnabled:NO];
+            [oChara2DHitButton5 setEnabled:NO];
+            [oChara2DHitButton6 setEnabled:NO];
+            [oChara2DHitButton7 setEnabled:NO];
+            [oChara2DHitButton8 setEnabled:NO];
+            [oChara2DHitButton9 setEnabled:NO];
+            [oChara2DHitButton10 setEnabled:NO];
+            [oChara2DHitButton11 setEnabled:NO];
+            [oChara2DHitButton12 setEnabled:NO];
+            
+            [oChara2DHitButton1 setState:NSOffState];
+            [oChara2DHitButton2 setState:NSOffState];
+            [oChara2DHitButton3 setState:NSOffState];
+            [oChara2DHitButton4 setState:NSOffState];
+            [oChara2DHitButton5 setState:NSOffState];
+            [oChara2DHitButton6 setState:NSOffState];
+            [oChara2DHitButton7 setState:NSOffState];
+            [oChara2DHitButton8 setState:NSOffState];
+            [oChara2DHitButton9 setState:NSOffState];
+            [oChara2DHitButton10 setState:NSOffState];
+            [oChara2DHitButton11 setState:NSOffState];
+            [oChara2DHitButton12 setState:NSOffState];
+
+            [oChara2DHitButtonAddRect setEnabled:NO];
+            [oChara2DHitButtonAddCircle setEnabled:NO];
+        }
+        [oChara2DHitCountField setIntValue:[theKoma hitInfoCount]];
+    } else {
+        [oChara2DHitButtonAll setState:NSOffState];
+        [oChara2DHitButtonAll setEnabled:NO];
+        [oChara2DHitButton1 setEnabled:NO];
+        [oChara2DHitButton2 setEnabled:NO];
+        [oChara2DHitButton3 setEnabled:NO];
+        [oChara2DHitButton4 setEnabled:NO];
+        [oChara2DHitButton5 setEnabled:NO];
+        [oChara2DHitButton6 setEnabled:NO];
+        [oChara2DHitButton7 setEnabled:NO];
+        [oChara2DHitButton8 setEnabled:NO];
+        [oChara2DHitButton9 setEnabled:NO];
+        [oChara2DHitButton10 setEnabled:NO];
+        [oChara2DHitButton11 setEnabled:NO];
+        [oChara2DHitButton12 setEnabled:NO];
+        [oChara2DHitButton1 setState:NSOffState];
+        [oChara2DHitButton2 setState:NSOffState];
+        [oChara2DHitButton3 setState:NSOffState];
+        [oChara2DHitButton4 setState:NSOffState];
+        [oChara2DHitButton5 setState:NSOffState];
+        [oChara2DHitButton6 setState:NSOffState];
+        [oChara2DHitButton7 setState:NSOffState];
+        [oChara2DHitButton8 setState:NSOffState];
+        [oChara2DHitButton9 setState:NSOffState];
+        [oChara2DHitButton10 setState:NSOffState];
+        [oChara2DHitButton11 setState:NSOffState];
+        [oChara2DHitButton12 setState:NSOffState];
+        [oChara2DHitButtonAddRect setEnabled:NO];
+        [oChara2DHitButtonAddCircle setEnabled:NO];
+        [oChara2DHitCountField setStringValue:@""];
+    }
+}
+
 
 #pragma mark -
 #pragma mark NSOutlineView DataSource
@@ -1595,7 +1904,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     // 2Dキャラクタのコマリスト
     else if (outlineView == oChara2DKomaListView) {
         [oChara2DKomaPreviewView updateViewSize];
-        [oChara2DKomaPreviewView setNeedsDisplay:YES];
+        [oChara2DKomaPreviewView deselectHitInfo];
+        [self setupChara2DHitButtons];
 
         [self willChangeValueForKey:@"isChara2DKomaSelected"];
         [self didChangeValueForKey:@"isChara2DKomaSelected"];
