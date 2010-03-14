@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         mScale = 1.0;
-        mResizingHitInfo = nil;
+        mResizingHitInfo = nil;        
     }
     return self;
 }
@@ -166,9 +166,35 @@
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
+    mIsResizingFromTop = NO;
+    mIsResizingFromBottom = NO;
+    mIsResizingFromLeft = NO;
+    mIsResizingFromRight = NO;
+    
     BXChara2DKoma* theKoma = [oDocument selectedChara2DKoma];
     if (!theKoma) {
         return;
+    }
+    
+    NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    
+    if (mResizingHitInfo) {
+        if ([mResizingHitInfo isPointInTopMiddleHandle:pos]) {
+            mIsResizingFromTop = YES;
+            return;
+        }
+        if ([mResizingHitInfo isPointInBottomMiddleHandle:pos]) {
+            mIsResizingFromBottom = YES;
+            return;
+        }
+        if ([mResizingHitInfo isPointInLeftMiddleHandle:pos]) {
+            mIsResizingFromLeft = YES;
+            return;
+        }
+        if ([mResizingHitInfo isPointInRightMiddleHandle:pos]) {
+            mIsResizingFromRight = YES;
+            return;
+        }
     }
     
     NSImage* nsImage = [theKoma nsImage];
@@ -181,9 +207,7 @@
     mStartX = (int)((frameSize.width - mSizeX) / 2);
     mStartY = (int)((frameSize.height - mSizeY) / 2);
     
-    NSRect targetRect = NSMakeRect(mStartX, mStartY, mSizeX, mSizeY);
-    
-    NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSRect targetRect = NSMakeRect(mStartX, mStartY, mSizeX, mSizeY);    
     
     pos.x -= targetRect.origin.x;
     pos.y -= targetRect.origin.y;
@@ -201,11 +225,46 @@
     if (!mResizingHitInfo) {
         return;
     }
+    
+    BXChara2DKoma* theKoma = [oDocument selectedChara2DKoma];
+    
+    NSImage* nsImage = [theKoma nsImage];
+    NSSize imageSize = [nsImage size];
+    
+    NSSize frameSize = [self frame].size;
+    
+    mSizeX = (int)(imageSize.width * mScale + 0.5);
+    mSizeY = (int)(imageSize.height * mScale + 0.5);
+    mStartX = (int)((frameSize.width - mSizeX) / 2);
+    mStartY = (int)((frameSize.height - mSizeY) / 2);
+    
+    NSRect targetRect = NSMakeRect(mStartX, mStartY, mSizeX, mSizeY);    
+    
+    NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    pos.x -= targetRect.origin.x;
+    pos.y -= targetRect.origin.y;
+    pos.x /= mScale;
+    pos.y /= mScale;
+    pos.y = imageSize.height - pos.y;    
 
-    NSRect rect = [mResizingHitInfo rect];
-    rect.origin.x += [theEvent deltaX];
-    rect.origin.y -= [theEvent deltaY];
-    [mResizingHitInfo setRect:rect];
+    if (mIsResizingFromTop) {
+        [mResizingHitInfo resizeFromTopWithPoint:pos];
+    }
+    else if (mIsResizingFromBottom) {
+        [mResizingHitInfo resizeFromBottomWithPoint:pos];
+    }
+    else if (mIsResizingFromLeft) {
+        [mResizingHitInfo resizeFromLeftWithPoint:pos];
+    }
+    else if (mIsResizingFromRight) {
+        [mResizingHitInfo resizeFromRightWithPoint:pos];
+    }
+    else {
+        NSRect rect = [mResizingHitInfo rect];
+        rect.origin.x += [theEvent deltaX] / mScale;
+        rect.origin.y -= [theEvent deltaY] / mScale;
+        [mResizingHitInfo setRect:rect];
+    }
 
     [self setNeedsDisplay:YES];
 }

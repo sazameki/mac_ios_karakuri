@@ -41,6 +41,20 @@
     [super dealloc];
 }
 
+- (BXDocument*)document
+{
+    BXDocument* ret = mDocument;
+    if (!ret && mParentElement) {
+        ret = [mParentElement document];
+    }
+    return ret;
+}
+
+- (void)setDocument:(BXDocument*)aDocument
+{
+    mDocument = aDocument;
+}
+
 
 #pragma mark -
 #pragma mark 項目の管理

@@ -48,7 +48,9 @@
     
     [self rebuildParticleSystem];
     
-    mTimer = [NSTimer scheduledTimerWithTimeInterval:0.016 target:self selector:@selector(refreshProc:) userInfo:nil repeats:YES];
+    if (mTargetSpec) {    
+        mTimer = [NSTimer scheduledTimerWithTimeInterval:0.016 target:self selector:@selector(refreshProc:) userInfo:nil repeats:YES];
+    }
 }
 
 - (void)rebuildParticleSystem

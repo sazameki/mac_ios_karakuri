@@ -25,6 +25,8 @@
     IBOutlet NSOutlineView*             oElementView;
     IBOutlet NSTabView*                 oEditorTabView;
     IBOutlet SZStatusBarBackgroundView* oStatusBarBGView;
+    IBOutlet NSView*                    oExportAccessoryView;
+    IBOutlet NSMatrix*                  oExportOptionMatrix;
 
     ///// 2Dキャラクタの設定用アウトレット
     IBOutlet NSTextField*               oChara2DResourceIDField;
@@ -114,8 +116,8 @@
     NSMutableArray*     mRootElements;
     
     BXResourceGroup*    mBackgroundGroup;
-    BXResourceGroup*    mCharaGroup;
-    BXResourceGroup*    mParticleGroup;
+    BXResourceGroup*    mChara2DGroup;
+    BXResourceGroup*    mParticle2DGroup;
     BXResourceGroup*    mBGMGroup;
     BXResourceGroup*    mSEGroup;
     BXResourceGroup*    mStageGroup;
@@ -125,10 +127,13 @@
 }
 
 
-///// 一般的な追加アクション
+///// 一般的なアクション
 
 - (void)addChara2D:(id)sender;
 - (void)addParticle2D:(id)sender;
+
+- (void)exportAllResources:(id)sender;
+- (void)exportSelectedResource:(id)sender;
 
 
 ///// 2Dキャラクタ設定アクション
@@ -167,6 +172,8 @@
 - (IBAction)addChara2DHitInfoOval:(id)sender;
 - (IBAction)addChara2DHitInfoRect:(id)sender;
 
+- (IBAction)removeSelectedChara2D:(id)sender;
+
 
 ///// パーティクル設定アクション
 
@@ -193,6 +200,8 @@
 
 - (IBAction)changedParticleLoopSetting:(id)sender;
 - (IBAction)changedParticleBGColor1:(id)sender;
+
+- (IBAction)removeSelectedParticle2D:(id)sender;
 
 
 ///// 2Dキャラクタ設定に関するメソッド
@@ -222,6 +231,9 @@
 - (NSFileWrapper*)rootWrapper;
 - (NSFileWrapper*)contentsWrapper;
 - (NSFileWrapper*)resourcesWrapper;
+
+- (BXResourceGroup*)chara2DGroup;
+- (BXResourceGroup*)particle2DGroup;
 
 
 @end

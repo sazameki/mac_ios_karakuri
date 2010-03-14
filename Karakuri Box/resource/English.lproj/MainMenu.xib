@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="538"/>
+			<integer value="81"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -296,7 +296,8 @@
 								<object class="NSMenuItem" id="772890892">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">書き出す…</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSKeyEquiv">e</string>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="1033313550"/>
 									<reference key="NSMixedImage" ref="310636482"/>
@@ -883,6 +884,14 @@
 					</object>
 					<int key="connectionID">545</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">exportAllResources:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="772890892"/>
+					</object>
+					<int key="connectionID">546</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1466,7 +1475,6 @@
 					<string>493.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
-					<string>534.IBPluginDependency</string>
 					<string>537.IBPluginDependency</string>
 					<string>538.IBEditorWindowLastContentRect</string>
 					<string>538.IBPluginDependency</string>
@@ -1609,7 +1617,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{277, 578}, {184, 43}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1669,7 +1676,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">545</int>
+			<int key="maxID">546</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1683,7 +1690,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">BXAppController.h</string>
+						<string key="minorKey">source/BXAppController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1695,7 +1702,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">BXChara2DAtlasView.h</string>
+						<string key="minorKey">source/BXChara2DAtlasView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1707,7 +1714,145 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">BXChara2DKomaPreviewView.h</string>
+						<string key="minorKey">source/BXChara2DKomaPreviewView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">BXChara2DSimulatorView</string>
+					<string key="superclassName">BXOpenGLView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>changedActionStateC:</string>
+							<string>changedActionStateDown:</string>
+							<string>changedActionStateLeft:</string>
+							<string>changedActionStateMouse:</string>
+							<string>changedActionStateRight:</string>
+							<string>changedActionStateUp:</string>
+							<string>changedActionStateX:</string>
+							<string>changedActionStateZ:</string>
+							<string>changedFirstState:</string>
+							<string>changedFirstStateKoma:</string>
+							<string>startAnimation:</string>
+							<string>stopAnimation:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>oActionSpeedFieldDown</string>
+							<string>oActionSpeedFieldLeft</string>
+							<string>oActionSpeedFieldRight</string>
+							<string>oActionSpeedFieldUp</string>
+							<string>oActionStateButtonC</string>
+							<string>oActionStateButtonDown</string>
+							<string>oActionStateButtonLeft</string>
+							<string>oActionStateButtonMouse</string>
+							<string>oActionStateButtonRight</string>
+							<string>oActionStateButtonUp</string>
+							<string>oActionStateButtonX</string>
+							<string>oActionStateButtonZ</string>
+							<string>oActionStateKomaButtonC</string>
+							<string>oActionStateKomaButtonDown</string>
+							<string>oActionStateKomaButtonLeft</string>
+							<string>oActionStateKomaButtonMouse</string>
+							<string>oActionStateKomaButtonRight</string>
+							<string>oActionStateKomaButtonUp</string>
+							<string>oActionStateKomaButtonX</string>
+							<string>oActionStateKomaButtonZ</string>
+							<string>oAnimationButton</string>
+							<string>oCurrentStateField</string>
+							<string>oDoChangeLocationButtonMouse</string>
+							<string>oFirstStateButton</string>
+							<string>oFirstStateKomaButton</string>
+							<string>oIgnoreCancelDeclButtonC</string>
+							<string>oIgnoreCancelDeclButtonDown</string>
+							<string>oIgnoreCancelDeclButtonLeft</string>
+							<string>oIgnoreCancelDeclButtonMouse</string>
+							<string>oIgnoreCancelDeclButtonRight</string>
+							<string>oIgnoreCancelDeclButtonUp</string>
+							<string>oIgnoreCancelDeclButtonX</string>
+							<string>oIgnoreCancelDeclButtonZ</string>
+							<string>oIgnoreCancelDeclRevertToFirstState</string>
+							<string>oIgnoreFinalAnimationButtonC</string>
+							<string>oIgnoreFinalAnimationButtonDown</string>
+							<string>oIgnoreFinalAnimationButtonLeft</string>
+							<string>oIgnoreFinalAnimationButtonMouse</string>
+							<string>oIgnoreFinalAnimationButtonRight</string>
+							<string>oIgnoreFinalAnimationButtonUp</string>
+							<string>oIgnoreFinalAnimationButtonX</string>
+							<string>oIgnoreFinalAnimationButtonZ</string>
+							<string>oIgnoreFinalAnimationRevertToFirstState</string>
+							<string>oRevertToFirstStateWithNoKeyButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSTextField</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
+							<string>NSButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">source/BXChara2DSimulatorView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1717,15 +1862,31 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>activateChara2DHitButton10:</string>
+							<string>activateChara2DHitButton11:</string>
+							<string>activateChara2DHitButton12:</string>
+							<string>activateChara2DHitButton1:</string>
+							<string>activateChara2DHitButton2:</string>
+							<string>activateChara2DHitButton3:</string>
+							<string>activateChara2DHitButton4:</string>
+							<string>activateChara2DHitButton5:</string>
+							<string>activateChara2DHitButton6:</string>
+							<string>activateChara2DHitButton7:</string>
+							<string>activateChara2DHitButton8:</string>
+							<string>activateChara2DHitButton9:</string>
 							<string>addChara2D:</string>
+							<string>addChara2DHitInfoOval:</string>
+							<string>addChara2DHitInfoRect:</string>
 							<string>addChara2DImage:</string>
 							<string>addChara2DState:</string>
 							<string>addParticle2D:</string>
 							<string>changedChara2DImageDivX:</string>
 							<string>changedChara2DImageDivY:</string>
 							<string>changedChara2DKomaDefaultInterval:</string>
+							<string>changedChara2DKomaPreviewScale:</string>
 							<string>changedChara2DResourceID:</string>
 							<string>changedChara2DResourceName:</string>
+							<string>changedChara2DShowsHitInfos:</string>
 							<string>changedParticleBGColor1:</string>
 							<string>changedParticleBlendMode:</string>
 							<string>changedParticleColor:</string>
@@ -1746,7 +1907,13 @@
 							<string>changedParticleMinVY:</string>
 							<string>changedParticleResourceID:</string>
 							<string>changedParticleResourceName:</string>
+							<string>exportAllResources:</string>
 							<string>removeChara2DState:</string>
+							<string>removeSelectedChara2D:</string>
+							<string>removeSelectedParticle2D:</string>
+							<string>startChara2DKomaPreviewAnimation:</string>
+							<string>startChara2DSimulator:</string>
+							<string>stopChara2DSimulator:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1780,21 +1947,64 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>oChara2DHitButton1</string>
+							<string>oChara2DHitButton10</string>
+							<string>oChara2DHitButton11</string>
+							<string>oChara2DHitButton12</string>
+							<string>oChara2DHitButton2</string>
+							<string>oChara2DHitButton3</string>
+							<string>oChara2DHitButton4</string>
+							<string>oChara2DHitButton5</string>
+							<string>oChara2DHitButton6</string>
+							<string>oChara2DHitButton7</string>
+							<string>oChara2DHitButton8</string>
+							<string>oChara2DHitButton9</string>
+							<string>oChara2DHitButtonAddCircle</string>
+							<string>oChara2DHitButtonAddRect</string>
+							<string>oChara2DHitButtonAll</string>
+							<string>oChara2DHitCountField</string>
 							<string>oChara2DImageAtlasView</string>
 							<string>oChara2DImageDivXField</string>
 							<string>oChara2DImageDivYField</string>
 							<string>oChara2DImageListView</string>
 							<string>oChara2DKomaDefaultIntervalButton</string>
+							<string>oChara2DKomaIntervalButtonCell</string>
 							<string>oChara2DKomaListView</string>
+							<string>oChara2DKomaPreviewScaleButton</string>
 							<string>oChara2DKomaPreviewView</string>
 							<string>oChara2DResourceIDField</string>
 							<string>oChara2DResourceNameField</string>
+							<string>oChara2DSimulatorPanel</string>
+							<string>oChara2DSimulatorView</string>
+							<string>oChara2DStateCancelKomaNumberButton</string>
 							<string>oChara2DStateListView</string>
 							<string>oChara2DStateNextStateButton</string>
 							<string>oEditorTabView</string>
@@ -1844,15 +2054,36 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSButton</string>
+							<string>NSTextField</string>
 							<string>BXChara2DAtlasView</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSOutlineView</string>
 							<string>NSPopUpButton</string>
+							<string>NSPopUpButtonCell</string>
 							<string>NSOutlineView</string>
+							<string>NSPopUpButton</string>
 							<string>BXChara2DKomaPreviewView</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSPanel</string>
+							<string>BXChara2DSimulatorView</string>
+							<string>NSPopUpButton</string>
 							<string>NSOutlineView</string>
 							<string>NSPopUpButton</string>
 							<string>NSTabView</string>
@@ -1897,13 +2128,13 @@
 							<string>NSSlider</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
-							<string>BXParticleSimulatorView</string>
+							<string>BXParticle2DSimulatorView</string>
 							<string>SZStatusBarBackgroundView</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">BXDocument.h</string>
+						<string key="minorKey">source/BXDocument.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1911,28 +2142,31 @@
 					<string key="superclassName">NSOpenGLView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">BXOpenGLView.h</string>
+						<string key="minorKey">source/BXOpenGLView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">BXParticleSimulatorView</string>
+					<string key="className">BXParticle2DSimulatorView</string>
 					<string key="superclassName">BXOpenGLView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">BXParticleSimulatorView.h</string>
+						<string key="minorKey">source/BXParticle2DSimulatorView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
+					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addChara2D:</string>
 							<string>addParticle2D:</string>
+							<string>exportAllResources:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -1947,12 +2181,20 @@
 					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SZStatusBarBackgroundView.h</string>
+						<string key="minorKey">source/SZStatusBarBackgroundView.h</string>
 					</object>
 				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSActionCell</string>
+					<string key="superclassName">NSCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSActionCell.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSApplication</string>
 					<string key="superclassName">NSResponder</string>
@@ -2010,6 +2252,22 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSButtonCell</string>
+					<string key="superclassName">NSActionCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSButtonCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSCell</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2127,6 +2385,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="741030023">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSMenuItem.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSMenuItemCell</string>
+					<string key="superclassName">NSButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSMenuItemCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2392,11 +2658,27 @@
 					<reference key="sourceIdentifier" ref="24092035"/>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSPanel</string>
+					<string key="superclassName">NSWindow</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSPopUpButton</string>
 					<string key="superclassName">NSButton</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSPopUpButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSPopUpButtonCell</string>
+					<string key="superclassName">NSMenuItemCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSPopUpButtonCell.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2513,7 +2795,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">../Karakuri Box.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../../Karakuri Box.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>

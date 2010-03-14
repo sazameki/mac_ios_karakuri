@@ -39,9 +39,96 @@
     return self;
 }
 
+- (BXDocument*)document
+{
+    return [mParentKoma document];
+}
+
+- (BXChara2DKoma*)parentKoma
+{
+    return mParentKoma;
+}
+
+- (void)setParentKoma:(BXChara2DKoma*)aKoma
+{
+    mParentKoma = aKoma;
+}
+
 - (BOOL)contains:(NSPoint)pos
 {
     return NSPointInRect(pos, mRect);
+}
+
+- (BOOL)isPointInTopMiddleHandle:(NSPoint)pos
+{
+    NSRect theRect = NSMakeRect(mTopMiddlePoint.x-2, mTopMiddlePoint.y-2, 4, 4);
+    return NSPointInRect(pos, theRect);
+}
+
+- (BOOL)isPointInBottomMiddleHandle:(NSPoint)pos
+{
+    NSRect theRect = NSMakeRect(mBottomMiddlePoint.x-2, mBottomMiddlePoint.y-2, 4, 4);
+    return NSPointInRect(pos, theRect);
+}
+
+- (BOOL)isPointInLeftMiddleHandle:(NSPoint)pos
+{
+    NSRect theRect = NSMakeRect(mLeftMiddlePoint.x-2, mLeftMiddlePoint.y-2, 4, 4);
+    return NSPointInRect(pos, theRect);
+}
+
+- (BOOL)isPointInRightMiddleHandle:(NSPoint)pos
+{
+    NSRect theRect = NSMakeRect(mRightMiddlePoint.x-2, mRightMiddlePoint.y-2, 4, 4);
+    return NSPointInRect(pos, theRect);
+}
+
+- (void)resizeFromTopWithPoint:(NSPoint)pos
+{
+    NSRect theRect = mRect;
+    theRect.size.height = pos.y - theRect.origin.y;
+    if (theRect.size.height < 1) {
+        theRect.size.height = 1;
+    }
+    [self setRect:theRect];
+}
+
+- (void)resizeFromBottomWithPoint:(NSPoint)pos
+{
+    NSRect theRect = mRect;
+    
+    float orgBottomEdge = theRect.origin.y + theRect.size.height;
+    theRect.origin.y = pos.y;
+    if (theRect.origin.y >= orgBottomEdge-1) {
+        theRect.origin.y = orgBottomEdge - 1;
+    }
+    theRect.size.height = orgBottomEdge - theRect.origin.y;
+    
+    [self setRect:theRect];    
+}
+
+- (void)resizeFromLeftWithPoint:(NSPoint)pos
+{    
+    NSRect theRect = mRect;
+
+    float orgRightEdge = theRect.origin.x + theRect.size.width;
+    theRect.origin.x = pos.x;
+    if (theRect.origin.x >= orgRightEdge-1) {
+        theRect.origin.x = orgRightEdge - 1;
+    }
+    theRect.size.width = orgRightEdge - theRect.origin.x;
+
+    [self setRect:theRect];
+}
+
+- (void)resizeFromRightWithPoint:(NSPoint)pos
+{
+    NSRect theRect = mRect;
+    theRect.size.width = pos.x - theRect.origin.x;
+    if (theRect.size.width < 1) {
+        theRect.size.width = 1;
+    }
+    [self setRect:theRect];
 }
 
 - (NSRect)rect
@@ -51,7 +138,10 @@
 
 - (void)setRect:(NSRect)rect
 {
-    mRect = rect;
+    if (!NSEqualRects(mRect, rect)) {
+        mRect = rect;
+        [[self document] updateChangeCount:NSChangeUndone];
+    }
 }
 
 - (void)drawInRect:(NSRect)targetRect scale:(double)scale isMain:(BOOL)isMain
@@ -140,14 +230,31 @@
                                 mRect.size.width * scale,
                                 mRect.size.height * scale);
 
-    NSPoint topMiddle = NSMakePoint(theRect.origin.x+theRect.size.width/2, theRect.origin.y+theRect.size.height);
-    NSPoint bottomMiddle = NSMakePoint(theRect.origin.x+theRect.size.width/2, theRect.origin.y);
-    NSPoint leftMiddle = NSMakePoint(theRect.origin.x, theRect.origin.y+theRect.size.height/2);
-    NSPoint rightMiddle = NSMakePoint(theRect.origin.x+theRect.size.width, theRect.origin.y+theRect.size.height/2);
-    [self drawHandleAtPoint:topMiddle];
-    [self drawHandleAtPoint:bottomMiddle];
-    [self drawHandleAtPoint:leftMiddle];
-    [self drawHandleAtPoint:rightMiddle];
+    mTopMiddlePoint = NSMakePoint(theRect.origin.x+theRect.size.width/2, theRect.origin.y);
+    mBottomMiddlePoint = NSMakePoint(theRect.origin.x+theRect.size.width/2, theRect.origin.y+theRect.size.height);
+    mLeftMiddlePoint = NSMakePoint(theRect.origin.x, theRect.origin.y+theRect.size.height/2);
+    mRightMiddlePoint = NSMakePoint(theRect.origin.x+theRect.size.width, theRect.origin.y+theRect.size.height/2);
+
+    [self drawHandleAtPoint:mTopMiddlePoint];
+    [self drawHandleAtPoint:mBottomMiddlePoint];
+    [self drawHandleAtPoint:mLeftMiddlePoint];
+    [self drawHandleAtPoint:mRightMiddlePoint];
+    
+    NSMutableDictionary* strAttr = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [NSFont systemFontOfSize:10.0], NSFontAttributeName,
+                                    [NSColor whiteColor], NSForegroundColorAttributeName,
+                                    nil];
+    
+    NSString* infoStr = [NSString stringWithFormat:@"(%d,%d)-[%d,%d]", (int)(mRect.origin.x+0.5), (int)(mRect.origin.y+0.5),
+                         (int)(mRect.size.width+0.5), (int)(mRect.size.height+0.5)];
+                                    
+    [infoStr drawAtPoint:NSMakePoint(mTopMiddlePoint.x-1, mTopMiddlePoint.y-10-1) withAttributes:strAttr];
+    [infoStr drawAtPoint:NSMakePoint(mTopMiddlePoint.x+1, mTopMiddlePoint.y-10-1) withAttributes:strAttr];
+    [infoStr drawAtPoint:NSMakePoint(mTopMiddlePoint.x-1, mTopMiddlePoint.y-10+1) withAttributes:strAttr];
+    [infoStr drawAtPoint:NSMakePoint(mTopMiddlePoint.x+1, mTopMiddlePoint.y-10+1) withAttributes:strAttr];
+
+    [strAttr setObject:[NSColor blackColor] forKey:NSForegroundColorAttributeName];
+    [infoStr drawAtPoint:NSMakePoint(mTopMiddlePoint.x, mTopMiddlePoint.y-10) withAttributes:strAttr];
 }
 
 - (int)groupIndex
@@ -215,7 +322,7 @@
             for (int i = 0; i < [hitInfoDicts count]; i++) {
                 NSDictionary* infoDict = [hitInfoDicts objectAtIndex:i];
                 BXChara2DKomaHitInfo* theInfo = [[[BXChara2DKomaHitInfo alloc] initWithInfo:infoDict] autorelease];
-                [mHitInfos addObject:theInfo];
+                [self addHitInfo:theInfo];
             }
         }
     }
@@ -227,6 +334,21 @@
     [mHitInfos release];
 
     [super dealloc];
+}
+
+- (BXDocument*)document
+{
+    return [mParentState document];
+}
+
+- (BXChara2DState*)parentState
+{
+    return mParentState;
+}
+
+- (void)setParentState:(BXChara2DState*)aState
+{
+    mParentState = aState;
 }
 
 - (void)drawHitInfosInRect:(NSRect)targetRect scale:(double)scale
@@ -273,6 +395,12 @@
     mCurrentHitGroupIndex = index;
 }
 
+- (void)addHitInfo:(BXChara2DKomaHitInfo*)aHitInfo
+{
+    [aHitInfo setParentKoma:self];
+    [mHitInfos addObject:aHitInfo];
+}
+
 - (BXChara2DKomaHitInfo*)addHitInfoOval
 {
     NSImage* nsImage = [self nsImage];
@@ -289,7 +417,8 @@
     BXChara2DKomaHitInfo* theInfo = [[[BXChara2DKomaHitInfo alloc] initWithType:BXChara2DKomaHitTypeOval
                                                                           group:mCurrentHitGroupIndex
                                                                            rect:theRect] autorelease];
-    [mHitInfos addObject:theInfo];
+    
+    [self addHitInfo:theInfo];
     
     return theInfo;
 }
@@ -310,7 +439,7 @@
     BXChara2DKomaHitInfo* theInfo = [[[BXChara2DKomaHitInfo alloc] initWithType:BXChara2DKomaHitTypeRect
                                                                           group:mCurrentHitGroupIndex
                                                                            rect:theRect] autorelease];
-    [mHitInfos addObject:theInfo];
+    [self addHitInfo:theInfo];
 
     return theInfo;
 }

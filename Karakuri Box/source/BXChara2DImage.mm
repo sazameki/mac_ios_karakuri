@@ -64,6 +64,11 @@
     [super dealloc];
 }
 
+- (BXDocument*)document
+{
+    return mDocument;
+}
+
 - (int)imageID
 {
     return mImageID;

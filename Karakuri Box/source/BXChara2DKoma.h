@@ -13,6 +13,7 @@
 
 @class BXChara2DSpec;
 @class BXChara2DState;
+@class BXChara2DKoma;
 
 
 enum {
@@ -22,13 +23,35 @@ enum {
 
 
 @interface BXChara2DKomaHitInfo : NSObject {
+    BXChara2DKoma*      mParentKoma;
+
     int     mHitType;
     int     mGroupIndex;
     NSRect  mRect;
+    
+    NSPoint mTopMiddlePoint;
+    NSPoint mBottomMiddlePoint;
+    NSPoint mLeftMiddlePoint;
+    NSPoint mRightMiddlePoint;
 }
 
 - (id)initWithType:(int)type group:(int)groupIndex rect:(NSRect)rect;
 - (id)initWithInfo:(NSDictionary*)infoDict;
+
+- (BXDocument*)document;
+
+- (BOOL)isPointInTopMiddleHandle:(NSPoint)pos;
+- (BOOL)isPointInBottomMiddleHandle:(NSPoint)pos;
+- (BOOL)isPointInLeftMiddleHandle:(NSPoint)pos;
+- (BOOL)isPointInRightMiddleHandle:(NSPoint)pos;
+
+- (void)resizeFromTopWithPoint:(NSPoint)pos;
+- (void)resizeFromBottomWithPoint:(NSPoint)pos;
+- (void)resizeFromLeftWithPoint:(NSPoint)pos;
+- (void)resizeFromRightWithPoint:(NSPoint)pos;
+
+- (BXChara2DKoma*)parentKoma;
+- (void)setParentKoma:(BXChara2DKoma*)aKoma;
 
 - (BOOL)contains:(NSPoint)pos;
 
@@ -46,6 +69,8 @@ enum {
 
 
 @interface BXChara2DKoma : NSObject {
+    BXChara2DState* mParentState;
+
     BXChara2DImage* mImage;
     int             mImageAtlasIndex;
     
@@ -65,10 +90,14 @@ enum {
 
 - (id)initWithInfo:(NSDictionary*)info chara2DSpec:(BXChara2DSpec*)chara2DSpec;
 
-- (void)drawHitInfosInRect:(NSRect)targetRect scale:(double)scale;
+- (BXDocument*)document;
+
+- (BXChara2DState*)parentState;
+- (void)setParentState:(BXChara2DState*)aState;
 
 - (void)setImage:(BXChara2DImage*)image atlasAtIndex:(int)index;
 
+- (void)drawHitInfosInRect:(NSRect)targetRect scale:(double)scale;
 - (int)hitInfoCount;
 - (BOOL)showsHitInfos;
 - (void)setShowsHitInfos:(BOOL)flag;
@@ -77,6 +106,8 @@ enum {
 - (BXChara2DKomaHitInfo*)addHitInfoOval;
 - (BXChara2DKomaHitInfo*)addHitInfoRect;
 - (BXChara2DKomaHitInfo*)hitInfoAtPoint:(NSPoint)pos;
+
+- (void)addHitInfo:(BXChara2DKomaHitInfo*)aHitInfo;
 
 - (int)komaNumber;
 - (void)setKomaNumber:(int)number;

@@ -13,7 +13,6 @@
 
 @interface BXChara2DSpec : BXResourceElement {
     NSMutableArray*     mStates;
-
     NSMutableArray*     mImages;
     
     double              mKomaPreviewScale;

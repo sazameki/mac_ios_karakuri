@@ -13,6 +13,8 @@
 
 
 @interface BXResourceElement : NSObject {
+    BXDocument*         mDocument;
+    
     NSString*           mResourceName;
     
     int                 mResourceID;
@@ -22,6 +24,9 @@
 }
 
 - (id)initWithName:(NSString*)name;
+
+- (BXDocument*)document;
+- (void)setDocument:(BXDocument*)aDocument;
 
 - (NSString*)localizedName;
 - (BOOL)isExpandable;

@@ -23,6 +23,11 @@
     double  mScale;
     
     BXChara2DKomaHitInfo*   mResizingHitInfo;
+    
+    BOOL    mIsResizingFromTop;
+    BOOL    mIsResizingFromBottom;
+    BOOL    mIsResizingFromLeft;
+    BOOL    mIsResizingFromRight;
 }
 
 - (void)selectHitInfo:(BXChara2DKomaHitInfo*)anInfo;

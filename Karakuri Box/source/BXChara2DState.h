@@ -10,7 +10,6 @@
 #import "BXChara2DKoma.h"
 
 
-@class BXDocument;
 @class BXChara2DSpec;
 
 
@@ -30,6 +29,8 @@
 }
 
 - (id)initWithName:(NSString*)name chara2DSpec:(BXChara2DSpec*)chara2DSpec;
+
+- (BXDocument*)document;
 
 - (BXChara2DKoma*)targetKomaForCancel;
 - (void)setTargetKomaForCancel:(BXChara2DKoma*)koma;

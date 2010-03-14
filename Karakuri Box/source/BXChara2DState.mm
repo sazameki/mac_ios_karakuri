@@ -48,6 +48,11 @@
     [super dealloc];
 }
 
+- (BXDocument*)document
+{
+    return [mParentSpec document];
+}
+
 - (BXChara2DKoma*)targetKomaForCancel
 {
     return mTargetKomaForCancel;
@@ -100,6 +105,7 @@
 - (BXChara2DKoma*)insertKomaAtIndex:(int)index
 {
     BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] init] autorelease];
+    [aKoma setParentState:self];
     [mKomas insertObject:aKoma atIndex:index];
     [self renumberKomas];
     return aKoma;
@@ -131,6 +137,7 @@
 - (void)removeKomaAtIndex:(int)index
 {
     BXChara2DKoma* theKoma = [mKomas objectAtIndex:index];
+    [theKoma setParentState:nil];
     BXChara2DImage* theImage = [theKoma image];
     [theImage decrementUsedCount];
     [mKomas removeObjectAtIndex:index];
@@ -237,6 +244,7 @@
     for (int i = 0; i < [komaInfos count]; i++) {
         NSDictionary* aKomaInfo = [komaInfos objectAtIndex:i];
         BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] initWithInfo:aKomaInfo chara2DSpec:mParentSpec] autorelease];
+        [aKoma setParentState:self];
         [mKomas addObject:aKoma];
     }
 
