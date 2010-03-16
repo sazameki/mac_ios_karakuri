@@ -1028,7 +1028,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 
 #pragma mark -
-#pragma mark パーティクルの設定アクション
+#pragma mark 2Dパーティクルの設定アクション
 
 - (IBAction)changedParticleResourceID:(id)sender
 {
@@ -1057,16 +1057,55 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self updateChangeCount:NSChangeUndone];
 }
 
+- (void)showCustomParticle2DImageSelectSheet
+{
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+    [openPanel setCanChooseDirectories:NO];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel beginSheetForDirectory:nil
+                                 file:nil
+                                types:[NSImage imageFileTypes]
+                       modalForWindow:oMainWindow
+                        modalDelegate:self
+                       didEndSelector:@selector(customParticle2DImageSheetDidEnd:returnCode:context:)
+                          contextInfo:nil];
+}
+
+- (void)customParticle2DImageSheetDidEnd:(NSOpenPanel*)panel
+                              returnCode:(int)returnCode
+                                 context:(void*)context
+{
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
+
+    if (returnCode == NSOKButton) {
+        NSString* filename = [panel filename];
+        [particleSpec setImageAtPath:filename];
+        
+        [self saveDocument:self];
+        
+        [oParticleView rebuildParticleSystem];
+    } else {
+        [oParticleImageButton selectItemWithTag:[particleSpec imageTag]];
+    }
+}
+
 - (IBAction)changedParticleImage:(id)sender
 {
     int tag = [oParticleImageButton selectedTag];
     
-    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
-    [particleSpec setImageTag:tag];
- 
-    [oParticleView rebuildParticleSystem];
-
-    [self updateChangeCount:NSChangeUndone];
+    // カスタム画像
+    if (tag == 999) {
+        [self showCustomParticle2DImageSelectSheet];
+    }
+    // プリセット画像
+    else {
+        BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
+        [particleSpec setImageTag:tag];
+        
+        [oParticleView rebuildParticleSystem];
+        
+        [self updateChangeCount:NSChangeUndone];
+    }    
 }
 
 - (IBAction)changedParticleLoopSetting:(id)sender
@@ -1634,6 +1673,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oParticleDeltaBlueSlider setFloatValue:deltaBlue];
     [oParticleDeltaAlphaField setFloatValue:deltaAlpha];
     [oParticleDeltaAlphaSlider setFloatValue:deltaAlpha];
+    
+    [oParticleImageButton selectItemWithTag:[theSpec imageTag]];
 }
 
 - (void)setupChara2DHitButtons

@@ -340,7 +340,7 @@
 			children = (
 				8E62A56C113AE053005DC90E /* Base */,
 				8E62A579113AE053005DC90E /* Texture */,
-				8E62A582113AE053005DC90E /* Particle */,
+				8E62A582113AE053005DC90E /* Particle2D */,
 			);
 			name = Karakuri;
 			sourceTree = "<group>";
@@ -379,13 +379,13 @@
 			name = Texture;
 			sourceTree = "<group>";
 		};
-		8E62A582113AE053005DC90E /* Particle */ = {
+		8E62A582113AE053005DC90E /* Particle2D */ = {
 			isa = PBXGroup;
 			children = (
 				8E62A583113AE053005DC90E /* KRParticle2DSystem.h */,
 				8E62A584113AE053005DC90E /* KRParticle2DSystem.mm */,
 			);
-			name = Particle;
+			name = Particle2D;
 			sourceTree = "<group>";
 		};
 		8E62A585113AE053005DC90E /* AppKit Ex */ = {

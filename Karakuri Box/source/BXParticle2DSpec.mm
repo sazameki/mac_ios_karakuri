@@ -9,6 +9,7 @@
 #import "BXParticle2DSpec.h"
 #import "KRGraphics.h"
 #import "NSDictionary+LoadSave.h"
+#import "BXDocument.h"
 
 
 @implementation BXParticle2DSpec
@@ -33,6 +34,7 @@
         *mGenerationPos = KRVector2DZero;
 
         mImageTag = 109;
+        mImageTicket = -1;
 
         mLife = 60;
         *mColor = KRColor::White;
@@ -65,8 +67,17 @@
 
 
 - (KRParticle2DSystem*)createParticleSystem
-{
-    KRParticle2DSystem* ret = new KRParticle2DSystem(mImageTag);
+{    
+    std::string customPath = "";
+    
+    if (mImageTag == 999) {
+        BXResourceFileManager* fileManager = [[self document] fileManager];
+        NSString* imagePath = [fileManager pathForTicket:mImageTicket];
+        customPath = [imagePath cStringUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    KRParticle2DSystem* ret = new KRParticle2DSystem(mImageTag, customPath);
+
     ret->setGravity(*mGravity);
     ret->setLife(mLife);
     ret->setColor(*mColor);
@@ -153,6 +164,11 @@
     return *mGravity;
 }
 
+- (int)imageTag
+{
+    return mImageTag;
+}
+
 - (int)life
 {
     return mLife;
@@ -185,6 +201,7 @@
 
 
 #pragma mark -
+#pragma mark Setter
 
 - (void)setBGColor1:(KRColor)color
 {
@@ -254,6 +271,13 @@
 - (void)setImageTag:(int)tag
 {
     mImageTag = tag;
+}
+
+- (void)setImageAtPath:(NSString*)path
+{
+    mImageTag = 999;
+    
+    mImageTicket = [[[self document] fileManager] storeImageFileAtPath:path];
 }
 
 - (void)setLife:(int)value
@@ -362,9 +386,10 @@
     [theInfo setDoubleValue:mGenerationPos->x forName:@"Generation Pos X"];
     [theInfo setDoubleValue:mGenerationPos->y forName:@"Generation Pos Y"];
     
-    // 画像のタグ
+    // 画像
     [theInfo setIntValue:mImageTag forName:@"Image Tag"];
-    
+    [theInfo setIntValue:mImageTicket forName:@"Image Ticket"];
+
     return theInfo;
 }
 
@@ -428,8 +453,9 @@
     mGenerationPos->x = [theInfo doubleValueForName:@"Generation Pos X" currentValue:mGenerationPos->x];
     mGenerationPos->y = [theInfo doubleValueForName:@"Generation Pos Y" currentValue:mGenerationPos->y];
 
-    // 画像のタグ
+    // 画像
     mImageTag = [theInfo intValueForName:@"Image Tag" currentValue:mImageTag];
+    mImageTicket = [theInfo intValueForName:@"Image Ticket" currentValue:mImageTicket];
 }
 
 @end

@@ -101,7 +101,7 @@ KRTexture2D::KRTexture2D(const std::string& filename, KRTexture2DScaleMode scale
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::KRTexture2D(int imageTag, KRTexture2DScaleMode scaleMode)
+KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, KRTexture2DScaleMode scaleMode)
 {
     if (sTexture2DBatchCount > 0) {
         KRTexture2D::processBatchedTexture2DDraws();
@@ -132,6 +132,10 @@ KRTexture2D::KRTexture2D(int imageTag, KRTexture2DScaleMode scaleMode)
     // 円 32x32
     else if (imageTag == 207) {
         filename = "particle_circle_32.png";
+    }
+    // カスタム画像
+    else if (imageTag == 999) {
+        filename = customPath;
     }
     
     mAtlasSize = KRVector2DZero;

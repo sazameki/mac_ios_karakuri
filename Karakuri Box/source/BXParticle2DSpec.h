@@ -39,6 +39,7 @@
     int         mMaxParticleCount;
     
     int         mImageTag;
+    int         mImageTicket;
 
     BOOL        mDoLoop;
     KRVector2D  *mGenerationPos;
@@ -58,6 +59,7 @@
 - (int)generateCount;
 - (KRVector2D)generationPos;
 - (KRVector2D)gravity;
+- (int)imageTag;
 - (int)life;
 - (int)maxAngleV;
 - (int)minAngleV;
@@ -79,6 +81,7 @@
 - (void)setGravityX:(double)value;
 - (void)setGravityY:(double)value;
 - (void)setImageTag:(int)tag;
+- (void)setImageAtPath:(NSString*)path;
 - (void)setLife:(int)value;
 - (void)setMaxAngleV:(int)value;
 - (void)setMinAngleV:(int)value;

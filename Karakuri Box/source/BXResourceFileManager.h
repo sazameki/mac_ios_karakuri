@@ -24,6 +24,7 @@
 - (id)initWithFileName:(NSString*)fileName resourceName:(NSString*)resourceName document:(BXDocument*)document;
 
 - (NSString*)fileName;
+- (NSString*)path;
 
 - (NSString*)resourceName;
 - (void)setResourceName:(NSString*)name;
@@ -41,9 +42,10 @@
 
 - (id)initWithDocument:(BXDocument*)document;
 
-- (int)storeImageFileAtPath:(NSString*)filepath;
 - (NSString*)imageNameForTicket:(int)ticket;
 - (NSImage*)image72dpiForTicket:(int)ticket;
+- (NSString*)pathForTicket:(int)ticket;
+- (int)storeImageFileAtPath:(NSString*)filepath;
 
 - (NSData*)resourceMapData;
 - (void)restoreResourceMapData:(NSData*)data;

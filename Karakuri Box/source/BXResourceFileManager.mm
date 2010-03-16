@@ -54,6 +54,15 @@
     return mFileName;
 }
 
+- (NSString*)path
+{
+    NSURL* docURL = [mDocument fileURL];
+    NSString* contentsPath = [[docURL path] stringByAppendingPathComponent:@"Contents"];
+    NSString* resourcesPath = [contentsPath stringByAppendingPathComponent:@"Resources"];
+    
+    return [resourcesPath stringByAppendingPathComponent:mFileName];
+}
+
 - (NSString*)resourceName
 {
     return mResourceName;
@@ -147,6 +156,12 @@
 {
     BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
     return [theInfo image72dpi];
+}
+
+- (NSString*)pathForTicket:(int)ticket
+{
+    BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
+    return [theInfo path];
 }
 
 - (NSData*)resourceMapData

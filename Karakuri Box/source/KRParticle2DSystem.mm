@@ -96,9 +96,9 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename)
     init();
 }
 
-KRParticle2DSystem::KRParticle2DSystem(int imageTag)
+KRParticle2DSystem::KRParticle2DSystem(int imageTag, std::string& customPath)
 {
-    mTexture = new KRTexture2D(imageTag);
+    mTexture = new KRTexture2D(imageTag, customPath);
     
     init();
 }

@@ -108,7 +108,7 @@ public:
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
      */
     KRParticle2DSystem(const std::string& filename);
-    KRParticle2DSystem(int imageTag);
+    KRParticle2DSystem(int imageTag, std::string& customPath);
 
     virtual ~KRParticle2DSystem();
     
