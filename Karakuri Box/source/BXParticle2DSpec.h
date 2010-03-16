@@ -39,7 +39,7 @@
     int         mMaxParticleCount;
     
     int         mImageTag;
-    int         mImageTicket;
+    NSString*   mImageTicket;
 
     BOOL        mDoLoop;
     KRVector2D  *mGenerationPos;

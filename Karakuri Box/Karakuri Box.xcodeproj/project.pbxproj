@@ -51,6 +51,7 @@
 		8E62A5B6113AE08F005DC90E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B5113AE08F005DC90E /* Localizable.strings */; };
 		8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B7113AE0BE005DC90E /* BXDocument.xib */; };
 		8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E62A5CA113AE18A005DC90E /* OpenGL.framework */; };
+		8E848159114F0FC70068D47F /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E848157114F0FC70068D47F /* NSString+UUID.m */; };
 		8E84ADBA11489B4B00438868 /* transparent_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E84ADB911489B4B00438868 /* transparent_pattern.png */; };
 		8EA495DD1146AEF5002BEBA8 /* BXChara2DKoma.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */; };
 		8EA497151146CD0A002BEBA8 /* NSMutableArray+Moving.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */; };
@@ -147,6 +148,8 @@
 		8E62A5B5113AE08F005DC90E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		8E62A5B8113AE0BE005DC90E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BXDocument.xib; sourceTree = "<group>"; };
 		8E62A5CA113AE18A005DC90E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		8E848157114F0FC70068D47F /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
+		8E848158114F0FC70068D47F /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
 		8E84ADB911489B4B00438868 /* transparent_pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent_pattern.png; sourceTree = "<group>"; };
 		8EA495DB1146AEF5002BEBA8 /* BXChara2DKoma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKoma.h; sourceTree = "<group>"; };
 		8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKoma.mm; sourceTree = "<group>"; };
@@ -243,7 +246,7 @@
 				8E62A55D113AE053005DC90E /* BXDocument.mm */,
 				8E62A562113AE053005DC90E /* Resource */,
 				8E62A56B113AE053005DC90E /* Karakuri */,
-				8E62A585113AE053005DC90E /* AppKit Ex */,
+				8E62A585113AE053005DC90E /* Cocoa Ex */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -388,9 +391,11 @@
 			name = Particle2D;
 			sourceTree = "<group>";
 		};
-		8E62A585113AE053005DC90E /* AppKit Ex */ = {
+		8E62A585113AE053005DC90E /* Cocoa Ex */ = {
 			isa = PBXGroup;
 			children = (
+				8E848157114F0FC70068D47F /* NSString+UUID.m */,
+				8E848158114F0FC70068D47F /* NSString+UUID.h */,
 				8E62A586113AE053005DC90E /* SZSplitView.h */,
 				8E62A587113AE053005DC90E /* SZSplitView.m */,
 				8E62A588113AE053005DC90E /* SZStatusBarBackgroundView.h */,
@@ -404,7 +409,7 @@
 				8EA4A31D11481107002BEBA8 /* NSImage+CGImageConversion.h */,
 				8EA4A31E11481107002BEBA8 /* NSImage+CGImageConversion.mm */,
 			);
-			name = "AppKit Ex";
+			name = "Cocoa Ex";
 			sourceTree = "<group>";
 		};
 		8E62A59E113AE082005DC90E /* Images */ = {
@@ -627,6 +632,7 @@
 				8EA4A1F8114802DE002BEBA8 /* BXChara2DSimulatorView.mm in Sources */,
 				8EA4A31F11481107002BEBA8 /* NSImage+CGImageConversion.mm in Sources */,
 				8EAB6186114CDC2100C2CBC5 /* BXResourceListView.mm in Sources */,
+				8E848159114F0FC70068D47F /* NSString+UUID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

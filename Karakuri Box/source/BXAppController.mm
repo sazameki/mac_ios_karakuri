@@ -77,7 +77,7 @@
     [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"krrsproj"]];
     [savePanel setExtensionHidden:YES];
     [savePanel center];
-    if ([savePanel runModalForDirectory:nil file:nil] == NSOKButton) {
+    if ([savePanel runModalForDirectory:nil file:@"New Resource"] == NSOKButton) {
         NSString* filepath = [savePanel filename];
         if ([self createRootPackageAtPath:filepath]) {
             NSDocumentController* docController = [NSDocumentController sharedDocumentController];

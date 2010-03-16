@@ -22,7 +22,7 @@
         
         mImageID = imageID;
 
-        mImageTicket = [[document fileManager] storeImageFileAtPath:path];
+        mImageTicket = [[[document fileManager] storeFileAtPath:path] copy];
         
         mAtlasImages = [[NSMutableArray alloc] init];
         
@@ -44,7 +44,7 @@
         
         mImageID = [info intValueForName:@"Image ID" currentValue:-1];
 
-        mImageTicket = [info intValueForName:@"Image Ticket" currentValue:-1];
+        mImageTicket = [[info stringValueForName:@"Image Ticket" currentValue:nil] copy];
         
         mAtlasImages = [[NSMutableArray alloc] init];
         
@@ -60,6 +60,7 @@
 - (void)dealloc
 {
     [mAtlasImages release];
+    [mImageTicket release];
 
     [super dealloc];
 }
@@ -142,7 +143,7 @@
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
     [theInfo setIntValue:mImageID forName:@"Image ID"];
-    [theInfo setIntValue:mImageTicket forName:@"Image Ticket"];
+    [theInfo setStringValue:mImageTicket forName:@"Image Ticket"];
     [theInfo setIntValue:mDivX forName:@"Div X"];
     [theInfo setIntValue:mDivY forName:@"Div Y"];
     [theInfo setIntValue:mUsedCount forName:@"Used Count"];

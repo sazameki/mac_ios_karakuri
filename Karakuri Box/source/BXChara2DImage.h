@@ -17,7 +17,7 @@
 
     int         mImageID;
 
-    int         mImageTicket;
+    NSString*   mImageTicket;
     
     int         mDivX;
     int         mDivY;

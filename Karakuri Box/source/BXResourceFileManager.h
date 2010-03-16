@@ -37,15 +37,16 @@
 @interface BXResourceFileManager : NSObject {
     BXDocument*             mDocument;
     
-    NSMutableDictionary*    mImageInfoMap;
+    NSMutableDictionary*    mResourceInfoMap;
 }
 
 - (id)initWithDocument:(BXDocument*)document;
 
-- (NSString*)imageNameForTicket:(int)ticket;
-- (NSImage*)image72dpiForTicket:(int)ticket;
-- (NSString*)pathForTicket:(int)ticket;
-- (int)storeImageFileAtPath:(NSString*)filepath;
+- (NSString*)pathForTicket:(NSString*)ticket;
+- (NSString*)storeFileAtPath:(NSString*)filepath;
+
+- (NSString*)imageNameForTicket:(NSString*)ticket;
+- (NSImage*)image72dpiForTicket:(NSString*)ticket;
 
 - (NSData*)resourceMapData;
 - (void)restoreResourceMapData:(NSData*)data;

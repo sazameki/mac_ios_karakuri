@@ -8,6 +8,7 @@
 
 #import "BXResourceFileManager.h"
 #import "BXDocument.h"
+#import "NSString+UUID.h"
 
 
 @implementation BXResourceFileInfo
@@ -87,13 +88,6 @@
 @end
 
 
-@interface BXResourceFileManager ()
-
-- (int)nextImageTicket;
-
-@end
-
-
 @implementation BXResourceFileManager
 
 - (id)initWithDocument:(BXDocument*)document
@@ -102,65 +96,43 @@
     if (self) {
         mDocument = document;
         
-        mImageInfoMap = [[NSMutableDictionary alloc] init];
+        mResourceInfoMap = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [mImageInfoMap release];
+    [mResourceInfoMap release];
 
     [super dealloc];
 }
 
-- (NSString*)imageNameForTicket:(int)ticket
+- (NSString*)imageNameForTicket:(NSString*)ticket
 {
-    BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
+    BXResourceFileInfo* theInfo = [mResourceInfoMap objectForKey:ticket];
     return [theInfo resourceName];
 }
 
-- (int)nextImageTicket
+- (NSString*)storeFileAtPath:(NSString*)filepath
 {
-    int ret = 0;
-    BOOL found = YES;
-
-    while ([mImageInfoMap objectForKey:[NSNumber numberWithInt:ret]]) {
-        ret++;
-        if (ret > 40000) {
-            found = NO;
-            break;
-        }
-    }
-    
-    if (!found) {
-        ret = -1;
-    }
-    return ret;
-}
-
-- (int)storeImageFileAtPath:(NSString*)filepath
-{
-    int imageTicket = [self nextImageTicket];
-    if (imageTicket < 0) {
-        return -1;
-    }
+    NSString* newTicket = [NSString generateUUIDString];
 
     BXResourceFileInfo* theInfo = [[[BXResourceFileInfo alloc] initWithFileAtPath:filepath document:mDocument] autorelease];
-    [mImageInfoMap setObject:theInfo forKey:[NSNumber numberWithInt:imageTicket]];
+    [mResourceInfoMap setObject:theInfo forKey:newTicket];
     
-    return imageTicket;
+    return newTicket;
 }
 
-- (NSImage*)image72dpiForTicket:(int)ticket
+- (NSImage*)image72dpiForTicket:(NSString*)ticket
 {
-    BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
+    BXResourceFileInfo* theInfo = [mResourceInfoMap objectForKey:ticket];
     return [theInfo image72dpi];
 }
 
-- (NSString*)pathForTicket:(int)ticket
+- (NSString*)pathForTicket:(NSString*)ticket
 {
-    BXResourceFileInfo* theInfo = [mImageInfoMap objectForKey:[NSNumber numberWithInt:ticket]];
+    BXResourceFileInfo* theInfo = [mResourceInfoMap objectForKey:ticket];
     return [theInfo path];
 }
 
@@ -169,19 +141,19 @@
     NSMutableDictionary* mapInfo = [NSMutableDictionary dictionary];
     
     // 画像
-    NSMutableArray* imageInfos = [NSMutableArray array];
-    NSArray* tickets = [mImageInfoMap allKeys];
+    NSMutableArray* resourceInfos = [NSMutableArray array];
+    NSArray* tickets = [mResourceInfoMap allKeys];
     for (int i = 0; i < [tickets count]; i++) {
-        NSNumber* theTicketObj = [tickets objectAtIndex:i];
-        BXResourceFileInfo* theFileInfo = [mImageInfoMap objectForKey:theTicketObj];
+        NSString* theTicketObj = [tickets objectAtIndex:i];
+        BXResourceFileInfo* theFileInfo = [mResourceInfoMap objectForKey:theTicketObj];
 
         NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
         [theInfo setObject:theTicketObj forKey:@"Ticket"];
         [theInfo setObject:[theFileInfo fileName] forKey:@"File Name"];
         [theInfo setObject:[theFileInfo resourceName] forKey:@"Resource Name"];
-        [imageInfos addObject:theInfo];
+        [resourceInfos addObject:theInfo];
     }
-    [mapInfo setObject:imageInfos forKey:@"Image Infos"];
+    [mapInfo setObject:resourceInfos forKey:@"Resource Infos"];
     
     return [NSPropertyListSerialization dataFromPropertyList:mapInfo format:NSPropertyListBinaryFormat_v1_0 errorDescription:nil];
 }
@@ -194,17 +166,17 @@
                                                              errorDescription:nil];
 
     // 画像
-    NSArray* imageInfos = [mapInfo objectForKey:@"Image Infos"];
-    for (int i = 0; i < [imageInfos count]; i++) {
-        NSDictionary* anImageInfo = [imageInfos objectAtIndex:i];
-        NSNumber* theTicketObj = [anImageInfo objectForKey:@"Ticket"];
+    NSArray* resourceInfos = [mapInfo objectForKey:@"Resource Infos"];
+    for (int i = 0; i < [resourceInfos count]; i++) {
+        NSDictionary* anImageInfo = [resourceInfos objectAtIndex:i];
+        NSString* theTicketObj = [anImageInfo objectForKey:@"Ticket"];
         NSString* fileName = [anImageInfo objectForKey:@"File Name"];
         NSString* resourceName = [anImageInfo objectForKey:@"Resource Name"];
         
         BXResourceFileInfo* theInfo = [[[BXResourceFileInfo alloc] initWithFileName:fileName
                                                                        resourceName:resourceName
                                                                            document:mDocument] autorelease];
-        [mImageInfoMap setObject:theInfo forKey:theTicketObj];
+        [mResourceInfoMap setObject:theInfo forKey:theTicketObj];
     }
 }
 

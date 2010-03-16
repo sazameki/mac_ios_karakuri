@@ -34,7 +34,7 @@
         *mGenerationPos = KRVector2DZero;
 
         mImageTag = 109;
-        mImageTicket = -1;
+        mImageTicket = nil;
 
         mLife = 60;
         *mColor = KRColor::White;
@@ -61,6 +61,8 @@
     delete mGravity;
     delete mMaxV;
     delete mMinV;
+    
+    [mImageTicket release];
 
     [super dealloc];
 }
@@ -277,7 +279,12 @@
 {
     mImageTag = 999;
     
-    mImageTicket = [[[self document] fileManager] storeImageFileAtPath:path];
+    if (mImageTicket) {
+        [mImageTicket release];
+    }
+    
+    BXResourceFileManager* fileManager = [[self document] fileManager];
+    mImageTicket = [[fileManager storeFileAtPath:path] copy];
 }
 
 - (void)setLife:(int)value
@@ -388,7 +395,7 @@
     
     // 画像
     [theInfo setIntValue:mImageTag forName:@"Image Tag"];
-    [theInfo setIntValue:mImageTicket forName:@"Image Ticket"];
+    [theInfo setStringValue:mImageTicket forName:@"Image Ticket"];
 
     return theInfo;
 }
@@ -455,7 +462,7 @@
 
     // 画像
     mImageTag = [theInfo intValueForName:@"Image Tag" currentValue:mImageTag];
-    mImageTicket = [theInfo intValueForName:@"Image Ticket" currentValue:mImageTicket];
+    mImageTicket = [[theInfo stringValueForName:@"Image Ticket" currentValue:mImageTicket] copy];
 }
 
 @end
