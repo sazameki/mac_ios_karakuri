@@ -10,6 +10,8 @@
 #import "KRGraphics.h"
 #import "NSDictionary+LoadSave.h"
 #import "BXDocument.h"
+#import "NSFileHandle+BXExport.h"
+#import "NSImage+BXEx.h"
 
 
 @implementation BXParticle2DSpec
@@ -336,6 +338,7 @@
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
     // 基本のIDと名前
+    [theInfo setIntValue:mGroupID forName:@"Group ID"];
     [theInfo setIntValue:mResourceID forName:@"Resource ID"];
     [theInfo setStringValue:mResourceName forName:@"Resource Name"];
     
@@ -395,7 +398,11 @@
     
     // 画像
     [theInfo setIntValue:mImageTag forName:@"Image Tag"];
-    [theInfo setStringValue:mImageTicket forName:@"Image Ticket"];
+    if (mImageTicket) {
+        [theInfo setStringValue:mImageTicket forName:@"Image Ticket"];
+    } else {
+        [theInfo removeObjectForKey:@"Image Ticket"];
+    }
 
     return theInfo;
 }
@@ -403,6 +410,7 @@
 - (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document
 {
     ///// 基本のIDと名前
+    mGroupID = [theInfo intValueForName:@"Group ID" currentValue:mGroupID];
     mResourceID = [theInfo intValueForName:@"Resource ID" currentValue:mResourceID];
     [self setResourceName:[theInfo stringValueForName:@"Resource Name" currentValue:mResourceName]];
 
@@ -463,6 +471,64 @@
     // 画像
     mImageTag = [theInfo intValueForName:@"Image Tag" currentValue:mImageTag];
     mImageTicket = [[theInfo stringValueForName:@"Image Ticket" currentValue:mImageTicket] copy];
+}
+
+@end
+
+
+@implementation BXSingleParticle2DSpec (Export)
+
+- (void)exportUnsignedIntValue:(unsigned)value fileHandle:(NSFileHandle*)fileHandle
+{
+    unsigned char buffer[4];
+    
+    buffer[0] = (unsigned char)((value >> 24) & 0xff);
+    buffer[1] = (unsigned char)((value >> 16) & 0xff);
+    buffer[2] = (unsigned char)((value >> 8) & 0xff);
+    buffer[3] = (unsigned char)(value & 0xff);
+    
+    NSData* data = [[NSData alloc] initWithBytesNoCopy:buffer length:4 freeWhenDone:NO];
+    [fileHandle writeData:data];
+    [data release];
+}
+
+- (void)exportToFileHandle:(NSFileHandle*)fileHandle
+{
+    // ヘッダの書き出し
+    [fileHandle writeBuffer:"KRP2" length:4];
+    
+    // リソース情報の書き出し
+    NSDictionary* elementInfo = [self elementInfo];
+    NSString* errorStr = nil;
+    NSData* infoData = [NSPropertyListSerialization dataFromPropertyList:elementInfo
+                                                                  format:NSPropertyListBinaryFormat_v1_0
+                                                        errorDescription:&errorStr];
+    [fileHandle writeUnsignedIntValue:[infoData length]];
+    [fileHandle writeData:infoData];
+    
+    // リソースの書き出し
+    if (mImageTicket && [mImageTicket length] > 0) {
+        BXResourceFileManager* fileManager = [[self document] fileManager];
+        NSImage* image = [fileManager image72dpiForTicket:mImageTicket];
+        NSData* pngData = [image pngData];
+        
+        NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
+        [texInfo setObject:mImageTicket forKey:@"Ticket"];
+        [texInfo setObject:[fileManager resourceNameForTicket:mImageTicket] forKey:@"Resource Name"];
+        NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
+                                                                         format:NSPropertyListBinaryFormat_v1_0
+                                                               errorDescription:&errorStr];
+        
+        // ヘッダ
+        [fileHandle writeBuffer:"KRPR" length:4];
+        [fileHandle writeUnsignedIntValue:[texInfoData length]];
+        [fileHandle writeData:texInfoData];
+
+        // データ
+        [fileHandle writeBuffer:"KRIM" length:4];
+        [fileHandle writeUnsignedIntValue:[pngData length]];
+        [fileHandle writeData:pngData];
+    }
 }
 
 @end

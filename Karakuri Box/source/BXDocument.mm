@@ -14,6 +14,7 @@
 #import "BXBGMResource.h"
 #import "BXSEResource.h"
 #import "BXStageSpec.h"
+#import "NSFileHandle+BXExport.h"
 
 
 static NSString*    sKADocumentToolbarItemAddBackground = @"KADocumentToolbarItemAddBackground";
@@ -26,17 +27,28 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 @interface BXDocument ()
 
-- (BXChara2DState*)selectedChara2DState;
-- (BXSingleParticle2DSpec*)selectedSingleParticle2DSpec;
-- (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
-- (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec;
-- (void)setupEditorForChara2DState:(BXChara2DState*)theState;
-- (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage;
+// すべてに共通のメソッド
+
+- (void)exportAllResourcesToFileHandle:(NSFileHandle*)fileHandle;
+- (void)exportSelectedResourceToFileHandle:(NSFileHandle*)fileHandle;
+- (BXResourceElement*)selectedResourceElement;
+
+// 2Dキャラクタ関係
+
 - (void)addChara2DImageFiles:(NSArray*)filepaths;
+- (BXChara2DState*)selectedChara2DState;
 - (void)setupChara2DHitButtons;
+- (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
+- (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage;
+- (void)setupEditorForChara2DState:(BXChara2DState*)theState;
 - (void)updateChara2DAtlasList;
 - (void)updateChara2DAtlasListSize;
 - (void)updateChara2DStateCancelKomaButtonMenu;
+
+// 2Dパーティクル関係
+
+- (BXSingleParticle2DSpec*)selectedSingleParticle2DSpec;
+- (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec;
 
 @end
 
@@ -201,16 +213,22 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     return resourcesWrapper;
 }
 
-- (BXChara2DSpec*)selectedChara2DSpec
+- (BXResourceElement*)selectedResourceElement
 {
     int selectedRow = [oElementView selectedRow];
     if (selectedRow < 0) {
         return nil;
     }
     
-    BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
-    if ([theElem isKindOfClass:[BXChara2DSpec class]]) {
-        return (BXChara2DSpec*)theElem;
+    return [oElementView itemAtRow:selectedRow];
+}
+
+- (BXChara2DSpec*)selectedChara2DSpec
+{
+    BXResourceElement* selectedElem = [self selectedResourceElement];
+
+    if ([selectedElem isKindOfClass:[BXChara2DSpec class]]) {
+        return (BXChara2DSpec*)selectedElem;
     }
     return nil;
 }
@@ -250,14 +268,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (BXSingleParticle2DSpec*)selectedSingleParticle2DSpec;
 {
-    int selectedRow = [oElementView selectedRow];
-    if (selectedRow < 0) {
-        return nil;
-    }
-    
-    BXResourceElement* theElem = [oElementView itemAtRow:selectedRow];
-    if ([theElem isKindOfClass:[BXSingleParticle2DSpec class]]) {
-        return (BXSingleParticle2DSpec*)theElem;
+    BXResourceElement* selectedElem = [self selectedResourceElement];
+
+    if ([selectedElem isKindOfClass:[BXSingleParticle2DSpec class]]) {
+        return (BXSingleParticle2DSpec*)selectedElem;
     }
     return nil;
 }
@@ -372,6 +386,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     NSSavePanel* savePanel = [NSSavePanel savePanel];
     
+    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"krrs"]];
     [savePanel setAccessoryView:oExportAccessoryView];
     [oExportOptionMatrix selectCellAtRow:0 column:0];
     
@@ -403,6 +418,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
     NSSavePanel* savePanel = [NSSavePanel savePanel];
     
+    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"krrs"]];
     [savePanel setAccessoryView:oExportAccessoryView];
     [oExportOptionMatrix selectCellAtRow:1 column:0];
     
@@ -419,12 +435,100 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
               contextInfo:(void*)contextInfo
 {
     if (returnCode == NSOKButton) {
+        NSString* filepath = [sheet filename];
+        
+        // 空データの書き出し
+        [[NSData data] writeToFile:filepath atomically:NO];
+
+        NSFileHandle* fileHandle = [NSFileHandle fileHandleForWritingAtPath:filepath];
+        
+        // すべてのリソースを書き出し
+        if ([oExportOptionMatrix selectedRow] == 0) {
+            [self exportAllResourcesToFileHandle:fileHandle];
+        }
+        // 選択中のリソースを書き出し
+        else {
+            [self exportSelectedResourceToFileHandle:fileHandle];
+        }
+        
+        [fileHandle synchronizeFile];
+        [fileHandle closeFile];
     }
 }
 
 
 #pragma mark -
+#pragma mark リソースの書き出し
+
+- (void)exportResourceHeaderToFileHandle:(NSFileHandle*)fileHandle
+{
+    int majorVersion = 1;
+    int minorVersion = 0;
+    
+    // MAGIC
+    [fileHandle writeBuffer:"KRRS" length:4];
+    
+    // メジャーバージョン番号
+    [fileHandle writeUnsignedIntValue:majorVersion];
+    
+    // マイナーバージョン番号
+    [fileHandle writeUnsignedIntValue:minorVersion];
+}
+
+- (void)exportResourceFooterToFileHandle:(NSFileHandle*)fileHandle
+{
+    [fileHandle writeBuffer:"KRED" length:4];
+}
+
+/**
+ * すべてのリソースを書き出します。
+ */
+- (void)exportAllResourcesToFileHandle:(NSFileHandle*)fileHandle
+{
+    // ヘッダの書き出し
+    [self exportResourceHeaderToFileHandle:fileHandle];
+
+    // リソースの書き出し
+    [mChara2DGroup exportToFileHandle:fileHandle];
+    [mParticle2DGroup exportToFileHandle:fileHandle];
+
+    // フッタの書き出し
+    [self exportResourceFooterToFileHandle:fileHandle];
+}
+
+/**
+ * 選択されたリソースを書き出します。
+ */
+- (void)exportSelectedResourceToFileHandle:(NSFileHandle*)fileHandle
+{
+    // ヘッダの書き出し
+    [self exportResourceHeaderToFileHandle:fileHandle];
+    
+    // リソースの書き出し
+    BXResourceElement* selectedElement = [self selectedResourceElement];
+    [selectedElement exportToFileHandle:fileHandle];
+
+    // フッタの書き出し
+    [self exportResourceFooterToFileHandle:fileHandle];
+}
+
+
+
+#pragma mark -
 #pragma mark 2Dキャラクタの設定アクション
+
+- (IBAction)changedChara2DGroupID:(id)sender
+{
+    BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
+    if (!charaSpec) {
+        return;
+    }
+    
+    int theID = [oChara2DGroupIDField intValue];
+    [charaSpec setGroupID:theID];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
 
 - (IBAction)addChara2DImage:(id)sender
 {
@@ -1030,6 +1134,19 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark 2Dパーティクルの設定アクション
 
+- (IBAction)changedParticleGroupID:(id)sender
+{
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
+    if (!particleSpec) {
+        return;
+    }
+    
+    int theID = [oParticleGroupIDField intValue];
+    [particleSpec setGroupID:theID];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
 - (IBAction)changedParticleResourceID:(id)sender
 {
     int theID = [oParticleResourceIDField intValue];
@@ -1537,6 +1654,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec
 {
+    [oChara2DGroupIDField setIntValue:[theSpec groupID]];
     [oChara2DResourceIDField setIntValue:[theSpec resourceID]];
     [oChara2DResourceNameField setStringValue:[theSpec resourceName]];
 
@@ -1607,6 +1725,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec
 {
+    [oParticleGroupIDField setIntValue:[theSpec groupID]];
     [oParticleResourceIDField setIntValue:[theSpec resourceID]];
     [oParticleResourceNameField setStringValue:[theSpec resourceName]];
 

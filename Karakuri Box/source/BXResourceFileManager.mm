@@ -75,13 +75,16 @@
     mResourceName = [name copy];
 }
 
-- (NSImage*)image72dpi
+- (NSData*)fileData
 {
     NSFileWrapper* resourcesWrapper = [mDocument resourcesWrapper];
     NSFileWrapper* theWrapper = [[resourcesWrapper fileWrappers] objectForKey:mFileName];
-    NSData *contentsData = [theWrapper regularFileContents];
-    
-    NSImage* theImage = [[[NSImage alloc] initWithData:contentsData] autorelease];
+    return [theWrapper regularFileContents];
+}
+
+- (NSImage*)image72dpi
+{
+    NSImage* theImage = [[[NSImage alloc] initWithData:[self fileData]] autorelease];
     return theImage;
 }
 
@@ -136,6 +139,12 @@
     return [theInfo path];
 }
 
+- (NSString*)resourceNameForTicket:(NSString*)ticket
+{
+    BXResourceFileInfo* theInfo = [mResourceInfoMap objectForKey:ticket];
+    return [theInfo resourceName];
+}
+
 - (NSData*)resourceMapData
 {
     NSMutableDictionary* mapInfo = [NSMutableDictionary dictionary];
@@ -181,4 +190,5 @@
 }
 
 @end
+
 

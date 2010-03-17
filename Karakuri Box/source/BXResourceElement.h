@@ -15,9 +15,9 @@
 @interface BXResourceElement : NSObject {
     BXDocument*         mDocument;
     
-    NSString*           mResourceName;
-    
+    int                 mGroupID;
     int                 mResourceID;
+    NSString*           mResourceName;
 
     BXResourceElement*  mParentElement;
     NSMutableArray*     mChildElements;
@@ -32,8 +32,10 @@
 - (BOOL)isExpandable;
 - (BOOL)isGroupItem;
 
+- (int)groupID;
 - (int)resourceID;
 - (NSString*)resourceName;
+- (void)setGroupID:(int)theID;
 - (void)setResourceID:(int)theID;
 - (void)setResourceName:(NSString*)name;
 
@@ -46,6 +48,13 @@
 
 - (NSDictionary*)elementInfo;
 - (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document;
+
+@end
+
+
+@interface BXResourceElement (Export)
+
+- (void)exportToFileHandle:(NSFileHandle*)fileHandle;
 
 @end
 

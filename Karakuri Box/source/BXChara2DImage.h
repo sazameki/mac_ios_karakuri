@@ -41,6 +41,8 @@
 - (void)setDivX:(int)value;
 - (void)setDivY:(int)value;
 
+- (NSString*)imageTicket;
+
 - (NSString*)imageName;
 - (NSImage*)image72dpi;
 - (int)atlasImageCount;

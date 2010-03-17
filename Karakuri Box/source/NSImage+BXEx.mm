@@ -83,5 +83,17 @@
     return ret;
 }
 
+- (NSData*)pngData
+{
+    NSData* tiffData = [self TIFFRepresentation];
+    NSBitmapImageRep* bitmapImageRep = [NSBitmapImageRep imageRepWithData:tiffData];
+
+    NSDictionary* pngInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
+                                                        forKey:NSImageInterlaced];
+
+    return [bitmapImageRep representationUsingType:NSPNGFileType
+                                        properties:pngInfo];    
+}
+
 @end
 

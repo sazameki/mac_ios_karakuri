@@ -15,5 +15,7 @@
 
 - (NSArray*)divideByX:(int)x y:(int)y;
 
+- (NSData*)pngData;
+
 @end
 

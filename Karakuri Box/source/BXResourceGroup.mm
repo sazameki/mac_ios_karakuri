@@ -79,4 +79,16 @@
 @end
 
 
+@implementation BXResourceGroup (Export)
+
+- (void)exportToFileHandle:(NSFileHandle*)fileHandle
+{
+    for (int i = 0; i < [self childCount]; i++) {
+        BXResourceElement* anElem = [self childAtIndex:i];
+        [anElem exportToFileHandle:fileHandle];
+    }
+}
+
+@end
+
 

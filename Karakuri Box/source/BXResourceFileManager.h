@@ -29,6 +29,7 @@
 - (NSString*)resourceName;
 - (void)setResourceName:(NSString*)name;
 
+- (NSData*)fileData;
 - (NSImage*)image72dpi;
 
 @end
@@ -44,6 +45,8 @@
 
 - (NSString*)pathForTicket:(NSString*)ticket;
 - (NSString*)storeFileAtPath:(NSString*)filepath;
+
+- (NSString*)resourceNameForTicket:(NSString*)ticket;
 
 - (NSString*)imageNameForTicket:(NSString*)ticket;
 - (NSImage*)image72dpiForTicket:(NSString*)ticket;

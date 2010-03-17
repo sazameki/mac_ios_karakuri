@@ -52,6 +52,7 @@
 		8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B7113AE0BE005DC90E /* BXDocument.xib */; };
 		8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E62A5CA113AE18A005DC90E /* OpenGL.framework */; };
 		8E848159114F0FC70068D47F /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E848157114F0FC70068D47F /* NSString+UUID.m */; };
+		8E84827F1150D1F80068D47F /* NSFileHandle+BXExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E84827E1150D1F80068D47F /* NSFileHandle+BXExport.m */; };
 		8E84ADBA11489B4B00438868 /* transparent_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E84ADB911489B4B00438868 /* transparent_pattern.png */; };
 		8EA495DD1146AEF5002BEBA8 /* BXChara2DKoma.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */; };
 		8EA497151146CD0A002BEBA8 /* NSMutableArray+Moving.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */; };
@@ -150,6 +151,8 @@
 		8E62A5CA113AE18A005DC90E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8E848157114F0FC70068D47F /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		8E848158114F0FC70068D47F /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
+		8E84827D1150D1F80068D47F /* NSFileHandle+BXExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileHandle+BXExport.h"; sourceTree = "<group>"; };
+		8E84827E1150D1F80068D47F /* NSFileHandle+BXExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileHandle+BXExport.m"; sourceTree = "<group>"; };
 		8E84ADB911489B4B00438868 /* transparent_pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent_pattern.png; sourceTree = "<group>"; };
 		8EA495DB1146AEF5002BEBA8 /* BXChara2DKoma.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXChara2DKoma.h; sourceTree = "<group>"; };
 		8EA495DC1146AEF5002BEBA8 /* BXChara2DKoma.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXChara2DKoma.mm; sourceTree = "<group>"; };
@@ -394,20 +397,22 @@
 		8E62A585113AE053005DC90E /* Cocoa Ex */ = {
 			isa = PBXGroup;
 			children = (
-				8E848157114F0FC70068D47F /* NSString+UUID.m */,
+				8EA49CC71147B6DD002BEBA8 /* NSDictionary+LoadSave.h */,
+				8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */,
+				8E84827D1150D1F80068D47F /* NSFileHandle+BXExport.h */,
+				8E84827E1150D1F80068D47F /* NSFileHandle+BXExport.m */,
+				8E207E911146550B00FA6B59 /* NSImage+BXEx.h */,
+				8E207E921146550B00FA6B59 /* NSImage+BXEx.mm */,
+				8EA4A31D11481107002BEBA8 /* NSImage+CGImageConversion.h */,
+				8EA4A31E11481107002BEBA8 /* NSImage+CGImageConversion.mm */,
+				8EA497131146CD0A002BEBA8 /* NSMutableArray+Moving.h */,
+				8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */,
 				8E848158114F0FC70068D47F /* NSString+UUID.h */,
+				8E848157114F0FC70068D47F /* NSString+UUID.m */,
 				8E62A586113AE053005DC90E /* SZSplitView.h */,
 				8E62A587113AE053005DC90E /* SZSplitView.m */,
 				8E62A588113AE053005DC90E /* SZStatusBarBackgroundView.h */,
 				8E62A589113AE053005DC90E /* SZStatusBarBackgroundView.m */,
-				8E207E911146550B00FA6B59 /* NSImage+BXEx.h */,
-				8E207E921146550B00FA6B59 /* NSImage+BXEx.mm */,
-				8EA497131146CD0A002BEBA8 /* NSMutableArray+Moving.h */,
-				8EA497141146CD0A002BEBA8 /* NSMutableArray+Moving.mm */,
-				8EA49CC71147B6DD002BEBA8 /* NSDictionary+LoadSave.h */,
-				8EA49CC81147B6DD002BEBA8 /* NSDictionary+LoadSave.mm */,
-				8EA4A31D11481107002BEBA8 /* NSImage+CGImageConversion.h */,
-				8EA4A31E11481107002BEBA8 /* NSImage+CGImageConversion.mm */,
 			);
 			name = "Cocoa Ex";
 			sourceTree = "<group>";
@@ -633,6 +638,7 @@
 				8EA4A31F11481107002BEBA8 /* NSImage+CGImageConversion.mm in Sources */,
 				8EAB6186114CDC2100C2CBC5 /* BXResourceListView.mm in Sources */,
 				8E848159114F0FC70068D47F /* NSString+UUID.m in Sources */,
+				8E84827F1150D1F80068D47F /* NSFileHandle+BXExport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

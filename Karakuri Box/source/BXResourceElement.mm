@@ -28,7 +28,8 @@
         mResourceName = [name copy];
         mChildElements = [[NSMutableArray alloc] init];
         
-        mResourceID = 99;   // TODO: リソースIDをちゃんと管理する。
+        mGroupID = 0;
+        mResourceID = 99;
     }
     return self;
 }
@@ -77,6 +78,11 @@
     return NO;
 }
 
+- (int)groupID
+{
+    return mGroupID;
+}
+
 - (int)resourceID
 {
     return mResourceID;
@@ -85,6 +91,11 @@
 - (NSString*)resourceName
 {
     return mResourceName;
+}
+
+- (void)setGroupID:(int)theID
+{
+    mGroupID = theID;
 }
 
 - (void)setResourceID:(int)theID
@@ -157,4 +168,15 @@
 }
 
 @end
+
+
+@implementation BXResourceElement (Export)
+
+- (void)exportToFileHandle:(NSFileHandle*)fileHandle
+{
+    // Do nothing.
+}
+
+@end
+
 

@@ -8,6 +8,10 @@
 
 #import "BXChara2DSpec.h"
 #import "NSDictionary+LoadSave.h"
+#import "NSFileHandle+BXExport.h"
+#import "BXResourceFileManager.h"
+#import "NSImage+BXEx.h"
+#import "BXDocument.h"
 
 
 @interface BXChara2DSpec ()
@@ -685,6 +689,7 @@
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
     // 基本のIDと名前
+    [theInfo setIntValue:mGroupID forName:@"Group ID"];
     [theInfo setIntValue:mResourceID forName:@"Resource ID"];
     [theInfo setStringValue:mResourceName forName:@"Resource Name"];
     
@@ -765,6 +770,7 @@
 - (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document
 {
     // 基本のIDと名前
+    mGroupID = [theInfo intValueForName:@"Group ID" currentValue:mResourceID];
     mResourceID = [theInfo intValueForName:@"Resource ID" currentValue:mResourceID];
     [self setResourceName:[theInfo stringValueForName:@"Resource Name" currentValue:mResourceName]];
     
@@ -842,4 +848,55 @@
 }
 
 @end
+
+
+@implementation BXChara2DSpec (Export)
+
+- (void)exportToFileHandle:(NSFileHandle*)fileHandle
+{
+    // ヘッダの書き出し
+    [fileHandle writeBuffer:"KRC2" length:4];
+    
+    // リソース情報の書き出し
+    NSDictionary* elementInfo = [self elementInfo];
+    NSString* errorStr = nil;
+    NSData* infoData = [NSPropertyListSerialization dataFromPropertyList:elementInfo
+                                                                  format:NSPropertyListBinaryFormat_v1_0
+                                                        errorDescription:&errorStr];
+    [fileHandle writeUnsignedIntValue:[infoData length]];
+    [fileHandle writeData:infoData];
+    
+    // リソースの書き出し
+    for (int i = 0; i < [mImages count]; i++) {
+        BXChara2DImage* anImage = (BXChara2DImage*)[mImages objectAtIndex:i];
+        NSString* imageTicket = [anImage imageTicket];
+        
+        BXResourceFileManager* fileManager = [[self document] fileManager];
+        NSImage* image = [fileManager image72dpiForTicket:imageTicket];
+        NSData* pngData = [image pngData];
+        
+        NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
+        [texInfo setObject:imageTicket forKey:@"Ticket"];
+        [texInfo setObject:[fileManager resourceNameForTicket:imageTicket] forKey:@"Resource Name"];
+        NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
+                                                                         format:NSPropertyListBinaryFormat_v1_0
+                                                               errorDescription:&errorStr];
+        
+        // ヘッダ
+        [fileHandle writeBuffer:"KRPR" length:4];
+        [fileHandle writeUnsignedIntValue:[texInfoData length]];
+        [fileHandle writeData:texInfoData];
+        
+        // データ
+        [fileHandle writeBuffer:"KRIM" length:4];
+        [fileHandle writeUnsignedIntValue:[pngData length]];
+        [fileHandle writeData:pngData];
+    }
+}
+
+@end
+
+
+
+
 

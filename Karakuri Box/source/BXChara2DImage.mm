@@ -103,6 +103,11 @@
     mDivY = value;
 }
 
+- (NSString*)imageTicket
+{
+    return mImageTicket;
+}
+
 - (NSString*)imageName
 {
     return [[mDocument fileManager] imageNameForTicket:mImageTicket];

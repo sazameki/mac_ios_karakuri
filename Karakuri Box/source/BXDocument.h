@@ -29,6 +29,7 @@
     IBOutlet NSMatrix*                  oExportOptionMatrix;
 
     ///// 2Dキャラクタの設定用アウトレット
+    IBOutlet NSTextField*               oChara2DGroupIDField;
     IBOutlet NSTextField*               oChara2DResourceIDField;
     IBOutlet NSTextField*               oChara2DResourceNameField;
     
@@ -70,6 +71,7 @@
     ///// パーティクルの設定用アウトレット
     IBOutlet BXParticle2DSimulatorView* oParticleView;
 
+    IBOutlet NSTextField*               oParticleGroupIDField;
     IBOutlet NSTextField*               oParticleResourceIDField;
     IBOutlet NSTextField*               oParticleResourceNameField;
 
@@ -138,12 +140,14 @@
 
 ///// 2Dキャラクタ設定アクション
 
+- (IBAction)changedChara2DGroupID:(id)sender;
+- (IBAction)changedChara2DResourceID:(id)sender;
+- (IBAction)changedChara2DResourceName:(id)sender;
+
 - (IBAction)addChara2DImage:(id)sender;
 - (IBAction)addChara2DState:(id)sender;
 - (IBAction)changedChara2DImageDivX:(id)sender;
 - (IBAction)changedChara2DImageDivY:(id)sender;
-- (IBAction)changedChara2DResourceID:(id)sender;
-- (IBAction)changedChara2DResourceName:(id)sender;
 - (IBAction)removeChara2DState:(id)sender;
 - (IBAction)changedChara2DKomaDefaultInterval:(id)sender;
 
@@ -177,6 +181,7 @@
 
 ///// パーティクル設定アクション
 
+- (IBAction)changedParticleGroupID:(id)sender;
 - (IBAction)changedParticleResourceID:(id)sender;
 - (IBAction)changedParticleResourceName:(id)sender;
 
