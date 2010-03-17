@@ -883,12 +883,12 @@
                                                                errorDescription:&errorStr];
         
         // ヘッダ
-        [fileHandle writeBuffer:"KRPR" length:4];
+        [fileHandle writeBuffer:"KRT2" length:4];
         [fileHandle writeUnsignedIntValue:[texInfoData length]];
         [fileHandle writeData:texInfoData];
         
         // データ
-        [fileHandle writeBuffer:"KRIM" length:4];
+        [fileHandle writeBuffer:"KRDT" length:4];
         [fileHandle writeUnsignedIntValue:[pngData length]];
         [fileHandle writeData:pngData];
     }
