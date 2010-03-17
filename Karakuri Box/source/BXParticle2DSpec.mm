@@ -513,6 +513,7 @@
         NSData* pngData = [image pngData];
         
         NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
+        [texInfo setIntValue:mGroupID forName:@"Group ID"];
         [texInfo setObject:mImageTicket forKey:@"Ticket"];
         [texInfo setObject:[fileManager resourceNameForTicket:mImageTicket] forKey:@"Resource Name"];
         NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
