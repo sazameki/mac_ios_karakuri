@@ -15,8 +15,6 @@
 @interface BXChara2DImage : NSObject {
     BXDocument* mDocument;
 
-    int         mImageID;
-
     NSString*   mImageTicket;
     
     int         mDivX;
@@ -27,12 +25,10 @@
     int         mUsedCount;
 }
 
-- (id)initWithFilepath:(NSString*)path imageID:(int)imageID document:(BXDocument*)document;
+- (id)initWithFilepath:(NSString*)path document:(BXDocument*)document;
 - (id)initWithInfo:(NSDictionary*)info document:(BXDocument*)document;
 
 - (BXDocument*)document;
-
-- (int)imageID;
 
 - (void)updateAtlasImages;
 

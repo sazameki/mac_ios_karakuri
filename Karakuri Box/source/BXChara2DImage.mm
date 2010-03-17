@@ -14,13 +14,11 @@
 
 @implementation BXChara2DImage
 
-- (id)initWithFilepath:(NSString*)path imageID:(int)imageID document:(BXDocument*)document
+- (id)initWithFilepath:(NSString*)path document:(BXDocument*)document
 {
     self = [super init];
     if (self) {
         mDocument = document;
-        
-        mImageID = imageID;
 
         mImageTicket = [[[document fileManager] storeFileAtPath:path] copy];
         
@@ -42,8 +40,6 @@
     if (self) {
         mDocument = document;
         
-        mImageID = [info intValueForName:@"Image ID" currentValue:-1];
-
         mImageTicket = [[info stringValueForName:@"Image Ticket" currentValue:nil] copy];
         
         mAtlasImages = [[NSMutableArray alloc] init];
@@ -68,11 +64,6 @@
 - (BXDocument*)document
 {
     return mDocument;
-}
-
-- (int)imageID
-{
-    return mImageID;
 }
 
 - (void)updateAtlasImages
@@ -147,7 +138,6 @@
 {
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
-    [theInfo setIntValue:mImageID forName:@"Image ID"];
     [theInfo setStringValue:mImageTicket forName:@"Image Ticket"];
     [theInfo setIntValue:mDivX forName:@"Div X"];
     [theInfo setIntValue:mDivY forName:@"Div Y"];

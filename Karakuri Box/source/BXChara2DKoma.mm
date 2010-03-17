@@ -301,8 +301,8 @@
 {
     self = [super init];
     if (self) {
-        int imageID = [info intValueForName:@"Image ID" currentValue:-1];
-        mImage = [chara2DSpec imageWithID:imageID];
+        NSString* imageTicket = [info stringValueForName:@"Image Ticket" currentValue:nil];
+        mImage = [chara2DSpec imageWithTicket:imageTicket];
         mImageAtlasIndex = [info intValueForName:@"Atlas Index" currentValue:0];
         
         mKomaNumber = [info intValueForName:@"Koma Number" currentValue:0];
@@ -550,7 +550,7 @@
 {
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
-    [theInfo setIntValue:[mImage imageID] forName:@"Image ID"];
+    [theInfo setStringValue:[mImage imageTicket] forName:@"Image Ticket"];
     [theInfo setIntValue:mImageAtlasIndex forName:@"Atlas Index"];
     [theInfo setIntValue:mKomaNumber forName:@"Koma Number"];
     [theInfo setBoolValue:mIsCancelable forName:@"Cancelable"];

@@ -176,7 +176,7 @@
 - (BXChara2DImage*)addImageAtPath:(NSString*)path document:(BXDocument*)document;
 - (int)imageCount;
 - (BXChara2DImage*)imageAtIndex:(int)index;
-- (BXChara2DImage*)imageWithID:(int)imageID;
+- (BXChara2DImage*)imageWithTicket:(NSString*)imageTicket;
 
 - (double)komaPreviewScale;
 - (void)setKomaPreviewScale:(double)value;

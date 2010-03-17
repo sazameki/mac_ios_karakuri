@@ -608,35 +608,9 @@
     }    
 }
 
-- (int)nextImageID
-{
-    int ret = 0;
-    
-    while (ret < 10000) {
-        BOOL found = NO;
-        for (int i = 0; i < [mImages count]; i++) {
-            BXChara2DImage* anImage = [mImages objectAtIndex:i];
-            if ([anImage imageID] == ret) {
-                found = YES;
-                break;
-            }
-        }
-        if (!found) {
-            break;
-        }
-        ret++;
-    }
-    
-    if (ret == 10000) {
-        return -1;
-    }
-    
-    return ret;
-}
-
 - (BXChara2DImage*)addImageAtPath:(NSString*)path document:(BXDocument*)document
 {
-    BXChara2DImage* anImage = [[[BXChara2DImage alloc] initWithFilepath:path imageID:[self nextImageID] document:document] autorelease];
+    BXChara2DImage* anImage = [[[BXChara2DImage alloc] initWithFilepath:path document:document] autorelease];
     [mImages addObject:anImage];
     return anImage;
 }
@@ -651,11 +625,11 @@
     return [mImages objectAtIndex:index];
 }
 
-- (BXChara2DImage*)imageWithID:(int)imageID
+- (BXChara2DImage*)imageWithTicket:(NSString*)imageTicket
 {
     for (int i = 0; i < [mImages count]; i++) {
         BXChara2DImage* anImage = [mImages objectAtIndex:i];
-        if ([anImage imageID] == imageID) {
+        if ([[anImage imageTicket] isEqualToString:imageTicket]) {
             return anImage;
         }
     }
