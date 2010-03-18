@@ -152,7 +152,8 @@ public:
 
     /*!
         @method loadResourceGroup
-        指定されたIDをもつリソース群を読み込みます。
+        @abstract 指定されたIDをもつリソース群を読み込みます。
+        @param groupID  読み込む対象のリソース群を表す ID
      */
     void    loadResourceGroup(int groupID);
 
@@ -244,6 +245,8 @@ protected:
         @task コンストラクタの中でだけ使用できる関数
      */
 
+    void            addResources(const std::string& filename);
+    
     /*!
         @method		setAudioMixType
         @abstract	オーディオ再生の方法を設定します。

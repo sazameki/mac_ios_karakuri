@@ -13,14 +13,9 @@
 int     gTex_Logo;
 int     gTex_LoadingChara;
 
-int     gTex_Test;
+int     gTex_Title;
 
-int     gBGM_Op;
-int     gBGM_Play;
-int     gBGM_Danger;
+//int     gBGM_Title;
+//int     gBGM_Play;
+//int     gSE_Hit;
 
-int     gSE_Hit;
-
-int     gParticle1;
-
-int     gSimulator1;

@@ -408,6 +408,17 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
     return ret;
 }
 
+GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+{
+    UIImage* image = [[UIImage alloc] initWithData:data];
+
+    GLuint ret = _KRCreateGLTextureFromCGImage([image CGImage], [image imageOrientation], NO, kTexture2DPixelFormat_Automatic, imageSize, textureSize, @"*on-memory");
+    
+    [image release];
+    
+    return ret;
+}
+
 GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& color, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize)
 {
     CGColorSpaceRef			colorSpace;

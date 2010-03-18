@@ -17,7 +17,7 @@
 
 
 /*!
-    @class KRNetwork
+    @-class KRNetwork
     @group Game Network
     <p>ネットワークを介して、1対1の通信をサポートするためのクラスです。</p>
     <p>gKRNetworkInst 変数を使ってアクセスしてください。</p>
@@ -79,7 +79,7 @@ public:
 
 
 /*!
-    @var gKRNetworkInst
+    @-var gKRNetworkInst
     @group Game Network
     @abstract 通信クラスのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。

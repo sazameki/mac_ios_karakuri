@@ -1,24 +1,22 @@
 /*!
     @file   PlayWorld.cpp
-    @author ___FULLUSERNAME___
-    @date   ___DATE___
+    @author numata
+    @date   10/02/13
  */
 
 #include "PlayWorld.h"
+#include "Globals.h"
 
-
-/*
-std::string PlayWorld::getLoadingScreenWorldName() const
-{
-    return "";
-}
-*/
 
 void PlayWorld::becameActive()
 {
-    mTex = new KRTexture2D("chara.png");
+    if (!hasLoadedResourceGroup(2)) {
+        startLoadingWorld("load", 2.0);
+        loadResourceGroup(2);
+        finishLoadingWorld();
+    }
 
-    mPos = gKRScreenSize / 2;
+    mPlayer = new Player();
     
 #if KR_IPHONE
     gKRInputInst->enableAccelerometer(true);
@@ -27,60 +25,23 @@ void PlayWorld::becameActive()
 
 void PlayWorld::resignedActive()
 {
-    delete mTex;
+    delete mPlayer;
     
 #if KR_IPHONE
     gKRInputInst->enableAccelerometer(false);
 #endif
 }
 
-void PlayWorld::updateModel(KRInput *input)
+void PlayWorld::updateModel(KRInput* input)
 {
-#if KR_MACOSX
-    KRKeyState keyState = input->getKeyState();
-
-    if (keyState & KRInput::KeyUp) {
-        mPos.y += 2;
-    }
-    if (keyState & KRInput::KeyDown) {
-        mPos.y -= 2;
-    }
-    if (keyState & KRInput::KeyLeft) {
-        mPos.x -= 2;
-    }
-    if (keyState & KRInput::KeyRight) {
-        mPos.x += 2;
-    }
-    
-    if (input->getMouseState() & KRInput::MouseButtonAny) {
-        mPos = input->getMouseLocation();
-    }
-#endif
-    
-#if KR_IPHONE
-    KRVector3D acc = input->getAcceleration();
-    mPos.x += acc.x * 8;
-    mPos.y += acc.y * 8;
-#endif
-    
-    if (mPos.x < mTex->getWidth() / 2) {
-        mPos.x = mTex->getWidth() / 2;
-    } else if (mPos.x >= gKRScreenSize.x - mTex->getWidth() / 2) {
-        mPos.x = gKRScreenSize.x - 1.0 - mTex->getWidth() / 2;
-    }
-
-    if (mPos.y < mTex->getHeight() / 2) {
-        mPos.y = mTex->getHeight() / 2;
-    } else if (mPos.y >= gKRScreenSize.y - mTex->getHeight() / 2) {
-        mPos.y = gKRScreenSize.y - 1.0 - mTex->getHeight() / 2;
-    }
+    mPlayer->move(input);
 }
 
-void PlayWorld::drawView(KRGraphics *g)
+void PlayWorld::drawView(KRGraphics* g)
 {
     g->clear(KRColor::CornflowerBlue);
     
-    mTex->drawAtPointCenter(mPos);
+    gKRAnime2DMan->draw();
 }
 
 

@@ -13,15 +13,9 @@
 extern int  gTex_Logo;
 extern int  gTex_LoadingChara;
 
-extern int  gTex_Test;
+extern int  gTex_Title;
 
-extern int  gBGM_Op;
-extern int  gBGM_Play;
-extern int  gBGM_Danger;
-
-extern int  gSE_Hit;
-
-extern int  gParticle1;
-
-extern int  gSimulator1;
+//extern int  gBGM_Title;
+//extern int  gBGM_Play;
+//extern int  gSE_Hit;
 

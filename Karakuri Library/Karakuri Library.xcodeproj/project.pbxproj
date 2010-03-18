@@ -80,6 +80,14 @@
 		8E2A1AFC1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
 		8E2A1AFD1025A1E700B5DD4C /* KarakuriGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */; };
 		8E2A1AFE1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
+		8E37113E11511CA300B1655B /* BXResourceImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E37113C11511CA300B1655B /* BXResourceImporter.h */; };
+		8E37113F11511CA300B1655B /* BXResourceImporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E37113D11511CA300B1655B /* BXResourceImporter.mm */; };
+		8E37114011511CA300B1655B /* BXResourceImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E37113C11511CA300B1655B /* BXResourceImporter.h */; };
+		8E37114111511CA300B1655B /* BXResourceImporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E37113D11511CA300B1655B /* BXResourceImporter.mm */; };
+		8E37114211511CA300B1655B /* BXResourceImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E37113C11511CA300B1655B /* BXResourceImporter.h */; };
+		8E37114311511CA300B1655B /* BXResourceImporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E37113D11511CA300B1655B /* BXResourceImporter.mm */; };
+		8E37114411511CA300B1655B /* BXResourceImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E37113C11511CA300B1655B /* BXResourceImporter.h */; };
+		8E37114511511CA300B1655B /* BXResourceImporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E37113D11511CA300B1655B /* BXResourceImporter.mm */; };
 		8E4050571029C9A400615B74 /* Karakuri.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F2C101B1FD100DDA881 /* Karakuri.h */; };
 		8E4050581029C9A400615B74 /* KarakuriLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F34101B200000DDA881 /* KarakuriLibrary.h */; };
 		8E4050591029C9A400615B74 /* Karakuri_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F35101B200000DDA881 /* Karakuri_Prefix.pch */; };
@@ -163,13 +171,13 @@
 		8E423B52103C8A2A00ED3880 /* KRPeerPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E423B4E103C8A2A00ED3880 /* KRPeerPicker.h */; };
 		8E423B53103C8A2A00ED3880 /* KRPeerPicker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E423B4F103C8A2A00ED3880 /* KRPeerPicker.mm */; };
 		8E537E8D10FAA924003C76D0 /* KRAnime2DManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */; };
-		8E537E8E10FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.cpp */; };
+		8E537E8E10FAA924003C76D0 /* KRAnime2DManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */; };
 		8E537E8F10FAA924003C76D0 /* KRAnime2DManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */; };
-		8E537E9010FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.cpp */; };
+		8E537E9010FAA924003C76D0 /* KRAnime2DManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */; };
 		8E537E9110FAA924003C76D0 /* KRAnime2DManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */; };
-		8E537E9210FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.cpp */; };
+		8E537E9210FAA924003C76D0 /* KRAnime2DManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */; };
 		8E537E9310FAA924003C76D0 /* KRAnime2DManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */; };
-		8E537E9410FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.cpp */; };
+		8E537E9410FAA924003C76D0 /* KRAnime2DManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */; };
 		8E60178A1031DCE70009C1F4 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E6017541031DCE70009C1F4 /* prime.h */; };
 		8E60178B1031DCE70009C1F4 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E6017551031DCE70009C1F4 /* cpVect.h */; };
 		8E60178C1031DCE70009C1F4 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8E6017561031DCE70009C1F4 /* cpVect.c */; };
@@ -765,6 +773,8 @@
 		8E1B938B101F9E7500D643AA /* KRTextReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTextReader.mm; sourceTree = "<group>"; };
 		8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGlobals.h; sourceTree = "<group>"; };
 		8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriGlobals.cpp; sourceTree = "<group>"; };
+		8E37113C11511CA300B1655B /* BXResourceImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceImporter.h; sourceTree = "<group>"; };
+		8E37113D11511CA300B1655B /* BXResourceImporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceImporter.mm; sourceTree = "<group>"; };
 		8E40509A1029C9A400615B74 /* libkarakuri-macphone-emu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-macphone-emu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4051EC1029DE2700615B74 /* KarakuriEmulatorBackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriEmulatorBackView.h; sourceTree = "<group>"; };
 		8E4051ED1029DE2700615B74 /* KarakuriEmulatorBackView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriEmulatorBackView.mm; sourceTree = "<group>"; };
@@ -777,7 +787,7 @@
 		8E423B4E103C8A2A00ED3880 /* KRPeerPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRPeerPicker.h; sourceTree = "<group>"; };
 		8E423B4F103C8A2A00ED3880 /* KRPeerPicker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRPeerPicker.mm; sourceTree = "<group>"; };
 		8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRAnime2DManager.h; sourceTree = "<group>"; };
-		8E537E8C10FAA924003C76D0 /* KRAnime2DManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRAnime2DManager.cpp; sourceTree = "<group>"; };
+		8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRAnime2DManager.mm; sourceTree = "<group>"; };
 		8E6017541031DCE70009C1F4 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		8E6017551031DCE70009C1F4 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		8E6017561031DCE70009C1F4 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
@@ -1026,6 +1036,15 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		8E3710FB1151185800B1655B /* cocoa_ex */ = {
+			isa = PBXGroup;
+			children = (
+				8E37113C11511CA300B1655B /* BXResourceImporter.h */,
+				8E37113D11511CA300B1655B /* BXResourceImporter.mm */,
+			);
+			name = cocoa_ex;
+			sourceTree = "<group>";
+		};
 		8E4051FA1029DE5200615B74 /* iphone_emu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1145,6 +1164,7 @@
 			isa = PBXGroup;
 			children = (
 				8EAB5F2C101B1FD100DDA881 /* Karakuri.h */,
+				8E3710FB1151185800B1655B /* cocoa_ex */,
 				8EAB5F33101B200000DDA881 /* base */,
 				8EAB5F6A101B205C00DDA881 /* game */,
 				8EAB5F73101B205C00DDA881 /* connection */,
@@ -1246,7 +1266,7 @@
 				8EEA3117112B234200226D42 /* KRTexture2DManager.h */,
 				8EEA3118112B234200226D42 /* KRTexture2DManager.mm */,
 				8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */,
-				8E537E8C10FAA924003C76D0 /* KRAnime2DManager.cpp */,
+				8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */,
 				8E9792681020C00700E3EC7A /* KRFont.h */,
 				8E9792691020C00700E3EC7A /* KRFont.mm */,
 				8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */,
@@ -1432,6 +1452,7 @@
 				8E537E9310FAA924003C76D0 /* KRAnime2DManager.h in Headers */,
 				8EEA28CB11269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA311C112B234200226D42 /* KRTexture2DManager.h in Headers */,
+				8E37114411511CA300B1655B /* BXResourceImporter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1521,6 +1542,7 @@
 				8E537E8F10FAA924003C76D0 /* KRAnime2DManager.h in Headers */,
 				8EEA28C511269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA3119112B234200226D42 /* KRTexture2DManager.h in Headers */,
+				8E37113E11511CA300B1655B /* BXResourceImporter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1610,6 +1632,7 @@
 				8E537E9110FAA924003C76D0 /* KRAnime2DManager.h in Headers */,
 				8EEA28C911269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA311B112B234200226D42 /* KRTexture2DManager.h in Headers */,
+				8E37114011511CA300B1655B /* BXResourceImporter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1701,6 +1724,7 @@
 				8E537E8D10FAA924003C76D0 /* KRAnime2DManager.h in Headers */,
 				8EEA28C711269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA311A112B234200226D42 /* KRTexture2DManager.h in Headers */,
+				8E37114211511CA300B1655B /* BXResourceImporter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1935,8 +1959,9 @@
 				8E75FE3B105288CE0012DAD3 /* KRBundle.m in Sources */,
 				8EFCEAA510F9904500E9598B /* KarakuriDebug.mm in Sources */,
 				8EFCEADC10F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
-				8E537E9410FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */,
+				8E537E9410FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28CC11269C0800226D42 /* KRAudioManager.mm in Sources */,
+				8E37114511511CA300B1655B /* BXResourceImporter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2014,8 +2039,9 @@
 				8EF05DCF1048887400CD7212 /* KRLabel.cpp in Sources */,
 				8EFCEAAB10F9904500E9598B /* KarakuriDebug.mm in Sources */,
 				8EFCEAE210F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
-				8E537E9010FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */,
+				8E537E9010FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28C611269C0800226D42 /* KRAudioManager.mm in Sources */,
+				8E37113F11511CA300B1655B /* BXResourceImporter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2093,8 +2119,9 @@
 				8EF05DCD1048887400CD7212 /* KRLabel.cpp in Sources */,
 				8EFCEAA910F9904500E9598B /* KarakuriDebug.mm in Sources */,
 				8EFCEAE010F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
-				8E537E9210FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */,
+				8E537E9210FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28CA11269C0800226D42 /* KRAudioManager.mm in Sources */,
+				8E37114111511CA300B1655B /* BXResourceImporter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2174,8 +2201,9 @@
 				8E75FE39105288CE0012DAD3 /* KRBundle.m in Sources */,
 				8EFCEAA710F9904500E9598B /* KarakuriDebug.mm in Sources */,
 				8EFCEADE10F9979900E9598B /* KRMemoryAllocator.cpp in Sources */,
-				8E537E8E10FAA924003C76D0 /* KRAnime2DManager.cpp in Sources */,
+				8E537E8E10FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28C811269C0800226D42 /* KRAudioManager.mm in Sources */,
+				8E37114311511CA300B1655B /* BXResourceImporter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

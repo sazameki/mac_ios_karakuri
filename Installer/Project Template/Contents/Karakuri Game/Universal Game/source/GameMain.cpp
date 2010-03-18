@@ -5,40 +5,73 @@
  */
 
 #include "GameMain.h"
+#include "Globals.h"
 
 #include "LogoWorld.h"
+#include "LoadingWorld.h"
+#include "TitleWorld.h"
 #include "PlayWorld.h"
 
 
 GameMain::GameMain()
 {
-    // Set up the game title, which will be shown at the title bar of the main window on Mac OS X.
-    // Please edit "Target" setting to change the bundle name, which will be shown in Finder or iPhone Desktop.
-    // This setting will be ignored on iPhone.
-    setTitle("My Karakuri Game");
+    ///// Main Settings
 
-    // Set up the screen size.
-    // System assumes that iPhone will be used horizontally if the screen width is wider than the screen height.
-    // System assumes that iPhone will be used vertically otherwise.
-    setScreenSize(480, 320);
+    setTitle("My Karakuri Game");           // Game title (Mac only)
 
-    // Set up the refresh rate.
-    setFrameRate(60.0);
+    setScreenSize(480, 320);                // iPhone Size (Horizontal use)
+    //setScreenSize(320, 480);                // iPhone Size (Vertical use)
+    //setScreenSize(1024, 768);               // iPad size (Horizontal use)
+    //setScreenSize(768, 1024);               // iPad size (Vertical use)
+
+    setFrameRate(60.0);                     // Refresh rate
+    setMaxChara2DCount(1024);               // Max Animation Character Count
+    setAudioMixType(KRAudioMixTypeAmbient); // Audio mixing
+
+    setShowsMouseCursor(true);              // Mouse cursor should be shown (Mac only)
+    setShowsFPS(true);                      // Realtime FPS information (debug build only)
+
+    // TODO: Edit "Target" setting to change the bundle name, which will be shown in Finder or iPhone Desktop.
+
+    ///// Add any code here for creating your objects
+}
+
+GameMain::~GameMain()
+{
+    // Add any code here for cleaning up your objects
+}
+
+void GameMain::setupResources()
+{
+    ///// Add all required resources at this point.
+
+    // Load integrated resource file (* Use Karakuri Box to make it *)
+    //addResources("resource.krrs");
     
-    // Set up whether mouse cursor should be shown
-    setShowsMouseCursor(true);
+    // Logo and Loading Worlds
+    gTex_Logo   = gKRTex2DMan->addTexture(0, checkDeviceType(KRDeviceTypeIPad)? "Default-Portrait.png": "Default.png");
+    gTex_LoadingChara = gKRTex2DMan->addTexture(0, "chara.png");
 
-    // Set up how audio sounds are mixed.
-    setAudioMixType(KRAudioMixTypeAmbientSolo);
+    // Title World
+    gTex_Title = gKRTex2DMan->addTexture(1, "title.png");
+    //gBGM_Title = gKRAudioMan->addBGM(1, "title_bgm.caf");
 
-    // Set up whether shows real time FPS information (works at debug build only)
-    setShowsFPS(true);
+    // Play World
+    gKRAnime2DMan->addCharacterSpecs(2, "chara2d.spec");
+    //gBGM_Play = gKRAudioMan->addBGM(2, "play_bgm.caf");
+    //gSE_Hit = gKRAudioMan->addSE(2, "hit.caf");
+    
+    // Load logo and loading worlds resources
+    // Basically you may want to load almost all resources at this point, except for stage-depenting resources.
+    loadResourceGroup(0);
 }
 
 std::string GameMain::setupWorlds()
 {
     // Add world instances with name
     addWorld("logo", new LogoWorld());
+    addWorld("load", new LoadingWorld());
+    addWorld("title", new TitleWorld());
     addWorld("play", new PlayWorld());
     
     // Return name of the world selected at first

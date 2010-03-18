@@ -16,6 +16,13 @@
 class KRFont;
 
 
+/*!
+    @enum   KRTexture2DScaleMode
+    @group  Game 2D Graphics
+    @constant   KRTexture2DScaleModeNearest     ニアレストネイバー法による画像補完を表す定数です。
+    @constant   KRTexture2DScaleModeLinear      バイリニア法による画像補完を表す定数です。
+    @abstract   画像補間法を表すための型です。
+ */
 typedef enum {
     KRTexture2DScaleModeNearest,
     KRTexture2DScaleModeLinear,
@@ -43,6 +50,9 @@ private:
     void        *mTexture2DImpl;
     void        *mAtlas;
     KRVector2D  mAtlasSize;
+    
+    KRVector2DInt   mAtlasDiv;
+    bool        mIsAtlasFlipped;
 
 public:
     static int  getResourceSize(const std::string& filename);
@@ -52,6 +62,11 @@ public:
         @task コンストラクタ
      */
     
+    /*!
+        @method KRTexture2D
+        @abstract 画像ファイルの名前（拡張子を含む）を指定してテクスチャを生成します。
+        画像の保管方法として、KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかを指定します。
+     */
     KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode);
 
     /*!
@@ -60,6 +75,8 @@ public:
         第2引数でアトラスのサイズを設定することで、簡単に部分描画を行なうことができます。
      */
     KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
+
+    KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode);
 
     KRTexture2D(const std::string& str, KRFont *font);
     ~KRTexture2D();
@@ -98,6 +115,10 @@ public:
         テクスチャの横幅をリターンします（ピクセル単位）。
      */
     double      getWidth() const;
+    
+    int         getDivX();
+    int         getDivY();
+    bool        isAtlasFlipped();
     
     
 public:

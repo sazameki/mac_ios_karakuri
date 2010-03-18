@@ -5,40 +5,28 @@
  */
 
 #include "LogoWorld.h"
+#include "Globals.h"
 
-
-/*
-std::string LogoWorld::getLoadingScreenWorldName() const
-{
-    return "";
-}
-*/
 
 void LogoWorld::becameActive()
 {
-    mCount = 120;
-
-#if KR_MACOSX
-    mCount += 100;
-#endif
-    
-    mTex = new KRTexture2D("Default.png");
+    mCount = 150;
 }
 
 void LogoWorld::resignedActive()
 {
-    delete mTex;
+    // Do nothing
 }
 
-void LogoWorld::updateModel(KRInput *input)
+void LogoWorld::updateModel(KRInput* input)
 {
     mCount--;
     if (mCount == 0) {
-        KRChangeWorld("play");
+        gKRGameMan->changeWorld("title");
     }
 }
 
-void LogoWorld::drawView(KRGraphics *g)
+void LogoWorld::drawView(KRGraphics* g)
 {
     g->clear(KRColor::White);
     
@@ -46,11 +34,13 @@ void LogoWorld::drawView(KRGraphics *g)
     if (alpha > 1.0) {
         alpha = 1.0;
     }
-    double angle = 0.0;
+
+    double angle = M_PI_4;
     if (gKRScreenSize.x > gKRScreenSize.y) {
-        angle = M_PI / 2;
+        angle = M_PI_2;
     }
-    mTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mTex->getCenterPos(), KRVector2DOne, alpha);
+
+    gKRTex2DMan->drawAtPointCenterEx(gTex_Logo, gKRScreenSize/2, angle, gKRTex2DMan->getTextureSize(gTex_Logo)/2, KRVector2DOne, alpha);
 }
 
 

@@ -14,7 +14,6 @@
 class «FILEBASENAMEASIDENTIFIER» : public KRWorld {
     
 public:
-    //virtual std::string getLoadingScreenWorldName() const;
 
     virtual void    becameActive();
     virtual void    resignedActive();

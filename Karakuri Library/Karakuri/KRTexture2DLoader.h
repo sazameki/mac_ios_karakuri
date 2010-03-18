@@ -14,6 +14,7 @@
 
 
 GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear=NO) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& color, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear=NO) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
+GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& color, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 

@@ -1,7 +1,7 @@
 /*!
     @file   PlayWorld.h
-    @author ___FULLUSERNAME___
-    @date   ___DATE___
+    @author numata
+    @date   10/02/13
 
     Please write the description of this world.
  */
@@ -9,20 +9,18 @@
 #pragma once
 
 #include <Karakuri/Karakuri.h>
+#include "Player.h"
 
 
 class PlayWorld : public KRWorld {
     
-    KRTexture2D     *mTex;
-    KRVector2D      mPos;
+    Player*         mPlayer;
     
 public:
-    //virtual std::string getLoadingScreenWorldName() const;
-
     virtual void    becameActive();
     virtual void    resignedActive();
-    virtual void    updateModel(KRInput *input);
-    virtual void    drawView(KRGraphics *g);
+    virtual void    updateModel(KRInput* input);
+    virtual void    drawView(KRGraphics* g);
 
 };
 

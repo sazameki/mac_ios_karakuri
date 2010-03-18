@@ -43,6 +43,34 @@ int KRTexture2DManager::addTexture(int groupID, const std::string& imageFileName
     return theTexID;    
 }
 
+int KRTexture2DManager::addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
+{
+    int theTexID = mNextNewTexID;
+    mNextNewTexID++;
+
+    std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
+    theTexIDList.push_back(theTexID);
+    
+    mTexID_Ticket_Map[theTexID] = ticket;
+
+    mTicket_TexID_Map[ticket] = theTexID;
+    mTicket_StartPos_Map[ticket] = pos;
+    mTicket_Length_Map[ticket] = length;
+    mTicket_DivX_Map[ticket] = 1;
+    mTicket_DivY_Map[ticket] = 1;
+
+    mTexID_ImageFileName_Map[theTexID] = resourceFileName;
+    mTexID_ScaleMode_Map[theTexID] = KRTexture2DScaleModeLinear;
+    
+    return theTexID;
+}
+
+void KRTexture2DManager::setDivForTicket(const std::string& ticket, int divX, int divY)
+{
+    mTicket_DivX_Map[ticket] = divX;
+    mTicket_DivY_Map[ticket] = divY;
+}
+
 int KRTexture2DManager::getResourceSize(int groupID)
 {
     int ret = 0;
@@ -87,7 +115,17 @@ void KRTexture2DManager::loadTextureFiles(int groupID, KRWorld* loaderWorld, dou
         NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
         if (mTexMap[texID] == NULL) {
             KRTexture2DScaleMode scaleMode = mTexID_ScaleMode_Map[texID];
-            mTexMap[texID] = new KRTexture2D(filename, scaleMode);
+            
+            NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+            if ([[filenameStr pathExtension] isEqualToString:@"krrs"]) {
+                std::string ticket = mTexID_Ticket_Map[texID];
+                int divX = mTicket_DivX_Map[ticket];
+                int divY = mTicket_DivY_Map[ticket];
+                mTexMap[texID] = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
+            } else {
+                mTexMap[texID] = new KRTexture2D(filename, scaleMode);
+            }
+            [filenameStr release];
         }
         NSTimeInterval loadTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
         
@@ -112,17 +150,51 @@ void KRTexture2DManager::unloadTextureFiles(int groupID)
     // Do nothing
 }
 
+std::string KRTexture2DManager::getFileNameForTicket(const std::string& ticket)
+{
+    int texID = mTicket_TexID_Map[ticket];
+    return mTexID_ImageFileName_Map[texID];
+}
+
+int KRTexture2DManager::getTextureIDForTicket(const std::string& ticket)
+{
+    return mTicket_TexID_Map[ticket];
+}
+
+unsigned KRTexture2DManager::getResourceStartPosForTicket(const std::string& ticket)
+{
+    return mTicket_StartPos_Map[ticket];
+}
+
+unsigned KRTexture2DManager::getResourceLengthForTicket(const std::string& ticket)
+{
+    return mTicket_Length_Map[ticket];
+}
+
 KRTexture2D* KRTexture2DManager::_getTexture(int texID)
 {
     // IDからテクスチャを引っ張ってくる。
     KRTexture2D* theTex = mTexMap[texID];
     if (theTex == NULL) {
         std::string filename = mTexID_ImageFileName_Map[texID];
+        NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+        
         KRTexture2DScaleMode scaleMode = mTexID_ScaleMode_Map[texID];
-        theTex = new KRTexture2D(filename, scaleMode);
+        
+        if ([[filenameStr pathExtension] isEqualToString:@"krrs"]) {
+            std::string ticket = mTexID_Ticket_Map[texID];
+            int divX = mTicket_DivX_Map[ticket];
+            int divY = mTicket_DivY_Map[ticket];
+            theTex = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
+        } else {
+            theTex = new KRTexture2D(filename, scaleMode);
+        }
+        
         mTexMap[texID] = theTex;
+        
+        [filenameStr release];
     }
-    
+
     // テクスチャが見つからなかったときの処理。
     if (theTex == NULL) {
         const char *errorFormat = "Failed to find the texture with ID %d.";
@@ -265,7 +337,13 @@ void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atla
     KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
-    KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
+    int theY = atlasPos.y;
+    
+    if (theTex->isAtlasFlipped()) {
+        theY = theTex->getDivY() - atlasPos.y - 1;
+    }
+    
+    KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * theY, atlasSize.x, atlasSize.y);
     
     theTex->drawAtPointEx_(pos, srcRect, rotate, origin, scale, color);
 }

@@ -9,10 +9,13 @@
 #include <Karakuri/Karakuri.h>
 
 
-class GameMain : public KRGame {
+class GameMain : public KRGameManager {
     
 public:
     GameMain();
+    virtual ~GameMain();
+
+    virtual void        setupResources();
     virtual std::string setupWorlds();
 
 };

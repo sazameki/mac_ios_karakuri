@@ -116,7 +116,23 @@ KRParticle2DSystem::KRParticle2DSystem(int groupID, const std::string& imageFile
     : mGroupID(groupID), mZOrder(zOrder)
 {
     mDoLoop = false;
+
     mCharaSpecID = gKRAnime2DMan->_addTexCharaSpec(groupID, imageFileName);
+    
+    init();
+}
+
+/*!
+    @method KRParticle2DSystem
+    Constructor
+ */
+KRParticle2DSystem::KRParticle2DSystem(int groupID, const std::string& ticket)
+    : mGroupID(groupID)
+{
+    mZOrder = 0;
+    mDoLoop = false;
+    
+    mCharaSpecID = gKRAnime2DMan->_addTexCharaSpecWithTicket(groupID, ticket);
     
     init();
 }
@@ -135,6 +151,7 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename, bool doLoop)
     
     init();
 }
+
 /*!
     @method KRParticle2DSystem
     Constructor
@@ -427,7 +444,7 @@ void KRParticle2DSystem::step()
                     mParticles.push_back(particle);
 
                     if (mCharaSpecID >= 0) {
-                        KRChara2D* theChara = gKRAnime2DMan->_createChara2DParticle(mCharaSpecID, mGenInfos[i].centerPos, 0, mZOrder, particle);
+                        KRChara2D* theChara = gKRAnime2DMan->createChara2D(mCharaSpecID, mGenInfos[i].centerPos, 0, mZOrder, particle);
                         theChara->blendMode = mBlendMode;
                         particle->setChara(theChara);
                     }

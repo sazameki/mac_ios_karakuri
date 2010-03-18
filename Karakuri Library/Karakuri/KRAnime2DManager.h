@@ -18,16 +18,58 @@ class KRSimulator2D;
 extern KRMemoryAllocator*   gKRChara2DAllocator;
 
 
-struct _KRChara2DState {
-    int     state;
-    int     repeatCount;
-    bool    doReverse;
-    int     imageInterval;
-    int     nextState;
-    int     repeatHeadIndex;
+static const unsigned       KRCharaStateChangeModeNormalMask            = 0x00;
+static const unsigned       KRCharaStateChangeModeIgnoreCancelFlagMask  = 0x01;
+static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
 
-    std::vector<KRVector2DInt>  atlasPositions;
-    std::list<int>              backToState;
+
+
+class KRChara2DKoma : public KRObject {
+
+    int     mTextureID;
+    int     mAtlasIndex;
+    int     mGotoTarget;
+    bool    mIsCancelable;
+    int     mInterval;
+    
+    KRVector2DInt   mAtlasPos;
+
+public:
+    KRChara2DKoma();
+
+    void    initForManualChara2D(int textureID, KRVector2DInt atlasPos, int interval, bool isCancelable, int gotoTarget);
+    void    initForBoxChara2D(const std::string& imageTicket, int atlasIndex, int interval, bool isCancelable, int gotoTarget);
+
+public:
+    KRVector2DInt   getAtlasPos();
+    KRVector2D      getAtlasSize();
+    int             getGotoTarget();
+    int             getInterval();
+    int             getTextureID();
+    
+};
+
+
+class KRChara2DState : public KRObject {
+    
+    std::vector<KRChara2DKoma*>   mKomas;
+
+    int     mCancelKomaNumber;
+    int     mNextStateID;
+
+public:
+    KRChara2DState();
+    
+    void    initForManualChara2D(int cancelKomaNumber, int nextStateID);
+    void    initForBoxChara2D(int cancelKomaNumber, int nextStateID);
+    
+public:
+    void    addKoma(KRChara2DKoma* aKoma);
+    
+public:
+    int             getKomaCount();
+    KRChara2DKoma*  getKoma(int komaNumber);
+    
 };
 
 
@@ -38,9 +80,11 @@ struct _KRChara2DState {
     <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
 class KRChara2DSpec : public KRObject {
-    std::map<int, _KRChara2DState*> mStateMap;
-    int                             mTextureID;
+    std::map<int, KRChara2DState*>  mStateMap;
     int                             mSpecID;
+    int                             mGroupID;
+    
+    int                             mParticleTexID;
 
 public:
     /*!
@@ -51,32 +95,28 @@ public:
         @method KRChara2DSpec
         テクスチャ名とアトラスのサイズを指定して、新しいキャラクタの特徴を生成します。
      */
-    KRChara2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize);
+    //KRChara2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize);
     
+    KRChara2DSpec(int groupID);
+
     ~KRChara2DSpec();
+    
+    void    initForManualChara2D();
+    void    initForManualParticle2D(const std::string& fileName);
+    void    initForBoxParticle2D(const std::string& imageTicket);
     
 public:
     /*!
         @task 状態の管理
      */
 
-    /*!
-        @method addState
-        キャラクタの特徴として、新しいキャラクタ状態を追加します。
-     */
-    void    addState(int state, int imageInterval, int repeatCount, bool doReverse, int nextState=-1);
+    void    addState(int stateID, KRChara2DState* aState);
 
-    /*!
-        @method addStateImage
-        キャラクタの状態を指定して、新しいアニメーションのコマを、テクスチャのアトラスの座標として追加します。
-     */
-    void    addStateImage(int state, const KRVector2DInt& atlasPos, bool isRepeatHead = false);
-    
-    _KRChara2DState*        _getState(int state);   KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    int                     _getTextureID() const;  KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    int                     _getSpecID() const;     KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    bool                    _isTextureAtlased() const;  KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    void                    _setSpecID(int specID); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    KRChara2DState*         getState(int state);
+    int                     getParticleTextureID() const;
+    int                     getSpecID() const;
+    void                    setSpecID(int specID);
+    bool                    isParticle();
     
 };
 
@@ -84,8 +124,8 @@ public:
     @class KRChara2D
     @group Game 2D Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
-    <p>このクラスのインスタンスは、グローバル変数 gKRAnime2DInst を使ってアクセスできる <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスの <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/createCharacter/KRCharacter2D*_createCharacter(int_specID,_const_KRVector2D@_centerPos,_int_zOrder_=_0,_int_firstState_=_0)">createCharacter</a> メソッドを使って作成します。</p>
-    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/removeCharacter/void_removeCharacter(KRCharacter2D_*chara)">removeCharacter</a> メソッドを使って削除してください。</p>
+    <p>このクラスのインスタンスは、グローバル変数 gKRAnime2DInst を使ってアクセスできる <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスの createChara2D() メソッドを使って作成します。</p>
+    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D メソッドを使って削除してください。</p>
     <p>キャラクタの現在位置は、テクスチャアトラス描画の中心点を示します。現在位置は、public な pos 変数を直接いじって変更してください。</p>
     <p>キャラクタの描画色は、public な color 変数を直接いじって変更してください。</p>
     <p>キャラクタのZオーダは、現在位置や描画色とは違い、setZOrder() メソッドを使って変更してください。</p>
@@ -98,19 +138,16 @@ class KRChara2D : public KRObject {
 
 private:
     KRChara2DSpec*      mCharaSpec;
-    int                 mState;
+
+    int                 mCurrentStateID;
+    int                 mCurrentKomaNumber;
+
     int                 mImageInterval;
     int                 mZOrder;
-    int                 mImageIndex;
-    bool                mIsStateFinished;
-    int                 mImageInc;
     int                 mRepeatCount;
-    int                 mNextState;
-    bool                mHasPassedHead;
-    
+    bool                mIsFinished;
+
     void*               mRepresentedObject;
-    
-    bool                mIsParticle;
     
 public:
     /*!
@@ -185,7 +222,7 @@ public:
         @method changeState
         キャラクタの状態を変更します。
      */
-    void    changeState(int state);
+    void    changeState(int stateID, unsigned modeMask = KRCharaStateChangeModeNormalMask);
 
     /*!
         @method setObject
@@ -211,7 +248,6 @@ public:
     <p>キャラクタのアニメーションを管理するためのクラスです。</p>
     <p>このクラスのオブジェクトには、gKRAnime2DMan 変数を使ってアクセスしてください。</p>
     <p>主な使い方は、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
-    <p>基本的には、<a href="#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">loadCharacterSpecs()</a> メソッドを使ってキャラクタの特徴記述ファイルを読み込み、<a href="#//apple_ref/cpp/instm/KRAnime2D/startLoadingTextures/void_startLoadingTextures()">startLoadingTextures()</a> メソッドを使ってテクスチャの読み込みを行います。その後、<a href="#//apple_ref/cpp/instm/KRAnime2D/createCharacter/KRCharacter2D*_createCharacter(int_specID,_const_KRVector2D@_centerPos,_int_zOrder_=_0,_int_firstState_=_0)">createCharacters()</a> メソッドを使ってキャラクタを生成してください。生成されたキャラクタは、<a href="../../Classes/KRCharacter2D/index.html#//apple_ref/cpp/cl/KRCharacter2D">KRCharacter2D</a> クラスのインスタンスとして参照できます。</p>
  */
 class KRAnime2DManager : public KRObject {
 
@@ -229,6 +265,25 @@ public:
 	virtual ~KRAnime2DManager();
 
 public:
+    
+#pragma mark ---- アニメーションの描画 ----
+    
+    /*!
+     @task アニメーションの描画
+     */
+
+    /*!
+        @method draw
+        すべてのキャラクタを描画します。重なって表示されるキャラクタには、Zオーダが適用されます。
+     */
+    void    draw();
+    
+    /*!
+        @-method stepAllCharas
+        すべてのキャラクタのアニメーションをステップ実行します。
+     */
+    void    stepAllCharas();
+    
     
 #pragma mark ---- キャラクタの管理 ----
 
@@ -251,13 +306,14 @@ public:
     void    _loadCharaSpecs(const std::string& specFileName);
     
     /*!
-        @method addCharaSpecs
+        @method addCharacterSpecs
         @abstract ゲーム内で利用するキャラクタの特徴ファイルを追加します。
         <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
      */
-    void    addCharaSpecs(int groupID, const std::string& specFileName);
+    void    addCharacterSpecs(int groupID, const std::string& specFileName);
     
     int     _addTexCharaSpec(int groupID, const std::string& imageFileName);
+    int     _addTexCharaSpecWithTicket(int groupID, const std::string& ticket);
     
 
     /*!
@@ -266,7 +322,6 @@ public:
         オプションで、Zオーダと、このキャラクタに関連付けるオブジェクトも指定できます。
      */
     KRChara2D*  createChara2D(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
-    KRChara2D*  _createChara2DParticle(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
 
     /*!
         @method removeAllCharas
@@ -297,71 +352,235 @@ public:
 
     
     /*!
-        @method addParticleSystem
+        @method addParticle2D
         @abstract 2次元の移動を行うパーティクル管理のシステムを生成します。火、爆発、煙、雲、霧などの表現に利用できます。
      */
-    int     addParticleSystem(int groupID, const std::string& imageFileName, int zOrder);
+    int     addParticle2D(int groupID, const std::string& imageFileName);
+    
+    void    _addParticle2DWithTicket(int resourceID, int groupID, const std::string& imageTicket);
     
     KRParticle2DSystem* _getParticleSystem(int particleID) const;
 
     /*!
-        @method generateParticles
+        @method generateParticle2D
         指定された座標に、新しいパーティクルを生成します。
      */
-    void    generateParticles(int particleID, const KRVector2D& pos);
+    void    generateParticle2D(int particleID, const KRVector2D& pos);
     
     void    stepParticles();
     
-    KRBlendMode     getParticleBlendMode(int particleID) const;
-    KRColor         getParticleColor(int particleID) const;
-    int             getParticleCount(int particleID) const;
-    double          getParticleAlphaDelta(int particleID) const;
-    double          getParticleBlueDelta(int particleID) const;
-    double          getParticleGreenDelta(int particleID) const;
-    double          getParticleRedDelta(int particleID) const;
-    double          getParticleScaleDelta(int particleID) const;
-    int             getParticleGenerateCount(int particleID) const;
-    KRVector2D      getParticleGravity(int particleID) const;
-    int             getParticleLife(int particleID) const;
-    double          getParticleMaxAngleV(int particleID) const;
-    int             getParticleMaxCount(int particleID) const;
-    double          getParticleMaxScale(int particleID) const;
-    KRVector2D      getParticleMaxV(int particleID) const;
-    double          getParticleMinAngleV(int particleID) const;
-    double          getParticleMinScale(int particleID) const;
-    KRVector2D      getParticleMinV(int particleID) const;
+    /*!
+        @task パーティクルの管理（状態の取得）
+     */
     
-    void    setParticleBlendMode(int particleID, KRBlendMode blendMode);
-    void    setParticleColor(int particleID, const KRColor& color);
-    void    setParticleColorDelta(int particleID, double red, double green, double blue, double alpha);
-    void    setParticleGenerateCount(int particleID, int count);
-    void    setParticleGravity(int particleID, const KRVector2D& a);
-    void    setParticleLife(int particleID, unsigned life);
-    void    setParticleMaxAngleV(int particleID, double angleV);
-    void    setParticleMaxCount(int particleID, unsigned count);
-    void    setParticleMaxScale(int particleID, double scale);
-    void    setParticleMaxV(int particleID, const KRVector2D& v);
-    void    setParticleMinAngleV(int particleID, double angleV);
-    void    setParticleMinScale(int particleID, double scale);
-    void    setParticleMinV(int particleID, const KRVector2D& v);
-    void    setParticleScaleDelta(int particleID, double value);
-
-#pragma mark ---- アニメーションの描画 ----
+    /*!
+        @method getParticle2DBlendMode
+        @abstract IDを指定して、パーティクル描画時のブレンドモードを取得します。
+     */
+    KRBlendMode     getParticle2DBlendMode(int particleID) const;
 
     /*!
-        @task アニメーションの描画
+        @method getParticle2DColor
+        @abstract IDを指定して、パーティクル描画の基本色を取得します。
      */
-    /*!
-        @method draw
-        すべてのキャラクタを描画します。重なって表示されるキャラクタには、Zオーダが適用されます。
-     */
-    void    draw();
+    KRColor         getParticle2DColor(int particleID) const;
 
     /*!
-        @-method stepAllCharas
-        すべてのキャラクタのアニメーションをステップ実行します。
+        @method getParticle2DCount
+        @abstract IDを指定して、現在までに生成されたパーティクルの個数を取得します。
      */
-    void    stepAllCharas();
+    int             getParticle2DCount(int particleID) const;
+
+    /*!
+        @method getParticle2DAlphaDelta
+        @abstract IDを指定して、パーティクルのアルファ値の変化量を取得します。
+     */
+    double          getParticle2DAlphaDelta(int particleID) const;
+
+    /*!
+        @method getParticle2DBlueDelta
+        @abstract IDを指定して、パーティクルの青成分の変化量を取得します。
+     */
+    double          getParticle2DBlueDelta(int particleID) const;
+
+    /*!
+        @method getParticle2DGreenDelta
+        @abstract IDを指定して、パーティクルの緑成分の変化量を取得します。
+     */
+    double          getParticle2DGreenDelta(int particleID) const;
+
+    /*!
+        @method getParticle2DRedDelta
+        @abstract IDを指定して、パーティクルの赤成分の変化量を取得します。
+     */
+    double          getParticle2DRedDelta(int particleID) const;
+
+    /*!
+        @method getParticle2DScaleDelta
+        @abstract IDを指定して、拡大率の変化量を取得します。
+     */
+    double          getParticle2DScaleDelta(int particleID) const;
+
+    /*!
+        @method getParticle2DGenerateCount
+        @abstract IDを指定して、1フレームあたりのパーティクルの生成量を取得します。
+     */
+    int             getParticle2DGenerateCount(int particleID) const;
+
+    /*!
+        @method getParticle2DGravity
+        @abstract IDを指定して、パーティクルに設定される重力を取得します。
+     */
+    KRVector2D      getParticle2DGravity(int particleID) const;
+
+    /*!
+        @method getParticle2DLife
+        @abstract IDを指定して、パーティクルに設定される生存期間（フレーム単位）を取得します。
+     */
+    int             getParticle2DLife(int particleID) const;
+
+    /*!
+        @method getParticle2DMaxAngleV
+        @abstract IDを指定して、パーティクルに設定される回転の最大の角速度を設定します。
+        回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    double          getParticle2DMaxAngleV(int particleID) const;
+
+    /*!
+        @method getParticle2DMaxCount
+        @abstract IDを指定して、パーティクルの最大生成量を設定します。
+     */
+    int             getParticle2DMaxCount(int particleID) const;
+
+    /*!
+        @method getParticle2DMaxScale
+        @abstract IDを指定して、パーティクルに設定される最大の拡大率を設定します。
+        拡大率は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    double          getParticle2DMaxScale(int particleID) const;
+
+    /*!
+        @method getParticle2DMaxV
+        @abstract IDを指定して、パーティクルに設定される最大の速度を設定します。
+        速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    KRVector2D      getParticle2DMaxV(int particleID) const;
+
+    /*!
+        @method getParticle2DMinAngleV
+        @abstract IDを指定して、パーティクルに設定される回転の最小の角速度を設定します。
+        回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    double          getParticle2DMinAngleV(int particleID) const;
+
+    /*!
+        @method getParticle2DMinScale
+        @abstract IDを指定して、パーティクルに設定される最小の拡大率を設定します。
+        拡大率は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    double          getParticle2DMinScale(int particleID) const;
+
+    /*!
+        @method getParticle2DMinV
+        @abstract IDを指定して、パーティクルに設定される最小の速度を設定します。
+        速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    KRVector2D      getParticle2DMinV(int particleID) const;
+
+    /*!
+        @task パーティクルの管理（状態の設定）
+     */
+    
+    /*!
+        @method setParticle2DBlendMode
+        @abstract IDを指定して、パーティクル描画時のブレンドモードを設定します。
+     */
+    void    setParticle2DBlendMode(int particleID, KRBlendMode blendMode);
+
+    /*!
+        @method setParticle2DColor
+        @abstract IDを指定して、パーティクル描画の基本色を設定します。
+     */
+    void    setParticle2DColor(int particleID, const KRColor& color);
+
+    /*!
+        @method setParticle2DColorDelta
+        @abstract IDを指定して、パーティクルの色の変化量を設定します。
+     */
+    void    setParticle2DColorDelta(int particleID, double red, double green, double blue, double alpha);
+
+    /*!
+        @method setParticle2DGenerateCount
+        @abstract IDを指定して、1フレームあたりのパーティクルの生成量を設定します。
+     */
+    void    setParticle2DGenerateCount(int particleID, int count);
+
+    /*!
+        @method setParticle2DGravity
+        @abstract IDを指定して、パーティクルに設定される重力を設定します。
+     */
+    void    setParticle2DGravity(int particleID, const KRVector2D& a);
+
+    /*!
+        @method setParticle2DLife
+        @abstract IDを指定して、パーティクルに設定される生存期間（フレーム単位）を設定します。
+     */
+    void    setParticle2DLife(int particleID, unsigned life);
+
+    /*!
+        @method setParticle2DMaxAngleV
+        @abstract IDを指定して、パーティクルに設定される回転の最大の角速度を設定します。
+        回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DMaxAngleV(int particleID, double angleV);
+
+    /*!
+        @method setParticle2DMaxCount
+        @abstract IDを指定して、パーティクルの最大の生成数を設定します。
+     */
+    void    setParticle2DMaxCount(int particleID, unsigned count);
+
+    /*!
+        @method setParticle2DMaxScale
+        @abstract IDを指定して、パーティクルに設定される最大の拡大率を設定します。
+        拡大率は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DMaxScale(int particleID, double scale);
+
+    /*!
+        @method setParticle2DMaxV
+        @abstract IDを指定して、パーティクルに設定される最大の速度を設定します。
+        速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DMaxV(int particleID, const KRVector2D& v);
+
+    /*!
+        @method setParticle2DMinAngleV
+        @abstract IDを指定して、パーティクルに設定される回転の最小の角速度を設定します。
+        回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DMinAngleV(int particleID, double angleV);
+
+    /*!
+        @method setParticle2DMinScale
+        @abstract IDを指定して、パーティクルに設定される最小の拡大率を設定します。
+        拡大率は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DMinScale(int particleID, double scale);
+
+    /*!
+        @method setParticle2DMinV
+        @abstract IDを指定して、パーティクルに設定される最小の速度を設定します。
+        速度は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DMinV(int particleID, const KRVector2D& v);
+
+    /*!
+        @method setParticle2DScaleDelta
+        @abstract IDを指定して、パーティクルに設定される拡大率の変化量を設定します。
+        拡大率は、生成時に設定の範囲内でランダムに設定されます。
+     */
+    void    setParticle2DScaleDelta(int particleID, double value);
 
 };
 

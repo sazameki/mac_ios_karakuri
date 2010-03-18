@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>iphone_icon.png</string>
 	<key>CFBundleIdentifier</key>
-	<string>jp.yourcompany.«PROJECTNAME»</string>
+	<string>jp.designed.numata.MyTestGame</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

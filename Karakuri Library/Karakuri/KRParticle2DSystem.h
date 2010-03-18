@@ -119,6 +119,8 @@ public:
     
     KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder);
     
+    KRParticle2DSystem(int groupID, const std::string& ticket);
+    
     /*!
         @method KRParticle2DSystem
         @abstract テクスチャに使用する画像ファイルの名前を指定して、このパーティクル・システムを生成します。

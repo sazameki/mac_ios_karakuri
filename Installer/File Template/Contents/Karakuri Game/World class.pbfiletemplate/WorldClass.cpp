@@ -15,19 +15,18 @@
 #include "«FILEBASENAMEASIDENTIFIER».h"
 
 
-/*
-std::string «FILEBASENAMEASIDENTIFIER»::getLoadingScreenWorldName() const
-{
-    return "";
-}
-*/
-
 void «FILEBASENAMEASIDENTIFIER»::becameActive()
 {
+    /*if (!hasLoadedResourceGroup(0)) {
+        startLoadingWorld("load", 2.0);
+        loadResourceGroup(0);
+        finishLoadingWorld();
+    }*/
 }
 
 void «FILEBASENAMEASIDENTIFIER»::resignedActive()
 {
+    //unloadResourceGroup(0);
 }
 
 void «FILEBASENAMEASIDENTIFIER»::updateModel(KRInput *input)
@@ -37,6 +36,8 @@ void «FILEBASENAMEASIDENTIFIER»::updateModel(KRInput *input)
 void «FILEBASENAMEASIDENTIFIER»::drawView(KRGraphics *g)
 {
     g->clear(KRColor::CornflowerBlue);
+    
+    gKRAnime2DMan->draw();
 }
 
 

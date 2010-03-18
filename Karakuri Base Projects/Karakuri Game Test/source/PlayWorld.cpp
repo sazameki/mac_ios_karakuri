@@ -11,7 +11,7 @@
 void PlayWorld::becameActive()
 {
     if (!hasLoadedResourceGroup(2)) {
-        startLoadingWorld("load", 0.5);
+        startLoadingWorld("load", 2.0);
         loadResourceGroup(2);
         finishLoadingWorld();
     }
@@ -35,11 +35,6 @@ void PlayWorld::resignedActive()
 void PlayWorld::updateModel(KRInput* input)
 {
     mPlayer->move(input);
-
-    if (input->isMouseDown()) {
-        gKRAudioMan->playSE(gSE_Hit, 0.8);
-        gKRAnime2DMan->generateParticles(gParticle1, input->getMouseLocation());
-    }
 }
 
 void PlayWorld::drawView(KRGraphics* g)

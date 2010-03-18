@@ -10,6 +10,7 @@
 #include "KRWorld.h"
 #include "KRTexture2DManager.h"
 #include "KRAudioManager.h"
+#import "BXResourceImporter.h"
 
 #import "KRGameController.h"
 
@@ -159,6 +160,18 @@ void KRGameManager::loadResourceGroup(int groupID)
 
 #pragma mark -
 #pragma mark ゲームの各種設定
+
+void KRGameManager::addResources(const std::string& filename)
+{
+    NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    
+    BXResourceImporter* importer = [[BXResourceImporter alloc] initWithFileName:filenameStr];
+
+    [importer importPrimitiveResources];
+    [importer importRichResources];
+
+    [importer release];
+}
 
 std::string KRGameManager::getTitle() const
 {

@@ -15,6 +15,125 @@
 #define KRTextureMaxSize    1024
 
 
+GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+{
+    [data writeToFile:[@"~/Desktop/source_data.png" stringByExpandingTildeInPath] atomically:NO];
+    
+    // Build up bitmap data
+    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+    CGImageRef imageRef = CGImageSourceCreateImageAtIndex(imageSourceRef, 0, NULL);
+    
+    GLuint textureName = GL_INVALID_VALUE;
+    
+    imageSize->x = CGImageGetWidth(imageRef);
+    imageSize->y = CGImageGetHeight(imageRef);
+    textureSize->x = 1.0;
+    textureSize->y = 1.0;
+    
+    // Adjust image size for texture
+    KRVector2D revisedSize = *imageSize;
+    int rwidth = imageSize->x;
+    if ((rwidth != 1) && (rwidth & (rwidth - 1))) {
+        int i = 1;
+        while (i < rwidth) {
+            i *= 2;
+        }
+        rwidth = i;
+    }
+    
+    int rheight = imageSize->y;
+    if ((rheight != 1) && (rheight & (rheight - 1))) {
+        int i = 1;
+        while (i < rheight) {
+            i *= 2;
+        }
+        rheight = i;
+    }
+    
+    revisedSize.x = (float)rwidth;
+    revisedSize.y = (float)rheight;
+    
+    if (revisedSize.x > KRTextureMaxSize) {
+        const char *errorFormat = "Failed to load a texture.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "テクスチャの読み込みに失敗しました。";
+        }
+        throw KRRuntimeError(errorFormat);
+    } else if (revisedSize.y > KRTextureMaxSize) {
+        const char * errorFormat = "Failed to load a texture.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "テクスチャの読み込みに失敗しました。";
+        }
+        throw KRRuntimeError(errorFormat);
+    }
+    
+    textureSize->x = (float)imageSize->x / revisedSize.x;
+    textureSize->y = (float)imageSize->y / revisedSize.y;
+    
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    
+    void *imageData = malloc(revisedSize.x * revisedSize.y * 4);
+    if (imageData != NULL) {
+        CGContextRef bitmapContext = CGBitmapContextCreate(imageData, revisedSize.x, revisedSize.y, 8,
+                                                           revisedSize.x * 4, colorSpaceRef, kCGImageAlphaPremultipliedLast);
+        
+		CGContextClearRect(bitmapContext, CGRectMake(0, 0, revisedSize.x, revisedSize.y));
+		CGContextTranslateCTM(bitmapContext, 0, revisedSize.y - imageSize->y);
+        CGContextDrawImage(bitmapContext, CGRectMake(0, 0, imageSize->x, imageSize->y), imageRef);
+        
+        // Create new texture
+        if (!_KRTexture2DEnabled) {
+            _KRTexture2DEnabled = true;
+            glEnable(GL_TEXTURE_2D);
+        }
+        
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, revisedSize.x);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glGenTextures(1, &textureName);
+        
+        if (textureName != GL_INVALID_VALUE && textureName != GL_INVALID_OPERATION) {
+            glBindTexture(GL_TEXTURE_2D, textureName);
+            
+#ifdef __LITTLE_ENDIAN__
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, revisedSize.x, revisedSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+#else
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, revisedSize.x, revisedSize.y, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, imageData);
+#endif
+            
+            if (scalesLinear) {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            } else {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            }
+        } else {
+            textureName = GL_INVALID_VALUE;
+        }
+        
+        {
+         CGImageRef testImageRef = CGBitmapContextCreateImage(bitmapContext);
+         NSURL *destUrl = [NSURL fileURLWithPath:[@"~/Desktop/test.png" stringByExpandingTildeInPath]];
+         CGImageDestinationRef imageDest = CGImageDestinationCreateWithURL((CFURLRef)destUrl, kUTTypePNG, 1, NULL);
+         CGImageDestinationAddImage(imageDest, testImageRef, nil);
+         CGImageDestinationFinalize(imageDest);
+         CFRelease(imageDest);
+         CFRelease(testImageRef);
+         }
+        
+        // Clean up
+        CGContextRelease(bitmapContext);
+        free(imageData);                
+    }
+    CGColorSpaceRelease(colorSpaceRef);    
+    
+    CGImageRelease(imageRef);
+    CFRelease(imageSourceRef);
+    
+    // Return
+    return textureName;    
+}
+
 GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
     static BOOL hasFailedInternalPNGLoading = NO;

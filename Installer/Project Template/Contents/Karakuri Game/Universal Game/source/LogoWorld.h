@@ -13,12 +13,9 @@
 
 class LogoWorld : public KRWorld {
 
-    KRTexture2D     *mTex;
     int             mCount;
     
 public:
-    //virtual std::string getLoadingScreenWorldName() const;
-
     virtual void    becameActive();
     virtual void    resignedActive();
     virtual void    updateModel(KRInput *input);
