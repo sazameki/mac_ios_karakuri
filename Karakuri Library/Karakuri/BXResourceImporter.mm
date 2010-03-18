@@ -224,6 +224,118 @@
     NSString* imageTicket = [particle2DInfo objectForKey:@"Image Ticket"];
     
     gKRAnime2DMan->_addParticle2DWithTicket(resourceID, groupID, [imageTicket cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    KRBlendMode blendMode = KRBlendModeAddition;
+    KRColor color = KRColor::White;
+    KRVector2D gravity;
+    int life = 60;
+    int maxAngleV = 5;
+    int minAngleV = -5;
+    KRVector2D maxV;
+    KRVector2D minV;
+    double deltaScale = -1.0;
+    double deltaRed = 0.0;
+    double deltaGreen = 0.0;
+    double deltaBlue = 0.0;
+    double deltaAlpha = -2.0;
+    int generateCount = 5;
+    int maxParticleCount = 256;
+    
+    // パーティクル色
+    if ([particle2DInfo objectForKey:@"Color Red"]) {
+        color.r = [[particle2DInfo objectForKey:@"Color Red"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Color Green"]) {
+        color.g = [[particle2DInfo objectForKey:@"Color Green"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Color Blue"]) {
+        color.b = [[particle2DInfo objectForKey:@"Color Blue"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Color Alpha"]) {
+        color.a = [[particle2DInfo objectForKey:@"Color Alpha"] doubleValue];
+    }
+
+    // ブレンドモード
+    if ([particle2DInfo objectForKey:@"Blend Mode"]) {
+        blendMode = (KRBlendMode)[[particle2DInfo objectForKey:@"Blend Mode"] intValue];
+    }
+    
+    // 重力
+    if ([particle2DInfo objectForKey:@"Gravity X"]) {
+        gravity.x = [[particle2DInfo objectForKey:@"Gravity X"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Gravity Y"]) {
+        gravity.y = [[particle2DInfo objectForKey:@"Gravity Y"] doubleValue];
+    }
+    
+    // ライフ
+    if ([particle2DInfo objectForKey:@"Life"]) {
+        life = [[particle2DInfo objectForKey:@"Life"] intValue];
+    }
+    
+    // 最小・最大の角速度
+    if ([particle2DInfo objectForKey:@"Max AngleV"]) {
+        maxAngleV = [[particle2DInfo objectForKey:@"Max AngleV"] intValue];
+    }
+    if ([particle2DInfo objectForKey:@"Min AngleV"]) {
+        minAngleV = [[particle2DInfo objectForKey:@"Min AngleV"] intValue];
+    }
+    
+    // 最小・最大の速度
+    if ([particle2DInfo objectForKey:@"Max VX"]) {
+        maxV.x = [[particle2DInfo objectForKey:@"Max VX"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Max VY"]) {
+        maxV.y = [[particle2DInfo objectForKey:@"Max VY"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Min VX"]) {
+        minV.x = [[particle2DInfo objectForKey:@"Min VX"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Min VY"]) {
+        minV.y = [[particle2DInfo objectForKey:@"Min VY"] doubleValue];
+    }
+    
+    // スケールの変化量
+    if ([particle2DInfo objectForKey:@"Delta Scale"]) {
+        deltaScale = [[particle2DInfo objectForKey:@"Delta Scale"] doubleValue];
+    }
+    
+    // 色の変化量
+    if ([particle2DInfo objectForKey:@"Delta Red"]) {
+        deltaRed = [[particle2DInfo objectForKey:@"Delta Red"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Delta Green"]) {
+        deltaGreen = [[particle2DInfo objectForKey:@"Delta Green"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Delta Blue"]) {
+        deltaBlue = [[particle2DInfo objectForKey:@"Delta Blue"] doubleValue];
+    }
+    if ([particle2DInfo objectForKey:@"Delta Alpha"]) {
+        deltaAlpha = [[particle2DInfo objectForKey:@"Delta Alpha"] doubleValue];
+    }
+    
+    // フレーム当たりの生成量
+    if ([particle2DInfo objectForKey:@"Generate Count"]) {
+        generateCount = [[particle2DInfo objectForKey:@"Generate Count"] intValue];
+    }
+    
+    // 最大生成数
+    if ([particle2DInfo objectForKey:@"Max Particle Count"]) {
+        maxParticleCount = [[particle2DInfo objectForKey:@"Max Particle Count"] intValue];
+    }
+    
+    gKRAnime2DMan->setParticle2DColor(resourceID, color);
+    gKRAnime2DMan->setParticle2DBlendMode(resourceID, blendMode);
+    gKRAnime2DMan->setParticle2DGravity(resourceID, gravity);
+    gKRAnime2DMan->setParticle2DLife(resourceID, life);
+    gKRAnime2DMan->setParticle2DMaxAngleV(resourceID, maxAngleV * M_PI / 180.0);
+    gKRAnime2DMan->setParticle2DMinAngleV(resourceID, minAngleV * M_PI / 180.0);
+    gKRAnime2DMan->setParticle2DMaxV(resourceID, maxV);
+    gKRAnime2DMan->setParticle2DMinV(resourceID, minV);
+    gKRAnime2DMan->setParticle2DScaleDelta(resourceID, deltaScale);
+    gKRAnime2DMan->setParticle2DColorDelta(resourceID, deltaRed, deltaGreen, deltaBlue, deltaAlpha);
+    gKRAnime2DMan->setParticle2DGenerateCount(resourceID, generateCount);
+    gKRAnime2DMan->setParticle2DMaxCount(resourceID, maxParticleCount);
 }
 
 - (void)skipTexture2D

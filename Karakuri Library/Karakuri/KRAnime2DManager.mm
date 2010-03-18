@@ -324,6 +324,8 @@ void KRChara2D::_draw()
 {    
     // パーティクル用のキャラクタ
     if (mCharaSpec->isParticle()) {
+        gKRGraphicsInst->setBlendMode(blendMode);
+
         int texID = mCharaSpec->getParticleTextureID();
         gKRTex2DMan->drawAtPointCenterEx(texID, pos, _angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
     }

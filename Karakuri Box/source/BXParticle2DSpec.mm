@@ -12,6 +12,7 @@
 #import "BXDocument.h"
 #import "NSFileHandle+BXExport.h"
 #import "NSImage+BXEx.h"
+#import "NSString+UUID.h"
 
 
 @implementation BXParticle2DSpec
@@ -499,6 +500,13 @@
     
     // リソース情報の書き出し
     NSDictionary* elementInfo = [self elementInfo];
+    
+    NSString* presetTicket = nil;
+    if (!mImageTicket || [mImageTicket length] == 0) {
+        presetTicket = [NSString generateUUIDString];
+        [elementInfo setValue:presetTicket forKey:@"Image Ticket"];
+    }
+    
     NSString* errorStr = nil;
     NSData* infoData = [NSPropertyListSerialization dataFromPropertyList:elementInfo
                                                                   format:NSPropertyListBinaryFormat_v1_0
@@ -506,7 +514,7 @@
     [fileHandle writeUnsignedIntValue:[infoData length]];
     [fileHandle writeData:infoData];
     
-    // リソースの書き出し
+    // リソースの書き出し（カスタム画像）
     if (mImageTicket && [mImageTicket length] > 0) {
         BXResourceFileManager* fileManager = [[self document] fileManager];
         NSImage* image = [fileManager image72dpiForTicket:mImageTicket];
@@ -529,6 +537,54 @@
         [fileHandle writeBuffer:"KRDT" length:4];
         [fileHandle writeUnsignedIntValue:[pngData length]];
         [fileHandle writeData:pngData];
+    }
+    // リソースの書き出し（プリセット画像）
+    else {
+        NSString* filename = @"particle_blur_128.png";  // 円ぼかし 128x128
+
+        // 円ぼかし 64x64
+        if (mImageTag == 108) {
+            filename = @"particle_blur_64.png";
+        }
+        // 円ぼかし 32x32
+        else if (mImageTag == 107) {
+            filename = @"particle_blur_32.png";
+        }
+        // 円 128x128
+        else if (mImageTag == 209) {
+            filename = @"particle_circle_128.png";
+        }
+        // 円 64x64
+        else if (mImageTag == 208) {
+            filename = @"particle_circle_64.png";
+        }
+        // 円 32x32
+        else if (mImageTag == 207) {
+            filename = @"particle_circle_32.png";
+        }
+        
+        NSString* filepath = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
+        NSData* pngData = [[NSData alloc] initWithContentsOfMappedFile:filepath];
+
+        NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
+        [texInfo setIntValue:mGroupID forName:@"Group ID"];
+        [texInfo setObject:presetTicket forKey:@"Ticket"];
+        [texInfo setObject:filename forKey:@"Resource Name"];
+        NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
+                                                                         format:NSPropertyListBinaryFormat_v1_0
+                                                               errorDescription:&errorStr];
+        
+        // ヘッダ
+        [fileHandle writeBuffer:"KRT2" length:4];
+        [fileHandle writeUnsignedIntValue:[texInfoData length]];
+        [fileHandle writeData:texInfoData];
+        
+        // データ
+        [fileHandle writeBuffer:"KRDT" length:4];
+        [fileHandle writeUnsignedIntValue:[pngData length]];
+        [fileHandle writeData:pngData];
+        
+        [pngData release];
     }
 }
 

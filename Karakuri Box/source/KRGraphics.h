@@ -29,13 +29,13 @@
     <p><a href="../../../guide/index.html">開発ガイド</a>の「<a href="../../../guide/blend_mode.html">ブレンドモードについて</a>」も参照してください。</p>
  */
 typedef enum {
-    KRBlendModeAlpha,
-    KRBlendModeAddition,
-    KRBlendModeMultiplication,
-    KRBlendModeInversion,
-    KRBlendModeScreen,
-    KRBlendModeXOR,
-    KRBlendModeCopy
+    KRBlendModeAlpha            = 0,
+    KRBlendModeAddition         = 1,
+    KRBlendModeMultiplication   = 2,
+    KRBlendModeInversion        = 3,
+    KRBlendModeScreen           = 4,
+    KRBlendModeXOR              = 5,
+    KRBlendModeCopy             = 6,
 } KRBlendMode;
 
 

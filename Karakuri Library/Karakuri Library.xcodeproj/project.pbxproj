@@ -1036,13 +1036,13 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		8E3710FB1151185800B1655B /* cocoa_ex */ = {
+		8E3710FB1151185800B1655B /* box_importer */ = {
 			isa = PBXGroup;
 			children = (
 				8E37113C11511CA300B1655B /* BXResourceImporter.h */,
 				8E37113D11511CA300B1655B /* BXResourceImporter.mm */,
 			);
-			name = cocoa_ex;
+			name = box_importer;
 			sourceTree = "<group>";
 		};
 		8E4051FA1029DE5200615B74 /* iphone_emu */ = {
@@ -1164,7 +1164,7 @@
 			isa = PBXGroup;
 			children = (
 				8EAB5F2C101B1FD100DDA881 /* Karakuri.h */,
-				8E3710FB1151185800B1655B /* cocoa_ex */,
+				8E3710FB1151185800B1655B /* box_importer */,
 				8EAB5F33101B200000DDA881 /* base */,
 				8EAB5F6A101B205C00DDA881 /* game */,
 				8EAB5F73101B205C00DDA881 /* connection */,
