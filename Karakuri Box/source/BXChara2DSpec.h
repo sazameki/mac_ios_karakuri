@@ -177,6 +177,7 @@
 - (int)imageCount;
 - (BXChara2DImage*)imageAtIndex:(int)index;
 - (BXChara2DImage*)imageWithTicket:(NSString*)imageTicket;
+- (void)removeImageAtIndex:(int)index;
 
 - (double)komaPreviewScale;
 - (void)setKomaPreviewScale:(double)value;

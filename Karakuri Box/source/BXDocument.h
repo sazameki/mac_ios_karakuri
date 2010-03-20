@@ -177,6 +177,7 @@
 - (IBAction)addChara2DHitInfoRect:(id)sender;
 
 - (IBAction)removeSelectedChara2D:(id)sender;
+- (IBAction)removeSelectedChara2DImage:(id)sender;
 
 
 ///// パーティクル設定アクション
@@ -219,8 +220,9 @@
 - (BXChara2DImage*)selectedChara2DImage;
 - (BXChara2DKoma*)selectedChara2DKoma;
 - (void)updateChara2DAtlasList;
-- (BOOL)isChara2DStateSelected;
+- (BOOL)isChara2DImageSelected;
 - (BOOL)isChara2DKomaSelected;
+- (BOOL)isChara2DStateSelected;
 - (BOOL)canChara2DStateSelectNextState;
 
 - (void)addChara2DWithInfo:(NSDictionary*)theInfo;

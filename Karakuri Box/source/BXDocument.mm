@@ -952,6 +952,30 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
 }
 
+- (IBAction)removeSelectedChara2DImage:(id)sender
+{
+    BXChara2DImage* theImage = [self selectedChara2DImage];
+    if (!theImage) {
+        NSBeep();
+        return;
+    }
+    
+    int ret = NSRunInformationalAlertPanel(@"画像の削除",
+                                           [NSString stringWithFormat:@"画像「%@」を削除してもよろしいですか？", [theImage imageName]],
+                                           @"OK",
+                                           @"キャンセル",
+                                           nil);
+    if (ret == NSOKButton) {
+        int row = [oChara2DImageListView selectedRow];
+        BXChara2DSpec* theSpec = [self selectedChara2DSpec];
+        [theSpec removeImageAtIndex:row];
+        
+        [oChara2DImageListView reloadData];
+        
+        [self updateChangeCount:NSChangeUndone];
+    }
+}
+
 
 #pragma mark-
 #pragma mark 2Dキャラクタに関係する操作
@@ -1037,16 +1061,22 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self updateChara2DAtlasListSize];    
 }
 
-- (BOOL)isChara2DStateSelected
+- (BOOL)isChara2DImageSelected
 {
-    BXChara2DState* selectedState = [self selectedChara2DState];
-    return (selectedState? YES: NO);
+    BXChara2DImage* selectedImage = [self selectedChara2DImage];
+    return (selectedImage? YES: NO);
 }
 
 - (BOOL)isChara2DKomaSelected
 {
     BXChara2DKoma* selectedKoma = [self selectedChara2DKoma];
     return (selectedKoma? YES: NO);
+}
+
+- (BOOL)isChara2DStateSelected
+{
+    BXChara2DState* selectedState = [self selectedChara2DState];
+    return (selectedState? YES: NO);
 }
 
 - (BOOL)canChara2DStateSelectNextState
@@ -2180,6 +2210,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [self setupEditorForChara2DImage:theImage];
         [oChara2DImageAtlasView deselectAll];
         [oChara2DImageAtlasView setNeedsDisplay:YES];
+        
+        NSLog(@"canRemoveChara2DImage: %d", [self canRemoveChara2DImage]);
         
         [self willChangeValueForKey:@"canRemoveChara2DImage"];
         [self didChangeValueForKey:@"canRemoveChara2DImage"];

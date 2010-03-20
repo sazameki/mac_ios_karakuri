@@ -636,6 +636,13 @@
     return nil;
 }
 
+- (void)removeImageAtIndex:(int)index
+{
+    [mImages removeObjectAtIndex:index];
+    
+    // TODO: 画像削除時の画像リソースの削除
+}
+
 - (double)komaPreviewScale
 {
     return mKomaPreviewScale;
