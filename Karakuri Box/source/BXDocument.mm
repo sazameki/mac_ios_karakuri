@@ -2211,8 +2211,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [oChara2DImageAtlasView deselectAll];
         [oChara2DImageAtlasView setNeedsDisplay:YES];
         
-        NSLog(@"canRemoveChara2DImage: %d", [self canRemoveChara2DImage]);
-        
         [self willChangeValueForKey:@"canRemoveChara2DImage"];
         [self didChangeValueForKey:@"canRemoveChara2DImage"];
     }

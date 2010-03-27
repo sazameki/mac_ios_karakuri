@@ -188,10 +188,10 @@
         }
     }
     
-    NSRect theRect = NSMakeRect(targetRect.origin.x + mRect.origin.x * scale,
-                                targetRect.origin.y + targetRect.size.height - mRect.origin.y * scale - mRect.size.height * scale,
-                                mRect.size.width * scale,
-                                mRect.size.height * scale);
+    NSRect theRect = NSMakeRect(targetRect.origin.x + ((int)(mRect.origin.x+0.5)) * scale,
+                                targetRect.origin.y + targetRect.size.height - ((int)(mRect.origin.y+0.5)) * scale - ((int)(mRect.size.height+0.5)) * scale,
+                                ((int)(mRect.size.width+0.5)) * scale,
+                                ((int)(mRect.size.height+0.5)) * scale);
     NSBezierPath* thePath = nil;
     if (mHitType == BXChara2DKomaHitTypeRect) {
         thePath = [NSBezierPath bezierPathWithRect:theRect];
@@ -225,10 +225,10 @@
 
 - (void)drawResizeHandlesInRect:(NSRect)targetRect scale:(double)scale
 {
-    NSRect theRect = NSMakeRect(targetRect.origin.x + mRect.origin.x * scale,
-                                targetRect.origin.y + targetRect.size.height - mRect.origin.y * scale - mRect.size.height * scale,
-                                mRect.size.width * scale,
-                                mRect.size.height * scale);
+    NSRect theRect = NSMakeRect(targetRect.origin.x + ((int)(mRect.origin.x+0.5)) * scale,
+                                targetRect.origin.y + targetRect.size.height - ((int)(mRect.origin.y+0.5)) * scale - ((int)(mRect.size.height+0.5)) * scale,
+                                ((int)(mRect.size.width+0.5)) * scale,
+                                ((int)(mRect.size.height+0.5)) * scale);
 
     mTopMiddlePoint = NSMakePoint(theRect.origin.x+theRect.size.width/2, theRect.origin.y);
     mBottomMiddlePoint = NSMakePoint(theRect.origin.x+theRect.size.width/2, theRect.origin.y+theRect.size.height);
