@@ -162,6 +162,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     // データの読み込み
     [self loadResourceInfos];
+    
+    // 最後に読み込んだファイルの更新
+    [[NSUserDefaults standardUserDefaults] setObject:[self fileName] forKey:@"lastOpenedFilePath"];
 }
 
 - (void)dealloc

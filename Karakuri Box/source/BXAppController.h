@@ -11,9 +11,11 @@
 
 
 @interface BXAppController : NSObject {
+    IBOutlet NSWindow*  oPrefWindow;
 }
 
 - (IBAction)createNewDocument:(id)sender;
+- (IBAction)showPreferencesWindow:(id)sender;
 
 @end
 

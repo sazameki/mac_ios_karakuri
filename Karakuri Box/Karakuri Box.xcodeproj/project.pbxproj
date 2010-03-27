@@ -70,6 +70,7 @@
 		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
 		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
 		8ED752FC113B9635004E78EB /* BXStageSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752FB113B9635004E78EB /* BXStageSpec.mm */; };
+		8EE2F661115E46BE0041C1DE /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EE2F660115E46BE0041C1DE /* UserDefaults.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -184,6 +185,7 @@
 		8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBackgroundSpec.mm; sourceTree = "<group>"; };
 		8ED752FA113B9635004E78EB /* BXStageSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXStageSpec.h; sourceTree = "<group>"; };
 		8ED752FB113B9635004E78EB /* BXStageSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXStageSpec.mm; sourceTree = "<group>"; };
+		8EE2F660115E46BE0041C1DE /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -468,6 +470,7 @@
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8E62A5B5113AE08F005DC90E /* Localizable.strings */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
+				8EE2F660115E46BE0041C1DE /* UserDefaults.plist */,
 			);
 			name = Strings;
 			sourceTree = "<group>";
@@ -586,6 +589,7 @@
 				8E84ADBA11489B4B00438868 /* transparent_pattern.png in Resources */,
 				8EAB6288114CEDC700C2CBC5 /* tbi_particle2d.tiff in Resources */,
 				8EAB62AF114CF9A100C2CBC5 /* tbi_chara2d.tiff in Resources */,
+				8EE2F661115E46BE0041C1DE /* UserDefaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

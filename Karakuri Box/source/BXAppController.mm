@@ -11,9 +11,49 @@
 
 @implementation BXAppController
 
++ (void)initialize
+{
+    NSString* defaultsPath = [[NSBundle mainBundle] pathForResource:@"UserDefaults" 
+                                                             ofType:@"plist"];
+    NSDictionary* defaultsDict = [NSDictionary dictionaryWithContentsOfFile:defaultsPath];
+
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsDict];
+    [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaultsDict];
+}
+
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication*)sender
 {
     return NO;
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification*)aNotification
+{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+    BOOL opensLastOpenedFile = [defaults boolForKey:@"opensLastOpenedFile"];
+    if (opensLastOpenedFile) {
+        BOOL processed = NO;
+        
+        NSString* lastOpenedFilePath = [defaults stringForKey:@"lastOpenedFilePath"];
+        
+        if (lastOpenedFilePath && [lastOpenedFilePath length] > 0) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:lastOpenedFilePath]) {
+                NSDocumentController* docController = [NSDocumentController sharedDocumentController];
+                NSURL* fileurl = [NSURL fileURLWithPath:lastOpenedFilePath];
+                
+                NSError* error = nil;
+                [docController openDocumentWithContentsOfURL:fileurl display:YES error:&error];
+                
+                if (!error) {
+                    processed = YES;
+                }
+            }
+        }
+        
+        if (!processed) {
+            [self createNewDocument:self];
+        }
+    }
 }
 
 - (NSData*)defaultInfoPlistDictionaryData
@@ -73,6 +113,7 @@
 {
     NSSavePanel* savePanel = [NSSavePanel savePanel];
     [savePanel setMessage:@"新規リソースプロジェクトの保存場所と名前を指定してください。"];
+    [savePanel setTitle:@"新規 Karakuri リソースの作成"];
     [savePanel setPrompt:@"作成"];
     [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"krrsproj"]];
     [savePanel setExtensionHidden:YES];
@@ -87,6 +128,16 @@
             [docController openDocumentWithContentsOfURL:fileurl display:YES error:&error];
         }
     }
+}
+
+- (IBAction)showPreferencesWindow:(id)sender
+{
+    if ([oPrefWindow isVisible]) {
+        return;
+    }
+    
+    [oPrefWindow center];
+    [oPrefWindow makeKeyAndOrderFront:self];
 }
 
 @end
