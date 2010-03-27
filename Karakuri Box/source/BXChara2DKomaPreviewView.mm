@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         mScale = 1.0;
-        mResizingHitInfo = nil;        
+        mResizingHitInfo = nil;
     }
     return self;
 }
@@ -127,6 +127,53 @@
 {
     mResizingHitInfo = nil;
     [self setNeedsDisplay:YES];
+}
+
+- (IBAction)doActionCommand:(id)sender
+{
+    int tag = [oActionCommandButton selectedTag];
+ 
+    BXChara2DKoma* selectedKoma = [oDocument selectedChara2DKoma];
+    
+    // 他のすべてのコマに当たり範囲を追加
+    if (tag == 10) {
+        BXChara2DState* selectedState = [oDocument selectedChara2DState];
+        for (int i = 0; i < [selectedState komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+            if (aKoma == selectedKoma) {
+                continue;
+            }
+            [aKoma importHitInfosFromKoma:selectedKoma];
+        }
+        [oDocument updateChangeCount:NSChangeUndone];
+    }
+    // 以降のすべてのコマに当たり範囲を追加
+    else if (tag == 20) {
+        BOOL foundSelectedKoma = NO;
+        BXChara2DState* selectedState = [oDocument selectedChara2DState];
+        for (int i = 0; i < [selectedState komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+            if (aKoma == selectedKoma) {
+                foundSelectedKoma = YES;
+                continue;
+            }
+            if (foundSelectedKoma) {
+                [aKoma importHitInfosFromKoma:selectedKoma];
+            }
+        }
+        [oDocument updateChangeCount:NSChangeUndone];
+    }
+    // 次のコマに当たり範囲を追加
+    else if (tag == 30) {
+        BXChara2DState* selectedState = [oDocument selectedChara2DState];
+        BXChara2DKoma* nextKoma = [selectedState komaWithNumber:[selectedKoma komaNumber]+1];
+        if (nextKoma != NULL) {
+            [nextKoma importHitInfosFromKoma:selectedKoma];
+        }
+        [oDocument updateChangeCount:NSChangeUndone];
+    }
+    
+    [oActionCommandButton selectItemWithTag:0];
 }
 
 - (void)keyDown:(NSEvent*)theEvent

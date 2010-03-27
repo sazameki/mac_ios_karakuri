@@ -36,7 +36,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 // 2Dキャラクタ関係
 
 - (void)addChara2DImageFiles:(NSArray*)filepaths;
-- (BXChara2DState*)selectedChara2DState;
 - (void)setupChara2DHitButtons;
 - (void)setupEditorUIForChara2D:(BXChara2DSpec*)theSpec;
 - (void)setupEditorForChara2DImage:(BXChara2DImage*)theImage;
@@ -2219,6 +2218,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [oChara2DKomaPreviewView updateViewSize];
         [oChara2DKomaPreviewView deselectHitInfo];
         [self setupChara2DHitButtons];
+        
+        [oChara2DKomaActionCommandButton setEnabled:([self selectedChara2DKoma]? YES: NO)];
 
         [self willChangeValueForKey:@"isChara2DKomaSelected"];
         [self didChangeValueForKey:@"isChara2DKomaSelected"];

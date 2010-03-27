@@ -39,6 +39,11 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone*)zone
+{
+    return [[BXChara2DKomaHitInfo alloc] initWithInfo:[self infoDict]];
+}
+
 - (BXDocument*)document
 {
     return [mParentKoma document];
@@ -375,6 +380,11 @@
     return [mHitInfos count];
 }
 
+- (BXChara2DKomaHitInfo*)hitInfoAtIndex:(int)index
+{
+    return [mHitInfos objectAtIndex:index];
+}
+
 - (BOOL)showsHitInfos
 {
     return mShowsHitInfos;
@@ -442,6 +452,17 @@
     [self addHitInfo:theInfo];
 
     return theInfo;
+}
+
+- (void)importHitInfosFromKoma:(BXChara2DKoma*)aKoma
+{
+    int hitInfoCount = [aKoma hitInfoCount];
+    
+    for (int i = 0; i < hitInfoCount; i++) {
+        BXChara2DKomaHitInfo* anInfo = [aKoma hitInfoAtIndex:i];
+        BXChara2DKomaHitInfo* theCopy = [[anInfo copy] autorelease];
+        [self addHitInfo:theCopy];
+    }
 }
 
 - (BXChara2DKomaHitInfo*)hitInfoAtPoint:(NSPoint)pos

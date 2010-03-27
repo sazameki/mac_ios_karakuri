@@ -48,6 +48,7 @@
 
     IBOutlet NSPopUpButton*             oChara2DKomaPreviewScaleButton;
     IBOutlet NSPopUpButton*             oChara2DStateCancelKomaNumberButton;
+    IBOutlet NSPopUpButton*             oChara2DKomaActionCommandButton;
 
     IBOutlet NSPanel*                   oChara2DSimulatorPanel;
     
@@ -218,6 +219,7 @@
 - (void)removeSelectedChara2DKoma;
 - (BXChara2DSpec*)selectedChara2DSpec;
 - (BXChara2DImage*)selectedChara2DImage;
+- (BXChara2DState*)selectedChara2DState;
 - (BXChara2DKoma*)selectedChara2DKoma;
 - (void)updateChara2DAtlasList;
 - (BOOL)isChara2DImageSelected;

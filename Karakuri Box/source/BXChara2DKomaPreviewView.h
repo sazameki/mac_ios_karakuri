@@ -15,6 +15,7 @@
 
 @interface BXChara2DKomaPreviewView : NSView {
     IBOutlet BXDocument*    oDocument;
+    IBOutlet NSPopUpButton* oActionCommandButton;
     
     int     mStartX;
     int     mStartY;
@@ -29,6 +30,8 @@
     BOOL    mIsResizingFromLeft;
     BOOL    mIsResizingFromRight;
 }
+
+- (IBAction)doActionCommand:(id)sender;
 
 - (void)selectHitInfo:(BXChara2DKomaHitInfo*)anInfo;
 - (void)deselectHitInfo;

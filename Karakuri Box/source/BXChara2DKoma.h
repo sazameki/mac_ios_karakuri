@@ -22,7 +22,7 @@ enum {
 };
 
 
-@interface BXChara2DKomaHitInfo : NSObject {
+@interface BXChara2DKomaHitInfo : NSObject<NSCopying> {
     BXChara2DKoma*      mParentKoma;
 
     int     mHitType;
@@ -106,8 +106,10 @@ enum {
 - (BXChara2DKomaHitInfo*)addHitInfoOval;
 - (BXChara2DKomaHitInfo*)addHitInfoRect;
 - (BXChara2DKomaHitInfo*)hitInfoAtPoint:(NSPoint)pos;
+- (BXChara2DKomaHitInfo*)hitInfoAtIndex:(int)index;
 
 - (void)addHitInfo:(BXChara2DKomaHitInfo*)aHitInfo;
+- (void)importHitInfosFromKoma:(BXChara2DKoma*)aKoma;
 
 - (int)komaNumber;
 - (void)setKomaNumber:(int)number;
