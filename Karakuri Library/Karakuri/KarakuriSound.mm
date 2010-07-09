@@ -28,7 +28,7 @@ void KRInitOpenAL()
     }
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryAmbient error: nil];
+    [session setCategory:categoryName error: nil];
     [session setActive:YES error:nil];
 #endif
     

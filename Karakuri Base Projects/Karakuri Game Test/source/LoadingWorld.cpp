@@ -32,7 +32,7 @@ void LoadingWorld::drawView(KRGraphics* g)
     
     g->clear(KRColor(1.0, 0, 0, 1));
     
-    gKRTex2DMan->drawAtPointCenter(gTex_LoadingChara, KRVector2D(progress*gKRScreenSize.x, 100));
+    gKRTex2DMan->drawAtPointCenter(TexID::LoadingChara, KRVector2D(progress*gKRScreenSize.x, 100));
 }
 
 

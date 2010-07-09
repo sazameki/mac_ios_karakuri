@@ -22,47 +22,53 @@ KRTexture2DManager::~KRTexture2DManager()
     // Do nothing
 }
 
-int KRTexture2DManager::addTexture(int groupID, const std::string& imageFileName, KRTexture2DScaleMode scaleMode)
+void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& imageFileName, KRTexture2DScaleMode scaleMode)
 {
-    return addTexture(groupID, imageFileName, KRVector2DZero, scaleMode);
+    addTexture(groupID, texID, imageFileName, KRVector2DZero, scaleMode);
 }
 
-int KRTexture2DManager::addTexture(int groupID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode)
+void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode)
 {
-    int theTexID = mNextNewTexID;
-    mNextNewTexID++;
+    // 100万以上の ID は予約済み
+    if (texID >= 1000000) {
+        const char *errorFormat = "Texture ID should be lower than a million (1000000).";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "テクスチャIDは 999999 以下でなければいけません。";
+        }
+        throw KRRuntimeError(errorFormat);
+    }
     
+#if __DEBUG__
+    // TODO: texID で既に登録されていないかをチェックして、登録されている場合には警告を出す。
+#endif
+
     std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
-    theTexIDList.push_back(theTexID);
+    theTexIDList.push_back(texID);
     
-    mTexID_ImageFileName_Map[theTexID] = imageFileName;
-    mTexID_ScaleMode_Map[theTexID] = scaleMode;
+    mTexID_ImageFileName_Map[texID] = imageFileName;
+    mTexID_ScaleMode_Map[texID] = scaleMode;
     
-    setTextureAtlasSize(theTexID, atlasSize);
-    
-    return theTexID;    
+    setTextureAtlasSize(texID, atlasSize);
 }
 
-int KRTexture2DManager::addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
+void KRTexture2DManager::addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
 {
-    int theTexID = mNextNewTexID;
-    mNextNewTexID++;
-
-    std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
-    theTexIDList.push_back(theTexID);
+    static int texID = 1000000;
+    texID++;
     
-    mTexID_Ticket_Map[theTexID] = ticket;
+    std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
+    theTexIDList.push_back(texID);
+    
+    mTexID_Ticket_Map[texID] = ticket;
 
-    mTicket_TexID_Map[ticket] = theTexID;
+    mTicket_TexID_Map[ticket] = texID;
     mTicket_StartPos_Map[ticket] = pos;
     mTicket_Length_Map[ticket] = length;
     mTicket_DivX_Map[ticket] = 1;
     mTicket_DivY_Map[ticket] = 1;
 
-    mTexID_ImageFileName_Map[theTexID] = resourceFileName;
-    mTexID_ScaleMode_Map[theTexID] = KRTexture2DScaleModeLinear;
-    
-    return theTexID;
+    mTexID_ImageFileName_Map[texID] = resourceFileName;
+    mTexID_ScaleMode_Map[texID] = KRTexture2DScaleModeLinear;
 }
 
 void KRTexture2DManager::setDivForTicket(const std::string& ticket, int divX, int divY)

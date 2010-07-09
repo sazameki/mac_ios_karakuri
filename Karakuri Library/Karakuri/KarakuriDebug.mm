@@ -48,7 +48,7 @@ void KRDebugScreen(const char *format, ...)
 #endif  // #ifdef __DEBUG__
 }
 
-void KRClearDebugScreen()
+void KRDebugScreenClear()
 {
 #if __DEBUG__
 

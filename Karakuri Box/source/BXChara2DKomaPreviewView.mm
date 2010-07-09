@@ -251,8 +251,14 @@
     }
     // Backspace / Delete
     else if (keyCode == 0x33 || keyCode == 0x75) {
-        // TODO: 選択された当たり判定範囲の削除
-        NSLog(@"選択された当たり判定範囲の削除");
+        BXChara2DKoma* selectedKoma = [oDocument selectedChara2DKoma];
+        if (mResizingHitInfo) {
+            [selectedKoma removeHitInfo:mResizingHitInfo];
+            mResizingHitInfo = NULL;
+            [oDocument updateChangeCount:NSChangeUndone];
+        } else {
+            NSBeep();
+        }
     }
 
     

@@ -107,6 +107,7 @@ enum {
 - (BXChara2DKomaHitInfo*)addHitInfoRect;
 - (BXChara2DKomaHitInfo*)hitInfoAtPoint:(NSPoint)pos;
 - (BXChara2DKomaHitInfo*)hitInfoAtIndex:(int)index;
+- (void)removeHitInfo:(BXChara2DKomaHitInfo*)aHitInfo;
 
 - (void)addHitInfo:(BXChara2DKomaHitInfo*)aHitInfo;
 - (void)removeAllHitInfos;

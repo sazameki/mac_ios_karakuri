@@ -9,9 +9,7 @@
 #pragma once
 
 #include <Karakuri/Karakuri.h>
-
-
-class KRChara2D;
+#include "KRChara2D.h"
 
 
 struct _KRParticle2DGenInfo {
@@ -23,7 +21,7 @@ struct _KRParticle2DGenInfo {
 const int _KRParticle2DGenMaxCount = 20;
 
 
-class _KRParticle2D : public KRObject {
+class _KRParticle2D : public KRChara2D {
     
 public:
     unsigned    mLife;
@@ -44,16 +42,11 @@ public:
     double      mDeltaBlue;
     double      mDeltaAlpha;
     
-    KRChara2D*  mChara;
-    
 public:
-	_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
+	_KRParticle2D(int charaSpecID, int zOrder, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
                   double angleV, const KRColor& color, double size, double scale,
                   double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale);
     ~_KRParticle2D();
-    
-    KRChara2D*  getChara() const;
-    void        setChara(KRChara2D* theChara);
     
 public:
     bool    step();

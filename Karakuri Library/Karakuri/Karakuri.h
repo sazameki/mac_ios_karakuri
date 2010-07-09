@@ -64,6 +64,7 @@
 // 2D Graphics Classes
 #include <Karakuri/KRTexture2DManager.h>
 #include <Karakuri/KRTexture2D.h>
+#include <Karakuri/KRChara2D.h>
 #include <Karakuri/KRAnime2DManager.h>
 #include <Karakuri/KRFont.h>
 #include <Karakuri/KRParticle2DSystem.h>

@@ -10,237 +10,12 @@
 
 #include <Karakuri/Karakuri.h>
 
+#include "KRChara2D.h"
+
 
 class KRParticle2DSystem;
 class KRSimulator2D;
 
-
-extern KRMemoryAllocator*   gKRChara2DAllocator;
-
-
-static const unsigned       KRCharaStateChangeModeNormalMask            = 0x00;
-static const unsigned       KRCharaStateChangeModeIgnoreCancelFlagMask  = 0x01;
-static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
-
-
-
-class KRChara2DKoma : public KRObject {
-
-    int     mTextureID;
-    int     mAtlasIndex;
-    int     mGotoTarget;
-    bool    mIsCancelable;
-    int     mInterval;
-    
-    KRVector2DInt   mAtlasPos;
-
-public:
-    KRChara2DKoma();
-
-    void    initForManualChara2D(int textureID, KRVector2DInt atlasPos, int interval, bool isCancelable, int gotoTarget);
-    void    initForBoxChara2D(const std::string& imageTicket, int atlasIndex, int interval, bool isCancelable, int gotoTarget);
-
-public:
-    KRVector2DInt   getAtlasPos();
-    KRVector2D      getAtlasSize();
-    int             getGotoTarget();
-    int             getInterval();
-    int             getTextureID();
-    
-};
-
-
-class KRChara2DState : public KRObject {
-    
-    std::vector<KRChara2DKoma*>   mKomas;
-
-    int     mCancelKomaNumber;
-    int     mNextStateID;
-
-public:
-    KRChara2DState();
-    
-    void    initForManualChara2D(int cancelKomaNumber, int nextStateID);
-    void    initForBoxChara2D(int cancelKomaNumber, int nextStateID);
-    
-public:
-    void    addKoma(KRChara2DKoma* aKoma);
-    
-public:
-    int             getKomaCount();
-    KRChara2DKoma*  getKoma(int komaNumber);
-    
-};
-
-
-/*
-    @-class KRChara2DSpec
-    @group Game 2D Graphics
-    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
-    <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
- */
-class KRChara2DSpec : public KRObject {
-    std::map<int, KRChara2DState*>  mStateMap;
-    int                             mSpecID;
-    int                             mGroupID;
-    
-    int                             mParticleTexID;
-
-public:
-    /*!
-        @task コンストラクタ
-     */
-
-    /*!
-        @method KRChara2DSpec
-        テクスチャ名とアトラスのサイズを指定して、新しいキャラクタの特徴を生成します。
-     */
-    //KRChara2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize);
-    
-    KRChara2DSpec(int groupID);
-
-    ~KRChara2DSpec();
-    
-    void    initForManualChara2D();
-    void    initForManualParticle2D(const std::string& fileName);
-    void    initForBoxParticle2D(const std::string& imageTicket);
-    
-public:
-    /*!
-        @task 状態の管理
-     */
-
-    void    addState(int stateID, KRChara2DState* aState);
-
-    KRChara2DState*         getState(int state);
-    int                     getParticleTextureID() const;
-    int                     getSpecID() const;
-    void                    setSpecID(int specID);
-    bool                    isParticle();
-    
-};
-
-/*!
-    @class KRChara2D
-    @group Game 2D Graphics
-    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
-    <p>このクラスのインスタンスは、グローバル変数 gKRAnime2DInst を使ってアクセスできる <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスの createChara2D() メソッドを使って作成します。</p>
-    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D メソッドを使って削除してください。</p>
-    <p>キャラクタの現在位置は、テクスチャアトラス描画の中心点を示します。現在位置は、public な pos 変数を直接いじって変更してください。</p>
-    <p>キャラクタの描画色は、public な color 変数を直接いじって変更してください。</p>
-    <p>キャラクタのZオーダは、現在位置や描画色とは違い、setZOrder() メソッドを使って変更してください。</p>
- */
-class KRChara2D : public KRObject {
-
-    friend class KRAnime2DManager;
-    
-    KR_DECLARE_USE_ALLOCATOR(gKRChara2DAllocator)
-
-private:
-    KRChara2DSpec*      mCharaSpec;
-
-    int                 mCurrentStateID;
-    int                 mCurrentKomaNumber;
-
-    int                 mImageInterval;
-    int                 mZOrder;
-    int                 mRepeatCount;
-    bool                mIsFinished;
-
-    void*               mRepresentedObject;
-    
-public:
-    /*!
-        @-var    _angle
-        キャラクタの現在の角度です。
-     */
-    double              _angle;
-    
-    /*!
-        @var    blendMode
-        キャラクタの現在の描画モードです。
-     */
-    KRBlendMode         blendMode;
-
-    /*!
-        @var    color
-        キャラクタの現在の描画色です。
-     */
-    KRColor             color;
-    
-    /*!
-        @var    pos
-        キャラクタの現在の描画位置です。テクスチャアトラス描画の中心点を示します。
-     */
-    KRVector2D          pos;
-    
-    /*!
-        @var    scale
-        キャラクタの現在の拡大率です。
-     */
-    double              scale;
-
-public:
-    KRChara2D(KRChara2DSpec *charaSpec, const KRVector2D& centerPos, int zOrder, void *repObj = NULL);
-    
-public:
-    /*!
-        @task 状態の取得
-     */
-
-    /*!
-        @method getObject
-        このキャラクタに関連付けられているオブジェクトのポインタを取得します。
-     */
-    void    *getObject() const;
-
-    /*!
-        @method getSize
-        テクスチャ・アトラスの1コマあたりのサイズをリターンします。
-     */
-    KRVector2D  getSize() const;
-    
-    /*!
-        @method getState
-        @abstract キャラクタの現在の状態を取得します。
-        状態の変更中は、変更後の状態がリターンされます。
-     */
-    int         getState() const;
-    
-    /*!
-        @method getZOrder
-        キャラクタの現在のZオーダを取得します。
-     */
-    int         getZOrder() const;
-
-public:
-    /*!
-        @task 状態の変更
-     */
-
-    /*!
-        @method changeState
-        キャラクタの状態を変更します。
-     */
-    void    changeState(int stateID, unsigned modeMask = KRCharaStateChangeModeNormalMask);
-
-    /*!
-        @method setObject
-        このキャラクタに関連付けるオブジェクトのポインタを指定します。
-     */
-    void    setObject(void *anObj);
-
-    /*!
-        @method setZOrder
-        キャラクタのZオーダを変更します。
-     */
-    void    setZOrder(int zOrder);
-    
-public:
-    void    _step();    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    void    _draw();    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-
-};
 
 /*!
     @class KRAnime2DManager
@@ -251,7 +26,7 @@ public:
  */
 class KRAnime2DManager : public KRObject {
 
-    std::map<int, KRChara2DSpec*>   mCharaSpecMap;
+    std::map<int, _KRChara2DSpec*>   mCharaSpecMap;
     std::list<KRChara2D*>           mCharas;
     
     std::map<int, KRParticle2DSystem*>  mParticleSystemMap;
@@ -296,7 +71,7 @@ public:
         @abstract キャラクタの ID を指定して、新しいキャラクタの特徴を追加します。
         追加されたキャラクタの特徴は、ゲーム終了時に自動的に delete されます。
      */
-    void    _addCharaSpec(int specID, KRChara2DSpec *spec);
+    void    _addCharaSpec(int specID, _KRChara2DSpec *spec);
     
     /*!
         @-method loadCharaSpecs
@@ -305,24 +80,60 @@ public:
      */
     void    _loadCharaSpecs(const std::string& specFileName);
     
-    /*!
+    /*
         @method addCharacterSpecs
         @abstract ゲーム内で利用するキャラクタの特徴ファイルを追加します。
         <p>キャラクタの特徴記述ファイルの仕様は、開発ガイドの「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
      */
-    void    addCharacterSpecs(int groupID, const std::string& specFileName);
+    //void    addCharacterSpecs(int groupID, const std::string& specFileName);
     
     int     _addTexCharaSpec(int groupID, const std::string& imageFileName);
     int     _addTexCharaSpecWithTicket(int groupID, const std::string& ticket);
     
 
-    /*!
-        @method createChara2D
-        @abstract キャラクタの特徴 ID、最初の表示位置、状態を指定して、新しいキャラクタを生成します。
-        オプションで、Zオーダと、このキャラクタに関連付けるオブジェクトも指定できます。
-     */
-    KRChara2D*  createChara2D(int specID, const KRVector2D& centerPos, int firstState, int zOrder = 0, void *repObj = NULL);
+    _KRChara2DSpec* _getChara2DSpec(int specID);
 
+    /*!
+        @method addChara2D
+        管理対象のキャラクタを追加します。
+     */
+    void        addChara2D(KRChara2D* aChara);
+    
+    /*!
+        @method getChara2D
+        @abstract 画面上の位置とクラスの種類を指定して、その位置に表示されているキャラクタを取得します。
+        もっとも手前に表示されているキャラクタが取得されます。
+     */
+    KRChara2D*  getChara2D(int classType, const KRVector2D& pos) const;
+    
+    /*!
+        @method hitChara2D
+        @abstract クラスの種類、当たり判定の種類、画面上の位置を指定して、その位置に当たり判定をもつキャラクタを取得します。
+        もっとも手前に表示されているキャラクタが取得されます。
+     */
+    KRChara2D*  hitChara2D(int classType, int hitType, const KRVector2D& pos) const;
+    
+    /*!
+        @method hitChara2D
+        @abstract 特定のクラスのキャラクタの特定の当たり判定の領域と、当たり判定の領域が重なっているキャラクタを取得します。
+        もっとも手前に表示されているキャラクタが取得されます。
+     */
+    KRChara2D*  hitChara2D(int classType, int hitType, const KRChara2D* targetChara, int targetHitType) const;
+    
+    /*!
+        @method playChara2D
+        @abstract キャラクタアニメーションを再生するための、もっとも簡単な方法です。指定したキャラクタの特定の状態のアニメーションだけを、指定された位置で再生します。
+        アニメーション完了後は、このアニメーションは自動的に削除されます。
+     */
+    void    playChara2D(int charaSpecID, int state, const KRVector2D& pos, int zOrder);
+
+    /*!
+        @method playChara2DCenter
+        @abstract キャラクタアニメーションを再生するための、もっとも簡単な方法です。指定したキャラクタの特定の状態のアニメーションだけを、指定された中心位置で再生します。
+        アニメーション完了後は、このアニメーションは自動的に削除されます。
+     */
+    void    playChara2DCenter(int charaSpecID, int state, const KRVector2D& centerPos, int zOrder);
+    
     /*!
         @method removeAllCharas
         生成されたすべてのキャラクタを削除します。

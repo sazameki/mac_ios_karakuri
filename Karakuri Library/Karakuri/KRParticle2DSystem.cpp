@@ -5,38 +5,26 @@
  */
 
 #include "KRParticle2DSystem.h"
+#include "KRChara2D.h"
 
 
 /*!
     @method _KRParticle2D
     Constructor
  */
-_KRParticle2D::_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
+_KRParticle2D::_KRParticle2D(int charaSpecID, int zOrder, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
                              double angleV, const KRColor& color, double size, double scale,
                              double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale)
-    : mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mSize(size), mScale(scale),
+    : KRChara2D(charaSpecID, 1000000), mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mSize(size), mScale(scale),
       mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaSize(deltaSize), mDeltaScale(deltaScale)
 {
-    mChara = NULL;
-    
     mAngle = 0.0;
+    setZOrder(zOrder);
 }
 
 _KRParticle2D::~_KRParticle2D()
 {
-    if (mChara != NULL) {
-        gKRAnime2DMan->removeChara2D(mChara);
-    }
-}
-
-KRChara2D* _KRParticle2D::getChara() const
-{
-    return mChara;
-}
-
-void _KRParticle2D::setChara(KRChara2D* theChara)
-{
-    mChara = theChara;
+    // Do nothing
 }
 
 bool _KRParticle2D::step()
@@ -47,17 +35,21 @@ bool _KRParticle2D::step()
     mAngle += mAngleV;
     mV += mGravity;
     mPos += mV;
-    if (mChara != NULL) {
-        mChara->pos = mPos;
-        mChara->_angle = mAngle;
 
-        double ratio = 1.0 - (double)mLife / mBaseLife;
-        mChara->scale = KRMax(mScale + mDeltaScale * ratio, 0.0);
-        mChara->color.r = KRMax(mColor.r + mDeltaRed * ratio, 0.0);
-        mChara->color.g = KRMax(mColor.g + mDeltaGreen * ratio, 0.0);
-        mChara->color.b = KRMax(mColor.b + mDeltaBlue * ratio, 0.0);
-        mChara->color.a = KRMax(mColor.a + mDeltaAlpha * ratio, 0.0);
-    }
+    setPos(mPos);
+    this->_angle = mAngle;
+
+    double ratio = 1.0 - (double)mLife / mBaseLife;
+
+    double scale = KRMax(mScale + mDeltaScale * ratio, 0.0);
+    setScale(KRVector2D(scale, scale));
+
+    double r = KRMax(mColor.r + mDeltaRed * ratio, 0.0);
+    double g = KRMax(mColor.g + mDeltaGreen * ratio, 0.0);
+    double b = KRMax(mColor.b + mDeltaBlue * ratio, 0.0);
+    double a = KRMax(mColor.a + mDeltaAlpha * ratio, 0.0);
+    setColor(KRColor(r, g, b, a));
+
     mLife--;  
     return true;
 }
@@ -416,7 +408,7 @@ void KRParticle2DSystem::step()
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D *particle = new _KRParticle2D(mLife, mStartPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mZOrder, mLife, mStartPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
                                                           mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
                 mParticles.push_back(particle);
                 count++;
@@ -439,15 +431,10 @@ void KRParticle2DSystem::step()
                     double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                     double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
 
-                    _KRParticle2D *particle = new _KRParticle2D(mLife, mGenInfos[i].centerPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                    _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mZOrder, mLife, mGenInfos[i].centerPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
                                                                 mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
+                    particle->setBlendMode(mBlendMode);
                     mParticles.push_back(particle);
-
-                    if (mCharaSpecID >= 0) {
-                        KRChara2D* theChara = gKRAnime2DMan->createChara2D(mCharaSpecID, mGenInfos[i].centerPos, 0, mZOrder, particle);
-                        theChara->blendMode = mBlendMode;
-                        particle->setChara(theChara);
-                    }
                 }
                 mGenInfos[i].count -= createCount;
                 if (mGenInfos[i].count == 0) {

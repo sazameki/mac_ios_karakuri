@@ -590,6 +590,14 @@
 		8EBB1D7F1034BFBE00936E01 /* KRPNGLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB1D791034BFBE00936E01 /* KRPNGLoader.mm */; };
 		8EBB1D801034BFBE00936E01 /* KRPNGLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBB1D781034BFBE00936E01 /* KRPNGLoader.h */; };
 		8EBB1D811034BFBE00936E01 /* KRPNGLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB1D791034BFBE00936E01 /* KRPNGLoader.mm */; };
+		8EBCAF5D11E71E130017A640 /* KRChara2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBCAF5B11E71E130017A640 /* KRChara2D.h */; };
+		8EBCAF5E11E71E130017A640 /* KRChara2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EBCAF5C11E71E130017A640 /* KRChara2D.mm */; };
+		8EBCAF5F11E71E130017A640 /* KRChara2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBCAF5B11E71E130017A640 /* KRChara2D.h */; };
+		8EBCAF6011E71E130017A640 /* KRChara2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EBCAF5C11E71E130017A640 /* KRChara2D.mm */; };
+		8EBCAF6111E71E130017A640 /* KRChara2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBCAF5B11E71E130017A640 /* KRChara2D.h */; };
+		8EBCAF6211E71E130017A640 /* KRChara2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EBCAF5C11E71E130017A640 /* KRChara2D.mm */; };
+		8EBCAF6311E71E130017A640 /* KRChara2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBCAF5B11E71E130017A640 /* KRChara2D.h */; };
+		8EBCAF6411E71E130017A640 /* KRChara2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EBCAF5C11E71E130017A640 /* KRChara2D.mm */; };
 		8EBE81391028988900F77A39 /* KRRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBE81371028988800F77A39 /* KRRandom.h */; };
 		8EBE813A1028988900F77A39 /* KRRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EBE81381028988900F77A39 /* KRRandom.cpp */; };
 		8EBE813B1028988900F77A39 /* KRRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EBE81371028988800F77A39 /* KRRandom.h */; };
@@ -914,6 +922,8 @@
 		8EAB5FF7101B20C100DDA881 /* KRTexture2DLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTexture2DLoader.mm; sourceTree = "<group>"; };
 		8EBB1D781034BFBE00936E01 /* KRPNGLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRPNGLoader.h; sourceTree = "<group>"; };
 		8EBB1D791034BFBE00936E01 /* KRPNGLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRPNGLoader.mm; sourceTree = "<group>"; };
+		8EBCAF5B11E71E130017A640 /* KRChara2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRChara2D.h; sourceTree = "<group>"; };
+		8EBCAF5C11E71E130017A640 /* KRChara2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRChara2D.mm; sourceTree = "<group>"; };
 		8EBE81371028988800F77A39 /* KRRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRRandom.h; sourceTree = "<group>"; };
 		8EBE81381028988900F77A39 /* KRRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRRandom.cpp; sourceTree = "<group>"; };
 		8EEA28C311269C0800226D42 /* KRAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRAudioManager.h; sourceTree = "<group>"; };
@@ -1265,6 +1275,8 @@
 			children = (
 				8EEA3117112B234200226D42 /* KRTexture2DManager.h */,
 				8EEA3118112B234200226D42 /* KRTexture2DManager.mm */,
+				8EBCAF5B11E71E130017A640 /* KRChara2D.h */,
+				8EBCAF5C11E71E130017A640 /* KRChara2D.mm */,
 				8E537E8B10FAA924003C76D0 /* KRAnime2DManager.h */,
 				8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */,
 				8E9792681020C00700E3EC7A /* KRFont.h */,
@@ -1453,6 +1465,7 @@
 				8EEA28CB11269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA311C112B234200226D42 /* KRTexture2DManager.h in Headers */,
 				8E37114411511CA300B1655B /* BXResourceImporter.h in Headers */,
+				8EBCAF5F11E71E130017A640 /* KRChara2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1543,6 +1556,7 @@
 				8EEA28C511269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA3119112B234200226D42 /* KRTexture2DManager.h in Headers */,
 				8E37113E11511CA300B1655B /* BXResourceImporter.h in Headers */,
+				8EBCAF5D11E71E130017A640 /* KRChara2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1633,6 +1647,7 @@
 				8EEA28C911269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA311B112B234200226D42 /* KRTexture2DManager.h in Headers */,
 				8E37114011511CA300B1655B /* BXResourceImporter.h in Headers */,
+				8EBCAF6111E71E130017A640 /* KRChara2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1725,6 +1740,7 @@
 				8EEA28C711269C0800226D42 /* KRAudioManager.h in Headers */,
 				8EEA311A112B234200226D42 /* KRTexture2DManager.h in Headers */,
 				8E37114211511CA300B1655B /* BXResourceImporter.h in Headers */,
+				8EBCAF6311E71E130017A640 /* KRChara2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1962,6 +1978,7 @@
 				8E537E9410FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28CC11269C0800226D42 /* KRAudioManager.mm in Sources */,
 				8E37114511511CA300B1655B /* BXResourceImporter.mm in Sources */,
+				8EBCAF6011E71E130017A640 /* KRChara2D.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2042,6 +2059,7 @@
 				8E537E9010FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28C611269C0800226D42 /* KRAudioManager.mm in Sources */,
 				8E37113F11511CA300B1655B /* BXResourceImporter.mm in Sources */,
+				8EBCAF5E11E71E130017A640 /* KRChara2D.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2122,6 +2140,7 @@
 				8E537E9210FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28CA11269C0800226D42 /* KRAudioManager.mm in Sources */,
 				8E37114111511CA300B1655B /* BXResourceImporter.mm in Sources */,
+				8EBCAF6211E71E130017A640 /* KRChara2D.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,6 +2223,7 @@
 				8E537E8E10FAA924003C76D0 /* KRAnime2DManager.mm in Sources */,
 				8EEA28C811269C0800226D42 /* KRAudioManager.mm in Sources */,
 				8E37114311511CA300B1655B /* BXResourceImporter.mm in Sources */,
+				8EBCAF6411E71E130017A640 /* KRChara2D.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2449,7 +2469,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-sim";
-				SDKROOT = iphonesimulator3.0;
+				SDKROOT = iphonesimulator3.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2463,7 +2483,8 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-sim";
-				SDKROOT = iphonesimulator3.0;
+				SDKROOT = iphonesimulator3.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2477,7 +2498,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-dev";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos3.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2491,7 +2512,8 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-dev";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos3.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
 			name = Release;

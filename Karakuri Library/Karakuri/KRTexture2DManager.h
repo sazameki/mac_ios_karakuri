@@ -46,21 +46,19 @@ public:
     
     /*!
         @method     addTexture
-        @abstract   グループIDと画像ファイルの名前（拡張子を含む）を指定してテクスチャを追加します。
-        @return     追加されたテクスチャに割り振られたリソースID。
+        @abstract   グループID、テクスチャID、画像ファイルの名前（拡張子を含む）を指定してテクスチャを追加します。
         オプションで KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかの定数で画像補完方法を指定できます。
      */
-    int     addTexture(int groupID, const std::string& imageFileName, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
+    void    addTexture(int groupID, int texID, const std::string& imageFileName, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
 
     /*!
         @method     addTexture
-        @abstract   グループIDと画像ファイルの名前（拡張子を含む）を指定してテクスチャを追加します。画像内の1コマあたりのサイズを指定して、各コマを描画できるようにします。
-        @return     追加されたテクスチャに割り振られたリソースID。
+        @abstract   グループID、テクスチャID、画像ファイルの名前（拡張子を含む）を指定してテクスチャを追加します。画像内の1コマあたりのサイズを指定して、各コマを描画できるようにします。
         オプションで KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかの定数で画像補完方法を指定できます。
      */
-    int     addTexture(int groupID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
+    void    addTexture(int groupID, int texID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
     
-    int     addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
+    void    addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
 
     int     addFont(int groupID, const std::string& fontName, double size);
     

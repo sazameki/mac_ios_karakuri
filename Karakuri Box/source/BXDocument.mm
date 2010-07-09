@@ -1832,6 +1832,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     BXChara2DKoma* theKoma = [self selectedChara2DKoma];
     
+    [oChara2DHitButtonAddCircle setHidden:YES];
+
     if (theKoma) {
         [oChara2DHitButtonAll setEnabled:YES];
         
@@ -1864,7 +1866,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DHitButton12 setState:([theKoma currentHitGroupIndex] == 12)? NSOnState: NSOffState];
             
             [oChara2DHitButtonAddRect setEnabled:YES];
-            [oChara2DHitButtonAddCircle setEnabled:YES];
+            //[oChara2DHitButtonAddCircle setEnabled:YES];
         } else {
             [oChara2DHitButtonAll setState:NSOffState];
             [oChara2DHitButton1 setEnabled:NO];
@@ -1894,7 +1896,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DHitButton12 setState:NSOffState];
 
             [oChara2DHitButtonAddRect setEnabled:NO];
-            [oChara2DHitButtonAddCircle setEnabled:NO];
+            //[oChara2DHitButtonAddCircle setEnabled:NO];
         }
         [oChara2DHitCountField setIntValue:[theKoma hitInfoCount]];
     } else {
@@ -1924,8 +1926,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [oChara2DHitButton10 setState:NSOffState];
         [oChara2DHitButton11 setState:NSOffState];
         [oChara2DHitButton12 setState:NSOffState];
+
         [oChara2DHitButtonAddRect setEnabled:NO];
-        [oChara2DHitButtonAddCircle setEnabled:NO];
+        //[oChara2DHitButtonAddCircle setEnabled:NO];
+
         [oChara2DHitCountField setStringValue:@""];
     }
 }

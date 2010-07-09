@@ -17,7 +17,7 @@
 
 GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
-    [data writeToFile:[@"~/Desktop/source_data.png" stringByExpandingTildeInPath] atomically:NO];
+    //[data writeToFile:[@"~/Desktop/source_data.png" stringByExpandingTildeInPath] atomically:NO];
     
     // Build up bitmap data
     CGImageSourceRef imageSourceRef = CGImageSourceCreateWithData((CFDataRef)data, NULL);
@@ -111,7 +111,7 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVec
             textureName = GL_INVALID_VALUE;
         }
         
-        {
+        /*{
          CGImageRef testImageRef = CGBitmapContextCreateImage(bitmapContext);
          NSURL *destUrl = [NSURL fileURLWithPath:[@"~/Desktop/test.png" stringByExpandingTildeInPath]];
          CGImageDestinationRef imageDest = CGImageDestinationCreateWithURL((CFURLRef)destUrl, kUTTypePNG, 1, NULL);
@@ -119,7 +119,7 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVec
          CGImageDestinationFinalize(imageDest);
          CFRelease(imageDest);
          CFRelease(testImageRef);
-         }
+         }*/
         
         // Clean up
         CGContextRelease(bitmapContext);

@@ -45,24 +45,23 @@ void GameMain::setupResources()
 {
     ///// Add all required resources at this point.
 
-    // Load integrated resource file (* Use Karakuri Box to make it *)
-    //addResources("resource.krrs");
-    
+    // Load integrated resource file (Use "Karakuri Box" to make it!)
+    addResources("resource.krrs");
+
     // Logo and Loading Worlds
-    gTex_Logo   = gKRTex2DMan->addTexture(0, checkDeviceType(KRDeviceTypeIPad)? "Default-Portrait.png": "Default.png");
-    gTex_LoadingChara = gKRTex2DMan->addTexture(0, "chara.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::Logo, checkDeviceType(KRDeviceTypeIPad)? "Default-Portrait.png": "Default.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::Logo, "chara.png");
 
     // Title World
-    gTex_Title = gKRTex2DMan->addTexture(1, "title.png");
+    gKRTex2DMan->addTexture(GroupID::Title, TexID::Title, "title.png");
     //gBGM_Title = gKRAudioMan->addBGM(1, "title_bgm.caf");
 
     // Play World
-    gKRAnime2DMan->addCharaSpecs(2, "chara2d.spec");
     //gBGM_Play = gKRAudioMan->addBGM(2, "play_bgm.caf");
     //gSE_Hit = gKRAudioMan->addSE(2, "hit.caf");
     
     // Load logo and loading worlds resources
-    loadResourceGroup(0);
+    loadResourceGroup(GroupID::LogoAndLoading);
 }
 
 std::string GameMain::setupWorlds()
@@ -73,7 +72,7 @@ std::string GameMain::setupWorlds()
     addWorld("title", new TitleWorld());
     addWorld("play", new PlayWorld());
     
-    // Return name of the world selected at first
+    // Return the first world name
     return "logo";
 }
 

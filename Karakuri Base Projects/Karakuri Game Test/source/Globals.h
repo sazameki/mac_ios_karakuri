@@ -3,19 +3,67 @@
  *  Karakuri Game Test
  *
  *  Created by numata on 10/02/13.
- *  Copyright 2010 Apple Inc. All rights reserved.
+ *  Copyright 2010 Satoshi Numata. All rights reserved.
  *
  */
 
 #pragma once
 
 
-extern int  gTex_Logo;
-extern int  gTex_LoadingChara;
+// Group IDs
+struct GroupID {
+    enum {
+        LogoAndLoading  = 0,
+        Title           = 1,
+        Play            = 2,
+    };
+};
 
-extern int  gTex_Title;
 
-//extern int  gBGM_Title;
-//extern int  gBGM_Play;
-//extern int  gSE_Hit;
+// Texture IDs
+struct TexID {
+    enum {
+        Logo,
+        LoadingChara,
+        Title,
+    };
+};
+
+// Character IDs (IDs are defined in Karakuri Box)
+struct CharaID {
+    enum {
+        Player      = 1000,
+        Enemy1      = 1001,
+        Explosion   = 1002,
+    };
+};
+
+struct CharaType {
+    enum {
+        Player,
+        Enemy
+    };
+};
+
+struct HitType {
+    enum {
+        Attack  = 1,
+        Block   = 2,
+    };
+};
+
+// BGM IDs
+struct BGM_ID {
+    enum {
+        Title,
+        Play,
+    };
+};
+
+// SE IDs
+struct SE_ID {
+    enum {
+        Hit,
+    };
+};
 

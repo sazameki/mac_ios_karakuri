@@ -166,6 +166,13 @@ void KRGameManager::addResources(const std::string& filename)
     NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
     
     BXResourceImporter* importer = [[BXResourceImporter alloc] initWithFileName:filenameStr];
+    if (!importer) {
+        const char *errorFormat = "Failed to load a Karakuri resource file \"%s\".";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "Karakuri リソースファイル \"%s\" の読み込みに失敗しました。";
+        }
+        throw KRRuntimeError(errorFormat, filename.c_str());
+    }
 
     [importer importPrimitiveResources];
     [importer importRichResources];

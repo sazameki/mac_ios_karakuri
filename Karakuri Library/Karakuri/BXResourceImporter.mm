@@ -116,6 +116,11 @@
     self = [super init];
     if (self) {
         NSString* filepath = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+        if (!filepath) {
+            [self release];
+            return nil;
+        }
+        
         mContext = [[BXImportContext alloc] initWithFileAtPath:filepath];
         mFileName = [fileName copy];
     }
@@ -155,8 +160,9 @@
     
     int resourceID = [[chara2DInfo objectForKey:@"Resource ID"] intValue];
     int groupID = [[chara2DInfo objectForKey:@"Group ID"] intValue];
-    
-    KRChara2DSpec* chara2DSpec = new KRChara2DSpec(groupID);
+    NSString* resourceName = [chara2DInfo objectForKey:@"Resource Name"];
+
+    _KRChara2DSpec* chara2DSpec = new _KRChara2DSpec(groupID, std::string([resourceName cStringUsingEncoding:NSUTF8StringEncoding]));
 
     NSArray* imageInfos = [chara2DInfo objectForKey:@"Image Infos"];
     for (int i = 0; i < [imageInfos count]; i++) {
@@ -176,7 +182,7 @@
         int nextStateID = [[aStateInfo objectForKey:@"Next State ID"] intValue];
         int cancelKomaNumber = [[aStateInfo objectForKey:@"Cancel Koma"] intValue]; // キャンセル時の終了アニメーション開始コマ
         
-        KRChara2DState* aState = new KRChara2DState();
+        _KRChara2DState* aState = new _KRChara2DState();
         aState->initForBoxChara2D(cancelKomaNumber, nextStateID);
 
         int defaultInterval = [[aStateInfo objectForKey:@"Default Interval"] intValue]; // キャンセル時の終了アニメーション開始コマ
@@ -194,9 +200,11 @@
             int atlasIndex = [[aKomaInfo objectForKey:@"Atlas Index"] intValue];
             BOOL isCancelable = [[aKomaInfo objectForKey:@"Cancelable"] boolValue];
             int gotoTarget = [[aKomaInfo objectForKey:@"Goto Target"] intValue];
-            //NSArray* hitInfos = [aKomaInfo objectForKey:@"Hit Infos"];
 
-            KRChara2DKoma* aKoma = new KRChara2DKoma();
+            NSArray* hitInfos = [aKomaInfo objectForKey:@"Hit Infos"];
+
+            _KRChara2DKoma* aKoma = new _KRChara2DKoma();
+            aKoma->_importHitArea(hitInfos);
             aKoma->initForBoxChara2D([imageTicket cStringUsingEncoding:NSUTF8StringEncoding], atlasIndex, interval,
                                      (isCancelable? true: false), gotoTarget);
             aState->addKoma(aKoma);

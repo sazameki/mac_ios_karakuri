@@ -30,7 +30,7 @@
         mTargetKomaForCancel = nil;
         
         mStateName = [name copy];
-        mStateID = 1;
+        mStateID = 0;
         mKomas = [[NSMutableArray alloc] init];
         
         mDefaultKomaInterval = 4;

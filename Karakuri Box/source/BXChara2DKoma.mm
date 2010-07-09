@@ -416,6 +416,10 @@
     [mHitInfos removeAllObjects];
 }
 
+- (void)removeSelectedHitInfo
+{
+}
+
 - (BXChara2DKomaHitInfo*)addHitInfoOval
 {
     NSImage* nsImage = [self nsImage];
@@ -485,6 +489,11 @@
         }
     }
     return nil;
+}
+
+- (void)removeHitInfo:(BXChara2DKomaHitInfo*)aHitInfo
+{
+    [mHitInfos removeObject:aHitInfo];
 }
 
 - (void)setImage:(BXChara2DImage*)image atlasAtIndex:(int)index

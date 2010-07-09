@@ -5,353 +5,11 @@
  */
 
 #include "KRAnime2DManager.h"
+#include "KRChara2D.h"
 
 
 KRAnime2DManager*   gKRAnime2DMan = NULL;
 KRMemoryAllocator*  gKRChara2DAllocator = NULL;
-
-
-#pragma mark -
-#pragma mark KRChara2DKoma の実装
-
-KRChara2DKoma::KRChara2DKoma()
-{
-    mAtlasIndex = -1;
-    mAtlasPos = KRVector2DInt(-1, -1);
-}
-
-void KRChara2DKoma::initForManualChara2D(int textureID, KRVector2DInt atlasPos, int interval, bool isCancelable, int gotoTarget)
-{
-    mTextureID = textureID;
-
-    mAtlasPos = atlasPos;
-    mIsCancelable = isCancelable;
-    mInterval = interval;
-    mGotoTarget = gotoTarget;    
-}
-
-void KRChara2DKoma::initForBoxChara2D(const std::string& imageTicket, int atlasIndex, int interval, bool isCancelable, int gotoTarget)
-{
-    mTextureID = gKRTex2DMan->getTextureIDForTicket(imageTicket);
-    
-    mAtlasIndex = atlasIndex;
-    mIsCancelable = isCancelable;
-    mInterval = interval;
-    mGotoTarget = gotoTarget;
-}
-
-KRVector2DInt KRChara2DKoma::getAtlasPos()
-{
-    if (mAtlasPos.x >= 0) {
-        return mAtlasPos;
-    }
-    
-    KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
-
-    int divX = theTex->getDivX();
-
-    return KRVector2DInt(mAtlasIndex % divX, mAtlasIndex / divX);
-}
-
-KRVector2D KRChara2DKoma::getAtlasSize()
-{
-    KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
-    return theTex->getAtlasSize();
-}
-
-int KRChara2DKoma::getGotoTarget()
-{
-    return mGotoTarget;
-}
-
-int KRChara2DKoma::getInterval()
-{
-    return mInterval;
-}
-
-int KRChara2DKoma::getTextureID()
-{
-    return mTextureID;
-}
-
-
-#pragma mark -
-#pragma mark KRChara2DState の実装
-
-KRChara2DState::KRChara2DState()
-{
-}
-
-void KRChara2DState::initForManualChara2D(int cancelKomaNumber, int nextStateID)
-{
-    mCancelKomaNumber = cancelKomaNumber;
-    mNextStateID = nextStateID;
-}
-
-void KRChara2DState::initForBoxChara2D(int cancelKomaNumber, int nextStateID)
-{
-    mCancelKomaNumber = cancelKomaNumber;
-    mNextStateID = nextStateID;
-}
-
-void KRChara2DState::addKoma(KRChara2DKoma* aKoma)
-{
-    mKomas.push_back(aKoma);
-}
-
-int KRChara2DState::getKomaCount()
-{
-    return mKomas.size();
-}
-
-KRChara2DKoma* KRChara2DState::getKoma(int komaNumber)
-{
-    return mKomas[komaNumber-1];
-}
-
-
-
-#pragma mark -
-#pragma mark KRChara2DSpec の実装
-
-/*KRChara2DSpec::KRChara2DSpec(int texGroupID, const std::string& textureName, const KRVector2D& atlasSize)
-{
-    mSpecID = -1;
-    mTextureID = gKRTex2DMan->addTexture(texGroupID, textureName, atlasSize);
-}
-
-KRChara2DSpec::KRChara2DSpec(int texGroupID, const std::string& ticket)
-{
-    mSpecID = -1;
-    mTextureID = gKRTex2DMan->getTextureIDForTicket(ticket);
-}*/
-
-KRChara2DSpec::KRChara2DSpec(int texGroupID)
-{
-    mGroupID = texGroupID;
-    mSpecID = -1;
-    mParticleTexID = -1;
-}
-
-KRChara2DSpec::~KRChara2DSpec()
-{
-    std::map<int, KRChara2DState*>::iterator it = mStateMap.begin();
-	while (it != mStateMap.end()) {
-        delete (*it).second;
-		it++;
-	}
-}
-
-void KRChara2DSpec::initForManualChara2D()
-{
-    // Do nothing
-}
-
-void KRChara2DSpec::initForManualParticle2D(const std::string& fileName)
-{
-    mParticleTexID = gKRTex2DMan->addTexture(mGroupID, fileName);
-}
-
-void KRChara2DSpec::initForBoxParticle2D(const std::string& imageTicket)
-{
-    mParticleTexID = gKRTex2DMan->getTextureIDForTicket(imageTicket);
-}
-
-void KRChara2DSpec::addState(int stateID, KRChara2DState* aState)
-{
-    mStateMap[stateID] = aState;
-}
-
-KRChara2DState* KRChara2DSpec::getState(int stateID)
-{
-    return mStateMap[stateID];
-}
-
-int KRChara2DSpec::getParticleTextureID() const
-{
-    return mParticleTexID;
-}
-
-int KRChara2DSpec::getSpecID() const
-{
-    return mSpecID;
-}
-
-bool KRChara2DSpec::isParticle()
-{
-    return (mParticleTexID >= 0)? true: false;
-}
-
-/*bool KRChara2DSpec::isTextureAtlased() const
-{
-    return (gKRTex2DMan->getAtlasSize(mTextureID).x > 0.0)? true: false;
-}*/
-
-void KRChara2DSpec::setSpecID(int specID)
-{
-    mSpecID = specID;
-}
-
-
-#pragma mark -
-#pragma mark KRChara2D クラスの実装
-
-KRChara2D::KRChara2D(KRChara2DSpec *charaSpec, const KRVector2D& _centerPos, int zOrder, void *repObj)
-    : mCharaSpec(charaSpec), pos(_centerPos), mZOrder(zOrder), mRepresentedObject(repObj)
-{
-    _angle = 0.0;
-    blendMode = KRBlendModeAlpha;
-    color = KRColor(1.0, 1.0, 1.0, 1.0);
-    scale = 1.0;
-    
-    mCurrentStateID = -1;
-    mIsFinished = true;
-    
-    mRepresentedObject = NULL;
-
-    //changeState(firstState);
-}
-
-void* KRChara2D::getObject() const
-{
-    return mRepresentedObject;
-}
-
-KRVector2D KRChara2D::getSize() const
-{
-    KRChara2DState* theState = mCharaSpec->getState(mCurrentStateID);
-    if (theState == NULL) {
-        return KRVector2DZero;
-    }
-    
-    KRChara2DKoma* theKoma = theState->getKoma(mCurrentKomaNumber);
-    return theKoma->getAtlasSize();
-}
-
-int KRChara2D::getState() const
-{
-    return mCurrentStateID;
-}
-
-int KRChara2D::getZOrder() const
-{
-    return mZOrder;
-}
-
-void KRChara2D::changeState(int stateID, unsigned modeMask)
-{
-    if (mCharaSpec->isParticle()) {
-        return;
-    }
-
-    if (mCurrentStateID == stateID) {
-        return;
-    }
-
-    KRChara2DState* theState = mCharaSpec->getState(stateID);
-    if (theState == NULL) {
-        if (gKRLanguage == KRLanguageJapanese) {
-            throw KRRuntimeError("KRChara2D::changeState() キャラクタ特徴 %d の 状態 %d は見つかりませんでした。", mCharaSpec->getSpecID(), stateID);
-        } else {
-            throw KRRuntimeError("KRChara2D::changeState() State %d was not found for character spec %d.", stateID, mCharaSpec->getSpecID());
-        }
-        return;
-    }
-    
-    mCurrentStateID = stateID;
-
-    mCurrentKomaNumber = 1;
-    mIsFinished = false;
-
-    KRChara2DKoma* theKoma = theState->getKoma(mCurrentKomaNumber);
-    mImageInterval = theKoma->getInterval();
-}
-
-void KRChara2D::setObject(void *anObj)
-{
-    mRepresentedObject = anObj;
-}
-
-void KRChara2D::setZOrder(int zOrder)
-{
-    if (mZOrder == zOrder) {
-        return;
-    }
-    mZOrder = zOrder;
-    gKRAnime2DMan->_reorderChara2D(this);
-}
-
-void KRChara2D::_step()
-{
-    if (mCurrentStateID < 0) {
-        return;
-    }
-    
-    if (mIsFinished) {
-        return;
-    }
-    
-    mImageInterval--;
-    if (mImageInterval == 0) {
-        KRChara2DState* theState = mCharaSpec->getState(mCurrentStateID);
-        KRChara2DKoma* theKoma = theState->getKoma(mCurrentKomaNumber);
-        
-        int gotoTarget = theKoma->getGotoTarget();
-
-        // GOTO の場合
-        if (gotoTarget > 0) {
-            mCurrentKomaNumber = gotoTarget;
-            theKoma = theState->getKoma(mCurrentKomaNumber);
-            mImageInterval = theKoma->getInterval();
-        }
-        // 次のコマへ
-        else {
-            // 最後のコマ
-            if (theState->getKomaCount() == mCurrentKomaNumber) {
-                mIsFinished = true;
-            }
-            // それ以外の場合
-            else  {
-                mCurrentKomaNumber++;
-                theKoma = theState->getKoma(mCurrentKomaNumber);
-                mImageInterval = theKoma->getInterval();
-            }
-        }
-    }
-}
-
-void KRChara2D::_draw()
-{    
-    // パーティクル用のキャラクタ
-    if (mCharaSpec->isParticle()) {
-        gKRGraphicsInst->setBlendMode(blendMode);
-
-        int texID = mCharaSpec->getParticleTextureID();
-        gKRTex2DMan->drawAtPointCenterEx(texID, pos, _angle, gKRTex2DMan->getTextureSize(texID)/2, KRVector2D(scale, scale), color);
-    }
-    
-    // 通常のキャラクタ
-    else {
-        if (mCurrentStateID < 0) {
-            return;
-        }
-        
-        KRChara2DState* theState = mCharaSpec->getState(mCurrentStateID);
-        if (theState == NULL) {
-            return;
-        }
-        
-        KRChara2DKoma* theKoma = theState->getKoma(mCurrentKomaNumber);
-        
-        gKRGraphicsInst->setBlendMode(blendMode);
-        
-        int texID = theKoma->getTextureID();
-        
-        KRVector2DInt atlasPos = theKoma->getAtlasPos();
-        gKRTex2DMan->drawAtlasAtPointEx(texID, atlasPos, pos, 0.0, KRVector2DZero, KRVector2D(scale, scale), color);
-    }
-}
-
 
 
 #pragma mark -
@@ -373,7 +31,7 @@ KRAnime2DManager::~KRAnime2DManager()
 
     // キャラクタの特徴マップの削除
     {
-        std::map<int, KRChara2DSpec*>::iterator it = mCharaSpecMap.begin();
+        std::map<int, _KRChara2DSpec*>::iterator it = mCharaSpecMap.begin();
         while (it != mCharaSpecMap.end()) {
             delete (*it).second;
             it++;
@@ -389,12 +47,13 @@ KRAnime2DManager::~KRAnime2DManager()
 #pragma mark -
 #pragma mark キャラクタの特徴の管理
 
-void KRAnime2DManager::_addCharaSpec(int specID, KRChara2DSpec* spec)
+void KRAnime2DManager::_addCharaSpec(int specID, _KRChara2DSpec* spec)
 {
     mCharaSpecMap[specID] = spec;
     spec->setSpecID(specID);
 }
 
+/*
 void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFileName)
 {
     KRTextReader reader(specFileName);
@@ -535,7 +194,7 @@ void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFil
             throw KRRuntimeError("Unknown command: %s", command.c_str());
         }
     }
-}
+}*/
 
 int KRAnime2DManager::addParticle2D(int groupID, const std::string& imageFileName)
 {
@@ -556,7 +215,7 @@ int KRAnime2DManager::_addTexCharaSpec(int groupID, const std::string& imageFile
     int theSpecID = mNextInnerCharaSpecID;
     mNextInnerCharaSpecID++;
 
-    KRChara2DSpec* theSpec = new KRChara2DSpec(groupID);
+    _KRChara2DSpec* theSpec = new _KRChara2DSpec(groupID, "");
     theSpec->initForManualParticle2D(imageFileName);
     
     _addCharaSpec(theSpecID, theSpec);
@@ -569,7 +228,7 @@ int KRAnime2DManager::_addTexCharaSpecWithTicket(int groupID, const std::string&
     int theSpecID = mNextInnerCharaSpecID;
     mNextInnerCharaSpecID++;
     
-    KRChara2DSpec* theSpec = new KRChara2DSpec(groupID);
+    _KRChara2DSpec* theSpec = new _KRChara2DSpec(groupID, "");
     theSpec->initForBoxParticle2D(ticket);
 
     _addCharaSpec(theSpecID, theSpec);
@@ -600,9 +259,9 @@ void KRAnime2DManager::putCharaInSimulator(KRChara2D* aChara, int simulatorID)
 #pragma mark -
 #pragma mark キャラクタの管理
 
-KRChara2D* KRAnime2DManager::createChara2D(int specID, const KRVector2D& centerPos, int firstState, int zOrder, void *repObj)
+_KRChara2DSpec* KRAnime2DManager::_getChara2DSpec(int specID)
 {
-    KRChara2DSpec* theSpec = mCharaSpecMap[specID];
+    _KRChara2DSpec* theSpec = mCharaSpecMap[specID];
     if (theSpec == NULL) {
         const char *errorFormat = "KRAnime2D::createCharacter() Character spec was not found for spec-id %d.";
         if (gKRLanguage == KRLanguageJapanese) {
@@ -610,10 +269,15 @@ KRChara2D* KRAnime2DManager::createChara2D(int specID, const KRVector2D& centerP
         }
         throw KRRuntimeError(errorFormat, specID);
     }
+    return theSpec;
+}
 
-    KRChara2D* newChara = new KRChara2D(theSpec, centerPos, zOrder, repObj);
-
+void KRAnime2DManager::addChara2D(KRChara2D* newChara)
+{
+    int zOrder = newChara->getZOrder();
+    
     bool hasAdded = false;
+    
     for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end(); it++) {
         KRChara2D* aChara = *it;
         if (zOrder >= aChara->getZOrder()) {
@@ -625,11 +289,67 @@ KRChara2D* KRAnime2DManager::createChara2D(int specID, const KRVector2D& centerP
     
     if (!hasAdded) {
         mCharas.push_back(newChara);
+    }    
+}
+
+KRChara2D* KRAnime2DManager::getChara2D(int classType, const KRVector2D& pos) const
+{
+    for (std::list<KRChara2D*>::const_iterator it = mCharas.begin(); it != mCharas.end(); it++) {
+        if ((*it)->getClassType() != classType) {
+            continue;
+        }
+        if ((*it)->contains(pos)) {
+            return *it;
+        }
     }
+    return NULL;
+}
+
+KRChara2D* KRAnime2DManager::hitChara2D(int classType, int hitType, const KRVector2D& pos) const
+{
+    for (std::list<KRChara2D*>::const_iterator it = mCharas.begin(); it != mCharas.end(); it++) {
+        if ((*it)->getClassType() != classType) {
+            continue;
+        }
+        if ((*it)->hitTest(hitType, pos)) {
+            return *it;
+        }
+    }
+    return NULL;    
+}
+
+KRChara2D* KRAnime2DManager::hitChara2D(int classType, int hitType, const KRChara2D* targetChara, int targetHitType) const
+{
+    for (std::list<KRChara2D*>::const_iterator it = mCharas.begin(); it != mCharas.end(); it++) {
+        if ((*it)->getClassType() != classType) {
+            continue;
+        }
+        if ((*it)->hitTest(hitType, targetChara, targetHitType)) {
+            return *it;
+        }
+    }
+    return NULL;    
+}
+
+void KRAnime2DManager::playChara2D(int charaSpecID, int state, const KRVector2D& pos, int zOrder)
+{
+    KRChara2D* chara = new KRChara2D(charaSpecID, 100000);
+    chara->setZOrder(zOrder);
+    chara->changeState(state);
+    chara->setPos(pos);
     
-    newChara->changeState(firstState);
+    this->addChara2D(chara);
+}
+
+void KRAnime2DManager::playChara2DCenter(int charaSpecID, int state, const KRVector2D& centerPos, int zOrder)
+{
+    KRChara2D* chara = new KRChara2D(charaSpecID, 100000);
+    chara->_setAsTemporal();
+    chara->setZOrder(zOrder);
+    chara->changeState(state);
+    chara->setCenterPos(centerPos);
     
-    return newChara;
+    this->addChara2D(chara);
 }
 
 void KRAnime2DManager::removeAllCharas()
@@ -671,8 +391,15 @@ void KRAnime2DManager::_reorderChara2D(KRChara2D* chara)
 
 void KRAnime2DManager::stepAllCharas()
 {
-    for (std::list<KRChara2D*>::reverse_iterator it = mCharas.rbegin(); it != mCharas.rend(); it++) {
+    for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end();) {
         (*it)->_step();
+        if ((*it)->_isTemporal() && (*it)->_isFinished()) {
+            KRChara2D* aChara = *it;
+            it = mCharas.erase(it);
+            delete aChara;
+        } else {
+            it++;
+        }
     }
     
     for (std::map<int, KRParticle2DSystem*>::iterator it = mParticleSystemMap.begin(); it != mParticleSystemMap.end(); it++) {

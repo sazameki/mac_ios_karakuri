@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E14BA8511E764D10021BB4D /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E14BA8411E764D10021BB4D /* Enemy.cpp */; };
+		8E14BA8611E764D10021BB4D /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E14BA8411E764D10021BB4D /* Enemy.cpp */; };
+		8E14BA8711E764D10021BB4D /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E14BA8411E764D10021BB4D /* Enemy.cpp */; };
+		8E14BA8E11E765290021BB4D /* Enemy1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E14BA8D11E765290021BB4D /* Enemy1.cpp */; };
+		8E14BA8F11E765290021BB4D /* Enemy1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E14BA8D11E765290021BB4D /* Enemy1.cpp */; };
+		8E14BA9011E765290021BB4D /* Enemy1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E14BA8D11E765290021BB4D /* Enemy1.cpp */; };
+		8E14BC2711E77A270021BB4D /* resource.krrs in Resources */ = {isa = PBXBuildFile; fileRef = 8E14BC2611E77A270021BB4D /* resource.krrs */; };
+		8E14BC2811E77A270021BB4D /* resource.krrs in Resources */ = {isa = PBXBuildFile; fileRef = 8E14BC2611E77A270021BB4D /* resource.krrs */; };
+		8E14BC2911E77A270021BB4D /* resource.krrs in Resources */ = {isa = PBXBuildFile; fileRef = 8E14BC2611E77A270021BB4D /* resource.krrs */; };
 		8E37172C1151907500B1655B /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E37172B1151907500B1655B /* player.png */; };
 		8E37172D1151907500B1655B /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E37172B1151907500B1655B /* player.png */; };
 		8E37172E1151907500B1655B /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E37172B1151907500B1655B /* player.png */; };
@@ -27,9 +36,6 @@
 		8EA660A4102A372F00F7081C /* PlayWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EA660A3102A372F00F7081C /* PlayWorld.cpp */; };
 		8EA660A5102A372F00F7081C /* PlayWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EA660A3102A372F00F7081C /* PlayWorld.cpp */; };
 		8EA660A6102A372F00F7081C /* PlayWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EA660A3102A372F00F7081C /* PlayWorld.cpp */; };
-		8EA660A8102A377100F7081C /* chara.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA660A7102A377100F7081C /* chara.png */; };
-		8EA660A9102A377100F7081C /* chara.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA660A7102A377100F7081C /* chara.png */; };
-		8EA660AA102A377100F7081C /* chara.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA660A7102A377100F7081C /* chara.png */; };
 		8EAB5E55101B0E2E00DDA881 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB5E54101B0E2E00DDA881 /* Default.png */; };
 		8EAB5E56101B0E2E00DDA881 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB5E54101B0E2E00DDA881 /* Default.png */; };
 		8EAB642F101B308C00DDA881 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB642E101B308C00DDA881 /* Entitlements.plist */; };
@@ -45,9 +51,6 @@
 		8EEA2B8D1126EB3F00226D42 /* LoadingWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA2B8C1126EB3F00226D42 /* LoadingWorld.cpp */; };
 		8EEA2B8E1126EB3F00226D42 /* LoadingWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA2B8C1126EB3F00226D42 /* LoadingWorld.cpp */; };
 		8EEA2B8F1126EB3F00226D42 /* LoadingWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA2B8C1126EB3F00226D42 /* LoadingWorld.cpp */; };
-		8EEA2D5F1127152B00226D42 /* chara2d.spec in Resources */ = {isa = PBXBuildFile; fileRef = 8EEA2D5E1127152B00226D42 /* chara2d.spec */; };
-		8EEA2D601127152B00226D42 /* chara2d.spec in Resources */ = {isa = PBXBuildFile; fileRef = 8EEA2D5E1127152B00226D42 /* chara2d.spec */; };
-		8EEA2D611127152B00226D42 /* chara2d.spec in Resources */ = {isa = PBXBuildFile; fileRef = 8EEA2D5E1127152B00226D42 /* chara2d.spec */; };
 		8EEA2F17112AF5D300226D42 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EEA2F16112AF5D300226D42 /* Default-Portrait.png */; };
 		8EEA2F18112AF5D300226D42 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EEA2F16112AF5D300226D42 /* Default-Portrait.png */; };
 		8EEA2F19112AF5D300226D42 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EEA2F16112AF5D300226D42 /* Default-Portrait.png */; };
@@ -55,6 +58,11 @@
 
 /* Begin PBXFileReference section */
 		8D1107320486CEB800E47090 /* Karakuri Game Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Karakuri Game Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E14BA8311E764D10021BB4D /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy.h; sourceTree = "<group>"; };
+		8E14BA8411E764D10021BB4D /* Enemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy.cpp; sourceTree = "<group>"; };
+		8E14BA8C11E765290021BB4D /* Enemy1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemy1.h; sourceTree = "<group>"; };
+		8E14BA8D11E765290021BB4D /* Enemy1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enemy1.cpp; sourceTree = "<group>"; };
+		8E14BC2611E77A270021BB4D /* resource.krrs */ = {isa = PBXFileReference; lastKnownFileType = file; path = resource.krrs; sourceTree = "<group>"; };
 		8E37172B1151907500B1655B /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
 		8E3717A01151995100B1655B /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		8E6F55411011CA330022E442 /* GameMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMain.h; sourceTree = "<group>"; };
@@ -65,7 +73,6 @@
 		8EA66038102A252600F7081C /* Karakuri Game Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Karakuri Game Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EA660A2102A372F00F7081C /* PlayWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayWorld.h; sourceTree = "<group>"; };
 		8EA660A3102A372F00F7081C /* PlayWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayWorld.cpp; sourceTree = "<group>"; };
-		8EA660A7102A377100F7081C /* chara.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chara.png; sourceTree = "<group>"; };
 		8EAB5E54101B0E2E00DDA881 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8EAB608C101B25A600DDA881 /* Karakuri_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri_Prefix.pch; sourceTree = "<group>"; };
 		8EAB642E101B308C00DDA881 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
@@ -81,7 +88,6 @@
 		8EEA29CB1126D1D700226D42 /* TitleWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleWorld.cpp; sourceTree = "<group>"; };
 		8EEA2B8B1126EB3F00226D42 /* LoadingWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingWorld.h; sourceTree = "<group>"; };
 		8EEA2B8C1126EB3F00226D42 /* LoadingWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingWorld.cpp; sourceTree = "<group>"; };
-		8EEA2D5E1127152B00226D42 /* chara2d.spec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chara2d.spec; sourceTree = "<group>"; };
 		8EEA2F16112AF5D300226D42 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +133,10 @@
 				8EA660A3102A372F00F7081C /* PlayWorld.cpp */,
 				8E8A9E6B112ED4B6007DD029 /* Player.h */,
 				8E8A9E6C112ED4B6007DD029 /* Player.cpp */,
+				8E14BA8311E764D10021BB4D /* Enemy.h */,
+				8E14BA8411E764D10021BB4D /* Enemy.cpp */,
+				8E14BA8C11E765290021BB4D /* Enemy1.h */,
+				8E14BA8D11E765290021BB4D /* Enemy1.cpp */,
 			);
 			name = "Source Files";
 			path = source;
@@ -166,6 +176,7 @@
 		8E6F600C1011F5110022E442 /* Resource Files */ = {
 			isa = PBXGroup;
 			children = (
+				8E14BC2611E77A270021BB4D /* resource.krrs */,
 				8E6F600D1011F51D0022E442 /* Image */,
 				8E6F600E1011F5290022E442 /* Sound */,
 			);
@@ -179,9 +190,7 @@
 				8EAB68B0101B340A00DDA881 /* iphone_icon.png */,
 				8EEA2F16112AF5D300226D42 /* Default-Portrait.png */,
 				8EAB5E54101B0E2E00DDA881 /* Default.png */,
-				8EEA2D5E1127152B00226D42 /* chara2d.spec */,
 				8E37172B1151907500B1655B /* player.png */,
-				8EA660A7102A377100F7081C /* chara.png */,
 				8E3717A01151995100B1655B /* title.png */,
 			);
 			name = Image;
@@ -301,11 +310,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EAB5E55101B0E2E00DDA881 /* Default.png in Resources */,
-				8EA660A8102A377100F7081C /* chara.png in Resources */,
-				8EEA2D611127152B00226D42 /* chara2d.spec in Resources */,
 				8EEA2F19112AF5D300226D42 /* Default-Portrait.png in Resources */,
 				8E37172E1151907500B1655B /* player.png in Resources */,
 				8E3717A31151995100B1655B /* title.png in Resources */,
+				8E14BC2711E77A270021BB4D /* resource.krrs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,11 +322,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EA6602E102A252600F7081C /* Default.png in Resources */,
-				8EA660A9102A377100F7081C /* chara.png in Resources */,
-				8EEA2D5F1127152B00226D42 /* chara2d.spec in Resources */,
 				8EEA2F17112AF5D300226D42 /* Default-Portrait.png in Resources */,
 				8E37172C1151907500B1655B /* player.png in Resources */,
 				8E3717A11151995100B1655B /* title.png in Resources */,
+				8E14BC2911E77A270021BB4D /* resource.krrs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,11 +336,10 @@
 				8EAB5E56101B0E2E00DDA881 /* Default.png in Resources */,
 				8EAB642F101B308C00DDA881 /* Entitlements.plist in Resources */,
 				8EAB68B1101B340A00DDA881 /* iphone_icon.png in Resources */,
-				8EA660AA102A377100F7081C /* chara.png in Resources */,
-				8EEA2D601127152B00226D42 /* chara2d.spec in Resources */,
 				8EEA2F18112AF5D300226D42 /* Default-Portrait.png in Resources */,
 				8E37172D1151907500B1655B /* player.png in Resources */,
 				8E3717A21151995100B1655B /* title.png in Resources */,
+				8E14BC2811E77A270021BB4D /* resource.krrs in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +358,8 @@
 				8EEA29CE1126D1D700226D42 /* TitleWorld.cpp in Sources */,
 				8EEA2B8F1126EB3F00226D42 /* LoadingWorld.cpp in Sources */,
 				8E8A9E6F112ED4B6007DD029 /* Player.cpp in Sources */,
+				8E14BA8511E764D10021BB4D /* Enemy.cpp in Sources */,
+				8E14BA8E11E765290021BB4D /* Enemy1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +375,8 @@
 				8EEA29CC1126D1D700226D42 /* TitleWorld.cpp in Sources */,
 				8EEA2B8D1126EB3F00226D42 /* LoadingWorld.cpp in Sources */,
 				8E8A9E6D112ED4B6007DD029 /* Player.cpp in Sources */,
+				8E14BA8711E764D10021BB4D /* Enemy.cpp in Sources */,
+				8E14BA9011E765290021BB4D /* Enemy1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +392,8 @@
 				8EEA29CD1126D1D700226D42 /* TitleWorld.cpp in Sources */,
 				8EEA2B8E1126EB3F00226D42 /* LoadingWorld.cpp in Sources */,
 				8E8A9E6E112ED4B6007DD029 /* Player.cpp in Sources */,
+				8E14BA8611E764D10021BB4D /* Enemy.cpp in Sources */,
+				8E14BA8F11E765290021BB4D /* Enemy1.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +502,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Karakuri Game Test";
-				SDKROOT = iphonesimulator3.0;
+				SDKROOT = iphonesimulator3.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -528,7 +540,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Karakuri Game Test";
-				SDKROOT = iphonesimulator3.0;
+				SDKROOT = iphonesimulator3.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};

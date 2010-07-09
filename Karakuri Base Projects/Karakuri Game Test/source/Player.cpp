@@ -5,35 +5,37 @@
  */
 
 #include "Player.h"
+#include "Globals.h"
 
 
 Player::Player()
+    : KRChara2D(CharaID::Player, CharaType::Player)
 {
-    mChara = gKRAnime2DMan->createChara2D(10, KRVector2D(0, 0), 1, 0, this);
+    setZOrder(1);
+    
+    // Make this character visible (initial state = -1)
+    changeState(0);
 }
 
 Player::~Player()
 {
-    gKRAnime2DMan->removeChara2D(mChara);
+    // Do nothing
 }
 
-void Player::move(KRInput* input)
+void Player::grab(bool flag)
 {
-#if KR_MACOSX
-    if (input->isMouseDown()) {
-        mChara->pos = input->getMouseLocation();
-    }
-#endif
+    // Save the center position
+    KRVector2D centerPos = getCenterPos();
 
-#if KR_IPHONE
-    KRVector3D acc = input->getAcceleration();
-    mChara->pos.x += acc.x * 8;
-    mChara->pos.y += acc.y * 8;
-    
-    if (input->getTouch()) {
-        mChara->pos = input->getLocation();
+    // Change the scale
+    if (flag) {
+        setScale(KRVector2D(1.5, 1.5));        
+    } else {        
+        setScale(KRVector2D(1.0, 1.0));        
     }
-#endif    
+
+    // Restore the center position
+    setCenterPos(centerPos);
 }
 
 

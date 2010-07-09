@@ -61,14 +61,21 @@ void* KRMemoryAllocator::allocate(size_t size)
     if (size > mMaxClassSize) {
         const char *errorFormat = "KRMemoryAllocator: Memory allocation size error (request=%dbytes, limit=%dbytes) <%s>.";
         if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "KRMemoryAllocator: new で要求されたメモリサイズが、登録されたクラスの最大メモリサイズを超えました。 (request=%dbytes, limit=%dbytes) <%s>.";
+            errorFormat = "KRMemoryAllocator: new で要求されたメモリサイズが、登録されたクラスの最大メモリサイズを超えました。 (request=%dbytes, limit=%dbytes) <%s>";
         }
         throw KRRuntimeError(errorFormat, (int)size, (int)mMaxClassSize, mDebugName.c_str());
     }
     if (mAllocateCount >= mMaxCount) {
+        if (mDebugName == "kr-chara2d-alloc") {
+            if (gKRLanguage == KRLanguageJapanese) {
+                throw KRRuntimeError("最大数 %d を超えるキャラクタを作成しようとしました。GameMain::GameMain() で設定を変更してください。", mMaxCount);
+            } else {
+                throw KRRuntimeError("Tried to create characters over max count %d. Change the setting at GameMain()::GameMain().", mMaxCount);
+            }
+        }
         const char *errorFormat = "KRMemoryAllocator: Tried to instantiate over max count %d <%s>.";
         if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "KRMemoryAllocator: 設定された最大数 %d を超えてインスタンスを作成しようとしました。 <%s>.";
+            errorFormat = "KRMemoryAllocator: 設定された最大数 %d を超えてインスタンスを作成しようとしました。 <%s>";
         }
         throw KRRuntimeError(errorFormat, mMaxCount, mDebugName.c_str());
     }

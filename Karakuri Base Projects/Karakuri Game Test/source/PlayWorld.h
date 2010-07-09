@@ -10,11 +10,13 @@
 
 #include <Karakuri/Karakuri.h>
 #include "Player.h"
+#include "Enemy.h"
 
 
 class PlayWorld : public KRWorld {
     
-    Player*         mPlayer;
+    Player*         mDraggingPlayer;
+    std::list<Enemy*>   mEnemies;
     
 public:
     virtual void    becameActive();
