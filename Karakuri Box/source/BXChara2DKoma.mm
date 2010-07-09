@@ -31,10 +31,10 @@
     if (self) {
         mHitType = [infoDict intValueForName:@"Hit Type" currentValue:BXChara2DKomaHitTypeRect];
         mGroupIndex = [infoDict intValueForName:@"Group Index" currentValue:1];
-        mRect.origin.x = [infoDict intValueForName:@"Rect X" currentValue:0.0];
-        mRect.origin.y = [infoDict intValueForName:@"Rect Y" currentValue:0.0];
-        mRect.size.width = [infoDict intValueForName:@"Rect Width" currentValue:2.0];
-        mRect.size.height = [infoDict intValueForName:@"Rect Height" currentValue:2.0];
+        mRect.origin.x = [infoDict doubleValueForName:@"Rect X" currentValue:0.0];
+        mRect.origin.y = [infoDict doubleValueForName:@"Rect Y" currentValue:0.0];
+        mRect.size.width = [infoDict doubleValueForName:@"Rect Width" currentValue:2.0];
+        mRect.size.height = [infoDict doubleValueForName:@"Rect Height" currentValue:2.0];
     }
     return self;
 }
@@ -411,6 +411,11 @@
     [mHitInfos addObject:aHitInfo];
 }
 
+- (void)removeAllHitInfos
+{
+    [mHitInfos removeAllObjects];
+}
+
 - (BXChara2DKomaHitInfo*)addHitInfoOval
 {
     NSImage* nsImage = [self nsImage];
@@ -463,6 +468,12 @@
         BXChara2DKomaHitInfo* theCopy = [[anInfo copy] autorelease];
         [self addHitInfo:theCopy];
     }
+}
+
+- (void)replaceHitInfosFromKoma:(BXChara2DKoma*)aKoma
+{
+    [self removeAllHitInfos];
+    [self importHitInfosFromKoma:aKoma];
 }
 
 - (BXChara2DKomaHitInfo*)hitInfoAtPoint:(NSPoint)pos

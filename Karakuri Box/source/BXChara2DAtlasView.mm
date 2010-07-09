@@ -164,6 +164,8 @@
                     [mSelectionIndexes addIndex:i];
                 }
             } else {
+                // TODO: 前の方向に範囲選択できるようにする
+                NSLog(@"TODO: 前の方向に範囲選択できるようにする");
                 [mSelectionIndexes addIndex:index];
                 mLastSelectedIndex = index;
             }

@@ -109,7 +109,9 @@ enum {
 - (BXChara2DKomaHitInfo*)hitInfoAtIndex:(int)index;
 
 - (void)addHitInfo:(BXChara2DKomaHitInfo*)aHitInfo;
+- (void)removeAllHitInfos;
 - (void)importHitInfosFromKoma:(BXChara2DKoma*)aKoma;
+- (void)replaceHitInfosFromKoma:(BXChara2DKoma*)aKoma;
 
 - (int)komaNumber;
 - (void)setKomaNumber:(int)number;

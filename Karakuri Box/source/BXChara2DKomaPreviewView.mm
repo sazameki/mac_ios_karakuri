@@ -172,6 +172,47 @@
         }
         [oDocument updateChangeCount:NSChangeUndone];
     }
+    // 他のすべてのコマの当たり範囲を置き換え
+    if (tag == 40) {
+        BXChara2DState* selectedState = [oDocument selectedChara2DState];
+        for (int i = 0; i < [selectedState komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+            if (aKoma == selectedKoma) {
+                continue;
+            }
+            [aKoma replaceHitInfosFromKoma:selectedKoma];
+        }
+        [oDocument updateChangeCount:NSChangeUndone];
+    }
+    // 以降のすべてのコマの当たり範囲を置き換え
+    else if (tag == 50) {
+        BOOL foundSelectedKoma = NO;
+        BXChara2DState* selectedState = [oDocument selectedChara2DState];
+        for (int i = 0; i < [selectedState komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+            if (aKoma == selectedKoma) {
+                foundSelectedKoma = YES;
+                continue;
+            }
+            if (foundSelectedKoma) {
+                [aKoma replaceHitInfosFromKoma:selectedKoma];
+            }
+        }
+        [oDocument updateChangeCount:NSChangeUndone];
+    }
+    // 次のコマの当たり判定を置き換え
+    else if (tag == 60) {
+        BXChara2DState* selectedState = [oDocument selectedChara2DState];
+        BXChara2DKoma* nextKoma = [selectedState komaWithNumber:[selectedKoma komaNumber]+1];
+        if (nextKoma != NULL) {
+            [nextKoma replaceHitInfosFromKoma:selectedKoma];
+        }
+        [oDocument updateChangeCount:NSChangeUndone];
+    }
+    // その他
+    else {
+        NSLog(@"Unknown action command tag: %d", tag);
+    }
     
     [oActionCommandButton selectItemWithTag:0];
 }
@@ -187,6 +228,7 @@
     
     int speed = (modifierFlags & NSShiftKeyMask)? 4: 1;
     
+    // 矢印キー
     if (keyCode == 0x7b) {
         NSRect rect = [mResizingHitInfo rect];
         rect.origin.x -= speed;
@@ -207,6 +249,12 @@
         rect.origin.y -= speed;
         [mResizingHitInfo setRect:rect];
     }
+    // Backspace / Delete
+    else if (keyCode == 0x33 || keyCode == 0x75) {
+        // TODO: 選択された当たり判定範囲の削除
+        NSLog(@"選択された当たり判定範囲の削除");
+    }
+
     
     [self setNeedsDisplay:YES];
 }

@@ -312,7 +312,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         int lastID = [[mChara2DGroup childAtIndex:[mChara2DGroup childCount]-1] resourceID];
         [newCharaSpec setResourceID:lastID+1];
     } else {
-        [newCharaSpec setResourceID:1];
+        [newCharaSpec setResourceID:1000];
     }
     
     [mChara2DGroup addChild:newCharaSpec];
@@ -334,7 +334,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         int lastID = [[mParticle2DGroup childAtIndex:[mParticle2DGroup childCount]-1] resourceID];
         [newParticleSpec setResourceID:lastID+1];
     } else {
-        [newParticleSpec setResourceID:1];
+        [newParticleSpec setResourceID:1000];
     }
     
     [mParticle2DGroup addChild:newParticleSpec];
