@@ -139,7 +139,7 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename, bool doLoop)
     mGroupID = -1;
     mCharaSpecID = -1;
     mHasInnerTexture = true;
-    mTexture = new KRTexture2D(filename);
+    mTexture = new _KRTexture2D(filename);
     
     init();
 }
@@ -148,7 +148,7 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename, bool doLoop)
     @method KRParticle2DSystem
     Constructor
  */
-KRParticle2DSystem::KRParticle2DSystem(KRTexture2D *texture, bool doLoop)
+KRParticle2DSystem::KRParticle2DSystem(_KRTexture2D *texture, bool doLoop)
     : mDoLoop(doLoop)
 {
     mGroupID = -1;

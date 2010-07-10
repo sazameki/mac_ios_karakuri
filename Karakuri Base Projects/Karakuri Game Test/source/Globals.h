@@ -26,6 +26,7 @@ struct TexID {
         Logo,
         LoadingChara,
         Title,
+        TitleChara,
     };
 };
 

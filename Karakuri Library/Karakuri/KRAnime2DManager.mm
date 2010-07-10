@@ -331,22 +331,22 @@ KRChara2D* KRAnime2DManager::hitChara2D(int classType, int hitType, const KRChar
     return NULL;    
 }
 
-void KRAnime2DManager::playChara2D(int charaSpecID, int state, const KRVector2D& pos, int zOrder)
+void KRAnime2DManager::playChara2D(int charaSpecID, int motionID, const KRVector2D& pos, int zOrder)
 {
     KRChara2D* chara = new KRChara2D(charaSpecID, 100000);
     chara->setZOrder(zOrder);
-    chara->changeState(state);
+    chara->changeMotion(motionID);
     chara->setPos(pos);
     
     this->addChara2D(chara);
 }
 
-void KRAnime2DManager::playChara2DCenter(int charaSpecID, int state, const KRVector2D& centerPos, int zOrder)
+void KRAnime2DManager::playChara2DCenter(int charaSpecID, int motionID, const KRVector2D& centerPos, int zOrder)
 {
     KRChara2D* chara = new KRChara2D(charaSpecID, 100000);
     chara->_setAsTemporal();
     chara->setZOrder(zOrder);
-    chara->changeState(state);
+    chara->changeMotion(motionID);
     chara->setCenterPos(centerPos);
     
     this->addChara2D(chara);

@@ -90,9 +90,9 @@ static volatile BOOL    sIsReady = NO;
     mKRGLContext.cglContext = (CGLContextObj)[[self openGLContext] CGLContextObj];
     CGLSetCurrentContext(mKRGLContext.cglContext);
     
-    mDefaultTex = new KRTexture2D("Default.png");
+    mDefaultTex = new _KRTexture2D("Default.png");
 #if KR_IPHONE_MACOSX_EMU
-    mTouchTex = new KRTexture2D("/Developer/Extras/Karakuri/images/System/iPhone Emulator/touch_circle.png");
+    mTouchTex = new _KRTexture2D("/Developer/Extras/Karakuri/images/System/iPhone Emulator/touch_circle.png");
     [self clearTouches];
 #endif
 
@@ -111,11 +111,11 @@ static volatile BOOL    sIsReady = NO;
         angle = M_PI / 2;
     }
     mDefaultTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
-    KRTexture2D::processBatchedTexture2DDraws();
+    _KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);
 
     mDefaultTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
-    KRTexture2D::processBatchedTexture2DDraws();
+    _KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);    
 
     [[KRGameController sharedController] setKRGLContext:&mKRGLContext];

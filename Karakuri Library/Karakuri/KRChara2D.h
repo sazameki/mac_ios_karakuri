@@ -17,9 +17,9 @@
 extern KRMemoryAllocator*   gKRChara2DAllocator;
 
 
-static const unsigned       KRCharaStateChangeModeNormalMask            = 0x00;
-static const unsigned       KRCharaStateChangeModeIgnoreCancelFlagMask  = 0x01;
-static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
+static const unsigned       KRCharaMotionChangeModeNormalMask            = 0x00;
+static const unsigned       KRCharaMotionChangeModeIgnoreCancelFlagMask  = 0x01;
+static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
 
 
 enum _KRChara2DHitAreaType {
@@ -72,18 +72,18 @@ public:
 };
 
 
-class _KRChara2DState : public KRObject {
+class _KRChara2DMotion : public KRObject {
     
     std::vector<_KRChara2DKoma*>   mKomas;
     
     int     mCancelKomaNumber;
-    int     mNextStateID;
+    int     mNextMotionID;
     
 public:
-    _KRChara2DState();
+    _KRChara2DMotion();
     
-    void    initForManualChara2D(int cancelKomaNumber, int nextStateID);
-    void    initForBoxChara2D(int cancelKomaNumber, int nextStateID);
+    void    initForManualChara2D(int cancelKomaNumber, int nextMotionID);
+    void    initForBoxChara2D(int cancelKomaNumber, int nextMotionID);
     
 public:
     void    addKoma(_KRChara2DKoma* aKoma);
@@ -102,12 +102,12 @@ public:
     <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
 class _KRChara2DSpec : public KRObject {
-    std::map<int, _KRChara2DState*>  mStateMap;
-    int                             mSpecID;
-    int                             mGroupID;
+    std::map<int, _KRChara2DMotion*>    mMotionMap;
+    int                                 mSpecID;
+    int                                 mGroupID;
     
-    int                             mParticleTexID;
-    std::string                     mSpecName;
+    int                                 mParticleTexID;
+    std::string                         mSpecName;
     
 public:
     /*!
@@ -132,10 +132,10 @@ public:
      @task 状態の管理
      */
     
-    void    addState(int stateID, _KRChara2DState* aState);
+    void    addMotion(int motionID, _KRChara2DMotion* aMotion);
     
     std::string             getSpecName() const;
-    _KRChara2DState*        getState(int state);
+    _KRChara2DMotion*       getMotion(int motionID);
     int                     getParticleTextureID() const;
     int                     getSpecID() const;
     void                    setSpecID(int specID);
@@ -147,11 +147,7 @@ public:
     @class KRChara2DElem
     @group Game 2D Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
-    <p>このクラスのインスタンスは、グローバル変数 gKRAnime2DInst を使ってアクセスできる <a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスの createChara2D() メソッドを使って作成します。</p>
     <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D メソッドを使って削除してください。</p>
-    <p>キャラクタの現在位置は、テクスチャアトラス描画の中心点を示します。現在位置は、public な pos 変数を直接いじって変更してください。</p>
-    <p>キャラクタの描画色は、public な color 変数を直接いじって変更してください。</p>
-    <p>キャラクタのZオーダは、現在位置や描画色とは違い、setZOrder() メソッドを使って変更してください。</p>
  */
 class KRChara2D : public KRObject {
     
@@ -161,7 +157,7 @@ private:
     _KRChara2DSpec*     _mCharaSpec;
     int                 _mClassType;
 
-    int                 _mCurrentStateID;
+    int                 _mCurrentMotionID;
     int                 _mCurrentKomaNumber;
     
     int                 _mImageInterval;
@@ -215,8 +211,33 @@ public:
     
     
     _KRChara2DKoma* _getCurrentKoma() const;
+
+public:
+    /*!
+        @task 動作の管理
+     */
     
+    /*!
+        @method changeMotion
+        キャラクタの動作を変更します。
+     */
+    void    changeMotion(int motionID);
+
+    /*!
+        @method changeMotion
+        キャラクタの動作を変更します。
+     */
+    void    changeMotion(int motionID, unsigned modeMask);
+
+    /*!
+        @method getMotion
+        @abstract キャラクタの現在の動作を取得します。
+        動作の変更中は、変更完了後に予定されている動作がリターンされます。
+     */
+    int     getMotion() const;
     
+
+public:
     /*!
         @task 状態の取得
      */    
@@ -246,30 +267,15 @@ public:
     KRVector2D  getSize() const;
     
     /*!
-        @method getState
-        @abstract キャラクタの現在の状態を取得します。
-        状態の変更中は、変更後の状態がリターンされます。
-     */
-    int         getState() const;
-    
-    /*!
         @method getZOrder
         キャラクタの現在のZオーダを取得します。
      */
     int         getZOrder() const;
     
-public:
+public:    
     /*!
         @task 状態の変更
      */
-    
-    /*!
-        @method changeState
-        キャラクタの状態を変更します。
-     */
-    void    changeState(int stateID);
-
-    void    changeState(int stateID, unsigned modeMask);
     
     void    setBlendMode(KRBlendMode blendMode);
     

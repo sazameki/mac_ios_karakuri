@@ -73,7 +73,7 @@ class KRParticle2DSystem : public KRObject {
     unsigned        mLife;
     KRVector2D      mStartPos;
     
-    KRTexture2D     *mTexture;
+    _KRTexture2D     *mTexture;
     bool            mHasInnerTexture;
     
     KRVector2D      mMinV;
@@ -129,7 +129,7 @@ public:
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(KRTexture2D *texture, bool doLoop=false);
+    KRParticle2DSystem(_KRTexture2D *texture, bool doLoop=false);
     virtual ~KRParticle2DSystem();
     
 private:

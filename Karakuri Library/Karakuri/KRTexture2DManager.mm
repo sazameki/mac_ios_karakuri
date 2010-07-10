@@ -86,7 +86,7 @@ int KRTexture2DManager::getResourceSize(int groupID)
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
         std::string filename = mTexID_ImageFileName_Map[texID];
-        int resourceSize = KRTexture2D::getResourceSize(filename);
+        int resourceSize = _KRTexture2D::getResourceSize(filename);
         ret += resourceSize;
     }
     
@@ -103,7 +103,7 @@ void KRTexture2DManager::loadTextureFiles(int groupID, KRWorld* loaderWorld, dou
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
         std::string filename = mTexID_ImageFileName_Map[texID];
-        int resourceSize = KRTexture2D::getResourceSize(filename);
+        int resourceSize = _KRTexture2D::getResourceSize(filename);
         allResourceSize += resourceSize;
     }
 
@@ -127,9 +127,9 @@ void KRTexture2DManager::loadTextureFiles(int groupID, KRWorld* loaderWorld, dou
                 std::string ticket = mTexID_Ticket_Map[texID];
                 int divX = mTicket_DivX_Map[ticket];
                 int divY = mTicket_DivY_Map[ticket];
-                mTexMap[texID] = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
+                mTexMap[texID] = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
             } else {
-                mTexMap[texID] = new KRTexture2D(filename, scaleMode);
+                mTexMap[texID] = new _KRTexture2D(filename, scaleMode);
             }
             [filenameStr release];
         }
@@ -177,10 +177,10 @@ unsigned KRTexture2DManager::getResourceLengthForTicket(const std::string& ticke
     return mTicket_Length_Map[ticket];
 }
 
-KRTexture2D* KRTexture2DManager::_getTexture(int texID)
+_KRTexture2D* KRTexture2DManager::_getTexture(int texID)
 {
     // IDからテクスチャを引っ張ってくる。
-    KRTexture2D* theTex = mTexMap[texID];
+    _KRTexture2D* theTex = mTexMap[texID];
     if (theTex == NULL) {
         std::string filename = mTexID_ImageFileName_Map[texID];
         NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
@@ -191,9 +191,9 @@ KRTexture2D* KRTexture2DManager::_getTexture(int texID)
             std::string ticket = mTexID_Ticket_Map[texID];
             int divX = mTicket_DivX_Map[ticket];
             int divY = mTicket_DivY_Map[ticket];
-            theTex = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
+            theTex = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
         } else {
-            theTex = new KRTexture2D(filename, scaleMode);
+            theTex = new _KRTexture2D(filename, scaleMode);
         }
         
         mTexMap[texID] = theTex;
@@ -232,7 +232,7 @@ void KRTexture2DManager::setTextureAtlasSize(int texID, const KRVector2D& size)
 
 
 #pragma mark -
-#pragma mark ---- テクスチャの描画 ----
+#pragma mark ---- テクスチャの描画（基本） ----
 
 void KRTexture2DManager::drawAtPoint(int texID, const KRVector2D& pos, double alpha)
 {
@@ -264,6 +264,10 @@ void KRTexture2DManager::drawAtPointEx2(int texID, const KRVector2D& pos, const 
     _getTexture(texID)->drawAtPointEx_(pos, srcRect, rotate, origin, scale, color);
 }
 
+
+#pragma mark -
+#pragma mark ---- テクスチャの描画（中心点指定） ----
+
 void KRTexture2DManager::drawAtPointCenter(int texID, const KRVector2D& centerPos, double alpha)
 {
     _getTexture(texID)->drawAtPointCenter_(centerPos, KRColor(1, 1, 1, alpha));
@@ -293,6 +297,10 @@ void KRTexture2DManager::drawAtPointCenterEx2(int texID, const KRVector2D& cente
 {
     _getTexture(texID)->drawAtPointCenterEx_(centerPos, srcRect, rotate, origin, scale, color);
 }
+
+
+#pragma mark -
+#pragma mark ---- テクスチャの描画（矩形指定） ----
 
 void KRTexture2DManager::drawInRect(int texID, const KRRect2D& destRect, double alpha)
 {
@@ -325,7 +333,7 @@ void KRTexture2DManager::drawAtlasAtPoint(int texID, const KRVector2DInt& atlasP
 
 void KRTexture2DManager::drawAtlasAtPoint(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
@@ -340,7 +348,7 @@ void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atla
 
 void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     int theY = atlasPos.y;
@@ -361,7 +369,7 @@ void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& 
 
 void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
@@ -376,7 +384,7 @@ void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt
 
 void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
@@ -391,7 +399,7 @@ void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPo
 
 void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);

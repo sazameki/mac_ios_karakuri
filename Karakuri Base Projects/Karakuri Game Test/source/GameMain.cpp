@@ -54,6 +54,7 @@ void GameMain::setupResources()
 
     // Title World
     gKRTex2DMan->addTexture(GroupID::Title, TexID::Title, "title.png");
+    gKRTex2DMan->addTexture(GroupID::Title, TexID::TitleChara, "chara.png");
     //gBGM_Title = gKRAudioMan->addBGM(1, "title_bgm.caf");
 
     // Play World

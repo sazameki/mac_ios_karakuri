@@ -8,10 +8,10 @@
 
 
 /*!
-    @method KRTexture2DAtlas
+    @method _KRTexture2DAtlas
     Constructor
  */
-KRTexture2DAtlas::KRTexture2DAtlas(KRTexture2D *tex, const KRVector2D& leftBottomPos, const KRVector2D& oneSize)
+_KRTexture2DAtlas::_KRTexture2DAtlas(_KRTexture2D *tex, const KRVector2D& leftBottomPos, const KRVector2D& oneSize)
 {
     mTexture = tex;
     mLeftBottomPos = leftBottomPos;
@@ -21,64 +21,64 @@ KRTexture2DAtlas::KRTexture2DAtlas(KRTexture2D *tex, const KRVector2D& leftBotto
 }
 
 /*!
-    @method ~KRTexture2DAtlas
+    @method ~_KRTexture2DAtlas
     Destructor
  */
-KRTexture2DAtlas::~KRTexture2DAtlas()
+_KRTexture2DAtlas::~_KRTexture2DAtlas()
 {
 }
 
-KRVector2D KRTexture2DAtlas::getLeftBottomPos() const
+KRVector2D _KRTexture2DAtlas::getLeftBottomPos() const
 {
     return mLeftBottomPos;
 }
 
-KRVector2D KRTexture2DAtlas::getOneSize() const
+KRVector2D _KRTexture2DAtlas::getOneSize() const
 {
     return mOneSize;
 }
 
-KRVector2D KRTexture2DAtlas::getCenterPos() const
+KRVector2D _KRTexture2DAtlas::getCenterPos() const
 {
     return mCenterPos;
 }
 
 
-void KRTexture2DAtlas::drawAtPoint(int row, int column, const KRVector2D& pos, double alpha)
+void _KRTexture2DAtlas::drawAtPoint(int row, int column, const KRVector2D& pos, double alpha)
 {
     draw(row, column, pos, 0.0, KRVector2DZero, KRVector2DOne, alpha);
 }
 
-void KRTexture2DAtlas::drawInRect(int row, int column, const KRRect2D& rect, double alpha)
+void _KRTexture2DAtlas::drawInRect(int row, int column, const KRRect2D& rect, double alpha)
 {
     KRVector2D scale(rect.width / mOneSize.x, rect.height / mOneSize.y);
     draw(row, column, rect.getOrigin(), 0.0, KRVector2DZero, scale, alpha);
 }
 
-void KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, double alpha)
+void _KRTexture2DAtlas::draw(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, double alpha)
 {
     KRRect2D srcRect(mLeftBottomPos.x + mOneSize.x * column, mLeftBottomPos.y + mOneSize.y * row, mOneSize.x, mOneSize.y);
     mTexture->draw(centerPos, srcRect, rotation, origin, scale, alpha);
 }
 
-void KRTexture2DAtlas::drawAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color)
+void _KRTexture2DAtlas::drawAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color)
 {
     drawC(row, column, pos, 0.0, KRVector2DZero, KRVector2DOne, color);
 }
 
-void KRTexture2DAtlas::drawInRectC(int row, int column, const KRRect2D& rect, const KRColor& color)
+void _KRTexture2DAtlas::drawInRectC(int row, int column, const KRRect2D& rect, const KRColor& color)
 {
     KRVector2D scale(rect.width / mOneSize.x, rect.height / mOneSize.y);
     drawC(row, column, rect.getOrigin(), 0.0, KRVector2DZero, scale, color);
 }
 
-void KRTexture2DAtlas::drawC(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, const KRColor& color)
+void _KRTexture2DAtlas::drawC(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D& origin, const KRVector2D &scale, const KRColor& color)
 {
     KRRect2D srcRect(mLeftBottomPos.x + mOneSize.x * column, mLeftBottomPos.y + mOneSize.y * row, mOneSize.x, mOneSize.y);
     mTexture->drawC(centerPos, srcRect, rotation, origin, scale, color);
 }
 
-std::string KRTexture2DAtlas::to_s() const
+std::string _KRTexture2DAtlas::to_s() const
 {
     return KRFS("<tex2_atlas>(left_bottom=(%3.1f,%3.1f), size=(%3.1f,%3.1f), tex=%s)", mLeftBottomPos.x, mLeftBottomPos.y, mOneSize.x, mOneSize.y, mTexture->c_str());
 }

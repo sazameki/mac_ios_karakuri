@@ -30,7 +30,7 @@ class KRTexture2DManager {
     std::map<std::string, int>          mTicket_DivY_Map;
     std::map<int, std::string>          mTexID_Ticket_Map;
     
-    std::map<int, KRTexture2D*>         mTexMap;
+    std::map<int, _KRTexture2D*>         mTexMap;
 
     int         mNextNewTexID;
 
@@ -61,7 +61,8 @@ public:
     void    addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
 
     int     addFont(int groupID, const std::string& fontName, double size);
-    
+
+
 #pragma mark ---- リソース管理 ----
 public:    
     /*!
@@ -92,7 +93,8 @@ public:
 
     void    setTextureAtlasSize(int texID, const KRVector2D& size);
     
-    KRTexture2D*    _getTexture(int texID);
+    _KRTexture2D*    _getTexture(int texID);
+
 
 #pragma mark ---- テクスチャの描画 ----
     /*!
@@ -135,6 +137,7 @@ public:
      */
     void    drawAtPointEx2(int texID, const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
 
+    
     /*!
         @task テクスチャの描画（中心点指定）
      */
@@ -175,6 +178,7 @@ public:
      */
     void    drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
 
+    
     /*!
         @task テクスチャの描画（矩形指定）
      */
@@ -202,7 +206,8 @@ public:
         @abstract IDと描画対象の矩形、描画元の矩形、色を指定してテクスチャを描画します。
      */
     void    drawInRect(int texID, const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color);
-    
+
+
 #pragma mark ---- アトラスの描画 ----
     /*!
         @task テクスチャの描画（アトラス指定）
@@ -275,6 +280,7 @@ public:
         @abstract IDとアトラス座標、描画対象の矩形、色を指定してテクスチャを描画します。
      */
     void    drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color);
+
 
 #pragma mark ---- フォントのサポート ----
     int     createStringTexture(int fontID, const std::string& str);    

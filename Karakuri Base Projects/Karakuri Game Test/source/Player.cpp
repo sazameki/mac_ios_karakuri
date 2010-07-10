@@ -14,7 +14,7 @@ Player::Player()
     setZOrder(1);
     
     // Make this character visible (initial state = -1)
-    changeState(0);
+    changeMotion(0);
 }
 
 Player::~Player()

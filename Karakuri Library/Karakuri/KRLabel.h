@@ -37,7 +37,7 @@ class KRLabel : public KRControl {
 
 protected:
     std::string     mText;
-    KRTexture2D     *mTextTexture;
+    _KRTexture2D     *mTextTexture;
     KRFont          *mFont;
     KRColor         mTextColor;
     bool            mHasChangedText;

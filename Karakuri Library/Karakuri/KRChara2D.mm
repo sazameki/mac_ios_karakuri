@@ -105,7 +105,7 @@ KRVector2DInt _KRChara2DKoma::getAtlasPos()
         return mAtlasPos;
     }
     
-    KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
+    _KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
     
     int divX = theTex->getDivX();
     
@@ -114,7 +114,7 @@ KRVector2DInt _KRChara2DKoma::getAtlasPos()
 
 KRVector2D _KRChara2DKoma::getAtlasSize()
 {
-    KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
+    _KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
     return theTex->getAtlasSize();
 }
 
@@ -171,36 +171,36 @@ _KRChara2DHitArea* _KRChara2DKoma::_getHitAreas() const
 
 
 #pragma mark -
-#pragma mark KRChara2DState の実装
+#pragma mark _KRChara2DMotion の実装
 
-_KRChara2DState::_KRChara2DState()
+_KRChara2DMotion::_KRChara2DMotion()
 {
     // Do nothing
 }
 
-void _KRChara2DState::initForManualChara2D(int cancelKomaNumber, int nextStateID)
+void _KRChara2DMotion::initForManualChara2D(int cancelKomaNumber, int nextMotionID)
 {
     mCancelKomaNumber = cancelKomaNumber;
-    mNextStateID = nextStateID;
+    mNextMotionID = nextMotionID;
 }
 
-void _KRChara2DState::initForBoxChara2D(int cancelKomaNumber, int nextStateID)
+void _KRChara2DMotion::initForBoxChara2D(int cancelKomaNumber, int nextMotionID)
 {
     mCancelKomaNumber = cancelKomaNumber;
-    mNextStateID = nextStateID;
+    mNextMotionID = nextMotionID;
 }
 
-void _KRChara2DState::addKoma(_KRChara2DKoma* aKoma)
+void _KRChara2DMotion::addKoma(_KRChara2DKoma* aKoma)
 {
     mKomas.push_back(aKoma);
 }
 
-int _KRChara2DState::getKomaCount()
+int _KRChara2DMotion::getKomaCount()
 {
     return mKomas.size();
 }
 
-_KRChara2DKoma* _KRChara2DState::getKoma(int komaNumber)
+_KRChara2DKoma* _KRChara2DMotion::getKoma(int komaNumber)
 {
     return mKomas[komaNumber-1];
 }
@@ -232,8 +232,8 @@ _KRChara2DSpec::_KRChara2DSpec(int texGroupID, const std::string& specName)
 
 _KRChara2DSpec::~_KRChara2DSpec()
 {
-    std::map<int, _KRChara2DState*>::iterator it = mStateMap.begin();
-	while (it != mStateMap.end()) {
+    std::map<int, _KRChara2DMotion*>::iterator it = mMotionMap.begin();
+	while (it != mMotionMap.end()) {
         delete (*it).second;
 		it++;
 	}
@@ -255,9 +255,9 @@ void _KRChara2DSpec::initForBoxParticle2D(const std::string& imageTicket)
     mParticleTexID = gKRTex2DMan->getTextureIDForTicket(imageTicket);
 }
 
-void _KRChara2DSpec::addState(int stateID, _KRChara2DState* aState)
+void _KRChara2DSpec::addMotion(int motionID, _KRChara2DMotion* aMotion)
 {
-    mStateMap[stateID] = aState;
+    mMotionMap[motionID] = aMotion;
 }
 
 std::string _KRChara2DSpec::getSpecName() const
@@ -265,9 +265,9 @@ std::string _KRChara2DSpec::getSpecName() const
     return mSpecName;
 }
 
-_KRChara2DState* _KRChara2DSpec::getState(int stateID)
+_KRChara2DMotion* _KRChara2DSpec::getMotion(int motionID)
 {
-    return mStateMap[stateID];
+    return mMotionMap[motionID];
 }
 
 int _KRChara2DSpec::getParticleTextureID() const
@@ -312,7 +312,7 @@ KRChara2D::KRChara2D(int charaSpecID, int classType)
     _mColor = KRColor(1.0, 1.0, 1.0, 1.0);
     _mScale = KRVector2DOne;
     
-    _mCurrentStateID = -1;
+    _mCurrentMotionID = -1;
     _mIsFinished = true;
     
     _mIsTemporal = false;
@@ -347,22 +347,22 @@ bool KRChara2D::contains(const KRVector2D& p) const
 
 _KRChara2DKoma* KRChara2D::_getCurrentKoma() const
 {
-    _KRChara2DState* theState = _mCharaSpec->getState(_mCurrentStateID);
-    if (theState == NULL) {
+    _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
+    if (theMotion == NULL) {
         return NULL;
     }
     
-    return theState->getKoma(_mCurrentKomaNumber);
+    return theMotion->getKoma(_mCurrentKomaNumber);
 }
 
 bool KRChara2D::hitTest(int hitType, const KRVector2D& pos) const
 {
-    _KRChara2DState* theState = _mCharaSpec->getState(_mCurrentStateID);
-    if (theState == NULL) {
+    _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
+    if (theMotion == NULL) {
         return false;
     }
     
-    _KRChara2DKoma* theKoma = theState->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
     int count = theKoma->_getHitAreaCount();
     if (count == 0) {
         return false;
@@ -383,12 +383,12 @@ bool KRChara2D::hitTest(int hitType, const KRVector2D& pos) const
 
 bool KRChara2D::hitTest(int hitType, const KRChara2D* targetChara, int targetHitType) const
 {
-    _KRChara2DState* theState = _mCharaSpec->getState(_mCurrentStateID);
-    if (theState == NULL) {
+    _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
+    if (theMotion == NULL) {
         return false;
     }
     
-    _KRChara2DKoma* theKoma = theState->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
     int count = theKoma->_getHitAreaCount();
     if (count == 0) {
         return false;
@@ -418,6 +418,51 @@ bool KRChara2D::hitTest(int hitType, const KRChara2D* targetChara, int targetHit
     
     return false;
 }
+
+
+#pragma mark （動作の管理）
+
+int KRChara2D::getMotion() const
+{
+    return _mCurrentMotionID;
+}
+
+void KRChara2D::changeMotion(int motionID)
+{
+    changeMotion(motionID, KRCharaMotionChangeModeNormalMask);
+}
+
+void KRChara2D::changeMotion(int motionID, unsigned modeMask)
+{
+    if (_mCharaSpec->isParticle()) {
+        return;
+    }
+    
+    if (_mCurrentMotionID == motionID) {
+        return;
+    }
+    
+    _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(motionID);
+    if (theMotion == NULL) {
+        if (gKRLanguage == KRLanguageJapanese) {
+            throw KRRuntimeError("KRChara2D::changeMotion() キャラクタ \"%s\" の動作 %d は見つかりませんでした。", _mCharaSpec->getSpecName().c_str(), motionID);
+        } else {
+            throw KRRuntimeError("KRChara2D::changeMotion() Motion %d was not found for the character \"%s\".", motionID, _mCharaSpec->getSpecName().c_str());
+        }
+        return;
+    }
+    
+    _mCurrentMotionID = motionID;
+    
+    _mCurrentKomaNumber = 1;
+    _mIsFinished = false;
+    
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+    _mImageInterval = theKoma->getInterval();
+}
+
+
+#pragma mark （状態の取得）
 
 KRVector2D KRChara2D::getCenterPos() const
 {
@@ -454,57 +499,18 @@ KRVector2D KRChara2D::getScale() const
 
 KRVector2D KRChara2D::getSize() const
 {
-    _KRChara2DState* theState = _mCharaSpec->getState(_mCurrentStateID);
-    if (theState == NULL) {
+    _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
+    if (theMotion == NULL) {
         return KRVector2DZero;
     }
     
-    _KRChara2DKoma* theKoma = theState->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
     return theKoma->getAtlasSize();
-}
-
-int KRChara2D::getState() const
-{
-    return _mCurrentStateID;
 }
 
 int KRChara2D::getZOrder() const
 {
     return _mZOrder;
-}
-
-void KRChara2D::changeState(int stateID)
-{
-    changeState(stateID, KRCharaStateChangeModeNormalMask);
-}
-
-void KRChara2D::changeState(int stateID, unsigned modeMask)
-{
-    if (_mCharaSpec->isParticle()) {
-        return;
-    }
-    
-    if (_mCurrentStateID == stateID) {
-        return;
-    }
-    
-    _KRChara2DState* theState = _mCharaSpec->getState(stateID);
-    if (theState == NULL) {
-        if (gKRLanguage == KRLanguageJapanese) {
-            throw KRRuntimeError("KRChara2D::changeState() キャラクタ \"%s\" の 状態 %d は見つかりませんでした。", _mCharaSpec->getSpecName().c_str(), stateID);
-        } else {
-            throw KRRuntimeError("KRChara2D::changeState() State %d was not found for character \"%s\".", stateID, _mCharaSpec->getSpecName().c_str());
-        }
-        return;
-    }
-    
-    _mCurrentStateID = stateID;
-    
-    _mCurrentKomaNumber = 1;
-    _mIsFinished = false;
-    
-    _KRChara2DKoma* theKoma = theState->getKoma(_mCurrentKomaNumber);
-    _mImageInterval = theKoma->getInterval();
 }
 
 void KRChara2D::setBlendMode(KRBlendMode blendMode)
@@ -538,7 +544,7 @@ void KRChara2D::setZOrder(int zOrder)
 
 void KRChara2D::_step()
 {
-    if (_mCurrentStateID < 0) {
+    if (_mCurrentMotionID < 0) {
         return;
     }
     
@@ -548,27 +554,27 @@ void KRChara2D::_step()
     
     _mImageInterval--;
     if (_mImageInterval == 0) {
-        _KRChara2DState* theState = _mCharaSpec->getState(_mCurrentStateID);
-        _KRChara2DKoma* theKoma = theState->getKoma(_mCurrentKomaNumber);
+        _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
+        _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
         
         int gotoTarget = theKoma->getGotoTarget();
         
         // GOTO の場合
         if (gotoTarget > 0) {
             _mCurrentKomaNumber = gotoTarget;
-            theKoma = theState->getKoma(_mCurrentKomaNumber);
+            theKoma = theMotion->getKoma(_mCurrentKomaNumber);
             _mImageInterval = theKoma->getInterval();
         }
         // 次のコマへ
         else {
             // 最後のコマ
-            if (theState->getKomaCount() == _mCurrentKomaNumber) {
+            if (theMotion->getKomaCount() == _mCurrentKomaNumber) {
                 _mIsFinished = true;
             }
             // それ以外の場合
             else  {
                 _mCurrentKomaNumber++;
-                theKoma = theState->getKoma(_mCurrentKomaNumber);
+                theKoma = theMotion->getKoma(_mCurrentKomaNumber);
                 _mImageInterval = theKoma->getInterval();
             }
         }
@@ -587,16 +593,16 @@ void KRChara2D::_draw()
     
     // 通常のキャラクタ
     else {
-        if (_mCurrentStateID < 0) {
+        if (_mCurrentMotionID < 0) {
             return;
         }
         
-        _KRChara2DState* theState = _mCharaSpec->getState(_mCurrentStateID);
-        if (theState == NULL) {
+        _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
+        if (theMotion == NULL) {
             return;
         }
         
-        _KRChara2DKoma* theKoma = theState->getKoma(_mCurrentKomaNumber);
+        _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
         
         gKRGraphicsInst->setBlendMode(_mBlendMode);
         

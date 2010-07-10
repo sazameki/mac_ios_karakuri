@@ -12,14 +12,14 @@
 
 
 /*
-    @!class KRTexture2DAtlas
+    @!class _KRTexture2DAtlas
     @!group Game 2D Graphics
     @!abstract テクスチャの一部分を切り取って描画するためのクラスです。
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
  */
-class KRTexture2DAtlas : public KRObject {
+class _KRTexture2DAtlas : public KRObject {
     
-    KRTexture2D     *mTexture;
+    _KRTexture2D*   mTexture;
     KRVector2D      mLeftBottomPos;
     KRVector2D      mOneSize;
     KRVector2D      mCenterPos;
@@ -30,12 +30,12 @@ public:
      */
     
     /*
-        @method KRTexture2DAtlas
+        @method _KRTexture2DAtlas
         @abstract コンストラクタ
         2次元テクスチャ、部品の開始点（左下）、各部品のサイズ（ピクセル単位）を指定して、このクラスのインスタンスを生成します。
      */
-	KRTexture2DAtlas(KRTexture2D *tex, const KRVector2D& leftBottomPos, const KRVector2D& oneSize);
-	virtual ~KRTexture2DAtlas();
+	_KRTexture2DAtlas(_KRTexture2D *tex, const KRVector2D& leftBottomPos, const KRVector2D& oneSize);
+	virtual ~_KRTexture2DAtlas();
     
 public:
     /*

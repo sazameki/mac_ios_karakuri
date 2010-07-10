@@ -29,7 +29,7 @@ static KRTexture2DDrawData  sTexture2DDrawData[KRTexture2DBatchSize*6];
 static int                  sTexture2DBatchCount = 0;
 
 
-int KRTexture2D::getResourceSize(const std::string& filename)
+int _KRTexture2D::getResourceSize(const std::string& filename)
 {
     int ret = 0;
     
@@ -54,7 +54,7 @@ int KRTexture2D::getResourceSize(const std::string& filename)
     return ret;
 }
 
-void KRTexture2D::processBatchedTexture2DDraws()
+void _KRTexture2D::processBatchedTexture2DDraws()
 {
     if (sTexture2DBatchCount == 0) {
         return;
@@ -80,10 +80,10 @@ void KRTexture2D::processBatchedTexture2DDraws()
 
 #pragma mark Constructor / Destructor
 
-KRTexture2D::KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode)
+_KRTexture2D::_KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode)
 {
     if (sTexture2DBatchCount > 0) {
-        KRTexture2D::processBatchedTexture2DDraws();
+        _KRTexture2D::processBatchedTexture2DDraws();
     }
     
     mAtlasSize = KRVector2DZero;
@@ -108,10 +108,10 @@ KRTexture2D::KRTexture2D(const std::string& filename, KRTexture2DScaleMode scale
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode)
+_KRTexture2D::_KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode)
 {
     if (sTexture2DBatchCount > 0) {
-        KRTexture2D::processBatchedTexture2DDraws();
+        _KRTexture2D::processBatchedTexture2DDraws();
     }
     
     mAtlasDiv = KRVector2DInt(divX, divY);
@@ -146,11 +146,11 @@ KRTexture2D::KRTexture2D(const std::string& resourceFileName, const std::string&
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::KRTexture2D(const std::string& filename, const KRVector2D& atlasSize)
+_KRTexture2D::_KRTexture2D(const std::string& filename, const KRVector2D& atlasSize)
     : mAtlasSize(atlasSize)
 {
     if (sTexture2DBatchCount > 0) {
-        KRTexture2D::processBatchedTexture2DDraws();
+        _KRTexture2D::processBatchedTexture2DDraws();
     }
 
     mAtlas = NULL;
@@ -171,14 +171,14 @@ KRTexture2D::KRTexture2D(const std::string& filename, const KRVector2D& atlasSiz
     _KRTexture2DName = GL_INVALID_VALUE;
     
     if (atlasSize.x > 0.0 && atlasSize.y > 0.0) {
-        mAtlas = new KRTexture2DAtlas(this, KRVector2DZero, atlasSize);
+        mAtlas = new _KRTexture2DAtlas(this, KRVector2DZero, atlasSize);
     }
 }
 
-KRTexture2D::KRTexture2D(const std::string& str, KRFont *font)
+_KRTexture2D::_KRTexture2D(const std::string& str, KRFont *font)
 {
     if (sTexture2DBatchCount > 0) {
-        KRTexture2D::processBatchedTexture2DDraws();
+        _KRTexture2D::processBatchedTexture2DDraws();
     }
 
     mAtlas = NULL;
@@ -196,7 +196,7 @@ KRTexture2D::KRTexture2D(const std::string& str, KRFont *font)
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::~KRTexture2D()
+_KRTexture2D::~_KRTexture2D()
 {
     if (_KRTexture2DName == mTextureName) {
         _KRTexture2DName = GL_INVALID_VALUE;
@@ -204,7 +204,7 @@ KRTexture2D::~KRTexture2D()
     glDeleteTextures(1, &mTextureName);
     
     if (mAtlas != NULL) {
-        delete ((KRTexture2DAtlas*)mAtlas);
+        delete ((_KRTexture2DAtlas*)mAtlas);
     }
 }
 
@@ -212,42 +212,42 @@ KRTexture2D::~KRTexture2D()
 #pragma mark -
 #pragma mark Status Getting Functions
 
-int KRTexture2D::getDivX()
+int _KRTexture2D::getDivX()
 {
     return mAtlasDiv.x;
 }
 
-int KRTexture2D::getDivY()
+int _KRTexture2D::getDivY()
 {
     return mAtlasDiv.y;
 }
 
-bool KRTexture2D::isAtlasFlipped()
+bool _KRTexture2D::isAtlasFlipped()
 {
     return mIsAtlasFlipped;
 }
 
-KRVector2D KRTexture2D::getAtlasSize() const
+KRVector2D _KRTexture2D::getAtlasSize() const
 {
     return mAtlasSize;
 }
 
-double KRTexture2D::getWidth() const
+double _KRTexture2D::getWidth() const
 {
     return mImageSize.x;
 }
 
-double KRTexture2D::getHeight() const
+double _KRTexture2D::getHeight() const
 {
     return mImageSize.y;
 }
 
-KRVector2D KRTexture2D::getSize() const
+KRVector2D _KRTexture2D::getSize() const
 {
     return mImageSize;
 }
 
-KRVector2D KRTexture2D::getCenterPos() const
+KRVector2D _KRTexture2D::getCenterPos() const
 {
     return KRVector2D(mImageSize.x / 2, mImageSize.y / 2);
 }
@@ -255,12 +255,12 @@ KRVector2D KRTexture2D::getCenterPos() const
 
 #pragma mark -
 
-void KRTexture2D::setTextureAtlasSize(const KRVector2D& size)
+void _KRTexture2D::setTextureAtlasSize(const KRVector2D& size)
 {
     mAtlasSize = size;
 }
 
-void KRTexture2D::setTextureOrigin(const KRVector2D& origin)
+void _KRTexture2D::setTextureOrigin(const KRVector2D& origin)
 {
     mOrigin = origin;
 }
@@ -269,12 +269,12 @@ void KRTexture2D::setTextureOrigin(const KRVector2D& origin)
 #pragma mark -
 #pragma mark Drawing Functions (New)
 
-void KRTexture2D::drawAtPoint_(const KRVector2D& pos, const KRColor& color)
+void _KRTexture2D::drawAtPoint_(const KRVector2D& pos, const KRColor& color)
 {
     drawAtPointEx_(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2DOne, color);
 }
 
-void KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
+void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
@@ -383,7 +383,7 @@ void KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect,
         p4_y += origin.y * scale.y;
     }    
     
-    // Translate the center point to the appropriate location
+    // Translate the point to the appropriate location
     p1_x += pos.x;
     p2_x += pos.x;
     p3_x += pos.x;
@@ -455,13 +455,18 @@ void KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect,
     }
 }
 
-void KRTexture2D::drawAtPointCenter_(const KRVector2D& centerPos, const KRColor& color)
+void _KRTexture2D::drawAtPointCenter_(const KRVector2D& centerPos, const KRColor& color)
 {
     drawAtPointCenterEx_(centerPos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2DOne, color);
 }
 
-void KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
+void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
+    KRVector2D theSize = getSize();
+    theSize.x *= scale.x;
+    theSize.y *= scale.y;
+    KRVector2D pos = centerPos - theSize / 2;
+    
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
     }
@@ -556,16 +561,16 @@ void KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect
         p4_y = p4_y2;
     }
     
-    // Translate the center point to the appropriate location
-    p1_x += centerPos.x;
-    p2_x += centerPos.x;
-    p3_x += centerPos.x;
-    p4_x += centerPos.x;
+    // Translate the point to the appropriate location
+    p1_x += pos.x;
+    p2_x += pos.x;
+    p3_x += pos.x;
+    p4_x += pos.x;
     
-    p1_y += centerPos.y;
-    p2_y += centerPos.y;
-    p3_y += centerPos.y;
-    p4_y += centerPos.y;
+    p1_y += pos.y;
+    p2_y += pos.y;
+    p3_y += pos.y;
+    p4_y += pos.y;
     
     // Set the vertices into an array
     int batchPos = sTexture2DBatchCount*6;
@@ -628,12 +633,12 @@ void KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect
     }
 }
 
-void KRTexture2D::drawInRect_(const KRRect2D& destRect, const KRColor& color)
+void _KRTexture2D::drawInRect_(const KRRect2D& destRect, const KRColor& color)
 {
     drawInRect_(destRect, KRRect2DZero, color);
 }
 
-void KRTexture2D::drawInRect_(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color)
+void _KRTexture2D::drawInRect_(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color)
 {
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
@@ -741,12 +746,12 @@ void KRTexture2D::drawInRect_(const KRRect2D& destRect, const KRRect2D& srcRect,
 #pragma mark -
 #pragma mark Drawing Functions
 
-void KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha)
+void _KRTexture2D::draw(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha)
 {
     drawC(centerPos, srcRect, rotation, origin, scale, KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::drawC(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
+void _KRTexture2D::drawC(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
 {
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
@@ -914,60 +919,60 @@ void KRTexture2D::drawC(const KRVector2D& centerPos, const KRRect2D& srcRect, do
     }
 }
 
-void KRTexture2D::drawAtPoint(double x, double y, double alpha)
+void _KRTexture2D::drawAtPoint(double x, double y, double alpha)
 {
     drawInRect(KRRect2D(KRVector2D(x, y), mImageSize), alpha);
 }
 
-void KRTexture2D::drawAtPointC(double x, double y, const KRColor& color)
+void _KRTexture2D::drawAtPointC(double x, double y, const KRColor& color)
 {
     drawInRectC(KRRect2D(KRVector2D(x, y), mImageSize), color);
 }
 
-void KRTexture2D::drawAtPoint(const KRVector2D& pos, double alpha)
+void _KRTexture2D::drawAtPoint(const KRVector2D& pos, double alpha)
 {
     drawInRect(KRRect2D(pos, mImageSize), alpha);
 }
 
-void KRTexture2D::drawAtPointCenter(const KRVector2D& centerPos, double alpha)
+void _KRTexture2D::drawAtPointCenter(const KRVector2D& centerPos, double alpha)
 {
     KRVector2D pos = centerPos - getSize() / 2;
     drawC(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::drawAtPointC(const KRVector2D& pos, const KRColor& color)
+void _KRTexture2D::drawAtPointC(const KRVector2D& pos, const KRColor& color)
 {
     drawC(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
 }
 
-void KRTexture2D::drawAtPointCenterC(const KRVector2D& centerPos, const KRColor& color)
+void _KRTexture2D::drawAtPointCenterC(const KRVector2D& centerPos, const KRColor& color)
 {
     KRVector2D pos = centerPos - getSize() / 2;
     drawC(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
 }
 
-void KRTexture2D::drawAtPoint(const KRVector2D& pos, const KRRect2D& srcRect, double alpha)
+void _KRTexture2D::drawAtPoint(const KRVector2D& pos, const KRRect2D& srcRect, double alpha)
 {
     drawC(pos, srcRect, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::drawAtPointC(const KRVector2D& pos, const KRRect2D& srcRect, const KRColor& color)
+void _KRTexture2D::drawAtPointC(const KRVector2D& pos, const KRRect2D& srcRect, const KRColor& color)
 {
     drawC(pos, srcRect, 0.0, KRVector2DZero, KRVector2D(1.0, 1.0), color);
 }
 
-void KRTexture2D::drawInRect(const KRRect2D& rect, double alpha)
+void _KRTexture2D::drawInRect(const KRRect2D& rect, double alpha)
 {
     KRVector2D scale(rect.width / mImageSize.x, rect.height / mImageSize.y);
     drawC(rect.getOrigin(), KRRect2DZero, 0.0, KRVector2DZero, scale, KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::drawInRectC(const KRRect2D& rect, const KRColor& color)
+void _KRTexture2D::drawInRectC(const KRRect2D& rect, const KRColor& color)
 {
     drawC(rect.getOrigin(), KRRect2DZero, 0.0, KRVector2DZero, KRVector2D(rect.width / mImageSize.x, rect.height / mImageSize.y), color);
 }
 
-void KRTexture2D::drawInRect(const KRRect2D& destRect, const KRRect2D& srcRect, double alpha)
+void _KRTexture2D::drawInRect(const KRRect2D& destRect, const KRRect2D& srcRect, double alpha)
 {
     KRRect2D theSrcRect = srcRect;
     if (srcRect.width == 0.0 && srcRect.height == 0.0) {
@@ -981,7 +986,7 @@ void KRTexture2D::drawInRect(const KRRect2D& destRect, const KRRect2D& srcRect, 
     drawC(destRect.getOrigin(), srcRect, 0.0, KRVector2DZero, scale, KRColor(1.0, 1.0, 1.0, alpha));
 }
 
-void KRTexture2D::drawInRectC(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color)
+void _KRTexture2D::drawInRectC(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color)
 {
     KRRect2D theSrcRect = srcRect;
     if (srcRect.width == 0.0 && srcRect.height == 0.0) {
@@ -998,7 +1003,7 @@ void KRTexture2D::drawInRectC(const KRRect2D& destRect, const KRRect2D& srcRect,
 
 #pragma mark -
 
-void KRTexture2D::drawAtlas(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha)
+void _KRTexture2D::drawAtlas(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlas(): \"%s\"";
@@ -1008,10 +1013,10 @@ void KRTexture2D::drawAtlas(int row, int column, const KRVector2D& centerPos, do
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((KRTexture2DAtlas *)mAtlas)->draw(row, column, centerPos, rotation, origin, scale, alpha);
+    ((_KRTexture2DAtlas *)mAtlas)->draw(row, column, centerPos, rotation, origin, scale, alpha);
 }
 
-void KRTexture2D::drawAtlasC(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
+void _KRTexture2D::drawAtlasC(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasC(): \"%s\"";
@@ -1021,10 +1026,10 @@ void KRTexture2D::drawAtlasC(int row, int column, const KRVector2D& centerPos, d
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((KRTexture2DAtlas *)mAtlas)->drawC(row, column, centerPos, rotation, origin, scale, color);
+    ((_KRTexture2DAtlas *)mAtlas)->drawC(row, column, centerPos, rotation, origin, scale, color);
 }
 
-void KRTexture2D::drawAtlasAtPoint(int row, int column, const KRVector2D& pos, double alpha)
+void _KRTexture2D::drawAtlasAtPoint(int row, int column, const KRVector2D& pos, double alpha)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPoint(): \"%s\"";
@@ -1034,10 +1039,10 @@ void KRTexture2D::drawAtlasAtPoint(int row, int column, const KRVector2D& pos, d
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
+    ((_KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
 }
 
-void KRTexture2D::drawAtlasAtPointCenter(int row, int column, const KRVector2D& centerPos, double alpha)
+void _KRTexture2D::drawAtlasAtPointCenter(int row, int column, const KRVector2D& centerPos, double alpha)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenter(): \"%s\"";
@@ -1047,11 +1052,11 @@ void KRTexture2D::drawAtlasAtPointCenter(int row, int column, const KRVector2D& 
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    KRVector2D pos = centerPos - ((KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
-    ((KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
+    KRVector2D pos = centerPos - ((_KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
+    ((_KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
 }
 
-void KRTexture2D::drawAtlasAtPointCenterC(int row, int column, const KRVector2D& centerPos, const KRColor& color)
+void _KRTexture2D::drawAtlasAtPointCenterC(int row, int column, const KRVector2D& centerPos, const KRColor& color)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenterC(): \"%s\"";
@@ -1061,11 +1066,11 @@ void KRTexture2D::drawAtlasAtPointCenterC(int row, int column, const KRVector2D&
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
 
-    KRVector2D pos = centerPos - ((KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
-    ((KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
+    KRVector2D pos = centerPos - ((_KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
+    ((_KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
 }
 
-void KRTexture2D::drawAtlasAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color)
+void _KRTexture2D::drawAtlasAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointC(): \"%s\"";
@@ -1075,10 +1080,10 @@ void KRTexture2D::drawAtlasAtPointC(int row, int column, const KRVector2D& pos, 
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
+    ((_KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
 }
 
-void KRTexture2D::drawAtlasInRect(int row, int column, const KRRect2D& rect, double alpha)
+void _KRTexture2D::drawAtlasInRect(int row, int column, const KRRect2D& rect, double alpha)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasInRect(): \"%s\"";
@@ -1088,10 +1093,10 @@ void KRTexture2D::drawAtlasInRect(int row, int column, const KRRect2D& rect, dou
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
  
-    ((KRTexture2DAtlas *)mAtlas)->drawInRect(row, column, rect, alpha);
+    ((_KRTexture2DAtlas *)mAtlas)->drawInRect(row, column, rect, alpha);
 }
 
-void KRTexture2D::drawAtlasInRectC(int row, int column, const KRRect2D& rect, const KRColor& color)
+void _KRTexture2D::drawAtlasInRectC(int row, int column, const KRRect2D& rect, const KRColor& color)
 {
     if (mAtlas == NULL) {
         const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasInRectC(): \"%s\"";
@@ -1101,13 +1106,13 @@ void KRTexture2D::drawAtlasInRectC(int row, int column, const KRRect2D& rect, co
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((KRTexture2DAtlas *)mAtlas)->drawInRectC(row, column, rect, color);
+    ((_KRTexture2DAtlas *)mAtlas)->drawInRectC(row, column, rect, color);
 }
 
 
 #pragma mark -
 
-void KRTexture2D::set()
+void _KRTexture2D::set()
 {
     if (!_KRTexture2DEnabled) {
         _KRTexture2DEnabled = true;
@@ -1126,7 +1131,7 @@ void KRTexture2D::set()
 #pragma mark -
 #pragma mark Exporting Texture Name
 
-GLuint KRTexture2D::getTextureName() const
+GLuint _KRTexture2D::getTextureName() const
 {
     return mTextureName;
 }
@@ -1135,7 +1140,7 @@ GLuint KRTexture2D::getTextureName() const
 #pragma mark -
 #pragma mark Debugging Support
 
-std::string KRTexture2D::to_s() const
+std::string _KRTexture2D::to_s() const
 {
     std::string ret = "<tex2>(file=\"" + mFileName + "\", ";
     ret += KRFS("name=%d, image_size=(%3.0f, %3.0f), tex_size=(%3.2f, %3.2f))", mTextureName, mImageSize.x, mImageSize.y, mTextureSize.x, mTextureSize.y);

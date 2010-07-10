@@ -173,21 +173,21 @@
         gKRTex2DMan->setDivForTicket([ticket cStringUsingEncoding:NSUTF8StringEncoding], divX, divY);
     }
     
-    NSArray* stateInfos = [chara2DInfo objectForKey:@"State Infos"];
-    for (int i = 0; i < [stateInfos count]; i++) {
-        NSDictionary* aStateInfo = [stateInfos objectAtIndex:i];
+    NSArray* motionInfos = [chara2DInfo objectForKey:@"State Infos"];
+    for (int i = 0; i < [motionInfos count]; i++) {
+        NSDictionary* aMotionInfo = [motionInfos objectAtIndex:i];
         
         //NSString* stateName = [aStateInfo objectForKey:@"State Name"];
-        int stateID = [[aStateInfo objectForKey:@"State ID"] intValue];
-        int nextStateID = [[aStateInfo objectForKey:@"Next State ID"] intValue];
-        int cancelKomaNumber = [[aStateInfo objectForKey:@"Cancel Koma"] intValue]; // キャンセル時の終了アニメーション開始コマ
+        int motionID = [[aMotionInfo objectForKey:@"State ID"] intValue];
+        int nextMotionID = [[aMotionInfo objectForKey:@"Next Motion ID"] intValue];
+        int cancelKomaNumber = [[aMotionInfo objectForKey:@"Cancel Koma"] intValue]; // キャンセル時の終了アニメーション開始コマ
         
-        _KRChara2DState* aState = new _KRChara2DState();
-        aState->initForBoxChara2D(cancelKomaNumber, nextStateID);
+        _KRChara2DMotion* aMotion = new _KRChara2DMotion();
+        aMotion->initForBoxChara2D(cancelKomaNumber, nextMotionID);
 
-        int defaultInterval = [[aStateInfo objectForKey:@"Default Interval"] intValue]; // キャンセル時の終了アニメーション開始コマ
+        int defaultInterval = [[aMotionInfo objectForKey:@"Default Interval"] intValue]; // キャンセル時の終了アニメーション開始コマ
 
-        NSArray* komaInfos = [aStateInfo objectForKey:@"Koma Infos"];
+        NSArray* komaInfos = [aMotionInfo objectForKey:@"Koma Infos"];
         for (int j = 0; j < [komaInfos count]; j++) {
             NSDictionary* aKomaInfo = [komaInfos objectAtIndex:j];
             
@@ -207,10 +207,10 @@
             aKoma->_importHitArea(hitInfos);
             aKoma->initForBoxChara2D([imageTicket cStringUsingEncoding:NSUTF8StringEncoding], atlasIndex, interval,
                                      (isCancelable? true: false), gotoTarget);
-            aState->addKoma(aKoma);
+            aMotion->addKoma(aKoma);
         }
         
-        chara2DSpec->addState(stateID, aState);
+        chara2DSpec->addMotion(motionID, aMotion);
     }
 
     gKRAnime2DMan->_addCharaSpec(resourceID, chara2DSpec);

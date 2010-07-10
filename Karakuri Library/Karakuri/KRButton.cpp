@@ -95,8 +95,8 @@ void KRButton::draw(KRGraphics *g)
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
     
     if (mTextureNormal == NULL && mTextureNameNormal.length() > 0 && mTextureNameHighlighted.length() > 0) {
-        mTextureNormal = new KRTexture2D(mTextureNameNormal);
-        mTextureHighlighted = new KRTexture2D(mTextureNameHighlighted);
+        mTextureNormal = new _KRTexture2D(mTextureNameNormal);
+        mTextureHighlighted = new _KRTexture2D(mTextureNameHighlighted);
     }
 
     if (mTextureNormal == NULL) {
@@ -104,7 +104,7 @@ void KRButton::draw(KRGraphics *g)
         drawColor.a = alpha;
         KRPrimitive2D::fillQuad(mFrame, drawColor);
     } else {
-        KRTexture2D *tex = mIsSelected? mTextureHighlighted: mTextureNormal;
+        _KRTexture2D *tex = mIsSelected? mTextureHighlighted: mTextureNormal;
         tex->drawInRect(mFrame, alpha);
         
         /*

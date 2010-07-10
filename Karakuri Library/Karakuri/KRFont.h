@@ -48,7 +48,7 @@ public:
         @method createStringTexture
         @abstract 指定された文字列のテクスチャを生成します。
      */
-    KRTexture2D *createStringTexture(const std::string& str);
+    _KRTexture2D *createStringTexture(const std::string& str);
 
 public:
     void        *getFontObject() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

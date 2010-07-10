@@ -17,7 +17,7 @@ Enemy::Enemy(int charaSpecID)
     setZOrder(0);
 
     // Make this character visible (initial state = -1)
-    changeState(0);
+    changeMotion(0);
 }
 
 Enemy::~Enemy()

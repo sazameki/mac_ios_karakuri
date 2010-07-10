@@ -29,14 +29,14 @@ typedef enum {
 } KRTexture2DScaleMode;
 
 
-/*!
-    @-class KRTexture2D
+/*
+    @-class _KRTexture2D
     @group Game 2D Graphics
     <p>2次元のテクスチャを表すためのクラスです。</p>
     <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
  */
-class KRTexture2D : public KRObject {
+class _KRTexture2D : public KRObject {
     
 private:
     std::string mFileName;
@@ -67,19 +67,19 @@ public:
         @abstract 画像ファイルの名前（拡張子を含む）を指定してテクスチャを生成します。
         画像の保管方法として、KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかを指定します。
      */
-    KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode);
+    _KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode);
 
     /*!
         @method KRTexture2D
         @abstract 画像ファイルの名前（拡張子を含む）を指定してテクスチャを生成します。
         第2引数でアトラスのサイズを設定することで、簡単に部分描画を行なうことができます。
      */
-    KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
+    _KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
 
-    KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode);
+    _KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode);
 
-    KRTexture2D(const std::string& str, KRFont *font);
-    ~KRTexture2D();
+    _KRTexture2D(const std::string& str, KRFont *font);
+    ~_KRTexture2D();
     
 public:
     /*!
