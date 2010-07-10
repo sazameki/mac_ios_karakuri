@@ -274,7 +274,7 @@ void _KRTexture2D::drawAtPoint_(const KRVector2D& pos, const KRColor& color)
     drawAtPointEx_(pos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2DOne, color);
 }
 
-void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
+void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin_, const KRVector2D& scale, const KRColor& color)
 {
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
@@ -292,6 +292,8 @@ void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect
         _KRTextureChangeCount++;
 #endif
     }
+    
+    KRVector2D origin = KRVector2D(mImageSize.x * origin_.x, mImageSize.y * origin_.y);
     
     KRRect2D theSrcRect = srcRect;
     if (theSrcRect.width == 0.0 || theSrcRect.height == 0.0) {
@@ -457,16 +459,16 @@ void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect
 
 void _KRTexture2D::drawAtPointCenter_(const KRVector2D& centerPos, const KRColor& color)
 {
-    drawAtPointCenterEx_(centerPos, KRRect2DZero, 0.0, KRVector2DZero, KRVector2DOne, color);
+    drawAtPointCenterEx_(centerPos, KRRect2DZero, 0.0, KRVector2DOne, color);
 }
 
-void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
+void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, const KRColor& color)
 {
     KRVector2D theSize = getSize();
     theSize.x *= scale.x;
     theSize.y *= scale.y;
     KRVector2D pos = centerPos - theSize / 2;
-    
+
     if (_KRTexture2DName != mTextureName) {
         processBatchedTexture2DDraws();
     }
@@ -484,6 +486,8 @@ void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRec
 #endif
     }
     
+    KRVector2D origin = KRVector2D(mImageSize.x * 0.5, mImageSize.y * 0.5);
+
     KRRect2D theSrcRect = srcRect;
     if (theSrcRect.width == 0.0 || theSrcRect.height == 0.0) {
         theSrcRect.x = 0;
@@ -562,15 +566,15 @@ void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRec
     }
     
     // Translate the point to the appropriate location
-    p1_x += pos.x;
-    p2_x += pos.x;
-    p3_x += pos.x;
-    p4_x += pos.x;
+    p1_x += centerPos.x;
+    p2_x += centerPos.x;
+    p3_x += centerPos.x;
+    p4_x += centerPos.x;
     
-    p1_y += pos.y;
-    p2_y += pos.y;
-    p3_y += pos.y;
-    p4_y += pos.y;
+    p1_y += centerPos.y;
+    p2_y += centerPos.y;
+    p3_y += centerPos.y;
+    p4_y += centerPos.y;
     
     // Set the vertices into an array
     int batchPos = sTexture2DBatchCount*6;

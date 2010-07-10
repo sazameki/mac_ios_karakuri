@@ -133,7 +133,7 @@ public:
     void    drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
     
     void    drawAtPointCenter_(const KRVector2D& centerPos, const KRColor& color);
-    void    drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
+    void    drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, const KRColor& color);
 
     void    drawInRect_(const KRRect2D& destRect, const KRColor& color);
     void    drawInRect_(const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color);

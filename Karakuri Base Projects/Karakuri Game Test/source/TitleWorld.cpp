@@ -45,8 +45,8 @@ void TitleWorld::drawView(KRGraphics* g)
     g->clear(KRColor::GreenYellow);
     
     gKRTex2DMan->drawAtPoint(TexID::Title, KRVector2D(0, 0));
-    gKRTex2DMan->drawAtPointEx(TexID::TitleChara, KRVector2D(100, 0), 0.0, KRVector2DZero, KRVector2D(2.0, 2.0), 1.0);
-    //gKRTex2DMan->drawAtPointCenterEx(TexID::TitleChara, KRVector2D(0, 0), 0.1, KRVector2DZero, KRVector2D(2.0, 2.0), 1.0);
+    //gKRTex2DMan->drawAtPointEx(TexID::TitleChara, KRVector2D(100, 0), 0.0, KRVector2DZero, KRVector2D(2.0, 2.0), 1.0);
+    gKRTex2DMan->drawAtPointCenter(TexID::TitleChara, gKRScreenSize/2);
 
     gKRAnime2DMan->draw();
 }

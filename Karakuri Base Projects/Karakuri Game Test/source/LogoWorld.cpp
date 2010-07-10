@@ -35,12 +35,12 @@ void LogoWorld::drawView(KRGraphics* g)
         alpha = 1.0;
     }
 
-    double angle = M_PI_4;
+    double angle = 0;
     if (gKRScreenSize.x > gKRScreenSize.y) {
         angle = M_PI_2;
     }
-
-    gKRTex2DMan->drawAtPointCenterEx(TexID::Logo, gKRScreenSize/2, angle, gKRTex2DMan->getTextureSize(TexID::Logo)/2, KRVector2DOne, alpha);
+    
+    gKRTex2DMan->drawAtPointCenterEx(TexID::Logo, gKRScreenSize/2, angle, KRVector2DOne, alpha);
 }
 
 

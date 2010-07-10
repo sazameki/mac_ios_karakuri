@@ -72,16 +72,23 @@ void PlayWorld::updateModel(KRInput* input)
     }
 #endif
 
+    // Move Enemies
     for (std::list<Enemy*>::iterator it = mEnemies.begin(); it != mEnemies.end();) {
+        // Do move
         (*it)->move();
+
+        // Hit test
         KRChara2D* hitPlayer = gKRAnime2DMan->hitChara2D(CharaType::Player, HitType::Block, *it, HitType::Attack);
         if (hitPlayer != NULL) {
+            // Explosion
             gKRAnime2DMan->playChara2DCenter(CharaID::Explosion, 0, (*it)->getCenterPos(), 10);
             
+            // Remove an enemy
             Enemy* enemy = *it;
             it = mEnemies.erase(it);
             gKRAnime2DMan->removeChara2D(enemy);
         } else {
+            // Next Enemy
             it++;
         }
     }

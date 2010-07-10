@@ -588,7 +588,7 @@ void KRChara2D::_draw()
         gKRGraphicsInst->setBlendMode(_mBlendMode);
         
         int texID = _mCharaSpec->getParticleTextureID();
-        gKRTex2DMan->drawAtPointCenterEx(texID, _mPos, _angle, gKRTex2DMan->getTextureSize(texID)/2, _mScale, _mColor);
+        gKRTex2DMan->drawAtPointCenterEx(texID, _mPos, _angle, _mScale, _mColor);
     }
     
     // 通常のキャラクタ

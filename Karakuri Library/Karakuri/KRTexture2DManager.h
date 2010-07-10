@@ -156,27 +156,27 @@ public:
 
     /*!
         @method drawAtPointCenterEx
-        @abstract IDと描画の中心点、回転と回転の中心点、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
+        @abstract IDと描画の中心点、回転角、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
      */
-    void    drawAtPointCenterEx(int texID, const KRVector2D& centerPos, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha=1.0);
+    void    drawAtPointCenterEx(int texID, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, double alpha=1.0);
 
     /*!
         @method drawAtPointCenterEx
-        @abstract IDと描画の中心点、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
+        @abstract IDと描画の中心点、回転角、拡大率、色を指定してテクスチャを描画します。
      */
-    void    drawAtPointCenterEx(int texID, const KRVector2D& centerPos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
+    void    drawAtPointCenterEx(int texID, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color);
 
     /*!
         @method drawAtPointCenterEx2
-        @abstract IDと描画の中心点、描画対象の矩形、回転と回転の中心点、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
+        @abstract IDと描画の中心点、描画対象の矩形、回転角、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
      */
-    void    drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha=1.0);
+    void    drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, double alpha=1.0);
 
     /*!
         @method drawAtPointCenterEx2
-        @abstract IDと描画の中心点、描画対象の矩形、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
+        @abstract IDと描画の中心点、描画対象の矩形、回転角、拡大率、色を指定してテクスチャを描画します。
      */
-    void    drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
+    void    drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, const KRColor& color);
 
     
     /*!
@@ -257,13 +257,13 @@ public:
         @method drawAtlasAtPointCenterEx
         @abstract IDとアトラス座標、描画の中心点、回転と回転の中心点、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
      */
-    void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha=1.0);
+    void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, double alpha=1.0);
 
     /*!
         @method drawAtlasAtPointCenterEx
         @abstract IDとアトラス座標、描画の中心点、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
      */
-    void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
+    void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color);
     
     /*!
         @task テクスチャの描画（アトラス指定＋矩形指定）
