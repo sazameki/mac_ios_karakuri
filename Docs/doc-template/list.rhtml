@@ -6,12 +6,19 @@
 </head>
 
 <body class="list">
-	<a href="toc.html" target="toc">Karakuri Framework</a>
-	<h1><a href="toc.html" target="toc">All Classes</a></h1>
+
+	<div class="logo"><a href="http://sazameki.jp/karakuri/" target="_top"><img src="../images/logo.png" border="0" /></a></div>
+
+    <ul class="toc">
+    	<li><a href="toc.html" target="toc">クラス・関数などの一覧</a></li>
+    	<li><a href="../guide/index.html" target="toc">開発ガイド</a></li>
+    </ul>
+
+	<h1>クラス一覧</h1>
 
 	<% $groups.each do |group| %>
 		<% if (group.d_classes_and_structs.size > 0) %>
-        	<h2><%= group.d_name %></h2>
+        	<h2> <%= group.d_name %></h2>
         	<ul>
         	<% group.d_classes_and_structs.each do |a_class| %>
         	   <li><a href="<%= a_class.d_href %>" target="toc"><%= a_class.d_name %></a></li>

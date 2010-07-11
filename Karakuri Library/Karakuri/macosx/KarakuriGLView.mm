@@ -268,7 +268,7 @@ static volatile BOOL    sIsReady = NO;
 {
 #if KR_MACOSX
     unsigned short keyCode = [theEvent keyCode];
-    gKRInputInst->processKeyDownCode(keyCode);
+    gKRInputInst->_processKeyDownCode(keyCode);
 #endif
 }
 
@@ -276,7 +276,7 @@ static volatile BOOL    sIsReady = NO;
 {
 #if KR_MACOSX
     unsigned short keyCode = [theEvent keyCode];
-    gKRInputInst->processKeyUpCode(keyCode);
+    gKRInputInst->_processKeyUpCode(keyCode);
 #endif
 }
 
@@ -297,7 +297,7 @@ static volatile BOOL    sIsReady = NO;
 - (void)mouseDown:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    gKRInputInst->processMouseDown(KRInput::MouseButtonLeft);
+    gKRInputInst->_processMouseDown(KRInput::_MouseButtonLeft);
 #endif
     
 #if KR_IPHONE_MACOSX_EMU
@@ -334,7 +334,7 @@ static volatile BOOL    sIsReady = NO;
         } else if (pos.y >= gKRScreenSize.y) {
             pos.y = gKRScreenSize.y - 1.0f;
         }
-        gKRInputInst->startTouch(i, pos.x, pos.y);
+        gKRInputInst->_startTouch(i, pos.x, pos.y);
         [self addTouch:KRVector2D(pos.x, pos.y)];
     }
 #endif
@@ -343,7 +343,7 @@ static volatile BOOL    sIsReady = NO;
 - (void)mouseUp:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    gKRInputInst->processMouseUp(KRInput::MouseButtonLeft);
+    gKRInputInst->_processMouseUp(KRInput::_MouseButtonLeft);
 #endif
 
 #if KR_IPHONE_MACOSX_EMU
@@ -379,7 +379,7 @@ static volatile BOOL    sIsReady = NO;
         } else if (pos.y >= gKRScreenSize.y) {
             pos.y = gKRScreenSize.y - 1.0f;
         }
-        gKRInputInst->endTouch(i, pos.x, pos.y, 0, 0);
+        gKRInputInst->_endTouch(i, pos.x, pos.y, 0, 0);
     }
     [self clearTouches];
 #endif
@@ -421,7 +421,7 @@ static volatile BOOL    sIsReady = NO;
         } else if (pos.y >= gKRScreenSize.y) {
             pos.y = gKRScreenSize.y - 1.0f;
         }
-        gKRInputInst->moveTouch(i, pos.x, pos.y, 0, 0);
+        gKRInputInst->_moveTouch(i, pos.x, pos.y, 0, 0);
         [self addTouch:KRVector2D(pos.x, pos.y)];
     }
 }
@@ -430,14 +430,14 @@ static volatile BOOL    sIsReady = NO;
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    gKRInputInst->processMouseDown(KRInput::MouseButtonRight);
+    gKRInputInst->_processMouseDown(KRInput::_MouseButtonRight);
 #endif
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
 #if KR_MACOSX
-    gKRInputInst->processMouseUp(KRInput::MouseButtonRight);
+    gKRInputInst->_processMouseUp(KRInput::_MouseButtonRight);
 #endif
 }
 

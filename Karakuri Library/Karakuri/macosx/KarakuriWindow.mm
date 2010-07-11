@@ -126,7 +126,7 @@ static KRVector3D   sAcc;
     } else {
         sAcc.y = value * 0.8;
     }
-    gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
+    gKRInputInst->_setAcceleration(sAcc.x, sAcc.y, sAcc.z);
 }
 
 - (void)changedMotionSensorButtonState:(id)sender
@@ -136,7 +136,7 @@ static KRVector3D   sAcc;
         [mAccVerticalSlider setEnabled:NO];
     } else {
         sAcc.x = sAcc.y = sAcc.z = 0.0;
-        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
+        gKRInputInst->_setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         [mAccHorizontalSlider setEnabled:YES];
         [mAccVerticalSlider setEnabled:YES];
     }
@@ -156,7 +156,7 @@ static KRVector3D   sAcc;
 
     if (![gKRGLViewInst isAccelerometerEnabled]) {
         sAcc.x = sAcc.y = sAcc.z = 0.0;
-        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
+        gKRInputInst->_setAcceleration(sAcc.x, sAcc.y, sAcc.z);        
         return;
     }
  
@@ -168,7 +168,7 @@ static KRVector3D   sAcc;
         sAcc.x = -(x / 0xff);
         sAcc.y = -(y / 0xff);
         sAcc.z = -(z / 0xff);
-        gKRInputInst->setAcceleration(sAcc.x, sAcc.y, sAcc.z);
+        gKRInputInst->_setAcceleration(sAcc.x, sAcc.y, sAcc.z);
     }
 }
 

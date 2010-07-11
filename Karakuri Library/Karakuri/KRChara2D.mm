@@ -422,11 +422,6 @@ bool KRChara2D::hitTest(int hitType, const KRChara2D* targetChara, int targetHit
 
 #pragma mark （動作の管理）
 
-int KRChara2D::getMotion() const
-{
-    return _mCurrentMotionID;
-}
-
 void KRChara2D::changeMotion(int motionID)
 {
     changeMotion(motionID, KRCharaMotionChangeModeNormalMask);
@@ -459,6 +454,11 @@ void KRChara2D::changeMotion(int motionID, unsigned modeMask)
     
     _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
     _mImageInterval = theKoma->getInterval();
+}
+
+int KRChara2D::getMotionID() const
+{
+    return _mCurrentMotionID;
 }
 
 

@@ -18,11 +18,11 @@
 #import <OpenAL/alc.h>
 
 
-void KRInitOpenAL();
-void KRCleanUpOpenAL();
+void _KRInitOpenAL();
+void _KRCleanUpOpenAL();
 
 
-@interface KarakuriSound : NSObject {
+@interface _KarakuriSound : NSObject {
     float   *mAudioBuffer;
     
     ALsizei mDataSize;

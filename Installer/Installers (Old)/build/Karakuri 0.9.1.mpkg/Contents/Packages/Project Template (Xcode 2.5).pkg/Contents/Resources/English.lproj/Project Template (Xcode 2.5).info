@@ -1,0 +1,17 @@
+Title Project Template (Xcode 2.5)
+Version 
+Description 
+DefaultLocation /Library/Application Support/Developer/2.5/Xcode/Project Templates
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization YES
+Required NO
+Relocatable NO
+RequiresReboot NO
+UseUserMask NO
+OverwritePermissions NO
+InstallFat NO
+RootVolumeOnly YES
+OnlyUpdateInstalledLanguages NO

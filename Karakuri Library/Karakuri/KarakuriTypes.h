@@ -19,7 +19,7 @@ struct KRVector2D;
 
 /*!
     @class KRObject
-    @group Game Foundation
+    @group Game Type
     @abstract Karakuri Framework 内のすべてのクラスの基底クラスとなるクラスです。
  */
 typedef struct KRObject {
@@ -45,7 +45,7 @@ typedef struct KRObject {
 
 /*!
     @struct KRRect2D
-    @group  Game Foundation
+    @group  Game Type
     @abstract 位置およびサイズで定義される矩形を表すための構造体です。
  */
 typedef struct KRRect2D : public KRObject {
@@ -226,7 +226,7 @@ typedef struct KRRect2D : public KRObject {
 
 /*!
     @struct KRVector2D
-    @group  Game Foundation
+    @group  Game Type
     @abstract double 型の2次元ベクトルを表すための構造体です。
     点情報、サイズ情報を表すためにも使われます。
  */
@@ -377,7 +377,7 @@ typedef struct KRVector2D : public KRObject {
 
 /*!
     @struct KRVector2DInt
-    @group  Game Foundation
+    @group  Game Type
     @abstract int 型の2次元ベクトルを表すための構造体です。
     点情報、サイズ情報を表すためにも使われます。
  */
@@ -529,7 +529,7 @@ typedef struct KRVector2DInt : public KRObject {
 
 /*!
     @struct KRVector3D
-    @group  Game Foundation
+    @group  Game Type
     @abstract double 型の3次元ベクトルを表すための構造体です。
     点情報、サイズ情報を表すためにも使われます。
  */
@@ -678,7 +678,7 @@ typedef struct KRVector3D : public KRObject {
 
 /*!
     @struct KRVector3DInt
-    @group  Game Foundation
+    @group  Game Type
     @abstract int 型の3次元ベクトルを表すための構造体です。
     点情報、サイズ情報を表すためにも使われます。
  */
@@ -828,49 +828,49 @@ typedef struct KRVector3DInt : public KRObject {
 
 /*!
     @const  KRRect2DZero
-    @group  Game Foundation
+    @group  Game Type
     @abstract x, y, width, height のすべての成分が 0.0 となっている KRRect2D 構造体の定数です。
  */
 extern const KRRect2D       KRRect2DZero;
 
 /*!
     @const  KRVector2DOne
-    @group  Game Foundation
+    @group  Game Type
     @abstract x成分とy成分がどちらも 1.0 となっている KRVector2D 構造体の定数です。
  */
 extern const KRVector2D     KRVector2DOne;
 
 /*!
     @const  KRVector2DZero
-    @group  Game Foundation
+    @group  Game Type
     @abstract x成分とy成分がどちらも 0.0 となっている KRVector2D 構造体の定数です。
  */
 extern const KRVector2D     KRVector2DZero;
 
 /*!
     @const  KRVector2DIntZero
-    @group  Game Foundation
+    @group  Game Type
     @abstract x成分とy成分がどちらも 0 となっている KRVector2DInt 構造体の定数です。
  */
 extern const KRVector2DInt  KRVector2DIntZero;
 
 /*!
     @const  KRVector3DOne
-    @group  Game Foundation
+    @group  Game Type
     @abstract x成分、y成分、z成分がすべて 1.0 となっている KRVector3D 構造体の定数です。
  */
 extern const KRVector3D     KRVector3DOne;
 
 /*!
     @const  KRVector3DZero
-    @group  Game Foundation
+    @group  Game Type
     @abstract x成分、y成分、z成分がすべて 0.0 となっている KRVector3D 構造体の定数です。
  */
 extern const KRVector3D     KRVector3DZero;
 
 /*!
     @const  KRVector3DIntZero
-    @group  Game Foundation
+    @group  Game Type
     @abstract x成分、y成分、z成分がすべて 0 となっている KRVector3DInt 構造体の定数です。
  */
 extern const KRVector2DInt  KRVector2DIntZero;
@@ -878,7 +878,7 @@ extern const KRVector2DInt  KRVector2DIntZero;
 
 /*!
     @enum   KRLanguageType
-    @group  Game Foundation
+    @group  Game System
     @constant   KRLanguageEnglish   英語環境を表す定数です。
     @constant   KRLanguageJapanese  日本語環境を表す定数です。
     @abstract   言語環境を表すための型です。
@@ -891,7 +891,7 @@ typedef enum KRLanguageType {
 
 /*!
     @var    gKRLanguage
-    @group  Game Foundation
+    @group  Game System
     @abstract 現在の言語環境を表す変数です。
     <p>該当する環境定数が KRLanguageType 列挙型に見つからない場合には、自動的に KRLanguageEnglish が設定されます。</p>
     <p>以下のようにして利用します。</p>

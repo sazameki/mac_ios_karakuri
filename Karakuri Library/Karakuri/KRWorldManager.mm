@@ -60,7 +60,7 @@ KRWorld *KRWorldManager::selectWorldWithName(const std::string &name, bool useLo
     if (world == NULL) {
         return NULL;
     }
-    gKRGameMan->startWorldChanging();
+    gKRGameMan->_startWorldChanging();
     if (mCurrentWorld != NULL) {
         mCurrentWorld->startResignedActive();
     }

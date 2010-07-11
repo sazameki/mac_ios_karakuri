@@ -1,0 +1,17 @@
+Title File Template (iPhone)
+Version 
+Description 
+DefaultLocation /Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/File Templates/
+DeleteWarning 
+
+### Package Flags
+
+NeedsAuthorization YES
+Required NO
+Relocatable NO
+RequiresReboot NO
+UseUserMask NO
+OverwritePermissions NO
+InstallFat NO
+RootVolumeOnly YES
+OnlyUpdateInstalledLanguages NO

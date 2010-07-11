@@ -234,19 +234,19 @@ public:
         @method buttonPressed
         このワールドに追加されているボタンが押されたときに呼び出されます。この関数は、updateModel() 関数が呼び出される直前に呼び出されます。
      */
-    virtual void    buttonPressed(KRButton *aButton);
+    virtual void    buttonPressed(KRButton* aButton);
 
     /*!
         @method sliderValueChanged
         このワールドに追加されているスライダの値が変更されたときに呼び出されます。この関数は、updateModel() 関数が呼び出される直前に呼び出されます。
      */
-    virtual void    sliderValueChanged(KRSlider *slider);
+    virtual void    sliderValueChanged(KRSlider* slider);
     
     /*!
         @method switchStateChanged
         このワールドに追加されている ON/OFF スイッチの状態が変更されたときに呼び出されます。この関数は、updateModel() 関数が呼び出される直前に呼び出されます。
      */
-    virtual void    switchStateChanged(KRSwitch *switcher);
+    virtual void    switchStateChanged(KRSwitch* switcher);
 
 
 #pragma mark -

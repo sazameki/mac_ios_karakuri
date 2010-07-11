@@ -2,16 +2,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="../css/main.css" type="text/css" />
-	<title>Karakuri Framework 開発ガイド - コントロールの使い方</title>
+	<title>Karakuri 開発ガイド - コントロールの使い方</title>
 </head>
 
 <body class="guide">
 
-<div class="logo"><a href="http://karakuri.designed.jp/"><img src="images/title.png" width="300px" border="0" /></a></div>
+<p><a href="index.html">開発ガイドの目次に戻る</a></p>
 
-<p><a href="index.html">目次に戻る</a></p>
-
-<div class="title">Karakuri Framework 開発ガイド</div>
 <h1>コントロールの使い方</h1>
 
 <h2>基本的な使い方</h2>
@@ -42,7 +39,7 @@
 <p>前述の通り、コントロールはワールドに追加しますが、コントロールの状態に変化があった場合、その変化はワールドに対して通知されます。コントロールの種類に応じて、<a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/cl/KarakuriWorld">KarakuriWorld</a> クラスの <a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/instm/KarakuriWorld/buttonPressed/virtual_void_buttonPressed(KRButton_*aButton)">buttonPressed()</a> 関数、<a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/instm/KarakuriWorld/sliderValueChanged/virtual_void_sliderValueChanged(KRSlider_*slider)">sliderValueChanged()</a> 関数、<a href="../referencelibrary/Game Foundation/Classes/KarakuriWorld/index.html#//apple_ref/cpp/instm/KarakuriWorld/switchStateChanged/virtual_void_switchStateChanged(KRSwitch_*switcher)">switchStateChange()</a> 関数がそれぞれ呼ばれますので、必要な関数をオーバーライドして、その関数内で処理を行ってください。なお、これらの関数は、必ずワールドの updateModel() 関数が呼ばれる直前に呼ばれます。</p>
 
 <div class="footer">
-	Copyright &copy; 2009 Satoshi Numata Ph.D.
+	Copyright &copy; 2010 Sazameki and Satoshi Numata Ph.D.
 </div>
 
 </body>

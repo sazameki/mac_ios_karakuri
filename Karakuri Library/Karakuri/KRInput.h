@@ -23,20 +23,19 @@ struct KRInputSourceData;
     @group Game System
     @abstract マウスの状態をビットフラグで管理するための型です。
  */
-typedef unsigned int        KRMouseState;
+typedef unsigned int        _KRMouseState;
 #endif
 
 
 #pragma mark Mask Type for Keyboard Input (Mac OS X)
 
 #if KR_MACOSX
-/*!
-    @typedef KRKeyInfo
+/*
+    @typedef _KRKeyInfo
     @group Game System
     @abstract キーボードの状態をビットフラグで管理するための型です。
  */
 typedef unsigned long long  KRKeyInfo;
-typedef KRKeyInfo           KRKeyState;
 #endif
 
 
@@ -44,33 +43,33 @@ typedef KRKeyInfo           KRKeyState;
 #pragma mark Mask Type for Touch Input (iPhone)
 
 #if KR_IPHONE
-/*!
-    @-typedef KRTouchState
-    @group Game Foundation
+/*
+    @-typedef _KRTouchState
+    @group Game System
     @abstract iPhone のタッチの状態をビットフラグで管理するための型です。
  */
-typedef int             KRTouchState;
+typedef int             _KRTouchState;
 
-/*!
-    @struct KRTouchInfo
-    @group Game Foundation
+/*
+    @-struct _KRTouchInfo
+    @group Game System
     @abstract iPhone のタッチ情報を表すための構造体です。
  */
-typedef struct KRTouchInfo {
-    /*!
-        @var touch_id
+typedef struct _KRTouchInfo {
+    /*
+        @-var touch_id
         @abstract 複数のタッチ情報を識別するためのIDです。
         指1本のタッチごとに、異なるIDが生成されます。
      */
     unsigned    touch_id;
     
-    /*!
-        @var pos
+    /*
+        @-var pos
         @abstract このタッチが最後に移動した位置を示します。
      */
     KRVector2D  pos;
 
-} KRTouchInfo;
+} _KRTouchInfo;
 #endif
 
 
@@ -81,7 +80,7 @@ typedef struct KRTouchInfo {
     @class  KRInput
     @group  Game System
     @abstract 入力関係全般をサポートするためのクラスです。
-    <p>Mac OS X 環境ではキーボードとマウスによる入力を、iPhone 環境ではマルチタッチと加速度センサによる入力をサポートします。</p>
+    <p>iOS 環境ではマルチタッチと加速度センサによる入力を、Mac OS X 環境ではキーボードとマウスによる入力をサポートします。</p>
  */
 class KRInput : public KRObject {
 
@@ -95,19 +94,19 @@ public:
         @-constant MouseButtonLeft
         マウスの左ボタンが押されていることを表すビットマスクです。
      */
-    static const KRMouseState   MouseButtonLeft         = 0x01;
+    static const _KRMouseState  _MouseButtonLeft        = 0x01;
 
     /*!
         @-constant MouseButtonRight
         マウスの右ボタンが押されていることを表すビットマスクです。
      */
-    static const KRMouseState   MouseButtonRight        = 0x02;
+    static const _KRMouseState  _MouseButtonRight       = 0x02;
 
     /*!
         @-constant MouseButtonAny
         マウスの左ボタンまたは右ボタンが押されていることを表すビットマスクです。
      */
-    static const KRMouseState   MouseButtonAny          = 0x03;
+    static const _KRMouseState  _MouseButtonAny         = 0x03;
 #endif
     
     
@@ -200,7 +199,7 @@ public:
 
 #if KR_IPHONE
 public:
-    static const KRTouchState   TouchMask   = 0x1;
+    static const _KRTouchState  TouchMask   = 0x1;
 #endif
     
     
@@ -213,9 +212,9 @@ private:
     bool            mIsMouseDownOld;
     bool            mIsMouseDownOnce;
     KRVector2DInt   mOldMouseLocationForInputLog;
-    KRMouseState    mMouseState;
-    KRMouseState    mMouseStateOld;
-    KRMouseState    mMouseStateAgainstDummy;
+    _KRMouseState   mMouseState;
+    _KRMouseState   mMouseStateOld;
+    _KRMouseState   mMouseStateAgainstDummy;
     KRVector2D      mMouseLocationForDummy;
     //bool            mIsFullScreen;
 #endif
@@ -238,23 +237,23 @@ private:
 
 #if KR_IPHONE
 private:
-    KRTouchState                mTouchState;
+    _KRTouchState               mTouchState;
     bool                        mIsTouchedOnce;
-    KRTouchState                mTouchStateOld;
+    _KRTouchState               mTouchStateOld;
     int                         mTouchCountAgainstDummy;
-    std::vector<KRTouchInfo>    mTouchInfos;
+    std::vector<_KRTouchInfo>   mTouchInfos;
 
     unsigned                    mTouchArrow_touchID;
     KRVector2D                  mTouchArrowCenterPos;
     KRVector2D                  mTouchArrowOldPos;
     
     unsigned                    mTouchButton1_touchID;
-    KRTouchState                mTouchButton1State;
-    KRTouchState                mTouchButton1StateOld;
+    _KRTouchState               mTouchButton1State;
+    _KRTouchState               mTouchButton1StateOld;
 
     unsigned                    mTouchButton2_touchID;
-    KRTouchState                mTouchButton2State;
-    KRTouchState                mTouchButton2StateOld;
+    _KRTouchState               mTouchButton2State;
+    _KRTouchState               mTouchButton2StateOld;
 #endif
     
     
@@ -279,6 +278,95 @@ private:
 
 public:
     KRInput();
+
+
+#pragma mark -
+#pragma mark Support for Touch Input (iOS)
+
+#if KR_IPHONE
+public:
+    /*!
+        @task タッチ入力のサポート (iOS)
+     */
+
+    /*!
+        @method getTouch
+        @abstract 現在画面がタッチされているかどうかを取得します。
+     */
+    bool            getTouch();
+    
+    /*!
+        @method getTouchAgainstDummy
+        @abstract ダミー入力が設定されている際に、現在画面がタッチされているかどうかを取得します。
+     */
+    bool            getTouchAgainstDummy();
+
+    /*!
+        @method getTouchOnce
+        @abstract 現在画面がタッチされているかどうかを取得します。
+        <p>あるフレームでタッチされていると判定されると、それ以降のフレームで指が離されてタッチし直されるまで、この関数が true を返すことはありません。</p>
+        <p>この関数は、複数のタッチを識別しません。</p>
+     */
+    bool            getTouchOnce();
+    
+    /*!
+        @method getTouchLocation
+        @abstract 現在タッチされている画面上の位置を取得します。
+        マルチタッチが行われている場合には、いずれか1つのタッチの情報が使用されます。
+     */
+    KRVector2D      getTouchLocation();
+
+    /*!
+        @method getTouchCount
+        @abstract 現在のマルチタッチの個数を取得します。
+     */
+    int             getTouchCount();
+    
+    /*!
+        @method getTouchIDs
+        @abstract 現在のすべてのマルチタッチの ID を取得します。新しいタッチが始まるごとに新しい ID が生成されます。
+        同じ ID が繰り返し使われることはありません。
+     */
+    std::vector<int> getTouchIDs() const;
+    
+    /*!
+        @method getTouchLocation
+        @abstract 指定された ID のタッチ位置を取得します。
+     */
+    KRVector2D  getTouchLocation(int touchID) const;
+#endif
+    
+
+#pragma mark -
+#pragma mark Support for Accelerometer (iOS)
+
+#if KR_IPHONE
+public:
+    /*!
+        @task 加速度センサのサポート (iOS)
+     */
+    
+    /*!
+        @method getAcceleration
+        加速度センサの3軸の加速度情報を取得します。
+     */
+    KRVector3D  getAcceleration() const;
+
+    /*!
+        @method getAccelerometerEnabled
+        @abstract 加速度センサが利用可能な状態になっているかどうかを取得します。
+        加速度センサは、デフォルトでは利用しない状態に設定されています。
+     */
+    bool        getAccelerometerEnabled() const;
+    
+    /*!
+        @method enableAccelerometer
+        @abstract 引数に true を指定することで、加速度センサを利用可能な状態に設定します。引数に false を指定した場合には、加速度センサを利用しない状態に設定します。
+        加速度センサは、デフォルトでは利用しない状態に設定されています。
+     */
+    void        enableAccelerometer(bool flag);
+#endif
+
 
     
 #pragma mark -
@@ -309,31 +397,13 @@ public:
      */
     bool        isKeyDownOnce(KRKeyInfo key) const;
     
-    /*!
-        @-method getKeyState
-        @abstract 現在のキー入力状態を取得します。
-        すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
-     */
-    KRKeyState      getKeyState();
-
-    /*!
-        @-method getKeyStateAgainstDummy
-        @abstract ダミー入力が設定されている際に、ユーザからの現在のキー入力状態を取得します。
-        すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
-     */
-    KRKeyState      getKeyStateAgainstDummy();
-
-    /*!
-        @-method getKeyStateOnce
-        @abstract 現在のキー入力状態を取得します。
-        この関数を一度呼び出すと、その時点で押されていたキーは、いったん指が離されてもう一度押されるまで対応するビットが立つことはありません。
-        すべてのキー入力情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってキー状態を判定してください。
-     */
-    KRKeyState      getKeyStateOnce();
-
+    KRKeyInfo   _getKeyState();
+    KRKeyInfo   _getKeyStateOnce();
+    KRKeyInfo   _getKeyStateAgainstDummy();
+    
 #endif
 
-    
+
 #pragma mark -
 #pragma mark Support for Mouse Input (Mac OS X)
 
@@ -371,144 +441,10 @@ public:
      */
     bool    isMouseDownOnce() const;
     
-    /*!
-        @-method getMouseState
-        @abstract 現在のマウス押下状態を取得します。
-        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
-     */
-    KRMouseState    getMouseState();
-
-    /*!
-        @-method getMouseStateAgainstDummy
-        @abstract ダミー入力が設定されている際に、ユーザからの現在のマウス押下状態を取得します。
-        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
-     */
-    KRMouseState    getMouseStateAgainstDummy();
+    _KRMouseState _getMouseState();
+    _KRMouseState _getMouseStateAgainstDummy();
+    _KRMouseState _getMouseStateOnce();
     
-    /*!
-        @-method getMouseStateOnce
-        @abstract 現在のマウス押下状態を取得します。
-        この関数を一度呼び出すと、その時点で押されていたボタンは、いったん指が離されてもう一度押されるまで対応するビットが立つことはありません。
-        左ボタン、右ボタンのすべての情報がビット単位で含まれた整数がリターンされるので、論理積 (AND) 演算を行ってマウス状態を判定してください。
-     */
-    KRMouseState    getMouseStateOnce();
-#endif
-
-
-#pragma mark -
-#pragma mark Support for Touch Input (iPhone)
-
-#if KR_IPHONE
-public:
-    /*!
-        @task タッチ入力のサポート (iPhone)
-     */
-
-    /*!
-        @method getTouch
-        @abstract 現在画面がタッチされているかどうかを取得します。
-     */
-    bool            getTouch();
-    
-    /*!
-        @method getTouchAgainstDummy
-        @abstract ダミー入力が設定されている際に、現在画面がタッチされているかどうかを取得します。
-     */
-    bool            getTouchAgainstDummy();
-
-    /*!
-        @method getTouchOnce
-        @abstract 現在画面がタッチされているかどうかを取得します。
-        <p>あるフレームでタッチされていると判定されると、それ以降のフレームで指が離されてタッチし直されるまで、この関数が true を返すことはありません。</p>
-        <p>この関数は、複数のタッチを識別しません。</p>
-     */
-    bool            getTouchOnce();
-    
-    /*!
-        @method getTouchLocation
-        @abstract 現在タッチされている画面上の位置を取得します。
-        マルチタッチが行われている場合には、いずれか1つのタッチの情報が使用されます。
-     */
-    KRVector2D      getTouchLocation();
-
-    /*!
-        @method getTouchCount
-        @abstract 現在のマルチタッチの個数を取得します。
-     */
-    int             getTouchCount();
-    
-    /*!
-        @method getTouchInfos
-        @abstract 現在のすべてのマルチタッチの情報を取得します。
-     */
-    const std::vector<KRTouchInfo> getTouchInfos() const;
-    
-    /*!
-        @-task 仮想ゲームパッドのサポート (iPhone)
-     */
-    
-    /*!
-        @-method getTouchArrowMotion
-        @abstract iPhone の画面左側をタッチしてドラッグすることで、仮想的に操作された十字キーの移動量を取得します。
-     */
-    KRVector2D      getTouchArrowMotion();
-
-    /*!
-        @-method getTouchButton1
-        @abstract 仮想的に操作されたボタン1（iPhone の画面右下のタッチ）の状態を取得します。
-     */
-    bool            getTouchButton1();
-    
-    /*!
-        @-method getTouchButton1Once
-        @abstract 仮想的に操作されたボタン1（iPhone の画面右下のタッチ）の状態を取得します。
-        この関数を一度呼び出すと、もう一度タッチし直すまでこの関数が true をリターンすることはありません。
-     */
-    bool            getTouchButton1Once();
-    
-    /*!
-        @-method getTouchButton2
-        @abstract 仮想的に操作されたボタン2（iPhone の画面右下のタッチ）の状態を取得します。
-     */
-    bool            getTouchButton2();
-
-    /*!
-        @-method getTouchButton2Once
-        @abstract 仮想的に操作されたボタン2（iPhone の画面右下のタッチ）の状態を取得します。
-        この関数を一度呼び出すと、もう一度タッチし直すまでこの関数が true をリターンすることはありません。
-     */
-    bool            getTouchButton2Once();
-#endif
-    
-
-#pragma mark -
-#pragma mark Support for Accelerometer (iPhone)
-
-#if KR_IPHONE
-public:
-    /*!
-        @task 加速度センサのサポート (iPhone)
-     */
-    
-    /*!
-        @method getAcceleration
-        加速度センサの3軸の加速度情報を取得します。
-     */
-    KRVector3D  getAcceleration() const;
-
-    /*!
-        @method getAccelerometerEnabled
-        @abstract 加速度センサが利用可能な状態になっているかどうかを取得します。
-        加速度センサは、デフォルトでは利用しない状態に設定されています。
-     */
-    bool        getAccelerometerEnabled() const;
-    
-    /*!
-        @method enableAccelerometer
-        @abstract 引数に true を指定することで、加速度センサを利用可能な状態に設定します。引数に false を指定した場合には、加速度センサを利用しない状態に設定します。
-        加速度センサは、デフォルトでは利用しない状態に設定されています。
-     */
-    void        enableAccelerometer(bool flag);
 #endif
 
     
@@ -526,16 +462,16 @@ public:
 #if KR_MACOSX
 public:
     // These methods are intended to be used with KarakuriGLView class.
-    void    processMouseDown(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processMouseDrag() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processMouseUp(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseDown(_KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseDrag() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseUp(_KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
 private:
-    void    processMouseDownImpl(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processMouseDragImpl(const KRVector2D& pos=KRVector2DZero) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processMouseUpImpl(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processMouseDownImplAgainstDummy(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processMouseUpImplAgainstDummy(KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseDownImpl(_KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseDragImpl(const KRVector2D& pos=KRVector2DZero) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseUpImpl(_KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseDownImplAgainstDummy(_KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processMouseUpImplAgainstDummy(_KRMouseState mouseMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
 
     
@@ -544,14 +480,14 @@ private:
 
 #if KR_MACOSX
 public:
-    void    processKeyDownCode(unsigned short keyCode) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processKeyUpCode(unsigned short keyCode) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processKeyDownCode(unsigned short keyCode) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processKeyUpCode(unsigned short keyCode) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
 private:
-    void    processKeyDown(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processKeyUp(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processKeyDownAgainstDummy(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processKeyUpAgainstDummy(KRKeyState keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processKeyDown(KRKeyInfo keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processKeyUp(KRKeyInfo keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processKeyDownAgainstDummy(KRKeyInfo keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processKeyUpAgainstDummy(KRKeyInfo keyMask) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
     
 
@@ -560,16 +496,16 @@ private:
 
 #if KR_IPHONE
 public:
-    void    startTouch(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    moveTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    endTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _startTouch(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _moveTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _endTouch(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 private:
-    void    startTouchImpl(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    moveTouchImpl(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    endTouchImpl(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;    
-    void    startTouchImplAgainstDummy(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    endTouchImplAgainstDummy(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;    
+    void    _startTouchImpl(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _moveTouchImpl(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _endTouchImpl(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;    
+    void    _startTouchImplAgainstDummy(unsigned touchID, double x, double y) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _endTouchImplAgainstDummy(unsigned touchID, double x, double y, double dx, double dy) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;    
 #endif
     
     
@@ -579,10 +515,10 @@ private:
 #if KR_IPHONE
 public:
     // These methods are intended to be used with KarakuriGLView class.
-    void    setAcceleration(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _setAcceleration(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 private:
-    void    setAccelerationImpl(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _setAccelerationImpl(double x, double y, double z) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 #endif
 
     
@@ -590,9 +526,9 @@ private:
 #pragma mark Dummy Input Support
     
 public:
-    void    plugDummySourceIn() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    pullDummySourceOut() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    processDummyData(KRInputSourceData& data) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _plugDummySourceIn() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _pullDummySourceOut() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _processDummyData(KRInputSourceData& data) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
     
 #pragma mark -
@@ -605,7 +541,7 @@ public:
 #pragma mark Debug Support
 
 public:
-    void    resetAllInputs() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    _resetAllInputs() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 #pragma mark -
 #pragma mark Debug Support

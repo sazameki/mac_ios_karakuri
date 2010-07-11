@@ -15,7 +15,7 @@
 
 /*!
     @class KRColor
-    @group  Game System
+    @group  Game Type
     @abstract 色を表すためのクラスです。
     利用可能な色の定数の一覧については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/color_chart.html">カラーチャート</a>」を参照してください。
  */

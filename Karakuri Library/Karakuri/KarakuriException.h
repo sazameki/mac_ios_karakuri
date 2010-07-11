@@ -22,7 +22,7 @@ public:
 
 /*!
     @class KRRuntimeError
-    @group Game Foundation
+    @group Game System
     <p>Karakuri Framework 内で起きるすべてのエラーを表すための例外クラスです。</p>
     <p>このクラスは直接使用せず、サブクラスの KRGameError クラスを利用してください。</p>
  */
@@ -43,7 +43,7 @@ public:
 
 /*!
     @class KRGameError
-    @group Game Foundation
+    @group Game System
     <p>ゲーム実行中のエラーを表すための例外クラスです。</p>
     <p>ゲーム制作者は、実行時のエラー処理を行うために、この例外クラスあるいはこのクラスから継承した例外クラスをスローしてください。</p>
  */

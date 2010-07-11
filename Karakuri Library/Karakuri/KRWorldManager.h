@@ -18,18 +18,18 @@ class KRWorld;
 class KRWorldManager : public KRObject {
     
 private:
-    KRWorld *mCurrentWorld;
-    std::map<std::string, KRWorld *> mWorldMap;
+    KRWorld*                        mCurrentWorld;
+    std::map<std::string, KRWorld*> mWorldMap;
     
 public:
     KRWorldManager();
     ~KRWorldManager();
 
 public:
-    KRWorld     *getCurrentWorld() const;
+    KRWorld*    getCurrentWorld() const;
     void        registerWorld(const std::string& name, KRWorld *aWorld);
-    KRWorld     *getWorldWithName(const std::string &name);
-    KRWorld     *selectWorldWithName(const std::string &name, bool useLoadingThread);
+    KRWorld*    getWorldWithName(const std::string &name);
+    KRWorld*    selectWorldWithName(const std::string &name, bool useLoadingThread);
 
     
 #pragma mark -

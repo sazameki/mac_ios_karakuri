@@ -104,20 +104,19 @@ body.toc {
 
 body.toc .logo {
 	float: right;
-	width: 250px;
 }
 
 body.toc h1 {
 	font-size: 34px;
-	color: #aaa;
+	color: #ccc;
 }
 
 body.toc h2 {
 	clear: both;
-	background-color: rgb(238, 255, 170);
+	background-color: #f0f6fa;
 	padding: 4px 8px;
 	margin: 0;
-	color: #222;
+	color: #235;
 }
 
 body.toc h3 {
@@ -157,7 +156,6 @@ body.class {
 body.class .logo {
 	float: right;
 	padding-top: 20px;
-	width: 250px;
 }
 
 body.class .overview {
@@ -195,24 +193,19 @@ body.class .class_info_box h2 {
 
 body.list {
 	padding: 4px;
-	background-color: #e60;
+	background-color: white;
 	font-size: 13px;
 }
 
 body.list h1 {
 	font-size: 18px;
-	color: yellow;
-}
-
-body.list h1 a {
-    text-decoration: none;
-	color: yellow;
+	color: #abc;
 }
 
 body.list h2 {
 	font-size: 14px;
-	color: gold;
-	border-bottom: 1px solid gold;
+	color: #abd;
+	border-bottom: 1px solid #abd;
 	padding-bottom: 0;
 	margin-bottom: 4px;
 }
@@ -231,12 +224,12 @@ body.list li {
 }
 
 body.list a:link {
-	color: white;
+	color: #222;
 	text-decoration: none;
 }
 
 body.list a:visited {
-	color: white;
+	color: #222;
 	text-decoration: none;
 }
 
@@ -244,30 +237,23 @@ body.list a:hover {
 	text-decoration: underline;
 }
 
-body.list h1 a {
-    text-decoration: none;
-	color: yellow;
+body.list ul.toc li {
+	list-style-type: disc;
 }
 
-body.list h1 a:link {
-    text-decoration: none;
-	color: yellow;
-}
-
-body.list h1 a:visited {
-    text-decoration: none;
-	color: yellow;
-}
-
-body.list h1 a:hover {
-    text-decoration: none;
-	color: yellow;
+body.list .logo {
+	margin-bottom: 30px;
 }
 
 /* ===== Guide Book ===== */
 
 body.guide {
 	padding: 24px 32px;
+}
+
+body.guide h1 {
+	font-size: 34px;
+	color: #ccc;
 }
 
 body.guide h2 {
@@ -291,11 +277,11 @@ body.guide p {
 }
 
 body.guide dl {
-	margin-left: 80px;
+	margin-left: 0;
 }
 
 body.guide ul {
-	margin-left: 80px;
+	margin-left: 10px;
 }
 
 body.guide ul.top {
@@ -305,14 +291,15 @@ body.guide ul.top {
 body.guide dl dt {
     display: list-item;
 	list-style: disc;
-	margin-left: 20px;
+	margin-left: 0;
 	font-weight: bold;
 	margin-bottom: 0.3em;
 }
 
 body.guide dl dd {
+	margin-left: 20px;
 	margin-bottom: 4px;
-	margin-right: 60px;
+	margin-right: 10px;
 }
 
 body.guide .guide_toc dl {
@@ -349,8 +336,3 @@ body.guide dl.faq dt {
 body.guide dl.faq dd {
 	margin-bottom: 14px;
 }
-
-body.guide .logo {
-	float: right;
-}
-

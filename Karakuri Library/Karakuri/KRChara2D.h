@@ -97,7 +97,7 @@ public:
 
 /*
     @-class KRChara2DSpec
-    @group Game 2D Graphics
+    @group Game Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
     <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
@@ -144,11 +144,11 @@ public:
 };
 
 /*!
-    @class KRChara2DElem
-    @group Game 2D Graphics
+    @class KRChara2D
+    @group Game Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
-    <p>このクラスから継承した、独自のサブクラスを作成して利用してください。</p>
-    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D メソッドを使って削除してください。</p>
+    <p>このクラスから継承した独自のサブクラスを作成し、addChara2D() メソッドを使って画面に表示してください。キャラクタは、デフォルト状態では動作が -1 となっており、changeMotion() メソッドを一度は呼び出さなければ画面に表示されないことに注意してください。</p>
+    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D() メソッドを使って削除してください。removeChara2D() メソッドは、自動的に delete でオブジェクトの解放を行ないます。</p>
  */
 class KRChara2D : public KRObject {
     
@@ -189,32 +189,6 @@ public:
     
 public:
     /*!
-        @task 当たり判定
-     */
-
-    /*!
-        @method contains
-        @abstract このキャラクタを囲む境界線の中に、与えられた点が含まれるかどうかを判定します。
-     */
-    bool    contains(const KRVector2D& pos) const;
-
-    /*!
-        @method hitTest
-        @abstract 与えられた点に対して、指定された種類の当たり判定領域との当たり判定を行ないます。
-     */
-    bool    hitTest(int hitType, const KRVector2D& pos) const;
-    
-    /*!
-        @method hitTest
-        @abstract 与えられたキャラクタに対して、指定された種類の当たり判定領域との当たり判定を行ないます。
-     */
-    bool    hitTest(int hitType, const KRChara2D* targetChara, int targetHitType) const;
-    
-    
-    _KRChara2DKoma* _getCurrentKoma() const;
-
-public:
-    /*!
         @task 動作の管理
      */
     
@@ -231,11 +205,11 @@ public:
     void    changeMotion(int motionID, unsigned modeMask);
 
     /*!
-        @method getMotion
+        @method getMotionID
         @abstract キャラクタの現在の動作を取得します。
         動作の変更中は、変更完了後に予定されている動作がリターンされます。
      */
-    int     getMotion() const;
+    int     getMotionID() const;
     
 
 public:
@@ -249,12 +223,6 @@ public:
      */
     KRVector2D  getCenterPos() const;
 
-    /*!
-        @method getClassType
-        このキャラクタ・クラスの種類を取得します。
-     */
-    int     getClassType() const;
-    
     /*!
         @method getColor
         このキャラクタの現在の色を取得します。
@@ -325,7 +293,39 @@ public:
         キャラクタのZオーダを設定します。デフォルトでは、0 となっています。
      */
     void    setZOrder(int zOrder);
+
+public:
+    /*!
+        @task 当たり判定
+     */
+
+    /*!
+        @method contains
+        @abstract このキャラクタを囲む境界線の中に、与えられた点が含まれるかどうかを判定します。
+     */
+    bool    contains(const KRVector2D& pos) const;
+
+    /*!
+        @method getClassType
+        このキャラクタ・クラスの種類を取得します。この値は、キャラクタ生成時に、KRChara2D クラスのコンストラクタで第2引数として渡されたものです。
+     */
+    int     getClassType() const;
     
+    /*!
+        @method hitTest
+        @abstract 与えられた点に対して、指定された種類の当たり判定領域との当たり判定を行ないます。
+     */
+    bool    hitTest(int hitType, const KRVector2D& pos) const;
+    
+    /*!
+        @method hitTest
+        @abstract 与えられたキャラクタに対して、指定された種類の当たり判定領域との当たり判定を行ないます。
+     */
+    bool    hitTest(int hitType, const KRChara2D* targetChara, int targetHitType) const;
+    
+    
+    _KRChara2DKoma* _getCurrentKoma() const;
+
 public:
     void    _step();    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     void    _draw();    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY

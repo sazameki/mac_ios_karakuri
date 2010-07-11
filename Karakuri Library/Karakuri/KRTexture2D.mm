@@ -175,7 +175,7 @@ _KRTexture2D::_KRTexture2D(const std::string& filename, const KRVector2D& atlasS
     }
 }
 
-_KRTexture2D::_KRTexture2D(const std::string& str, KRFont *font)
+_KRTexture2D::_KRTexture2D(const std::string& str, _KRFont *font)
 {
     if (sTexture2DBatchCount > 0) {
         _KRTexture2D::processBatchedTexture2DDraws();
@@ -296,7 +296,7 @@ void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect
     KRVector2D origin = KRVector2D(mImageSize.x * origin_.x, mImageSize.y * origin_.y);
     
     KRRect2D theSrcRect = srcRect;
-    if (theSrcRect.width == 0.0 || theSrcRect.height == 0.0) {
+    if (theSrcRect.width == 0.0 && theSrcRect.height == 0.0) {
         theSrcRect.x = 0;
         theSrcRect.y = 0;
         theSrcRect.width = mImageSize.x;
@@ -489,7 +489,7 @@ void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRec
     KRVector2D origin = KRVector2D(mImageSize.x * 0.5, mImageSize.y * 0.5);
 
     KRRect2D theSrcRect = srcRect;
-    if (theSrcRect.width == 0.0 || theSrcRect.height == 0.0) {
+    if (theSrcRect.width == 0.0 && theSrcRect.height == 0.0) {
         theSrcRect.x = 0;
         theSrcRect.y = 0;
         theSrcRect.width = mImageSize.x;

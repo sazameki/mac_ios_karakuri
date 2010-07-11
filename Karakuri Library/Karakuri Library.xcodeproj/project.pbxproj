@@ -15,7 +15,7 @@
 			);
 			dependencies = (
 				8E423A9C103C826300ED3880 /* PBXTargetDependency */,
-				8E423A9A103C826300ED3880 /* PBXTargetDependency */,
+				8EC66D4A11E9EFD7009853A2 /* PBXTargetDependency */,
 			);
 			name = "Build & Install iPhone";
 			productName = "Build All";
@@ -719,13 +719,6 @@
 			remoteGlobalIDString = 8E4050551029C9A400615B74;
 			remoteInfo = "iPhone Emulator";
 		};
-		8E423A99103C826300ED3880 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8EAB5EF3101B13C200DDA881;
-			remoteInfo = "iPhone Device";
-		};
 		8E423A9B103C826300ED3880 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -766,6 +759,13 @@
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8EAB5EF3101B13C200DDA881;
+			remoteInfo = "iPhone Device";
+		};
+		8EC66D4911E9EFD7009853A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8EAB5EF3101B13C200DDA881 /* iPhone Device */;
 			remoteInfo = "iPhone Device";
 		};
 /* End PBXContainerItemProxy section */
@@ -2235,11 +2235,6 @@
 			target = 8E4050551029C9A400615B74 /* iPhone Emulator */;
 			targetProxy = 8E40509B1029C9E100615B74 /* PBXContainerItemProxy */;
 		};
-		8E423A9A103C826300ED3880 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8EAB5EF3101B13C200DDA881 /* iPhone Device */;
-			targetProxy = 8E423A99103C826300ED3880 /* PBXContainerItemProxy */;
-		};
 		8E423A9C103C826300ED3880 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8EAB5EEA101B136400DDA881 /* iPhone Simulator */;
@@ -2270,6 +2265,11 @@
 			target = 8EAB5EF3101B13C200DDA881 /* iPhone Device */;
 			targetProxy = 8EAB5F1B101B1E4700DDA881 /* PBXContainerItemProxy */;
 		};
+		8EC66D4A11E9EFD7009853A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8EAB5EF3101B13C200DDA881 /* iPhone Device */;
+			targetProxy = 8EC66D4911E9EFD7009853A2 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2285,8 +2285,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Karakuri Library_Prefix.pch";
+				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = "karakuri-macosx";
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -2299,9 +2301,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Karakuri Library_Prefix.pch";
+				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = "karakuri-macosx";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
@@ -2373,8 +2376,10 @@
 					"$(inherited)",
 					"KR_MACPHONE_EMU=1",
 				);
+				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = "karakuri-macphone-emu";
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -2391,9 +2396,10 @@
 					"$(inherited)",
 					"KR_MACPHONE_EMU=1",
 				);
+				GCC_VERSION = 4.2;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = "karakuri-macphone-emu";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
@@ -2467,6 +2473,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-sim";
 				SDKROOT = iphonesimulator3.2;
@@ -2481,6 +2488,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-sim";
 				SDKROOT = iphonesimulator3.2;
@@ -2496,6 +2504,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-dev";
 				SDKROOT = iphoneos3.2;
@@ -2510,6 +2519,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_VERSION = 4.2;
 				PREBINDING = NO;
 				PRODUCT_NAME = "karakuri-iphone-dev";
 				SDKROOT = iphoneos3.2;

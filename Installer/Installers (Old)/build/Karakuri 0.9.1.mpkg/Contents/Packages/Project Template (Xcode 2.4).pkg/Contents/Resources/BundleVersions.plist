@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>./Karakuri Game/Universal Game/version.plist</key>
+	<dict>
+		<key>BuildVersion</key>
+		<string>3</string>
+		<key>CFBundleShortVersionString</key>
+		<string>0.0.0</string>
+		<key>CFBundleVersion</key>
+		<string>1.0</string>
+		<key>ProjectName</key>
+		<string>DevToolsWizardTemplates</string>
+		<key>SourceVersion</key>
+		<string>11600000</string>
+	</dict>
+</dict>
+</plist>

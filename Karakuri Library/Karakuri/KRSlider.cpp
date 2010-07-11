@@ -50,7 +50,7 @@ bool KRSlider::update(KRInput *input)
         return true;
     } else {
 #if KR_MACOSX
-        bool inputOn = (input->getMouseState() & KRInput::MouseButtonAny)? true: false;
+        bool inputOn = input->isMouseDown();
 #endif
 #if KR_IPHONE
         bool inputOn = input->getTouch();

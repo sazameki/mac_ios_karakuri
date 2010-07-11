@@ -13,12 +13,12 @@
 
 /*!
     @class KRTexture2DManager
-    @group Game 2D Graphics
+    @group Game Graphics
     <p>2次元のテクスチャの管理を行うためのクラスです。</p>
     <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
  */
-class KRTexture2DManager {
+class KRTexture2DManager : public KRObject {
 
     std::map<int, std::vector<int> >    mGroupID_TexIDList_Map;
     std::map<int, std::string>          mTexID_ImageFileName_Map;
@@ -287,7 +287,7 @@ public:
 
 /*!
     @var    gKRTex2DMan
-    @group  Game 2D Graphics
+    @group  Game Graphics
     @abstract テクスチャの管理を行うクラスのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */

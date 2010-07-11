@@ -16,14 +16,14 @@ KRSaveBox *gKRSaveBoxInst = NULL;
 
 #pragma mark Save Box のセットアップ
 
-void KRSetupSaveBox()
+void _KRSetupSaveBox()
 {
     if (gKRSaveBoxInst == NULL) {
         gKRSaveBoxInst = new KRSaveBox();
     }
 }
 
-void KRCleanUpSaveBox()
+void _KRCleanUpSaveBox()
 {
     if (gKRSaveBoxInst != NULL) {
         delete gKRSaveBoxInst;

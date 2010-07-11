@@ -11,14 +11,14 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
-class KRFont;
+class _KRFont;
 class _KRTexture2D;
 class _KRTexture2DAtlas;
 
 
 class KRFPSDisplay : public KRObject {
 
-    KRFont*             mFont;
+    _KRFont*            mFont;
 
     _KRTexture2D*       mNumberTex;
     _KRTexture2DAtlas*  mNumberAtlas;

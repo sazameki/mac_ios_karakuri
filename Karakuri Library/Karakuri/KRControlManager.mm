@@ -63,7 +63,7 @@ bool KRControlManager::updateControls(KRInput *input, int groupID)
         KRVector2D inputPos(-1, -1);
         
 #if KR_MACOSX
-        if (input->getMouseState() & KRInput::MouseButtonAny) {
+        if (input->isMouseDown()) {
             inputPos = input->getMouseLocation();
         }
 #endif

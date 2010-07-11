@@ -19,7 +19,7 @@ class KRSimulator2D;
 
 /*!
     @class KRAnime2DManager
-    @group Game 2D Graphics
+    @group Game Graphics
     <p>キャラクタのアニメーションを管理するためのクラスです。</p>
     <p>このクラスのオブジェクトには、gKRAnime2DMan 変数を使ってアクセスしてください。</p>
     <p>主な使い方は、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
@@ -394,7 +394,7 @@ public:
 
 /*!
     @var    gKRAnime2DMan
-    @group  Game 2D Graphics
+    @group  Game Graphics
     @abstract 2Dアニメーション管理機構のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */

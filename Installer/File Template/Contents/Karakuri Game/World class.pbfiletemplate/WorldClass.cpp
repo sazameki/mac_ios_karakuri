@@ -17,27 +17,39 @@
 
 void «FILEBASENAMEASIDENTIFIER»::becameActive()
 {
-    /*if (!hasLoadedResourceGroup(0)) {
+    /*if (!hasLoadedResourceGroup(GroupID::Foo)) {
         startLoadingWorld("load", 2.0);
-        loadResourceGroup(0);
+        loadResourceGroup(GroupID::Foo);
         finishLoadingWorld();
     }*/
 }
 
 void «FILEBASENAMEASIDENTIFIER»::resignedActive()
 {
-    //unloadResourceGroup(0);
+    //unloadResourceGroup(GroupID::Foo);
 }
 
-void «FILEBASENAMEASIDENTIFIER»::updateModel(KRInput *input)
+void «FILEBASENAMEASIDENTIFIER»::updateModel(KRInput* input)
 {
 }
 
-void «FILEBASENAMEASIDENTIFIER»::drawView(KRGraphics *g)
+void «FILEBASENAMEASIDENTIFIER»::drawView(KRGraphics* g)
 {
     g->clear(KRColor::CornflowerBlue);
     
     gKRAnime2DMan->draw();
 }
+
+/*void «FILEBASENAMEASIDENTIFIER»::buttonPressed(KRButton* aButton)
+ {
+ }*/
+
+/*void «FILEBASENAMEASIDENTIFIER»::sliderValueChanged(KRSlider* slider)
+ {
+ }*/
+
+/*void «FILEBASENAMEASIDENTIFIER»::switchStateChanged(KRSwitch* switcher)
+ {
+ }*/
 
 

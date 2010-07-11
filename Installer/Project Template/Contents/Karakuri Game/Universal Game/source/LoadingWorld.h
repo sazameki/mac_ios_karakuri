@@ -3,7 +3,7 @@
     @author ___FULLUSERNAME___
     @date   ___DATE___
     
-    Please write the description of this world.
+    Loading world for the game play resources.
  */
 
 #pragma once

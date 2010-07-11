@@ -114,10 +114,10 @@ void KRGameManager::addWorld(const std::string& name, KRWorld *aWorld)
 
 void KRGameManager::changeWorld(const std::string& name)
 {
-    changeWorldImpl(name, true);
+    _changeWorldImpl(name, true);
 }
 
-void KRGameManager::changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
+void KRGameManager::_changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
 {
     if (!isFirstInitialization && useLoadingThread && !sIsUpdatingModel) {
         const char *errorFormat = "Invalid world changing was performed. changeWorld() cannot be invoked outside updateModel().";
@@ -193,7 +193,7 @@ void KRGameManager::setTitle(const std::string& str)
     mTitle = str;
 }
 
-bool KRGameManager::checkDeviceType(KRDeviceType type) const
+bool KRGameManager::_checkDeviceType(KRDeviceType type) const
 {
     return (mDeviceType == type)? true: false;
 }
@@ -282,7 +282,7 @@ void KRGameManager::updateMaxChara2DSize(size_t size)
     }
 }
 
-void KRGameManager::startWorldChanging()
+void KRGameManager::_startWorldChanging()
 {
     mWasChangingWorld = true;
 }
@@ -329,7 +329,7 @@ void KRGameManager::setNetworkGameID(const std::string& gameID, const std::strin
     mNetworkStartWorldName = startWorldName;
 }
 
-void KRGameManager::saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRGameManager::_saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     KRWorld *currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
@@ -338,7 +338,7 @@ void KRGameManager::saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     }    
 }
 
-void KRGameManager::checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRGameManager::_checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
 #if KR_MACOSX
     mDeviceType = KRDeviceTypeMac;

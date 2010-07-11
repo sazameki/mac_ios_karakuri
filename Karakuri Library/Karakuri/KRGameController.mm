@@ -103,7 +103,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             gKRLanguage = KRLanguageJapanese;            
         }
         
-        KRSetupSaveBox();
+        _KRSetupSaveBox();
 
         mGameManager = [mLibraryConnector createGameInstance];
         mGraphics = new KRGraphics();
@@ -184,8 +184,8 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [mEAGLSharegroup release];
 #endif
     
-    KRCleanUpOpenAL();
-    KRCleanUpSaveBox();
+    _KRCleanUpOpenAL();
+    _KRCleanUpSaveBox();
 }
 
 - (void)dealloc
@@ -222,7 +222,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [mWindow center];
 #endif
     
-    KRInitOpenAL();
+    _KRInitOpenAL();
     KRSimulator2D::initSimulatorSystem();
 }
 
@@ -519,7 +519,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    mGameManager->checkDeviceType();
+    mGameManager->_checkDeviceType();
     [mWindow makeKeyAndOrderFront:self];
     
     [self checkOpenGLVersion];
@@ -633,7 +633,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     }
 
     mWindow = [KarakuriWindow new];
-    mGameManager->checkDeviceType();
+    mGameManager->_checkDeviceType();
     [mWindow makeKeyAndVisible];
     
     [self checkOpenGLVersion];
@@ -746,7 +746,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 #if KR_IPHONE_MACOSX_EMU
             [gKRGLViewInst drawTouches];
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 #endif
         
             // ダブルバッファのスワップ
@@ -860,7 +860,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         if (!mGameIsInitialized) {
             mGameManager->setupResources();
             std::string firstWorldName = mGameManager->setupWorlds();
-            mGameManager->changeWorldImpl(firstWorldName, true, true);
+            mGameManager->_changeWorldImpl(firstWorldName, true, true);
             if (mLoadingWorld != NULL) {
                 mLoadingWorld->startBecameActive();
                 mLoadingWorld = NULL;
@@ -943,7 +943,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             
 #if KR_IPHONE_MACOSX_EMU
             [gKRGLViewInst drawTouches];
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 #endif
 
             // ダブルバッファのスワップ
@@ -1013,14 +1013,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                             [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
                         }
                         if (mHasAcceptedNetworkPeer) {
-                            mGameManager->changeWorldImpl(mGameManager->getNetworkStartWorldName(), true, true);
+                            mGameManager->_changeWorldImpl(mGameManager->getNetworkStartWorldName(), true, true);
                         }
                     } else if (mIsInvitingNetworkPeer) {
                         while (mIsInvitingNetworkPeer) {
                             [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
                         }
                         if (mHasAcceptedNetworkPeer) {
-                            mGameManager->changeWorldImpl(mGameManager->getNetworkStartWorldName(), true, true);
+                            mGameManager->_changeWorldImpl(mGameManager->getNetworkStartWorldName(), true, true);
                         }
                     }
                     
@@ -1120,7 +1120,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
     if (mHasMetEmergency) {
         if (mLoadingWorld == NULL) {
-            mGameManager->saveForEmergency();
+            mGameManager->_saveForEmergency();
         }
     }
     
@@ -1253,11 +1253,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             while (isRunning && (event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES])) {
                 switch ([event type]) {
                     case NSLeftMouseDown:
-                        mInput->processMouseDown(KRInput::MouseButtonLeft);
+                        mInput->_processMouseDown(KRInput::_MouseButtonLeft);
                         break;
                         
                     case NSLeftMouseUp:
-                        mInput->processMouseUp(KRInput::MouseButtonLeft);
+                        mInput->_processMouseUp(KRInput::_MouseButtonLeft);
                         break;
 
                     case NSKeyDown: {
@@ -1270,14 +1270,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                             mGameIsFinished = YES;
                             isRunning = NO;
                         } else {
-                            mInput->processKeyDownCode(keyCode);
+                            mInput->_processKeyDownCode(keyCode);
                         }
                         break;
                     }
                         
                     case NSKeyUp: {
                         unsigned short keyCode = [event keyCode];
-                        mInput->processKeyUpCode(keyCode);
+                        mInput->_processKeyUpCode(keyCode);
                         break;
                     }
                         

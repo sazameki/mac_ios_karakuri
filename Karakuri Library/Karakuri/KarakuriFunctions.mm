@@ -75,12 +75,17 @@ double KRCurrentTime()
     return gKRGameMan->getCurrentTime();
 }
 
-void KRChangeWorld(const std::string& worldName)
+void _KRChangeWorld(const std::string& worldName)
 {
     gKRGameMan->changeWorld(worldName);
 }
 
-bool KRCheckOpenGLExtensionSupported(const std::string& extensionName)
+bool KRCheckDeviceType(KRDeviceType deviceType)
+{
+    return gKRGameMan->_checkDeviceType(deviceType);
+}
+
+bool _KRCheckOpenGLExtensionSupported(const std::string& extensionName)
 {
     const char *extensions = (const char *)glGetString(GL_EXTENSIONS);
     return (strstr(extensions, extensionName.c_str()) != NULL);

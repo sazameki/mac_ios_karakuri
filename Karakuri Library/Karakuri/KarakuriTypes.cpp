@@ -207,7 +207,7 @@ KRRect2D KRRect2D::makeUnion(const KRRect2D& src1, const KRRect2D& src2)
 
 std::string KRRect2D::to_s() const
 {
-    return KRFS("<rect2>(x=%3.2f, y=%3.2f, width=%3.2f, height=%3.2f)", x, y);
+    return KRFS("<rect2>(%3.2f, %3.2f, %3.2f, %3.2f)", x, y);
 }
 
 
@@ -334,7 +334,7 @@ double KRVector2D::outerProduct(const KRVector2D &vec) const
 
 std::string KRVector2D::to_s() const
 {
-    return KRFS("<vec2>(x=%3.2f, y=%3.2f)", x, y);
+    return KRFS("<vec2>(%3.2f, %3.2f)", x, y);
 }
 
 
@@ -457,7 +457,7 @@ KRVector2DInt KRVector2DInt::operator-() const
     
 std::string KRVector2DInt::to_s() const
 {
-    return KRFS("<vec2int>(x=%d, y=%d)", x, y);
+    return KRFS("<vec2int>(%d, %d)", x, y);
 }
 
 
@@ -591,7 +591,7 @@ KRVector3D KRVector3D::outerProduct(const KRVector3D& vec) const
 
 std::string KRVector3D::to_s() const
 {
-    return KRFS("<vec3>(x=%3.2f, y=%3.2f, z=%3.2f)", x, y, z);
+    return KRFS("<vec3>(%3.2f, %3.2f, %3.2f)", x, y, z);
 }
 
 
@@ -717,7 +717,7 @@ KRVector3DInt KRVector3DInt::operator-() const
 
 std::string KRVector3DInt::to_s() const
 {
-    return KRFS("<vec3int>(x=%d, y=%d, z=%d)", x, y, z);
+    return KRFS("<vec3int>(%d, %d, %d)", x, y, z);
 }
 
 

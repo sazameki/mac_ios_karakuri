@@ -10,49 +10,62 @@
 
 void TitleWorld::becameActive()
 {
-    if (!hasLoadedResourceGroup(1)) {
-        startLoadingWorld("load", 2.0);
-        loadResourceGroup(1);
-        finishLoadingWorld();
-    }
+    // It is very light weight, so we don't use the loading screen for this resource.
+    loadResourceGroup(GroupID::Title);
 
-    //gKRAudioMan->playBGM(gBGM_Title, 0.5);
-    //gKRAudioMan->setSEListenerPos(KRVector3D(0, 0, 0));
+    // Play BGM for title
+    gKRAudioMan->playBGM(BGM_ID::Title);
 }
 
 void TitleWorld::resignedActive()
 {
-    gKRAudioMan->unloadAudioFiles(0);
+    unloadResourceGroup(GroupID::Title);
 }
 
 void TitleWorld::updateModel(KRInput* input)
 {
-    bool hasTouched = false;
+    bool isTouched = false;
+    KRVector2D touchPos;
     
 #if KR_MACOSX
     if (input->isMouseDown()) {
-        hasTouched = true;
+        isTouched = true;
+        touchPos = input->getMouseLocation();
     }
 #endif
     
 #if KR_IPHONE
     if (input->getTouch()) {
-        hasTouched = true;
-    }    
-#endif
-    
-    if (hasTouched) {
-        gKRGameMan->changeWorld("play");
+        isTouched = true;
+        touchPos = input->getTouchLocation();
     }
+#endif
+
+    if (isTouched) {
+        gKRGameMan->changeWorld("play");
+    }    
 }
 
 void TitleWorld::drawView(KRGraphics* g)
 {
     g->clear(KRColor::GreenYellow);
     
-    gKRTex2DMan->drawAtPoint(gTex_Title, KRVector2D(0, 0));
+    gKRTex2DMan->drawInRect(TexID::Title, KRRect2D(0, 0, gKRScreenSize.x, gKRScreenSize.y));
 
     gKRAnime2DMan->draw();
 }
+
+
+/*void TitleWorld::buttonPressed(KRButton* aButton)
+{
+}*/
+
+/*void TitleWorld::sliderValueChanged(KRSlider* slider)
+{
+}*/
+
+/*void TitleWorld::switchStateChanged(KRSwitch* switcher)
+{
+}*/
 
 

@@ -23,7 +23,7 @@ static BOOL sCanUseNSSound = NO;
 #endif
 
 
-int KRMusic::getResourceSize(const std::string& filename)
+int _KRMusic::getResourceSize(const std::string& filename)
 {
     int ret = 0;
 
@@ -48,7 +48,7 @@ int KRMusic::getResourceSize(const std::string& filename)
     return ret;
 }
 
-KRMusic::KRMusic(const std::string& filename, bool loop)
+_KRMusic::_KRMusic(const std::string& filename, bool loop)
 {
     mFileName = filename;
     mDoLoop = loop;
@@ -80,7 +80,7 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
                 mImpl = [[NSSound alloc] initWithContentsOfFile:filepath byReference:YES];
             }
         } else {
-            mImpl = [[KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
+            mImpl = [[_KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
         }
         if (!mImpl) {
             const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
@@ -128,7 +128,7 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
 }
 
 
-KRMusic::~KRMusic()
+_KRMusic::~_KRMusic()
 {
     stop();
 
@@ -137,7 +137,7 @@ KRMusic::~KRMusic()
         if (sCanUseNSSound) {
             [(NSSound *)mImpl release];
         } else {
-            [(KarakuriSound *)mImpl release];
+            [(_KarakuriSound *)mImpl release];
         }
     }
 #endif
@@ -149,7 +149,7 @@ KRMusic::~KRMusic()
 #endif
 }
 
-void KRMusic::prepareToPlay()
+void _KRMusic::prepareToPlay()
 {
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -158,14 +158,14 @@ void KRMusic::prepareToPlay()
 #endif    
 }
 
-bool KRMusic::isPlaying() const
+bool _KRMusic::isPlaying() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
             return [(NSSound *)mImpl isPlaying];
         } else {
-            return [(KarakuriSound *)mImpl isPlaying];
+            return [(_KarakuriSound *)mImpl isPlaying];
         }
     }
     return false;
@@ -179,7 +179,7 @@ bool KRMusic::isPlaying() const
 #endif
 }
 
-void KRMusic::play()
+void _KRMusic::play()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -190,7 +190,7 @@ void KRMusic::play()
                 [(NSSound *)mImpl play];
             }
         } else {
-            [(KarakuriSound *)mImpl play];
+            [(_KarakuriSound *)mImpl play];
         }
     }
 #endif
@@ -204,14 +204,14 @@ void KRMusic::play()
     mIsPausing = false;
 }
 
-void KRMusic::pause()
+void _KRMusic::pause()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
             [(NSSound *)mImpl pause];
         } else {
-            [(KarakuriSound *)mImpl pause];
+            [(_KarakuriSound *)mImpl pause];
         }
     }
 #endif
@@ -225,14 +225,14 @@ void KRMusic::pause()
     mIsPausing = true;
 }
 
-void KRMusic::stop()
+void _KRMusic::stop()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
             [(NSSound *)mImpl stop];
         } else {
-            [(KarakuriSound *)mImpl stop];
+            [(_KarakuriSound *)mImpl stop];
         }
     }
 #endif
@@ -246,7 +246,7 @@ void KRMusic::stop()
     mIsPausing = false;
 }
 
-double KRMusic::getVolume() const
+double _KRMusic::getVolume() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -260,7 +260,7 @@ double KRMusic::getVolume() const
             [invocation getReturnValue:&value];
             return (double)value;
         } else {
-            return (double)[(KarakuriSound *)mImpl volume];
+            return (double)[(_KarakuriSound *)mImpl volume];
         }
     }
 #endif
@@ -274,7 +274,7 @@ double KRMusic::getVolume() const
     return 0.0;
 }
 
-void KRMusic::setVolume(double value)
+void _KRMusic::setVolume(double value)
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -287,7 +287,7 @@ void KRMusic::setVolume(double value)
             [invocation setArgument:&floatValue atIndex:2];
             [invocation invokeWithTarget:(NSSound *)mImpl];
         } else {
-            [(KarakuriSound *)mImpl setVolume:(float)value];
+            [(_KarakuriSound *)mImpl setVolume:(float)value];
         }
     }
 #endif
@@ -299,17 +299,17 @@ void KRMusic::setVolume(double value)
 #endif
 }
 
-int KRMusic::_getBGMID() const
+int _KRMusic::_getBGMID() const
 {
     return mBGMID;
 }
 
-void KRMusic::_setBGMID(int bgmID)
+void _KRMusic::_setBGMID(int bgmID)
 {
     mBGMID = bgmID;
 }
 
-std::string KRMusic::to_s() const
+std::string _KRMusic::to_s() const
 {
     return "<music>(file=\"" + mFileName + "\", loop=" + (mDoLoop? "true": "false") + ")";
 }

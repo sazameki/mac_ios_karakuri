@@ -31,7 +31,7 @@ KRWorld::KRWorld()
 
 void KRWorld::startBecameActive()
 {
-    gKRInputInst->resetAllInputs();
+    gKRInputInst->_resetAllInputs();
     gKRRandInst->resetSeed();
     
     mHasDummyInputSource = false;
@@ -50,7 +50,7 @@ void KRWorld::startBecameActive()
     becameActive();
     
     if (mHasDummyInputSource) {
-        gKRInputInst->plugDummySourceIn();
+        gKRInputInst->_plugDummySourceIn();
     }
 }
 
@@ -64,7 +64,7 @@ void KRWorld::startResignedActive()
         gInputLogHandle = nil;
     }
     
-    gKRInputInst->pullDummySourceOut();
+    gKRInputInst->_pullDummySourceOut();
 
     delete mControlManager;
     mControlManager = NULL;
@@ -73,15 +73,15 @@ void KRWorld::startResignedActive()
 void KRWorld::startUpdateModel(KRInput *input)
 {
 #if KR_MACOSX
-    if ((NSFileHandle *)gInputLogHandle != nil && (input->getMouseState() & KRInput::MouseButtonAny)) {
-        input->processMouseDrag();
+    if ((NSFileHandle *)gInputLogHandle != nil && (input->_getMouseState() & KRInput::_MouseButtonAny)) {
+        input->_processMouseDrag();
     }
 #endif
     
     if (mHasDummyInputSource && mDummyInputSourceDataPos < mDummyInputSourceDataList.size()) {
         KRInputSourceData& inputSourceData = mDummyInputSourceDataList[mDummyInputSourceDataPos];
         if (inputSourceData.frame <= gInputLogFrameCounter) {
-            input->processDummyData(inputSourceData);
+            input->_processDummyData(inputSourceData);
             mDummyInputSourceDataPos++;
         }
     }
@@ -195,6 +195,20 @@ void KRWorld::finishLoadingWorld()
 
             gKRAudioMan->_loadAudioFiles(*it, this, minDuration);
         }
+        
+        if (mLoadingResourceAllSize == 0) {
+            mLoadingResourceAllSize = 100;
+            int divCount = 10;
+            double oneDuration = mLoadingResourceMinDuration / divCount;
+            double oneSize = mLoadingResourceAllSize / divCount;
+            for (int i = 0; i < divCount; i++) {
+                _setFinishedSize(oneSize * i);
+                KRSleep(oneDuration);
+            }
+            _setFinishedSize(mLoadingResourceAllSize);
+        }
+        
+        KRSleep(1.0);
     }
 
     [[KRGameController sharedController] finishLoadingWorld];
@@ -487,9 +501,9 @@ void KRWorld::setDummyInputSource(const std::string& filename)
                 if (aData.command[1] == 'D' || aData.command[1] == 'U') {
                     unsigned char mouseMaskC = aLine[pos++];
                     if (mouseMaskC == '1') {
-                        aData.data_mask = KRInput::MouseButtonLeft;
+                        aData.data_mask = KRInput::_MouseButtonLeft;
                     } else {
-                        aData.data_mask = KRInput::MouseButtonRight;
+                        aData.data_mask = KRInput::_MouseButtonRight;
                     }
                 }
                 // Skip '('

@@ -13,7 +13,7 @@
 
 /*
     @!class _KRTexture2DAtlas
-    @!group Game 2D Graphics
+    @!group Game Graphics
     @!abstract テクスチャの一部分を切り取って描画するためのクラスです。
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
  */

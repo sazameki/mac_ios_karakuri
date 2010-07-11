@@ -10,8 +10,8 @@
 
 #import <Karakuri/KarakuriLibrary.h>
 
-void KRSetupSaveBox();
-void KRCleanUpSaveBox();
+void _KRSetupSaveBox();
+void _KRCleanUpSaveBox();
 
 
 #pragma mark -
@@ -19,7 +19,7 @@ void KRCleanUpSaveBox();
 
 /*!
     @class  KRSaveBox
-    @group  Game Foundation
+    @group  Game System
     @abstract ゲームの実行状態を保存し、読み込み直すためのクラスです。
     このクラスのインスタンスには、gKRSaveBoxInst 変数を利用してアクセスしてください。
  */
@@ -28,8 +28,8 @@ class KRSaveBox : public KRObject {
 #pragma mark -
 #pragma mark Friend Function Declaration
 
-    friend void KRSetupSaveBox() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    friend void KRCleanUpSaveBox() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    friend void _KRSetupSaveBox() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    friend void _KRCleanUpSaveBox() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 
 #pragma mark -
@@ -147,7 +147,7 @@ public:
 
 /*!
     @var gKRSaveBoxInst
-    @group Game Foundation
+    @group Game System
     @abstract ゲーム状態保存クラスのインスタンスを指す変数です。
  */
 extern KRSaveBox    *gKRSaveBoxInst;

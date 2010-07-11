@@ -13,11 +13,11 @@
 
 /*!
     @class  KRPrimitive2D
-    @group  Game 2D Graphics
+    @group  Game Graphics
     <p>単純図形の描画をサポートするためのクラスです。</p>
     <p>このクラスはインスタンスをもちません。インスタンスの生成は禁止されています。</p>
  */
-class KRPrimitive2D {
+class KRPrimitive2D : public KRObject {
 
 private:
 	KRPrimitive2D() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;

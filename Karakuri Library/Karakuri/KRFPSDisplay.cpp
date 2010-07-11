@@ -17,7 +17,7 @@
  */
 KRFPSDisplay::KRFPSDisplay()
 {
-    mFont = new KRFont("Helvetica-Bold", 24.0);
+    mFont = new _KRFont("Helvetica-Bold", 24.0);
 
     mNumberTex = mFont->createStringTexture("0123456789");
     mNumberAtlas = new _KRTexture2DAtlas(mNumberTex, KRVector2DZero, KRVector2D(mNumberTex->getWidth()/10, mNumberTex->getHeight()));

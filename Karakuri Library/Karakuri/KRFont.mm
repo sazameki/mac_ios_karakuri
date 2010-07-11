@@ -8,10 +8,10 @@
 
 
 /*!
-    @method KRFont
+    @method _KRFont
     Constructor
  */
-KRFont::KRFont(const std::string& fontName, double size)
+_KRFont::_KRFont(const std::string& fontName, double size)
 {
     mFontName = fontName;
 
@@ -29,10 +29,10 @@ KRFont::KRFont(const std::string& fontName, double size)
 }
 
 /*!
-    @method ~KRFont
+    @method ~_KRFont
     Destructor
  */
-KRFont::~KRFont()
+_KRFont::~_KRFont()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     [(NSFont *)mFontObj release];
@@ -43,17 +43,17 @@ KRFont::~KRFont()
 #endif
 }
 
-void* KRFont::getFontObject() const
+void* _KRFont::getFontObject() const
 {
     return mFontObj;
 }
 
-_KRTexture2D* KRFont::createStringTexture(const std::string& str)
+_KRTexture2D* _KRFont::createStringTexture(const std::string& str)
 {
     return new _KRTexture2D(str, this);
 }
 
-std::string KRFont::to_s() const
+std::string _KRFont::to_s() const
 {
     return KRFS("<font>(name=\"%s\")", mFontName.c_str());
 }

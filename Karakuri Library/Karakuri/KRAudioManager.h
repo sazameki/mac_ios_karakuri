@@ -18,13 +18,13 @@ class KRWorld;
 
 /*!
     @class  KRAudioManager
-    @group  Game System
+    @group  Game Audio
     <p>ゲームの BGM と SE を管理するためのクラスです。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
  */
-class KRAudioManager {
+class KRAudioManager : public KRObject {
     
-    KRMusic*    mCurrentBGM;
+    _KRMusic*   mCurrentBGM;
     
     std::map<int, std::vector<int> >    mBGM_GroupID_BGMIDList_Map;
     std::map<int, std::string>          mBGM_BGMID_AudioFileName_Map;
@@ -32,11 +32,8 @@ class KRAudioManager {
     std::map<int, std::vector<int> >    mSE_GroupID_SEIDList_Map;
     std::map<int, std::string>          mSE_SEID_AudioFileName_Map;
 
-    std::map<int, KRMusic*>  mBGMMap;
-    std::map<int, KRSound*>  mSEMap;
-    
-    int         mNextNewBGMID;
-    int         mNextNewSEID;
+    std::map<int, _KRMusic*> mBGMMap;
+    std::map<int, _KRSound*>  mSEMap;
     
 public:
 	KRAudioManager();
@@ -50,15 +47,15 @@ public:
     
     /*!
         @method addBGM
-        グループIDを指定して、BGM として利用するオーディオファイルをゲーム・リソースとして追加します。
+        グループID、BGM ID を指定して、BGM として利用するオーディオファイルをゲーム・リソースとして追加します。
      */
-    int     addBGM(int groupID, const std::string& audioFileName);
+    void    addBGM(int groupID, int bgmID, const std::string& audioFileName);
 
     /*!
         @method addSE
-        グループIDを指定して、SE として利用するオーディオファイルをゲーム・リソースとして追加します。
+        グループID、SE ID を指定して、SE として利用するオーディオファイルをゲーム・リソースとして追加します。
      */
-    int     addSE(int groupID, const std::string& audioFileName);
+    void    addSE(int groupID, int seID, const std::string& audioFileName);
     
 #pragma mark ---- リソースの読み込み ----
 public:

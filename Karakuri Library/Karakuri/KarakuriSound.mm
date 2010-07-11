@@ -15,7 +15,7 @@ static ALCdevice *sALDevice = NULL;
 static ALCcontext *sALContext = NULL;
 
 
-void KRInitOpenAL()
+void _KRInitOpenAL()
 {
     if (sALDevice != NULL) {
         return;
@@ -37,7 +37,7 @@ void KRInitOpenAL()
     alcMakeContextCurrent(sALContext);
 }
 
-void KRCleanUpOpenAL()
+void _KRCleanUpOpenAL()
 {
     if (sALDevice == NULL) {
         return;
@@ -57,7 +57,7 @@ static float    sListenerHorizontalOrientation    = 0.0f;
 static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
 
 
-@implementation KarakuriSound
+@implementation _KarakuriSound
 
 + (float)listenerHorizontalOrientation
 {

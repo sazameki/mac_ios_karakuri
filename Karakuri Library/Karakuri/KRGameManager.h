@@ -30,12 +30,6 @@ typedef enum KRAudioMixType {
     KRAudioMixTypeAmbientSolo,     //!< Play own background music and own sound effects
 } KRAudioMixType;
 
-typedef enum KRDeviceType {
-    KRDeviceTypeMac,
-    KRDeviceTypeIPhone,
-    KRDeviceTypeIPad,
-} KRDeviceType;
-
 
 #pragma mark -
 #pragma mark Game Class Declaration
@@ -181,7 +175,7 @@ public:
         @task 状態を取得するための関数
      */
 
-    bool            checkDeviceType(KRDeviceType type) const;    
+    bool            _checkDeviceType(KRDeviceType type) const;    
 
     /*!
         @method getAudioMixType
@@ -303,12 +297,12 @@ protected:
     
     
 public:
-    void            changeWorldImpl(const std::string& name, bool useLoadingThread = true, bool isFirstInitialization = false) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void            startWorldChanging() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void            checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void            _changeWorldImpl(const std::string& name, bool useLoadingThread = true, bool isFirstInitialization = false) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void            _startWorldChanging() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void            _checkDeviceType() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
 public:
-    void            saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void            _saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 
 #pragma mark -

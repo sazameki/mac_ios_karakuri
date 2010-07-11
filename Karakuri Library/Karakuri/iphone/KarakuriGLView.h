@@ -15,26 +15,26 @@
 #define KR_TOUCH_MAX_COUNT    5
 
 
-typedef struct _KRTouchInfo {
+typedef struct _KRTouchInfo2 {
     bool        is_used;
     CGPoint     pos;
     void        *touch_pointer;
     unsigned    touch_id;
-} _KRTouchInfo;
+} _KRTouchInfo2;
 
 
 @interface KarakuriGLView : UIView<UIAccelerometerDelegate> {
     KarakuriGLContext   mKRGLContext;
     
     unsigned            mNextTouchID;
-    _KRTouchInfo         mTouchInfos[KR_TOUCH_MAX_COUNT];
+    _KRTouchInfo2       mTouchInfos[KR_TOUCH_MAX_COUNT];
     
 //    BOOL        mIsTouchActive[KR_TOUCH_MAX_COUNT];
 //    CGPoint     mTouchPos[KR_TOUCH_MAX_COUNT];
 
     BOOL    mIsAccelerometerEnabled;
     
-    KRTexture2D *mDefaultTex;
+    _KRTexture2D*   mDefaultTex;
 }
 
 - (id)initWithScreenSize:(CGSize)screenSize;

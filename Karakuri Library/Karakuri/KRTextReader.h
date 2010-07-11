@@ -13,7 +13,7 @@
 
 /*!
     @class  KRTextReader
-    @group  Game Foundation
+    @group  Game System
     <p>UTF-8形式のテキストファイルを、1行ずつ読み込むためのクラスです。</p>
     <p>改行コードには LF のみを用いてください。</p>
  */

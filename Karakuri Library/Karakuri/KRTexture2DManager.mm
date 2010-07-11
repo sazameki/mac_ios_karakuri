@@ -86,7 +86,23 @@ int KRTexture2DManager::_getResourceSize(int groupID)
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
         std::string filename = mTexID_ImageFileName_Map[texID];
-        int resourceSize = _KRTexture2D::getResourceSize(filename);
+        
+        BOOL isKarakuriBoxResourse = NO;
+        std::string ticket;
+
+        NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+        if ([[filenameStr pathExtension] isEqualToString:@"krrs"]) {
+            isKarakuriBoxResourse = YES;
+            ticket = mTexID_Ticket_Map[texID];
+        }
+        [filenameStr release];
+
+        int resourceSize;
+        if (isKarakuriBoxResourse) {
+            resourceSize = _getResourceLengthForTicket(ticket);
+        } else {
+            resourceSize = _KRTexture2D::getResourceSize(filename);
+        }
         ret += resourceSize;
     }
     
@@ -110,7 +126,7 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
         std::string filename = mTexID_ImageFileName_Map[texID];
-        int resourceSize = KRMusic::getResourceSize(filename);
+        int resourceSize = _KRMusic::getResourceSize(filename);
         double theMinDuration = ((double)resourceSize / allResourceSize) * minDuration;
         
         int baseFinishedSize = 0;
@@ -118,13 +134,17 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
             baseFinishedSize = loaderWorld->_getFinishedSize();
         }
         
+        BOOL isKarakuriBoxResourse = NO;
+        std::string ticket;
+        
         NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
         if (mTexMap[texID] == NULL) {
             KRTexture2DScaleMode scaleMode = mTexID_ScaleMode_Map[texID];
             
             NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
             if ([[filenameStr pathExtension] isEqualToString:@"krrs"]) {
-                std::string ticket = mTexID_Ticket_Map[texID];
+                isKarakuriBoxResourse = YES;
+                ticket = mTexID_Ticket_Map[texID];
                 int divX = mTicket_DivX_Map[ticket];
                 int divY = mTicket_DivY_Map[ticket];
                 mTexMap[texID] = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
@@ -145,7 +165,12 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
                     progress = loadTime / theMinDuration;
                 }
             }
-            int resourceSize = KRMusic::getResourceSize(filename);
+            int resourceSize;
+            if (isKarakuriBoxResourse) {
+                resourceSize = _getResourceLengthForTicket(ticket);
+            } else {
+                resourceSize = _KRTexture2D::getResourceSize(filename);
+            }
             loaderWorld->_setFinishedSize(baseFinishedSize + resourceSize);
         }
     }

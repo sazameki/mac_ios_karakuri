@@ -12,6 +12,10 @@
 #include "TitleWorld.h"
 #include "PlayWorld.h"
 
+#include "Player.h"
+#include "Enemy1.h"
+#include "Enemy2.h"
+
 
 GameMain::GameMain()
 {
@@ -21,16 +25,23 @@ GameMain::GameMain()
 
     setScreenSize(480, 320);                // iPhone Size (Horizontal use)
     //setScreenSize(320, 480);                // iPhone Size (Vertical use)
-    //setScreenSize(1024, 768);               // iPad size (Horizontal use)
-    //setScreenSize(768, 1024);               // iPad size (Vertical use)
+    //setScreenSize(1024, 768);               // iPad size (Horizontal use. Don't forget to remove Default-Portrait.png.)
+    //setScreenSize(768, 1024);               // iPad size (Vertical use. Don't forget to remove Default-Landscape.png.)
 
     setFrameRate(60.0);                     // Refresh rate
-    setMaxChara2DCount(1024);               // Max Animation Character Count
     setAudioMixType(KRAudioMixTypeAmbient); // Audio mixing
 
     setShowsMouseCursor(true);              // Mouse cursor should be shown (Mac only)
     setShowsFPS(true);                      // Realtime FPS information (debug build only)
 
+    // Set max animation character count
+    setMaxChara2DCount(1024);
+    
+    // Update max animation character class size
+    updateMaxChara2DSize(sizeof(Player));
+    updateMaxChara2DSize(sizeof(Enemy1));
+    updateMaxChara2DSize(sizeof(Enemy2));
+    
     // TODO: Edit "Target" setting to change the bundle name, which will be shown in Finder or iPhone Desktop.
 
     ///// Add any code here for creating your objects
@@ -45,25 +56,34 @@ void GameMain::setupResources()
 {
     ///// Add all required resources at this point.
 
-    // Load integrated resource file (* Use Karakuri Box to make it *)
-    //addResources("resource.krrs");
-    
+    // Load integrated resource file (Use "Karakuri Box" to edit "Game Resource.krrsproj" and export the resource file)
+    addResources("resource.krrs");
+
     // Logo and Loading Worlds
-    gTex_Logo   = gKRTex2DMan->addTexture(0, checkDeviceType(KRDeviceTypeIPad)? "Default-Portrait.png": "Default.png");
-    gTex_LoadingChara = gKRTex2DMan->addTexture(0, "chara.png");
+    if (KRCheckDeviceType(KRDeviceTypeIPad)) {
+        gKRTex2DMan->addTexture(GroupID::LogoAndLoading,
+                                TexID::Logo,
+                                (gKRScreenSize.x > gKRScreenSize.y)? "Default-Landscape.png": "Default-Portrait.png");
+    } else {
+        gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::Logo, "Default.png");
+    }
+
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingText, "loading_text.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingChara, "loading_chara.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingOff, "loading_off.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingOn, "loading_on.png");
+    gKRAudioMan->addBGM(GroupID::LogoAndLoading, BGM_ID::Loading, "bgm_loading.caf");
 
     // Title World
-    gTex_Title = gKRTex2DMan->addTexture(1, "title.png");
-    //gBGM_Title = gKRAudioMan->addBGM(1, "title_bgm.caf");
+    gKRTex2DMan->addTexture(GroupID::Title, TexID::Title, "title.png");
+    gKRAudioMan->addBGM(GroupID::Title, BGM_ID::Title, "bgm_title.caf");
 
     // Play World
-    gKRAnime2DMan->addCharacterSpecs(2, "chara2d.spec");
-    //gBGM_Play = gKRAudioMan->addBGM(2, "play_bgm.caf");
-    //gSE_Hit = gKRAudioMan->addSE(2, "hit.caf");
+    gKRAudioMan->addBGM(GroupID::Play, BGM_ID::Play, "bgm_play.caf");
+    gKRAudioMan->addSE(GroupID::Play, SE_ID::Burn, "se_burn.caf");
     
     // Load logo and loading worlds resources
-    // Basically you may want to load almost all resources at this point, except for stage-depenting resources.
-    loadResourceGroup(0);
+    loadResourceGroup(GroupID::LogoAndLoading);
 }
 
 std::string GameMain::setupWorlds()
@@ -74,7 +94,7 @@ std::string GameMain::setupWorlds()
     addWorld("title", new TitleWorld());
     addWorld("play", new PlayWorld());
     
-    // Return name of the world selected at first
+    // Return the first world name
     return "logo";
 }
 

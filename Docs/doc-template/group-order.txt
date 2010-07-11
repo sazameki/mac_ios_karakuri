@@ -1,6 +1,7 @@
+Game Graphics
+Game Audio
 Game System
-Game 2D Graphics
+Game Type
 Game Controls
 Game 2D Simulator
 Game Network
-Game Foundation

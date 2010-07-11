@@ -104,9 +104,26 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     [self createFramebuffer];
     
     if (mKRGLContext.backingWidth >= 768) {
-        mDefaultTex = new KRTexture2D("Default-Portrait.png");
+        KRGameManager* gameMan = [[KRGameController sharedController] game];
+        KRVector2D screenSize = gameMan->getScreenSize();
+        try {
+            // iPad (Landscape)
+            if (screenSize.x >= 1000) {
+                mDefaultTex = new _KRTexture2D("Default-Landscape.png");
+            }
+            // iPad (Portrait)
+            else {
+                mDefaultTex = new _KRTexture2D("Default-Portrait.png");
+            }
+        } catch (KRRuntimeError& e) {
+            mDefaultTex = NULL;
+        }
+        if (mDefaultTex == NULL) {
+            mDefaultTex = new _KRTexture2D("Default.png");
+        }
     } else {
-        mDefaultTex = new KRTexture2D("Default.png");
+        // iPhone
+        mDefaultTex = new _KRTexture2D("Default.png");
     }
 
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, mKRGLContext.viewFramebuffer);
@@ -119,11 +136,11 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     glOrthof(0.0f, (float)mKRGLContext.backingWidth, 0.0f, (float)mKRGLContext.backingHeight, -1.0f, 1.0f);
     
     mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight));
-    KRTexture2D::processBatchedTexture2DDraws();
+    _KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
     mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight));
-    KRTexture2D::processBatchedTexture2DDraws();
+    _KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
     sIsReady = YES;
@@ -204,9 +221,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
     if (gKRGameMan->getScreenWidth() > gKRGameMan->getScreenHeight()) {
-        gKRInputInst->setAcceleration(-acceleration.y, acceleration.x, acceleration.z);
+        gKRInputInst->_setAcceleration(-acceleration.y, acceleration.x, acceleration.z);
     } else {
-        gKRInputInst->setAcceleration(acceleration.x, acceleration.y, acceleration.z);
+        gKRInputInst->_setAcceleration(acceleration.x, acceleration.y, acceleration.z);
     }
 }
 
@@ -226,9 +243,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 mTouchInfos[i].touch_pointer = aTouch;
 
                 if (sPhoneOrientatilHorizontal) {
-                    gKRInputInst->startTouch(mTouchInfos[i].touch_id, pos.y, pos.x);
+                    gKRInputInst->_startTouch(mTouchInfos[i].touch_id, pos.y, pos.x);
                 } else {
-                    gKRInputInst->startTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y);
+                    gKRInputInst->_startTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y);
                 }
                 break;
             }
@@ -245,9 +262,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 CGPoint& oldPos = mTouchInfos[i].pos;
                 mTouchInfos[i].pos = pos;
                 if (sPhoneOrientatilHorizontal) {
-                    gKRInputInst->moveTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
+                    gKRInputInst->_moveTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
                 } else {
-                    gKRInputInst->moveTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, pos.x-oldPos.x, oldPos.y-pos.y);
+                    gKRInputInst->_moveTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, pos.x-oldPos.x, oldPos.y-pos.y);
                 }
                 break;
             }
@@ -263,9 +280,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 CGPoint pos = [aTouch locationInView:nil];
                 CGPoint& oldPos = mTouchInfos[i].pos;
                 if (sPhoneOrientatilHorizontal) {
-                    gKRInputInst->endTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
+                    gKRInputInst->_endTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
                 } else {
-                    gKRInputInst->endTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, oldPos.x-pos.x, oldPos.y-pos.y);
+                    gKRInputInst->_endTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, oldPos.x-pos.x, oldPos.y-pos.y);
                 }
 
                 mTouchInfos[i].is_used = false;

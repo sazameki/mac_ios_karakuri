@@ -1,9 +1,9 @@
 /*!
     @file   Player.h
-    @author numata
-    @date   10/02/19
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
     
-    Please write the description of this class.
+    Player class, which attacks enemies.
  */
 
 #pragma once
@@ -11,16 +11,17 @@
 #include <Karakuri/Karakuri.h>
 
 
-class Player {
-
-    KRChara2D*  mChara;
+/*
+    Please notice that KRChara2D should not be deleted manually.
+ */
+class Player : public KRChara2D {
     
 public:
 	Player();
 	virtual ~Player();
     
 public:
-    void    move(KRInput* input);
+    void    grab(bool flag);
     
 };
 

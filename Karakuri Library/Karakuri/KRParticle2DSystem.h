@@ -58,7 +58,7 @@ public:
 
 /*!
     @-class  _KRParticle2DSystem
-    @group  Game 2D Graphics
+    @group  Game Graphics
     @abstract 2次元の移動を行うパーティクル群を生成し管理するための仕組みです。
     火、爆発、煙、雲、霧などの表現に利用できます。
  */

@@ -13,12 +13,12 @@
 #include <Karakuri/KarakuriTypes.h>
 
 
-class KRFont;
+class _KRFont;
 
 
 /*!
     @enum   KRTexture2DScaleMode
-    @group  Game 2D Graphics
+    @group  Game Graphics
     @constant   KRTexture2DScaleModeNearest     ニアレストネイバー法による画像補完を表す定数です。
     @constant   KRTexture2DScaleModeLinear      バイリニア法による画像補完を表す定数です。
     @abstract   画像補間法を表すための型です。
@@ -31,7 +31,7 @@ typedef enum {
 
 /*
     @-class _KRTexture2D
-    @group Game 2D Graphics
+    @group Game Graphics
     <p>2次元のテクスチャを表すためのクラスです。</p>
     <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
@@ -78,7 +78,7 @@ public:
 
     _KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode);
 
-    _KRTexture2D(const std::string& str, KRFont *font);
+    _KRTexture2D(const std::string& str, _KRFont *font);
     ~_KRTexture2D();
     
 public:

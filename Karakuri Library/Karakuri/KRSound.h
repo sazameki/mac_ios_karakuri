@@ -13,7 +13,7 @@
 
 
 /*!
-    @-class  KRSound
+    @-class  _KRSound
     @group  Game Audio
     <p>10秒以下の長さのサウンドファイルを、ゲームの効果音として再生するためのクラスです。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
@@ -25,7 +25,7 @@
     <p>このクラスでは、3次元の音場に1人の聴取者（リスナ）と、複数の音源（ソース）があるものとしてモデル化されています。
     ひとつひとつのソースの位置は移動させることができ、それぞれの位置に応じて聞こえ方が変化します。またリスナの位置や向きも変化させることができます。</p>
  */
-class KRSound : public KRObject {
+class _KRSound : public KRObject {
     
 private:
     std::string mFileName;
@@ -42,12 +42,12 @@ public:
      */
     
     /*!
-        @method KRSound
+        @method _KRSound
         @abstract ファイル名（拡張子含む）を指定して、効果音再生用のインスタンスを作成します。
         デフォルトではループ再生しませんが、第2引数に true を指定するとループ再生するようになります。
      */
-    KRSound(const std::string& filename, bool doLoop = false);
-    ~KRSound();
+    _KRSound(const std::string& filename, bool doLoop = false);
+    ~_KRSound();
     
 public:
     /*!

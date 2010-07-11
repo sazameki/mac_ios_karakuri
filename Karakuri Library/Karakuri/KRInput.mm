@@ -21,13 +21,13 @@
 #endif
 
 
-KRInput *gKRInputInst = NULL;
+KRInput*    gKRInputInst = NULL;
 
 
 #if KR_IPHONE
-static NSLock   *sTouchLock = nil;
+static NSLock*  sTouchLock = nil;
 
-static double TouchPadButtonThresholdY = 130.0;
+static double   TouchPadButtonThresholdY = 130.0;
 #endif
 
 
@@ -42,7 +42,7 @@ KRInput::KRInput()
     //mIsFullScreen = false;
 #endif
 
-    resetAllInputs();
+    _resetAllInputs();
 
     // Touch Input Support
 #if KR_IPHONE
@@ -72,19 +72,19 @@ bool KRInput::isMouseDownOnce() const
     return mIsMouseDownOnce;
 }
 
-KRMouseState KRInput::getMouseState()
+_KRMouseState KRInput::_getMouseState()
 {
     return mMouseState;
 }
 
-KRMouseState KRInput::getMouseStateAgainstDummy()
+_KRMouseState KRInput::_getMouseStateAgainstDummy()
 {
     return mMouseStateAgainstDummy;
 }
 
-KRMouseState KRInput::getMouseStateOnce()
+_KRMouseState KRInput::_getMouseStateOnce()
 {
-	KRMouseState ret = (mMouseState ^ mMouseStateOld) & mMouseState;
+	_KRMouseState ret = (mMouseState ^ mMouseStateOld) & mMouseState;
 	mMouseStateOld |= mMouseState;
 	return ret;
 }
@@ -133,19 +133,19 @@ bool KRInput::isKeyDownAgainstDummy(KRKeyInfo key) const
     return (mKeyStateAgainstDummy & key)? true: false;
 }
 
-KRKeyState KRInput::getKeyState()
+KRKeyInfo KRInput::_getKeyState()
 {
     return mKeyState;
 }
 
-KRKeyState KRInput::getKeyStateOnce()
+KRKeyInfo KRInput::_getKeyStateOnce()
 {
-	KRKeyState ret = (mKeyState ^ mKeyStateOld) & mKeyState;
+	KRKeyInfo ret = (mKeyState ^ mKeyStateOld) & mKeyState;
 	mKeyStateOld |= mKeyState;
 	return ret;
 }
 
-KRKeyState KRInput::getKeyStateAgainstDummy()
+KRKeyInfo KRInput::_getKeyStateAgainstDummy()
 {
     return mKeyStateAgainstDummy;
 }
@@ -168,7 +168,7 @@ bool KRInput::getTouchAgainstDummy()
 
 bool KRInput::getTouchOnce()
 {
-    KRTouchState theState = (mTouchState ^ mTouchStateOld) & mTouchState;
+    _KRTouchState theState = (mTouchState ^ mTouchStateOld) & mTouchState;
 	mTouchStateOld = mTouchState;
     return (theState & TouchMask)? true: false;
 }
@@ -190,16 +190,44 @@ KRVector2D KRInput::getTouchLocation()
 
 int KRInput::getTouchCount()
 {
+    int ret;
+    
     [sTouchLock lock];
 
-    int ret = mTouchInfos.size();
+    ret = mTouchInfos.size();
     
     [sTouchLock unlock];
 
     return ret;
 }
 
-const std::vector<KRTouchInfo> KRInput::getTouchInfos() const
+std::vector<int> KRInput::getTouchIDs() const
+{
+    std::vector<int> ret;
+
+    [sTouchLock lock];
+    
+    for (std::vector<_KRTouchInfo>::const_iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+        ret.push_back(it->touch_id);
+    }
+    
+    [sTouchLock unlock];
+    
+    return ret;
+}
+
+KRVector2D KRInput::getTouchLocation(int touchID) const
+{
+    for (std::vector<_KRTouchInfo>::const_iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+        if (it->touch_id == touchID) {
+            return it->pos;
+        }
+    }
+    
+    return KRVector2DZero;
+}
+
+/*const std::vector<KRTouchInfo> KRInput::getTouchInfos() const
 {
     [sTouchLock lock];
 
@@ -208,39 +236,39 @@ const std::vector<KRTouchInfo> KRInput::getTouchInfos() const
     [sTouchLock unlock];
 
     return ret;
-}
+}*/
 
-KRVector2D KRInput::getTouchArrowMotion()
+/*KRVector2D KRInput::getTouchArrowMotion()
 {
     if (mTouchArrow_touchID > 1000) {
         return KRVector2DZero;
     }
     return KRVector2D(mTouchArrowOldPos.x - mTouchArrowCenterPos.x, mTouchArrowOldPos.y - mTouchArrowCenterPos.y);
-}
+}*/
 
-bool KRInput::getTouchButton1()
+/*bool KRInput::getTouchButton1()
 {
     return (mTouchButton1_touchID <= 1000);
-}
+}*/
 
-bool KRInput::getTouchButton1Once()
+/*bool KRInput::getTouchButton1Once()
 {
     KRTouchState theState = (mTouchButton1State ^ mTouchButton1StateOld) & mTouchButton1State;
 	mTouchButton1StateOld = mTouchButton1State;
     return (theState & TouchMask)? true: false;
-}
+}*/
 
-bool KRInput::getTouchButton2()
+/*bool KRInput::getTouchButton2()
 {
     return (mTouchButton2_touchID <= 1000);
-}
+}*/
 
-bool KRInput::getTouchButton2Once()
+/*bool KRInput::getTouchButton2Once()
 {
     KRTouchState theState = (mTouchButton2State ^ mTouchButton2StateOld) & mTouchButton2State;
 	mTouchButton2StateOld = mTouchButton2State;
     return (theState & TouchMask)? true: false;
-}
+}*/
 
 #endif
 
@@ -298,7 +326,7 @@ void KRInput::enableAccelerometer(bool flag)
 
 #if KR_MACOSX
 
-void KRInput::processMouseDownImpl(KRMouseState mouseMask)
+void KRInput::_processMouseDownImpl(_KRMouseState mouseMask)
 {
     mMouseState |= mouseMask;
 
@@ -311,7 +339,7 @@ void KRInput::processMouseDownImpl(KRMouseState mouseMask)
     }
 }
 
-void KRInput::processMouseDragImpl(const KRVector2D& pos)
+void KRInput::_processMouseDragImpl(const KRVector2D& pos)
 {
     if (mHasDummySource) {
         mMouseLocationForDummy = pos;
@@ -328,12 +356,12 @@ void KRInput::processMouseDragImpl(const KRVector2D& pos)
     }
 }
 
-void KRInput::processMouseUpImpl(KRMouseState mouseMask)
+void KRInput::_processMouseUpImpl(_KRMouseState mouseMask)
 {
     mMouseState &= ~mouseMask;
     mMouseStateOld &= ~mouseMask;
     
-	mIsMouseDownOld = mIsMouseDownOld && ((mouseMask & (MouseButtonLeft | MouseButtonRight))? false: true);
+	mIsMouseDownOld = mIsMouseDownOld && ((mouseMask & (_MouseButtonLeft | _MouseButtonRight))? false: true);
 
     if ((NSFileHandle *)gInputLogHandle != nil) {
         KRVector2D locationDouble = getMouseLocation();
@@ -343,40 +371,40 @@ void KRInput::processMouseUpImpl(KRMouseState mouseMask)
     }
 }
 
-void KRInput::processMouseDownImplAgainstDummy(KRMouseState mouseMask)
+void KRInput::_processMouseDownImplAgainstDummy(_KRMouseState mouseMask)
 {
     mMouseStateAgainstDummy |= mouseMask;
 }
 
-void KRInput::processMouseUpImplAgainstDummy(KRMouseState mouseMask)
+void KRInput::_processMouseUpImplAgainstDummy(_KRMouseState mouseMask)
 {
     mMouseStateAgainstDummy &= ~mouseMask;
 }
 
-void KRInput::processMouseDown(KRMouseState mouseMask)
+void KRInput::_processMouseDown(_KRMouseState mouseMask)
 {
     if (mHasDummySource) {
-        processMouseDownImplAgainstDummy(mouseMask);
+        _processMouseDownImplAgainstDummy(mouseMask);
     } else {
-        processMouseDownImpl(mouseMask);
+        _processMouseDownImpl(mouseMask);
     }
 }
 
-void KRInput::processMouseDrag()
+void KRInput::_processMouseDrag()
 {
     if (mHasDummySource) {
         // Do nothing
     } else {
-        processMouseDragImpl();
+        _processMouseDragImpl();
     }
 }
 
-void KRInput::processMouseUp(KRMouseState mouseMask)
+void KRInput::_processMouseUp(_KRMouseState mouseMask)
 {
     if (mHasDummySource) {
-        processMouseUpImplAgainstDummy(mouseMask);
+        _processMouseUpImplAgainstDummy(mouseMask);
     } else {
-        processMouseUpImpl(mouseMask);
+        _processMouseUpImpl(mouseMask);
     }
 }
 
@@ -388,7 +416,7 @@ void KRInput::processMouseUp(KRMouseState mouseMask)
 
 #if KR_MACOSX
 
-void KRInput::processKeyDown(KRKeyState keyMask)
+void KRInput::_processKeyDown(KRKeyInfo keyMask)
 {
     mKeyState |= keyMask;
     
@@ -398,12 +426,12 @@ void KRInput::processKeyDown(KRKeyState keyMask)
     }
 }
 
-void KRInput::processKeyDownAgainstDummy(KRKeyState keyMask)
+void KRInput::_processKeyDownAgainstDummy(KRKeyInfo keyMask)
 {
     mKeyStateAgainstDummy |= keyMask;
 }
 
-void KRInput::processKeyUp(KRKeyState keyMask)
+void KRInput::_processKeyUp(KRKeyInfo keyMask)
 {
     mKeyState &= ~keyMask;
     mKeyStateOld &= ~keyMask;
@@ -414,17 +442,17 @@ void KRInput::processKeyUp(KRKeyState keyMask)
     }
 }
 
-void KRInput::processKeyUpAgainstDummy(KRKeyState keyMask)
+void KRInput::_processKeyUpAgainstDummy(KRKeyInfo keyMask)
 {
     mKeyStateAgainstDummy &= ~keyMask;
 }
 
-void KRInput::processKeyDownCode(unsigned short keyCode)
+void KRInput::_processKeyDownCode(unsigned short keyCode)
 {
-    void (KRInput::*processFunc)(KRKeyState) = &KRInput::processKeyDown;
+    void (KRInput::*processFunc)(KRKeyInfo) = &KRInput::_processKeyDown;
 
     if (mHasDummySource) {
-        processFunc = &KRInput::processKeyDownAgainstDummy;
+        processFunc = &KRInput::_processKeyDownAgainstDummy;
     }
 
     if (keyCode == 0x1d || keyCode == 0x52) {
@@ -567,12 +595,12 @@ void KRInput::processKeyDownCode(unsigned short keyCode)
     }
 }
 
-void KRInput::processKeyUpCode(unsigned short keyCode)
+void KRInput::_processKeyUpCode(unsigned short keyCode)
 {
-    void (KRInput::*processFunc)(KRKeyState) = &KRInput::processKeyUp;
+    void (KRInput::*processFunc)(KRKeyInfo) = &KRInput::_processKeyUp;
     
     if (mHasDummySource) {
-        processFunc = &KRInput::processKeyUpAgainstDummy;
+        processFunc = &KRInput::_processKeyUpAgainstDummy;
     }
     
     if (keyCode == 0x1d || keyCode == 0x52) {
@@ -723,9 +751,9 @@ void KRInput::processKeyUpCode(unsigned short keyCode)
 
 #if KR_IPHONE
 
-void KRInput::startTouchImpl(unsigned touchID, double x, double y)
+void KRInput::_startTouchImpl(unsigned touchID, double x, double y)
 {
-    KRTouchInfo newInfo;
+    _KRTouchInfo newInfo;
     
     newInfo.touch_id = touchID;
     newInfo.pos.x = x;
@@ -760,11 +788,11 @@ void KRInput::startTouchImpl(unsigned touchID, double x, double y)
     [sTouchLock unlock];
 }
 
-void KRInput::moveTouchImpl(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::_moveTouchImpl(unsigned touchID, double x, double y, double dx, double dy)
 {
     [sTouchLock lock];
 
-    for (std::vector<KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+    for (std::vector<_KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
         if (it->touch_id == touchID) {
             it->pos.x = x;
             it->pos.y = y;
@@ -781,11 +809,11 @@ void KRInput::moveTouchImpl(unsigned touchID, double x, double y, double dx, dou
     [sTouchLock unlock];
 }
 
-void KRInput::endTouchImpl(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::_endTouchImpl(unsigned touchID, double x, double y, double dx, double dy)
 {
     [sTouchLock lock];
 
-    for (std::vector<KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+    for (std::vector<_KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
         if (it->touch_id == touchID) {
             mTouchInfos.erase(it);
             break;
@@ -817,22 +845,22 @@ void KRInput::endTouchImpl(unsigned touchID, double x, double y, double dx, doub
     [sTouchLock unlock];
 }
 
-void KRInput::startTouchImplAgainstDummy(unsigned touchID, double x, double y)
+void KRInput::_startTouchImplAgainstDummy(unsigned touchID, double x, double y)
 {
     mTouchCountAgainstDummy++;
 }
 
-void KRInput::endTouchImplAgainstDummy(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::_endTouchImplAgainstDummy(unsigned touchID, double x, double y, double dx, double dy)
 {
     mTouchCountAgainstDummy--;
 }
 
-void KRInput::startTouch(unsigned touchID, double x, double y)
+void KRInput::_startTouch(unsigned touchID, double x, double y)
 {
     if (mHasDummySource) {
-        startTouchImplAgainstDummy(touchID, x, y);
+        _startTouchImplAgainstDummy(touchID, x, y);
     } else {
-        startTouchImpl(touchID, x, y);
+        _startTouchImpl(touchID, x, y);
     }
     
     if ((NSFileHandle *)gInputLogHandle != nil) {
@@ -841,12 +869,12 @@ void KRInput::startTouch(unsigned touchID, double x, double y)
     }
 }
 
-void KRInput::moveTouch(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::_moveTouch(unsigned touchID, double x, double y, double dx, double dy)
 {
     if (mHasDummySource) {
         // Do nothing
     } else {
-        moveTouchImpl(touchID, x, y, dx, dy);
+        _moveTouchImpl(touchID, x, y, dx, dy);
     }
     
     if ((NSFileHandle *)gInputLogHandle != nil) {
@@ -855,12 +883,12 @@ void KRInput::moveTouch(unsigned touchID, double x, double y, double dx, double 
     }    
 }
 
-void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double dy)
+void KRInput::_endTouch(unsigned touchID, double x, double y, double dx, double dy)
 {
     if (mHasDummySource) {
-        endTouchImplAgainstDummy(touchID, x, y, dx, dy);
+        _endTouchImplAgainstDummy(touchID, x, y, dx, dy);
     } else {
-        endTouchImpl(touchID, x, y, dx, dy);
+        _endTouchImpl(touchID, x, y, dx, dy);
     }
     
     if ((NSFileHandle *)gInputLogHandle != nil) {
@@ -878,19 +906,19 @@ void KRInput::endTouch(unsigned touchID, double x, double y, double dx, double d
 
 #if KR_IPHONE
 
-void KRInput::setAccelerationImpl(double x, double y, double z)
+void KRInput::_setAccelerationImpl(double x, double y, double z)
 {
     mAcceleration.x = x;
     mAcceleration.y = y;
     mAcceleration.z = z;
 }
 
-void KRInput::setAcceleration(double x, double y, double z)
+void KRInput::_setAcceleration(double x, double y, double z)
 {
     if (mHasDummySource) {
         // Do nothing
     } else {
-        setAccelerationImpl(x, y, z);
+        _setAccelerationImpl(x, y, z);
     }
 
     if ((NSFileHandle *)gInputLogHandle != nil) {
@@ -908,9 +936,9 @@ void KRInput::setAcceleration(double x, double y, double z)
 void KRInput::_updateOnceInfo()
 {
 #if KR_MACOSX
-    mKeyStateOnce = getKeyStateOnce();
+    mKeyStateOnce = _getKeyStateOnce();
 
-    mIsMouseDown = (getMouseState() & (MouseButtonLeft | MouseButtonRight))? true: false;
+    mIsMouseDown = (_getMouseState() & (_MouseButtonLeft | _MouseButtonRight))? true: false;
     mIsMouseDownOnce = (mIsMouseDown ^ mIsMouseDownOld) && mIsMouseDown;
 	mIsMouseDownOld = mIsMouseDownOld || mIsMouseDown;
 #endif
@@ -924,28 +952,28 @@ void KRInput::_updateOnceInfo()
 #pragma mark -
 #pragma mark Dummy Input Support
 
-void KRInput::plugDummySourceIn()
+void KRInput::_plugDummySourceIn()
 {
     mHasDummySource = true;
 }
 
-void KRInput::pullDummySourceOut()
+void KRInput::_pullDummySourceOut()
 {
     mHasDummySource = false;
 }
 
-void KRInput::processDummyData(KRInputSourceData& data)
+void KRInput::_processDummyData(KRInputSourceData& data)
 {
 #if KR_MACOSX
     // Keyboard
     if (data.command[0] == 'K') {
         // Key Down
         if (data.command[1] == 'D') {
-            processKeyDown(data.data_mask);
+            _processKeyDown(data.data_mask);
         }
         // Key Up
         else if (data.command[1] == 'U') {
-            processKeyUp(data.data_mask);
+            _processKeyUp(data.data_mask);
         }
     }
     // Mouse
@@ -953,16 +981,16 @@ void KRInput::processDummyData(KRInputSourceData& data)
         // Mouse Down
         if (data.command[1] == 'D') {
             mMouseLocationForDummy = data.location;
-            processMouseDownImpl((KRMouseState)data.data_mask);
+            _processMouseDownImpl((_KRMouseState)data.data_mask);
         }
         // Mouse Drag
         else if (data.command[1] == 'M') {
-            processMouseDragImpl(data.location);
+            _processMouseDragImpl(data.location);
         }
         // Mouse Up
         else if (data.command[1] == 'U') {
             mMouseLocationForDummy = data.location;
-            processMouseUpImpl((KRMouseState)data.data_mask);
+            _processMouseUpImpl((_KRMouseState)data.data_mask);
         }
     }
 #endif
@@ -972,20 +1000,20 @@ void KRInput::processDummyData(KRInputSourceData& data)
     if (data.command[0] == 'T') {
         // Touch Start
         if (data.command[1] == 'D') {
-            startTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y);
+            _startTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y);
         }
         // Touch Move
         else if (data.command[1] == 'M') {
-            moveTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y, 0.0, 0.0);
+            _moveTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y, 0.0, 0.0);
         }
         // Touch End
         else if (data.command[1] == 'U') {
-            endTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y, 0.0, 0.0);
+            _endTouchImpl((unsigned)data.data_mask, data.location.x, data.location.y, 0.0, 0.0);
         }
     }
     // Acceleration
     else if (data.command[0] == 'A') {
-        setAccelerationImpl(data.location.x, data.location.y, data.location.z);
+        _setAccelerationImpl(data.location.x, data.location.y, data.location.z);
     }
 #endif
 }
@@ -994,7 +1022,7 @@ void KRInput::processDummyData(KRInputSourceData& data)
 #pragma mark -
 #pragma mark Debug Support
 
-void KRInput::resetAllInputs()
+void KRInput::_resetAllInputs()
 {
     mHasDummySource = NO;
     

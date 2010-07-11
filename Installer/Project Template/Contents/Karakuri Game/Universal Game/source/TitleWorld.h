@@ -3,7 +3,7 @@
     @author ___FULLUSERNAME___
     @date   ___DATE___
     
-    Please write the description of this world.
+    Game title world.
  */
 
 #pragma once
@@ -19,5 +19,9 @@ public:
     virtual void    updateModel(KRInput* input);
     virtual void    drawView(KRGraphics* g);
 
+    //virtual void    buttonPressed(KRButton* aButton);
+    //virtual void    sliderValueChanged(KRSlider* slider);    
+    //virtual void    switchStateChanged(KRSwitch* switcher);
+    
 };
 

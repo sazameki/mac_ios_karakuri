@@ -35,12 +35,16 @@ void LogoWorld::drawView(KRGraphics* g)
         alpha = 1.0;
     }
 
-    double angle = M_PI_4;
-    if (gKRScreenSize.x > gKRScreenSize.y) {
-        angle = M_PI_2;
+    if (KRCheckDeviceType(KRDeviceTypeIPad)) {
+        gKRTex2DMan->drawAtPoint(TexID::Logo, KRVector2DZero, alpha);
+    } else {
+        double angle = 0;
+        if (gKRScreenSize.x > gKRScreenSize.y) {
+            angle = M_PI_2;
+        }
+        
+        gKRTex2DMan->drawAtPointCenterEx(TexID::Logo, gKRScreenSize/2, angle, KRVector2DOne, alpha);
     }
-
-    gKRTex2DMan->drawAtPointCenterEx(gTex_Logo, gKRScreenSize/2, angle, gKRTex2DMan->getTextureSize(gTex_Logo)/2, KRVector2DOne, alpha);
 }
 
 

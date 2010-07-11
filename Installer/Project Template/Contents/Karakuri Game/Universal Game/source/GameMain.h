@@ -2,6 +2,8 @@
     @file   GameMain.h
     @author ___FULLUSERNAME___
     @date   ___DATE___
+ 
+    Game management class.
  */
 
 #pragma once

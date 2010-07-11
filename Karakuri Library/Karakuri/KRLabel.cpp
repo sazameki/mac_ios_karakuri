@@ -19,7 +19,7 @@ KRLabel::KRLabel(const KRRect2D& frame)
     mText = "";
     mTextTexture = NULL;
     
-    mFont = new KRFont("Helvetica-Bold", 20);
+    mFont = new _KRFont("Helvetica-Bold", 20);
     
     mTextColor = KRColor::White;
     mTextAlignment = KRTextAlignmentLeft;
@@ -86,7 +86,7 @@ std::string KRLabel::getText() const
 void KRLabel::setFont(const std::string& fontName, double size)
 {
     delete mFont;
-    mFont = new KRFont(fontName, size);
+    mFont = new _KRFont(fontName, size);
     mHasChangedText = true;
 }
 
