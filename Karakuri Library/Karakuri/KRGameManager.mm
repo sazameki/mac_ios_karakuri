@@ -10,6 +10,7 @@
 #include "KRWorld.h"
 #include "KRTexture2DManager.h"
 #include "KRAudioManager.h"
+#include "KRParticle2DSystem.h"
 #import "BXResourceImporter.h"
 
 #import "KRGameController.h"
@@ -45,7 +46,9 @@ KRGameManager::KRGameManager()
     mShowsMouseCursor = false;
     mShowsFPS = false;
     
-    mMaxChara2DCount = 256;
+    mMaxChara2DCount = 1024;
+    mMaxChara2DSize = sizeof(KRChara2D);
+    updateMaxChara2DSize(sizeof(_KRParticle2D));
 
     mGameIDForNetwork = "";
 
@@ -153,8 +156,8 @@ void KRGameManager::setupResources()
 
 void KRGameManager::loadResourceGroup(int groupID)
 {
-    gKRTex2DMan->loadTextureFiles(groupID, NULL, 0.0);
-    gKRAudioMan->loadAudioFiles(groupID, NULL, 0.0);
+    gKRTex2DMan->_loadTextureFiles(groupID, NULL, 0.0);
+    gKRAudioMan->_loadAudioFiles(groupID, NULL, 0.0);
 }
 
 
@@ -265,6 +268,18 @@ void KRGameManager::setScreenSize(int width, int height)
     mScreenHeight = height;
     gKRScreenSize.x = width;
     gKRScreenSize.y = height;
+}
+
+size_t KRGameManager::getMaxChara2DSize() const
+{
+    return mMaxChara2DSize;
+}
+
+void KRGameManager::updateMaxChara2DSize(size_t size)
+{
+    if (mMaxChara2DSize < size) {
+        mMaxChara2DSize = size;
+    }
 }
 
 void KRGameManager::startWorldChanging()

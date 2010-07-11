@@ -58,6 +58,7 @@ class KRGameManager : public KRObject {
     bool            mShowsMouseCursor;
     bool            mShowsFPS;
     int             mMaxChara2DCount;
+    size_t          mMaxChara2DSize;
     
     std::string     mGameIDForNetwork;
     std::string     mNetworkStartWorldName;
@@ -199,6 +200,8 @@ public:
      */
     int             getMaxChara2DCount() const;
     
+    size_t          getMaxChara2DSize() const;
+
     /*!
         @method     getNetworkStartWorldName
      */
@@ -295,6 +298,8 @@ protected:
         設定されたタイトルは、Mac OS X 環境のウィンドウのタイトルバーや、警告メッセージのタイトルなどに使用されます。
      */
     void            setTitle(const std::string& str);
+    
+    void            updateMaxChara2DSize(size_t size);
     
     
 public:

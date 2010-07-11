@@ -53,6 +53,12 @@ struct HitType {
     };
 };
 
+struct ParticleID {
+    enum {
+        Particle1   = 1000,
+    };
+};
+
 // BGM IDs
 struct BGM_ID {
     enum {

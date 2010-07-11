@@ -109,7 +109,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         mGraphics = new KRGraphics();
         mInput = new KRInput();
         mTex2DManager = new KRTexture2DManager();
-        mAnime2DManager = new KRAnime2DManager(mGameManager->getMaxChara2DCount());
+        mAnime2DManager = new KRAnime2DManager(mGameManager->getMaxChara2DCount(), mGameManager->getMaxChara2DSize());
         mAudioManager = new KRAudioManager();
         
         mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGameManager->getFrameRate()));

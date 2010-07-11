@@ -58,44 +58,41 @@ public:
      */
     void    addTexture(int groupID, int texID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
     
-    void    addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
 
-    int     addFont(int groupID, const std::string& fontName, double size);
-
-
-#pragma mark ---- リソース管理 ----
-public:    
-    /*!
-        @task リソースの管理
-     */
-
-    void    setDivForTicket(const std::string& ticket, int divX, int divY);
-    int     getTextureIDForTicket(const std::string& ticket);
-    std::string getFileNameForTicket(const std::string& ticket);
-    unsigned    getResourceStartPosForTicket(const std::string& ticket);
-    unsigned    getResourceLengthForTicket(const std::string& ticket);
-
-    int     getResourceSize(int groupID);
-    void    loadTextureFiles(int groupID, KRWorld* loaderWorld, double minDuration);
-    void    unloadTextureFiles(int groupID);
-    
     /*!
         @method getAtlasSize
-        @abstract リソースIDを指定して、テクスチャに指定された1コマごとのサイズを取得します。
+        @abstract テクスチャIDを指定して、テクスチャに指定された1コマごとのサイズを取得します。
      */
     KRVector2D  getAtlasSize(int texID);
     
     /*!
         @method getTextureSize
-        @abstract リソースIDを指定して、テクスチャの全体のサイズを取得します。
+        @abstract テクスチャIDを指定して、テクスチャの全体のサイズを取得します。
      */
     KRVector2D  getTextureSize(int texID);
 
+    /*!
+        @method setTextureAtlasSize
+        テクスチャIDを指定して、テクスチャの1コマごとのサイズを指定します。
+     */
     void    setTextureAtlasSize(int texID, const KRVector2D& size);
     
+    
+    void    _addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
+
+    void        _setDivForTicket(const std::string& ticket, int divX, int divY);
+    int         _getTextureIDForTicket(const std::string& ticket);
+    std::string _getFileNameForTicket(const std::string& ticket);
+    unsigned    _getResourceStartPosForTicket(const std::string& ticket);
+    unsigned    _getResourceLengthForTicket(const std::string& ticket);
+    
+    void    _loadTextureFiles(int groupID, KRWorld* loaderWorld, double minDuration);
+    void    _unloadTextureFiles(int groupID);
+    
+    int     _getResourceSize(int groupID);
     _KRTexture2D*    _getTexture(int texID);
-
-
+    
+    
 #pragma mark ---- テクスチャの描画 ----
     /*!
         @task テクスチャの描画（基本）
@@ -137,7 +134,7 @@ public:
      */
     void    drawAtPointEx2(int texID, const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
 
-    
+
     /*!
         @task テクスチャの描画（中心点指定）
      */
@@ -178,7 +175,7 @@ public:
      */
     void    drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, const KRColor& color);
 
-    
+
     /*!
         @task テクスチャの描画（矩形指定）
      */
@@ -228,15 +225,18 @@ public:
     /*!
         @method drawAtlasAtPointEx
         @abstract IDとアトラス座標、回転と回転の中心点、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
+        回転の中心点 origin は、x も y も 0.0〜1.0 の、横幅と高さに対する比率で指定します。画像の左下の点が (0, 0)、右上の点が (1, 1) です。
      */
     void    drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha=1.0);
 
     /*!
         @method drawAtlasAtPointEx
         @abstract IDとアトラス座標、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
+        回転の中心点 origin は、x も y も 0.0〜1.0 の、横幅と高さに対する比率で指定します。画像の左下の点が (0, 0)、右上の点が (1, 1) です。
      */
     void    drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
-    
+
+
     /*!
         @task テクスチャの描画（アトラス指定＋中心点指定）
      */
@@ -264,7 +264,8 @@ public:
         @abstract IDとアトラス座標、描画の中心点、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
      */
     void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color);
-    
+
+
     /*!
         @task テクスチャの描画（アトラス指定＋矩形指定）
      */
@@ -281,10 +282,6 @@ public:
      */
     void    drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color);
 
-
-#pragma mark ---- フォントのサポート ----
-    int     createStringTexture(int fontID, const std::string& str);    
-    
 };
 
 

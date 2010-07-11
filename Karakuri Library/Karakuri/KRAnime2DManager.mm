@@ -9,20 +9,20 @@
 
 
 KRAnime2DManager*   gKRAnime2DMan = NULL;
-KRMemoryAllocator*  gKRChara2DAllocator = NULL;
+_KRMemoryAllocator* _gKRChara2DAllocator = NULL;
 
 
 #pragma mark -
 #pragma mark KRAnime2DManager クラスの実装
 
-KRAnime2DManager::KRAnime2DManager(int maxCharacter2DSize)
+KRAnime2DManager::KRAnime2DManager(int maxCharacter2DCount, size_t maxChara2DSize)
 {
     gKRAnime2DMan = this;
     
     mNextInnerCharaSpecID = 10000;
     mNextSimulatorID = 10000;
     
-    gKRChara2DAllocator = new KRMemoryAllocator(sizeof(KRChara2D), maxCharacter2DSize, "kr-chara2d-alloc");
+    _gKRChara2DAllocator = new _KRMemoryAllocator(maxChara2DSize, maxCharacter2DCount, "kr-chara2d-alloc");
 }
 
 KRAnime2DManager::~KRAnime2DManager()
@@ -39,8 +39,8 @@ KRAnime2DManager::~KRAnime2DManager()
         mCharaSpecMap.clear();
     }
     
-    delete gKRChara2DAllocator;
-    gKRChara2DAllocator = NULL;
+    delete _gKRChara2DAllocator;
+    _gKRChara2DAllocator = NULL;
 }
 
 
@@ -196,18 +196,18 @@ void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFil
     }
 }*/
 
-int KRAnime2DManager::addParticle2D(int groupID, const std::string& imageFileName)
+int KRAnime2DManager::_addParticle2D(int groupID, const std::string& imageFileName)
 {
     int theParticleID = mParticleSystemMap.size() + 1000;
     
-    mParticleSystemMap[theParticleID] = new KRParticle2DSystem(groupID, imageFileName, 0);
+    mParticleSystemMap[theParticleID] = new _KRParticle2DSystem(groupID, imageFileName, 0);
     
     return theParticleID;
 }
 
 void KRAnime2DManager::_addParticle2DWithTicket(int resourceID, int groupID, const std::string& imageTicket)
 {
-    mParticleSystemMap[resourceID] = new KRParticle2DSystem(groupID, imageTicket);
+    mParticleSystemMap[resourceID] = new _KRParticle2DSystem(groupID, imageTicket);
 }
 
 int KRAnime2DManager::_addTexCharaSpec(int groupID, const std::string& imageFileName)
@@ -402,8 +402,8 @@ void KRAnime2DManager::stepAllCharas()
         }
     }
     
-    for (std::map<int, KRParticle2DSystem*>::iterator it = mParticleSystemMap.begin(); it != mParticleSystemMap.end(); it++) {
-        KRParticle2DSystem* theParticleSystem = it->second;
+    for (std::map<int, _KRParticle2DSystem*>::iterator it = mParticleSystemMap.begin(); it != mParticleSystemMap.end(); it++) {
+        _KRParticle2DSystem* theParticleSystem = it->second;
         theParticleSystem->step();
     }
 }
@@ -423,12 +423,12 @@ void KRAnime2DManager::draw()
 #pragma mark -
 #pragma mark パーティクルシステム
 
-KRParticle2DSystem* KRAnime2DManager::_getParticleSystem(int particleID) const
+_KRParticle2DSystem* KRAnime2DManager::_getParticleSystem(int particleID) const
 {
-    KRParticle2DSystem* theParticleSystem = NULL;
+    _KRParticle2DSystem* theParticleSystem = NULL;
 
     // IDからパーティクルシステムを引っ張ってくる。
-    std::map<int, KRParticle2DSystem*>::const_iterator theElem = mParticleSystemMap.find(particleID);
+    std::map<int, _KRParticle2DSystem*>::const_iterator theElem = mParticleSystemMap.find(particleID);
     if (theElem != mParticleSystemMap.end()) {
         theParticleSystem = theElem->second;
     }
@@ -456,160 +456,161 @@ KRBlendMode KRAnime2DManager::getParticle2DBlendMode(int particleID) const
     return _getParticleSystem(particleID)->getBlendMode();
 }
 
-KRColor KRAnime2DManager::getParticle2DColor(int particleID) const
-{
-    return _getParticleSystem(particleID)->getColor();
-}
-
-int KRAnime2DManager::getParticle2DCount(int particleID) const
-{
-    return _getParticleSystem(particleID)->getGeneratedParticleCount();
-}
-
-double KRAnime2DManager::getParticle2DAlphaDelta(int particleID) const
-{
-    return _getParticleSystem(particleID)->getDeltaAlpha();
-}
-
-double KRAnime2DManager::getParticle2DBlueDelta(int particleID) const
-{
-    return _getParticleSystem(particleID)->getDeltaBlue();
-}
-
-double KRAnime2DManager::getParticle2DGreenDelta(int particleID) const
-{
-    return _getParticleSystem(particleID)->getDeltaGreen();
-}
-
-double KRAnime2DManager::getParticle2DRedDelta(int particleID) const
-{
-    return _getParticleSystem(particleID)->getDeltaRed();
-}
-
-double KRAnime2DManager::getParticle2DScaleDelta(int particleID) const
-{
-    return _getParticleSystem(particleID)->getDeltaScale();
-}
-
-int KRAnime2DManager::getParticle2DGenerateCount(int particleID) const
-{
-    return _getParticleSystem(particleID)->getGenerateCount();
-}
-
-KRVector2D KRAnime2DManager::getParticle2DGravity(int particleID) const
-{
-    return _getParticleSystem(particleID)->getGravity();
-}
-
-int KRAnime2DManager::getParticle2DLife(int particleID) const
-{
-    return _getParticleSystem(particleID)->getLife();
-}
-
-double KRAnime2DManager::getParticle2DMaxAngleV(int particleID) const
-{
-    return _getParticleSystem(particleID)->getMaxAngleV();
-}
-
-int KRAnime2DManager::getParticle2DMaxCount(int particleID) const
-{
-    return _getParticleSystem(particleID)->getParticleCount();
-}
-
-double KRAnime2DManager::getParticle2DMaxScale(int particleID) const
-{
-    return _getParticleSystem(particleID)->getMaxScale();
-}
-
-KRVector2D KRAnime2DManager::getParticle2DMaxV(int particleID) const
-{
-    return _getParticleSystem(particleID)->getMaxV();
-}
-
-double KRAnime2DManager::getParticle2DMinAngleV(int particleID) const
-{
-    return _getParticleSystem(particleID)->getMinAngleV();
-}
-
-double KRAnime2DManager::getParticle2DMinScale(int particleID) const
-{
-    return _getParticleSystem(particleID)->getMinScale();
-}
-
-KRVector2D KRAnime2DManager::getParticle2DMinV(int particleID) const
-{
-    return _getParticleSystem(particleID)->getMinV();
-}
-
 void KRAnime2DManager::setParticle2DBlendMode(int particleID, KRBlendMode blendMode)
 {
     _getParticleSystem(particleID)->setBlendMode(blendMode);
 }
 
-void KRAnime2DManager::setParticle2DColor(int particleID, const KRColor& color)
+
+/*KRColor KRAnime2DManager::_getParticle2DColor(int particleID) const
+{
+    return _getParticleSystem(particleID)->getColor();
+}*/
+
+/*int KRAnime2DManager::_getParticle2DCount(int particleID) const
+{
+    return _getParticleSystem(particleID)->getGeneratedParticleCount();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DAlphaDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaAlpha();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DBlueDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaBlue();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DGreenDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaGreen();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DRedDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaRed();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DScaleDelta(int particleID) const
+{
+    return _getParticleSystem(particleID)->getDeltaScale();
+}*/
+
+/*int KRAnime2DManager::_getParticle2DGenerateCount(int particleID) const
+{
+    return _getParticleSystem(particleID)->getGenerateCount();
+}*/
+
+/*KRVector2D KRAnime2DManager::_getParticle2DGravity(int particleID) const
+{
+    return _getParticleSystem(particleID)->getGravity();
+}*/
+
+/*int KRAnime2DManager::_getParticle2DLife(int particleID) const
+{
+    return _getParticleSystem(particleID)->getLife();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DMaxAngleV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMaxAngleV();
+}*/
+
+/*int KRAnime2DManager::_getParticle2DMaxCount(int particleID) const
+{
+    return _getParticleSystem(particleID)->getParticleCount();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DMaxScale(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMaxScale();
+}*/
+
+/*KRVector2D KRAnime2DManager::_getParticle2DMaxV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMaxV();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DMinAngleV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMinAngleV();
+}*/
+
+/*double KRAnime2DManager::_getParticle2DMinScale(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMinScale();
+}*/
+
+/*KRVector2D KRAnime2DManager::_getParticle2DMinV(int particleID) const
+{
+    return _getParticleSystem(particleID)->getMinV();
+}*/
+
+/*void KRAnime2DManager::_setParticle2DColor(int particleID, const KRColor& color)
 {
     _getParticleSystem(particleID)->setColor(color);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DColorDelta(int particleID, double red, double green, double blue, double alpha)
+/*void KRAnime2DManager::_setParticle2DColorDelta(int particleID, double red, double green, double blue, double alpha)
 {
     _getParticleSystem(particleID)->setColorDelta(red, green, blue, alpha);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DGenerateCount(int particleID, int count)
+/*void KRAnime2DManager::_setParticle2DGenerateCount(int particleID, int count)
 {
     _getParticleSystem(particleID)->setGenerateCount(count);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DGravity(int particleID, const KRVector2D& a)
+/*void KRAnime2DManager::_setParticle2DGravity(int particleID, const KRVector2D& a)
 {
     _getParticleSystem(particleID)->setGravity(a);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DLife(int particleID, unsigned life)
+/*void KRAnime2DManager::_setParticle2DLife(int particleID, unsigned life)
 {
     _getParticleSystem(particleID)->setLife(life);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMaxAngleV(int particleID, double angleV)
+/*void KRAnime2DManager::_setParticle2DMaxAngleV(int particleID, double angleV)
 {
     _getParticleSystem(particleID)->setMaxAngleV(angleV);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMaxCount(int particleID, unsigned count)
+/*void KRAnime2DManager::_setParticle2DMaxCount(int particleID, unsigned count)
 {
     _getParticleSystem(particleID)->setParticleCount(count);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMaxScale(int particleID, double scale)
+/*void KRAnime2DManager::_setParticle2DMaxScale(int particleID, double scale)
 {
     _getParticleSystem(particleID)->setMaxScale(scale);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMaxV(int particleID, const KRVector2D& v)
+/*void KRAnime2DManager::_setParticle2DMaxV(int particleID, const KRVector2D& v)
 {
     _getParticleSystem(particleID)->setMaxV(v);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMinAngleV(int particleID, double angleV)
+/*void KRAnime2DManager::_setParticle2DMinAngleV(int particleID, double angleV)
 {
     _getParticleSystem(particleID)->setMinAngleV(angleV);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMinScale(int particleID, double scale)
+/*void KRAnime2DManager::_setParticle2DMinScale(int particleID, double scale)
 {
     _getParticleSystem(particleID)->setMinScale(scale);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DMinV(int particleID, const KRVector2D& v)
+/*void KRAnime2DManager::_setParticle2DMinV(int particleID, const KRVector2D& v)
 {
     _getParticleSystem(particleID)->setMinV(v);
-}
+}*/
 
-void KRAnime2DManager::setParticle2DScaleDelta(int particleID, double value)
+/*void KRAnime2DManager::_setParticle2DScaleDelta(int particleID, double value)
 {
     _getParticleSystem(particleID)->setScaleDelta(value);
-}
+}*/
 
 
 

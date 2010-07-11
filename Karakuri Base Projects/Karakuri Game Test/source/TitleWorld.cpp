@@ -16,28 +16,32 @@ void TitleWorld::becameActive()
 
 void TitleWorld::resignedActive()
 {
-    gKRAudioMan->unloadAudioFiles(0);
+    unloadResourceGroup(GroupID::Title);
 }
 
 void TitleWorld::updateModel(KRInput* input)
 {
-    bool hasTouched = false;
+    bool isTouched = false;
+    KRVector2D touchPos;
     
 #if KR_MACOSX
     if (input->isMouseDown()) {
-        hasTouched = true;
+        isTouched = true;
+        touchPos = input->getMouseLocation();
     }
 #endif
     
 #if KR_IPHONE
     if (input->getTouch()) {
-        hasTouched = true;
-    }    
+        isTouched = true;
+        touchPos = input->getTouchLocation();
+    }
 #endif
     
-    if (hasTouched) {
-        gKRGameMan->changeWorld("play");
-    }
+    if (isTouched) {
+        //gKRGameMan->changeWorld("play");
+        gKRAnime2DMan->generateParticle2D(ParticleID::Particle1, touchPos);
+    }    
 }
 
 void TitleWorld::drawView(KRGraphics* g)

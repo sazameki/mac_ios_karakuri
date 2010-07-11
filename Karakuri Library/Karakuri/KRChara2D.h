@@ -14,7 +14,7 @@
 #include "KRGraphics.h"
 
 
-extern KRMemoryAllocator*   gKRChara2DAllocator;
+extern _KRMemoryAllocator*  _gKRChara2DAllocator;
 
 
 static const unsigned       KRCharaMotionChangeModeNormalMask            = 0x00;
@@ -147,11 +147,12 @@ public:
     @class KRChara2DElem
     @group Game 2D Graphics
     <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
+    <p>このクラスから継承した、独自のサブクラスを作成して利用してください。</p>
     <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D メソッドを使って削除してください。</p>
  */
 class KRChara2D : public KRObject {
     
-    KR_DECLARE_USE_ALLOCATOR(gKRChara2DAllocator)
+    _KR_DECLARE_USE_ALLOCATOR(_gKRChara2DAllocator)
     
 private:
     _KRChara2DSpec*     _mCharaSpec;
@@ -254,10 +255,22 @@ public:
      */
     int     getClassType() const;
     
+    /*!
+        @method getColor
+        このキャラクタの現在の色を取得します。
+     */
     KRColor     getColor() const;
     
+    /*!
+        @method getPos
+        このキャラクタの現在位置（左下の点）を取得します。
+     */
     KRVector2D  getPos() const;
     
+    /*!
+        @method getScale
+        このキャラクタの現在の拡大率を取得します。
+     */
     KRVector2D  getScale() const;
     
     /*!
@@ -277,6 +290,10 @@ public:
         @task 状態の変更
      */
     
+    /*!
+        @method setBlendMode
+        キャラクタを描画するためのブレンドモードを設定します。デフォルトでは、KRBlendModeAlpha が設定されています。
+     */
     void    setBlendMode(KRBlendMode blendMode);
     
     /*!
@@ -285,19 +302,27 @@ public:
      */
     void    setCenterPos(const KRVector2D& pos);
     
+    /*!
+        @method setColor
+        キャラクタを描画する際の色を設定します。デフォルトでは、RGBA=(1.0, 1.0, 1.0, 1.0) の白が設定されています。
+     */
     void    setColor(const KRColor& color);
     
+    /*!
+        @method setPos
+        キャラクタを描画するための左下の点の座標を設定します。デフォルトでは、(0, 0) の点が設定されています。
+     */
     void    setPos(const KRVector2D& pos);
     
     /*!
         @method setScale
-        キャラクタの拡大率を設定します。
+        キャラクタの拡大率を設定します。デフォルトでは、1.0 となっています。
      */
     void    setScale(const KRVector2D& scale);
     
     /*!
         @method setZOrder
-        キャラクタのZオーダを設定します。
+        キャラクタのZオーダを設定します。デフォルトでは、0 となっています。
      */
     void    setZOrder(int zOrder);
     

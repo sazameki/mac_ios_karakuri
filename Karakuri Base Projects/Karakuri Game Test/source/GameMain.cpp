@@ -12,6 +12,9 @@
 #include "TitleWorld.h"
 #include "PlayWorld.h"
 
+#include "Player.h"
+#include "Enemy1.h"
+
 
 GameMain::GameMain()
 {
@@ -25,12 +28,18 @@ GameMain::GameMain()
     //setScreenSize(768, 1024);               // iPad size (Vertical use)
 
     setFrameRate(60.0);                     // Refresh rate
-    setMaxChara2DCount(1024);               // Max Animation Character Count
     setAudioMixType(KRAudioMixTypeAmbient); // Audio mixing
 
     setShowsMouseCursor(true);              // Mouse cursor should be shown (Mac only)
     setShowsFPS(true);                      // Realtime FPS information (debug build only)
 
+    // Set max animation character count
+    setMaxChara2DCount(1024);
+    
+    // Update max animation character class size
+    updateMaxChara2DSize(sizeof(Player));
+    updateMaxChara2DSize(sizeof(Enemy1));
+    
     // TODO: Edit "Target" setting to change the bundle name, which will be shown in Finder or iPhone Desktop.
 
     ///// Add any code here for creating your objects

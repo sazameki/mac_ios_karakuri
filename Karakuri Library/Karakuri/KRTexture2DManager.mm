@@ -51,7 +51,7 @@ void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& i
     setTextureAtlasSize(texID, atlasSize);
 }
 
-void KRTexture2DManager::addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
+void KRTexture2DManager::_addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
 {
     static int texID = 1000000;
     texID++;
@@ -71,13 +71,13 @@ void KRTexture2DManager::addTexture(int groupID, const std::string& resourceName
     mTexID_ScaleMode_Map[texID] = KRTexture2DScaleModeLinear;
 }
 
-void KRTexture2DManager::setDivForTicket(const std::string& ticket, int divX, int divY)
+void KRTexture2DManager::_setDivForTicket(const std::string& ticket, int divX, int divY)
 {
     mTicket_DivX_Map[ticket] = divX;
     mTicket_DivY_Map[ticket] = divY;
 }
 
-int KRTexture2DManager::getResourceSize(int groupID)
+int KRTexture2DManager::_getResourceSize(int groupID)
 {
     int ret = 0;
     
@@ -93,7 +93,7 @@ int KRTexture2DManager::getResourceSize(int groupID)
     return ret;
 }
 
-void KRTexture2DManager::loadTextureFiles(int groupID, KRWorld* loaderWorld, double minDuration)
+void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, double minDuration)
 {
     std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
 
@@ -151,28 +151,28 @@ void KRTexture2DManager::loadTextureFiles(int groupID, KRWorld* loaderWorld, dou
     }
 }
 
-void KRTexture2DManager::unloadTextureFiles(int groupID)
+void KRTexture2DManager::_unloadTextureFiles(int groupID)
 {
     // Do nothing
 }
 
-std::string KRTexture2DManager::getFileNameForTicket(const std::string& ticket)
+std::string KRTexture2DManager::_getFileNameForTicket(const std::string& ticket)
 {
     int texID = mTicket_TexID_Map[ticket];
     return mTexID_ImageFileName_Map[texID];
 }
 
-int KRTexture2DManager::getTextureIDForTicket(const std::string& ticket)
+int KRTexture2DManager::_getTextureIDForTicket(const std::string& ticket)
 {
     return mTicket_TexID_Map[ticket];
 }
 
-unsigned KRTexture2DManager::getResourceStartPosForTicket(const std::string& ticket)
+unsigned KRTexture2DManager::_getResourceStartPosForTicket(const std::string& ticket)
 {
     return mTicket_StartPos_Map[ticket];
 }
 
-unsigned KRTexture2DManager::getResourceLengthForTicket(const std::string& ticket)
+unsigned KRTexture2DManager::_getResourceLengthForTicket(const std::string& ticket)
 {
     return mTicket_Length_Map[ticket];
 }

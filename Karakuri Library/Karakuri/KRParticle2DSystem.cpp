@@ -12,14 +12,13 @@
     @method _KRParticle2D
     Constructor
  */
-_KRParticle2D::_KRParticle2D(int charaSpecID, int zOrder, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
+_KRParticle2D::_KRParticle2D(int charaSpecID, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
                              double angleV, const KRColor& color, double size, double scale,
                              double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale)
     : KRChara2D(charaSpecID, 1000000), mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mSize(size), mScale(scale),
       mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaSize(deltaSize), mDeltaScale(deltaScale)
 {
     mAngle = 0.0;
-    setZOrder(zOrder);
 }
 
 _KRParticle2D::~_KRParticle2D()
@@ -60,7 +59,7 @@ std::string _KRParticle2D::to_s() const
 }
 
 
-void KRParticle2DSystem::init()
+void _KRParticle2DSystem::init()
 {    
     mStartPos = gKRScreenSize / 2;
     
@@ -104,7 +103,7 @@ void KRParticle2DSystem::init()
 #pragma mark -
 #pragma mark Constructor / Destructor
 
-KRParticle2DSystem::KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder)
+_KRParticle2DSystem::_KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder)
     : mGroupID(groupID), mZOrder(zOrder)
 {
     mDoLoop = false;
@@ -115,10 +114,10 @@ KRParticle2DSystem::KRParticle2DSystem(int groupID, const std::string& imageFile
 }
 
 /*!
-    @method KRParticle2DSystem
+    @method _KRParticle2DSystem
     Constructor
  */
-KRParticle2DSystem::KRParticle2DSystem(int groupID, const std::string& ticket)
+_KRParticle2DSystem::_KRParticle2DSystem(int groupID, const std::string& ticket)
     : mGroupID(groupID)
 {
     mZOrder = 0;
@@ -130,10 +129,10 @@ KRParticle2DSystem::KRParticle2DSystem(int groupID, const std::string& ticket)
 }
 
 /*!
-    @method KRParticle2DSystem
+    @method _KRParticle2DSystem
     Constructor
  */
-KRParticle2DSystem::KRParticle2DSystem(const std::string& filename, bool doLoop)
+_KRParticle2DSystem::_KRParticle2DSystem(const std::string& filename, bool doLoop)
     : mDoLoop(doLoop)
 {
     mGroupID = -1;
@@ -145,10 +144,10 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename, bool doLoop)
 }
 
 /*!
-    @method KRParticle2DSystem
+    @method _KRParticle2DSystem
     Constructor
  */
-KRParticle2DSystem::KRParticle2DSystem(_KRTexture2D *texture, bool doLoop)
+_KRParticle2DSystem::_KRParticle2DSystem(_KRTexture2D *texture, bool doLoop)
     : mDoLoop(doLoop)
 {
     mGroupID = -1;
@@ -160,10 +159,10 @@ KRParticle2DSystem::KRParticle2DSystem(_KRTexture2D *texture, bool doLoop)
 }
 
 /*!
-    @method ~KRParticleSystem
+    @method ~_KRParticleSystem
     Destructor
  */
-KRParticle2DSystem::~KRParticle2DSystem()
+_KRParticle2DSystem::~_KRParticle2DSystem()
 {
     for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
         delete *it;
@@ -179,97 +178,97 @@ KRParticle2DSystem::~KRParticle2DSystem()
 #pragma mark -
 #pragma mark Getter Functions
 
-unsigned KRParticle2DSystem::getLife() const
+unsigned _KRParticle2DSystem::getLife() const
 {
     return mLife;
 }
 
-double KRParticle2DSystem::getMaxAngleV() const
+double _KRParticle2DSystem::getMaxAngleV() const
 {
     return mMaxAngleV;
 }
 
-double KRParticle2DSystem::getMinAngleV() const
+double _KRParticle2DSystem::getMinAngleV() const
 {
     return mMinAngleV;
 }
 
-double KRParticle2DSystem::getMaxScale() const
+double _KRParticle2DSystem::getMaxScale() const
 {
     return mMaxScale;
 }
 
-double KRParticle2DSystem::getMinScale() const
+double _KRParticle2DSystem::getMinScale() const
 {
     return mMinScale;
 }
 
-KRVector2D KRParticle2DSystem::getStartPos() const
+KRVector2D _KRParticle2DSystem::getStartPos() const
 {
     return mStartPos;
 }
 
-unsigned KRParticle2DSystem::getParticleCount() const
+unsigned _KRParticle2DSystem::getParticleCount() const
 {
     return mParticleCount;
 }
 
-int KRParticle2DSystem::getGenerateCount() const
+int _KRParticle2DSystem::getGenerateCount() const
 {
     return mGenerateCount;
 }
 
-unsigned KRParticle2DSystem::getGeneratedParticleCount() const
+unsigned _KRParticle2DSystem::getGeneratedParticleCount() const
 {
     return mParticles.size();
 }
 
-KRBlendMode KRParticle2DSystem::getBlendMode() const
+KRBlendMode _KRParticle2DSystem::getBlendMode() const
 {
     return mBlendMode;
 }
 
-KRColor KRParticle2DSystem::getColor() const
+KRColor _KRParticle2DSystem::getColor() const
 {
     return mColor;
 }
 
-double KRParticle2DSystem::getDeltaRed() const
+double _KRParticle2DSystem::getDeltaRed() const
 {
     return mDeltaRed;
 }
 
-double KRParticle2DSystem::getDeltaGreen() const
+double _KRParticle2DSystem::getDeltaGreen() const
 {
     return mDeltaGreen;
 }
 
-double KRParticle2DSystem::getDeltaBlue() const
+double _KRParticle2DSystem::getDeltaBlue() const
 {
     return mDeltaBlue;
 }
 
-double KRParticle2DSystem::getDeltaAlpha() const
+double _KRParticle2DSystem::getDeltaAlpha() const
 {
     return mDeltaAlpha;
 }
 
-double KRParticle2DSystem::getDeltaScale() const
+double _KRParticle2DSystem::getDeltaScale() const
 {
     return mDeltaScale;
 }
 
-KRVector2D KRParticle2DSystem::getMinV() const
+KRVector2D _KRParticle2DSystem::getMinV() const
 {
     return mMinV;
 }
 
-KRVector2D KRParticle2DSystem::getMaxV() const
+KRVector2D _KRParticle2DSystem::getMaxV() const
 {
     return mMaxV;
 }
 
-KRVector2D KRParticle2DSystem::getGravity() const
+KRVector2D _KRParticle2DSystem::getGravity() const
 {
     return mGravity;
 }
@@ -278,17 +277,17 @@ KRVector2D KRParticle2DSystem::getGravity() const
 #pragma mark -
 #pragma mark Setter Functions
 
-void KRParticle2DSystem::setStartPos(const KRVector2D& pos)
+void _KRParticle2DSystem::setStartPos(const KRVector2D& pos)
 {
     mStartPos = pos;
 }
 
-void KRParticle2DSystem::setColor(const KRColor& color)
+void _KRParticle2DSystem::setColor(const KRColor& color)
 {
     mColor = color;
 }
 
-void KRParticle2DSystem::setColorDelta(double red, double green, double blue, double alpha)
+void _KRParticle2DSystem::setColorDelta(double red, double green, double blue, double alpha)
 {
     mDeltaRed = red;
     mDeltaGreen = green;
@@ -296,92 +295,92 @@ void KRParticle2DSystem::setColorDelta(double red, double green, double blue, do
     mDeltaAlpha = alpha;
 }
 
-void KRParticle2DSystem::setBlendMode(KRBlendMode blendMode)
+void _KRParticle2DSystem::setBlendMode(KRBlendMode blendMode)
 {
     mBlendMode = blendMode;
 }
 
-void KRParticle2DSystem::setParticleCount(unsigned count)
+void _KRParticle2DSystem::setParticleCount(unsigned count)
 {
     mParticleCount = count;
 }
 
-void KRParticle2DSystem::setGenerateCount(int count)
+void _KRParticle2DSystem::setGenerateCount(int count)
 {
     mGenerateCount = count;
 }
 
-double KRParticle2DSystem::getMinSize() const
+double _KRParticle2DSystem::getMinSize() const
 {
     return mMinSize;
 }
 
-double KRParticle2DSystem::getMaxSize() const
+double _KRParticle2DSystem::getMaxSize() const
 {
     return mMaxSize;
 }
 
-void KRParticle2DSystem::setMaxScale(double scale)
+void _KRParticle2DSystem::setMaxScale(double scale)
 {
     mMaxScale = scale;
 }
 
-void KRParticle2DSystem::setMinSize(double size)
+void _KRParticle2DSystem::setMinSize(double size)
 {
     mMinSize = size;
 }
 
-void KRParticle2DSystem::setMaxSize(double size)
+void _KRParticle2DSystem::setMaxSize(double size)
 {
     mMaxSize = size;
 }
 
-void KRParticle2DSystem::setMinScale(double scale)
+void _KRParticle2DSystem::setMinScale(double scale)
 {
     mMinScale = scale;
 }
 
-void KRParticle2DSystem::setScaleDelta(double value)
+void _KRParticle2DSystem::setScaleDelta(double value)
 {
     mDeltaScale = value;
 }
 
-void KRParticle2DSystem::setSizeDelta(double value)
+void _KRParticle2DSystem::setSizeDelta(double value)
 {
     mDeltaSize = value;
 }
 
-void KRParticle2DSystem::setLife(unsigned life)
+void _KRParticle2DSystem::setLife(unsigned life)
 {
     mLife = life;
 }
 
-void KRParticle2DSystem::setMaxAngleV(double angleV)
+void _KRParticle2DSystem::setMaxAngleV(double angleV)
 {
     mMaxAngleV = angleV;
 }
 
-void KRParticle2DSystem::setMinAngleV(double angleV)
+void _KRParticle2DSystem::setMinAngleV(double angleV)
 {
     mMinAngleV = angleV;
 }
 
-void KRParticle2DSystem::setMinV(const KRVector2D& v)
+void _KRParticle2DSystem::setMinV(const KRVector2D& v)
 {
     mMinV = v;
 }
 
-void KRParticle2DSystem::setMaxV(const KRVector2D& v)
+void _KRParticle2DSystem::setMaxV(const KRVector2D& v)
 {
     mMaxV = v;
 }
 
-void KRParticle2DSystem::setGravity(const KRVector2D& a)
+void _KRParticle2DSystem::setGravity(const KRVector2D& a)
 {
     mGravity = a;
 }
 
-void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
+void _KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
 {
     if (mActiveGenCount >= _KRParticle2DGenMaxCount) {
         return;
@@ -396,7 +395,7 @@ void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
     }
 }
 
-void KRParticle2DSystem::step()
+void _KRParticle2DSystem::step()
 {
     // Continuous Generation
     if (mDoLoop) {
@@ -408,8 +407,9 @@ void KRParticle2DSystem::step()
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mZOrder, mLife, mStartPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mLife, mStartPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
                                                           mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
+                particle->setZOrder(mZOrder);
                 mParticles.push_back(particle);
                 count++;
                 if (count == mGenerateCount) {
@@ -431,10 +431,12 @@ void KRParticle2DSystem::step()
                     double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                     double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
 
-                    _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mZOrder, mLife, mGenInfos[i].centerPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                    _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mLife, mGenInfos[i].centerPos, theV, mGravity, theAngleV, mColor, theSize, theScale,
                                                                 mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
+                    particle->setZOrder(mZOrder);
                     particle->setBlendMode(mBlendMode);
                     mParticles.push_back(particle);
+                    gKRAnime2DMan->addChara2D(particle);
                 }
                 mGenInfos[i].count -= createCount;
                 if (mGenInfos[i].count == 0) {
@@ -456,12 +458,12 @@ void KRParticle2DSystem::step()
         } else {
             _KRParticle2D* theParticle = *it;
             it = mParticles.erase(it);
-            delete theParticle;
+            gKRAnime2DMan->removeChara2D(theParticle);
         }
     }    
 }
 
-void KRParticle2DSystem::draw()
+void _KRParticle2DSystem::draw()
 {
     KRBlendMode oldBlendMode = gKRGraphicsInst->getBlendMode();
 
@@ -482,7 +484,7 @@ void KRParticle2DSystem::draw()
     gKRGraphicsInst->setBlendMode(oldBlendMode);
 }
 
-std::string KRParticle2DSystem::to_s() const
+std::string _KRParticle2DSystem::to_s() const
 {
     if (mCharaSpecID >= 0) {
         return KRFS("<particle2_sys>(size=(%3.1f, %3.1f), life=%u, count=%u, generated=%u, charaspec=%d)", mMinSize, mMaxSize, mLife, mParticleCount, mParticles.size(), mCharaSpecID);

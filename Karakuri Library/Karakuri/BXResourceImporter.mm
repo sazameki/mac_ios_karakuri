@@ -170,7 +170,7 @@
         int divX = [[anImageInfo objectForKey:@"Div X"] intValue];
         int divY = [[anImageInfo objectForKey:@"Div Y"] intValue];
         NSString* ticket = [anImageInfo objectForKey:@"Image Ticket"];
-        gKRTex2DMan->setDivForTicket([ticket cStringUsingEncoding:NSUTF8StringEncoding], divX, divY);
+        gKRTex2DMan->_setDivForTicket([ticket cStringUsingEncoding:NSUTF8StringEncoding], divX, divY);
     }
     
     NSArray* motionInfos = [chara2DInfo objectForKey:@"State Infos"];
@@ -227,11 +227,11 @@
                                                                               format:nil
                                                                     errorDescription:&errorStr];
     
-    int resourceID = [[particle2DInfo objectForKey:@"Resource ID"] intValue];
+    int particleID = [[particle2DInfo objectForKey:@"Resource ID"] intValue];
     int groupID = [[particle2DInfo objectForKey:@"Group ID"] intValue];
     NSString* imageTicket = [particle2DInfo objectForKey:@"Image Ticket"];
     
-    gKRAnime2DMan->_addParticle2DWithTicket(resourceID, groupID, [imageTicket cStringUsingEncoding:NSUTF8StringEncoding]);
+    gKRAnime2DMan->_addParticle2DWithTicket(particleID, groupID, [imageTicket cStringUsingEncoding:NSUTF8StringEncoding]);
     
     KRBlendMode blendMode = KRBlendModeAddition;
     KRColor color = KRColor::White;
@@ -332,18 +332,20 @@
         maxParticleCount = [[particle2DInfo objectForKey:@"Max Particle Count"] intValue];
     }
     
-    gKRAnime2DMan->setParticle2DColor(resourceID, color);
-    gKRAnime2DMan->setParticle2DBlendMode(resourceID, blendMode);
-    gKRAnime2DMan->setParticle2DGravity(resourceID, gravity);
-    gKRAnime2DMan->setParticle2DLife(resourceID, life);
-    gKRAnime2DMan->setParticle2DMaxAngleV(resourceID, maxAngleV * M_PI / 180.0);
-    gKRAnime2DMan->setParticle2DMinAngleV(resourceID, minAngleV * M_PI / 180.0);
-    gKRAnime2DMan->setParticle2DMaxV(resourceID, maxV);
-    gKRAnime2DMan->setParticle2DMinV(resourceID, minV);
-    gKRAnime2DMan->setParticle2DScaleDelta(resourceID, deltaScale);
-    gKRAnime2DMan->setParticle2DColorDelta(resourceID, deltaRed, deltaGreen, deltaBlue, deltaAlpha);
-    gKRAnime2DMan->setParticle2DGenerateCount(resourceID, generateCount);
-    gKRAnime2DMan->setParticle2DMaxCount(resourceID, maxParticleCount);
+    _KRParticle2DSystem* particleSys = gKRAnime2DMan->_getParticleSystem(particleID);
+    
+    particleSys->setColor(color);
+    particleSys->setBlendMode(blendMode);
+    particleSys->setGravity(gravity);
+    particleSys->setLife(life);
+    particleSys->setParticleCount(maxParticleCount);
+    particleSys->setGenerateCount(generateCount);
+    particleSys->setMinAngleV(minAngleV * M_PI / 180.0);
+    particleSys->setMaxAngleV(maxAngleV * M_PI / 180.0);
+    particleSys->setMaxV(maxV);
+    particleSys->setMinV(minV);
+    particleSys->setScaleDelta(deltaScale);
+    particleSys->setColorDelta(deltaRed, deltaGreen, deltaBlue, deltaAlpha);
 }
 
 - (void)skipTexture2D
@@ -381,11 +383,11 @@
     NSString* resourceName = [tex2DInfo objectForKey:@"Resource Name"];
     NSString* ticket = [tex2DInfo objectForKey:@"Ticket"];
     
-    gKRTex2DMan->addTexture(groupID,
-                            [resourceName cStringUsingEncoding:NSUTF8StringEncoding],
-                            [ticket cStringUsingEncoding:NSUTF8StringEncoding],
-                            [mFileName cStringUsingEncoding:NSUTF8StringEncoding],
-                            dataStartPos, dataLength);
+    gKRTex2DMan->_addTexture(groupID,
+                             [resourceName cStringUsingEncoding:NSUTF8StringEncoding],
+                             [ticket cStringUsingEncoding:NSUTF8StringEncoding],
+                             [mFileName cStringUsingEncoding:NSUTF8StringEncoding],
+                             dataStartPos, dataLength);
 
     [mContext skip:dataLength];
 }

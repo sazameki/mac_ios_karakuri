@@ -7,11 +7,11 @@
 #include "KRMemoryAllocator.h"
 
 
-/*!
-    @method KRMemoryAllocator
+/*
+    @method _KRMemoryAllocator
     Constructor
  */
-KRMemoryAllocator::KRMemoryAllocator(size_t maxClassSize, int maxCount, const std::string& debugName)
+_KRMemoryAllocator::_KRMemoryAllocator(size_t maxClassSize, int maxCount, const std::string& debugName)
     : mMaxClassSize(maxClassSize), mMaxCount(maxCount), mDebugName(debugName)
 {
     size_t allocateSize = (maxClassSize + 1) * maxCount;
@@ -19,12 +19,12 @@ KRMemoryAllocator::KRMemoryAllocator(size_t maxClassSize, int maxCount, const st
     mDummyElement.prev = NULL;
     mDummyElement.next = NULL;
     
-    KRMemoryElement *lastElem = &mDummyElement;
+    _KRMemoryElement* lastElem = &mDummyElement;
 
     for (int i = 0; i < maxCount; i++) {
-        KRMemoryElement *newElem = (KRMemoryElement *)malloc(maxClassSize + sizeof(KRMemoryElement));
+        _KRMemoryElement* newElem = (_KRMemoryElement*)malloc(maxClassSize + sizeof(_KRMemoryElement));
         if (newElem == NULL) {
-            const char *errorFormat = "KRMemoryAllocator: Failed to allocate enough memory (size=%d) <%s>.";
+            const char* errorFormat = "KRMemoryAllocator: Failed to allocate enough memory (size=%d) <%s>.";
             if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "KRMemoryAllocator: 十分なメモリを確保できませんでした。 (size=%d) <%s>.";
             }
@@ -42,28 +42,35 @@ KRMemoryAllocator::KRMemoryAllocator(size_t maxClassSize, int maxCount, const st
 }
 
 /*!
-    @method ~KRMemoryAllocator
+    @method ~_KRMemoryAllocator
     Destructor
  */
-KRMemoryAllocator::~KRMemoryAllocator()
+_KRMemoryAllocator::~_KRMemoryAllocator()
 {
-    KRMemoryElement *theElem = mDummyElement.next;
+    _KRMemoryElement* theElem = mDummyElement.next;
     
     while (theElem != NULL) {
-        KRMemoryElement *nextElem = theElem->next;
+        _KRMemoryElement* nextElem = theElem->next;
         free(theElem);
         theElem = nextElem;
     }
 }
 
-void* KRMemoryAllocator::allocate(size_t size)
+void* _KRMemoryAllocator::allocate(size_t size)
 {
     if (size > mMaxClassSize) {
-        const char *errorFormat = "KRMemoryAllocator: Memory allocation size error (request=%dbytes, limit=%dbytes) <%s>.";
-        if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "KRMemoryAllocator: new で要求されたメモリサイズが、登録されたクラスの最大メモリサイズを超えました。 (request=%dbytes, limit=%dbytes) <%s>";
+        if (mDebugName == "kr-chara2d-alloc") {
+            if (gKRLanguage == KRLanguageJapanese) {
+                throw KRRuntimeError("最大サイズ %d バイトを超えるキャラクタを作成しようとしました。GameMain::GameMain() で全キャラクタクラスのサイズを登録しているのを確認してください。", (int)mMaxClassSize);
+            } else {
+                throw KRRuntimeError("Tried to create a character instance over %d bytes. Please confirm that all character class sizes are registered at GameMain::GameMain().", (int)mMaxClassSize);
+            }
         }
-        throw KRRuntimeError(errorFormat, (int)size, (int)mMaxClassSize, mDebugName.c_str());
+        if (gKRLanguage == KRLanguageJapanese) {
+            throw KRRuntimeError("KRMemoryAllocator: new で要求されたメモリサイズが、登録されたクラスの最大メモリサイズを超えました。 (request=%dbytes, limit=%dbytes) <%s>", (int)size, (int)mMaxClassSize, mDebugName.c_str());
+        } else {
+            throw KRRuntimeError("KRMemoryAllocator: Memory allocation size error (request=%dbytes, limit=%dbytes) <%s>.", (int)size, (int)mMaxClassSize, mDebugName.c_str());
+        }
     }
     if (mAllocateCount >= mMaxCount) {
         if (mDebugName == "kr-chara2d-alloc") {
@@ -73,14 +80,14 @@ void* KRMemoryAllocator::allocate(size_t size)
                 throw KRRuntimeError("Tried to create characters over max count %d. Change the setting at GameMain()::GameMain().", mMaxCount);
             }
         }
-        const char *errorFormat = "KRMemoryAllocator: Tried to instantiate over max count %d <%s>.";
+        const char* errorFormat = "KRMemoryAllocator: Tried to instantiate over max count %d <%s>.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "KRMemoryAllocator: 設定された最大数 %d を超えてインスタンスを作成しようとしました。 <%s>";
         }
         throw KRRuntimeError(errorFormat, mMaxCount, mDebugName.c_str());
     }
     
-    KRMemoryElement *theElem = mLastFreeElement;
+    _KRMemoryElement* theElem = mLastFreeElement;
     mLastFreeElement = theElem->prev;
     mLastFreeElement->next = NULL;
     
@@ -91,12 +98,12 @@ void* KRMemoryAllocator::allocate(size_t size)
     
     mAllocateCount++;
     
-    return (void *)((char *)theElem + sizeof(KRMemoryElement));
+    return (void*)((char*)theElem + sizeof(_KRMemoryElement));
 }
 
-void KRMemoryAllocator::release(void *ptr)
+void _KRMemoryAllocator::release(void* ptr)
 {
-    KRMemoryElement *theElem = (KRMemoryElement *)((char *)ptr - sizeof(KRMemoryElement));
+    _KRMemoryElement* theElem = (_KRMemoryElement*)((char*)ptr - sizeof(_KRMemoryElement));
     
     if (theElem != mLastFreeElement) {
         theElem->prev->next = theElem->next;

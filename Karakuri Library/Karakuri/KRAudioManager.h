@@ -62,9 +62,9 @@ public:
     
 #pragma mark ---- リソースの読み込み ----
 public:
-    int     getResourceSize(int groupID);
-    void    loadAudioFiles(int groupID, KRWorld* loaderWorld, double minDuration);
-    void    unloadAudioFiles(int groupID);
+    int     _getResourceSize(int groupID);
+    void    _loadAudioFiles(int groupID, KRWorld* loaderWorld, double minDuration);
+    void    _unloadAudioFiles(int groupID);
     
     
 #pragma mark ---- BGM 管理 ----

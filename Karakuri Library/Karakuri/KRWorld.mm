@@ -168,12 +168,12 @@ void KRWorld::setResourceLoadingWorld(KRWorld* aWorld) KARAKURI_FRAMEWORK_INTERN
 void KRWorld::loadResourceGroup(int groupID)
 {
     if (mIsShowingLoadingWorld) {
-        mLoadingResourceAllSize += gKRTex2DMan->getResourceSize(groupID);
-        mLoadingResourceAllSize += gKRAudioMan->getResourceSize(groupID);
+        mLoadingResourceAllSize += gKRTex2DMan->_getResourceSize(groupID);
+        mLoadingResourceAllSize += gKRAudioMan->_getResourceSize(groupID);
         mLoadingResourceGroupIDs.push_back(groupID);
     } else {
-        gKRTex2DMan->loadTextureFiles(groupID, NULL, 0.0);
-        gKRAudioMan->loadAudioFiles(groupID, NULL, 0.0);
+        gKRTex2DMan->_loadTextureFiles(groupID, NULL, 0.0);
+        gKRAudioMan->_loadAudioFiles(groupID, NULL, 0.0);
     }
 }
 
@@ -181,19 +181,19 @@ void KRWorld::finishLoadingWorld()
 {
     if (mIsShowingLoadingWorld) {
         for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
-            int resourceSize = gKRTex2DMan->getResourceSize(*it);
+            int resourceSize = gKRTex2DMan->_getResourceSize(*it);
             double ratio = (double)resourceSize / mLoadingResourceAllSize;
             double minDuration = ratio * mLoadingResourceMinDuration;
             
-            gKRTex2DMan->loadTextureFiles(*it, this, minDuration);
+            gKRTex2DMan->_loadTextureFiles(*it, this, minDuration);
         }
 
         for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
-            int resourceSize = gKRAudioMan->getResourceSize(*it);
+            int resourceSize = gKRAudioMan->_getResourceSize(*it);
             double ratio = (double)resourceSize / mLoadingResourceAllSize;
             double minDuration = ratio * mLoadingResourceMinDuration;
 
-            gKRAudioMan->loadAudioFiles(*it, this, minDuration);
+            gKRAudioMan->_loadAudioFiles(*it, this, minDuration);
         }
     }
 

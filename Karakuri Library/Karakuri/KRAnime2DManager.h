@@ -13,7 +13,7 @@
 #include "KRChara2D.h"
 
 
-class KRParticle2DSystem;
+class _KRParticle2DSystem;
 class KRSimulator2D;
 
 
@@ -26,17 +26,17 @@ class KRSimulator2D;
  */
 class KRAnime2DManager : public KRObject {
 
-    std::map<int, _KRChara2DSpec*>   mCharaSpecMap;
+    std::map<int, _KRChara2DSpec*>  mCharaSpecMap;
     std::list<KRChara2D*>           mCharas;
     
-    std::map<int, KRParticle2DSystem*>  mParticleSystemMap;
+    std::map<int, _KRParticle2DSystem*> mParticleSystemMap;
     std::map<int, KRSimulator2D*>       mSimulatorMap;
     
     int                             mNextInnerCharaSpecID;
     int                             mNextSimulatorID;
 
 public:
-	KRAnime2DManager(int maxChara2DSize);
+	KRAnime2DManager(int maxChara2DCount, size_t maxChara2DSize);
 	virtual ~KRAnime2DManager();
 
 public:
@@ -122,17 +122,17 @@ public:
     
     /*!
         @method playChara2D
-        @abstract キャラクタアニメーションを再生するための、もっとも簡単な方法です。指定したキャラクタの特定の状態のアニメーションだけを、指定された位置で再生します。
+        @abstract キャラクタアニメーションを再生するための、もっとも簡単な方法です。指定したキャラクタの特定の動作のアニメーションだけを、指定された位置で再生します。
         アニメーション完了後は、このアニメーションは自動的に削除されます。
      */
-    void    playChara2D(int charaSpecID, int state, const KRVector2D& pos, int zOrder);
+    void    playChara2D(int charaSpecID, int motionID, const KRVector2D& pos, int zOrder);
 
     /*!
         @method playChara2DCenter
-        @abstract キャラクタアニメーションを再生するための、もっとも簡単な方法です。指定したキャラクタの特定の状態のアニメーションだけを、指定された中心位置で再生します。
+        @abstract キャラクタアニメーションを再生するための、もっとも簡単な方法です。指定したキャラクタの特定の動作のアニメーションだけを、指定された中心位置で再生します。
         アニメーション完了後は、このアニメーションは自動的に削除されます。
      */
-    void    playChara2DCenter(int charaSpecID, int state, const KRVector2D& centerPos, int zOrder);
+    void    playChara2DCenter(int charaSpecID, int motionID, const KRVector2D& centerPos, int zOrder);
     
     /*!
         @method removeAllCharas
@@ -162,15 +162,15 @@ public:
      */
 
     
-    /*!
-        @method addParticle2D
+    /*
+        @-method _addParticle2D
         @abstract 2次元の移動を行うパーティクル管理のシステムを生成します。火、爆発、煙、雲、霧などの表現に利用できます。
      */
-    int     addParticle2D(int groupID, const std::string& imageFileName);
+    int     _addParticle2D(int groupID, const std::string& imageFileName);
     
     void    _addParticle2DWithTicket(int resourceID, int groupID, const std::string& imageTicket);
     
-    KRParticle2DSystem* _getParticleSystem(int particleID) const;
+    _KRParticle2DSystem*    _getParticleSystem(int particleID) const;
 
     /*!
         @method generateParticle2D
@@ -178,10 +178,10 @@ public:
      */
     void    generateParticle2D(int particleID, const KRVector2D& pos);
     
-    void    stepParticles();
+    void    _stepParticles();
     
     /*!
-        @task パーティクルの管理（状態の取得）
+        @task パーティクルの管理
      */
     
     /*!
@@ -191,207 +191,203 @@ public:
     KRBlendMode     getParticle2DBlendMode(int particleID) const;
 
     /*!
-        @method getParticle2DColor
+     @method setParticle2DBlendMode
+     @abstract IDを指定して、パーティクル描画時のブレンドモードを設定します。
+     */
+    void    setParticle2DBlendMode(int particleID, KRBlendMode blendMode);
+
+    /*
+        @method _getParticle2DColor
         @abstract IDを指定して、パーティクル描画の基本色を取得します。
      */
-    KRColor         getParticle2DColor(int particleID) const;
+    //KRColor         _getParticle2DColor(int particleID) const;
 
-    /*!
-        @method getParticle2DCount
+    /*
+        @method _getParticle2DCount
         @abstract IDを指定して、現在までに生成されたパーティクルの個数を取得します。
      */
-    int             getParticle2DCount(int particleID) const;
+    //int             _getParticle2DCount(int particleID) const;
 
-    /*!
-        @method getParticle2DAlphaDelta
+    /*
+        @method _getParticle2DAlphaDelta
         @abstract IDを指定して、パーティクルのアルファ値の変化量を取得します。
      */
-    double          getParticle2DAlphaDelta(int particleID) const;
+    //double          _getParticle2DAlphaDelta(int particleID) const;
 
-    /*!
-        @method getParticle2DBlueDelta
+    /*
+        @method _getParticle2DBlueDelta
         @abstract IDを指定して、パーティクルの青成分の変化量を取得します。
      */
-    double          getParticle2DBlueDelta(int particleID) const;
+    //double          _getParticle2DBlueDelta(int particleID) const;
 
-    /*!
-        @method getParticle2DGreenDelta
+    /*
+        @method _getParticle2DGreenDelta
         @abstract IDを指定して、パーティクルの緑成分の変化量を取得します。
      */
-    double          getParticle2DGreenDelta(int particleID) const;
+    //double          _getParticle2DGreenDelta(int particleID) const;
 
-    /*!
-        @method getParticle2DRedDelta
+    /*
+        @method _getParticle2DRedDelta
         @abstract IDを指定して、パーティクルの赤成分の変化量を取得します。
      */
-    double          getParticle2DRedDelta(int particleID) const;
+    //double          _getParticle2DRedDelta(int particleID) const;
 
-    /*!
-        @method getParticle2DScaleDelta
+    /*
+        @method _getParticle2DScaleDelta
         @abstract IDを指定して、拡大率の変化量を取得します。
      */
-    double          getParticle2DScaleDelta(int particleID) const;
+    //double          _getParticle2DScaleDelta(int particleID) const;
 
-    /*!
-        @method getParticle2DGenerateCount
+    /*
+        @method _getParticle2DGenerateCount
         @abstract IDを指定して、1フレームあたりのパーティクルの生成量を取得します。
      */
-    int             getParticle2DGenerateCount(int particleID) const;
+    //int             _getParticle2DGenerateCount(int particleID) const;
 
-    /*!
-        @method getParticle2DGravity
+    /*
+        @method _getParticle2DGravity
         @abstract IDを指定して、パーティクルに設定される重力を取得します。
      */
-    KRVector2D      getParticle2DGravity(int particleID) const;
+    //KRVector2D      _getParticle2DGravity(int particleID) const;
 
-    /*!
-        @method getParticle2DLife
+    /*
+        @method _getParticle2DLife
         @abstract IDを指定して、パーティクルに設定される生存期間（フレーム単位）を取得します。
      */
-    int             getParticle2DLife(int particleID) const;
+    //int             _getParticle2DLife(int particleID) const;
 
-    /*!
+    /*
         @method getParticle2DMaxAngleV
         @abstract IDを指定して、パーティクルに設定される回転の最大の角速度を設定します。
         回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    double          getParticle2DMaxAngleV(int particleID) const;
+    //double          _getParticle2DMaxAngleV(int particleID) const;
 
-    /*!
-        @method getParticle2DMaxCount
+    /*
+        @method _getParticle2DMaxCount
         @abstract IDを指定して、パーティクルの最大生成量を設定します。
      */
-    int             getParticle2DMaxCount(int particleID) const;
+    //int             _getParticle2DMaxCount(int particleID) const;
 
-    /*!
-        @method getParticle2DMaxScale
+    /*
+        @method _getParticle2DMaxScale
         @abstract IDを指定して、パーティクルに設定される最大の拡大率を設定します。
         拡大率は、生成時に設定の範囲内でランダムに設定されます。
      */
-    double          getParticle2DMaxScale(int particleID) const;
+    //double          _getParticle2DMaxScale(int particleID) const;
 
-    /*!
-        @method getParticle2DMaxV
+    /*
+        @method _getParticle2DMaxV
         @abstract IDを指定して、パーティクルに設定される最大の速度を設定します。
         速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    KRVector2D      getParticle2DMaxV(int particleID) const;
+    //KRVector2D      _getParticle2DMaxV(int particleID) const;
 
-    /*!
-        @method getParticle2DMinAngleV
+    /*
+        @method _getParticle2DMinAngleV
         @abstract IDを指定して、パーティクルに設定される回転の最小の角速度を設定します。
         回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    double          getParticle2DMinAngleV(int particleID) const;
+    //double          _getParticle2DMinAngleV(int particleID) const;
 
-    /*!
-        @method getParticle2DMinScale
+    /*
+        @method _getParticle2DMinScale
         @abstract IDを指定して、パーティクルに設定される最小の拡大率を設定します。
         拡大率は、生成時に設定の範囲内でランダムに設定されます。
      */
-    double          getParticle2DMinScale(int particleID) const;
+    //double          _getParticle2DMinScale(int particleID) const;
 
-    /*!
-        @method getParticle2DMinV
+    /*
+        @method _getParticle2DMinV
         @abstract IDを指定して、パーティクルに設定される最小の速度を設定します。
         速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    KRVector2D      getParticle2DMinV(int particleID) const;
+    //KRVector2D      _getParticle2DMinV(int particleID) const;
 
-    /*!
-        @task パーティクルの管理（状態の設定）
-     */
-    
-    /*!
-        @method setParticle2DBlendMode
-        @abstract IDを指定して、パーティクル描画時のブレンドモードを設定します。
-     */
-    void    setParticle2DBlendMode(int particleID, KRBlendMode blendMode);
-
-    /*!
-        @method setParticle2DColor
+    /*
+        @method _setParticle2DColor
         @abstract IDを指定して、パーティクル描画の基本色を設定します。
      */
-    void    setParticle2DColor(int particleID, const KRColor& color);
+    //void    _setParticle2DColor(int particleID, const KRColor& color);
 
-    /*!
-        @method setParticle2DColorDelta
+    /*
+        @method _setParticle2DColorDelta
         @abstract IDを指定して、パーティクルの色の変化量を設定します。
      */
-    void    setParticle2DColorDelta(int particleID, double red, double green, double blue, double alpha);
+    //void    _setParticle2DColorDelta(int particleID, double red, double green, double blue, double alpha);
 
-    /*!
-        @method setParticle2DGenerateCount
+    /*
+        @method _setParticle2DGenerateCount
         @abstract IDを指定して、1フレームあたりのパーティクルの生成量を設定します。
      */
-    void    setParticle2DGenerateCount(int particleID, int count);
+    //void    _setParticle2DGenerateCount(int particleID, int count);
 
-    /*!
-        @method setParticle2DGravity
+    /*
+        @method _setParticle2DGravity
         @abstract IDを指定して、パーティクルに設定される重力を設定します。
      */
-    void    setParticle2DGravity(int particleID, const KRVector2D& a);
+    //void    _setParticle2DGravity(int particleID, const KRVector2D& a);
 
-    /*!
-        @method setParticle2DLife
+    /*
+        @method _setParticle2DLife
         @abstract IDを指定して、パーティクルに設定される生存期間（フレーム単位）を設定します。
      */
-    void    setParticle2DLife(int particleID, unsigned life);
+    //void    _setParticle2DLife(int particleID, unsigned life);
 
-    /*!
-        @method setParticle2DMaxAngleV
+    /*
+        @method _setParticle2DMaxAngleV
         @abstract IDを指定して、パーティクルに設定される回転の最大の角速度を設定します。
         回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DMaxAngleV(int particleID, double angleV);
+    //void    _setParticle2DMaxAngleV(int particleID, double angleV);
 
-    /*!
-        @method setParticle2DMaxCount
+    /*
+        @method _setParticle2DMaxCount
         @abstract IDを指定して、パーティクルの最大の生成数を設定します。
      */
-    void    setParticle2DMaxCount(int particleID, unsigned count);
+    //void    _setParticle2DMaxCount(int particleID, unsigned count);
 
-    /*!
-        @method setParticle2DMaxScale
+    /*
+        @method _setParticle2DMaxScale
         @abstract IDを指定して、パーティクルに設定される最大の拡大率を設定します。
         拡大率は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DMaxScale(int particleID, double scale);
+    //void    _setParticle2DMaxScale(int particleID, double scale);
 
-    /*!
-        @method setParticle2DMaxV
+    /*
+        @method _setParticle2DMaxV
         @abstract IDを指定して、パーティクルに設定される最大の速度を設定します。
         速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DMaxV(int particleID, const KRVector2D& v);
+    //void    _setParticle2DMaxV(int particleID, const KRVector2D& v);
 
-    /*!
-        @method setParticle2DMinAngleV
+    /*
+        @method _setParticle2DMinAngleV
         @abstract IDを指定して、パーティクルに設定される回転の最小の角速度を設定します。
         回転の角速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DMinAngleV(int particleID, double angleV);
+    //void    _setParticle2DMinAngleV(int particleID, double angleV);
 
-    /*!
-        @method setParticle2DMinScale
+    /*
+        @method _setParticle2DMinScale
         @abstract IDを指定して、パーティクルに設定される最小の拡大率を設定します。
         拡大率は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DMinScale(int particleID, double scale);
+    //void    _setParticle2DMinScale(int particleID, double scale);
 
-    /*!
-        @method setParticle2DMinV
+    /*
+        @method _setParticle2DMinV
         @abstract IDを指定して、パーティクルに設定される最小の速度を設定します。
         速度は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DMinV(int particleID, const KRVector2D& v);
+    //void    _setParticle2DMinV(int particleID, const KRVector2D& v);
 
-    /*!
-        @method setParticle2DScaleDelta
+    /*
+        @method _setParticle2DScaleDelta
         @abstract IDを指定して、パーティクルに設定される拡大率の変化量を設定します。
         拡大率は、生成時に設定の範囲内でランダムに設定されます。
      */
-    void    setParticle2DScaleDelta(int particleID, double value);
+    //void    _setParticle2DScaleDelta(int particleID, double value);
 
 };
 

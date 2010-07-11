@@ -91,7 +91,7 @@ void _KRChara2DKoma::initForManualChara2D(int textureID, KRVector2DInt atlasPos,
 
 void _KRChara2DKoma::initForBoxChara2D(const std::string& imageTicket, int atlasIndex, int interval, bool isCancelable, int gotoTarget)
 {
-    mTextureID = gKRTex2DMan->getTextureIDForTicket(imageTicket);
+    mTextureID = gKRTex2DMan->_getTextureIDForTicket(imageTicket);
     
     mAtlasIndex = atlasIndex;
     mIsCancelable = isCancelable;
@@ -252,7 +252,7 @@ void _KRChara2DSpec::initForManualParticle2D(const std::string& fileName)
 
 void _KRChara2DSpec::initForBoxParticle2D(const std::string& imageTicket)
 {
-    mParticleTexID = gKRTex2DMan->getTextureIDForTicket(imageTicket);
+    mParticleTexID = gKRTex2DMan->_getTextureIDForTicket(imageTicket);
 }
 
 void _KRChara2DSpec::addMotion(int motionID, _KRChara2DMotion* aMotion)

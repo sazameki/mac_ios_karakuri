@@ -43,7 +43,7 @@ public:
     double      mDeltaAlpha;
     
 public:
-	_KRParticle2D(int charaSpecID, int zOrder, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
+	_KRParticle2D(int charaSpecID, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
                   double angleV, const KRColor& color, double size, double scale,
                   double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale);
     ~_KRParticle2D();
@@ -57,12 +57,12 @@ public:
 };
 
 /*!
-    @-class  KRParticle2DSystem
+    @-class  _KRParticle2DSystem
     @group  Game 2D Graphics
     @abstract 2次元の移動を行うパーティクル群を生成し管理するための仕組みです。
     火、爆発、煙、雲、霧などの表現に利用できます。
  */
-class KRParticle2DSystem : public KRObject {
+class _KRParticle2DSystem : public KRObject {
     
     std::list<_KRParticle2D *>  mParticles;
     
@@ -110,27 +110,27 @@ public:
         @task コンストラクタ
      */
     
-    KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder);
+    _KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder);
     
-    KRParticle2DSystem(int groupID, const std::string& ticket);
+    _KRParticle2DSystem(int groupID, const std::string& ticket);
     
     /*!
-        @method KRParticle2DSystem
+        @method _KRParticle2DSystem
         @abstract テクスチャに使用する画像ファイルの名前を指定して、このパーティクル・システムを生成します。
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(const std::string& filename, bool doLoop=false);
+    _KRParticle2DSystem(const std::string& filename, bool doLoop=false);
 
     /*!
-        @method KRParticle2DSystem
+        @method _KRParticle2DSystem
         @abstract テクスチャを指定して、このパーティクル・システムを生成します。
         <p>このコンストラクタを利用することにより、同じテクスチャを異なる複数のパーティクル・システムで共有して効率的に使うことができます。同じ画像でサイズが異なるパーティクルを生成したい場合などに、このコンストラクタを利用してください。</p>
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(_KRTexture2D *texture, bool doLoop=false);
-    virtual ~KRParticle2DSystem();
+    _KRParticle2DSystem(_KRTexture2D *texture, bool doLoop=false);
+    virtual ~_KRParticle2DSystem();
     
 private:
     void    init();

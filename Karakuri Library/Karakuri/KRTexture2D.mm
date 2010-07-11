@@ -117,8 +117,8 @@ _KRTexture2D::_KRTexture2D(const std::string& resourceFileName, const std::strin
     mAtlasDiv = KRVector2DInt(divX, divY);
     mIsAtlasFlipped = true;
 
-    unsigned startPos = gKRTex2DMan->getResourceStartPosForTicket(ticket);
-    unsigned length = gKRTex2DMan->getResourceLengthForTicket(ticket);
+    unsigned startPos = gKRTex2DMan->_getResourceStartPosForTicket(ticket);
+    unsigned length = gKRTex2DMan->_getResourceLengthForTicket(ticket);
     
     NSString *filenameStr = [[NSString alloc] initWithCString:resourceFileName.c_str() encoding:NSUTF8StringEncoding];
     

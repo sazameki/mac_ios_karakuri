@@ -63,7 +63,7 @@ int KRAudioManager::addSE(int groupID, const std::string& audioFileName)
 #pragma mark -
 #pragma mark リソースの管理
 
-int KRAudioManager::getResourceSize(int groupID)
+int KRAudioManager::_getResourceSize(int groupID)
 {
     int ret = 0;
     
@@ -87,7 +87,7 @@ int KRAudioManager::getResourceSize(int groupID)
     return ret;
 }
 
-void KRAudioManager::loadAudioFiles(int groupID, KRWorld* loaderWorld, double minDuration)
+void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double minDuration)
 {
     std::vector<int>& theBGMIDList = mBGM_GroupID_BGMIDList_Map[groupID];
     std::vector<int>& theSEIDList = mSE_GroupID_SEIDList_Map[groupID];
@@ -174,7 +174,7 @@ void KRAudioManager::loadAudioFiles(int groupID, KRWorld* loaderWorld, double mi
     }
 }
 
-void KRAudioManager::unloadAudioFiles(int groupID)
+void KRAudioManager::_unloadAudioFiles(int groupID)
 {
 }
 
