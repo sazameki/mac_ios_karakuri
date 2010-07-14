@@ -1,9 +1,9 @@
 /*!
     @file   LoadingWorld.h
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
     
-    Please write the description of this world.
+    Loading world for the game play resources.
  */
 
 #pragma once

@@ -1,9 +1,9 @@
 /*!
     @file   Enemy2.h
-    @author numata
-    @date   10/02/19
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  
-    Please write the description of this class.
+    Enemy class, which moves vertically.
  */
 
 #pragma once

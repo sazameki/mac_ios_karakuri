@@ -1,7 +1,7 @@
 /*!
     @file   LoadingWorld.cpp
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "LoadingWorld.h"
@@ -30,10 +30,6 @@ void LoadingWorld::updateModel(KRInput* input)
 
     double progress = getLoadingProgress();
     gKRAudioMan->setBGMVolume(1.0-progress);
-    
-#if _DEBUG
-#error TEST
-#endif
 }
 
 void LoadingWorld::drawView(KRGraphics* g)

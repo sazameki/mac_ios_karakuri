@@ -1,7 +1,7 @@
 /*!
     @file   LogoWorld.cpp
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "LogoWorld.h"

@@ -38,6 +38,30 @@
     return [NSPropertyListSerialization dataFromPropertyList:infos format:NSPropertyListBinaryFormat_v1_0 errorDescription:nil];    
 }
 
+- (void)exportIDsToString:(NSMutableString*)str
+{
+    int count = [self childCount];
+    for (int i = 0; i < count; i++) {
+        BXResourceElement* aSpec = (BXResourceElement*)[self childAtIndex:i];
+        NSMutableString* resourceName = [NSMutableString stringWithString:[aSpec resourceName]];
+        [resourceName replaceOccurrencesOfString:@" "
+                                      withString:@""
+                                         options:0
+                                           range:NSMakeRange(0, [resourceName length])];
+        int resourceID = [aSpec resourceID];
+        [str appendString:@"        "];
+        [str appendString:resourceName];
+        int spaceCount = 20 - [resourceName length];
+        if (spaceCount <= 0) {
+            spaceCount = 1;
+        }
+        for (int j = 0; j < spaceCount; j++) {
+            [str appendString:@" "];
+        }
+        [str appendFormat:@"= %d,\n", resourceID];
+    }
+}
+
 @end
 
 

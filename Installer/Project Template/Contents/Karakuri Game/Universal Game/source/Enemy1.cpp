@@ -9,7 +9,7 @@
 
 
 Enemy1::Enemy1()
-    : Enemy(CharaID::Enemy1)
+    : Enemy(CharaID::EnemyThunder)
 {
     mDirection = 1;
 }

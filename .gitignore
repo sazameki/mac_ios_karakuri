@@ -21,8 +21,12 @@ Karakuri Base Projects/*~.xib
 
 # Installer Noise
 Installer/Karakuri Library/Contents/*
-Installer/Installers/build
+Installer/build
+Installer/*/build
+Installer/*/*/build
+Installer/*/*/*/build
 Installer/*/*/*/*/build
+Installer/old/Installers/build
  
 # Mac OS X Noise
 *.swp

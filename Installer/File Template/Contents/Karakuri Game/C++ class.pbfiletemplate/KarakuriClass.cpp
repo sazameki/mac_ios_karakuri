@@ -5,6 +5,7 @@
  */
 
 #include "«FILEBASENAME».h"
+#include "Globals.h"
 
 
 «FILEBASENAME»::«FILEBASENAME»()

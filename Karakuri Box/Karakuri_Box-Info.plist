@@ -9,10 +9,32 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>krbox</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>krbox-icon.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Karakuri Box Launcher</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>????</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSDocumentClass</key>
+			<string>BXDocument</string>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>krrsproj</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string></string>
+			<string>krbox-icon.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>Karakuri Resource Project</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -30,9 +52,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>krbox-icon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>jp.designed.karakuri.KarakuriBox</string>
+	<string>jp.sazameki.karakuri.KarakuriBox</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -40,16 +62,34 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>3.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>3.1.1</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.archive</string>
+			</array>
+			<key>UTTypeIconFile</key>
+			<string>krbox-icon.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>jp.sazameki.karakuri.KarakuriBoxLauncher</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>krbox</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

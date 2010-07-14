@@ -9,7 +9,7 @@
 
 
 Enemy2::Enemy2()
-    : Enemy(CharaID::Enemy2)
+    : Enemy(CharaID::EnemyIce)
 {
     mDirection = 1;
 }

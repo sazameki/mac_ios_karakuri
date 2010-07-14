@@ -384,7 +384,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 
-- (void)exportAllResources:(id)sender
+/*- (void)exportAllResources:(id)sender
 {
     NSSavePanel* savePanel = [NSSavePanel savePanel];
     
@@ -398,7 +398,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
                         modalDelegate:self
                        didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:)
                           contextInfo:nil];
-}
+}*/
 
 - (void)exportSelectedResource:(id)sender
 {
@@ -514,6 +514,56 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self exportResourceFooterToFileHandle:fileHandle];
 }
 
+- (void)updateExportedResources:(id)sender
+{
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    
+    NSString* selfPath = [[self fileURL] path];
+    NSString* filepath = [[selfPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"resource.krrs"];
+
+    // 空データの書き出し
+    [[NSData data] writeToFile:filepath atomically:NO];
+
+    // すべてのリソースを書き出し
+    NSFileHandle* fileHandle = [NSFileHandle fileHandleForWritingAtPath:filepath];
+    [self exportAllResourcesToFileHandle:fileHandle];
+
+    // 完了処理
+    [fileHandle synchronizeFile];
+    [fileHandle closeFile];
+    
+    NSString* resourceDirPath = [selfPath stringByDeletingLastPathComponent];
+    if (![[resourceDirPath lastPathComponent] isEqualToString:@"resource"]) {
+        NSLog(@"Skipped Resource ID Exportation (1)");
+        return;
+    }
+    
+    NSString* sourceDirPath = [[resourceDirPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"source"];
+    if (![fileManager fileExistsAtPath:sourceDirPath]) {
+        NSLog(@"Skipped Resource ID Exportation (2)");
+        return;
+    }
+    
+    NSString* resourceIDHeaderFilePath = [sourceDirPath stringByAppendingPathComponent:@"GameResourceID.h"];
+    
+    NSMutableString* headerContent = [[NSMutableString alloc] initWithFormat:@"// Karakuri Box Exported Resource IDs (%@)\n\n", [NSDate date]];
+
+    [headerContent appendString:@"// 2D Character IDs\n"];
+    [headerContent appendString:@"struct CharaID {\n    enum {\n"];
+    [mChara2DGroup exportIDsToString:headerContent];
+    [headerContent appendString:@"    };\n};\n\n"];
+
+    [headerContent appendString:@"// 2D Particle IDs\n"];
+    [headerContent appendString:@"struct ParticleID {\n    enum {\n"];
+    [mParticle2DGroup exportIDsToString:headerContent];
+    [headerContent appendString:@"    };\n};\n\n"];
+    
+    [headerContent appendString:@"\n\n\n"];
+    
+    if (![headerContent writeToFile:resourceIDHeaderFilePath atomically:NO encoding:NSUTF8StringEncoding error:NULL]) {
+        NSLog(@"Failed to export resource IDs...");
+    }
+}
 
 
 #pragma mark -
@@ -1642,6 +1692,29 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark -
 #pragma mark シリアライゼーション（読み込み）
 
+- (BOOL)readFromURL:(NSURL*)absoluteURL ofType:(NSString*)typeName error:(NSError**)outError
+{
+    NSString* filepath = [absoluteURL path];
+    NSString* filename = [filepath lastPathComponent];
+    NSString* ext = [filename pathExtension];
+
+    if ([ext isEqualToString:@"krbox"]) {
+        NSDictionary* theInfo = [NSDictionary dictionaryWithContentsOfFile:filepath];
+        NSString* projFileName = [theInfo objectForKey:@"Project File"];
+        if (!projFileName || [projFileName length] == 0) {
+            return NO;
+        } else {
+            NSString* projFilePath = [[filepath stringByDeletingLastPathComponent] stringByAppendingPathComponent:projFileName];
+            NSFileWrapper* fileWrapper = [[[NSFileWrapper alloc] initWithPath:projFilePath] autorelease];
+            mRootWrapper = [fileWrapper retain];
+            return YES;
+        }
+    } else {
+        NSFileWrapper* fileWrapper = [[[NSFileWrapper alloc] initWithPath:filepath] autorelease];
+        return [self readFromFileWrapper:fileWrapper ofType:@"Karakuri Resource Project" error:outError];
+    }
+}
+
 - (BOOL)readFromFileWrapper:(NSFileWrapper*)fileWrapper ofType:(NSString*)typeName error:(NSError**)outError
 {
     mRootWrapper = [fileWrapper retain];
@@ -1652,6 +1725,30 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 #pragma mark -
 #pragma mark シリアライゼーション（保存）
+
+- (BOOL)writeToURL:(NSURL*)absoluteURL ofType:(NSString*)typeName error:(NSError**)outError
+{
+    NSString* filepath = [absoluteURL path];
+    NSString* filename = [filepath lastPathComponent];
+    NSString* ext = [filename pathExtension];
+    
+    if ([ext isEqualToString:@"krbox"]) {
+        NSDictionary* theInfo = [NSDictionary dictionaryWithObject:@"Game Resource.krrsproj" forKey:@"Project File"];
+        NSString* error = nil;
+        NSData* theData = [NSPropertyListSerialization dataFromPropertyList:theInfo format:NSPropertyListBinaryFormat_v1_0 errorDescription:&error];
+        [theData writeToURL:absoluteURL atomically:NO];
+        
+        NSFileWrapper* fileWrapper = [self fileWrapperOfType:nil error:outError];
+        NSString* selfPath = [[self fileURL] path];
+        NSString* projPath = [[selfPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Game Resource.krrsproj"];
+        
+        [fileWrapper writeToFile:projPath atomically:NO updateFilenames:YES];
+        
+        return YES;
+    } else {
+        return [super writeToURL:absoluteURL ofType:typeName error:outError];
+    }
+}
 
 - (NSFileWrapper*)fileWrapperOfType:(NSString*)typeName error:(NSError**)outError
 {

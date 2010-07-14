@@ -1,7 +1,7 @@
 /*!
     @file   TitleWorld.cpp
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "TitleWorld.h"
@@ -48,11 +48,13 @@ void TitleWorld::updateModel(KRInput* input)
 
 void TitleWorld::drawView(KRGraphics* g)
 {
-    g->clear(KRColor::GreenYellow);
+    // Clearing screen should be omitted because the title image fully covers the screen.
+    //g->clear(KRColor::GreenYellow);
     
-    gKRTex2DMan->drawAtPoint(TexID::Title, KRVector2D(0, 0));
+    gKRTex2DMan->drawInRect(TexID::Title, KRRect2D(0, 0, gKRScreenSize.x, gKRScreenSize.y));
 
-    gKRAnime2DMan->draw();
+    // We don't use animation mechanism at the title world.
+    //gKRAnime2DMan->draw();
 }
 
 

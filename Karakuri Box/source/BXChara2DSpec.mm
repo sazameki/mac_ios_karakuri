@@ -840,7 +840,6 @@
     
     // リソース情報の書き出し
     NSDictionary* elementInfo = [self elementInfo];
-    NSLog(@"elementInfo: %@", elementInfo);
     NSString* errorStr = nil;
     NSData* infoData = [NSPropertyListSerialization dataFromPropertyList:elementInfo
                                                                   format:NSPropertyListBinaryFormat_v1_0

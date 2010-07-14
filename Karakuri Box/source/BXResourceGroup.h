@@ -16,6 +16,7 @@
 }
 
 - (NSData*)groupData;
+- (void)exportIDsToString:(NSMutableString*)str;
 
 @end
 

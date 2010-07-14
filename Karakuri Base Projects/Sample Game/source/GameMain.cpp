@@ -1,7 +1,7 @@
 /*!
     @file   GameMain.cpp
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "GameMain.h"
@@ -56,7 +56,7 @@ void GameMain::setupResources()
 {
     ///// Add all required resources at this point.
 
-    // Load integrated resource file (Use "Karakuri Box" to make it!)
+    // Load integrated resource file.
     addResources("resource.krrs");
 
     // Logo and Loading Worlds

@@ -13,6 +13,7 @@
  */
 
 #include "«FILEBASENAMEASIDENTIFIER».h"
+#include "Globals.h"
 
 
 void «FILEBASENAMEASIDENTIFIER»::becameActive()
@@ -31,6 +32,7 @@ void «FILEBASENAMEASIDENTIFIER»::resignedActive()
 
 void «FILEBASENAMEASIDENTIFIER»::updateModel(KRInput* input)
 {
+    // TODO: Write your own game world logic.
 }
 
 void «FILEBASENAMEASIDENTIFIER»::drawView(KRGraphics* g)

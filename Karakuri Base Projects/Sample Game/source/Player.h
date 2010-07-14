@@ -1,9 +1,9 @@
 /*!
     @file   Player.h
-    @author numata
-    @date   10/02/19
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
     
-    Please write the description of this class.
+    Player class, which attacks enemies.
  */
 
 #pragma once

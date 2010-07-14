@@ -1,7 +1,9 @@
 /*!
     @file   GameMain.h
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
+ 
+    Game management class.
  */
 
 #pragma once

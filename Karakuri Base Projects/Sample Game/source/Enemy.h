@@ -1,9 +1,9 @@
 /*!
     @file   Enemy.h
-    @author numata
-    @date   10/02/19
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  
-    Please write the description of this class.
+    Base class of enemy classes.
  */
 
 #pragma once

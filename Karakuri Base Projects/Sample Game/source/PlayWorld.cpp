@@ -1,7 +1,7 @@
 /*!
     @file   PlayWorld.cpp
-    @author numata
-    @date   10/02/13
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "PlayWorld.h"
@@ -43,13 +43,13 @@ void PlayWorld::becameActive()
         } else {
             enemy = new Enemy2();
         }
-        enemy->setCenterPos(KRVector2D(KRRandInt(460)+10, KRRandInt(300)+10));
+        enemy->setCenterPos(KRVector2D(KRRandInt(gKRScreenSize.x-20)+10, KRRandInt(gKRScreenSize.y-20)+10));
         mEnemies.push_back(enemy);
         gKRAnime2DMan->addChara2D(enemy);
     }
     
     // Use label for displaying texts.
-    mScoreLabel = new KRLabel(KRRect2D(10, 320-30, 240, 30));
+    mScoreLabel = new KRLabel(KRRect2D(10, gKRScreenSize.y-30, 240, 30));
     mScoreLabel->setText("Score: 0000");
     addControl(mScoreLabel);
 

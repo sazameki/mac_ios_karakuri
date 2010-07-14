@@ -1,10 +1,7 @@
-/*
- *  Globals.cpp
- *  Karakuri Game Test
- *
- *  Created by numata on 10/02/13.
- *  Copyright 2010 Apple Inc. All rights reserved.
- *
+/*!
+    @file   Globals.cpp
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "Globals.h"

@@ -66,6 +66,7 @@
 		8EAB6186114CDC2100C2CBC5 /* BXResourceListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB6185114CDC2100C2CBC5 /* BXResourceListView.mm */; };
 		8EAB6288114CEDC700C2CBC5 /* tbi_particle2d.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB6287114CEDC700C2CBC5 /* tbi_particle2d.tiff */; };
 		8EAB62AF114CF9A100C2CBC5 /* tbi_chara2d.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB62AE114CF9A100C2CBC5 /* tbi_chara2d.tiff */; };
+		8ED0E21011ED39B800A7553A /* krbox-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED0E20F11ED39B800A7553A /* krbox-icon.icns */; };
 		8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */; };
 		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
 		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
@@ -177,6 +178,7 @@
 		8EAB6185114CDC2100C2CBC5 /* BXResourceListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceListView.mm; sourceTree = "<group>"; };
 		8EAB6287114CEDC700C2CBC5 /* tbi_particle2d.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = tbi_particle2d.tiff; sourceTree = "<group>"; };
 		8EAB62AE114CF9A100C2CBC5 /* tbi_chara2d.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = tbi_chara2d.tiff; sourceTree = "<group>"; };
+		8ED0E20F11ED39B800A7553A /* krbox-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "krbox-icon.icns"; sourceTree = "<group>"; };
 		8ED752A1113B8E2B004E78EB /* BXBGMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBGMResource.h; sourceTree = "<group>"; };
 		8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBGMResource.mm; sourceTree = "<group>"; };
 		8ED752A4113B8E49004E78EB /* BXSEResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXSEResource.h; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 		8E62A59E113AE082005DC90E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8ED0E20F11ED39B800A7553A /* krbox-icon.icns */,
 				8EAB62AE114CF9A100C2CBC5 /* tbi_chara2d.tiff */,
 				8EAB6287114CEDC700C2CBC5 /* tbi_particle2d.tiff */,
 				8E84ADB911489B4B00438868 /* transparent_pattern.png */,
@@ -590,6 +593,7 @@
 				8EAB6288114CEDC700C2CBC5 /* tbi_particle2d.tiff in Resources */,
 				8EAB62AF114CF9A100C2CBC5 /* tbi_chara2d.tiff in Resources */,
 				8EE2F661115E46BE0041C1DE /* UserDefaults.plist in Resources */,
+				8ED0E21011ED39B800A7553A /* krbox-icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

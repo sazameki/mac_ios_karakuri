@@ -56,7 +56,7 @@ void GameMain::setupResources()
 {
     ///// Add all required resources at this point.
 
-    // Load integrated resource file (Use "Karakuri Box" to edit "Game Resource.krrsproj" and export the resource file)
+    // Load integrated resource file.
     addResources("resource.krrs");
 
     // Logo and Loading Worlds

@@ -1,7 +1,7 @@
 /*!
     @file   Enemy2.cpp
-    @author numata
-    @date   10/02/19
+    @author ___FULLUSERNAME___
+    @date   ___DATE___
  */
 
 #include "Enemy2.h"
@@ -9,7 +9,7 @@
 
 
 Enemy2::Enemy2()
-    : Enemy(CharaID::Enemy2)
+    : Enemy(CharaID::EnemyIce)
 {
     mDirection = 1;
 }
@@ -28,9 +28,9 @@ void Enemy2::move()
         mDirection *= -1;
         pos.y = 20;
     }
-    else if (pos.y > 300) {
+    else if (pos.y > gKRScreenSize.y-20) {
         mDirection *= -1;
-        pos.y = 300;
+        pos.y = gKRScreenSize.y-20;
     }
     
     setPos(pos);

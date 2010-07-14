@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include "GameResourceID.h"
+
 
 // Group IDs
 struct GroupID {
@@ -31,16 +33,6 @@ struct TexID {
     };
 };
 
-// Character IDs (IDs are defined in Karakuri Box)
-struct CharaID {
-    enum {
-        Player      = 1000,
-        Explosion   = 1001,
-        Enemy1      = 1002,
-        Enemy2      = 1003,
-    };
-};
-
 struct CharaType {
     enum {
         Player,
@@ -52,12 +44,6 @@ struct HitType {
     enum {
         Attack  = 1,
         Block   = 2,
-    };
-};
-
-struct ParticleID {
-    enum {
-        Particle1   = 1000,
     };
 };
 

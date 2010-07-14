@@ -7,6 +7,7 @@
 //
 
 #import "BXAppController.h"
+#import "BXDocument.h"
 
 
 @implementation BXAppController
@@ -39,12 +40,12 @@
         if (lastOpenedFilePath && [lastOpenedFilePath length] > 0) {
             if ([[NSFileManager defaultManager] fileExistsAtPath:lastOpenedFilePath]) {
                 NSDocumentController* docController = [NSDocumentController sharedDocumentController];
-                NSURL* fileurl = [NSURL fileURLWithPath:lastOpenedFilePath];
+                NSURL* fileURL = [NSURL fileURLWithPath:lastOpenedFilePath];
                 
                 NSError* error = nil;
-                [docController openDocumentWithContentsOfURL:fileurl display:YES error:&error];
+                BXDocument* newDoc = [docController openDocumentWithContentsOfURL:fileURL display:YES error:&error];
                 
-                if (!error) {
+                if (newDoc) {
                     processed = YES;
                 }
             }

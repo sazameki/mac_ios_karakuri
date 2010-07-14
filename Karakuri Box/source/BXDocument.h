@@ -138,6 +138,8 @@
 - (void)exportAllResources:(id)sender;
 - (void)exportSelectedResource:(id)sender;
 
+- (void)updateExportedResources:(id)sender;
+
 
 ///// 2Dキャラクタ設定アクション
 
