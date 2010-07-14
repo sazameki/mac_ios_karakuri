@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="100516"/>
+			<integer value="100035"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -258,7 +258,7 @@
 										<object class="NSTabViewItem" id="358377521">
 											<string key="NSIdentifier">chara2d-editor</string>
 											<object class="NSView" key="NSView" id="77651629">
-												<nil key="NSNextResponder"/>
+												<reference key="NSNextResponder" ref="225689728"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2006,7 +2006,7 @@
 																				<object class="NSTableHeaderCell" key="NSHeaderCell">
 																					<int key="NSCellFlags">75628096</int>
 																					<int key="NSCellFlags2">2048</int>
-																					<string key="NSContents">状態ID</string>
+																					<string key="NSContents">モーションID</string>
 																					<reference key="NSSupport" ref="26"/>
 																					<object class="NSColor" key="NSBackgroundColor" id="976624730">
 																						<int key="NSColorSpace">3</int>
@@ -2094,7 +2094,7 @@
 																				<object class="NSTableHeaderCell" key="NSHeaderCell">
 																					<int key="NSCellFlags">75628096</int>
 																					<int key="NSCellFlags2">2048</int>
-																					<string key="NSContents">状態名</string>
+																					<string key="NSContents">モーションの名前</string>
 																					<reference key="NSSupport" ref="26"/>
 																					<reference key="NSBackgroundColor" ref="976624730"/>
 																					<reference key="NSTextColor" ref="883668581"/>
@@ -2827,6 +2827,7 @@
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
+												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Chara2D</string>
 											<reference key="NSColor" ref="806369588"/>
@@ -2835,7 +2836,7 @@
 										<object class="NSTabViewItem" id="1013352480">
 											<string key="NSIdentifier">particle2d-editor</string>
 											<object class="NSView" key="NSView" id="539060000">
-												<reference key="NSNextResponder" ref="225689728"/>
+												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -5216,14 +5217,13 @@
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
-												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Particle2D</string>
 											<reference key="NSColor" ref="806369588"/>
 											<reference key="NSTabView" ref="225689728"/>
 										</object>
 									</object>
-									<reference key="NSSelectedTabViewItem" ref="1013352480"/>
+									<reference key="NSSelectedTabViewItem" ref="358377521"/>
 									<object class="NSFont" key="NSFont">
 										<string key="NSName">LucidaGrande</string>
 										<double key="NSSize">9</double>
@@ -5234,7 +5234,7 @@
 									<bool key="NSDrawsBackground">YES</bool>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<reference ref="539060000"/>
+										<reference ref="77651629"/>
 									</object>
 								</object>
 							</object>
@@ -16156,9 +16156,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{170, 376}, {1000, 683}}</string>
+					<string>{{632, 161}, {1000, 683}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{170, 376}, {1000, 683}}</string>
+					<string>{{632, 161}, {1000, 683}}</string>
 					<integer value="1"/>
 					<string>{{201, 387}, {507, 413}}</string>
 					<integer value="1"/>
@@ -16784,9 +16784,11 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>startChara2DKomaPreviewAnimation:</string>
 							<string>startChara2DSimulator:</string>
 							<string>stopChara2DSimulator:</string>
+							<string>updateExportedResources:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -16905,6 +16907,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>startChara2DKomaPreviewAnimation:</string>
 							<string>startChara2DSimulator:</string>
 							<string>stopChara2DSimulator:</string>
+							<string>updateExportedResources:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -17130,6 +17133,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">stopChara2DSimulator:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">updateExportedResources:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
