@@ -19,6 +19,9 @@
 		8E37172C1151907500B1655B /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E37172B1151907500B1655B /* player.png */; };
 		8E37172D1151907500B1655B /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E37172B1151907500B1655B /* player.png */; };
 		8E37172E1151907500B1655B /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E37172B1151907500B1655B /* player.png */; };
+		8E4B202811F1CD310041E14D /* Default_V.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B202711F1CD310041E14D /* Default_V.png */; };
+		8E4B202911F1CD310041E14D /* Default_V.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B202711F1CD310041E14D /* Default_V.png */; };
+		8E4B202A11F1CD310041E14D /* Default_V.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E4B202711F1CD310041E14D /* Default_V.png */; };
 		8E6F55431011CA330022E442 /* GameMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6F55421011CA330022E442 /* GameMain.cpp */; };
 		8E6F55441011CA330022E442 /* GameMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6F55421011CA330022E442 /* GameMain.cpp */; };
 		8E6F5A361011D6B60022E442 /* KarakuriLibraryConnector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E6F5A351011D6B60022E442 /* KarakuriLibraryConnector.mm */; };
@@ -97,6 +100,7 @@
 		8E14BDD611E8340F0021BB4D /* loading_chara.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_chara.png; sourceTree = "<group>"; };
 		8E36486F11ED3E0B0031ECAD /* Game Resource.krbox */ = {isa = PBXFileReference; explicitFileType = archive; fileEncoding = 4; path = "Game Resource.krbox"; sourceTree = "<group>"; };
 		8E37172B1151907500B1655B /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
+		8E4B202711F1CD310041E14D /* Default_V.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_V.png; sourceTree = "<group>"; };
 		8E6F55411011CA330022E442 /* GameMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMain.h; sourceTree = "<group>"; };
 		8E6F55421011CA330022E442 /* GameMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMain.cpp; sourceTree = "<group>"; };
 		8E6F5A351011D6B60022E442 /* KarakuriLibraryConnector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriLibraryConnector.mm; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				8EC66E3311E9FB86009853A2 /* Default.png */,
+				8E4B202711F1CD310041E14D /* Default_V.png */,
 				8EC66E2711E9F9F8009853A2 /* Default-Landscape.png */,
 				8EC66E2811E9F9F8009853A2 /* Default-Portrait.png */,
 				8EC66E2F11E9FAC6009853A2 /* iphone_icon.png */,
@@ -390,6 +395,7 @@
 				8EC6709D11EA193E009853A2 /* bgm_title.caf in Resources */,
 				8EC670AC11EA1BAC009853A2 /* bgm_play.caf in Resources */,
 				8EC671E411EA2C4F009853A2 /* resource.krrs in Resources */,
+				8E4B202A11F1CD310041E14D /* Default_V.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +418,7 @@
 				8EC6709F11EA193E009853A2 /* bgm_title.caf in Resources */,
 				8EC670AE11EA1BAC009853A2 /* bgm_play.caf in Resources */,
 				8EC671E311EA2C4F009853A2 /* resource.krrs in Resources */,
+				8E4B202811F1CD310041E14D /* Default_V.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +442,7 @@
 				8EC6709E11EA193E009853A2 /* bgm_title.caf in Resources */,
 				8EC670AD11EA1BAC009853A2 /* bgm_play.caf in Resources */,
 				8EC671E511EA2C4F009853A2 /* resource.krrs in Resources */,
+				8E4B202911F1CD310041E14D /* Default_V.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,7 +578,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Satoshi Numata (X5QAS282RN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satoshi Numata (9Z2NGKFWMB)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

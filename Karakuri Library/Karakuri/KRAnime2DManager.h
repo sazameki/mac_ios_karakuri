@@ -102,7 +102,7 @@ public:
     /*!
         @method getChara2D
         @abstract 画面上の位置とクラスの種類を指定して、その位置に表示されているキャラクタを取得します。
-        もっとも手前に表示されているキャラクタが取得されます。
+        現在の拡大率が反映された状態で、現在のコマに設定されたテクスチャサイズに基づいて当たり判定が行われます。もっとも手前に表示されているキャラクタが取得されます。
      */
     KRChara2D*  getChara2D(int classType, const KRVector2D& pos) const;
     
