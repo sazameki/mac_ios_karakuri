@@ -223,14 +223,27 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     NSString* appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
 #if KR_IPHONE_MACOSX_EMU
-    if (mIsScreenSizeHalved) {
-        appName = [appName stringByAppendingString:@" (50%)"];
-    } else {
-        appName = [appName stringByAppendingString:@" (100%)"];
+    // iPad
+    if (mGameManager->getScreenWidth() > 500) {
+        if (mIsScreenSizeHalved) {
+            appName = [appName stringByAppendingString:@" (50%)"];
+        } else {
+            appName = [appName stringByAppendingString:@" (100%)"];
+        }
     }
 #endif
     [mWindow setTitle:appName];
     [mWindow center];
+#endif
+    
+#if KR_IPHONE_MACOSX_EMU
+    // iPad
+    if (mGameManager->getScreenWidth() > 500) {
+        NSSize screenSize = [[NSScreen mainScreen] visibleFrame].size;
+        if (screenSize.height < 1024 + 21*2 + 22 + 23) {
+            [self halveSize:self];
+        }
+    }
 #endif
     
     _KRInitOpenAL();
