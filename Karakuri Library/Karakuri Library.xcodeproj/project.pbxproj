@@ -765,7 +765,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8EAB5EF3101B13C200DDA881 /* iPhone Device */;
+			remoteGlobalIDString = 8EAB5EF3101B13C200DDA881;
 			remoteInfo = "iPhone Device";
 		};
 /* End PBXContainerItemProxy section */

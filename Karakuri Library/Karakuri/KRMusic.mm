@@ -67,61 +67,52 @@ _KRMusic::_KRMusic(const std::string& filename, bool loop)
         sHasOSVersionChecked = YES;
     }
     
-    bool soloPlayEnabled = true;
-#if KR_IPHONE_MACOSX_EMU
-    soloPlayEnabled = (gKRGameMan->getAudioMixType() == KRAudioMixTypeAmbientSolo);
-#endif
-
-    if (soloPlayEnabled) {
-        NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-        if (sCanUseNSSound) {
-            NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
-            if (filepath) {
-                mImpl = [[NSSound alloc] initWithContentsOfFile:filepath byReference:YES];
-            }
-        } else {
-            mImpl = [[_KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
+    NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    if (sCanUseNSSound) {
+        NSString* filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+        if (filepath) {
+            mImpl = [[NSSound alloc] initWithContentsOfFile:filepath byReference:YES];
         }
-        if (!mImpl) {
-            const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
-            if (gKRLanguage == KRLanguageJapanese) {
-                errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
-            }
-            throw KRRuntimeError(errorFormat, filename.c_str());
+    } else {
+        mImpl = [[_KarakuriSound alloc] initWithName:filenameStr doLoop:loop];
+    }
+    if (!mImpl) {
+        const char* errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
         }
-        if (sCanUseNSSound && loop) {
-            NSMethodSignature *sig = [(NSSound *)mImpl methodSignatureForSelector:@selector(setLoops:)];
-            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
-            [invocation setSelector:@selector(setLoops:)];
-            [invocation setTarget:(NSSound *)mImpl];
-            BOOL boolValue = YES;
-            [invocation setArgument:&boolValue atIndex:2];
-            [invocation invokeWithTarget:(NSSound *)mImpl];
-        }
+        throw KRRuntimeError(errorFormat, filename.c_str());
+    }
+    if (sCanUseNSSound && loop) {
+        NSMethodSignature* sig = [(NSSound*)mImpl methodSignatureForSelector:@selector(setLoops:)];
+        NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
+        [invocation setSelector:@selector(setLoops:)];
+        [invocation setTarget:(NSSound*)mImpl];
+        BOOL boolValue = YES;
+        [invocation setArgument:&boolValue atIndex:2];
+        [invocation invokeWithTarget:(NSSound*)mImpl];
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    if (gKRGameMan->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
-        NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-        NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
-        NSURL *fileURL = nil;
-        
-        if (filepath) {
-            fileURL = [NSURL fileURLWithPath:filepath];
-        }
-        
-        NSError *error = nil;
-        mImpl = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
-        if (error) {
-            const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
-            if (gKRLanguage == KRLanguageJapanese) {
-                errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
-            }
-            throw KRRuntimeError(errorFormat, filename.c_str());
-        }
-        ((AVAudioPlayer *)mImpl).numberOfLoops = (loop? -1: 0);
+    NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+    NSURL *fileURL = nil;
+    
+    if (filepath) {
+        fileURL = [NSURL fileURLWithPath:filepath];
     }
+    
+    NSError* error = nil;
+    mImpl = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
+    if (error) {
+        const char* errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
+        if (gKRLanguage == KRLanguageJapanese) {
+            errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
+        }
+        throw KRRuntimeError(errorFormat, filename.c_str());
+    }
+    ((AVAudioPlayer*)mImpl).numberOfLoops = (loop? -1: 0);
 #endif
     
     prepareToPlay();

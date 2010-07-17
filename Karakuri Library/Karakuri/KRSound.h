@@ -29,7 +29,7 @@ class _KRSound : public KRObject {
     
 private:
     std::string mFileName;
-    void        *mSoundImpl;
+    void*       mSoundImpl;
     KRVector3D  mSourcePos;
     bool        mDoLoop;
 

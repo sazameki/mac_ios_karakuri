@@ -23,7 +23,7 @@ void _KRCleanUpOpenAL();
 
 
 @interface _KarakuriSound : NSObject {
-    float   *mAudioBuffer;
+    float*  mAudioBuffer;
     
     ALsizei mDataSize;
     ALuint  mALBuffer;
@@ -40,10 +40,10 @@ void _KRCleanUpOpenAL();
 + (float)listenerHorizontalOrientation;
 + (void)setListenerHorizontalOrientation:(float)radAngle;
 
-+ (void)getListenerX:(float *)x y:(float *)y z:(float *)z;
++ (void)getListenerX:(float*)x y:(float*)y z:(float*)z;
 + (void)setListenerX:(float)x y:(float)y z:(float)z;
 
-- (id)initWithName:(NSString *)name doLoop:(BOOL)doLoop;
+- (id)initWithName:(NSString*)name doLoop:(BOOL)doLoop;
 
 - (void)play;
 - (void)pause;
@@ -52,7 +52,7 @@ void _KRCleanUpOpenAL();
 - (BOOL)isPlaying;
 - (BOOL)isPaused;
 
-- (void)getSourceX:(float *)x y:(float *)y z:(float *)z;
+- (void)getSourceX:(float*)x y:(float*)y z:(float*)z;
 - (void)setSourceX:(float)x y:(float)y z:(float)z;
 
 - (float)pitch;

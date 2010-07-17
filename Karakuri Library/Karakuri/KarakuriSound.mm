@@ -11,8 +11,8 @@
 #import "KRGameManager.h"
 
 
-static ALCdevice *sALDevice = NULL;
-static ALCcontext *sALContext = NULL;
+static ALCdevice*   sALDevice = NULL;
+static ALCcontext*  sALContext = NULL;
 
 
 void _KRInitOpenAL()
@@ -22,14 +22,23 @@ void _KRInitOpenAL()
     }
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    NSString *categoryName = AVAudioSessionCategoryAmbient;
+    NSString* categoryName = AVAudioSessionCategoryAmbient;
     if (gKRGameMan->getAudioMixType() == KRAudioMixTypeAmbientSolo) {
         categoryName = AVAudioSessionCategorySoloAmbient;
     }
     
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:categoryName error: nil];
-    [session setActive:YES error:nil];
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+
+    NSError* error = nil;
+    if (![session setCategory:categoryName error:nil]) {
+        NSLog(@"Failed to set category for AVAudioSession. %@ (%@)", [error localizedDescription], [error localizedFailureReason]);
+        return;
+    }
+
+    if (![session setActive:YES error:&error]) {
+        NSLog(@"Failed to set active for AVAudioSession. %@ (%@)", [error localizedDescription], [error localizedFailureReason]);
+        return;
+    }
 #endif
     
     sALDevice = alcOpenDevice(NULL);
@@ -86,7 +95,7 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
     }
 }
 
-+ (void)getListenerX:(float *)x y:(float *)y z:(float *)z
++ (void)getListenerX:(float*)x y:(float*)y z:(float*)z
 {
     *x = sListenerPos[0];
     *y = sListenerPos[1];
@@ -101,7 +110,7 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
 	alListenerfv(AL_POSITION, sListenerPos);    
 }
 
-- (id)initWithName:(NSString *)name doLoop:(BOOL)doLoop
+- (id)initWithName:(NSString*)name doLoop:(BOOL)doLoop
 {
     self = [super init];
     if (self) {
@@ -114,10 +123,10 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
         
         mAudioBuffer = NULL;
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:nil];
+        NSString* path = [[NSBundle mainBundle] pathForResource:name ofType:nil];
         
         if (!path) {
-            const char *errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
+            const char* errorFormat = "Failed to load \"%s\". Please confirm that the audio file exists.";
             if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "\"%s\" の読み込みに失敗しました。オーディオファイルが存在することを確認してください。";
             }
@@ -131,11 +140,11 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
         ExtAudioFileRef audioFile;
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
         FSRef fileRef;
-        err = FSPathMakeRef((const UInt8 *)[path fileSystemRepresentation], &fileRef, NULL);
+        err = FSPathMakeRef((const UInt8*)[path fileSystemRepresentation], &fileRef, NULL);
         err = ExtAudioFileOpen(&fileRef, &audioFile);
 #endif
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-        NSURL *url = [NSURL fileURLWithPath:path];
+        NSURL* url = [NSURL fileURLWithPath:path];
         err = ExtAudioFileOpenURL((CFURLRef)url, &audioFile);
 #endif
         if (err != noErr) {
@@ -169,7 +178,7 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
         
         // バッファを用意する
         mDataSize = fileLengthFrames * outputFormat.mBytesPerFrame;
-        mAudioBuffer = (float *)malloc(mDataSize);
+        mAudioBuffer = (float*)malloc(mDataSize);
         
         AudioBufferList dataBuffer;
         dataBuffer.mNumberBuffers = 1;
@@ -246,7 +255,7 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
     return (state == AL_PAUSED)? YES: NO;
 }
 
-- (void)getSourceX:(float *)x y:(float *)y z:(float *)z
+- (void)getSourceX:(float*)x y:(float*)y z:(float*)z
 {
     *x = mSourcePos[0];
     *y = mSourcePos[1];
