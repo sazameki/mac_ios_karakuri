@@ -1,4 +1,4 @@
-// Karakuri Box Exported Resource IDs (2010-07-14 08:44:33 +0900)
+// Karakuri Box Exported Resource IDs (2010-07-18 01:24:11 +0900)
 
 // 2D Character IDs
 struct CharaID {
@@ -13,7 +13,8 @@ struct CharaID {
 // 2D Particle IDs
 struct ParticleID {
     enum {
-        NewParticle         = 1000,
+        Fire                = 1000,
+        Smoke               = 1001,
     };
 };
 

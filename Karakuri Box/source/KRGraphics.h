@@ -17,7 +17,7 @@
 
 /*!
     @enum KRBlendMode
-    @group  Game System
+    @group  Game Graphics
     @constant KRBlendModeAlpha          アルファ合成（glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)）
     @constant KRBlendModeAddition       加算合成（glBlendFunc(GL_SRC_ALPHA, GL_ONE)）
     @constant KRBlendModeMultiplication 乗算合成（glBlendFunc(GL_ZERO, GL_SRC_COLOR)）
@@ -41,7 +41,7 @@ typedef enum {
 
 /*!
     @class KRGraphics
-    @group  Game System
+    @group  Game Graphics
     @abstract 画面描画の基本設定の管理を行います。
  */
 class KRGraphics {

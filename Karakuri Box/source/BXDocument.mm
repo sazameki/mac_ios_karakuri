@@ -1431,8 +1431,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     KRBlendMode blendMode = KRBlendModeAlpha;
     if (blendModeTag == 1) {
         blendMode = KRBlendModeAddition;
-    } else if (blendModeTag == 2) {
+    } else if (blendModeTag == 4) {
         blendMode = KRBlendModeScreen;
+    } else if (blendModeTag == 2) {
+        blendMode = KRBlendModeMultiplication;
     }
 
     BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
@@ -1888,6 +1890,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     if (blendMode == KRBlendModeAddition) {
         blendModeTag = 1;
     } else if (blendMode == KRBlendModeScreen) {
+        blendModeTag = 4;
+    } else if (blendMode == KRBlendModeMultiplication) {
         blendModeTag = 2;
     }
     [oParticleBlendModeButton selectItemWithTag:blendModeTag];    

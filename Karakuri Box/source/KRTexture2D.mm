@@ -133,6 +133,22 @@ KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, KRTexture2DScale
     else if (imageTag == 207) {
         filename = "particle_circle_32.png";
     }
+    // 炎 256x256
+    else if (imageTag == 301) {
+        filename = "particle_fire_256.png";
+    }    
+    // 炎 128x128
+    else if (imageTag == 302) {
+        filename = "particle_fire_128.png";
+    }    
+    // 煙 256x256
+    else if (imageTag == 401) {
+        filename = "particle_smoke_256.png";
+    }    
+    // 煙 128x128
+    else if (imageTag == 402) {
+        filename = "particle_smoke_128.png";
+    }    
     // カスタム画像
     else if (imageTag == 999) {
         filename = customPath;

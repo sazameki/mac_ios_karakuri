@@ -20,7 +20,7 @@ class KRControlManager;
 
 /*!
     @enum KRAudioMixType
-    @group Game System
+    @group Game Audio
     @constant KRAudioMixTypeAmbient         iPhone の iPod の曲再生と、このゲーム独自のサウンド効果をミックスして同時に出力します。
     @constant KRAudioMixTypeAmbientSolo     iPhone の iPod の曲再生を中止し、このゲームのサウンド効果のみを出力します。
     iPhone の iPod の曲再生と、ゲームのサウンド効果のミックス方法を指定するための enum 定数です。

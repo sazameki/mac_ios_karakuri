@@ -29,24 +29,24 @@
         mColor = new KRColor();
         mGenerationPos = new KRVector2D();
         mGravity = new KRVector2D();
-        mMaxV = new KRVector2D(8.0, 8.0);
-        mMinV = new KRVector2D(-8.0, -8.0);
+        mMaxV = new KRVector2D(3.0, 0.0);
+        mMinV = new KRVector2D(-3.0, 0.0);
 
-        *mBGColor1 = KRColor::Black;
-        mDoLoop = NO;
+        *mBGColor1 = KRColor::DimGray;
+        mDoLoop = YES;
         *mGenerationPos = KRVector2DZero;
 
-        mImageTag = 109;
+        mImageTag = 302;
         mImageTicket = nil;
 
-        mLife = 60;
+        mLife = 140;
         *mColor = KRColor::White;
-        *mGravity = KRVector2DZero;
+        *mGravity = KRVector2D(0.0, 0.24);
         mMinAngleV = -5;
         mMaxAngleV = 5;
-        mDeltaScale = -1.0;
+        mDeltaScale = -0.2;
         mBlendMode = KRBlendModeAddition;
-        mGenerateCount = 5;
+        mGenerateCount = 1;
         mMaxParticleCount = 256;
         mDeltaRed = 0.0;
         mDeltaGreen = 0.0;
@@ -561,6 +561,22 @@
         // 円 32x32
         else if (mImageTag == 207) {
             filename = @"particle_circle_32.png";
+        }
+        // 炎 256x256
+        else if (mImageTag == 301) {
+            filename = @"particle_fire_256.png";
+        }
+        // 炎 128x128
+        else if (mImageTag == 302) {
+            filename = @"particle_fire_128.png";
+        }
+        // 煙 256x256
+        else if (mImageTag == 401) {
+            filename = @"particle_smoke_256.png";
+        }
+        // 煙 128x128
+        else if (mImageTag == 402) {
+            filename = @"particle_smoke_128.png";
         }
         
         NSString* filepath = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
