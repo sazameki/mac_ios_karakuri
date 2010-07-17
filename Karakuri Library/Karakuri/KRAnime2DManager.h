@@ -176,7 +176,7 @@ public:
         @method generateParticle2D
         指定された座標に、新しいパーティクルを生成します。
      */
-    void    generateParticle2D(int particleID, const KRVector2D& pos);
+    void    generateParticle2D(int particleID, const KRVector2D& pos, int zOrder = 0);
     
     void    _stepParticles();
     

@@ -33,19 +33,19 @@ int _KRTexture2D::getResourceSize(const std::string& filename)
 {
     int ret = 0;
     
-    NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+    NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (filepath) {
-        NSDictionary *fileInfo = [[NSFileManager defaultManager] fileAttributesAtPath:filepath traverseLink:NO];
+        NSDictionary* fileInfo = [[NSFileManager defaultManager] fileAttributesAtPath:filepath traverseLink:NO];
         ret += (int)[fileInfo fileSize];
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (filepath) {
-        NSDictionary *fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:filepath
+        NSDictionary* fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:filepath
                                                                                   error:nil];
         ret += (int)[fileInfo fileSize];
     }
@@ -61,14 +61,14 @@ void _KRTexture2D::processBatchedTexture2DDraws()
     }
 
     glVertexPointer(2, GL_SHORT, sizeof(KRTexture2DDrawData), sTexture2DDrawData);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(KRTexture2DDrawData), ((GLshort *)sTexture2DDrawData)+2);
-    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(KRTexture2DDrawData), ((GLfloat *)(((GLshort *)sTexture2DDrawData)+2))+2);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(KRTexture2DDrawData), ((GLshort*)sTexture2DDrawData)+2);
+    glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(KRTexture2DDrawData), ((GLfloat*)(((GLshort*)sTexture2DDrawData)+2))+2);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
     
-    glDrawArrays(GL_TRIANGLES, 0, sTexture2DBatchCount*6);
+    glDrawArrays(GL_TRIANGLES, 0, sTexture2DBatchCount * 6);
     
     sTexture2DBatchCount = 0;
     
@@ -90,15 +90,15 @@ _KRTexture2D::_KRTexture2D(const std::string& filename, KRTexture2DScaleMode sca
     mAtlas = NULL;
     mAtlasDiv = KRVector2DInt(1, 1);
     mIsAtlasFlipped = false;
+    mTextureTarget = GL_TEXTURE_2D;
 
     mFileName = filename;
-    NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-    mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mTextureTarget, &mImageSize, &mTextureSize,
-                                                      (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
+    NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mImageSize, &mTextureSize, (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
     [filenameStr release];
 
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
-        const char *errorFormat = "Failed to load \"%s\". Please confirm that the image file exists.";
+        const char* errorFormat = "Failed to load \"%s\". Please confirm that the image file exists.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。画像ファイルが存在することを確認してください。";
         }
@@ -116,24 +116,27 @@ _KRTexture2D::_KRTexture2D(const std::string& resourceFileName, const std::strin
     
     mAtlasDiv = KRVector2DInt(divX, divY);
     mIsAtlasFlipped = true;
+    mTextureTarget = GL_TEXTURE_2D;
 
     unsigned startPos = gKRTex2DMan->_getResourceStartPosForTicket(ticket);
     unsigned length = gKRTex2DMan->_getResourceLengthForTicket(ticket);
     
-    NSString *filenameStr = [[NSString alloc] initWithCString:resourceFileName.c_str() encoding:NSUTF8StringEncoding];
+    NSString* filenameStr = [[NSString alloc] initWithCString:resourceFileName.c_str() encoding:NSUTF8StringEncoding];
     
     NSString* filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
     NSData* data = [[NSData alloc] initWithContentsOfMappedFile:filepath];
     NSData* imageData = [data subdataWithRange:NSMakeRange(startPos, length)];
-    
-    mTextureName = KRCreateGLTextureFromImageData(imageData, &mTextureTarget, &mImageSize, &mTextureSize,
-                                                  (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
+
+    mTextureName = KRCreatePNGGLTextureFromImageData(imageData, &mImageSize, &mTextureSize, (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
+    if (mTextureName == GL_INVALID_VALUE) {
+        mTextureName = KRCreateGLTextureFromImageData(imageData, &mImageSize, &mTextureSize, (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
+    }
     
     [data release];
     [filenameStr release];
     
      if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
-         const char *errorFormat = "Failed to load \"%s\".";
+         const char* errorFormat = "Failed to load \"%s\".";
          if (gKRLanguage == KRLanguageJapanese) {
              errorFormat = "\"%s\" の読み込みに失敗しました。";
          }
@@ -156,13 +159,14 @@ _KRTexture2D::_KRTexture2D(const std::string& filename, const KRVector2D& atlasS
     mAtlas = NULL;
     mAtlasDiv = KRVector2DInt(1, 1);
     mIsAtlasFlipped = false;
+    mTextureTarget = GL_TEXTURE_2D;
 
     mFileName = filename;
-    NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-    mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mTextureTarget, &mImageSize, &mTextureSize);
+    NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mImageSize, &mTextureSize);
     [filenameStr release];
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
-        const char *errorFormat = "Failed to load \"%s\". Please confirm that the image file exists.";
+        const char* errorFormat = "Failed to load \"%s\". Please confirm that the image file exists.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。画像ファイルが存在することを確認してください。";
         }
@@ -175,7 +179,7 @@ _KRTexture2D::_KRTexture2D(const std::string& filename, const KRVector2D& atlasS
     }
 }
 
-_KRTexture2D::_KRTexture2D(const std::string& str, _KRFont *font)
+_KRTexture2D::_KRTexture2D(const std::string& str, _KRFont* font)
 {
     if (sTexture2DBatchCount > 0) {
         _KRTexture2D::processBatchedTexture2DDraws();
@@ -183,11 +187,11 @@ _KRTexture2D::_KRTexture2D(const std::string& str, _KRFont *font)
 
     mAtlas = NULL;
     
-    NSString *strStr = [[NSString alloc] initWithCString:str.c_str() encoding:NSUTF8StringEncoding];
+    NSString* strStr = [[NSString alloc] initWithCString:str.c_str() encoding:NSUTF8StringEncoding];
     mTextureName = KRCreateGLTextureFromString(strStr, font->getFontObject(), KRColor::White, &mTextureTarget, &mImageSize, &mTextureSize);
     [strStr release];
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
-        const char *errorFormat = "Failed to create a texture for a string: \"%s\"";
+        const char* errorFormat = "Failed to create a texture for a string: \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "文字列テクスチャの生成に失敗しました。\"%s\"";
         }
@@ -397,7 +401,7 @@ void _KRTexture2D::drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect
     p4_y += pos.y;
     
     // Set the vertices into an array
-    int batchPos = sTexture2DBatchCount*6;
+    int batchPos = sTexture2DBatchCount * 6;
     
     sTexture2DDrawData[batchPos].vertex_x = (GLfloat)p1_x;    sTexture2DDrawData[batchPos].vertex_y = (GLfloat)p1_y;
     sTexture2DDrawData[batchPos+1].vertex_x = (GLfloat)p2_x;  sTexture2DDrawData[batchPos+1].vertex_y = (GLfloat)p2_y;
@@ -577,7 +581,7 @@ void _KRTexture2D::drawAtPointCenterEx_(const KRVector2D& centerPos, const KRRec
     p4_y += centerPos.y;
     
     // Set the vertices into an array
-    int batchPos = sTexture2DBatchCount*6;
+    int batchPos = sTexture2DBatchCount * 6;
     
     sTexture2DDrawData[batchPos].vertex_x = (GLfloat)p1_x;    sTexture2DDrawData[batchPos].vertex_y = (GLfloat)p1_y;
     sTexture2DDrawData[batchPos+1].vertex_x = (GLfloat)p2_x;  sTexture2DDrawData[batchPos+1].vertex_y = (GLfloat)p2_y;
@@ -686,7 +690,7 @@ void _KRTexture2D::drawInRect_(const KRRect2D& destRect, const KRRect2D& srcRect
     short p4_y = destRect.y;
     
     // Set the vertices into an array
-    int batchPos = sTexture2DBatchCount*6;
+    int batchPos = sTexture2DBatchCount * 6;
     
     sTexture2DDrawData[batchPos].vertex_x = p1_x;    sTexture2DDrawData[batchPos].vertex_y = p1_y;
     sTexture2DDrawData[batchPos+1].vertex_x = p2_x;  sTexture2DDrawData[batchPos+1].vertex_y = p2_y;
@@ -863,7 +867,7 @@ void _KRTexture2D::drawC(const KRVector2D& centerPos, const KRRect2D& srcRect, d
     p4_y += centerPos.y;
     
     // Set the vertices into an array
-    int batchPos = sTexture2DBatchCount*6;
+    int batchPos = sTexture2DBatchCount * 6;
     
     sTexture2DDrawData[batchPos].vertex_x = (GLfloat)p1_x;    sTexture2DDrawData[batchPos].vertex_y = (GLfloat)p1_y;
     sTexture2DDrawData[batchPos+1].vertex_x = (GLfloat)p2_x;  sTexture2DDrawData[batchPos+1].vertex_y = (GLfloat)p2_y;
@@ -1010,107 +1014,107 @@ void _KRTexture2D::drawInRectC(const KRRect2D& destRect, const KRRect2D& srcRect
 void _KRTexture2D::drawAtlas(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale, double alpha)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlas(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlas(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlas() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((_KRTexture2DAtlas *)mAtlas)->draw(row, column, centerPos, rotation, origin, scale, alpha);
+    ((_KRTexture2DAtlas*)mAtlas)->draw(row, column, centerPos, rotation, origin, scale, alpha);
 }
 
 void _KRTexture2D::drawAtlasC(int row, int column, const KRVector2D& centerPos, double rotation, const KRVector2D &origin, const KRVector2D &scale, const KRColor& color)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasC(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasC(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasC() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((_KRTexture2DAtlas *)mAtlas)->drawC(row, column, centerPos, rotation, origin, scale, color);
+    ((_KRTexture2DAtlas*)mAtlas)->drawC(row, column, centerPos, rotation, origin, scale, color);
 }
 
 void _KRTexture2D::drawAtlasAtPoint(int row, int column, const KRVector2D& pos, double alpha)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPoint(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPoint(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasAtPoint() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((_KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
+    ((_KRTexture2DAtlas*)mAtlas)->drawAtPoint(row, column, pos, alpha);
 }
 
 void _KRTexture2D::drawAtlasAtPointCenter(int row, int column, const KRVector2D& centerPos, double alpha)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenter(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenter(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasAtPointCenter() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    KRVector2D pos = centerPos - ((_KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
-    ((_KRTexture2DAtlas *)mAtlas)->drawAtPoint(row, column, pos, alpha);
+    KRVector2D pos = centerPos - ((_KRTexture2DAtlas*)mAtlas)->getOneSize()/2;    
+    ((_KRTexture2DAtlas*)mAtlas)->drawAtPoint(row, column, pos, alpha);
 }
 
 void _KRTexture2D::drawAtlasAtPointCenterC(int row, int column, const KRVector2D& centerPos, const KRColor& color)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenterC(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointCenterC(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasAtPointCenterC() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
 
-    KRVector2D pos = centerPos - ((_KRTexture2DAtlas *)mAtlas)->getOneSize()/2;    
-    ((_KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
+    KRVector2D pos = centerPos - ((_KRTexture2DAtlas*)mAtlas)->getOneSize()/2;    
+    ((_KRTexture2DAtlas*)mAtlas)->drawAtPointC(row, column, pos, color);
 }
 
 void _KRTexture2D::drawAtlasAtPointC(int row, int column, const KRVector2D& pos, const KRColor& color)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointC(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasAtPointC(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasAtPointC() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((_KRTexture2DAtlas *)mAtlas)->drawAtPointC(row, column, pos, color);
+    ((_KRTexture2DAtlas*)mAtlas)->drawAtPointC(row, column, pos, color);
 }
 
 void _KRTexture2D::drawAtlasInRect(int row, int column, const KRRect2D& rect, double alpha)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasInRect(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasInRect(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasInRect() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
  
-    ((_KRTexture2DAtlas *)mAtlas)->drawInRect(row, column, rect, alpha);
+    ((_KRTexture2DAtlas*)mAtlas)->drawInRect(row, column, rect, alpha);
 }
 
 void _KRTexture2D::drawAtlasInRectC(int row, int column, const KRRect2D& rect, const KRColor& color)
 {
     if (mAtlas == NULL) {
-        const char *errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasInRectC(): \"%s\"";
+        const char* errorFormat = "You have to set atlas size at constructor KRTexture2D() when you use drawAtlasInRectC(): \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "drawAtlasInRectC() を使用するためには、コンストラクタ KRTexture2D() でアトラスサイズを指定する必要があります。\"%s\"";
         }
         throw KRRuntimeError(errorFormat, mFileName.c_str());
     }
     
-    ((_KRTexture2DAtlas *)mAtlas)->drawInRectC(row, column, rect, color);
+    ((_KRTexture2DAtlas*)mAtlas)->drawInRectC(row, column, rect, color);
 }
 
 

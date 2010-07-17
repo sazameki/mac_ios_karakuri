@@ -1286,16 +1286,12 @@ static BOOL stbi_png_info_from_memory(stbi_uc const *buffer, int len, int *x, in
 #pragma mark -
 #pragma mark PNG Loader Interface
 
-GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreatePNGGLTextureFromImageData(NSData* imageData, KRVector2D* imageSize, KRVector2D* textureSize, BOOL scalesLinear)
 {
     GLuint textureName = GL_INVALID_VALUE;
-    NSData *fileData = [[NSData alloc] initWithContentsOfFile:imagePath];
-    if (!fileData || [fileData length] == 0) {
-        return textureName;
-    }
     int image_width, image_height, image_component_count;
-
-    if (stbi_png_info_from_memory((const stbi_uc *)[fileData bytes], [fileData length], &image_width, &image_height, &image_component_count)) {        
+    
+    if (stbi_png_info_from_memory((const stbi_uc*)[imageData bytes], [imageData length], &image_width, &image_height, &image_component_count)) {
         int rwidth = image_width;
         if ((rwidth != 1) && (rwidth & (rwidth - 1))) {
             int i = 1;
@@ -1315,7 +1311,7 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
         }
         
         BOOL isAppleCgBI = NO;
-        unsigned char *image_buffer = stbi_png_load_from_memory((const stbi_uc *)[fileData bytes], [fileData length],
+        unsigned char* image_buffer = stbi_png_load_from_memory((const stbi_uc*)[imageData bytes], [imageData length],
                                                                 &image_width, &image_height, &image_component_count, image_component_count,
                                                                 rwidth, rheight, &isAppleCgBI);
         if (image_buffer != NULL && (!isAppleCgBI || isAppleCgBI && image_component_count == 4)) {
@@ -1324,7 +1320,7 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
                 _KRTexture2DEnabled = true;
                 glEnable(GL_TEXTURE_2D);
             }
-
+            
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
             glPixelStorei(GL_UNPACK_ROW_LENGTH, rwidth);
 #endif
@@ -1333,7 +1329,7 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
             
             if (textureName != GL_INVALID_VALUE && textureName != GL_INVALID_OPERATION) {
                 glBindTexture(GL_TEXTURE_2D, textureName);
-
+                
                 GLenum sourceFormat;
                 if (isAppleCgBI) {
                     sourceFormat = GL_BGRA;
@@ -1371,6 +1367,16 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
             
             stbi_img_free(image_buffer);
         }
+    }
+    return textureName;    
+}
+
+GLuint KRCreatePNGGLTextureFromImageAtPath(NSString* imagePath, KRVector2D* imageSize, KRVector2D* textureSize, BOOL scalesLinear)
+{
+    GLuint textureName = GL_INVALID_VALUE;
+    NSData* fileData = [[NSData alloc] initWithContentsOfFile:imagePath];
+    if (fileData && [fileData length] > 0) {
+        textureName = KRCreatePNGGLTextureFromImageData(fileData, imageSize, textureSize, scalesLinear);
     }
     [fileData release];
     return textureName;

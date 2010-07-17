@@ -446,9 +446,9 @@ _KRParticle2DSystem* KRAnime2DManager::_getParticleSystem(int particleID) const
     return theParticleSystem;    
 }
 
-void KRAnime2DManager::generateParticle2D(int particleID, const KRVector2D& pos)
+void KRAnime2DManager::generateParticle2D(int particleID, const KRVector2D& pos, int zOrder)
 {
-    return _getParticleSystem(particleID)->addGenerationPoint(pos);
+    return _getParticleSystem(particleID)->addGenerationPoint(pos, zOrder);
 }
 
 KRBlendMode KRAnime2DManager::getParticle2DBlendMode(int particleID) const

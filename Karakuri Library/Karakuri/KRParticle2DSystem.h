@@ -15,6 +15,7 @@
 struct _KRParticle2DGenInfo {
     KRVector2D  centerPos;
     int         count;
+    int         zOrder;
 };
 
 
@@ -26,7 +27,6 @@ class _KRParticle2D : public KRChara2D {
 public:
     unsigned    mLife;
     unsigned    mBaseLife;
-    KRVector2D  mPos;
     KRVector2D  mV;
     KRVector2D  mGravity;
     KRColor     mColor;
@@ -141,12 +141,6 @@ public:
      */
     
     /*!
-        @method draw
-        このパーティクル・システムで生成されたすべてのパーティクルを描画します。
-     */
-    void    draw();
-    
-    /*!
         @method step
         設定に基づいて必要なパーティクルを生成し、生成されたすべてのパーティクルを動かします。基本的に、1フレームに1回この関数を呼び出してください。
      */
@@ -179,7 +173,7 @@ public:
         @abstract 新しいパーティクル生成ポイントを指定された座標に追加します。
         setParticleCount() 関数で設定された最大個数だけパーティクルを生成した時点で、その生成ポイントは削除されます。
      */
-    void    addGenerationPoint(const KRVector2D& pos);
+    void    addGenerationPoint(const KRVector2D& pos, int zOrder);
 
 public:
     /*!

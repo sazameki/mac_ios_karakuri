@@ -384,7 +384,7 @@ static GLuint _KRCreateGLTextureFromCGImage(CGImageRef imageRef, UIImageOrientat
 	return ret;
 }
 
-GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreateGLTextureFromImageWithName(NSString* imageName, KRVector2D* imageSize, KRVector2D* textureSize, BOOL scalesLinear)
 {
     static BOOL hasFailedInternalPNGLoading = NO;
     
@@ -393,13 +393,12 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
     if (!hasFailedInternalPNGLoading && [[imageName pathExtension] compare:@"png" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
         GLuint textureName = KRCreatePNGGLTextureFromImageAtPath(imagePath, imageSize, textureSize, scalesLinear);
         if (textureName != GL_INVALID_VALUE) {
-            *textureTarget = GL_TEXTURE_2D;
             return textureName;
         }
         hasFailedInternalPNGLoading = YES;
     }
     
-    UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    UIImage* image = [[UIImage alloc] initWithContentsOfFile:imagePath];
     
     GLuint ret = _KRCreateGLTextureFromCGImage([image CGImage], [image imageOrientation], NO, kTexture2DPixelFormat_Automatic, imageSize, textureSize, imageName);
     
@@ -408,7 +407,7 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTa
     return ret;
 }
 
-GLuint KRCreateGLTextureFromImageData(NSData* data, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
     UIImage* image = [[UIImage alloc] initWithData:data];
 

@@ -45,6 +45,9 @@ void LogoWorld::drawView(KRGraphics* g)
         
         gKRTex2DMan->drawAtPointCenterEx(TexID::Logo, gKRScreenSize/2, angle, KRVector2DOne, alpha);
     }
+
+    // We don't use animation mechanism at the logo world.
+    gKRAnime2DMan->draw();
 }
 
 

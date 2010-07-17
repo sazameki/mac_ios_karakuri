@@ -1,4 +1,4 @@
-// Karakuri Box Exported Resource IDs (2010-07-18 01:24:11 +0900)
+// Karakuri Box Exported Resource IDs (2010-07-18 04:11:45 +0900)
 
 // 2D Character IDs
 struct CharaID {

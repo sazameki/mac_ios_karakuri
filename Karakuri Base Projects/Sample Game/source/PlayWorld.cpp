@@ -139,6 +139,8 @@ void PlayWorld::updateModel(KRInput* input)
         // Move the position
         if (mDraggingPlayer != NULL) {
             mDraggingPlayer->setCenterPos(touchPos);
+            gKRAnime2DMan->generateParticle2D(ParticleID::Smoke, touchPos, -2);
+            gKRAnime2DMan->generateParticle2D(ParticleID::Fire, touchPos, -1);
         }
     } else if (mDraggingPlayer != NULL) {
         mDraggingPlayer->grab(false);

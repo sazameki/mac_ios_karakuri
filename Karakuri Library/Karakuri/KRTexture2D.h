@@ -47,8 +47,8 @@ private:
     
     KRVector2D  mOrigin;
     
-    void        *mTexture2DImpl;
-    void        *mAtlas;
+    void*       mTexture2DImpl;
+    void*       mAtlas;
     KRVector2D  mAtlasSize;
     
     KRVector2DInt   mAtlasDiv;
@@ -78,7 +78,7 @@ public:
 
     _KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode);
 
-    _KRTexture2D(const std::string& str, _KRFont *font);
+    _KRTexture2D(const std::string& str, _KRFont* font);
     ~_KRTexture2D();
     
 public:

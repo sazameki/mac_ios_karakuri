@@ -1296,7 +1296,7 @@ GLuint KRCreatePNGGLTextureFromImageAtPath(NSString *imagePath, KRVector2D *imag
     }
     int image_width, image_height, image_component_count;
 
-    if (stbi_png_info_from_memory((const stbi_uc *)[fileData bytes], [fileData length], &image_width, &image_height, &image_component_count)) {        
+    if (stbi_png_info_from_memory((const stbi_uc *)[fileData bytes], [fileData length], &image_width, &image_height, &image_component_count)) {
         int rwidth = image_width;
         if ((rwidth != 1) && (rwidth & (rwidth - 1))) {
             int i = 1;
