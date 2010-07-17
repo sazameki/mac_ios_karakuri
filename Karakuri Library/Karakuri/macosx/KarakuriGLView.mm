@@ -37,7 +37,7 @@ static volatile BOOL    sIsReady = NO;
         NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)16,
         (NSOpenGLPixelFormatAttribute)0
     };
-    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
+    NSOpenGLPixelFormat* pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
     if (!pixelFormat) {
         NSLog(@"KarakuriGLView: Failed to create a pixel format object.");
         [self release];
@@ -50,12 +50,30 @@ static volatile BOOL    sIsReady = NO;
     NSRect viewRect = NSMakeRect(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight);
     
 #if KR_IPHONE_MACOSX_EMU
-    if (game->getScreenWidth() > game->getScreenHeight()) {
-        viewRect.origin.x += 250 / 2 + 17;
-        viewRect.origin.y += 100 / 2 - 3 + 21;
-    } else {
-        viewRect.origin.x += 100 / 2;
-        viewRect.origin.y += 250 / 2 + 8 + 21;
+    mIsScreenSizeHalved = NO;
+    
+    int width = game->getScreenWidth();
+    int height = game->getScreenHeight();
+    
+    // iPhone
+    if (width < 500 || height < 500) {
+        if (width > height) {
+            viewRect.origin.x += 250 / 2 + 14;
+            viewRect.origin.y += 100 / 2 - 3;
+        } else {
+            viewRect.origin.x += 100 / 2 - 3;
+            viewRect.origin.y += 250 / 2 + 6;
+        }
+    }
+    // iPad
+    else {
+        if (width > height) {
+            viewRect.origin.x += 21;
+            viewRect.origin.y += 21;
+        } else {
+            viewRect.origin.x += 21;
+            viewRect.origin.y += 21;
+        }
     }
 #endif
     
@@ -158,7 +176,7 @@ static volatile BOOL    sIsReady = NO;
         NSOpenGLPFADepthSize, (NSOpenGLPixelFormatAttribute)16,
         (NSOpenGLPixelFormatAttribute)0
     };
-    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
+    NSOpenGLPixelFormat* pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attrs];
     if (!pixelFormat) {
         NSLog(@"KarakuriGLView-startFullScreen: Failed to create a pixel format object for full screen context.");
         return NO;
@@ -192,7 +210,7 @@ static volatile BOOL    sIsReady = NO;
         CGDisplayHideCursor(kCGDirectMainDisplay);
     }
     
-    NSOpenGLContext *fullScreenContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:[self openGLContext]];
+    NSOpenGLContext* fullScreenContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:[self openGLContext]];
     mKRGLContext.cglFullScreenContext = (CGLContextObj)[fullScreenContext CGLContextObj];
     
     [pixelFormat release];
@@ -264,7 +282,7 @@ static volatile BOOL    sIsReady = NO;
 }
 #endif
 
-- (void)keyDown:(NSEvent *)theEvent
+- (void)keyDown:(NSEvent*)theEvent
 {
 #if KR_MACOSX
     unsigned short keyCode = [theEvent keyCode];
@@ -272,7 +290,7 @@ static volatile BOOL    sIsReady = NO;
 #endif
 }
 
-- (void)keyUp:(NSEvent *)theEvent
+- (void)keyUp:(NSEvent*)theEvent
 {
 #if KR_MACOSX
     unsigned short keyCode = [theEvent keyCode];
@@ -280,7 +298,7 @@ static volatile BOOL    sIsReady = NO;
 #endif
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent
+- (void)mouseEntered:(NSEvent*)theEvent
 {
     // Hide mouse cursor
     if (!gKRGameMan->getShowsMouseCursor()) {
@@ -288,13 +306,13 @@ static volatile BOOL    sIsReady = NO;
     }
 }
 
-- (void)mouseExited:(NSEvent *)theEvent
+- (void)mouseExited:(NSEvent*)theEvent
 {
     // Show mouse cursor
     CGDisplayShowCursor(kCGDirectMainDisplay);
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent*)theEvent
 {
 #if KR_MACOSX
     gKRInputInst->_processMouseDown(KRInput::_MouseButtonLeft);
@@ -303,9 +321,14 @@ static volatile BOOL    sIsReady = NO;
 #if KR_IPHONE_MACOSX_EMU
     NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     unsigned modifierFlags = [theEvent modifierFlags];
+    
+    if (mIsScreenSizeHalved) {
+        pos.x *= 2;
+        pos.y *= 2;
+    }
 
     NSPoint touchPos[3];
-    
+
     touchPos[0] = pos;
     touchPos[1].x = -99999;
     touchPos[2].x = -99999;
@@ -340,7 +363,7 @@ static volatile BOOL    sIsReady = NO;
 #endif
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent*)theEvent
 {
 #if KR_MACOSX
     gKRInputInst->_processMouseUp(KRInput::_MouseButtonLeft);
@@ -350,6 +373,11 @@ static volatile BOOL    sIsReady = NO;
     NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     unsigned modifierFlags = [theEvent modifierFlags];
 
+    if (mIsScreenSizeHalved) {
+        pos.x *= 2;
+        pos.y *= 2;
+    }
+    
     NSPoint touchPos[3];
 
     touchPos[0] = pos;
@@ -386,11 +414,21 @@ static volatile BOOL    sIsReady = NO;
 }
 
 #if KR_IPHONE_MACOSX_EMU
-- (void)mouseDragged:(NSEvent *)theEvent
+- (void)setScreenSizeHalved:(BOOL)flag
+{
+    mIsScreenSizeHalved = flag;
+}
+
+- (void)mouseDragged:(NSEvent*)theEvent
 {
     NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     unsigned modifierFlags = [theEvent modifierFlags];
 
+    if (mIsScreenSizeHalved) {
+        pos.x *= 2;
+        pos.y *= 2;
+    }
+    
     NSPoint touchPos[3];
     
     touchPos[0] = pos;
@@ -427,14 +465,14 @@ static volatile BOOL    sIsReady = NO;
 }
 #endif
 
-- (void)rightMouseDown:(NSEvent *)theEvent
+- (void)rightMouseDown:(NSEvent*)theEvent
 {
 #if KR_MACOSX
     gKRInputInst->_processMouseDown(KRInput::_MouseButtonRight);
 #endif
 }
 
-- (void)rightMouseUp:(NSEvent *)theEvent
+- (void)rightMouseUp:(NSEvent*)theEvent
 {
 #if KR_MACOSX
     gKRInputInst->_processMouseUp(KRInput::_MouseButtonRight);

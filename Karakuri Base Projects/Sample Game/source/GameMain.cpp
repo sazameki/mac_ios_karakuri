@@ -21,18 +21,18 @@ GameMain::GameMain()
 {
     ///// Main Settings
 
-    setTitle("My Karakuri Game");           // Game title (Mac only)
+    setTitle("My Karakuri Game");           // Game title (iOS won't use this setting)
 
     setScreenSize(480, 320);                // iPhone Size (Horizontal use)
-    //setScreenSize(320, 480);                // iPhone Size (Vertical use)
+    //setScreenSize(320, 480);                // iPhone Size (Vertical use. Don't forget to remove Default.png and rename Default_V.png to Default.png.)
     //setScreenSize(1024, 768);               // iPad size (Horizontal use. Don't forget to remove Default-Portrait.png.)
     //setScreenSize(768, 1024);               // iPad size (Vertical use. Don't forget to remove Default-Landscape.png.)
 
     setFrameRate(60.0);                     // Refresh rate
     setAudioMixType(KRAudioMixTypeAmbient); // Audio mixing
 
-    setShowsMouseCursor(true);              // Mouse cursor should be shown (Mac only)
-    setShowsFPS(true);                      // Realtime FPS information (debug build only)
+    setShowsMouseCursor(true);              // Mouse cursor should be shown (iOS won't use this setting)
+    setShowsFPS(true);                      // Realtime FPS information (Debug build only)
 
     // Set max animation character count
     setMaxChara2DCount(1024);

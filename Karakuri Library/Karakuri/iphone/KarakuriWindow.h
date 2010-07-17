@@ -12,11 +12,11 @@
 
 
 @interface KarakuriWindow : UIWindow {
-    KarakuriGLView      *mGLView;
+    KarakuriGLView*     mGLView;
 }
 
 @end
 
 
-extern KarakuriWindow *gKRWindowInst;
+extern KarakuriWindow*  gKRWindowInst;
 

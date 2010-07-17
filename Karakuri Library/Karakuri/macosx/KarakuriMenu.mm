@@ -12,7 +12,7 @@
 
 @interface NSApplication(Boohoo)
 
-- (void)setAppleMenu:(NSMenu *)menu;
+- (void)setAppleMenu:(NSMenu*)menu;
 
 @end
 
@@ -27,21 +27,21 @@
     return self;
 }
 
-- (NSMenu *)makeAppleMenu
+- (NSMenu*)makeAppleMenu
 {
-    KRGameController *controller = [KRGameController sharedController];
+    KRGameController* controller = [KRGameController sharedController];
     KRGameManager* game = [controller game];
-    NSString *appName = [NSString stringWithCString:game->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSString* appName = [NSString stringWithCString:game->getTitle().c_str() encoding:NSUTF8StringEncoding];
 
-    NSMenu *appleMenu = [[NSMenu alloc] initWithTitle:@"AppleMenu"];
+    NSMenu* appleMenu = [[NSMenu alloc] initWithTitle:@"AppleMenu"];
     
     {
-        NSString *titleFormat = @"About %@";
+        NSString* titleFormat = @"About %@";
         if (gKRLanguage == KRLanguageJapanese) {
             titleFormat = @"%@ について";
         }
-        NSString *title = [NSString stringWithFormat:titleFormat, appName];
-        NSMenuItem *menuItem = [appleMenu addItemWithTitle:title
+        NSString* title = [NSString stringWithFormat:titleFormat, appName];
+        NSMenuItem* menuItem = [appleMenu addItemWithTitle:title
                                                     action:@selector(openAboutPanel:)
                                              keyEquivalent:@""];
         [menuItem setTarget:controller];
@@ -50,23 +50,23 @@
     [appleMenu addItem:[NSMenuItem separatorItem]];
     
     {
-        NSString *titleFormat = @"Hide %@";
+        NSString* titleFormat = @"Hide %@";
         if (gKRLanguage == KRLanguageJapanese) {
             titleFormat = @"%@ を隠す";
         }
-        NSString *title = [NSString stringWithFormat:titleFormat, appName];
+        NSString* title = [NSString stringWithFormat:titleFormat, appName];
         [appleMenu addItemWithTitle:title action:@selector(hide:) keyEquivalent:@"h"];
     }
     {
-        NSString *title = @"Hide Others";
+        NSString* title = @"Hide Others";
         if (gKRLanguage == KRLanguageJapanese) {
             title = @"ほかを隠す";
         }
-        NSMenuItem *menuItem = (NSMenuItem *)[appleMenu addItemWithTitle:title action:@selector(hideOtherApplications:) keyEquivalent:@"h"];
+        NSMenuItem* menuItem = (NSMenuItem*)[appleMenu addItemWithTitle:title action:@selector(hideOtherApplications:) keyEquivalent:@"h"];
         [menuItem setKeyEquivalentModifierMask:(NSAlternateKeyMask|NSCommandKeyMask)];
     }
     {
-        NSString *title = @"Show All";
+        NSString* title = @"Show All";
         if (gKRLanguage == KRLanguageJapanese) {
             title = @"すべてを表示";
         }
@@ -76,46 +76,66 @@
     [appleMenu addItem:[NSMenuItem separatorItem]];
     
     {
-        NSString *titleFormat = @"Quit %@";
+        NSString* titleFormat = @"Quit %@";
         if (gKRLanguage == KRLanguageJapanese) {
             titleFormat = @"%@ を終了";
         }
-        NSString *title = [NSString stringWithFormat:titleFormat, appName];
-        NSMenuItem *menuItem = [appleMenu addItemWithTitle:title action:@selector(terminate:) keyEquivalent:@"q"];
+        NSString* title = [NSString stringWithFormat:titleFormat, appName];
+        NSMenuItem* menuItem = [appleMenu addItemWithTitle:title action:@selector(terminate:) keyEquivalent:@"q"];
         [menuItem setTarget:controller];
     }
     
     return appleMenu;
 }
 
-- (NSMenu *)makeWindowMenu
+- (NSMenu*)makeWindowMenu
 {
-    NSString *menuTitle = @"Window";
+    NSString* menuTitle = @"Window";
     if (gKRLanguage == KRLanguageJapanese) {
         menuTitle = @"ウィンドウ";
     }
-    NSMenu *windowMenu = [[[NSMenu alloc] initWithTitle:menuTitle] autorelease];
+    NSMenu* windowMenu = [[[NSMenu alloc] initWithTitle:menuTitle] autorelease];
 
-    KRGameController *controller = [KRGameController sharedController];
+    KRGameController* controller = [KRGameController sharedController];
 
     {
-        NSString *title = @"Minimize";
+        NSString* title = @"Minimize";
         if (gKRLanguage == KRLanguageJapanese) {
             title = @"しまう";
         }
-        NSMenuItem *menuItem = [windowMenu addItemWithTitle:title action:@selector(minimizeWindow:) keyEquivalent:@"m"];
+        NSMenuItem* menuItem = [windowMenu addItemWithTitle:title action:@selector(minimizeWindow:) keyEquivalent:@"m"];
         [menuItem setTarget:controller];
     }
     
     [windowMenu addItem:[NSMenuItem separatorItem]];
 
+#if KR_IPHONE_MACOSX_EMU
+    
+    // iPad
+    KRGameManager* game = [controller game];
+    int width = game->getScreenWidth();
+    int height = game->getScreenHeight();
+    
+    if (width > 500 && height > 500) {        
+        NSString* title = @"Half Size (iPad)";
+        if (gKRLanguage == KRLanguageJapanese) {
+            title = @"半分のサイズ (iPad)";
+        }
+        NSMenuItem* menuItem = [windowMenu addItemWithTitle:title action:@selector(halveSize:) keyEquivalent:@"b"];
+        [menuItem setTarget:controller];
+    }
+    
+    [windowMenu addItem:[NSMenuItem separatorItem]];
+    
+#endif
+
 #if KR_MACOSX
     {
-        NSString *title = @"Full Screen";
+        NSString* title = @"Full Screen";
         if (gKRLanguage == KRLanguageJapanese) {
             title = @"フルスクリーン";
         }
-        NSMenuItem *menuItem = [windowMenu addItemWithTitle:title action:@selector(toggleFullScreen:) keyEquivalent:@"f"];
+        NSMenuItem* menuItem = [windowMenu addItemWithTitle:title action:@selector(toggleFullScreen:) keyEquivalent:@"f"];
         [menuItem setTarget:controller];
     }
 
@@ -128,14 +148,14 @@
 - (void)setupMenuItems
 {
     // Set up Apple Menu
-    NSMenu *appleMenu = [self makeAppleMenu];
-    NSMenuItem *appleMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
+    NSMenu* appleMenu = [self makeAppleMenu];
+    NSMenuItem* appleMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
     [appleMenuItem setSubmenu:appleMenu];
     [self addItem:appleMenuItem];
     
     // Set up Window Menu
-    NSMenu *windowMenu = [self makeWindowMenu];
-    NSMenuItem *windowMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
+    NSMenu* windowMenu = [self makeWindowMenu];
+    NSMenuItem* windowMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
     [windowMenuItem setSubmenu:windowMenu];
     [self addItem:windowMenuItem];
     

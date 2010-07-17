@@ -13,7 +13,7 @@
 #import "KarakuriEmulatorBackView.h"
 #endif
 
-KarakuriWindow *gKRWindowInst = nil;
+KarakuriWindow* gKRWindowInst = nil;
 
 static KRVector3D   sAcc;
 
@@ -30,12 +30,24 @@ static KRVector3D   sAcc;
     
 #if KR_IPHONE_MACOSX_EMU
     styleMask |= NSTexturedBackgroundWindowMask;
-    if (game->getScreenWidth() > game->getScreenHeight()) {
-        windowRect.size.width += 270 + 21;
-        windowRect.size.height += 100 + 21;
-    } else {
-        windowRect.size.width += 100 + 21;
-        windowRect.size.height += 270 + 21;
+    
+    int width = game->getScreenWidth();
+    int height = game->getScreenHeight();
+    
+    // iPhone
+    if (width < 500 && height < 500) {
+        if (width > height) {
+            windowRect.size.width += 244 + 21;
+            windowRect.size.height += 70 + 21;
+        } else {
+            windowRect.size.width += 74 + 21;
+            windowRect.size.height += 250 + 21;
+        }
+    }
+    // iPad
+    else {
+        windowRect.size.width += 21*2;
+        windowRect.size.height += 21*2;
     }
 #endif
     
@@ -49,8 +61,9 @@ static KRVector3D   sAcc;
         [self setDelegate:[KRGameController sharedController]];
         
 #if KR_IPHONE_MACOSX_EMU
-        KarakuriEmulatorBackView *backView = [KarakuriEmulatorBackView new];
+        KarakuriEmulatorBackView* backView = [KarakuriEmulatorBackView new];
         [[self contentView] addSubview:backView];
+        [backView release];
         sAcc = KRVector3DZero;
         
         mSMSEnabled = YES;
@@ -63,13 +76,30 @@ static KRVector3D   sAcc;
         [[self contentView] addSubview:mGLView];
         
 #if KR_IPHONE_MACOSX_EMU
-        if (game->getScreenWidth() > game->getScreenHeight()) {
-            mAccHorizontalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(580+4, 5, 150, 21)];
-            mAccVerticalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(750-4, 21+4, 21, 120)];
-        } else {
-            mAccHorizontalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(580-320+4+14, 5, 120, 21)];
-            mAccVerticalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(750-320-4-14, 21+4, 21, 150)];
+        int width = game->getScreenWidth();
+        int height = game->getScreenHeight();
+        
+        // iPhone
+        if (width < 500) {
+            if (width > height) {
+                mAccHorizontalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(570, 3, 150, 21)];
+                mAccVerticalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(720, 21+4, 21, 120)];
+            } else {
+                mAccHorizontalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(274, 3, 120, 21)];
+                mAccVerticalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(391, 21, 21, 150)];
+            }
         }
+        // iPad
+        else {
+            if (width > height) {
+                mAccHorizontalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(898, 0, 150, 21)];
+                mAccVerticalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(1024+21, 17, 21, 120)];
+            } else {
+                mAccHorizontalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(671, 0, 120, 21)];
+                mAccVerticalSlider = [[KarakuriAccSlider alloc] initWithFrame:NSMakeRect(768+21, 17, 21, 150)];
+            }
+        }
+
         [mAccHorizontalSlider setMinValue:-1.0];
         [mAccHorizontalSlider setMaxValue:1.0];
         [mAccVerticalSlider setMinValue:-1.0];
@@ -83,11 +113,16 @@ static KRVector3D   sAcc;
         [[self contentView] addSubview:mAccHorizontalSlider];
         [[self contentView] addSubview:mAccVerticalSlider];
         
-        mMotionSensorButton = [[NSButton alloc] initWithFrame:NSMakeRect(10, 5, 150, 18)];
-        NSString *motionSensorButtonTitle = @"SMS Emulation";
-        if (gKRLanguage == KRLanguageJapanese) {
-            motionSensorButtonTitle = @"SMS エミュレーション";
+        // iPhone
+        if (game->getScreenWidth() < 500) {
+            mMotionSensorButton = [[NSButton alloc] initWithFrame:NSMakeRect(10, 5, 150, 18)];
         }
+        // iPad
+        else {
+            mMotionSensorButton = [[NSButton alloc] initWithFrame:NSMakeRect(10, 1, 150, 18)];            
+        }
+
+        NSString* motionSensorButtonTitle = @"SMS Emu";
         [mMotionSensorButton setTitle:motionSensorButtonTitle];
         [mMotionSensorButton setButtonType:NSSwitchButton];
         [mMotionSensorButton setTarget:self];
@@ -96,6 +131,20 @@ static KRVector3D   sAcc;
             [mMotionSensorButton setEnabled:NO];
         }
         [[self contentView] addSubview:mMotionSensorButton];
+        
+        // iPad
+        if (game->getScreenWidth() > 500 || 1) {
+            // Set Button's Text Color
+            NSMutableAttributedString* attrTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[mMotionSensorButton attributedTitle]];
+            int len = [attrTitle length];
+            NSRange range = NSMakeRange(0, len);
+            [attrTitle addAttribute:NSForegroundColorAttributeName 
+                              value:[NSColor whiteColor] 
+                              range:range];
+            [attrTitle fixAttributesInRange:range];
+            [mMotionSensorButton setAttributedTitle:attrTitle];
+            [attrTitle release];            
+        }
 #endif
     }
     return self;
@@ -115,7 +164,61 @@ static KRVector3D   sAcc;
 }
 
 #if KR_IPHONE_MACOSX_EMU
-- (void)changedAccValue:(NSSlider *)sender
+
+// このメソッドは iPad のときしか呼ばれない。
+- (void)changeWindowSize
+{
+    KRGameController* controller = [KRGameController sharedController];
+    KRGameManager* game = [controller game];
+    int width = game->getScreenWidth();
+    int height = game->getScreenHeight();
+    
+    NSSize contentSize = NSMakeSize(width, height);
+    
+    if ([controller isScreenSizeHalved]) {
+        contentSize.width /= 2;
+        contentSize.height /= 2;
+        
+        NSRect glViewFrame = [mGLView frame];
+        glViewFrame.size = NSMakeSize(width / 2, height / 2);
+        [mGLView setFrame:glViewFrame];
+        [mGLView setScreenSizeHalved:YES];
+        
+        NSRect hSliderFrame = [mAccHorizontalSlider frame];
+        hSliderFrame.origin.x -= (width > height)? 1024/2: 768/2;
+        [mAccHorizontalSlider setFrame:hSliderFrame];
+
+        NSRect vSliderFrame = [mAccVerticalSlider frame];
+        vSliderFrame.origin.x -= (width > height)? 1024/2: 768/2;
+        [mAccVerticalSlider setFrame:vSliderFrame];
+    } else {
+        NSRect glViewFrame = [mGLView frame];
+        glViewFrame.size = NSMakeSize(width, height);
+        [mGLView setFrame:glViewFrame];
+        [mGLView setScreenSizeHalved:NO];
+
+        NSRect hSliderFrame = [mAccHorizontalSlider frame];
+        hSliderFrame.origin.x += (width > height)? 1024/2: 768/2;
+        [mAccHorizontalSlider setFrame:hSliderFrame];
+
+        NSRect vSliderFrame = [mAccVerticalSlider frame];
+        vSliderFrame.origin.x += (width > height)? 1024/2: 768/2;
+        [mAccVerticalSlider setFrame:vSliderFrame];
+    }
+    
+    contentSize.width += 21*2;
+    contentSize.height += 21*2;
+    
+    NSRect oldFrame = [self frame];
+
+    NSRect newFrame = [self frameRectForContentRect: NSMakeRect(0, 0, contentSize.width, contentSize.height)];
+    float titleBarHeight = newFrame.size.height - contentSize.height;
+    newFrame.origin.x = oldFrame.origin.x;
+    newFrame.origin.y = oldFrame.origin.y + oldFrame.size.height - newFrame.size.height, titleBarHeight;
+    [self setFrame:newFrame display:YES animate:NO];
+}
+
+- (void)changedAccValue:(NSSlider*)sender
 {
     if (![gKRGLViewInst isAccelerometerEnabled]) {
         return;

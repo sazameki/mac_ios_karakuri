@@ -67,6 +67,10 @@
     BOOL                mHasMetEmergency;
     BOOL                mTerminatedByUser;
     
+#if KR_IPHONE_MACOSX_EMU
+    BOOL                mIsScreenSizeHalved;
+#endif
+    
     KRTexture2DManager* mTex2DManager;
     KRAnime2DManager*   mAnime2DManager;
     KRAudioManager*     mAudioManager;
@@ -136,6 +140,11 @@
 
 #if KR_MACOSX
 - (void)fullScreenGameProc;
+#endif
+
+#if KR_IPHONE_MACOSX_EMU
+- (IBAction)halveSize:(id)sender;
+- (BOOL)isScreenSizeHalved;
 #endif
 
 - (KRGameManager*)game;

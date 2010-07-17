@@ -36,7 +36,7 @@
 #define KRMaxFrameSkipCount     5
 
 
-static KRGameController *sInstance = nil;
+static KRGameController*    sInstance = nil;
 
 
 #if __DEBUG__
@@ -71,7 +71,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 @implementation KRGameController
 
-+ (KRGameController *)sharedController
++ (KRGameController*)sharedController
 {
     return sInstance;
 }
@@ -113,6 +113,10 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         mAudioManager = new KRAudioManager();
         
         mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGameManager->getFrameRate()));
+        
+#if KR_IPHONE_MACOSX_EMU
+        mIsScreenSizeHalved = NO;
+#endif
         
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
         mGameIsChaningScreenMode = NO;
@@ -217,7 +221,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     mWindow = [KarakuriWindow new];
     
-    NSString *appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSString* appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
+#if KR_IPHONE_MACOSX_EMU
+    if (mIsScreenSizeHalved) {
+        appName = [appName stringByAppendingString:@" (50%)"];
+    } else {
+        appName = [appName stringByAppendingString:@" (100%)"];
+    }
+#endif
     [mWindow setTitle:appName];
     [mWindow center];
 #endif
@@ -276,6 +287,27 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 {
     mMCFrameInterval = ConvertNanoSecToMachTime((uint64_t)(1000000000 / mGameManager->getFrameRate()));
 }
+
+#if KR_IPHONE_MACOSX_EMU
+- (IBAction)halveSize:(id)sender
+{
+    mIsScreenSizeHalved = !mIsScreenSizeHalved;
+    
+    NSString* appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    if (mIsScreenSizeHalved) {
+        appName = [appName stringByAppendingString:@" (50%)"];
+    } else {
+        appName = [appName stringByAppendingString:@" (100%)"];
+    }
+    [mWindow setTitle:appName];
+    [mWindow changeWindowSize];
+}
+
+- (BOOL)isScreenSizeHalved
+{
+    return mIsScreenSizeHalved;
+}
+#endif
 
 #if __DEBUG__
 - (void)addDebugString:(const std::string&)str
@@ -371,7 +403,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView == mErrorAlertView) {
         exit(9999);
@@ -456,7 +488,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-- (void)peerPickerCanceled:(KRPeerPickerController *)pickerController
+- (void)peerPickerCanceled:(KRPeerPickerController*)pickerController
 {
     [UIView beginAnimations:@"Picker Out" context:nil];
     [UIView setAnimationDuration:0.5];
@@ -470,7 +502,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [UIView setAnimationDidStopSelector:@selector(pickerOutAnimationFinished:finished:context:)];
     [UIView commitAnimations];
 }
-- (void)peerPickerAccepted:(KRPeerPickerController *)pickerController
+- (void)peerPickerAccepted:(KRPeerPickerController*)pickerController
 {
     mHasAcceptedNetworkPeer = YES;
 
@@ -482,7 +514,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [UIView setAnimationDidStopSelector:@selector(pickerOutAnimationFinished:finished:context:)];
     [UIView commitAnimations];
 }
-- (void)peerPickerDenied:(KRPeerPickerController *)pickerController
+- (void)peerPickerDenied:(KRPeerPickerController*)pickerController
 {
     mHasAcceptedNetworkPeer = YES;
     
@@ -547,7 +579,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [mWindow miniaturize:self];
 }
 
-- (void)windowWillClose:(NSNotification *)notification
+- (void)windowWillClose:(NSNotification*)notification
 {
     if (mPeerPickerWindow) {
         [mPeerPickerWindow cancelPeerPicker:self];
@@ -719,7 +751,15 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
         
             // Set the view port
+#if KR_IPHONE_MACOSX_EMU
+            if (mIsScreenSizeHalved) {
+                glViewport(0, 0, mKRGLContext->backingWidth/2, mKRGLContext->backingHeight/2);
+            } else {
+                glViewport(0, 0, mKRGLContext->backingWidth, mKRGLContext->backingHeight);
+            }
+#else
             glViewport(0, 0, mKRGLContext->backingWidth, mKRGLContext->backingHeight);
+#endif
             
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
@@ -890,7 +930,15 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 
             // Set the view port
+#if KR_IPHONE_MACOSX_EMU
+            if (mIsScreenSizeHalved) {
+                glViewport(0, 0, mKRGLContext->backingWidth/2, mKRGLContext->backingHeight/2);
+            } else {
+                glViewport(0, 0, mKRGLContext->backingWidth, mKRGLContext->backingHeight);
+            }
+#else
             glViewport(0, 0, mKRGLContext->backingWidth, mKRGLContext->backingHeight);
+#endif
 
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();

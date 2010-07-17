@@ -224,7 +224,7 @@ KRVector2D KRInput::getTouchLocation(int touchID) const
         }
     }
     
-    return KRVector2DZero;
+    return KRVector2D(-1.0, -1.0);
 }
 
 /*const std::vector<KRTouchInfo> KRInput::getTouchInfos() const

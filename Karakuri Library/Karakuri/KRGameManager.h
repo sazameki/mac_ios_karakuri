@@ -57,7 +57,7 @@ class KRGameManager : public KRObject {
     std::string     mGameIDForNetwork;
     std::string     mNetworkStartWorldName;
     
-    KRWorldManager    *mWorldManager;
+    KRWorldManager* mWorldManager;
 
 
 #pragma mark -
@@ -117,7 +117,7 @@ public:
         @method     addWorld
         @abstract   新しいワールドクラスのインスタンスを、名前を付けて登録します。
      */
-    void            addWorld(const std::string& name, KRWorld *aWorld);
+    void            addWorld(const std::string& name, KRWorld* aWorld);
 
     /*!
         @method     changeWorld
@@ -131,13 +131,13 @@ public:
         @abstract   現在選択されているワールドを取得します。
         @return     現在選択されているワールド
      */
-    KRWorld         *getCurrentWorld() const;
+    KRWorld*        getCurrentWorld() const;
 
     /*!
         @method getWorld
         @abstract 名前を指定して登録されたワールドを取得します。 
      */
-    KRWorld         *getWorld(const std::string& name) const;
+    KRWorld*        getWorld(const std::string& name) const;
 
 
 public:
@@ -166,8 +166,8 @@ public:
 
 
     void    cleanUpGame();
-    void    updateModel(KRInput *input);
-    void    drawView(KRGraphics *g);
+    void    updateModel(KRInput* input);
+    void    drawView(KRGraphics* g);
     
     
 public:

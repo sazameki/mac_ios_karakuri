@@ -331,7 +331,7 @@ public:
     
     /*!
         @method getTouchLocation
-        @abstract 指定された ID のタッチ位置を取得します。
+        @abstract 指定された ID のタッチ位置を取得します。指定された ID が無効な場合には、X方向、Y方向ともにマイナスの値をもった KRVector2D がリターンされます。
      */
     KRVector2D  getTouchLocation(int touchID) const;
 #endif

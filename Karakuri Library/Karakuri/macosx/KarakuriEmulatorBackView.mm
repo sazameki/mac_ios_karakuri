@@ -14,15 +14,33 @@
 
 - (id)init
 {
-    NSRect frameRect = NSMakeRect(0, 0, 750+21, 414+21);
-    if (gKRGameMan->getScreenWidth() < gKRGameMan->getScreenHeight()) {
-        frameRect = NSMakeRect(0, 0, 414+21, 750+21);
+    int width = gKRGameMan->getScreenWidth();
+    int height = gKRGameMan->getScreenHeight();
+
+    NSRect frameRect;
+
+    // iPhone
+    if (width < 500 || height < 500) {
+        if (width > height) {
+            frameRect = NSMakeRect(0, 0, 750+21, 414+21);
+        } else {
+            frameRect = NSMakeRect(0, 0, 414+21, 750+21);
+        }
     }
+    // iPad
+    else {
+        if (width > height) {
+            frameRect = NSMakeRect(0, 0, 1024+21*2, 768+21*2);
+        } else {
+            frameRect = NSMakeRect(0, 0, 768+21*2, 1024+21*2);
+        }
+    }
+
     self = [super initWithFrame:frameRect];
     if (self) {
         //[self setAlphaValue:0.0f];
         
-        NSString *imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back.png";
+        NSString* imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back.png";
         if (gKRGameMan->getScreenWidth() < gKRGameMan->getScreenHeight()) {
             imageFilePath = @"/Developer/Extras/Karakuri/images/System/iPhone Emulator/iphone_emu_back2.png";
         }
@@ -39,10 +57,21 @@
 
 - (void)drawRect:(NSRect)rect
 {
-    if (gKRGameMan->getScreenWidth() > gKRGameMan->getScreenHeight()) {
-        [mBackgroundImage compositeToPoint:NSMakePoint(3, 21) operation:NSCompositeSourceOver];
-    } else {
-        [mBackgroundImage compositeToPoint:NSMakePoint(3, 3) operation:NSCompositeSourceOver];
+    int width = gKRGameMan->getScreenWidth();
+    int height = gKRGameMan->getScreenHeight();
+    
+    // iPhone
+    if (width < 500 || height < 500) {
+        if (width > height) {
+            [mBackgroundImage compositeToPoint:NSMakePoint(0, 0) operation:NSCompositeSourceOver];
+        } else {
+            [mBackgroundImage compositeToPoint:NSMakePoint(0, -20) operation:NSCompositeSourceOver];
+        }
+    }
+    // iPad
+    else {
+        [[NSColor blackColor] set];
+        NSRectFill(rect);
     }
 }
 

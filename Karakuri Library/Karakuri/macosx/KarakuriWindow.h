@@ -17,18 +17,20 @@
 
 
 @interface KarakuriWindow : NSWindow {
-    KarakuriGLView      *mGLView;
+    KarakuriGLView*     mGLView;
     
 #if KR_IPHONE_MACOSX_EMU
-    KarakuriAccSlider   *mAccHorizontalSlider;
-    KarakuriAccSlider   *mAccVerticalSlider;
-    NSButton            *mMotionSensorButton;
+    KarakuriAccSlider*  mAccHorizontalSlider;
+    KarakuriAccSlider*  mAccVerticalSlider;
+    NSButton*           mMotionSensorButton;
     sms_t               mSMS;
     BOOL                mSMSEnabled;
 #endif
 }
 
 #if KR_IPHONE_MACOSX_EMU
+- (void)changeWindowSize;
+
 - (void)fetchSMSData;
 - (void)cleanUpSMS;
 #endif
@@ -36,6 +38,6 @@
 @end
 
 
-extern KarakuriWindow *gKRWindowInst;
+extern KarakuriWindow*  gKRWindowInst;
 
 

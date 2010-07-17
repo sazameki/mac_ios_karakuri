@@ -84,7 +84,7 @@ double KRGameManager::getFrameRate() const
 void KRGameManager::setFrameRate(double value)
 {
     if (value <= 0.0) {
-        const char *errorFormat = "Invalid frame rate %3.1f was set.";
+        const char* errorFormat = "Invalid frame rate %3.1f was set.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "不正なフレームレート %3.1f を設定しようとしました。";
         }        
@@ -107,7 +107,7 @@ void KRGameManager::sleep(double interval)
 #pragma mark -
 #pragma mark ワールドに関する関数
 
-void KRGameManager::addWorld(const std::string& name, KRWorld *aWorld)
+void KRGameManager::addWorld(const std::string& name, KRWorld* aWorld)
 {
     mWorldManager->registerWorld(name, aWorld);
 }
@@ -120,14 +120,14 @@ void KRGameManager::changeWorld(const std::string& name)
 void KRGameManager::_changeWorldImpl(const std::string& name, bool useLoadingThread, bool isFirstInitialization)
 {
     if (!isFirstInitialization && useLoadingThread && !sIsUpdatingModel) {
-        const char *errorFormat = "Invalid world changing was performed. changeWorld() cannot be invoked outside updateModel().";
+        const char* errorFormat = "Invalid world changing was performed. changeWorld() cannot be invoked outside updateModel().";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "不正なワールド変更処理が行われました。changeWorld() 関数は、updateModel() の中以外では呼び出せません。";
         }
         throw KRRuntimeError(errorFormat);
     }
     if (mWorldManager->selectWorldWithName(name, useLoadingThread) == NULL) {
-        const char *errorFormat = "Failed to find the world named \"%s\".";
+        const char* errorFormat = "Failed to find the world named \"%s\".";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" という名前のワールドは見つかりませんでした。";
         }
@@ -170,7 +170,7 @@ void KRGameManager::addResources(const std::string& filename)
     
     BXResourceImporter* importer = [[BXResourceImporter alloc] initWithFileName:filenameStr];
     if (!importer) {
-        const char *errorFormat = "Failed to load a Karakuri resource file \"%s\".";
+        const char* errorFormat = "Failed to load a Karakuri resource file \"%s\".";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "Karakuri リソースファイル \"%s\" の読み込みに失敗しました。";
         }
@@ -250,6 +250,12 @@ void KRGameManager::setScreenSize(int width, int height)
     int longSide = 480;
     int shortSide = 320;
     
+    // iPad support
+    if (width > 500 || height > 500) {
+        longSide = 1024;
+        shortSide = 768;
+    }
+    
 #if !KR_IPHONE_MACOSX_EMU
     CGRect bounds = [[UIScreen mainScreen] bounds];
     longSide = bounds.size.height;
@@ -293,7 +299,7 @@ void KRGameManager::cleanUpGame()
     mWorldManager = NULL;
 }
 
-void KRGameManager::updateModel(KRInput *input)
+void KRGameManager::updateModel(KRInput* input)
 {
     sIsUpdatingModel = YES;
 
@@ -307,7 +313,7 @@ void KRGameManager::updateModel(KRInput *input)
 
 void KRGameManager::drawView(KRGraphics* g)
 {
-    KRWorld *currentWorld = mWorldManager->getCurrentWorld();
+    KRWorld* currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
         currentWorld->startDrawView(g);
     }    
@@ -331,7 +337,7 @@ void KRGameManager::setNetworkGameID(const std::string& gameID, const std::strin
 
 void KRGameManager::_saveForEmergency() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
-    KRWorld *currentWorld = mWorldManager->getCurrentWorld();
+    KRWorld* currentWorld = mWorldManager->getCurrentWorld();
     if (currentWorld != NULL) {
         currentWorld->saveForEmergency(gKRSaveBoxInst);
         gKRSaveBoxInst->save();

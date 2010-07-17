@@ -9,7 +9,7 @@
 #import "KarakuriWindow.h"
 
 
-KarakuriWindow *gKRWindowInst = nil;
+KarakuriWindow* gKRWindowInst = nil;
 
 
 @implementation KarakuriWindow
