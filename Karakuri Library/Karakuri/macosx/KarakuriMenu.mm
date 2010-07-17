@@ -123,9 +123,9 @@
         }
         NSMenuItem* menuItem = [windowMenu addItemWithTitle:title action:@selector(halveSize:) keyEquivalent:@"b"];
         [menuItem setTarget:controller];
-    }
-    
-    [windowMenu addItem:[NSMenuItem separatorItem]];
+
+        [windowMenu addItem:[NSMenuItem separatorItem]];
+    }    
     
 #endif
 
