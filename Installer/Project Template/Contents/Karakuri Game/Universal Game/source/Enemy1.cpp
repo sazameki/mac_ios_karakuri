@@ -11,6 +11,10 @@
 Enemy1::Enemy1()
     : Enemy(CharaID::EnemyThunder)
 {
+    // Z-Order is very important for effective drawing.
+    // It is recommended that the same type of character has the same Z-Order.
+    setZOrder(1);
+
     mDirection = 1;
 }
 

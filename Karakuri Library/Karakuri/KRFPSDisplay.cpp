@@ -82,7 +82,7 @@ void KRFPSDisplay::drawTPF(double x, double y, double tpf)
     
     double width = 0.0;
     if (x > gKRScreenSize.x/2) {
-        width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
+        width = str.length() * mNumberSize.x + mFPSTex->getWidth();
     }
     
     int i;
@@ -94,12 +94,12 @@ void KRFPSDisplay::drawTPF(double x, double y, double tpf)
             mNumberTex->drawAtPointEx_(KRVector2D(x + i * mNumberSize.x + 1 - width, y - 1), atlasRect, 0.0, KRVector2DZero, KRVector2DOne, KRColor::Black);
             mNumberTex->drawAtPointEx_(KRVector2D(x + i * mNumberSize.x - width, y), atlasRect, 0.0, KRVector2DZero, KRVector2DOne, KRColor::White);
         } else {
-            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 1 - width, y - 1), KRColor::Black);
-            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 - width, y), KRColor::White);
+            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 1 - width, y - 1), KRColor::Black);
+            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x - width, y), KRColor::White);
         }
     }
-    mTPFTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 5 + 1 - width, y - 1), KRColor::Black);
-    mTPFTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 5 - width, y), KRColor::White);
+    mTPFTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 5 + 1 - width, y - 1), KRColor::Black);
+    mTPFTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 5 - width, y), KRColor::White);
 }
 
 void KRFPSDisplay::drawBPF(double x, double y, double bpf)
@@ -110,7 +110,7 @@ void KRFPSDisplay::drawBPF(double x, double y, double bpf)
     
     double width = 0.0;
     if (x > gKRScreenSize.x/2) {
-        width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
+        width = str.length() * mNumberSize.x + mFPSTex->getWidth();
     }
     
     int i;
@@ -122,12 +122,12 @@ void KRFPSDisplay::drawBPF(double x, double y, double bpf)
             mNumberTex->drawAtPointEx_(KRVector2D(x + i * mNumberSize.x + 1 - width, y - 1), atlasRect, 0.0, KRVector2DZero, KRVector2DOne, KRColor::Black);
             mNumberTex->drawAtPointEx_(KRVector2D(x + i * mNumberSize.x - width, y), atlasRect, 0.0, KRVector2DZero, KRVector2DOne, KRColor::White);
         } else {
-            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 1 - width, y - 1), KRColor::Black);
-            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 - width, y), KRColor::White);
+            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 1 - width, y - 1), KRColor::Black);
+            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x - width, y), KRColor::White);
         }
     }
-    mBPFTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 5 + 1 - width, y - 1), KRColor::Black);
-    mBPFTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 5 - width, y), KRColor::White);
+    mBPFTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 5 + 1 - width, y - 1), KRColor::Black);
+    mBPFTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 5 - width, y), KRColor::White);
 }
 
 void KRFPSDisplay::drawCPF(double x, double y, double cpf)
@@ -138,7 +138,7 @@ void KRFPSDisplay::drawCPF(double x, double y, double cpf)
     
     double width = 0.0;
     if (x > gKRScreenSize.x/2) {
-        width = str.length() * mNumberTex->getWidth()/10 + mFPSTex->getWidth();
+        width = str.length() * mNumberSize.x + mFPSTex->getWidth();
     }
     
     int i;
@@ -150,12 +150,12 @@ void KRFPSDisplay::drawCPF(double x, double y, double cpf)
             mNumberTex->drawAtPointEx_(KRVector2D(x + i * mNumberSize.x + 1 - width, y - 1), atlasRect, 0.0, KRVector2DZero, KRVector2DOne, KRColor::Black);
             mNumberTex->drawAtPointEx_(KRVector2D(x + i * mNumberSize.x - width, y), atlasRect, 0.0, KRVector2DZero, KRVector2DOne, KRColor::White);
         } else {
-            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 1 - width, y - 1), KRColor::Black);
-            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 - width, y), KRColor::White);
+            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 1 - width, y - 1), KRColor::Black);
+            mPointTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x - width, y), KRColor::White);
         }
     }
-    mCPFTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 5 + 1 - width, y - 1), KRColor::Black);
-    mCPFTex->drawAtPoint_(KRVector2D(x + i * mNumberTex->getWidth()/10 + 5 - width, y), KRColor::White);
+    mCPFTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 5 + 1 - width, y - 1), KRColor::Black);
+    mCPFTex->drawAtPoint_(KRVector2D(x + i * mNumberSize.x + 5 - width, y), KRColor::White);
 }
 
 std::string KRFPSDisplay::to_s() const

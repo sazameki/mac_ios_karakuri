@@ -36,7 +36,7 @@ void PlayWorld::becameActive()
     gKRAnime2DMan->addChara2D(p2);
     
     // Create enemies
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < 40; i++) {
         Enemy* enemy;
         if (KRRandInt() % 2 == 0) {
             enemy = new Enemy1();

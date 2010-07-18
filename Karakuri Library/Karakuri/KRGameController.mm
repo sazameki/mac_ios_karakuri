@@ -231,6 +231,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     mWindow = [KarakuriWindow new];
     
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+    NSArray* screens = [UIScreen screens];
+    if ([screens count] >= 2) {
+        UIScreen* externalScreen = [screens objectAtIndex:1];
+        mWindow.screen = externalScreen;
+    }
+#endif
+    
     NSString* appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
 #if KR_IPHONE_MACOSX_EMU
     // iPad

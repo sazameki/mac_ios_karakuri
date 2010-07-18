@@ -11,6 +11,10 @@
 Enemy2::Enemy2()
     : Enemy(CharaID::EnemyIce)
 {
+    // Z-Order is very important for effective drawing.
+    // It is recommended that the same type of character has the same Z-Order.
+    setZOrder(2);
+
     mDirection = 1;
 }
 

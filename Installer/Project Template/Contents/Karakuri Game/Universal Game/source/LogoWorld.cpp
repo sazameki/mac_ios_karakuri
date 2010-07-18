@@ -47,7 +47,7 @@ void LogoWorld::drawView(KRGraphics* g)
     }
 
     // We don't use animation mechanism at the logo world.
-    gKRAnime2DMan->draw();
+    //gKRAnime2DMan->draw();
 }
 
 
