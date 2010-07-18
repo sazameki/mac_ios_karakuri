@@ -222,7 +222,7 @@ public:
         @method KRColor
         @abstract この色を、与えられた色と同じ色で生成します。
      */
-    KRColor(const KRColor &color);
+    KRColor(const KRColor& color);
     
 public:
     void set() const;
@@ -237,19 +237,19 @@ public:
         @method operator=
         @abstract 与えられた色の情報をこのインスタンスにコピーします。
      */
-    KRColor&    operator=(const KRColor &color);
+    KRColor&    operator=(const KRColor& color);
     
     /*!
         @method operator==
         @abstract 与えられた色とこの色が等しいかどうかをリターンします。
      */
-    bool        operator==(const KRColor &color);
+    bool        operator==(const KRColor& color);
 
     /*!
         @method operator!=
         @abstract 与えられた色とこの色が等しくないかどうかをリターンします。
      */
-    bool        operator!=(const KRColor &color);
+    bool        operator!=(const KRColor& color);
     
 
 #pragma mark -

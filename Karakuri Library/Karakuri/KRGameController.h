@@ -32,11 +32,18 @@
 
 
 #if __DEBUG__
-    #define KR_FRAME_COUNT_HISTORY_SIZE         10
-    #define KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE       10
-    #define KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE       10
+    #define KR_FRAME_COUNT_HISTORY_SIZE                 10
+    #define KR_TEXTURE_CHANGE_COUNT_HISTORY_SIZE        10
+    #define KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE 10
+    #define KR_CHARA_COUNT_HISTORY_SIZE                 10
 #endif
 
+
+#if __DEBUG__
+extern double   _gCurrentCPF;
+extern int      _gCharaDrawCounts[];
+extern int      _gCharaDrawCountPos;
+#endif
 
 @interface KRGameController : NSObject<KRPeerPickerDelegate> {
     KarakuriWindow*     mWindow;

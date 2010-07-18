@@ -162,6 +162,7 @@ const KRColor &KRColor::ClearColor              = KRColor(1.0, 1.0, 1.0, 0.0);
 KRColor::KRColor()
     : r(0.0), g(0.0), b(0.0), a(1.0)
 {
+    // Do nothing
 }
 
 KRColor::KRColor(int rgb)
@@ -170,21 +171,25 @@ KRColor::KRColor(int rgb)
       b((double)(rgb & 0xff) / 255.0),
       a(1.0)
 {
+    // Do nothing
 }
 
 KRColor::KRColor(double _r, double _g, double _b)
     : r(_r), g(_g), b(_b), a(1.0)
 {
+    // Do nothing
 }
 
 KRColor::KRColor(double _r, double _g, double _b, double _a)
     : r(_r), g(_g), b(_b), a(_a)
 {
+    // Do nothing
 }
 
-KRColor::KRColor(const KRColor &color)
+KRColor::KRColor(const KRColor& color)
     : r(color.r), g(color.g), b(color.b), a(color.a)
 {
+    // Do nothing
 }
 
 void KRColor::set() const
@@ -213,7 +218,7 @@ void KRColor::setAsClearColor() const
     }
 }
 
-KRColor& KRColor::operator=(const KRColor &color)
+KRColor& KRColor::operator=(const KRColor& color)
 {
     r = color.r;
     g = color.g;
@@ -222,12 +227,12 @@ KRColor& KRColor::operator=(const KRColor &color)
     return *this;
 }
 
-bool KRColor::operator==(const KRColor &color)
+bool KRColor::operator==(const KRColor& color)
 {
     return (r == color.r && g == color.g && b == color.b && a == color.a);
 }
 
-bool KRColor::operator!=(const KRColor &color)
+bool KRColor::operator!=(const KRColor& color)
 {
     return (r != color.r || g != color.g || b != color.b || a != color.a);
 }

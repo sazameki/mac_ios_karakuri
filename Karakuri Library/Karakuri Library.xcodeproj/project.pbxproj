@@ -62,12 +62,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		8E1B92B5101F848D00D643AA /* KRTexture2DAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */; };
-		8E1B92B6101F848D00D643AA /* KRTexture2DAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */; };
-		8E1B92B7101F848D00D643AA /* KRTexture2DAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */; };
-		8E1B92B8101F848D00D643AA /* KRTexture2DAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */; };
-		8E1B92B9101F848D00D643AA /* KRTexture2DAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */; };
-		8E1B92BA101F848D00D643AA /* KRTexture2DAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */; };
 		8E1B938C101F9E7500D643AA /* KRTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B938A101F9E7500D643AA /* KRTextReader.h */; };
 		8E1B938D101F9E7500D643AA /* KRTextReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B938B101F9E7500D643AA /* KRTextReader.mm */; };
 		8E1B938E101F9E7500D643AA /* KRTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B938A101F9E7500D643AA /* KRTextReader.h */; };
@@ -115,7 +109,6 @@
 		8E40506F1029C9A400615B74 /* KarakuriMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5FE2101B209E00DDA881 /* KarakuriMenu.h */; };
 		8E4050701029C9A400615B74 /* KarakuriWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5FE4101B209E00DDA881 /* KarakuriWindow.h */; };
 		8E4050711029C9A400615B74 /* KarakuriGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5FE6101B209E00DDA881 /* KarakuriGLView.h */; };
-		8E4050721029C9A400615B74 /* KRTexture2DAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */; };
 		8E4050731029C9A400615B74 /* KRTextReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E1B938A101F9E7500D643AA /* KRTextReader.h */; };
 		8E4050741029C9A400615B74 /* KRFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E9792681020C00700E3EC7A /* KRFont.h */; };
 		8E4050751029C9A400615B74 /* KRPrimitive2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E946906102265240073A4FD /* KRPrimitive2D.h */; };
@@ -143,7 +136,6 @@
 		8E40508C1029C9A400615B74 /* KarakuriWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5FE5101B209E00DDA881 /* KarakuriWindow.mm */; };
 		8E40508D1029C9A400615B74 /* KarakuriGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5FE7101B209E00DDA881 /* KarakuriGLView.mm */; };
 		8E40508E1029C9A400615B74 /* KRTexture2DLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8EAB5FE8101B209E00DDA881 /* KRTexture2DLoader.mm */; };
-		8E40508F1029C9A400615B74 /* KRTexture2DAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */; };
 		8E4050901029C9A400615B74 /* KRTextReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E1B938B101F9E7500D643AA /* KRTextReader.mm */; };
 		8E4050911029C9A400615B74 /* KRFont.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9792691020C00700E3EC7A /* KRFont.mm */; };
 		8E4050921029C9A400615B74 /* KRPrimitive2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E946907102265240073A4FD /* KRPrimitive2D.cpp */; };
@@ -775,8 +767,6 @@
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* Karakuri Library_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Karakuri Library_Prefix.pch"; sourceTree = "<group>"; };
-		8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRTexture2DAtlas.h; sourceTree = "<group>"; };
-		8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRTexture2DAtlas.cpp; sourceTree = "<group>"; };
 		8E1B938A101F9E7500D643AA /* KRTextReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRTextReader.h; sourceTree = "<group>"; };
 		8E1B938B101F9E7500D643AA /* KRTextReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTextReader.mm; sourceTree = "<group>"; };
 		8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGlobals.h; sourceTree = "<group>"; };
@@ -1287,8 +1277,6 @@
 				8E946907102265240073A4FD /* KRPrimitive2D.cpp */,
 				8EAB5F82101B205C00DDA881 /* KRTexture2D.h */,
 				8EAB5F83101B205C00DDA881 /* KRTexture2D.mm */,
-				8E1B92B3101F848D00D643AA /* KRTexture2DAtlas.h */,
-				8E1B92B4101F848D00D643AA /* KRTexture2DAtlas.cpp */,
 				8EAB5F84101B205C00DDA881 /* KRTexture2DLoader.h */,
 				8EBB1D761034BF7200936E01 /* image_loader */,
 			);
@@ -1405,7 +1393,6 @@
 				8E40506F1029C9A400615B74 /* KarakuriMenu.h in Headers */,
 				8E4050701029C9A400615B74 /* KarakuriWindow.h in Headers */,
 				8E4050711029C9A400615B74 /* KarakuriGLView.h in Headers */,
-				8E4050721029C9A400615B74 /* KRTexture2DAtlas.h in Headers */,
 				8E4050731029C9A400615B74 /* KRTextReader.h in Headers */,
 				8E4050741029C9A400615B74 /* KRFont.h in Headers */,
 				8E4050751029C9A400615B74 /* KRPrimitive2D.h in Headers */,
@@ -1499,7 +1486,6 @@
 				8EAB5FDE101B205C00DDA881 /* KarakuriSound.h in Headers */,
 				8EAB5FF8101B20C100DDA881 /* KarakuriWindow.h in Headers */,
 				8EAB5FFA101B20C100DDA881 /* KarakuriGLView.h in Headers */,
-				8E1B92B7101F848D00D643AA /* KRTexture2DAtlas.h in Headers */,
 				8E1B9390101F9E7500D643AA /* KRTextReader.h in Headers */,
 				8E97926E1020C00700E3EC7A /* KRFont.h in Headers */,
 				8E946908102265240073A4FD /* KRPrimitive2D.h in Headers */,
@@ -1590,7 +1576,6 @@
 				8EAB5FC2101B205C00DDA881 /* KarakuriSound.h in Headers */,
 				8EAB5FFD101B20C100DDA881 /* KarakuriWindow.h in Headers */,
 				8EAB5FFF101B20C100DDA881 /* KarakuriGLView.h in Headers */,
-				8E1B92B9101F848D00D643AA /* KRTexture2DAtlas.h in Headers */,
 				8E1B938C101F9E7500D643AA /* KRTextReader.h in Headers */,
 				8E97926A1020C00700E3EC7A /* KRFont.h in Headers */,
 				8E94690C102265240073A4FD /* KRPrimitive2D.h in Headers */,
@@ -1682,7 +1667,6 @@
 				8EAB5FE9101B209E00DDA881 /* KarakuriMenu.h in Headers */,
 				8EAB5FEB101B209E00DDA881 /* KarakuriWindow.h in Headers */,
 				8EAB5FED101B209E00DDA881 /* KarakuriGLView.h in Headers */,
-				8E1B92B5101F848D00D643AA /* KRTexture2DAtlas.h in Headers */,
 				8E1B938E101F9E7500D643AA /* KRTextReader.h in Headers */,
 				8E97926C1020C00700E3EC7A /* KRFont.h in Headers */,
 				8E94690A102265240073A4FD /* KRPrimitive2D.h in Headers */,
@@ -1923,7 +1907,6 @@
 				8E40508C1029C9A400615B74 /* KarakuriWindow.mm in Sources */,
 				8E40508D1029C9A400615B74 /* KarakuriGLView.mm in Sources */,
 				8E40508E1029C9A400615B74 /* KRTexture2DLoader.mm in Sources */,
-				8E40508F1029C9A400615B74 /* KRTexture2DAtlas.cpp in Sources */,
 				8E4050901029C9A400615B74 /* KRTextReader.mm in Sources */,
 				8E4050911029C9A400615B74 /* KRFont.mm in Sources */,
 				8E4050921029C9A400615B74 /* KRPrimitive2D.cpp in Sources */,
@@ -2008,7 +1991,6 @@
 				8EAB5FF9101B20C100DDA881 /* KarakuriWindow.mm in Sources */,
 				8EAB5FFB101B20C100DDA881 /* KarakuriGLView.mm in Sources */,
 				8EAB5FFC101B20C100DDA881 /* KRTexture2DLoader.mm in Sources */,
-				8E1B92B8101F848D00D643AA /* KRTexture2DAtlas.cpp in Sources */,
 				8E1B9391101F9E7500D643AA /* KRTextReader.mm in Sources */,
 				8E97926F1020C00700E3EC7A /* KRFont.mm in Sources */,
 				8E946909102265240073A4FD /* KRPrimitive2D.cpp in Sources */,
@@ -2089,7 +2071,6 @@
 				8EAB5FFE101B20C100DDA881 /* KarakuriWindow.mm in Sources */,
 				8EAB6000101B20C100DDA881 /* KarakuriGLView.mm in Sources */,
 				8EAB6001101B20C100DDA881 /* KRTexture2DLoader.mm in Sources */,
-				8E1B92BA101F848D00D643AA /* KRTexture2DAtlas.cpp in Sources */,
 				8E1B938D101F9E7500D643AA /* KRTextReader.mm in Sources */,
 				8E97926B1020C00700E3EC7A /* KRFont.mm in Sources */,
 				8E94690D102265240073A4FD /* KRPrimitive2D.cpp in Sources */,
@@ -2171,7 +2152,6 @@
 				8EAB5FEC101B209E00DDA881 /* KarakuriWindow.mm in Sources */,
 				8EAB5FEE101B209E00DDA881 /* KarakuriGLView.mm in Sources */,
 				8EAB5FEF101B209E00DDA881 /* KRTexture2DLoader.mm in Sources */,
-				8E1B92B6101F848D00D643AA /* KRTexture2DAtlas.cpp in Sources */,
 				8E1B938F101F9E7500D643AA /* KRTextReader.mm in Sources */,
 				8E97926D1020C00700E3EC7A /* KRFont.mm in Sources */,
 				8E94690B102265240073A4FD /* KRPrimitive2D.cpp in Sources */,

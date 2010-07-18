@@ -72,9 +72,9 @@ void KRLabel::draw(KRGraphics *g)
         KRVector2D drawPos(drawX, mFrame.y + mFrame.height/2 - mTextTexture->getHeight()/2);
         if (mHasTextShadow) {
             KRVector2D shadowPos = drawPos + mTextShadowOffset;
-            mTextTexture->drawAtPointC(shadowPos, mTextShadowColor);
+            mTextTexture->drawAtPoint_(shadowPos, mTextShadowColor);
         }
-        mTextTexture->drawAtPointC(drawPos, mTextColor);
+        mTextTexture->drawAtPoint_(drawPos, mTextColor);
     }
 }
 

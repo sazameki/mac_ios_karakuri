@@ -368,8 +368,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8ECE9A39101034D500F32CF7 /* iOS */,
 				8EA6602C102A252600F7081C /* iOS (Emulator) */,
+				8ECE9A39101034D500F32CF7 /* iOS */,
 				8D1107260486CEB800E47090 /* Mac OS X */,
 			);
 		};

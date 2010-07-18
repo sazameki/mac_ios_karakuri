@@ -128,11 +128,13 @@ static volatile BOOL    sIsReady = NO;
     if (gKRScreenSize.x > gKRScreenSize.y) {
         angle = M_PI / 2;
     }
-    mDefaultTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
+    
+    // 表画面と裏画面の両方に描画しておく
+    mDefaultTex->drawAtPointEx_(gKRScreenSize/2, KRRect2DZero, angle, KRVector2D(0.5, 0.5), KRVector2DOne, KRColor::White);
     _KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);
 
-    mDefaultTex->draw(gKRScreenSize/2, KRRect2DZero, angle, mDefaultTex->getCenterPos());
+    mDefaultTex->drawAtPointEx_(gKRScreenSize/2, KRRect2DZero, angle, KRVector2D(0.5, 0.5), KRVector2DOne, KRColor::White);
     _KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);    
 
@@ -515,7 +517,7 @@ static volatile BOOL    sIsReady = NO;
 
     for (int i = 0; i < 5; i++) {
         if (mTouchPos[i].x >= 0) {
-            mTouchTex->drawAtPoint(mTouchPos[i].x-mTouchTex->getWidth()/2, mTouchPos[i].y-mTouchTex->getHeight()/2);
+            mTouchTex->drawAtPointCenter_(mTouchPos[i], KRColor::White);
         }
     }
     

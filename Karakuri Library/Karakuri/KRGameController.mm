@@ -49,6 +49,13 @@ inline double gettimeofday_sec()
 #endif
 
 
+#if __DEBUG__
+double  _gCurrentCPF;
+int     _gCharaDrawCounts[KR_CHARA_COUNT_HISTORY_SIZE];
+int     _gCharaDrawCountPos;
+#endif
+
+
 /*!
  @function   ConvertNanoSecToMachTime
  @abstract   ナノ秒単位を Mach 時間に変換します。
@@ -141,9 +148,12 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
         mCurrentTPF = 1.0;
         mTextureChangeCountPos = 0;
-
+        
         mCurrentBPF = 1.0;
         mTextureBatchProcessCountPos = 0;
+        
+        _gCurrentCPF = 1.0;
+        _gCharaDrawCountPos = 0;
 #endif
         
         [self setupApplication];
@@ -998,6 +1008,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 mFPSDisplay->drawFPS(gKRScreenSize.x-10, gKRScreenSize.y-30, mCurrentFPS);
                 mFPSDisplay->drawTPF(gKRScreenSize.x-10, gKRScreenSize.y-30*2, mCurrentTPF);
                 mFPSDisplay->drawBPF(gKRScreenSize.x-10, gKRScreenSize.y-30*3, mCurrentBPF);
+                mFPSDisplay->drawCPF(gKRScreenSize.x-10, gKRScreenSize.y-30*4, _gCurrentCPF);
                 _KRTexture2D::processBatchedTexture2DDraws();
             }
 #endif
@@ -1123,6 +1134,12 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mCurrentBPF += mTextureBatchProcessCounts[i];
                 }
                 mCurrentBPF /= KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE;
+                
+                _gCurrentCPF = 0.0;
+                for (int i = 0; i < KR_CHARA_COUNT_HISTORY_SIZE; i++) {
+                    _gCurrentCPF += _gCharaDrawCounts[i];
+                }
+                _gCurrentCPF /= KR_CHARA_COUNT_HISTORY_SIZE;
                 
                 mPrevFPSUpdateTime = currentTime;
             }
@@ -1296,6 +1313,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 mFPSDisplay->drawFPS(gKRScreenSize.x-10, gKRScreenSize.y-30, mCurrentFPS);
                 mFPSDisplay->drawTPF(gKRScreenSize.x-10, gKRScreenSize.y-30*2, mCurrentTPF);
                 mFPSDisplay->drawBPF(gKRScreenSize.x-10, gKRScreenSize.y-30*3, mCurrentBPF);
+                mFPSDisplay->drawCPF(gKRScreenSize.x-10, gKRScreenSize.y-30*4, _gCurrentCPF);
                 _KRTexture2D::processBatchedTexture2DDraws();
             }
 #endif
@@ -1415,6 +1433,12 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                     mCurrentBPF += mTextureBatchProcessCounts[i];
                 }
                 mCurrentBPF /= KR_TEXTURE_BATCH_PROCESS_COUNT_HISTORY_SIZE;
+                
+                _gCurrentCPF = 0.0;
+                for (int i = 0; i < KR_CHARA_COUNT_HISTORY_SIZE; i++) {
+                    _gCurrentCPF += _gCharaDrawCounts[i];
+                }
+                _gCurrentCPF /= KR_CHARA_COUNT_HISTORY_SIZE;
                 
                 mPrevFPSUpdateTime = currentTime;
             }

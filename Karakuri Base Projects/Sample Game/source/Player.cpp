@@ -11,7 +11,7 @@
 Player::Player()
     : KRChara2D(CharaID::Player, CharaType::Player)
 {
-    setZOrder(1);
+    setZOrder(100);
     
     // Make this character visible (initial state = -1)
     changeMotion(0);

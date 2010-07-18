@@ -75,22 +75,25 @@ void KRSwitch::draw(KRGraphics *g)
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
 
     if (mBackTexture != NULL) {
+        KRColor drawColor(1.0, 1.0, 1.0, alpha);
+        
         double indicatorWidth = mFrame.width - mTextureEdgeSize * 2;
-        double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;        
+        double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;
         
         // Indicator
-        mBackTexture->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
-                                 KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()), alpha);
+        mBackTexture->drawInRect_(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
+                                  KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()), drawColor);
         
         // Left Edge
-        mBackTexture->drawAtPoint(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height), alpha);
+        mBackTexture->drawAtPointEx_(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height), 0.0, KRVector2DZero, KRVector2DOne, drawColor);
 
         // Right Edge
-        mBackTexture->drawAtPoint(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
-                                  KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height), alpha);
+        mBackTexture->drawAtPointEx_(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
+                                     KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height),
+                                     0.0, KRVector2DZero, KRVector2DOne, drawColor);
 
         // Thumb
-        mThumbTexture->drawAtPoint((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y, alpha);
+        mThumbTexture->drawAtPoint_(KRVector2D((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y), drawColor);
     } else {
         KRColor drawColor = (mIsOn? KRColor::Blue: KRColor::Red);
         drawColor.a = alpha;

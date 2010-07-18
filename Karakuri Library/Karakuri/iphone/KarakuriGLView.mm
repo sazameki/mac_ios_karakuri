@@ -135,11 +135,11 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     
     glOrthof(0.0f, (float)mKRGLContext.backingWidth, 0.0f, (float)mKRGLContext.backingHeight, -1.0f, 1.0f);
     
-    mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight));
+    mDefaultTex->drawInRect_(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight), KRColor::White);
     _KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
-    mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight));
+    mDefaultTex->drawInRect_(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight), KRColor::White);
     _KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
