@@ -15,7 +15,7 @@
 #import "KRGameController.h"
 
 
-KRWorldManager *gKRWorldManagerInst = NULL;
+KRWorldManager* gKRWorldManagerInst = NULL;
 
 
 KRWorldManager::KRWorldManager()
@@ -31,32 +31,32 @@ KRWorldManager::~KRWorldManager()
         mCurrentWorld->startResignedActive();
         mCurrentWorld = NULL;
     }
-    std::map<std::string, KRWorld *>::iterator it = mWorldMap.begin();
+    std::map<std::string, KRWorld*>::iterator it = mWorldMap.begin();
 	while (it != mWorldMap.end()) {
         delete (*it).second;
 		it++;
 	}
 }
 
-KRWorld *KRWorldManager::getCurrentWorld() const
+KRWorld* KRWorldManager::getCurrentWorld() const
 {
     return mCurrentWorld;
 }
 
-void KRWorldManager::registerWorld(const std::string& name, KRWorld *aWorld)
+void KRWorldManager::registerWorld(const std::string& name, KRWorld* aWorld)
 {
     aWorld->setName(name);
     mWorldMap[name] = aWorld;
 }
 
-KRWorld *KRWorldManager::getWorldWithName(const std::string &name)
+KRWorld* KRWorldManager::getWorldWithName(const std::string &name)
 {
     return mWorldMap[name];
 }
 
-KRWorld *KRWorldManager::selectWorldWithName(const std::string &name, bool useLoadingThread)
+KRWorld* KRWorldManager::selectWorldWithName(const std::string &name, bool useLoadingThread)
 {
-    KRWorld *world = getWorldWithName(name);
+    KRWorld* world = getWorldWithName(name);
     if (world == NULL) {
         return NULL;
     }

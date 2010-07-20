@@ -16,8 +16,8 @@
 #import "KRTextReader.h"
 
 
-void *gInputLogHandle = nil;
-unsigned gInputLogFrameCounter = 0;
+void*       gInputLogHandle = nil;
+unsigned    gInputLogFrameCounter = 0;
 
 
 KRWorld::KRWorld()
@@ -58,9 +58,9 @@ void KRWorld::startResignedActive()
 {    
     resignedActive();
     
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        [(NSFileHandle *)gInputLogHandle writeData:[@"# Log End\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        [(NSFileHandle *)gInputLogHandle closeFile];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        [(NSFileHandle*)gInputLogHandle writeData:[@"# Log End\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [(NSFileHandle*)gInputLogHandle closeFile];
         gInputLogHandle = nil;
     }
     
@@ -70,10 +70,10 @@ void KRWorld::startResignedActive()
     mControlManager = NULL;
 }
 
-void KRWorld::startUpdateModel(KRInput *input)
+void KRWorld::startUpdateModel(KRInput* input)
 {
 #if KR_MACOSX
-    if ((NSFileHandle *)gInputLogHandle != nil && (input->_getMouseState() & KRInput::_MouseButtonAny)) {
+    if ((NSFileHandle*)gInputLogHandle != nil && (input->_getMouseState() & KRInput::_MouseButtonAny)) {
         input->_processMouseDrag();
     }
 #endif
@@ -100,7 +100,7 @@ void KRWorld::startUpdateModel(KRInput *input)
     gInputLogFrameCounter++;
 }
 
-void KRWorld::startDrawView(KRGraphics *g)
+void KRWorld::startDrawView(KRGraphics* g)
 {
     drawView(g);
     
@@ -233,7 +233,7 @@ void KRWorld::_setFinishedSize(int size)
 
 #pragma mark -
 
-void KRWorld::saveForEmergency(KRSaveBox *saveBox)
+void KRWorld::saveForEmergency(KRSaveBox* saveBox)
 {
     // Do nothing
 }
@@ -241,13 +241,13 @@ void KRWorld::saveForEmergency(KRSaveBox *saveBox)
 
 #pragma mark -
 
-void KRWorld::addControl(KRControl *aControl, int groupID)
+void KRWorld::addControl(KRControl* aControl, int groupID)
 {
     aControl->setWorld(this);
     mControlManager->addControl(aControl, groupID);
 }
 
-void KRWorld::removeControl(KRControl *aControl)
+void KRWorld::removeControl(KRControl* aControl)
 {
     mControlManager->removeControl(aControl);
     aControl->setWorld(NULL);
@@ -263,7 +263,7 @@ void KRWorld::disableControlProcess(bool flag)
     mIsControlProcessDisabled = flag;
 }
 
-bool KRWorld::processControls(KRInput *input, int groupID)
+bool KRWorld::processControls(KRInput* input, int groupID)
 {
     if (mControlManager->updateControls(input, groupID)) {
         mHasProcessedControl = true;
@@ -281,22 +281,22 @@ bool KRWorld::isManualControlManagementEnabled() const
     return mIsManualControlManagementEnabled;
 }
 
-void KRWorld::drawControls(KRGraphics *g, int groupID)
+void KRWorld::drawControls(KRGraphics* g, int groupID)
 {
     mControlManager->drawAllControls(g, groupID);
 }
 
-void KRWorld::buttonPressed(KRButton *aButton)
+void KRWorld::buttonPressed(KRButton* aButton)
 {
     // Do nothing
 }
 
-void KRWorld::sliderValueChanged(KRSlider *slider)
+void KRWorld::sliderValueChanged(KRSlider* slider)
 {
     // Do nothing
 }
 
-void KRWorld::switchStateChanged(KRSwitch *switcher)
+void KRWorld::switchStateChanged(KRSwitch* switcher)
 {
     // Do nothing
 }
@@ -309,23 +309,23 @@ std::vector<std::string> KRWorld::listAllInputLogFiles() const
 {
     std::vector<std::string> ret;
 
-    NSString *baseDirPath = nil;
+    NSString* baseDirPath = nil;
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    NSMutableString *titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
-    NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    NSMutableString* titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSString* bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
     baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
 #else
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
     baseDirPath = [documentsDirectory stringByAppendingPathComponent:@"Input Log"];
 #endif
     
-    NSMutableArray *logFiles = [NSMutableArray array];
+    NSMutableArray* logFiles = [NSMutableArray array];
     
-    NSArray *filesInDir = [[NSFileManager defaultManager] directoryContentsAtPath:baseDirPath];
+    NSArray* filesInDir = [[NSFileManager defaultManager] directoryContentsAtPath:baseDirPath];
     for (unsigned i = 0; i < [filesInDir count]; i++) {
-        NSString *aFileName = [filesInDir objectAtIndex:i];
+        NSString* aFileName = [filesInDir objectAtIndex:i];
         if ([[[aFileName pathExtension] lowercaseString] isEqualToString:@"log"]) {
             [logFiles addObject:aFileName];
         }
@@ -334,7 +334,7 @@ std::vector<std::string> KRWorld::listAllInputLogFiles() const
     [logFiles sortUsingSelector:@selector(compare:)];
     
     for (unsigned i = 0; i < [logFiles count]; i++) {
-        NSString *aFileName = [logFiles objectAtIndex:i];
+        NSString* aFileName = [logFiles objectAtIndex:i];
         std::string theStr = [aFileName cStringUsingEncoding:NSUTF8StringEncoding];
         ret.push_back(theStr);
     }
@@ -355,14 +355,14 @@ bool KRWorld::hasMoreDummyInputData() const
     return (mDummyInputSourceDataPos < mDummyInputSourceDataList.size())? true: false;
 }
 
-static void makeDirectories(NSString *path)
+static void makeDirectories(NSString* path)
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSFileManager* fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:path]) {
         return;
     }
     
-    NSString *basePath = [path stringByDeletingLastPathComponent];
+    NSString* basePath = [path stringByDeletingLastPathComponent];
     makeDirectories(basePath);
     
     [fileManager createDirectoryAtPath:path attributes:nil];
@@ -371,16 +371,16 @@ static void makeDirectories(NSString *path)
 std::string KRWorld::startInputLog()
 {
     if (mIsLoadingWorld) {
-        const char *errorFormat = "startInputLog(): Cannot log user inputs in loading screen world: \"%s\"";
+        const char* errorFormat = "startInputLog(): Cannot log user inputs in loading screen world: \"%s\"";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "startInputLog(): 読み込み画面のためのワールド \"%s\" では、ユーザ入力のログ出力はできません。";
         }
         throw KRRuntimeError(errorFormat, getName().c_str());
     }
 
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-    NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|
+    NSDateComponents* dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|
                                                              NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit)
                                                    fromDate:[NSDate date]];
     
@@ -391,54 +391,54 @@ std::string KRWorld::startInputLog()
     int minute = [dateComponents minute];
     int second = [dateComponents second];
     
-    NSMutableString *worldName = [[NSMutableString new] autorelease];
+    NSMutableString* worldName = [[NSMutableString new] autorelease];
     [worldName appendString:[NSString stringWithCString:getName().c_str() encoding:NSUTF8StringEncoding]];
     [worldName replaceOccurrencesOfString:@" " withString:@"-" options:0 range:NSMakeRange(0, [worldName length])];
     
 #if KR_MACOSX
-    NSString *filename = [NSString stringWithFormat:@"MacOSX__%@__%04d%02d%02d_%02d%02d%02d.log", worldName, year, month, day, hour, minute, second];
+    NSString* filename = [NSString stringWithFormat:@"MacOSX__%@__%04d%02d%02d_%02d%02d%02d.log", worldName, year, month, day, hour, minute, second];
 #else
-    NSString *filename = [NSString stringWithFormat:@"iPhone__%@__%04d%02d%02d_%02d%02d%02d.log", worldName, year, month, day, hour, minute, second];
+    NSString* filename = [NSString stringWithFormat:@"iPhone__%@__%04d%02d%02d_%02d%02d%02d.log", worldName, year, month, day, hour, minute, second];
 #endif
     
-    NSString *baseDirPath = nil;
+    NSString* baseDirPath = nil;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    NSMutableString *titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
-    NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    NSMutableString* titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
+    NSString* bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
     baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
 #else
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentsDirectory = [paths objectAtIndex:0];
     baseDirPath = [documentsDirectory stringByAppendingPathComponent:@"Input Log"];
 #endif
     
     makeDirectories(baseDirPath);
     
-    NSString *filepath = [baseDirPath stringByAppendingPathComponent:filename];
+    NSString* filepath = [baseDirPath stringByAppendingPathComponent:filename];
     
     [[NSData data] writeToFile:filepath atomically:NO];
     gInputLogHandle = [[NSFileHandle fileHandleForWritingAtPath:filepath] retain];
-    [(NSFileHandle *)gInputLogHandle writeData:[@"# Karakuri Input Log\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [(NSFileHandle *)gInputLogHandle writeData:[@"# @version 1.0\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @date %04d/%02d/%02d %02d:%02d:%02d\n", year, month, day, hour, minute, second] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[@"# Karakuri Input Log\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[@"# @version 1.0\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @date %04d/%02d/%02d %02d:%02d:%02d\n", year, month, day, hour, minute, second] dataUsingEncoding:NSUTF8StringEncoding]];
     
 #if KR_MACOSX
-    [(NSFileHandle *)gInputLogHandle writeData:[@"# @target Mac OS X\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[@"# @target Mac OS X\n" dataUsingEncoding:NSUTF8StringEncoding]];
 #endif
     
 #if KR_IPHONE
-    [(NSFileHandle *)gInputLogHandle writeData:[@"# @target iPhone\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[@"# @target iPhone\n" dataUsingEncoding:NSUTF8StringEncoding]];
 #endif
 
-    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_x %qX\n", gKRRandInst->getX()] dataUsingEncoding:NSUTF8StringEncoding]];
-    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_y %qX\n", gKRRandInst->getY()] dataUsingEncoding:NSUTF8StringEncoding]];
-    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_z %qX\n", gKRRandInst->getZ()] dataUsingEncoding:NSUTF8StringEncoding]];
-    [(NSFileHandle *)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_w %qX\n", gKRRandInst->getW()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_x %qX\n", gKRRandInst->getX()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_y %qX\n", gKRRandInst->getY()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_z %qX\n", gKRRandInst->getZ()] dataUsingEncoding:NSUTF8StringEncoding]];
+    [(NSFileHandle*)gInputLogHandle writeData:[[NSString stringWithFormat:@"# @rand_w %qX\n", gKRRandInst->getW()] dataUsingEncoding:NSUTF8StringEncoding]];
 
     [calendar release];
     
-    std::string ret = [(NSString *)filename cStringUsingEncoding:NSUTF8StringEncoding];
+    std::string ret = [(NSString*)filename cStringUsingEncoding:NSUTF8StringEncoding];
     
     return ret;
 }
@@ -632,7 +632,7 @@ void KRWorld::setDummyInputSource(const std::string& filename)
         
         mHasDummyInputSource = true;
     } catch (KRRuntimeError& e) {
-        const char *errorFormat = "Failed to open dummy input file \"%s\". Please confirm that the file exists.";
+        const char* errorFormat = "Failed to open dummy input file \"%s\". Please confirm that the file exists.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ダミー入力ファイル \"%s\" の読み込みに失敗しました。";
         }

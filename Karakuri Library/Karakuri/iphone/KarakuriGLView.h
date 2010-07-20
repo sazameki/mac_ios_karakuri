@@ -18,7 +18,7 @@
 typedef struct _KRTouchInfo2 {
     bool        is_used;
     CGPoint     pos;
-    void        *touch_pointer;
+    void*       touch_pointer;
     unsigned    touch_id;
 } _KRTouchInfo2;
 
@@ -34,7 +34,10 @@ typedef struct _KRTouchInfo2 {
 
     BOOL    mIsAccelerometerEnabled;
     
+    BOOL    mIsAttachedToSecondScreen;
+    
     _KRTexture2D*   mDefaultTex;
+    void*           mCurrentImageBuffer;
 }
 
 - (id)initWithScreenSize:(CGSize)screenSize;
@@ -43,6 +46,10 @@ typedef struct _KRTouchInfo2 {
 
 - (void)enableAccelerometer;
 - (void)disableAccelerometer;
+
+- (void)setAttachedToSecondScreen;
+
+- (UIImage*)currentImage;
 
 @end
 

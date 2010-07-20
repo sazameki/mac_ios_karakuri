@@ -431,6 +431,10 @@
 		8E97926D1020C00700E3EC7A /* KRFont.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9792691020C00700E3EC7A /* KRFont.mm */; };
 		8E97926E1020C00700E3EC7A /* KRFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E9792681020C00700E3EC7A /* KRFont.h */; };
 		8E97926F1020C00700E3EC7A /* KRFont.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9792691020C00700E3EC7A /* KRFont.mm */; };
+		8E9C486011F611C200F2A5C2 /* KRProxyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E9C485E11F611C200F2A5C2 /* KRProxyView.h */; };
+		8E9C486111F611C200F2A5C2 /* KRProxyView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C485F11F611C200F2A5C2 /* KRProxyView.mm */; };
+		8E9C486211F611C200F2A5C2 /* KRProxyView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E9C485E11F611C200F2A5C2 /* KRProxyView.h */; };
+		8E9C486311F611C200F2A5C2 /* KRProxyView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C485F11F611C200F2A5C2 /* KRProxyView.mm */; };
 		8EAB5F2D101B1FD100DDA881 /* Karakuri.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F2C101B1FD100DDA881 /* Karakuri.h */; };
 		8EAB5F2E101B1FD100DDA881 /* Karakuri.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F2C101B1FD100DDA881 /* Karakuri.h */; };
 		8EAB5F2F101B1FD100DDA881 /* Karakuri.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EAB5F2C101B1FD100DDA881 /* Karakuri.h */; };
@@ -854,6 +858,8 @@
 		8E946907102265240073A4FD /* KRPrimitive2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRPrimitive2D.cpp; sourceTree = "<group>"; };
 		8E9792681020C00700E3EC7A /* KRFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRFont.h; sourceTree = "<group>"; };
 		8E9792691020C00700E3EC7A /* KRFont.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRFont.mm; sourceTree = "<group>"; };
+		8E9C485E11F611C200F2A5C2 /* KRProxyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRProxyView.h; sourceTree = "<group>"; };
+		8E9C485F11F611C200F2A5C2 /* KRProxyView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRProxyView.mm; sourceTree = "<group>"; };
 		8EAB5EEB101B136400DDA881 /* libkarakuri-iphone-sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-iphone-sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EAB5EFA101B13C200DDA881 /* libkarakuri-iphone-dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-iphone-dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EAB5F2C101B1FD100DDA881 /* Karakuri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Karakuri.h; sourceTree = "<group>"; };
@@ -1327,6 +1333,8 @@
 				8EAB5FF7101B20C100DDA881 /* KRTexture2DLoader.mm */,
 				8E423B4E103C8A2A00ED3880 /* KRPeerPicker.h */,
 				8E423B4F103C8A2A00ED3880 /* KRPeerPicker.mm */,
+				8E9C485E11F611C200F2A5C2 /* KRProxyView.h */,
+				8E9C485F11F611C200F2A5C2 /* KRProxyView.mm */,
 			);
 			path = iphone;
 			sourceTree = "<group>";
@@ -1543,6 +1551,7 @@
 				8EEA3119112B234200226D42 /* KRTexture2DManager.h in Headers */,
 				8E37113E11511CA300B1655B /* BXResourceImporter.h in Headers */,
 				8EBCAF5D11E71E130017A640 /* KRChara2D.h in Headers */,
+				8E9C486011F611C200F2A5C2 /* KRProxyView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1633,6 +1642,7 @@
 				8EEA311B112B234200226D42 /* KRTexture2DManager.h in Headers */,
 				8E37114011511CA300B1655B /* BXResourceImporter.h in Headers */,
 				8EBCAF6111E71E130017A640 /* KRChara2D.h in Headers */,
+				8E9C486211F611C200F2A5C2 /* KRProxyView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2042,6 +2052,7 @@
 				8EEA28C611269C0800226D42 /* KRAudioManager.mm in Sources */,
 				8E37113F11511CA300B1655B /* BXResourceImporter.mm in Sources */,
 				8EBCAF5E11E71E130017A640 /* KRChara2D.mm in Sources */,
+				8E9C486111F611C200F2A5C2 /* KRProxyView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2122,6 +2133,7 @@
 				8EEA28CA11269C0800226D42 /* KRAudioManager.mm in Sources */,
 				8E37114111511CA300B1655B /* BXResourceImporter.mm in Sources */,
 				8EBCAF6211E71E130017A640 /* KRChara2D.mm in Sources */,
+				8E9C486311F611C200F2A5C2 /* KRProxyView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

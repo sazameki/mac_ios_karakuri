@@ -78,6 +78,10 @@ extern int      _gCharaDrawCountPos;
     BOOL                mIsScreenSizeHalved;
 #endif
     
+#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
+    BOOL                mIsAttachedToSecondScreen;
+#endif
+    
     KRTexture2DManager* mTex2DManager;
     KRAnime2DManager*   mAnime2DManager;
     KRAudioManager*     mAudioManager;

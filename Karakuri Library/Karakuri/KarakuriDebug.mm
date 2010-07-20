@@ -9,7 +9,7 @@
 #include <sys/time.h>
 
 
-void KRDebug(const char *format, ...)
+void KRDebug(const char* format, ...)
 {
 #if __DEBUG__
     
@@ -23,7 +23,7 @@ void KRDebug(const char *format, ...)
     gettimeofday(&tp, NULL);
     
     time_t theTime = time(NULL);
-    tm *date = localtime(&theTime);
+    tm* date = localtime(&theTime);
     
     static char dateBuffer[16];
     strftime(dateBuffer, 15, "%H:%M:%S", date);
@@ -33,7 +33,7 @@ void KRDebug(const char *format, ...)
 #endif  // #ifdef __DEBUG__
 }
 
-void KRDebugScreen(const char *format, ...)
+void KRDebugScreen(const char* format, ...)
 {
 #if __DEBUG__
     

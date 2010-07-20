@@ -38,6 +38,8 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 //The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
 - (id)initWithScreenSize:(CGSize)screenSize
 {
+    mCurrentImageBuffer = NULL;
+    
     // iPad
     if (screenSize.width >= 768) {
         self = [super initWithFrame:CGRectMake(0, 0, 768, 1024)];
@@ -50,8 +52,10 @@ static BOOL sPhoneOrientatilHorizontal = YES;
         gKRGLViewInst = self;
 
         self.multipleTouchEnabled = YES;
+        
+        mIsAttachedToSecondScreen = NO;
 
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+        CAEAGLLayer* eaglLayer = (CAEAGLLayer*)self.layer;
         
         eaglLayer.opaque = YES;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -59,8 +63,8 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                                         kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
                                         nil];
                 
-        //KRGameController *controller = [KRGameController sharedController];
-        //EAGLSharegroup *sharegroup = [controller eaglSharegroup];
+        //KRGameController* controller = [KRGameController sharedController];
+        //EAGLSharegroup* sharegroup = [controller eaglSharegroup];
         //NSLog(@"%@", sharegroup);
 
         mKRGLContext.eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -85,7 +89,13 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
+    if (mCurrentImageBuffer != NULL) {
+        free(mCurrentImageBuffer);
+        mCurrentImageBuffer = NULL;
+    }
+    
     if ([EAGLContext currentContext] == mKRGLContext.eaglContext) {
         [EAGLContext setCurrentContext:nil];
     }
@@ -95,6 +105,11 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     delete mDefaultTex;
 
     [super dealloc];
+}
+
+- (void)setAttachedToSecondScreen
+{
+    mIsAttachedToSecondScreen = YES;
 }
 
 - (void)layoutSubviews
@@ -128,7 +143,11 @@ static BOOL sPhoneOrientatilHorizontal = YES;
 
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, mKRGLContext.viewFramebuffer);
     
-    glViewport(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight);
+    if (mIsAttachedToSecondScreen) {
+        glViewport(0, 0, mKRGLContext.backingHeight, mKRGLContext.backingWidth);
+    } else {
+        glViewport(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight);
+    }
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -201,7 +220,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     
     mIsAccelerometerEnabled = YES;
     
-    UIAccelerometer *uiAcc = [UIAccelerometer sharedAccelerometer];
+    UIAccelerometer* uiAcc = [UIAccelerometer sharedAccelerometer];
     uiAcc.updateInterval = 0.1;
     uiAcc.delegate = self;
 }
@@ -214,11 +233,11 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     
     mIsAccelerometerEnabled = NO;
     
-    UIAccelerometer *uiAcc = [UIAccelerometer sharedAccelerometer];
+    UIAccelerometer* uiAcc = [UIAccelerometer sharedAccelerometer];
     uiAcc.delegate = nil;
 }
 
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
 {
     if (gKRGameMan->getScreenWidth() > gKRGameMan->getScreenHeight()) {
         gKRInputInst->_setAcceleration(-acceleration.y, acceleration.x, acceleration.z);
@@ -227,9 +246,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    for (UITouch *aTouch in touches) {
+    for (UITouch* aTouch in touches) {
         for (int i = 0; i < KR_TOUCH_MAX_COUNT; i++) {
             if (!mTouchInfos[i].is_used) {
                 CGPoint pos = [aTouch locationInView:nil];
@@ -253,9 +272,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     }
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    for (UITouch *aTouch in touches) {
+    for (UITouch* aTouch in touches) {
         for (int i = 0; i < KR_TOUCH_MAX_COUNT; i++) {
             if (mTouchInfos[i].is_used && mTouchInfos[i].touch_pointer == aTouch) {
                 CGPoint pos = [aTouch locationInView:nil];
@@ -272,9 +291,9 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    for (UITouch *aTouch in touches) {
+    for (UITouch* aTouch in touches) {
         for (int i = 0; i < KR_TOUCH_MAX_COUNT; i++) {
             if (mTouchInfos[i].is_used && mTouchInfos[i].touch_pointer == aTouch) {
                 CGPoint pos = [aTouch locationInView:nil];
@@ -290,6 +309,35 @@ static BOOL sPhoneOrientatilHorizontal = YES;
             }
         }
     }
+}
+
+- (UIImage*)currentImage
+{
+    [EAGLContext setCurrentContext:mKRGLContext.eaglContext];
+    
+    CGRect frame = [self frame];
+	size_t width = frame.size.width;
+	size_t height = frame.size.height;
+    
+    if (mCurrentImageBuffer == NULL) {
+        int dataSize = 4 * width * height;
+        mCurrentImageBuffer = malloc(dataSize * sizeof(GLubyte));
+    }
+
+	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, mCurrentImageBuffer);
+	
+	CGColorSpaceRef space =  CGColorSpaceCreateDeviceRGB();
+	CGContextRef context = CGBitmapContextCreate(mCurrentImageBuffer, width, height, 8, width * 4, space, kCGImageAlphaPremultipliedLast);
+	CGImageRef cgImage = CGBitmapContextCreateImage(context);
+	
+    UIImage* ret = [UIImage imageWithCGImage:cgImage];
+
+    CGContextRelease(context);
+	CGColorSpaceRelease(space);
+	CGImageRelease(cgImage);
+	UIGraphicsEndImageContext();
+    
+    return ret;
 }
 
 @end

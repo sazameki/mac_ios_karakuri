@@ -48,7 +48,7 @@ class KRWorld : public KRObject {
     
 private:
     std::string         mName;
-    KRControlManager    *mControlManager;
+    KRControlManager*   mControlManager;
     bool                mHasProcessedControl;
     bool                mIsControlProcessDisabled;
     bool                mIsManualControlManagementEnabled;
@@ -121,8 +121,8 @@ public:
 
     void    startBecameActive();
     void    startResignedActive();
-    void    startUpdateModel(KRInput *input);
-    void    startDrawView(KRGraphics *g);
+    void    startUpdateModel(KRInput* input);
+    void    startDrawView(KRGraphics* g);
 
     /*!
         @task ゲーム実行のためのオーバーライド関数
@@ -138,7 +138,7 @@ public:
      @method drawView
      このワールド内のゲームモデルを元にして、画面描画を行います。
      */
-    virtual void    drawView(KRGraphics *g) = 0;
+    virtual void    drawView(KRGraphics* g) = 0;
     
     /*!
         @method resignedActive
@@ -150,7 +150,7 @@ public:
         @method updateModel
         このワールド内のゲームモデルの更新を行います。
      */
-    virtual void    updateModel(KRInput *input) = 0;
+    virtual void    updateModel(KRInput* input) = 0;
 
     
     /*!
@@ -161,7 +161,7 @@ public:
         @method saveForEmergency
         ウィンドウの閉じるボタンを押して終了した場合、iPhone のホームボタンが押された場合、電話コールを受信した場合に対応するために、この関数をオーバーライドして、ゲームの実行状態を保存します。
      */
-    virtual void    saveForEmergency(KRSaveBox *saveBox);
+    virtual void    saveForEmergency(KRSaveBox* saveBox);
     
 #pragma mark -
 #pragma mark Control Support
@@ -175,13 +175,13 @@ public:
         @abstract 新しいコントロールをこのワールドに追加します。追加されたコントロールは、自動的に解放されます。自分では delete しないように注意してください。
         groupID を指定することで、コントロールのグループを指定できます。デフォルトのグループIDは 0 です。0 以外のグループIDをもつコントロールは、自動的にはユーザ入力の受け付けや描画が行われません。
      */
-    void    addControl(KRControl *aControl, int groupID = 0);
+    void    addControl(KRControl* aControl, int groupID = 0);
     
     /*!
         @method removeControl
         指定されたコントロールを、このワールドから削除します。一度追加されたこのコントロールは、自動的に解放されます。自分では delete しないように注意してください。
      */
-    void    removeControl(KRControl *aControl);
+    void    removeControl(KRControl* aControl);
     
     /*!
         @method hasProcessedControl
@@ -216,14 +216,14 @@ public:
         <p>デフォルトでは groupID が 0 のコントロールを描画しますが、groupID を指定することで、そのグループのコントロールを描画します。</p>
         <p>同じ groupID を共有するコントロールは、領域が重ならないことを前提としています。</p>
      */
-    void    drawControls(KRGraphics *g, int groupID = 0);
+    void    drawControls(KRGraphics* g, int groupID = 0);
     
     /*!
         @method processControls
         @abstract コントロールのユーザ入力受け付けを行い、ユーザ入力が処理された場合には true を、そうでなければ false をリターンします。
         <p>デフォルトでは groupID が 0 のコントロールを処理しますが、groupID を指定することで、そのグループのコントロールを処理します。</p>
      */
-    bool    processControls(KRInput *input, int groupID = 0);
+    bool    processControls(KRInput* input, int groupID = 0);
 
 
     /*!
@@ -323,6 +323,6 @@ public:
 
 };
 
-extern void     *gInputLogHandle KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+extern void*    gInputLogHandle KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 extern unsigned gInputLogFrameCounter KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 

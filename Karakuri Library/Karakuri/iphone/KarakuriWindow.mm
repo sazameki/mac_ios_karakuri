@@ -36,6 +36,23 @@ KarakuriWindow* gKRWindowInst = nil;
     [super dealloc];
 }
 
+- (KarakuriGLView*)glView
+{
+    return mGLView;
+}
+
+- (void)changeToSubScreenWindow
+{
+    mProxyView = [[KRProxyView alloc] initWithFrame:[mGLView frame]];
+    [mProxyView setGLView:mGLView];
+    
+    [mGLView setAttachedToSecondScreen];
+    [mGLView removeFromSuperview];
+    mGLView = nil;
+    
+    [self addSubview:mProxyView];
+}
+
 @end
 
 

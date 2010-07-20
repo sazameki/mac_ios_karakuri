@@ -9,11 +9,16 @@
 #import <Karakuri/KarakuriLibrary.h>
 
 #import <Karakuri/iphone/KarakuriGLView.h>
+#import <Karakuri/iphone/KRProxyView.h>
 
 
 @interface KarakuriWindow : UIWindow {
     KarakuriGLView*     mGLView;
+    KRProxyView*        mProxyView;
 }
+
+- (KarakuriGLView*)glView;
+- (void)changeToSubScreenWindow;
 
 @end
 

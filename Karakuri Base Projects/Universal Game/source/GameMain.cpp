@@ -23,10 +23,10 @@ GameMain::GameMain()
 
     setTitle("My Karakuri Game");           // Game title (iOS won't use this setting)
 
-    setScreenSize(480, 320);                // iPhone Size (Horizontal use)
+    //setScreenSize(480, 320);                // iPhone Size (Horizontal use)
     //setScreenSize(320, 480);                // iPhone Size (Vertical use. Don't forget to remove Default.png and rename Default_V.png to Default.png.)
     //setScreenSize(1024, 768);               // iPad size (Horizontal use. Don't forget to remove Default-Portrait.png.)
-    //setScreenSize(768, 1024);               // iPad size (Vertical use. Don't forget to remove Default-Landscape.png.)
+    setScreenSize(768, 1024);               // iPad size (Vertical use. Don't forget to remove Default-Landscape.png.)
 
     setFrameRate(60.0);                     // Refresh rate
     setAudioMixType(KRAudioMixTypeAmbient); // Audio mixing

@@ -105,7 +105,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
         mLibraryConnector = [KarakuriLibraryConnector new];
         
-        NSString *currentLangCode = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
+        NSString* currentLangCode = [[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode];
         if ([currentLangCode isEqualToString:@"ja"]) {
             gKRLanguage = KRLanguageJapanese;            
         }
@@ -213,7 +213,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #pragma mark -
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-- (EAGLSharegroup *)eaglSharegroup
+- (EAGLSharegroup*)eaglSharegroup
 {
     return mEAGLSharegroup;
 }
@@ -222,23 +222,15 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 - (void)setupApplication
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    NSApplication *app = [NSApplication sharedApplication];
+    NSApplication* app = [NSApplication sharedApplication];
     [app setDelegate:self];
     
-    KarakuriMenu *menu = [[KarakuriMenu new] autorelease];
+    KarakuriMenu* menu = [[KarakuriMenu new] autorelease];
     [app setMainMenu:menu];
     [menu setupMenuItems];
     
-    mWindow = [KarakuriWindow new];
-    
-#if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    NSArray* screens = [UIScreen screens];
-    if ([screens count] >= 2) {
-        UIScreen* externalScreen = [screens objectAtIndex:1];
-        mWindow.screen = externalScreen;
-    }
-#endif
-    
+    mWindow = [KarakuriWindow new];    
+
     NSString* appName = [NSString stringWithCString:mGameManager->getTitle().c_str() encoding:NSUTF8StringEncoding];
 #if KR_IPHONE_MACOSX_EMU
     // iPad
@@ -253,7 +245,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [mWindow setTitle:appName];
     [mWindow center];
 #endif
-    
+
 #if KR_IPHONE_MACOSX_EMU
     // iPad
     if (mGameManager->getScreenWidth() > 500) {
@@ -270,21 +262,21 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)checkOpenGLVersion
 {
-    const GLubyte *verStr = glGetString(GL_VERSION);
-    _KROpenGLVersionStr += (const char *)verStr;
+    const GLubyte* verStr = glGetString(GL_VERSION);
+    _KROpenGLVersionStr += (const char*)verStr;
     
     std::string first3 = _KROpenGLVersionStr.substr(0, 3);
     
     _KROpenGLVersionValue = atof(first3.c_str());
 }
 
-- (void)startChaningWorld:(KRWorld *)world
+- (void)startChaningWorld:(KRWorld*)world
 {
     mIsWorldLoading = YES;
     mLoadingWorld = world;
 }
 
-- (void)setKRGLContext:(KarakuriGLContext *)context
+- (void)setKRGLContext:(KarakuriGLContext*)context
 {
     mKRGLContext = context;
 }
@@ -305,7 +297,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     // Set up VSYNC (Not needed at most of the case. So we disable this option at now.)
     //long sync = 1;
-    //CGLSetParameter(mKRGLContext->cglContext, kCGLCPSwapInterval, (GLint *)&sync);
+    //CGLSetParameter(mKRGLContext->cglContext, kCGLCPSwapInterval, (GLint*)&sync);
 #endif
 }
 
@@ -349,12 +341,12 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     gettimeofday(&tp, NULL);
     
     time_t theTime = time(NULL);
-    tm *date = localtime(&theTime);
+    tm* date = localtime(&theTime);
     
     static char dateBuffer[16];
     strftime(dateBuffer, 15, "%H:%M:%S", date);
     
-    KRLabel *aLabel = new KRLabel(KRRect2D(10, 1, gKRScreenSize.x-10*2, 20));
+    KRLabel* aLabel = new KRLabel(KRRect2D(10, 1, gKRScreenSize.x-10*2, 20));
     aLabel->setFont("Courier", 12.0);
     aLabel->setTextColor(KRColor::White);
     aLabel->setTextShadowColor(KRColor::Black);
@@ -379,14 +371,14 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     mNetworkServer = new KRNetwork(gameID);
 }
 
-- (void)processNetworkRequest:(NSString *)name
+- (void)processNetworkRequest:(NSString*)name
 {
     mNetworkPeerName = [name retain];
     
-    NSString *title = @"Network Play Invitation";
-    NSString *acceptLabel = @"Accept";
-    NSString *rejectLabel = @"Reject";
-    NSString *messageFormat = @"%@ is inviting you to join a new game. Do you want to accept the invitation?";
+    NSString* title = @"Network Play Invitation";
+    NSString* acceptLabel = @"Accept";
+    NSString* rejectLabel = @"Reject";
+    NSString* messageFormat = @"%@ is inviting you to join a new game. Do you want to accept the invitation?";
     
     if (gKRLanguage == KRLanguageJapanese) {
         title = @"ネットワーク・プレイの招待";
@@ -395,7 +387,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         messageFormat = @"%@ さんから招待が来ています。招待を受けますか？";
     }
     
-    NSString *message = [NSString stringWithFormat:messageFormat, mNetworkPeerName];
+    NSString* message = [NSString stringWithFormat:messageFormat, mNetworkPeerName];
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU    
     NSBeginAlertSheet(title,
@@ -419,7 +411,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 }
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-- (void)networkInvitationSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)networkInvitationSheetDidEnd:(NSWindow*)sheet returnCode:(int)returnCode contextInfo:(void*)contextInfo
 {
     [sheet orderOut:self];
     if (returnCode == NSAlertDefaultReturn) {
@@ -497,20 +489,20 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 }
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-- (void)peerPickerCanceled:(KRPeerPickerWindow *)pickerWindow
+- (void)peerPickerCanceled:(KRPeerPickerWindow*)pickerWindow
 {
     mPeerPickerWindow = nil;
     mIsInvitingNetworkPeer = NO;
 }
 
-- (void)peerPickerAccepted:(KRPeerPickerWindow *)pickerWindow
+- (void)peerPickerAccepted:(KRPeerPickerWindow*)pickerWindow
 {
     mHasAcceptedNetworkPeer = YES;
     mPeerPickerWindow = nil;
     mIsInvitingNetworkPeer = NO;
 }
 
-- (void)peerPickerDenied:(KRPeerPickerWindow *)pickerWindow
+- (void)peerPickerDenied:(KRPeerPickerWindow*)pickerWindow
 {
     mHasAcceptedNetworkPeer = NO;
     mPeerPickerWindow = nil;
@@ -561,7 +553,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [UIView setAnimationDidStopSelector:@selector(pickerOutAnimationFinished:finished:context:)];
     [UIView commitAnimations];
 }
-- (void)pickerOutAnimationFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context
+- (void)pickerOutAnimationFinished:(NSString*)animationID finished:(BOOL)finished context:(void*)context
 {
     [mPeerPickerController.view removeFromSuperview];
     [mPeerPickerController release];
@@ -575,12 +567,12 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #pragma mark NSApplication Delegation
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
 {
     return YES;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     mGameManager->_checkDeviceType();
     [mWindow makeKeyAndOrderFront:self];
@@ -655,11 +647,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             CGDisplayShowCursor(kCGDirectMainDisplay);
             NSBeep();
             
-            NSString *alertTitle = @"Karakuri Runtime Error";
+            NSString* alertTitle = @"Karakuri Runtime Error";
             if (gKRLanguage == KRLanguageJapanese) {
                 alertTitle = @"Karakuri ランタイムエラー";
             }
-            NSString *message = [NSString stringWithCString:mLastErrorMessage->c_str() encoding:NSUTF8StringEncoding];
+            NSString* message = [NSString stringWithCString:mLastErrorMessage->c_str() encoding:NSUTF8StringEncoding];
             std::cerr << "[Karakuri Runtime Error] " << *mLastErrorMessage << std::endl;
             
             NSBeginCriticalAlertSheet(alertTitle,
@@ -689,13 +681,51 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #pragma mark UIApplication Delegation
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-- (void)applicationDidFinishLaunching:(UIApplication *)application
+- (void)applicationDidFinishLaunching:(UIApplication*)application
 {
     if (gKRScreenSize.x > gKRScreenSize.y) {
         [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
     }
 
+    mIsAttachedToSecondScreen = NO;
+    
     mWindow = [KarakuriWindow new];
+
+    NSArray* screens = [UIScreen screens];
+    if ([screens count] >= 2) {
+        UIScreen* externalScreen = [screens objectAtIndex:1];
+        NSArray* modes = [externalScreen availableModes];
+        UIScreenMode* maxScreenMode = [modes objectAtIndex:0];
+        CGSize maxSize = maxScreenMode.size;
+        int modeCount = [modes count];
+        for (int i = 1; i < modeCount; i++) {
+            UIScreenMode* aMode = [modes objectAtIndex:i];
+            if (aMode.size.width > maxSize.width) {
+                maxSize = aMode.size;
+                maxScreenMode = aMode;
+            }
+        }
+        
+        externalScreen.currentMode = maxScreenMode;
+        
+        KarakuriGLView* glView = [mWindow glView];
+        [mWindow changeToSubScreenWindow];
+        
+        CGRect viewFrame = glView.frame;
+        float width = viewFrame.size.width;
+        viewFrame.size.width = viewFrame.size.height;
+        viewFrame.size.height = width;
+        glView.frame = viewFrame;
+        
+        UIWindow* newWindow = [[UIWindow alloc] init];
+        newWindow.screen = externalScreen;
+        [newWindow addSubview:glView];
+        [glView release];
+        [newWindow makeKeyAndVisible];
+        
+        mIsAttachedToSecondScreen = YES;
+    }
+
     mGameManager->_checkDeviceType();
     [mWindow makeKeyAndVisible];
     
@@ -705,7 +735,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     [NSThread detachNewThreadSelector:@selector(gameThreadProc:) toTarget:self withObject:nil];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
+- (void)applicationWillTerminate:(UIApplication*)application
 {
     mHasMetEmergency = YES;
     mGameIsRunning = NO;
@@ -723,7 +753,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)worldLoadingProc:(id)dummy
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     CGLContextObj cglContext = (mKRGLContext->isFullScreen)? mKRGLContext->cglFullScreenContext: mKRGLContext->cglContext;
@@ -747,7 +777,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)loadingWorldProc:(id)dummy
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
     
     try {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
@@ -800,11 +830,15 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
             glOrthof(0.0f, (float)mKRGLContext->backingWidth, 0.0f, (float)mKRGLContext->backingHeight, -1.0f, 1.0f);
-            // If Horizontal
-            if (mGameManager->getScreenWidth() > mGameManager->getScreenHeight()) {
-                glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
-                glScalef(1.0f, 1.0f, 1.0f);
-                glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+            
+            if (mIsAttachedToSecondScreen) {
+            } else {
+                // If Horizontal
+                if (mGameManager->getScreenWidth() > mGameManager->getScreenHeight()) {
+                    glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
+                    glScalef(1.0f, 1.0f, 1.0f);
+                    glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+                }
             }
 #endif
             glMatrixMode(GL_MODELVIEW);
@@ -889,7 +923,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 
 - (void)gameThreadProc:(id)dummy
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
 
     [gKRGLViewInst waitForReady];
     
@@ -979,11 +1013,16 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #endif
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
             glOrthof(0.0f, (float)mKRGLContext->backingWidth, 0.0f, (float)mKRGLContext->backingHeight, -1.0f, 1.0f);
-            // If Horizontal
-            if (mGameManager->getScreenWidth() > mGameManager->getScreenHeight()) {
-                glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
-                glScalef(1.0f, 1.0f, 1.0f);
-                glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+            
+            // Second Screen
+            if (mIsAttachedToSecondScreen) {
+            } else {
+                // If Horizontal
+                if (mGameManager->getScreenWidth() > mGameManager->getScreenHeight()) {
+                    glTranslatef(0.0f, (float)(mKRGLContext->backingHeight), 0.0f);
+                    glScalef(1.0f, 1.0f, 1.0f);
+                    glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+                }
             }
 #endif
             glMatrixMode(GL_MODELVIEW);
@@ -1163,17 +1202,17 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
         gKRAudioMan->stopBGM();
         
         mGameIsAborted = YES;
-        NSString *alertTitle = @"Karakuri Runtime Error";
+        NSString* alertTitle = @"Karakuri Runtime Error";
         if (gKRLanguage == KRLanguageJapanese) {
             alertTitle = @"Karakuri ランタイムエラー";
         }
-        if (dynamic_cast<KRGameError *>(&e)) {
+        if (dynamic_cast<KRGameError*>(&e)) {
             alertTitle = @"Game Execution Error";
             if (gKRLanguage == KRLanguageJapanese) {
                 alertTitle = @"ゲーム実行エラー";
             }
         }
-        NSString *message = [NSString stringWithCString:e.what() encoding:NSUTF8StringEncoding];
+        NSString* message = [NSString stringWithCString:e.what() encoding:NSUTF8StringEncoding];
         std::cerr << "[Karakuri Runtime Error] " << e.what() << std::endl;
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
         [gKRGLViewInst clearMouseTrackingRect];
@@ -1336,7 +1375,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 throw KRRuntimeError(message);
             }
             
-            NSEvent *event;
+            NSEvent* event;
             while (isRunning && (event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES])) {
                 switch ([event type]) {
                     case NSLeftMouseDown:
