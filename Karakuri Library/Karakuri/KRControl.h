@@ -25,7 +25,7 @@ const double _gKRControlDisabledAlpha   = 0.1;
 class KRControl : public KRObject {
     
 protected:
-    KRWorld     *mWorld;
+    KRWorld*    mWorld;
 
     bool        mIsEnabled;
     bool        mIsHidden;
@@ -112,9 +112,9 @@ public:
     virtual bool    _isUpdatableControl() const;    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 public:
-    void            setWorld(KRWorld *aWorld);      KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual bool    update(KRInput *input) = 0;     KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual void    draw(KRGraphics *g) = 0;        KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    void            setWorld(KRWorld* aWorld);      KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual bool    update(KRInput* input) = 0;     KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics* g) = 0;        KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 };
 

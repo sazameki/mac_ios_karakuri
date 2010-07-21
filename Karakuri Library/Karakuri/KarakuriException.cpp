@@ -15,6 +15,7 @@
 KRGameExitError::KRGameExitError()
     : std::runtime_error("")
 {
+    // Nothing to do
 }
 
 KRGameExitError::~KRGameExitError() throw()
@@ -26,18 +27,18 @@ KRGameExitError::~KRGameExitError() throw()
 #pragma mark -
 #pragma mark Runtime error caused from framework side
 
-KRRuntimeError::KRRuntimeError(const std::string &message)
+KRRuntimeError::KRRuntimeError(const std::string& message)
     : std::runtime_error("")
 {
     mMessage = message;
 }
 
-KRRuntimeError::KRRuntimeError(const char *format, ...)
+KRRuntimeError::KRRuntimeError(const char* format, ...)
     : std::runtime_error("")
 {
     char buffer[1024];
     va_list marker;
-    va_start(marker,format);
+    va_start(marker, format);
     vsprintf(buffer, format, marker);
     va_end(marker);
     
@@ -46,6 +47,7 @@ KRRuntimeError::KRRuntimeError(const char *format, ...)
 
 KRRuntimeError::~KRRuntimeError() throw()
 {
+    // Nothing to do
 }
 
 const char *KRRuntimeError::what() const throw()
@@ -57,12 +59,13 @@ const char *KRRuntimeError::what() const throw()
 #pragma mark -
 #pragma mark Network error
 
-KRNetworkError::KRNetworkError(const std::string &message)
+KRNetworkError::KRNetworkError(const std::string& message)
     : KRRuntimeError(message)
 {
+    // Nothing to do
 }
 
-KRNetworkError::KRNetworkError(const char *format, ...)
+KRNetworkError::KRNetworkError(const char* format, ...)
     : KRRuntimeError("")
 {
     char buffer[1024];
@@ -76,6 +79,7 @@ KRNetworkError::KRNetworkError(const char *format, ...)
 
 KRNetworkError::~KRNetworkError() throw()
 {
+    // Nothing to do
 }
 
 
@@ -83,12 +87,13 @@ KRNetworkError::~KRNetworkError() throw()
 #pragma mark -
 #pragma mark Runtime error caused from user (game programmer) side
 
-KRGameError::KRGameError(const std::string &message)
+KRGameError::KRGameError(const std::string& message)
     : KRRuntimeError(message)
 {
+    // Nothing to do
 }
 
-KRGameError::KRGameError(const char *format, ...)
+KRGameError::KRGameError(const char* format, ...)
     : KRRuntimeError("")
 {
     char buffer[1024];
@@ -102,6 +107,7 @@ KRGameError::KRGameError(const char *format, ...)
 
 KRGameError::~KRGameError() throw()
 {
+    // Nothing to do
 }
 
 

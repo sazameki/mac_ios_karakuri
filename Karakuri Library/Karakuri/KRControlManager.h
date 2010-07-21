@@ -17,20 +17,20 @@
 class KRControlManager {
 
 private:
-    std::vector<KRControl *>    mControls;
-    KRControl                   *mSelectedControl;
+    std::vector<KRControl*>     mControls;
+    KRControl*                  mSelectedControl;
 
 public:
 	KRControlManager();
 	virtual ~KRControlManager();
 
 public:
-    void    addControl(KRControl *aControl, int groupID);
+    void    addControl(KRControl* aControl, int groupID);
     void    removeAllControls();
-    void    removeControl(KRControl *aControl);
+    void    removeControl(KRControl* aControl);
 
-    bool    updateControls(KRInput *input, int groupID);
-    void    drawAllControls(KRGraphics *g, int groupID);
+    bool    updateControls(KRInput* input, int groupID);
+    void    drawAllControls(KRGraphics* g, int groupID);
     
     void    scrollUpAllDebugLabels();   KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 

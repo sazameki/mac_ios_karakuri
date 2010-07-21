@@ -69,7 +69,7 @@ void KRButton::setFrameSize(const KRVector2D& size)
     mLabel->setFrameSize(size);
 }
 
-bool KRButton::update(KRInput *input)
+bool KRButton::update(KRInput* input)
 {
     if (!mIsSelected) {
         mIsSelected = true;
@@ -90,7 +90,7 @@ bool KRButton::update(KRInput *input)
     }
 }
 
-void KRButton::draw(KRGraphics *g)
+void KRButton::draw(KRGraphics* g)
 {
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
     

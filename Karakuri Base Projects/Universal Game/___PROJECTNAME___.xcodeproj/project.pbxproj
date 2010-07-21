@@ -29,6 +29,8 @@
 		8E8A9E6D112ED4B6007DD029 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A9E6C112ED4B6007DD029 /* Player.cpp */; };
 		8E8A9E6E112ED4B6007DD029 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A9E6C112ED4B6007DD029 /* Player.cpp */; };
 		8E8A9E6F112ED4B6007DD029 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E8A9E6C112ED4B6007DD029 /* Player.cpp */; };
+		8E9C4A8711F6B01600F2A5C2 /* ipad_iphonesize_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9C4A8611F6B01600F2A5C2 /* ipad_iphonesize_back.png */; };
+		8E9C4A8811F6B01600F2A5C2 /* ipad_iphonesize_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9C4A8611F6B01600F2A5C2 /* ipad_iphonesize_back.png */; };
 		8EA66030102A252600F7081C /* GameMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6F55421011CA330022E442 /* GameMain.cpp */; };
 		8EA66031102A252600F7081C /* KarakuriLibraryConnector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E6F5A351011D6B60022E442 /* KarakuriLibraryConnector.mm */; };
 		8EA66032102A252600F7081C /* LogoWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ED951931017AB0D00CFB07D /* LogoWorld.cpp */; };
@@ -106,6 +108,7 @@
 		8E6F5A351011D6B60022E442 /* KarakuriLibraryConnector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KarakuriLibraryConnector.mm; sourceTree = "<group>"; };
 		8E8A9E6B112ED4B6007DD029 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		8E8A9E6C112ED4B6007DD029 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		8E9C4A8611F6B01600F2A5C2 /* ipad_iphonesize_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_iphonesize_back.png; sourceTree = "<group>"; };
 		8EA66038102A252600F7081C /* ___PROJECTNAME___.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "___PROJECTNAME___.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EA660A2102A372F00F7081C /* PlayWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayWorld.h; sourceTree = "<group>"; };
 		8EA660A3102A372F00F7081C /* PlayWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayWorld.cpp; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 				8EC66FAD11EA0E4D009853A2 /* loading_text.png */,
 				8EC66F1811EA0562009853A2 /* title.png */,
 				8E37172B1151907500B1655B /* player.png */,
+				8E9C4A8611F6B01600F2A5C2 /* ipad_iphonesize_back.png */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -419,6 +423,7 @@
 				8EC670AE11EA1BAC009853A2 /* bgm_play.caf in Resources */,
 				8EC671E311EA2C4F009853A2 /* resource.krrs in Resources */,
 				8E4B202811F1CD310041E14D /* Default_V.png in Resources */,
+				8E9C4A8811F6B01600F2A5C2 /* ipad_iphonesize_back.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +448,7 @@
 				8EC670AD11EA1BAC009853A2 /* bgm_play.caf in Resources */,
 				8EC671E511EA2C4F009853A2 /* resource.krrs in Resources */,
 				8E4B202911F1CD310041E14D /* Default_V.png in Resources */,
+				8E9C4A8711F6B01600F2A5C2 /* ipad_iphonesize_back.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

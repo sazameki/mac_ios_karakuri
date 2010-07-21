@@ -10,7 +10,7 @@
 #include "KarakuriString.h"
 
 
-std::string KRFS(const char *format, ...)
+std::string KRFS(const char* format, ...)
 {
     static char buffer[1024];
     va_list marker;

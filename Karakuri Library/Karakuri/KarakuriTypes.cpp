@@ -32,7 +32,7 @@ KRObject::KRObject()
     // Nothing to do
 }
 
-const char *KRObject::c_str() const
+const char* KRObject::c_str() const
 {
     return to_s().c_str();
 }

@@ -87,7 +87,7 @@ bool KRCheckDeviceType(KRDeviceType deviceType)
 
 bool _KRCheckOpenGLExtensionSupported(const std::string& extensionName)
 {
-    const char *extensions = (const char *)glGetString(GL_EXTENSIONS);
+    const char* extensions = (const char*)glGetString(GL_EXTENSIONS);
     return (strstr(extensions, extensionName.c_str()) != NULL);
 }
 

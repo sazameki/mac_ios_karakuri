@@ -37,7 +37,7 @@ KRSwitch::~KRSwitch()
 #pragma mark -
 #pragma mark Control Implementation
 
-bool KRSwitch::update(KRInput *input)
+bool KRSwitch::update(KRInput* input)
 {
     if (!mIsEnabled) {
         return false;
@@ -65,7 +65,7 @@ bool KRSwitch::update(KRInput *input)
     }
 }
 
-void KRSwitch::draw(KRGraphics *g)
+void KRSwitch::draw(KRGraphics* g)
 {
     if (mBackTexture == NULL && mBackTextureName.length() > 0 && mThumbTextureName.length() > 0) {
         mBackTexture = new _KRTexture2D(mBackTextureName);

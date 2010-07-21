@@ -20,16 +20,16 @@
 class KRButton : public KRControl {
 
 protected:
-    KRLabel     *mLabel;
+    KRLabel*    mLabel;
 
     KRColor     mTitleColorNormal;
     KRColor     mTitleColorHighlighted;
     
-    std::string mTextureNameNormal;
-    _KRTexture2D *mTextureNormal;
+    std::string     mTextureNameNormal;
+    _KRTexture2D*   mTextureNormal;
     
-    std::string mTextureNameHighlighted;
-    _KRTexture2D *mTextureHighlighted;
+    std::string     mTextureNameHighlighted;
+    _KRTexture2D*   mTextureHighlighted;
     
     double      mTextureEdgeSize;
 
@@ -46,8 +46,8 @@ public:
 	virtual ~KRButton();
 
 public:
-    virtual bool    update(KRInput *input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual void    draw(KRGraphics *g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual bool    update(KRInput* input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics* g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 public:
     /*!

@@ -22,10 +22,10 @@ typedef struct KarakuriGLContext {
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    EAGLContext *eaglContext;
-    GLuint      viewRenderbuffer;
-    GLuint      viewFramebuffer;
-    GLuint      depthRenderbuffer;
+    EAGLContext*    eaglContext;
+    GLuint          viewRenderbuffer;
+    GLuint          viewFramebuffer;
+    GLuint          depthRenderbuffer;
 #endif
 
     /* The pixel dimensions of the backbuffer */

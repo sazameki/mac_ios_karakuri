@@ -52,7 +52,7 @@ public:
         @method hasValue
         指定したキーに対応する値が存在することを確認します。
      */
-    bool    hasValue(const std::string &key) const;
+    bool    hasValue(const std::string& key) const;
     
     /*!
         @method save
@@ -73,31 +73,31 @@ public:
         @method getBoolValue
         名前を指定して bool 値を取得します。
      */
-    bool        getBoolValue(const std::string &key) const;
+    bool        getBoolValue(const std::string& key) const;
 
     /*!
         @method getDoubleValue
         名前を指定して double 値を取得します。
      */
-    double      getDoubleValue(const std::string &key) const;
+    double      getDoubleValue(const std::string& key) const;
     
     /*!
         @method getFloatValue
         名前を指定して float 値を取得します。
      */
-    float       getFloatValue(const std::string &key) const;
+    float       getFloatValue(const std::string& key) const;
 
     /*!
         @method getIntValue
         名前を指定して int 値を取得します。
      */
-    int         getIntValue(const std::string &key) const;
+    int         getIntValue(const std::string& key) const;
     
     /*!
         @method getStringValue
         名前を指定して文字列を取得します。
      */
-    std::string getStringValue(const std::string &key) const;
+    std::string getStringValue(const std::string& key) const;
     
 public:
 #pragma mark -
@@ -110,31 +110,31 @@ public:
         @method setBoolValue
         名前を指定して bool 値を保存します。
      */
-    void        setBoolValue(const std::string &key, bool boolValue);
+    void        setBoolValue(const std::string& key, bool boolValue);
 
     /*!
         @method setDoubleValue
         名前を指定して double 値を保存します。
      */
-    void        setDoubleValue(const std::string &key, double doubleValue);
+    void        setDoubleValue(const std::string& key, double doubleValue);
     
     /*!
         @method setFloatValue
         名前を指定して float 値を保存します。
      */
-    void        setFloatValue(const std::string &key, float floatValue);
+    void        setFloatValue(const std::string& key, float floatValue);
 
     /*!
         @method setIntValue
         名前を指定して int 値を保存します。
      */
-    void        setIntValue(const std::string &key, int intValue);
+    void        setIntValue(const std::string& key, int intValue);
 
     /*!
         @method setStringValue
         名前を指定して文字列を保存します。
      */
-    void        setStringValue(const std::string &key, const std::string &strValue);
+    void        setStringValue(const std::string& key, const std::string& strValue);
 
     
 #pragma mark -
@@ -150,5 +150,5 @@ public:
     @group Game System
     @abstract ゲーム状態保存クラスのインスタンスを指す変数です。
  */
-extern KRSaveBox    *gKRSaveBoxInst;
+extern KRSaveBox*   gKRSaveBoxInst;
 

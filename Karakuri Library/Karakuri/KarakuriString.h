@@ -21,7 +21,7 @@
     @abstract   C++版の sprintf() です。
     指定された書式に従って C++ 文字列を生成します。
  */
-std::string KRFS(const char *format, ...);
+std::string KRFS(const char* format, ...);
 
 /*!
     @function   KRSplitString

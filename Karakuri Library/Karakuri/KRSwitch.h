@@ -23,10 +23,10 @@ protected:
     bool    mIsOn;
 
     std::string     mBackTextureName;
-    _KRTexture2D     *mBackTexture;
+    _KRTexture2D*   mBackTexture;
 
     std::string     mThumbTextureName;
-    _KRTexture2D     *mThumbTexture;
+    _KRTexture2D*   mThumbTexture;
 
     double          mTextureEdgeSize;
     double          mTextureThumbX;
@@ -44,8 +44,8 @@ public:
 	virtual ~KRSwitch();
     
 public:
-    virtual bool    update(KRInput *input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual void    draw(KRGraphics *g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual bool    update(KRInput* input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics* g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 
 public:
     /*!

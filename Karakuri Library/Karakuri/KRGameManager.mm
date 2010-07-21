@@ -255,11 +255,14 @@ void KRGameManager::setScreenSize(int width, int height)
         longSide = 1024;
         shortSide = 768;
     }
-    
+
 #if !KR_IPHONE_MACOSX_EMU
+    // iPhone (with iPad support) support
     CGRect bounds = [[UIScreen mainScreen] bounds];
-    longSide = bounds.size.height;
-    shortSide = bounds.size.width;
+    if (bounds.size.width < 500 && shortSide > 500) {
+        longSide = bounds.size.height;
+        shortSide = bounds.size.width;
+    }
 #endif
 
     if (width > height) {

@@ -71,7 +71,7 @@ public:
     
 public:
     void*   allocate(size_t size);
-    void    release(void *ptr);
+    void    release(void* ptr);
     
 };
 

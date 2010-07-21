@@ -13,8 +13,8 @@
 static unsigned sGeneratedCount = 0;
 
 
-static KRRandom *sKRRandInst = new KRRandom();
-KRRandom *gKRRandInst = NULL;
+static KRRandom*    sKRRandInst = new KRRandom();
+KRRandom*           gKRRandInst = NULL;
 
 
 /*!

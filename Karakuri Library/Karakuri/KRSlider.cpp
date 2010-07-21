@@ -39,7 +39,7 @@ KRSlider::~KRSlider()
 #pragma mark -
 #pragma mark Control Implementation
 
-bool KRSlider::update(KRInput *input)
+bool KRSlider::update(KRInput* input)
 {
     if (!mIsEnabled) {
         return false;
@@ -83,7 +83,7 @@ bool KRSlider::update(KRInput *input)
     }        
 }
 
-void KRSlider::draw(KRGraphics *g)
+void KRSlider::draw(KRGraphics* g)
 {
     if (mThumbTexture == NULL && mThumbTextureName.length() > 0) {
         mThumbTexture = new _KRTexture2D(mThumbTextureName);

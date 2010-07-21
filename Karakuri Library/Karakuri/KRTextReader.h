@@ -19,7 +19,7 @@
  */
 class KRTextReader : public KRObject {
 
-    void		*mFileData;	//!< Objective-C でファイルデータを表すオブジェクトへのポインタ
+    void*       mFileData;	//!< Objective-C でファイルデータを表すオブジェクトへのポインタ
 	unsigned	mLength;	//!< ファイルサイズ
 	unsigned	mPos;		//!< ファイル上の現在の位置
     
@@ -44,7 +44,7 @@ public:
         @method readLine
         ファイルから文字列を1行分読み込み、与えられた string クラスのポインタに値を代入します。
      */
-	bool    readLine(std::string *str);
+	bool    readLine(std::string* str);
 
 public:
     virtual std::string to_s() const;

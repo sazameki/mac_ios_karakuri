@@ -251,7 +251,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     for (UITouch* aTouch in touches) {
         for (int i = 0; i < KR_TOUCH_MAX_COUNT; i++) {
             if (!mTouchInfos[i].is_used) {
-                CGPoint pos = [aTouch locationInView:nil];
+                CGPoint pos = [aTouch locationInView:self];
 
                 mTouchInfos[i].is_used = true;
                 mTouchInfos[i].touch_id = mNextTouchID++;
@@ -277,7 +277,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     for (UITouch* aTouch in touches) {
         for (int i = 0; i < KR_TOUCH_MAX_COUNT; i++) {
             if (mTouchInfos[i].is_used && mTouchInfos[i].touch_pointer == aTouch) {
-                CGPoint pos = [aTouch locationInView:nil];
+                CGPoint pos = [aTouch locationInView:self];
                 CGPoint& oldPos = mTouchInfos[i].pos;
                 mTouchInfos[i].pos = pos;
                 if (sPhoneOrientatilHorizontal) {
@@ -296,12 +296,12 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     for (UITouch* aTouch in touches) {
         for (int i = 0; i < KR_TOUCH_MAX_COUNT; i++) {
             if (mTouchInfos[i].is_used && mTouchInfos[i].touch_pointer == aTouch) {
-                CGPoint pos = [aTouch locationInView:nil];
+                CGPoint pos = [aTouch locationInView:self];
                 CGPoint& oldPos = mTouchInfos[i].pos;
                 if (sPhoneOrientatilHorizontal) {
                     gKRInputInst->_endTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
                 } else {
-                    gKRInputInst->_endTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, oldPos.x-pos.x, oldPos.y-pos.y);
+                    gKRInputInst->_endTouch(mTouchInfos[i].touch_id, pos.x, gKRScreenSize.y-pos.y, oldPos.x-pos.x, oldPos.y-pos.y);
                 }
 
                 mTouchInfos[i].is_used = false;

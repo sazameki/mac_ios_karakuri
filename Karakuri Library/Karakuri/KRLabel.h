@@ -60,8 +60,8 @@ public:
 	virtual ~KRLabel();
     
 public:
-    virtual bool    update(KRInput *input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
-    virtual void    draw(KRGraphics *g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual bool    update(KRInput* input); KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    virtual void    draw(KRGraphics* g);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 public:
     /*!

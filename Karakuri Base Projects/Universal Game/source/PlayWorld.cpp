@@ -120,8 +120,6 @@ void PlayWorld::updateModel(KRInput* input)
     }
     
     if (isTouched) {
-        KRDebug("touchPos: %s", touchPos.c_str());
-        
         if (mDraggingPlayer == NULL) {
             // Get an animating character at the touch position
             KRChara2D* theChara = gKRAnime2DMan->getChara2D(CharaType::Player, touchPos);

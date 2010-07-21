@@ -16,16 +16,16 @@
  */
 KRTextReader::KRTextReader(const std::string& filename)
 {
-    NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-	NSString *path = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+    NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+	NSString* path = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
 
     // 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (!path) {
-        NSMutableString *titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
-        NSString *bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
-        NSString *baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
-        NSString *thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];
+        NSMutableString* titleName = [NSString stringWithCString:gKRGameMan->getTitle().c_str() encoding:NSUTF8StringEncoding];
+        NSString* bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+        NSString* baseDirPath = [[NSString stringWithFormat:@"~/Library/Application Support/Karakuri/%@/%@/Input Log", bundleID, titleName] stringByExpandingTildeInPath];
+        NSString* thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thePath]) {
             path = thePath;
         }
@@ -34,10 +34,10 @@ KRTextReader::KRTextReader(const std::string& filename)
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (!path) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *baseDirPath = [documentsDirectory stringByAppendingPathComponent:@"Input Log"];
-        NSString *thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString* documentsDirectory = [paths objectAtIndex:0];
+        NSString* baseDirPath = [documentsDirectory stringByAppendingPathComponent:@"Input Log"];
+        NSString* thePath = [baseDirPath stringByAppendingPathComponent:filenameStr];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thePath]) {
             path = thePath;
         }
@@ -45,7 +45,7 @@ KRTextReader::KRTextReader(const std::string& filename)
 #endif
     
     if (!path) {
-        const char *errorFormat = "KRTextReader: Failed to load text named \"%s\". Please check the file existence.";
+        const char* errorFormat = "KRTextReader: Failed to load text named \"%s\". Please check the file existence.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "KRTextReader: テキストファイルの読み込みに失敗しました。ファイルの存在を確認してください。\"%s\".";
         }        
@@ -55,7 +55,7 @@ KRTextReader::KRTextReader(const std::string& filename)
 	mFileData = nil;
 	if (path) {
 		mFileData = [[NSData alloc] initWithContentsOfMappedFile:path];
-		mLength = [(NSData *)mFileData length];
+		mLength = [(NSData*)mFileData length];
 	}
 	mPos = 0;
 	[filenameStr release];
@@ -67,11 +67,11 @@ KRTextReader::KRTextReader(const std::string& filename)
  */
 KRTextReader::~KRTextReader()
 {
-    [(NSData *)mFileData release];
+    [(NSData*)mFileData release];
 }
 
 
-bool KRTextReader::readLine(std::string *str)
+bool KRTextReader::readLine(std::string* str)
 {
     if (!mFileData) {
 		return false;
@@ -80,7 +80,7 @@ bool KRTextReader::readLine(std::string *str)
 		return false;
 	}
 	std::stringstream ret;
-	unsigned char *p = (unsigned char *) [(NSData *)mFileData bytes];
+	unsigned char* p = (unsigned char*) [(NSData*)mFileData bytes];
 	while (mPos < mLength) {
 		if (p[mPos] == '\n') {
 			mPos++;

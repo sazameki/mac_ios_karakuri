@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 
 
-KRSaveBox *gKRSaveBoxInst = NULL;
+KRSaveBox*  gKRSaveBoxInst = NULL;
 
 
 #pragma mark Save Box のセットアップ
@@ -48,12 +48,12 @@ KRSaveBox::~KRSaveBox()
 
 #pragma mark -
 #pragma mark 値が設定されていることの確認と、保存の実行
-bool KRSaveBox::hasValue(const std::string &key) const
+bool KRSaveBox::hasValue(const std::string& key) const
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     bool ret = ([defaults objectForKey:keyStr] != nil)? true: false;
     
     [keyStr release];
@@ -64,7 +64,7 @@ bool KRSaveBox::hasValue(const std::string &key) const
 
 void KRSaveBox::save()
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
 }
 
@@ -72,12 +72,12 @@ void KRSaveBox::save()
 #pragma mark -
 #pragma mark 値の取得
 
-bool KRSaveBox::getBoolValue(const std::string &key) const
+bool KRSaveBox::getBoolValue(const std::string& key) const
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     bool ret = [defaults boolForKey:keyStr];
     
     [keyStr release];
@@ -86,12 +86,12 @@ bool KRSaveBox::getBoolValue(const std::string &key) const
     return ret;
 }
 
-double KRSaveBox::getDoubleValue(const std::string &key) const
+double KRSaveBox::getDoubleValue(const std::string& key) const
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     double ret = [[defaults objectForKey:keyStr] doubleValue];
     
     [keyStr release];
@@ -100,12 +100,12 @@ double KRSaveBox::getDoubleValue(const std::string &key) const
     return ret;
 }
 
-float KRSaveBox::getFloatValue(const std::string &key) const
+float KRSaveBox::getFloatValue(const std::string& key) const
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     float ret = [defaults floatForKey:keyStr];
     
     [keyStr release];
@@ -114,12 +114,12 @@ float KRSaveBox::getFloatValue(const std::string &key) const
     return ret;
 }
 
-int KRSaveBox::getIntValue(const std::string &key) const
+int KRSaveBox::getIntValue(const std::string& key) const
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     int ret = [defaults integerForKey:keyStr];
     
     [keyStr release];
@@ -128,13 +128,13 @@ int KRSaveBox::getIntValue(const std::string &key) const
     return ret;
 }
 
-std::string KRSaveBox::getStringValue(const std::string &key) const
+std::string KRSaveBox::getStringValue(const std::string& key) const
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *retObj = [defaults stringForKey:keyStr];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSString* retObj = [defaults stringForKey:keyStr];
     
     [keyStr release];
     [keyStrData release];
@@ -150,22 +150,22 @@ std::string KRSaveBox::getStringValue(const std::string &key) const
 #pragma mark -
 #pragma mark 値の設定
 
-void KRSaveBox::setBoolValue(const std::string &key, bool boolValue)
+void KRSaveBox::setBoolValue(const std::string& key, bool boolValue)
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:boolValue forKey:keyStr];
     
     [keyStr release];
     [keyStrData release];
 }
 
-void KRSaveBox::setDoubleValue(const std::string &key, double doubleValue)
+void KRSaveBox::setDoubleValue(const std::string& key, double doubleValue)
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSNumber numberWithDouble:doubleValue] forKey:keyStr];
@@ -174,39 +174,39 @@ void KRSaveBox::setDoubleValue(const std::string &key, double doubleValue)
     [keyStrData release];
 }
 
-void KRSaveBox::setFloatValue(const std::string &key, float floatValue)
+void KRSaveBox::setFloatValue(const std::string& key, float floatValue)
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setFloat:floatValue forKey:keyStr];
     
     [keyStr release];
     [keyStrData release];
 }
 
-void KRSaveBox::setIntValue(const std::string &key, int intValue)
+void KRSaveBox::setIntValue(const std::string& key, int intValue)
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:intValue forKey:keyStr];
     
     [keyStr release];
     [keyStrData release];
 }
 
-void KRSaveBox::setStringValue(const std::string &key, const std::string &strValue)
+void KRSaveBox::setStringValue(const std::string& key, const std::string &strValue)
 {
-	NSData *keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
-    NSString *keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
+	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
+    NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-	NSData *valueStrData = [[NSData alloc] initWithBytes:strValue.data() length:strValue.length()];
-    NSString *valueStr = [[NSString alloc] initWithData:valueStrData encoding:NSUTF8StringEncoding];
+	NSData* valueStrData = [[NSData alloc] initWithBytes:strValue.data() length:strValue.length()];
+    NSString* valueStr = [[NSString alloc] initWithData:valueStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:valueStr forKey:keyStr];
     
     [valueStr release];

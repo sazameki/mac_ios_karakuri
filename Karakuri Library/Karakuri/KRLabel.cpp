@@ -43,12 +43,12 @@ KRLabel::~KRLabel()
     delete mFont;
 }
 
-bool KRLabel::update(KRInput *input)
+bool KRLabel::update(KRInput* input)
 {
     return false;
 }
 
-void KRLabel::draw(KRGraphics *g)
+void KRLabel::draw(KRGraphics* g)
 {
     if (mText.length() == 0) {
         return;

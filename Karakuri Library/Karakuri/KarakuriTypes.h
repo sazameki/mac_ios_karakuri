@@ -33,7 +33,7 @@ typedef struct KRObject {
         @method c_str
         このクラスの内容を表すC言語文字列をリターンします。
      */
-    const char *c_str() const;
+    const char* c_str() const;
 
     /*!
         @method to_s

@@ -68,7 +68,7 @@ void KRControl::setHidden(bool flag)
     mIsHidden = flag;
 }
 
-void KRControl::setWorld(KRWorld *aWorld)
+void KRControl::setWorld(KRWorld* aWorld)
 {
     mWorld = aWorld;
 }

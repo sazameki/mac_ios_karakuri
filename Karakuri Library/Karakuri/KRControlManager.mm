@@ -26,7 +26,7 @@ KRControlManager::~KRControlManager()
     removeAllControls();
 }
 
-void KRControlManager::addControl(KRControl *aControl, int groupID)
+void KRControlManager::addControl(KRControl* aControl, int groupID)
 {
     aControl->setGroupID(groupID);
     mControls.push_back(aControl);
@@ -34,17 +34,17 @@ void KRControlManager::addControl(KRControl *aControl, int groupID)
 
 void KRControlManager::removeAllControls()
 {
-    for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end();) {
-        KRControl *aControl = (KRControl *)(*it);
+    for (std::vector<KRControl*>::iterator it = mControls.begin(); it != mControls.end();) {
+        KRControl* aControl = (KRControl*)(*it);
         it = mControls.erase(it);
         delete aControl;
     }    
 }
 
-void KRControlManager::removeControl(KRControl *aControl)
+void KRControlManager::removeControl(KRControl* aControl)
 {
-    for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end(); it++) {
-        KRControl *theControl = *it;
+    for (std::vector<KRControl*>::iterator it = mControls.begin(); it != mControls.end(); it++) {
+        KRControl* theControl = *it;
         if (theControl == aControl) {
             mControls.erase(it);
             break;
@@ -52,7 +52,7 @@ void KRControlManager::removeControl(KRControl *aControl)
     }
 }
 
-bool KRControlManager::updateControls(KRInput *input, int groupID)
+bool KRControlManager::updateControls(KRInput* input, int groupID)
 {    
     if (mSelectedControl != NULL) {
         if (!mSelectedControl->update(input)) {
@@ -74,8 +74,8 @@ bool KRControlManager::updateControls(KRInput *input, int groupID)
 #endif
 
         if (inputPos.x >= 0) {
-            for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end(); it++) {
-                KRControl *theControl = *it;
+            for (std::vector<KRControl*>::iterator it = mControls.begin(); it != mControls.end(); it++) {
+                KRControl* theControl = *it;
                 if (theControl->contains(inputPos) && theControl->getGroupID() == groupID &&
                         !theControl->isHidden() && theControl->isEnabled() && theControl->_isUpdatableControl())
                 {
@@ -89,12 +89,12 @@ bool KRControlManager::updateControls(KRInput *input, int groupID)
     return false;
 }
 
-void KRControlManager::drawAllControls(KRGraphics *g, int groupID)
+void KRControlManager::drawAllControls(KRGraphics* g, int groupID)
 {
     g->setBlendMode(KRBlendModeAlpha);
 
-    for (std::vector<KRControl *>::reverse_iterator it = mControls.rbegin(); it != mControls.rend(); it++) {
-        KRControl *theControl = *it;
+    for (std::vector<KRControl*>::reverse_iterator it = mControls.rbegin(); it != mControls.rend(); it++) {
+        KRControl* theControl = *it;
         if (!theControl->isHidden() && theControl->getGroupID() == groupID) {
             theControl->draw(g);
         }
@@ -103,8 +103,8 @@ void KRControlManager::drawAllControls(KRGraphics *g, int groupID)
 
 void KRControlManager::scrollUpAllDebugLabels()
 {
-    for (std::vector<KRControl *>::iterator it = mControls.begin(); it != mControls.end();) {
-        KRControl *theControl = *it;
+    for (std::vector<KRControl*>::iterator it = mControls.begin(); it != mControls.end();) {
+        KRControl* theControl = *it;
         KRRect2D frame = theControl->getFrame();
         frame.y += 16;
         theControl->setFrame(frame);

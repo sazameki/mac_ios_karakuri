@@ -32,12 +32,12 @@ protected:
     std::string mMessage;
     
 public:
-    KRRuntimeError(const std::string &message);
-    KRRuntimeError(const char *format, ...);
+    KRRuntimeError(const std::string& message);
+    KRRuntimeError(const char* format, ...);
     virtual ~KRRuntimeError() throw();
 
 public:
-    virtual const char *what() const throw();
+    virtual const char* what() const throw();
 
 };
 
@@ -58,13 +58,13 @@ public:
         @method KRGameError
         @abstract エラーメッセージを指定して、エラーを生成します。
      */
-    KRGameError(const std::string &message);
+    KRGameError(const std::string& message);
     
     /*!
         @method KRGameError
         @abstract エラーメッセージの書式と引数を指定して、エラーを生成します。
      */
-    KRGameError(const char *format, ...);
+    KRGameError(const char* format, ...);
 
     virtual ~KRGameError() throw();
     
@@ -86,13 +86,13 @@ public:
         @method KRNetworkError
         @abstract エラーメッセージを指定して、エラーを生成します。
      */
-    KRNetworkError(const std::string &message);
+    KRNetworkError(const std::string& message);
 
     /*!
         @method KRNetworkError
         @abstract エラーメッセージの書式と引数を指定して、エラーを生成します。
      */
-    KRNetworkError(const char *format, ...);
+    KRNetworkError(const char* format, ...);
     virtual ~KRNetworkError() throw();
 
 };

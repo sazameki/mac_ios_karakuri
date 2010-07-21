@@ -19,20 +19,44 @@
 
 GameMain::GameMain()
 {
-    ///// Main Settings
+    ///// Title Setting (Game title for the Mac OS X window's title bar. iOS will ignore this setting)
 
-    setTitle("My Karakuri Game");           // Game title (iOS won't use this setting)
+    setTitle("My Karakuri Game");
 
-    setScreenSize(480, 320);                // iPhone Size (Horizontal use)
-    //setScreenSize(320, 480);                // iPhone Size (Vertical use. Don't forget to remove Default.png and rename Default_V.png to Default.png.)
-    //setScreenSize(1024, 768);               // iPad size (Horizontal use. Don't forget to remove Default-Portrait.png.)
-    //setScreenSize(768, 1024);               // iPad size (Vertical use. Don't forget to remove Default-Landscape.png.)
+    
+    ///// Size Setting
+    
+    // iPhone Size (Horizontal use)
+    setScreenSize(480, 320);
 
-    setFrameRate(60.0);                     // Refresh rate
-    setAudioMixType(KRAudioMixTypeAmbient); // Audio mixing
+    // iPhone Size (Vertical use. Don't forget to remove Default.png and rename Default_V.png to Default.png.)
+    //setScreenSize(320, 480);
 
-    setShowsMouseCursor(true);              // Mouse cursor should be shown (iOS won't use this setting)
-    setShowsFPS(true);                      // Realtime FPS information (Debug build only)
+    // iPad size (Horizontal use. Use this size when you want to support both iPhone and iPad. Don't forget to remove Default-Portrait.png.)
+    //setScreenSize(1024, 768);
+    
+    // iPad size (Vertical use. Use this size when you want to support both iPhone and iPad. Don't forget to remove Default-Landscape.png.)
+    //setScreenSize(768, 1024);
+
+
+    ///// Misc Game Settings
+
+    // Refresh rate
+    setFrameRate(60.0);
+
+    // Audio mixing (KRAudioMixTypeAmbient or KRAudioMixTypeAmbientSolo)
+    //   KRAudioMixTypeAmbient:     iPod music and game sound will be mixed.
+    //   KRAudioMixTypeAmbientSolo: Game sound only mode. iPod music will be stopped.
+    setAudioMixType(KRAudioMixTypeAmbient);
+
+    // Mouse cursor should be shown (iOS will ignore this setting)
+    setShowsMouseCursor(true);
+
+    // Realtime FPS information (Debug build only)
+    setShowsFPS(true);
+
+    
+    ///// Animation Character Setting
 
     // Set max animation character count
     setMaxChara2DCount(1024);
@@ -43,6 +67,7 @@ GameMain::GameMain()
     updateMaxChara2DSize(sizeof(Enemy2));
     
     // TODO: Edit "Target" setting to change the bundle name, which will be shown in Finder or iPhone Desktop.
+
 
     ///// Add any code here for creating your objects
 }

@@ -15,21 +15,21 @@
 #endif
 
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    NSAutoreleasePool* pool = [NSAutoreleasePool new];
 
     int ret = 0;
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     [[KRBundle class] poseAsClass:[NSBundle class]];
 
-    KRGameController *controller = [KRGameController new];
-    ret = NSApplicationMain(argc, (const char **)argv);
+    KRGameController* controller = [KRGameController new];
+    ret = NSApplicationMain(argc, (const char**)argv);
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    ret = UIApplicationMain(argc, (char **)argv, nil, @"KRGameController");
+    ret = UIApplicationMain(argc, (char**)argv, nil, @"KRGameController");
 #endif
     
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
