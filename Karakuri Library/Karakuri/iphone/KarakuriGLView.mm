@@ -264,7 +264,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 if (sPhoneOrientatilHorizontal) {
                     gKRInputInst->_startTouch(mTouchInfos[i].touch_id, pos.y, pos.x);
                 } else {
-                    gKRInputInst->_startTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y);
+                    gKRInputInst->_startTouch(mTouchInfos[i].touch_id, pos.x, gKRScreenSize.y-pos.y);
                 }
                 break;
             }
@@ -283,7 +283,7 @@ static BOOL sPhoneOrientatilHorizontal = YES;
                 if (sPhoneOrientatilHorizontal) {
                     gKRInputInst->_moveTouch(mTouchInfos[i].touch_id, pos.y, pos.x, pos.y-oldPos.y, pos.x-oldPos.x);
                 } else {
-                    gKRInputInst->_moveTouch(mTouchInfos[i].touch_id, pos.x, 480-pos.y, pos.x-oldPos.x, oldPos.y-pos.y);
+                    gKRInputInst->_moveTouch(mTouchInfos[i].touch_id, pos.x, gKRScreenSize.y-pos.y, pos.x-oldPos.x, oldPos.y-pos.y);
                 }
                 break;
             }
