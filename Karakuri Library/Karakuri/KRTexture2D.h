@@ -32,7 +32,7 @@ typedef enum {
 /*
     @class KRTexture2D
     @group Game Graphics
-    @abstract (Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRTexture2DManager を使用してください。
+    @abstract <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRTexture2DManager を使用してください。</strong>
     <p>2次元のテクスチャを表すためのクラスです。</p>
     <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>

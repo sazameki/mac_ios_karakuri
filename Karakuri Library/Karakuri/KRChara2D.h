@@ -154,6 +154,9 @@ class KRChara2D : public KRObject {
     
     _KR_DECLARE_USE_ALLOCATOR(_gKRChara2DAllocator)
     
+public:
+    bool                _mIsHidden;
+    
 private:
     _KRChara2DSpec*     _mCharaSpec;
     int                 _mClassType;
@@ -164,7 +167,8 @@ private:
     int                 _mImageInterval;
     int                 _mZOrder;
     int                 _mRepeatCount;
-    bool                _mIsFinished;    
+    bool                _mIsMotionFinished;
+    bool                _mIsMotionPaused;
     bool                _mIsTemporal;
     
     KRVector2D          _mScale;
@@ -184,7 +188,6 @@ public:
     virtual ~KRChara2D();
 
     bool    _isTemporal() const;
-    bool    _isFinished() const;
     void    _setAsTemporal();
     
 public:
@@ -210,7 +213,45 @@ public:
         動作の変更中は、変更完了後に予定されている動作がリターンされます。
      */
     int     getMotionID() const;
+
+    /*!
+        @method getCurrentMotionFrameIndex
+        @abstract キャラクタの現在の動作におけるコマ番号（0 から開始）を取得します。
+        動作の変更中は、変更完了後に予定されている動作に合わせて、0 がリターンされます。
+     */
+    int     getCurrentMotionFrameIndex() const;
     
+    /*!
+        @method isMotionFinished
+        @abstract キャラクタの現在の動作が完了しているかどうかを取得します。
+     */
+    bool    isMotionFinished() const;
+    
+    /*!
+        @method isMotionPaused
+        @abstract キャラクタの動作が一時停止中かどうかを取得します。
+     */
+    bool    isMotionPaused() const;
+    
+    /*!
+        @method pauseMotion
+        @abstract 動作を一時停止中の状態に変更します。
+        既に動作が一時停止中の場合には、何も起こりません。
+     */
+    void    pauseMotion();
+
+    /*!
+        @method startMotion
+        @abstract 動作が一時停止中の場合に、動作を再開させます。
+     */
+    void    startMotion();
+
+    /*!
+        @method stopMotion
+        @abstract 現在の動作を中断し、動作が完了したことにします。
+     */
+    void    stopMotion();
+
 
 public:
     /*!
@@ -219,7 +260,7 @@ public:
     
     /*!
         @method getCenterPos
-        現代の拡大率における中心点の座標を取得します。
+        現在の拡大率における中心点の座標を取得します。
      */
     KRVector2D  getCenterPos() const;
 
@@ -253,6 +294,12 @@ public:
      */
     int         getZOrder() const;
     
+    /*!
+        @method isHidden
+        キャラクが現在隠された（画面に描画されない）状態になっているかどうかを取得します。
+     */
+    bool        isHidden() const;
+    
 public:    
     /*!
         @task 状態の変更
@@ -275,6 +322,12 @@ public:
         キャラクタを描画する際の色を設定します。デフォルトでは、RGBA=(1.0, 1.0, 1.0, 1.0) の白が設定されています。
      */
     void    setColor(const KRColor& color);
+    
+    /*!
+        @method setHidden
+        キャラクタを隠された状態にするかどうかを設定します。
+     */
+    void    setHidden(bool flag);
     
     /*!
         @method setPos

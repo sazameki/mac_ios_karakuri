@@ -393,7 +393,7 @@ void KRAnime2DManager::stepAllCharas()
 {
     for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end();) {
         (*it)->_step();
-        if ((*it)->_isTemporal() && (*it)->_isFinished()) {
+        if ((*it)->_isTemporal() && (*it)->isMotionFinished()) {
             KRChara2D* aChara = *it;
             it = mCharas.erase(it);
             delete aChara;
@@ -413,7 +413,9 @@ void KRAnime2DManager::draw()
     KRBlendMode oldBlendMode = gKRGraphicsInst->getBlendMode();
     
     for (std::list<KRChara2D*>::reverse_iterator it = mCharas.rbegin(); it != mCharas.rend(); it++) {
-        (*it)->_draw();
+        if (!(*it)->_mIsHidden) {
+            (*it)->_draw();
+        }
     }
     
     gKRGraphicsInst->setBlendMode(oldBlendMode);

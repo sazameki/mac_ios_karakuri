@@ -2151,7 +2151,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         // コマ#
         if ([columnIdentifier isEqualToString:@"koma_number"]) {
-            return [NSNumber numberWithInt:[(BXChara2DKoma*)item komaNumber]];
+            return [NSNumber numberWithInt:[(BXChara2DKoma*)item komaNumber]-1];
         }
         // コマ画像
         else if ([columnIdentifier isEqualToString:@"koma_image"]) {

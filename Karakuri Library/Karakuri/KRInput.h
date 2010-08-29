@@ -53,7 +53,7 @@ typedef int             _KRTouchState;
 /*
     @struct KRTouchInfo
     @group Game System
-    @abstract (Deprecated) 現在、この構造体の利用は推奨されません。以前のバージョンとの互換性のためにのみ用意しています。
+    @abstract <strong class="warning">(Deprecated) 現在、この構造体の利用は推奨されません。以前のバージョンとの互換性のためにのみ用意しています。</strong>
     <p>iPhone のタッチ情報を表すための構造体です。</p>
  */
 typedef struct KRTouchInfo {
@@ -339,7 +339,7 @@ public:
     
     /*!
         @method getTouchInfos
-        @abstract (Deprecated) 現在、この関数の使用は推奨されません。getTouchIDs() と getTouchLocation() の組み合わせを利用してください。
+        @abstract <strong class="warning">(Deprecated) 現在、この関数の使用は推奨されません。getTouchIDs() と getTouchLocation() の組み合わせを利用してください。</strong>
         <p>現在のすべてのマルチタッチの情報を取得します。</p>
      */
     const std::vector<KRTouchInfo> getTouchInfos() const;    

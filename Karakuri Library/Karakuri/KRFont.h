@@ -17,7 +17,7 @@
 /*!
     @class KRFont
     @group  Game Graphics
-    @abstract (Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRLabel コントロールを利用してください。
+    @abstract <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRLabel コントロールを利用してください。</strong>
     <p>文字列のテクスチャを生成するためのクラスです。</p>
     <p>利用可能なフォント名については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/font_list.html">フォント名の一覧</a>」を参照してください。
     <p>文字列のテクスチャは、できるだけワールドの becameActive() 関数内で生成してください。ゲーム実行中の生成は強く推奨しません。</p>

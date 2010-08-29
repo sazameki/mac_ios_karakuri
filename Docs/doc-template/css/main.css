@@ -32,6 +32,10 @@ a:hover {
 	text-decoration: underline;
 }
 
+strong.warning {
+	color: #d00;
+}
+
 blockquote.code pre {
 	border: 1px solid #aaa;
 	background-color: #eee;

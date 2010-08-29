@@ -304,6 +304,7 @@ KRChara2D::KRChara2D(int charaSpecID, int classType)
     _mCharaSpec = gKRAnime2DMan->_getChara2DSpec(charaSpecID);
     _mClassType = classType;
     _mZOrder = 0;
+    _mIsHidden = false;
 
     _mPos = KRVector2DZero;
     
@@ -313,7 +314,8 @@ KRChara2D::KRChara2D(int charaSpecID, int classType)
     _mScale = KRVector2DOne;
     
     _mCurrentMotionID = -1;
-    _mIsFinished = true;
+    _mIsMotionFinished = true;
+    _mIsMotionPaused = false;
     
     _mIsTemporal = false;
 }
@@ -331,11 +333,6 @@ bool KRChara2D::_isTemporal() const
 void KRChara2D::_setAsTemporal()
 {
     _mIsTemporal = true;
-}
-
-bool KRChara2D::_isFinished() const
-{
-    return _mIsFinished;
 }
 
 bool KRChara2D::contains(const KRVector2D& p) const
@@ -450,7 +447,7 @@ void KRChara2D::changeMotion(int motionID, unsigned modeMask)
     _mCurrentMotionID = motionID;
     
     _mCurrentKomaNumber = 1;
-    _mIsFinished = false;
+    _mIsMotionFinished = false;
     
     _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
     _mImageInterval = theKoma->getInterval();
@@ -459,6 +456,54 @@ void KRChara2D::changeMotion(int motionID, unsigned modeMask)
 int KRChara2D::getMotionID() const
 {
     return _mCurrentMotionID;
+}
+
+int KRChara2D::getCurrentMotionFrameIndex() const
+{
+    return _mCurrentKomaNumber - 1;
+}
+
+bool KRChara2D::isMotionFinished() const
+{
+    return _mIsMotionFinished;
+}
+
+void KRChara2D::startMotion()
+{
+    // 一時停止中でなければ何もしない
+    if (!_mIsMotionPaused) {
+        return;
+    }
+    
+    // 一時停止を解除する
+    _mIsMotionPaused = false;
+}
+
+bool KRChara2D::isMotionPaused() const
+{
+    return _mIsMotionPaused;
+}
+
+void KRChara2D::pauseMotion()
+{
+    // 一時停止中であれば何もしない
+    if (_mIsMotionPaused) {
+        return;
+    }
+    
+    // 一時停止の状態にする
+    _mIsMotionPaused = true;
+}
+
+void KRChara2D::stopMotion()
+{
+    // 既に動作が完了している場合には何もしない
+    if (_mIsMotionFinished) {
+        return;
+    }
+    
+    // 動作が完了したことにする
+    _mIsMotionFinished = true;
 }
 
 
@@ -513,6 +558,11 @@ int KRChara2D::getZOrder() const
     return _mZOrder;
 }
 
+bool KRChara2D::isHidden() const
+{
+    return _mIsHidden;
+}
+
 void KRChara2D::setBlendMode(KRBlendMode blendMode)
 {
     _mBlendMode = blendMode;
@@ -521,6 +571,11 @@ void KRChara2D::setBlendMode(KRBlendMode blendMode)
 void KRChara2D::setColor(const KRColor& color)
 {
     _mColor = color;
+}
+
+void KRChara2D::setHidden(bool flag)
+{
+    _mIsHidden = flag;
 }
 
 void KRChara2D::setPos(const KRVector2D& pos)
@@ -548,7 +603,7 @@ void KRChara2D::_step()
         return;
     }
     
-    if (_mIsFinished) {
+    if (_mIsMotionFinished || _mIsMotionPaused) {
         return;
     }
     
@@ -569,7 +624,7 @@ void KRChara2D::_step()
         else {
             // 最後のコマ
             if (theMotion->getKomaCount() == _mCurrentKomaNumber) {
-                _mIsFinished = true;
+                _mIsMotionFinished = true;
             }
             // それ以外の場合
             else  {

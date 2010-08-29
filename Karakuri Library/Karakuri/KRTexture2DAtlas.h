@@ -14,7 +14,7 @@
 /*
     @class KRTexture2DAtlas
     @group Game Graphics
-    @abstract (Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRTexture2DManager を使用してください。
+    @abstract <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRTexture2DManager を使用してください。</strong>
     <p>テクスチャの一部分を切り取って描画するためのクラスです。</p>
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
  */
