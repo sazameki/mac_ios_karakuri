@@ -86,11 +86,11 @@ bool KRSlider::update(KRInput* input)
 void KRSlider::draw(KRGraphics* g)
 {
     if (mThumbTexture == NULL && mThumbTextureName.length() > 0) {
-        mThumbTexture = new _KRTexture2D(mThumbTextureName);
+        mThumbTexture = new KRTexture2D(mThumbTextureName);
     }
     
     if (mBackTexture == NULL && mBackTextureName.length() > 0) {
-        mBackTexture = new _KRTexture2D(mBackTextureName);
+        mBackTexture = new KRTexture2D(mBackTextureName);
     }
     
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);

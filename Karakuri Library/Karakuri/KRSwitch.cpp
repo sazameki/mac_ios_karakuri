@@ -68,8 +68,8 @@ bool KRSwitch::update(KRInput* input)
 void KRSwitch::draw(KRGraphics* g)
 {
     if (mBackTexture == NULL && mBackTextureName.length() > 0 && mThumbTextureName.length() > 0) {
-        mBackTexture = new _KRTexture2D(mBackTextureName);
-        mThumbTexture = new _KRTexture2D(mThumbTextureName);
+        mBackTexture = new KRTexture2D(mBackTextureName);
+        mThumbTexture = new KRTexture2D(mThumbTextureName);
     }
     
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);

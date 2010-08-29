@@ -8,6 +8,7 @@
 
 #import "KarakuriFunctions.h"
 #import "KarakuriDefines.h"
+#import "KarakuriDebug.h"
 
 #include "KRGameManager.h"
 #include <string>
@@ -67,16 +68,25 @@ void KRTranslate2D(const KRVector2D& size)
 
 void KRSleep(double interval)
 {
+#if __DEBUG__
+    KRDebug("KRSleep() function is now deprecated. Use gKRGameMan->sleep() instead.");
+#endif
     gKRGameMan->sleep(interval);
 }
 
 double KRCurrentTime()
 {
+#if __DEBUG__
+    KRDebug("KRCurrentTime() function is now deprecated. Use gKRGameMan->getCurrentTime() instead.");
+#endif
     return gKRGameMan->getCurrentTime();
 }
 
-void _KRChangeWorld(const std::string& worldName)
+void KRChangeWorld(const std::string& worldName)
 {
+#if __DEBUG__
+    KRDebug("KRChangeWorld() function is now deprecated. Use gKRGameMan->changeWorld() instead.");
+#endif
     gKRGameMan->changeWorld(worldName);
 }
 

@@ -95,19 +95,21 @@ void    KRTranslate2D(double x, double y);
 void    KRTranslate2D(const KRVector2D& size);
 
 /*!
-    @-function   KRSleep
+    @function   KRSleep
     @group      Game System
-    @abstract   一定時間スリープさせます。
     @param  interval    スリープさせる時間（秒単位）。
+    @abstract   (Deprecated) 現在、この関数の利用は推奨されません。代わりに gKRGameMan->sleep() を利用してください。
+    <p>一定時間スリープさせます。</p>
  */
 void    KRSleep(double interval);
 
 /*!
-    @-function   KRCurrentTime
+    @function   KRCurrentTime
     @group      Game System
-    @abstract   現在時刻を秒単位で表す数値をリターンします。
+    @abstract   (Deprecated) 現在、この関数の利用は推奨されません。代わりに gKRGameMan->getCurrentTime() を利用してください。
     @return     現在時刻
     @discussion この数値は2001年1月1日 0時00分00秒からの経過時間（秒）となっていますが、基本的には差分をとって利用してください。
+    <p>現在時刻を秒単位で表す数値をリターンします。</p>
  */
 double  KRCurrentTime();
 
@@ -119,11 +121,12 @@ double  KRCurrentTime();
 std::string KRGetKarakuriVersion();
 
 /*!
-    @-function   _KRChangeWorld
+    @function   KRChangeWorld
     @group      Game System
-    @abstract   ワールドを切り替えます。
+    @abstract   (Deprecated) 現在、この関数の利用は推奨されません。代わりに gKRGameMan->changeWorld() を利用してください。
+    <p>ワールドを切り替えます。</p>
  */
-void    _KRChangeWorld(const std::string& worldName);
+void    KRChangeWorld(const std::string& worldName);
 
 /*!
     @function   KRCheckDeviceType

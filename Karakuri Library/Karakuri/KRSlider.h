@@ -25,10 +25,10 @@ protected:
     double  mValue;
     
     std::string     mThumbTextureName;
-    _KRTexture2D*   mThumbTexture;
+    KRTexture2D*    mThumbTexture;
 
     std::string     mBackTextureName;
-    _KRTexture2D*   mBackTexture;
+    KRTexture2D*    mBackTexture;
     double          mBackTextureEdgeSize;
 
 public:

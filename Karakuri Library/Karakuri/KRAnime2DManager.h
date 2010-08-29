@@ -29,7 +29,7 @@ class KRAnime2DManager : public KRObject {
     std::map<int, _KRChara2DSpec*>  mCharaSpecMap;
     std::list<KRChara2D*>           mCharas;
     
-    std::map<int, _KRParticle2DSystem*> mParticleSystemMap;
+    std::map<int, _KRParticle2DSystem*>  mParticleSystemMap;
     std::map<int, KRSimulator2D*>       mSimulatorMap;
     
     int                             mNextInnerCharaSpecID;

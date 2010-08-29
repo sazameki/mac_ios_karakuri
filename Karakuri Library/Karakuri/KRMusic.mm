@@ -23,7 +23,7 @@ static BOOL sCanUseNSSound = NO;
 #endif
 
 
-int _KRMusic::getResourceSize(const std::string& filename)
+int KRMusic::getResourceSize(const std::string& filename)
 {
     int ret = 0;
 
@@ -48,7 +48,7 @@ int _KRMusic::getResourceSize(const std::string& filename)
     return ret;
 }
 
-_KRMusic::_KRMusic(const std::string& filename, bool loop)
+KRMusic::KRMusic(const std::string& filename, bool loop)
 {
     mFileName = filename;
     mDoLoop = loop;
@@ -119,7 +119,7 @@ _KRMusic::_KRMusic(const std::string& filename, bool loop)
 }
 
 
-_KRMusic::~_KRMusic()
+KRMusic::~KRMusic()
 {
     stop();
 
@@ -140,7 +140,7 @@ _KRMusic::~_KRMusic()
 #endif
 }
 
-void _KRMusic::prepareToPlay()
+void KRMusic::prepareToPlay()
 {
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -149,7 +149,7 @@ void _KRMusic::prepareToPlay()
 #endif    
 }
 
-bool _KRMusic::isPlaying() const
+bool KRMusic::isPlaying() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -170,7 +170,7 @@ bool _KRMusic::isPlaying() const
 #endif
 }
 
-void _KRMusic::play()
+void KRMusic::play()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -195,7 +195,7 @@ void _KRMusic::play()
     mIsPausing = false;
 }
 
-void _KRMusic::pause()
+void KRMusic::pause()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -216,7 +216,7 @@ void _KRMusic::pause()
     mIsPausing = true;
 }
 
-void _KRMusic::stop()
+void KRMusic::stop()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -237,7 +237,7 @@ void _KRMusic::stop()
     mIsPausing = false;
 }
 
-double _KRMusic::getVolume() const
+double KRMusic::getVolume() const
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -265,7 +265,7 @@ double _KRMusic::getVolume() const
     return 0.0;
 }
 
-void _KRMusic::setVolume(double value)
+void KRMusic::setVolume(double value)
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
@@ -290,17 +290,17 @@ void _KRMusic::setVolume(double value)
 #endif
 }
 
-int _KRMusic::_getBGMID() const
+int KRMusic::_getBGMID() const
 {
     return mBGMID;
 }
 
-void _KRMusic::_setBGMID(int bgmID)
+void KRMusic::_setBGMID(int bgmID)
 {
     mBGMID = bgmID;
 }
 
-std::string _KRMusic::to_s() const
+std::string KRMusic::to_s() const
 {
     return "<music>(file=\"" + mFileName + "\", loop=" + (mDoLoop? "true": "false") + ")";
 }

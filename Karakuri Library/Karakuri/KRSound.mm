@@ -15,7 +15,7 @@
 static KRVector3D   sListenerPos            = KRVector3DZero;
 
 
-int _KRSound::getResourceSize(const std::string& filename)
+int KRSound::getResourceSize(const std::string& filename)
 {
     int ret = 0;
 
@@ -40,22 +40,22 @@ int _KRSound::getResourceSize(const std::string& filename)
     return ret;
 }
 
-double _KRSound::getListenerHorizontalOrientation()
+double KRSound::getListenerHorizontalOrientation()
 {
     return [_KarakuriSound listenerHorizontalOrientation];
 }
 
-void _KRSound::setListenerHorizontalOrientation(double radAngle)
+void KRSound::setListenerHorizontalOrientation(double radAngle)
 {
     [_KarakuriSound setListenerHorizontalOrientation:radAngle];
 }
 
-KRVector3D _KRSound::getListenerPos()
+KRVector3D KRSound::getListenerPos()
 {
     return sListenerPos;
 }
 
-void _KRSound::setListenerPos(double x, double y, double z)
+void KRSound::setListenerPos(double x, double y, double z)
 {
     sListenerPos.x = x;
     sListenerPos.y = y;
@@ -63,12 +63,12 @@ void _KRSound::setListenerPos(double x, double y, double z)
     [_KarakuriSound setListenerX:x y:y z:z];
 }
 
-void _KRSound::setListenerPos(const KRVector3D &vec3)
+void KRSound::setListenerPos(const KRVector3D &vec3)
 {
     setListenerPos(vec3.x, vec3.y, vec3.z);
 }
 
-_KRSound::_KRSound(const std::string& filename, bool doLoop)
+KRSound::KRSound(const std::string& filename, bool doLoop)
 {
     mFileName = filename;
     mDoLoop = doLoop;
@@ -80,58 +80,58 @@ _KRSound::_KRSound(const std::string& filename, bool doLoop)
     mSoundImpl = [[_KarakuriSound alloc] initWithName:filenameStr doLoop:(doLoop? YES: NO)];    
 }
 
-_KRSound::~_KRSound()
+KRSound::~KRSound()
 {
     [(_KarakuriSound*)mSoundImpl release];
 }
 
-bool _KRSound::isPlaying() const
+bool KRSound::isPlaying() const
 {
     return [(_KarakuriSound*)mSoundImpl isPlaying];
 }
 
-void _KRSound::play()
+void KRSound::play()
 {
     [(_KarakuriSound*)mSoundImpl play];
 }
 
-void _KRSound::stop()
+void KRSound::stop()
 {
     [(_KarakuriSound*)mSoundImpl stop];
 }
 
-KRVector3D _KRSound::getSourcePos() const
+KRVector3D KRSound::getSourcePos() const
 {
     return mSourcePos;
 }
 
-void _KRSound::setSourcePos(const KRVector3D &vec3)
+void KRSound::setSourcePos(const KRVector3D &vec3)
 {
     mSourcePos = vec3;
     [(_KarakuriSound*)mSoundImpl setSourceX:vec3.x y:vec3.y z:vec3.z];
 }
 
-double _KRSound::getPitch() const
+double KRSound::getPitch() const
 {
     return (double)[(_KarakuriSound*)mSoundImpl pitch];
 }
 
-void _KRSound::setPitch(double value)
+void KRSound::setPitch(double value)
 {
     [(_KarakuriSound*)mSoundImpl setPitch:(float)value];
 }
 
-double _KRSound::getVolume() const
+double KRSound::getVolume() const
 {
     return (double)[(_KarakuriSound*)mSoundImpl volume];
 }
 
-void _KRSound::setVolume(double value)
+void KRSound::setVolume(double value)
 {
     [(_KarakuriSound*)mSoundImpl setVolume:(float)value];
 }
 
-std::string _KRSound::to_s() const
+std::string KRSound::to_s() const
 {
     return "<sound>(file=\"" + mFileName + "\", loop=" + (mDoLoop? "true": "false") + ")";
 }

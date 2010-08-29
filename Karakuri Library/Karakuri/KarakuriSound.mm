@@ -32,12 +32,12 @@ void _KRInitOpenAL()
     NSError* error = nil;
     if (![session setCategory:categoryName error:nil]) {
         NSLog(@"Failed to set category for AVAudioSession. %@ (%@)", [error localizedDescription], [error localizedFailureReason]);
-        return;
+        //return;
     }
 
     if (![session setActive:YES error:&error]) {
         NSLog(@"Failed to set active for AVAudioSession. %@ (%@)", [error localizedDescription], [error localizedFailureReason]);
-        return;
+        //return;
     }
 #endif
     

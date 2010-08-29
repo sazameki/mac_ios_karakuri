@@ -23,10 +23,10 @@ protected:
     bool    mIsOn;
 
     std::string     mBackTextureName;
-    _KRTexture2D*   mBackTexture;
+    KRTexture2D*    mBackTexture;
 
     std::string     mThumbTextureName;
-    _KRTexture2D*   mThumbTexture;
+    KRTexture2D*    mThumbTexture;
 
     double          mTextureEdgeSize;
     double          mTextureThumbX;

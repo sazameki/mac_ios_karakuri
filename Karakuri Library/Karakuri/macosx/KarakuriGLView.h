@@ -17,12 +17,12 @@
     
     NSTrackingRectTag   mMouseTrackingRectTag;
 
-    _KRTexture2D*   mDefaultTex;
+    KRTexture2D*    mDefaultTex;
     
 #if KR_IPHONE_MACOSX_EMU
     BOOL            mIsScreenSizeHalved;
     BOOL            mIsAccelerometerEnabled;
-    _KRTexture2D*   mTouchTex;
+    KRTexture2D*    mTouchTex;
     KRVector2D      mTouchPos[5];
 #endif
 }

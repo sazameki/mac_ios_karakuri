@@ -36,7 +36,7 @@ typedef struct _KRTouchInfo2 {
     
     BOOL    mIsAttachedToSecondScreen;
     
-    _KRTexture2D*   mDefaultTex;
+    KRTexture2D*    mDefaultTex;
     void*           mCurrentImageBuffer;
 }
 

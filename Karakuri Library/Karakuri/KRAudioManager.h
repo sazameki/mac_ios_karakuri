@@ -24,7 +24,7 @@ class KRWorld;
  */
 class KRAudioManager : public KRObject {
     
-    _KRMusic*   mCurrentBGM;
+    KRMusic*    mCurrentBGM;
     
     std::map<int, std::vector<int> >    mBGM_GroupID_BGMIDList_Map;
     std::map<int, std::string>          mBGM_BGMID_AudioFileName_Map;
@@ -32,8 +32,8 @@ class KRAudioManager : public KRObject {
     std::map<int, std::vector<int> >    mSE_GroupID_SEIDList_Map;
     std::map<int, std::string>          mSE_SEID_AudioFileName_Map;
 
-    std::map<int, _KRMusic*> mBGMMap;
-    std::map<int, _KRSound*>  mSEMap;
+    std::map<int, KRMusic*> mBGMMap;
+    std::map<int, KRSound*>  mSEMap;
     
 public:
 	KRAudioManager();

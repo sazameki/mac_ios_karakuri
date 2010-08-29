@@ -51,11 +51,12 @@ typedef unsigned long long  KRKeyInfo;
 typedef int             _KRTouchState;
 
 /*
-    @-struct _KRTouchInfo
+    @struct KRTouchInfo
     @group Game System
-    @abstract iPhone のタッチ情報を表すための構造体です。
+    @abstract (Deprecated) 現在、この構造体の利用は推奨されません。以前のバージョンとの互換性のためにのみ用意しています。
+    <p>iPhone のタッチ情報を表すための構造体です。</p>
  */
-typedef struct _KRTouchInfo {
+typedef struct KRTouchInfo {
     /*
         @-var touch_id
         @abstract 複数のタッチ情報を識別するためのIDです。
@@ -69,7 +70,7 @@ typedef struct _KRTouchInfo {
      */
     KRVector2D  pos;
 
-} _KRTouchInfo;
+} KRTouchInfo;
 #endif
 
 
@@ -241,7 +242,7 @@ private:
     bool                        mIsTouchedOnce;
     _KRTouchState               mTouchStateOld;
     int                         mTouchCountAgainstDummy;
-    std::vector<_KRTouchInfo>   mTouchInfos;
+    std::vector<KRTouchInfo>    mTouchInfos;
 
     unsigned                    mTouchArrow_touchID;
     KRVector2D                  mTouchArrowCenterPos;
@@ -307,7 +308,8 @@ public:
         <p>あるフレームでタッチされていると判定されると、それ以降のフレームで指が離されてタッチし直されるまで、この関数が true を返すことはありません。</p>
         <p>この関数は、複数のタッチを識別しません。</p>
      */
-    bool            getTouchOnce();
+    bool            getTouchOnce() const;
+    bool            _getTouchOnceImpl();
     
     /*!
         @method getTouchLocation
@@ -334,6 +336,13 @@ public:
         @abstract 指定された ID のタッチ位置を取得します。指定された ID が無効な場合には、X方向、Y方向ともにマイナスの値をもった KRVector2D がリターンされます。
      */
     KRVector2D  getTouchLocation(int touchID) const;
+    
+    /*!
+        @method getTouchInfos
+        @abstract (Deprecated) 現在、この関数の使用は推奨されません。getTouchIDs() と getTouchLocation() の組み合わせを利用してください。
+        <p>現在のすべてのマルチタッチの情報を取得します。</p>
+     */
+    const std::vector<KRTouchInfo> getTouchInfos() const;    
 #endif
     
 

@@ -26,10 +26,10 @@ protected:
     KRColor     mTitleColorHighlighted;
     
     std::string     mTextureNameNormal;
-    _KRTexture2D*   mTextureNormal;
+    KRTexture2D*    mTextureNormal;
     
     std::string     mTextureNameHighlighted;
-    _KRTexture2D*   mTextureHighlighted;
+    KRTexture2D*    mTextureHighlighted;
     
     double      mTextureEdgeSize;
 

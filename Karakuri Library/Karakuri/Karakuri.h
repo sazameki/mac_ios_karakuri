@@ -67,6 +67,7 @@
 #include <Karakuri/KRChara2D.h>
 #include <Karakuri/KRAnime2DManager.h>
 #include <Karakuri/KRFont.h>
+#include <Karakuri/KRParticle2DSystem_old.h>
 #include <Karakuri/KRParticle2DSystem.h>
 #include <Karakuri/KRPrimitive2D.h>
 

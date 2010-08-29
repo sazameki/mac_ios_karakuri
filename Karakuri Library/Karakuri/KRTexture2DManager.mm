@@ -101,7 +101,7 @@ int KRTexture2DManager::_getResourceSize(int groupID)
         if (isKarakuriBoxResourse) {
             resourceSize = _getResourceLengthForTicket(ticket);
         } else {
-            resourceSize = _KRTexture2D::getResourceSize(filename);
+            resourceSize = KRTexture2D::getResourceSize(filename);
         }
         ret += resourceSize;
     }
@@ -119,14 +119,14 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
         std::string filename = mTexID_ImageFileName_Map[texID];
-        int resourceSize = _KRTexture2D::getResourceSize(filename);
+        int resourceSize = KRTexture2D::getResourceSize(filename);
         allResourceSize += resourceSize;
     }
 
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
         std::string filename = mTexID_ImageFileName_Map[texID];
-        int resourceSize = _KRMusic::getResourceSize(filename);
+        int resourceSize = KRMusic::getResourceSize(filename);
         double theMinDuration = ((double)resourceSize / allResourceSize) * minDuration;
         
         int baseFinishedSize = 0;
@@ -147,9 +147,9 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
                 ticket = mTexID_Ticket_Map[texID];
                 int divX = mTicket_DivX_Map[ticket];
                 int divY = mTicket_DivY_Map[ticket];
-                mTexMap[texID] = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
+                mTexMap[texID] = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
             } else {
-                mTexMap[texID] = new _KRTexture2D(filename, scaleMode);
+                mTexMap[texID] = new KRTexture2D(filename, scaleMode);
             }
             [filenameStr release];
         }
@@ -169,7 +169,7 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
             if (isKarakuriBoxResourse) {
                 resourceSize = _getResourceLengthForTicket(ticket);
             } else {
-                resourceSize = _KRTexture2D::getResourceSize(filename);
+                resourceSize = KRTexture2D::getResourceSize(filename);
             }
             loaderWorld->_setFinishedSize(baseFinishedSize + resourceSize);
         }
@@ -202,10 +202,10 @@ unsigned KRTexture2DManager::_getResourceLengthForTicket(const std::string& tick
     return mTicket_Length_Map[ticket];
 }
 
-_KRTexture2D* KRTexture2DManager::_getTexture(int texID)
+KRTexture2D* KRTexture2DManager::_getTexture(int texID)
 {
     // IDからテクスチャを引っ張ってくる。
-    _KRTexture2D* theTex = mTexMap[texID];
+    KRTexture2D* theTex = mTexMap[texID];
     if (theTex == NULL) {
         std::string filename = mTexID_ImageFileName_Map[texID];
         NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
@@ -216,9 +216,9 @@ _KRTexture2D* KRTexture2DManager::_getTexture(int texID)
             std::string ticket = mTexID_Ticket_Map[texID];
             int divX = mTicket_DivX_Map[ticket];
             int divY = mTicket_DivY_Map[ticket];
-            theTex = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
+            theTex = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
         } else {
-            theTex = new _KRTexture2D(filename, scaleMode);
+            theTex = new KRTexture2D(filename, scaleMode);
         }
         
         mTexMap[texID] = theTex;
@@ -358,7 +358,7 @@ void KRTexture2DManager::drawAtlasAtPoint(int texID, const KRVector2DInt& atlasP
 
 void KRTexture2DManager::drawAtlasAtPoint(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, const KRColor& color)
 {
-    _KRTexture2D* theTex = _getTexture(texID);
+    KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
@@ -373,7 +373,7 @@ void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atla
 
 void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
-    _KRTexture2D* theTex = _getTexture(texID);
+    KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     int theY = atlasPos.y;
@@ -394,7 +394,7 @@ void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& 
 
 void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, const KRColor& color)
 {
-    _KRTexture2D* theTex = _getTexture(texID);
+    KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
@@ -409,7 +409,7 @@ void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt
 
 void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color)
 {
-    _KRTexture2D* theTex = _getTexture(texID);
+    KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
@@ -424,7 +424,7 @@ void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPo
 
 void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color)
 {
-    _KRTexture2D* theTex = _getTexture(texID);
+    KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);

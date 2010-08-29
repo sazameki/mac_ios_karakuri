@@ -64,14 +64,14 @@ int KRAudioManager::_getResourceSize(int groupID)
     for (std::vector<int>::const_iterator it = theBGMIDList.begin(); it != theBGMIDList.end(); it++) {
         int bgmID = *it;
         std::string filename = mBGM_BGMID_AudioFileName_Map[bgmID];
-        int resourceSize = _KRMusic::getResourceSize(filename);
+        int resourceSize = KRMusic::getResourceSize(filename);
         ret += resourceSize;
     }
     
     for (std::vector<int>::const_iterator it = theSEIDList.begin(); it != theSEIDList.end(); it++) {
         int seID = *it;
         std::string filename = mSE_SEID_AudioFileName_Map[seID];
-        int resourceSize = _KRSound::getResourceSize(filename);
+        int resourceSize = KRSound::getResourceSize(filename);
         ret += resourceSize;
     }
 
@@ -89,21 +89,21 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
     for (std::vector<int>::const_iterator it = theBGMIDList.begin(); it != theBGMIDList.end(); it++) {
         int bgmID = *it;
         std::string filename = mBGM_BGMID_AudioFileName_Map[bgmID];
-        int resourceSize = _KRMusic::getResourceSize(filename);
+        int resourceSize = KRMusic::getResourceSize(filename);
         allResourceSize += resourceSize;
     }
 
     for (std::vector<int>::const_iterator it = theSEIDList.begin(); it != theSEIDList.end(); it++) {
         int seID = *it;
         std::string filename = mSE_SEID_AudioFileName_Map[seID];
-        int resourceSize = _KRSound::getResourceSize(filename);
+        int resourceSize = KRSound::getResourceSize(filename);
         allResourceSize += resourceSize;
     }
         
     for (std::vector<int>::const_iterator it = theBGMIDList.begin(); it != theBGMIDList.end(); it++) {
         int bgmID = *it;
         std::string filename = mBGM_BGMID_AudioFileName_Map[bgmID];
-        int resourceSize = _KRMusic::getResourceSize(filename);
+        int resourceSize = KRMusic::getResourceSize(filename);
         double theMinDuration = ((double)resourceSize / allResourceSize) * minDuration;
         
         int baseFinishedSize = 0;
@@ -113,7 +113,7 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
 
         NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
         if (mBGMMap[bgmID] == NULL) {
-            mBGMMap[bgmID] = new _KRMusic(filename, true);
+            mBGMMap[bgmID] = new KRMusic(filename, true);
         }
         NSTimeInterval loadTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
 
@@ -127,7 +127,7 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
                     progress = loadTime / theMinDuration;
                 }
             }
-            int resourceSize = _KRMusic::getResourceSize(filename);
+            int resourceSize = KRMusic::getResourceSize(filename);
             loaderWorld->_setFinishedSize(baseFinishedSize + resourceSize);
         }
     }
@@ -135,7 +135,7 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
     for (std::vector<int>::const_iterator it = theSEIDList.begin(); it != theSEIDList.end(); it++) {
         int seID = *it;
         std::string filename = mSE_SEID_AudioFileName_Map[seID];
-        int resourceSize = _KRMusic::getResourceSize(filename);
+        int resourceSize = KRMusic::getResourceSize(filename);
         double theMinDuration = ((double)resourceSize / allResourceSize) * minDuration;
 
         int baseFinishedSize = 0;
@@ -145,7 +145,7 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
         
         NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
         if (mSEMap[seID] == NULL) {
-            mSEMap[seID] = new _KRSound(filename, false);
+            mSEMap[seID] = new KRSound(filename, false);
         }
         NSTimeInterval loadTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
 
@@ -159,7 +159,7 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
                     progress = loadTime / theMinDuration;
                 }
             }
-            int resourceSize = _KRMusic::getResourceSize(filename);
+            int resourceSize = KRMusic::getResourceSize(filename);
             loaderWorld->_setFinishedSize(baseFinishedSize + resourceSize);
         }
     }
@@ -207,7 +207,7 @@ void KRAudioManager::playBGM(int bgmID, double volume)
     // BGMが読み込まれていない場合はここで読み込む。
     if (mCurrentBGM == NULL) {
         std::string filename = mBGM_BGMID_AudioFileName_Map[bgmID];
-        mBGMMap[bgmID] = new _KRMusic(filename, true);
+        mBGMMap[bgmID] = new KRMusic(filename, true);
         mCurrentBGM = mBGMMap[bgmID];
     }
     
@@ -263,10 +263,10 @@ void KRAudioManager::stopBGM()
 void KRAudioManager::playSE(int seID, double volume, const KRVector3D& sourcePos)
 {
     // IDからSEを引っ張ってくる。
-    _KRSound* theSound = mSEMap[seID];
+    KRSound* theSound = mSEMap[seID];
     if (theSound == NULL) {
         std::string filename = mSE_SEID_AudioFileName_Map[seID];
-        mSEMap[seID] = new _KRSound(filename, false);
+        mSEMap[seID] = new KRSound(filename, false);
         theSound = mSEMap[seID];
     }
 
@@ -291,12 +291,12 @@ void KRAudioManager::playSE(int seID, double volume, const KRVector3D& sourcePos
 
 KRVector3D KRAudioManager::getSEListenerPos() const
 {
-    return _KRSound::getListenerPos();
+    return KRSound::getListenerPos();
 }
 
 void KRAudioManager::setSEListenerPos(const KRVector3D& listenerPos)
 {
-    _KRSound::setListenerPos(listenerPos);
+    KRSound::setListenerPos(listenerPos);
 }
 
 

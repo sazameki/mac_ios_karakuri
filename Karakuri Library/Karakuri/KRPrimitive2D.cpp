@@ -14,7 +14,7 @@ void KRPrimitive2D::drawLine(const KRVector2D& p1, const KRVector2D& p2, const K
 
 void KRPrimitive2D::drawLine(const KRVector2D& p1, const KRVector2D& p2, const KRColor& c1, const KRColor& c2, double width)
 {
-    _KRTexture2D::processBatchedTexture2DDraws();
+    KRTexture2D::processBatchedTexture2DDraws();
 
     if (_KRTexture2DEnabled) {
         _KRTexture2DEnabled = false;
@@ -65,7 +65,7 @@ void KRPrimitive2D::fillQuad(const KRVector2D& p1, const KRVector2D& p2, const K
 void KRPrimitive2D::fillQuad(const KRVector2D& p1, const KRVector2D& p2, const KRVector2D& p3, const KRVector2D& p4,
                      const KRColor& c1, const KRColor& c2, const KRColor& c3, const KRColor& c4)
 {
-    _KRTexture2D::processBatchedTexture2DDraws();
+    KRTexture2D::processBatchedTexture2DDraws();
 
     if (_KRTexture2DEnabled) {
         _KRTexture2DEnabled = false;
