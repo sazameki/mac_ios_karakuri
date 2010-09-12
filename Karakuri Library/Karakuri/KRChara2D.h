@@ -185,7 +185,13 @@ public:
     double              _angle;
     
 public:
-    KRChara2D(int charaSpecID, int charaType);
+    /*!
+        @method KRChara2D
+        @param charaSpecID  Karakuri Box で定義した、このキャラクタの特徴を表す ID です。
+        @param classType    KRAnime2DManager でヒットテストを行う際に使われる、クラスの種類を示す値です。
+        Karakuri Box で作成したキャラクタの ID を第1引数の charaSpecID に、KRAnime2DManager でヒットテストを行う際に使うクラスの種類を示す値を第2引数の classType に指定して、このクラスのオブジェクトを生成します。
+     */
+    KRChara2D(int charaSpecID, int classType);
     virtual ~KRChara2D();
 
     bool    _isTemporal() const;
