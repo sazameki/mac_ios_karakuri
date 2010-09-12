@@ -318,6 +318,8 @@ KRChara2D::KRChara2D(int charaSpecID, int classType)
     _mIsMotionPaused = false;
     
     _mIsTemporal = false;
+    
+    _mIsInList = false;
 }
 
 KRChara2D::~KRChara2D()
@@ -594,7 +596,9 @@ void KRChara2D::setZOrder(int zOrder)
         return;
     }
     _mZOrder = zOrder;
-    gKRAnime2DMan->_reorderChara2D(this);
+    if (_mIsInList) {
+        gKRAnime2DMan->_reorderChara2D(this);
+    }
 }
 
 void KRChara2D::_step()
@@ -668,5 +672,14 @@ void KRChara2D::_draw()
     }
 }
 
+bool KRChara2D::_isInList() const
+{
+    return _mIsInList;
+}
+
+void KRChara2D::_setIsInList(bool flag)
+{
+    _mIsInList = flag;
+}
 
 

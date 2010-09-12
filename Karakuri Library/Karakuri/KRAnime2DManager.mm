@@ -275,6 +275,10 @@ _KRChara2DSpec* KRAnime2DManager::_getChara2DSpec(int specID)
 
 void KRAnime2DManager::addChara2D(KRChara2D* newChara)
 {
+    if (newChara->_isInList()) {
+        return;
+    }
+    
     int zOrder = newChara->getZOrder();
     
     bool hasAdded = false;
@@ -289,7 +293,9 @@ void KRAnime2DManager::addChara2D(KRChara2D* newChara)
     
     if (!hasAdded) {
         mCharas.push_back(newChara);
-    }    
+    }
+    
+    newChara->_setIsInList(true);
 }
 
 KRChara2D* KRAnime2DManager::getChara2D(int classType, const KRVector2D& pos) const
@@ -364,12 +370,20 @@ void KRAnime2DManager::removeAllCharas()
 
 void KRAnime2DManager::removeChara2D(KRChara2D* chara)
 {
+    if (!chara->_isInList()) {
+        return;
+    }
+    
     mCharas.remove(chara);
     delete chara;
 }
 
 void KRAnime2DManager::_reorderChara2D(KRChara2D* chara)
 {
+    if (!chara->_isInList()) {
+        return;
+    }
+    
     int zOrder = chara->getZOrder();
     
     mCharas.remove(chara);

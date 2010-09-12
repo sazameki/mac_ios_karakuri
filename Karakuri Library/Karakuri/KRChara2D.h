@@ -170,6 +170,7 @@ private:
     bool                _mIsMotionFinished;
     bool                _mIsMotionPaused;
     bool                _mIsTemporal;
+    bool                _mIsInList;
     
     KRVector2D          _mScale;
     KRBlendMode         _mBlendMode;
@@ -382,6 +383,8 @@ public:
 public:
     void    _step();    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     void    _draw();    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    bool    _isInList() const;          KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    void    _setIsInList(bool flag);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     
 };
 

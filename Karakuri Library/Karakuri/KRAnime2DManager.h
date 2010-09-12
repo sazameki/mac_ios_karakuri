@@ -95,7 +95,7 @@ public:
 
     /*!
         @method addChara2D
-        管理対象のキャラクタを追加します。
+        管理対象のキャラクタを追加します。いったん追加されたキャラクタは、自動的にメモリ管理が行われますので、delete しないようにしてください。
      */
     void        addChara2D(KRChara2D* aChara);
     
