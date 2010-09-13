@@ -239,6 +239,7 @@ static float    sListenerPos[3]         = { 0.0f, 0.0f, 0.0f };
 - (void)stop
 {
     alSourceStop(mALSource);
+    alSourceRewind(mALSource);
 }
 
 - (BOOL)isPlaying

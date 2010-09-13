@@ -203,6 +203,30 @@ typedef struct KRRect2D : public KRObject {
     KRRect2D    getUnion(const KRRect2D& rect) const;    
     
     /*!
+        @method setOrigin
+        X座標・Y座標がともに最小となるこの矩形上の座標をセットします。
+     */
+    void    setOrigin(double _x, double _y);
+    
+    /*!
+        @method setOrigin
+        X座標・Y座標がともに最小となるこの矩形上の座標をセットします。
+     */
+    void    setOrigin(const KRVector2D& origin);
+    
+    /*!
+        @method setSize
+        この矩形のサイズをセットします。
+     */
+    void    setSize(double _width, double _height);
+    
+    /*!
+        @method setSize
+        この矩形のサイズをセットします。
+     */
+    void    setSize(const KRVector2D& size);
+    
+    /*!
         @task 演算子のオーバーライド
      */
     

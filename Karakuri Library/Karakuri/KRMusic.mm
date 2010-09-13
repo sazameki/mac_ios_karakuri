@@ -222,6 +222,7 @@ void KRMusic::stop()
     if (mImpl) {
         if (sCanUseNSSound) {
             [(NSSound *)mImpl stop];
+            [(NSSound *)mImpl setCurrentTime:0.0];
         } else {
             [(_KarakuriSound *)mImpl stop];
         }
@@ -231,6 +232,7 @@ void KRMusic::stop()
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         [(AVAudioPlayer *)mImpl stop];
+        ((AVAudioPlayer *)mImpl).currentTime = 0.0;
     }
 #endif
     

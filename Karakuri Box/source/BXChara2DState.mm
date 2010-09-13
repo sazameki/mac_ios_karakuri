@@ -167,7 +167,7 @@
             continue;
         }
         
-        NSMenuItem* menuItem = [ret addItemWithTitle:[NSString stringWithFormat:@"%d", i+1]
+        NSMenuItem* menuItem = [ret addItemWithTitle:[NSString stringWithFormat:@"%d", i]
                                               action:@selector(changedChara2DKomaGotoTarget:)
                                        keyEquivalent:@""];
         [menuItem setTag:i+1];

@@ -141,6 +141,30 @@ bool KRRect2D::contains(const KRRect2D& rect) const
     return contains(rect.x, rect.y, rect.width, rect.height);
 }
 
+void KRRect2D::setOrigin(double _x, double _y)
+{
+    x = _x;
+    y = _y;
+}
+
+void KRRect2D::setOrigin(const KRVector2D& origin)
+{
+    x = origin.x;
+    y = origin.y;
+}
+
+void KRRect2D::setSize(double _width, double _height)
+{
+    width = _width;
+    height = _height;
+}
+
+void KRRect2D::setSize(const KRVector2D& size)
+{
+    width = size.x;
+    height = size.y;
+}
+
 bool KRRect2D::intersects(double _x, double _y, double _width, double _height) const
 {
     if (width <= 0.0 || height <= 0.0 || _width <= 0.0 || height <= 0.0) {

@@ -362,7 +362,7 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     
     for (int i = 0; i < [aState komaCount]; i++) {
         BXChara2DKoma* aKoma = [aState komaAtIndex:i];
-        NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"%d", [aKoma komaNumber]]
+        NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"%d", [aKoma komaNumber]-1]
                                                  action:nil
                                           keyEquivalent:@""];
         [theItem setTag:[aKoma komaNumber]];
@@ -897,7 +897,7 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
         }        
     }
     
-    NSString* stateStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentState stateID], [mCurrentState stateName], [mCurrentKoma komaNumber]];
+    NSString* stateStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentState stateID], [mCurrentState stateName], [mCurrentKoma komaNumber]-1];
     [oCurrentStateField setStringValue:stateStr];
 }
 

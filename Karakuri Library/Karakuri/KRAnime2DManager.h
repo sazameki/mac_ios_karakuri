@@ -142,7 +142,7 @@ public:
     
     /*!
         @method removeChara2D
-        キャラクタを削除します。削除したキャラクタは、自動的に delete されます。
+        キャラクタを削除します。削除したキャラクタは即座に delete されますので、このメソッドの呼び出し後のタイミングでキャラクタオブジェクトに対する操作を行わないでください。
      */
     void    removeChara2D(KRChara2D *chara);
 

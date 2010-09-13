@@ -129,7 +129,7 @@ public:
     
 public:
     /*!
-     @task 状態の管理
+        @task 状態の管理
      */
     
     void    addMotion(int motionID, _KRChara2DMotion* aMotion);
@@ -185,6 +185,10 @@ public:
     double              _angle;
     
 public:
+    /*!
+        @task コンストラクタ
+     */
+    
     /*!
         @method KRChara2D
         @param charaSpecID  Karakuri Box で定義した、このキャラクタの特徴を表す ID です。

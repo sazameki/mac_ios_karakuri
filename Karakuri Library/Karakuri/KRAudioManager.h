@@ -114,7 +114,7 @@ public:
 
     /*!
         @method stopBGM
-        BGM の再生を中断します。
+        BGM の再生を中断します。このメソッドの呼び出し後、BGM の再生位置は先頭に戻ります。
      */
     void    stopBGM();
     
