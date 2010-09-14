@@ -128,7 +128,7 @@ public:
     
 public:
     /*!
-        @task 描画のための関数（1.0.0 で導入した新バージョン）
+        @-task 描画のための関数（1.0.0 で導入した新バージョン）
      */
     void    drawAtPoint_(const KRVector2D& pos, const KRColor& color);
     void    drawAtPointEx_(const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);

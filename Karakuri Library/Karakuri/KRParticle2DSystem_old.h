@@ -54,7 +54,7 @@ public:
 
 /*!
     @class  KRParticle2DSystem
-    @group  Game 2D Graphics
+    @group  Game Graphics
     @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box と gKRAnime2DMan を利用してください。</strong>
     <p>2次元の移動を行うパーティクル群を生成し管理するための仕組みです。<br/>
     火、爆発、煙、雲、霧などの表現に利用できます。</p>

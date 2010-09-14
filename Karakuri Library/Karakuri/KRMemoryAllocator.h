@@ -12,26 +12,28 @@
 
 
 /*
-    @-define _KR_DECLARE_USE_ALLOCATOR
-    @group  Game Foundation
-    @abstract アロケータの変数名を指定して、アロケータの使用を宣言するためのマクロ関数です。必ずクラス宣言の先頭に記述してください。
+    @define KR_DECLARE_USE_ALLOCATOR
+    @group  Game System
+    @abstract <p><strong class="warning">(Deprecated) 現在、このマクロ関数の利用は推奨されません。代わりに KRAnime2DManager のアニメーション管理機構を使用してください。</strong></p>
+    <p>アロケータの変数名を指定して、アロケータの使用を宣言するためのマクロ関数です。必ずクラス宣言の先頭に記述してください。</p>
     <p>使い方は、「<a href="../../../guide/memory_allocator.html">多数インスタンスのメモリ管理</a>」を参照してください。</p>
  */
-#define _KR_DECLARE_USE_ALLOCATOR(allocator)\
+#define KR_DECLARE_USE_ALLOCATOR(allocator)\
     public:\
         void*   operator new(size_t size) { return allocator->allocate(size); }\
         void    operator delete(void *ptr) { allocator->release(ptr); }\
     private:
 
 /*
-    @-define _KR_UPDATE_MAX_CLASS_SIZE
-    @group  Game Foundation
-    @abstract ある基底クラスから派生したすべてのクラスの最大サイズを求めるマクロ関数です。
+    @define KR_UPDATE_MAX_CLASS_SIZE
+    @group  Game System
+    @abstract <p><strong class="warning">(Deprecated) 現在、このマクロ関数の利用は推奨されません。代わりに KRAnime2DManager のアニメーション管理機構を使用してください。</strong></p>
+    <p>ある基底クラスから派生したすべてのクラスの最大サイズを求めるマクロ関数です。</p>
     <p>使い方は、「<a href="../../../guide/memory_allocator.html">多数インスタンスのメモリ管理</a>」を参照してください。</p>
     <p>第1引数には、最大サイズを格納するための size_t 型の変数を入れてください。</p>
     <p>第2引数には、派生クラスの名前を入れてください。</p>
  */
-#define _KR_UPDATE_MAX_CLASS_SIZE(size_var, the_class)  if (sizeof(the_class) > size_var) { size_var = sizeof(the_class); }
+#define KR_UPDATE_MAX_CLASS_SIZE(size_var, the_class)  if (sizeof(the_class) > size_var) { size_var = sizeof(the_class); }
 
 
 struct _KRMemoryElement {
@@ -41,12 +43,13 @@ struct _KRMemoryElement {
 
 
 /*
-    @-class _KRMemoryAllocator
-    @group  Game Foundation
-    @abstract 同じ種類のクラスのインスタンスを複数個作成するために、あらかじめ必要な領域を確保して、連結リストで管理しておくクラスです。
+    @class KRMemoryAllocator
+    @group  Game System
+    @abstract <p><strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに KRAnime2DManager のアニメーション管理機構を使用してください。</strong></p>
+    <p>同じ種類のクラスのインスタンスを複数個作成するために、あらかじめ必要な領域を確保して、連結リストで管理しておくクラスです。</p>
     <p>このクラスのメソッドなどは直接使用しません。主にマクロを使って利用します。主な使い方は、「<a href="../../../../guide/memory_allocator.html">多数インスタンスのメモリ管理</a>」を参照してください。</p>
  */
-class _KRMemoryAllocator : public KRObject {
+class KRMemoryAllocator : public KRObject {
     
     std::string mDebugName;
     
@@ -62,12 +65,12 @@ public:
         @task コンストラクタ
      */
     /*!
-        @method _KRMemoryAllocator
+        @method KRMemoryAllocator
         メモリサイズ、インスタンスの最大生成個数、デバッグ用のアロケータの名称を指定して、アロケータを生成します。
      */
-    _KRMemoryAllocator(size_t maxClassSize, int maxCount, const std::string &debugName);
+    KRMemoryAllocator(size_t maxClassSize, int maxCount, const std::string &debugName);
 
-    virtual ~_KRMemoryAllocator();
+    virtual ~KRMemoryAllocator();
     
 public:
     void*   allocate(size_t size);

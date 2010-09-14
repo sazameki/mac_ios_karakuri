@@ -10,7 +10,7 @@
 
 
 KRAnime2DManager*   gKRAnime2DMan = NULL;
-_KRMemoryAllocator* _gKRChara2DAllocator = NULL;
+KRMemoryAllocator*  _gKRChara2DAllocator = NULL;
 
 
 #pragma mark -
@@ -23,7 +23,7 @@ KRAnime2DManager::KRAnime2DManager(int maxCharacter2DCount, size_t maxChara2DSiz
     mNextInnerCharaSpecID = 10000;
     mNextSimulatorID = 10000;
     
-    _gKRChara2DAllocator = new _KRMemoryAllocator(maxChara2DSize, maxCharacter2DCount, "kr-chara2d-alloc");
+    _gKRChara2DAllocator = new KRMemoryAllocator(maxChara2DSize, maxCharacter2DCount, "kr-chara2d-alloc");
 }
 
 KRAnime2DManager::~KRAnime2DManager()

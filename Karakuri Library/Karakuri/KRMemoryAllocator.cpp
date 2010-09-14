@@ -8,10 +8,10 @@
 
 
 /*
-    @method _KRMemoryAllocator
+    @method KRMemoryAllocator
     Constructor
  */
-_KRMemoryAllocator::_KRMemoryAllocator(size_t maxClassSize, int maxCount, const std::string& debugName)
+KRMemoryAllocator::KRMemoryAllocator(size_t maxClassSize, int maxCount, const std::string& debugName)
     : mMaxClassSize(maxClassSize), mMaxCount(maxCount), mDebugName(debugName)
 {
     size_t allocateSize = (maxClassSize + 1) * maxCount;
@@ -42,10 +42,10 @@ _KRMemoryAllocator::_KRMemoryAllocator(size_t maxClassSize, int maxCount, const 
 }
 
 /*!
-    @method ~_KRMemoryAllocator
+    @method ~KRMemoryAllocator
     Destructor
  */
-_KRMemoryAllocator::~_KRMemoryAllocator()
+KRMemoryAllocator::~KRMemoryAllocator()
 {
     _KRMemoryElement* theElem = mDummyElement.next;
     
@@ -56,7 +56,7 @@ _KRMemoryAllocator::~_KRMemoryAllocator()
     }
 }
 
-void* _KRMemoryAllocator::allocate(size_t size)
+void* KRMemoryAllocator::allocate(size_t size)
 {
     if (size > mMaxClassSize) {
         if (mDebugName == "kr-chara2d-alloc") {
@@ -101,7 +101,7 @@ void* _KRMemoryAllocator::allocate(size_t size)
     return (void*)((char*)theElem + sizeof(_KRMemoryElement));
 }
 
-void _KRMemoryAllocator::release(void* ptr)
+void KRMemoryAllocator::release(void* ptr)
 {
     _KRMemoryElement* theElem = (_KRMemoryElement*)((char*)ptr - sizeof(_KRMemoryElement));
     

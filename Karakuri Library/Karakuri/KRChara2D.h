@@ -14,7 +14,7 @@
 #include "KRGraphics.h"
 
 
-extern _KRMemoryAllocator*  _gKRChara2DAllocator;
+extern KRMemoryAllocator*   _gKRChara2DAllocator;
 
 
 static const unsigned       KRCharaMotionChangeModeNormalMask            = 0x00;
@@ -152,7 +152,7 @@ public:
  */
 class KRChara2D : public KRObject {
     
-    _KR_DECLARE_USE_ALLOCATOR(_gKRChara2DAllocator)
+    KR_DECLARE_USE_ALLOCATOR(_gKRChara2DAllocator)
     
 public:
     bool                _mIsHidden;
