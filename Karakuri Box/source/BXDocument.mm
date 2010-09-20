@@ -15,6 +15,7 @@
 #import "BXBGMResource.h"
 #import "BXSEResource.h"
 #import "BXStageSpec.h"
+#import "BXTexture2DAtlas.h"
 #import "NSFileHandle+BXExport.h"
 
 
@@ -248,6 +249,22 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     return nil;
 }
+
+- (BXTexture2DAtlas*)selectedTex2DAtlas
+{
+    BXTexture2DSpec* tex = [self selectedTex2DSpec];
+    if (!tex) {
+        return nil;
+    }
+    
+    int selectedRow = [oTex2DAtlasListView selectedRow];
+    if (selectedRow < 0) {
+        return nil;
+    }
+
+    return [oTex2DAtlasListView itemAtRow:selectedRow];
+}
+
 
 - (BXChara2DSpec*)selectedChara2DSpec
 {
@@ -709,6 +726,24 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self updateChangeCount:NSChangeUndone];
 }
 
+- (IBAction)addTex2DAtlas:(id)sender
+{
+    BXTexture2DAtlas* newAtlas = [[BXTexture2DAtlas alloc] init];
+    
+    BXTexture2DSpec* texSpec = [self selectedTex2DSpec];
+    [texSpec addAtlas:newAtlas];
+    
+    [newAtlas release];
+    
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+}
+
+- (IBAction)changedTex2DAtlasPreviewOn:(id)sender
+{
+    BOOL previewOn = ([oTex2DAtlasPreviewOnButton state] == NSOnState);
+    [oTex2DPreviewView setShowsAtlas:previewOn];
+}
 
 
 #pragma mark -
@@ -1179,10 +1214,176 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)addTexture2DWithInfo:(NSDictionary*)theInfo
 {
+    [self willChangeValueForKey:@"isTex2DAtlasSelected"];
+
     BXTexture2DSpec* newTexSpec = [[[BXTexture2DSpec alloc] initWithName:@"New Texture"] autorelease];
     [newTexSpec setDocument:self];
     [newTexSpec restoreElementInfo:theInfo document:self];
     [mTex2DGroup addChild:newTexSpec];
+
+    [self didChangeValueForKey:@"isTex2DAtlasSelected"];
+}
+
+- (BOOL)isTex2DAtlasSelected
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    return (selectedAtlas? YES: NO);
+}
+
+- (int)tex2DAtlasStartPosX
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return 0;
+    }
+    return [selectedAtlas startPos].x;
+}
+
+- (void)setTex2DAtlasStartPosX:(int)x
+{
+    BXTexture2DAtlas* atlas = [self selectedTex2DAtlas];
+    if (!atlas) {
+        return;
+    }
+    
+    KRVector2DInt startPos = [atlas startPos];
+    startPos.x = x;
+    [atlas setStartPos:startPos];
+
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (int)tex2DAtlasStartPosY
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return 0;
+    }
+    return [selectedAtlas startPos].y;
+}
+
+- (void)setTex2DAtlasStartPosY:(int)y
+{
+    BXTexture2DAtlas* atlas = [self selectedTex2DAtlas];
+    if (!atlas) {
+        return;
+    }
+    
+    KRVector2DInt startPos = [atlas startPos];
+    startPos.y = y;
+    [atlas setStartPos:startPos];
+    
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (int)tex2DAtlasSizeX
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return 0;
+    }
+    return [selectedAtlas size].x;
+}
+
+- (void)setTex2DAtlasSizeX:(int)x
+{
+    BXTexture2DAtlas* atlas = [self selectedTex2DAtlas];
+    if (!atlas) {
+        return;
+    }
+    
+    KRVector2DInt size = [atlas size];
+    size.x = x;
+    [atlas setSize:size];
+    
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (int)tex2DAtlasSizeY
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return 0;
+    }
+    return [selectedAtlas size].y;
+}
+
+- (void)setTex2DAtlasSizeY:(int)y
+{
+    BXTexture2DAtlas* atlas = [self selectedTex2DAtlas];
+    if (!atlas) {
+        return;
+    }
+    
+    KRVector2DInt size = [atlas size];
+    size.y = y;
+    [atlas setSize:size];
+    
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (int)tex2DAtlasCountX
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return 0;
+    }
+    return [selectedAtlas count].x;
+}
+
+- (void)setTex2DAtlasCountX:(int)x
+{
+    BXTexture2DAtlas* atlas = [self selectedTex2DAtlas];
+    if (!atlas) {
+        return;
+    }
+    
+    KRVector2DInt count = [atlas count];
+    count.x = x;
+    [atlas setCount:count];
+    
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (int)tex2DAtlasCountY
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return 0;
+    }
+    return [selectedAtlas count].y;
+}
+
+- (void)setTex2DAtlasCountY:(int)y
+{
+    BXTexture2DAtlas* atlas = [self selectedTex2DAtlas];
+    if (!atlas) {
+        return;
+    }
+    
+    KRVector2DInt count = [atlas count];
+    count.y = y;
+    [atlas setCount:count];
+    
+    [oTex2DAtlasListView reloadData];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+    
+    [self updateChangeCount:NSChangeUndone];
 }
 
 
@@ -2022,9 +2223,16 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oTex2DGroupIDField setIntValue:[theSpec groupID]];
     [oTex2DResourceIDField setIntValue:[theSpec resourceID]];
     [oTex2DResourceNameField setStringValue:[theSpec resourceName]];
-    [oTex2DImageNameField setStringValue:[theSpec imageName]];
+    
+    NSString* imageName = [theSpec imageName];
+    if (!imageName) {
+        imageName = @"";
+    }
+    [oTex2DImageNameField setStringValue:imageName];
     
     [oTex2DPreviewScaleButton selectItemWithTag:(int)([theSpec previewScale] * 100)];
+    
+    [oTex2DAtlasListView reloadData];
 }
 
 - (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec
@@ -2258,6 +2466,17 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             return [selectedState komaCount];
         }
     }
+    // 2Dテクスチャのアトラス
+    else if (outlineView == oTex2DAtlasListView) {
+        // Root
+        if (!item) {
+            BXTexture2DSpec* selectedTex = [self selectedTex2DSpec];
+            if (!selectedTex) {
+                return 0;
+            }
+            return [selectedTex atlasCount];
+        }
+    }
 
     return 0;
 }
@@ -2292,12 +2511,19 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     else if (outlineView == oChara2DKomaListView) {
         // Root
         if (!item) {
-            NSLog(@"child-koma: %d", index);
             BXChara2DState* selectedState = [self selectedChara2DState];
             return [selectedState komaAtIndex:index];
         }
     }
-    
+    // 2Dテクスチャのアトラス
+    else if (outlineView == oTex2DAtlasListView) {
+        // Root
+        if (!item) {
+            BXTexture2DSpec* selectedTex = [self selectedTex2DSpec];
+            return [selectedTex atlasAtIndex:index];
+        }
+    }
+
     return nil;
 }
 
@@ -2341,6 +2567,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             int index = [oChara2DKomaIntervalButtonCell indexOfItemWithTag:interval];
             return [NSNumber numberWithInt:index];
         }
+    }
+    // 2Dテクスチャのアトラス
+    else if (outlineView == oTex2DAtlasListView) {
+        return [(BXTexture2DAtlas*)item atlasDescription];
     }
 
     return @"????";
@@ -2515,6 +2745,23 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
         [self willChangeValueForKey:@"isChara2DKomaSelected"];
         [self didChangeValueForKey:@"isChara2DKomaSelected"];
+    }
+    // 2Dテクスチャのアトラスリスト
+    else if (outlineView == oTex2DAtlasListView) {
+        [self willChangeValueForKey:@"tex2DAtlasStartPosX"];
+        [self willChangeValueForKey:@"tex2DAtlasStartPosY"];
+        [self willChangeValueForKey:@"tex2DAtlasSizeX"];
+        [self willChangeValueForKey:@"tex2DAtlasSizeY"];        
+        [self willChangeValueForKey:@"tex2DAtlasCountX"];
+        [self willChangeValueForKey:@"tex2DAtlasCountY"];        
+        [self willChangeValueForKey:@"isTex2DAtlasSelected"];
+        [self didChangeValueForKey:@"tex2DAtlasStartPosX"];
+        [self didChangeValueForKey:@"tex2DAtlasStartPosY"];
+        [self didChangeValueForKey:@"tex2DAtlasSizeX"];
+        [self didChangeValueForKey:@"tex2DAtlasSizeY"];
+        [self didChangeValueForKey:@"tex2DAtlasCountX"];
+        [self didChangeValueForKey:@"tex2DAtlasCountY"];        
+        [self didChangeValueForKey:@"isTex2DAtlasSelected"];
     }
 }
 

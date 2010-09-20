@@ -10,12 +10,16 @@
 
 
 @class BXDocument;
+@class BXTexture2DAtlas;
 
 
 @interface BXTexture2DSpec : BXResourceElement {
     NSString*   mImageTicket;
     double      mPreviewScale;
     NSString*   mImageName;
+    NSString*   mImageID;
+    
+    NSMutableArray* mAtlasInfos;
 }
 
 - (void)setImageWithFileAtPath:(NSString*)path;
@@ -26,6 +30,10 @@
 
 - (double)previewScale;
 - (void)setPreviewScale:(double)scale;
+
+- (int)atlasCount;
+- (BXTexture2DAtlas*)atlasAtIndex:(int)index;
+- (void)addAtlas:(BXTexture2DAtlas*)anAtlas;
 
 @end
 

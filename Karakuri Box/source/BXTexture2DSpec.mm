@@ -11,6 +11,8 @@
 #import "NSDictionary+LoadSave.h"
 #import "NSFileHandle+BXExport.h"
 #import "NSImage+BXEx.h"
+#import "NSString+UUID.h"
+#import "BXTexture2DAtlas.h"
 
 
 @implementation BXTexture2DSpec
@@ -20,6 +22,7 @@
     self = [super initWithName:name];
     if (self) {
         mPreviewScale = 1.0;
+        mAtlasInfos = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -28,14 +31,21 @@
 {
     [mImageTicket release];
     [mImageName release];
+    [mImageID release];
+
+    [mAtlasInfos release];
 
     [super dealloc];
 }
 
 - (void)setImageWithFileAtPath:(NSString*)path
 {
+    [mImageTicket release];
     mImageTicket = [[[mDocument fileManager] storeFileAtPath:path] copy];
     [self setImageName:[path lastPathComponent]];
+    
+    [mImageID release];
+    mImageID = [[NSString generateUUIDString] retain];
 }
 
 - (NSString*)imageName
@@ -69,6 +79,22 @@
     mPreviewScale = scale;
 }
 
+- (int)atlasCount
+{
+    return [mAtlasInfos count];
+}
+
+- (BXTexture2DAtlas*)atlasAtIndex:(int)index
+{
+    return [mAtlasInfos objectAtIndex:index];
+}
+
+- (void)addAtlas:(BXTexture2DAtlas*)anAtlas
+{
+    [mAtlasInfos addObject:anAtlas];
+    [anAtlas setTexture2D:self];
+}
+
 
 #pragma mark -
 #pragma mark シリアライゼーションのサポート
@@ -94,6 +120,11 @@
     } else {
         [theInfo removeObjectForKey:@"Image Name"];
     }
+    if (mImageID) {
+        [theInfo setStringValue:mImageID forName:@"Image ID"];
+    } else {
+        [theInfo removeObjectForKey:@"Image ID"];
+    }
     
     // スケール
     [theInfo setDoubleValue:mPreviewScale forName:@"Preview Scale"];
@@ -111,6 +142,7 @@
     // 画像
     mImageTicket = [[theInfo stringValueForName:@"Image Ticket" currentValue:mImageTicket] copy];
     mImageName = [[theInfo stringValueForName:@"Image Name" currentValue:mImageTicket] copy];
+    mImageID = [[theInfo stringValueForName:@"Image ID" currentValue:mImageID] copy];
     
     // プレビュー
     mPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mPreviewScale];
@@ -118,7 +150,7 @@
 
 - (void)exportToFileHandle:(NSFileHandle*)fileHandle
 {
-    // リソースの書き出し（カスタム画像）
+    // リソースの書き出し
     if (mImageTicket && [mImageTicket length] > 0) {
         NSString* errorStr = nil;
 

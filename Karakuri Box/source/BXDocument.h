@@ -17,6 +17,7 @@
 #import "BXChara2DKomaPreviewView.h"
 #import "BXChara2DSimulatorView.h"
 #import "BXTexture2DPreviewView.h"
+#import "BXTexture2DAtlas.h"
 
 
 @interface BXDocument : NSDocument
@@ -36,6 +37,9 @@
     IBOutlet NSTextField*               oTex2DImageNameField;
     IBOutlet NSPopUpButton*             oTex2DPreviewScaleButton;
     IBOutlet BXTexture2DPreviewView*    oTex2DPreviewView;
+    IBOutlet NSOutlineView*             oTex2DAtlasListView;
+    IBOutlet NSTextField*               oTex2DAtlasStartPosXField;
+    IBOutlet NSButton*                  oTex2DAtlasPreviewOnButton;
 
     ///// 2Dキャラクタの設定用アウトレット
     IBOutlet NSTextField*               oChara2DGroupIDField;
@@ -159,6 +163,8 @@
 - (IBAction)changedTex2DGroupID:(id)sender;
 - (IBAction)changedTex2DResourceID:(id)sender;
 - (IBAction)changedTex2DResourceName:(id)sender;
+- (IBAction)addTex2DAtlas:(id)sender;
+- (IBAction)changedTex2DAtlasPreviewOn:(id)sender;
 
 
 ///// 2Dキャラクタ設定アクション
@@ -236,9 +242,24 @@
 ///// 2Dテクスチャ設定に関するメソッド
 
 - (BXTexture2DSpec*)selectedTex2DSpec;
+- (BXTexture2DAtlas*)selectedTex2DAtlas;
 
 - (void)addTexture2DWithInfo:(NSDictionary*)theInfo;
 - (void)setupEditorUIForTexture2D:(BXTexture2DSpec*)theSpec;
+
+- (BOOL)isTex2DAtlasSelected;
+- (int)tex2DAtlasStartPosX;
+- (void)setTex2DAtlasStartPosX:(int)x;
+- (int)tex2DAtlasStartPosY;
+- (void)setTex2DAtlasStartPosY:(int)y;
+- (int)tex2DAtlasSizeX;
+- (void)setTex2DAtlasSizeX:(int)x;
+- (int)tex2DAtlasSizeY;
+- (void)setTex2DAtlasSizeY:(int)y;
+- (int)tex2DAtlasCountX;
+- (void)setTex2DAtlasCountX:(int)x;
+- (int)tex2DAtlasCountY;
+- (void)setTex2DAtlasCountY:(int)y;
 
 
 ///// 2Dキャラクタ設定に関するメソッド

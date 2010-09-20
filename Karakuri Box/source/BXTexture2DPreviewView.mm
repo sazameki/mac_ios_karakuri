@@ -8,6 +8,7 @@
 
 #import "BXTexture2DPreviewView.h"
 #import "BXDocument.h"
+#import "BXTexture2DAtlas.h"
 
 
 @implementation BXTexture2DPreviewView
@@ -17,7 +18,7 @@
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+        mShowsAtlas = YES;
     }
     return self;
 }
@@ -44,8 +45,37 @@
              fromRect:NSMakeRect(0, 0, imageSize.width, imageSize.height)
             operation:NSCompositeSourceOver
              fraction:1.0];
+    
+    if (mShowsAtlas) {
+        [[NSGraphicsContext currentContext] setShouldAntialias:NO];
+        
+        int atlasCount = [theTexSpec atlasCount];
+        for (int i = 0; i < atlasCount; i++) {
+            BXTexture2DAtlas* anAtlas = [theTexSpec atlasAtIndex:i];
+            KRVector2DInt atlasStartPos = [anAtlas startPos];
+            KRVector2DInt atlasSize = [anAtlas size];
+            KRVector2DInt atlasCount = [anAtlas count];
+            for (int y = 0; y < atlasCount.y; y++) {
+                for (int x = 0; x < atlasCount.x; x++) {
+                    NSRect theRect = NSMakeRect((atlasStartPos.x+atlasSize.x*x) * scale, (atlasStartPos.y+atlasSize.y*y) * scale, atlasSize.x * scale - 1, atlasSize.y * scale - 1);
+                    
+                    [[NSColor colorWithCalibratedRed:1.0 green:0.0 blue:0.0 alpha:0.2] set];
+                    [NSBezierPath fillRect:theRect];
+
+                    [[NSColor redColor] set];
+                    [NSBezierPath strokeRect:theRect];
+                }
+            }
+        }
+    }
 
     [[NSGraphicsContext currentContext] restoreGraphicsState];
+}
+
+- (void)setShowsAtlas:(BOOL)flag
+{
+    mShowsAtlas = flag;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)updateFrame

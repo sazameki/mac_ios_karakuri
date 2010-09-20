@@ -15,8 +15,11 @@
 
 @interface BXTexture2DPreviewView : NSView {
     IBOutlet BXDocument*    oDocument;
+    
+    BOOL    mShowsAtlas;
 }
 
+- (void)setShowsAtlas:(BOOL)flag;
 - (void)updateFrame;
 
 @end
