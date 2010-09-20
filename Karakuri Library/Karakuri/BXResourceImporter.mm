@@ -365,7 +365,7 @@
 {
     unsigned infoSize = [mContext readUnsignedIntValue];
     NSData* data = [mContext readDataWithLength:infoSize];
-
+    
     NSString* errorStr = nil;
     NSDictionary* tex2DInfo = [NSPropertyListSerialization propertyListFromData:data
                                                                mutabilityOption:NSPropertyListImmutable
@@ -375,20 +375,24 @@
     if ([mContext checkResourceType] != BXResourceTypeData) {
         throw KRRuntimeError("KRGameManager::addResources(): Resource data is lacking: 0x%06x", [mContext currentPos]-4);
     }
-
+    
     unsigned dataLength = [mContext readUnsignedIntValue];
     unsigned dataStartPos = [mContext currentPos];
-
+    
     int groupID = [[tex2DInfo objectForKey:@"Group ID"] intValue];
+    int resourceID = [[tex2DInfo objectForKey:@"Resource ID"] intValue];
     NSString* resourceName = [tex2DInfo objectForKey:@"Resource Name"];
     NSString* ticket = [tex2DInfo objectForKey:@"Ticket"];
     
+    NSLog(@"Resource: %@ (id=%d)", resourceName, resourceID);
+
     gKRTex2DMan->_addTexture(groupID,
                              [resourceName cStringUsingEncoding:NSUTF8StringEncoding],
+                             resourceID,
                              [ticket cStringUsingEncoding:NSUTF8StringEncoding],
                              [mFileName cStringUsingEncoding:NSUTF8StringEncoding],
                              dataStartPos, dataLength);
-
+    
     [mContext skip:dataLength];
 }
 

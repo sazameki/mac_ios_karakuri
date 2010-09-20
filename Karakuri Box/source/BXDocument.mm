@@ -431,8 +431,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 
-/*- (void)exportAllResources:(id)sender
+- (void)exportAllResources:(id)sender
 {
+/*
     NSSavePanel* savePanel = [NSSavePanel savePanel];
     
     [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"krrs"]];
@@ -445,7 +446,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
                         modalDelegate:self
                        didEndSelector:@selector(exportPanelDidEnd:returnCode:contextInfo:)
                           contextInfo:nil];
-}*/
+*/
+}
 
 - (void)exportSelectedResource:(id)sender
 {
@@ -538,6 +540,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self exportResourceHeaderToFileHandle:fileHandle];
 
     // リソースの書き出し
+    [mTex2DGroup exportToFileHandle:fileHandle];
     [mChara2DGroup exportToFileHandle:fileHandle];
     [mParticle2DGroup exportToFileHandle:fileHandle];
 

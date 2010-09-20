@@ -78,7 +78,7 @@ public:
     void    setTextureAtlasSize(int texID, const KRVector2D& size);
     
     
-    void    _addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
+    void    _addTexture(int groupID, const std::string& resourceName, int texID, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
 
     void        _setDivForTicket(const std::string& ticket, int divX, int divY);
     int         _getTextureIDForTicket(const std::string& ticket);

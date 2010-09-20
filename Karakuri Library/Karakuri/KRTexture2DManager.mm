@@ -51,10 +51,13 @@ void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& i
     setTextureAtlasSize(texID, atlasSize);
 }
 
-void KRTexture2DManager::_addTexture(int groupID, const std::string& resourceName, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
+void KRTexture2DManager::_addTexture(int groupID, const std::string& resourceName, int texID, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length)
 {
-    static int texID = 1000000;
-    texID++;
+    static int undefinedTexID = 1000000;
+    if (texID == 0) {
+        texID = undefinedTexID;
+        undefinedTexID++;
+    }    
     
     std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
     theTexIDList.push_back(texID);

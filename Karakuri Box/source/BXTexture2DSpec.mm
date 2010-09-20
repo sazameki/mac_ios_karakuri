@@ -9,6 +9,8 @@
 #import "BXTexture2DSpec.h"
 #import "BXDocument.h"
 #import "NSDictionary+LoadSave.h"
+#import "NSFileHandle+BXExport.h"
+#import "NSImage+BXEx.h"
 
 
 @implementation BXTexture2DSpec
@@ -113,7 +115,39 @@
     // プレビュー
     mPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mPreviewScale];
 }    
-    
+
+- (void)exportToFileHandle:(NSFileHandle*)fileHandle
+{
+    // リソースの書き出し（カスタム画像）
+    if (mImageTicket && [mImageTicket length] > 0) {
+        NSString* errorStr = nil;
+
+        BXResourceFileManager* fileManager = [[self document] fileManager];
+        NSImage* image = [fileManager image72dpiForTicket:mImageTicket];
+        NSData* pngData = [image pngData];
+        
+        NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
+        [texInfo setIntValue:mGroupID forName:@"Group ID"];
+        [texInfo setObject:mImageTicket forKey:@"Ticket"];
+        [texInfo setIntValue:mResourceID forName:@"Resource ID"];
+        [texInfo setObject:[fileManager resourceNameForTicket:mImageTicket] forKey:@"Resource Name"];
+        NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
+                                                                         format:NSPropertyListBinaryFormat_v1_0
+                                                               errorDescription:&errorStr];
+        
+        // ヘッダ
+        [fileHandle writeBuffer:"KRT2" length:4];
+        [fileHandle writeUnsignedIntValue:[texInfoData length]];
+        [fileHandle writeData:texInfoData];
+        
+        // データ
+        [fileHandle writeBuffer:"KRDT" length:4];
+        [fileHandle writeUnsignedIntValue:[pngData length]];
+        [fileHandle writeData:pngData];
+    }
+}
+
+
 @end
 
 
