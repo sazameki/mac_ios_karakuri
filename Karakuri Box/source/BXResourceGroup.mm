@@ -65,6 +65,24 @@
 @end
 
 
+@implementation BXResourceGroup (Texture2DSerialization)
+
+- (void)readTexture2DInfosData:(NSData*)data document:(BXDocument*)document
+{
+    NSArray* infos = [NSPropertyListSerialization propertyListFromData:data
+                                                      mutabilityOption:NSPropertyListImmutable
+                                                                format:NULL
+                                                      errorDescription:nil];
+    int infoCount = [infos count];
+    for (int i = 0; i < infoCount; i++) {
+        NSDictionary* anInfo = [infos objectAtIndex:i];
+        [document addTexture2DWithInfo:anInfo];
+    }
+}
+
+@end
+
+
 @implementation BXResourceGroup (Chara2DSerialization)
 
 - (void)readChara2DInfosData:(NSData*)data document:(BXDocument*)document

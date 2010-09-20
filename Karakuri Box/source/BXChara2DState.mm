@@ -91,7 +91,8 @@
 
 - (void)renumberKomas
 {
-    for (int i = 0; i < [mKomas count]; i++) {
+    unsigned komaCount = [mKomas count];
+    for (int i = 0; i < komaCount; i++) {
         BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
         [aKoma setKomaNumber:i+1];
     }
@@ -136,7 +137,28 @@
 
 - (void)removeKomaAtIndex:(int)index
 {
+    // 削除対象のコマ
     BXChara2DKoma* theKoma = [mKomas objectAtIndex:index];
+    
+    // 削除対象のコマを GOTO のターゲットに参照しているコマの処理
+    unsigned komaCount = [mKomas count];
+    for (unsigned i = 0; i < komaCount; i++) {
+        if (i == index) {
+            continue;
+        }
+        BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
+        if ([aKoma gotoTarget] == theKoma) {
+            BXChara2DKoma* nextKoma = nil;
+            if (index+1 < komaCount && index+1 != i) {
+                nextKoma = [mKomas objectAtIndex:index+1];
+            } else if (index-1 >= 0 && index-1 != i) {
+                nextKoma = [mKomas objectAtIndex:index-1];
+            }
+            [aKoma setGotoTarget:nextKoma];
+        }
+    }
+    
+    // 削除の実行
     [theKoma setParentState:nil];
     BXChara2DImage* theImage = [theKoma image];
     [theImage decrementUsedCount];
@@ -166,7 +188,6 @@
         if (i == sourceIndex) {
             continue;
         }
-        
         NSMenuItem* menuItem = [ret addItemWithTitle:[NSString stringWithFormat:@"%d", i]
                                               action:@selector(changedChara2DKomaGotoTarget:)
                                        keyEquivalent:@""];

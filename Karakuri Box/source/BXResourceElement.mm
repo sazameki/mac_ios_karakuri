@@ -26,7 +26,7 @@
     self = [super init];
     if (self) {
         mResourceName = [name copy];
-        mChildElements = [[NSMutableArray alloc] init];
+        mChildElements = [NSMutableArray new];
         
         mGroupID = 0;
         mResourceID = 99;

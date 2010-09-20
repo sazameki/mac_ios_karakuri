@@ -9,6 +9,7 @@
 #import "BXDocument.h"
 
 #import "BXBackgroundSpec.h"
+#import "BXTexture2DSpec.h"
 #import "BXChara2DSpec.h"
 #import "BXParticle2DSpec.h"
 #import "BXBGMResource.h"
@@ -18,6 +19,7 @@
 
 
 static NSString*    sKADocumentToolbarItemAddBackground = @"KADocumentToolbarItemAddBackground";
+static NSString*    sKADocumentToolbarItemAddTexture2D  = @"KADocumentToolbarItemAddTexture2D";
 static NSString*    sKADocumentToolbarItemAddChara2D    = @"KADocumentToolbarItemAddChara2D";
 static NSString*    sKADocumentToolbarItemAddParticle2D = @"KADocumentToolbarItemAddParticle2D";
 static NSString*    sKADocumentToolbarItemAddBGM        = @"KADocumentToolbarItemAddBGM";
@@ -72,6 +74,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         mBackgroundGroup = [[[BXResourceGroup alloc] initWithName:@"*bg-group"] autorelease];
         [mBackgroundGroup setDocument:self];
 
+        mTex2DGroup = [[[BXResourceGroup alloc] initWithName:@"*tex2d-group"] autorelease];
+        [mTex2DGroup setDocument:self];
+
         mChara2DGroup = [[[BXResourceGroup alloc] initWithName:@"*chara2d-group"] autorelease];
         [mChara2DGroup setDocument:self];
         
@@ -88,6 +93,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [mStageGroup setDocument:self];
 
         //[mRootElements addObject:mBackgroundGroup];
+        [mRootElements addObject:mTex2DGroup];
         [mRootElements addObject:mChara2DGroup];
         [mRootElements addObject:mParticle2DGroup];
         //[mRootElements addObject:mBGMGroup];
@@ -113,6 +119,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     
     if (contentsWrapper) {
+        NSFileWrapper* tex2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Texture2DInfos.plist"];
+        if (tex2DInfosWrapper) {
+            [mTex2DGroup readTexture2DInfosData:[tex2DInfosWrapper regularFileContents] document:self];
+        }
+        
         NSFileWrapper* chara2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Chara2DInfos.plist"];
         if (chara2DInfosWrapper) {
             [mChara2DGroup readChara2DInfosData:[chara2DInfosWrapper regularFileContents] document:self];
@@ -125,6 +136,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     }
     
     [oElementView reloadData];
+    if ([mTex2DGroup childCount] > 0) {
+        [oElementView expandItem:mTex2DGroup];
+    }
     if ([mChara2DGroup childCount] > 0) {
         [oElementView expandItem:mChara2DGroup];
     }
@@ -225,6 +239,16 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     return [oElementView itemAtRow:selectedRow];
 }
 
+- (BXTexture2DSpec*)selectedTex2DSpec
+{
+    BXResourceElement* selectedElem = [self selectedResourceElement];
+    
+    if ([selectedElem isKindOfClass:[BXTexture2DSpec class]]) {
+        return (BXTexture2DSpec*)selectedElem;
+    }
+    return nil;
+}
+
 - (BXChara2DSpec*)selectedChara2DSpec
 {
     BXResourceElement* selectedElem = [self selectedResourceElement];
@@ -302,6 +326,29 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     int row = [oElementView rowForItem:newBGSpec];
     [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
+
+- (void)addTexture2D:(id)sender
+{
+    BXTexture2DSpec* newTexSpec = [[[BXTexture2DSpec alloc] initWithName:@"New Texture"] autorelease];
+    [newTexSpec setDocument:self];
+    
+    if ([mTex2DGroup childCount] > 0) {
+        int lastID = [[mTex2DGroup childAtIndex:[mTex2DGroup childCount]-1] resourceID];
+        [newTexSpec setResourceID:lastID+1];
+    } else {
+        [newTexSpec setResourceID:1000];
+    }
+
+    [mTex2DGroup addChild:newTexSpec];
+
+    [oElementView reloadData];
+    [oElementView expandItem:mTex2DGroup];
+
+    int row = [oElementView rowForItem:newTexSpec];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (void)addChara2D:(id)sender
@@ -548,6 +595,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     NSMutableString* headerContent = [[NSMutableString alloc] initWithFormat:@"// Karakuri Box Exported Resource IDs (%@)\n\n", [NSDate date]];
 
+    [headerContent appendString:@"// 2D Texture IDs\n"];
+    [headerContent appendString:@"struct TexID {\n    enum {\n"];
+    [mTex2DGroup exportIDsToString:headerContent];
+    [headerContent appendString:@"    };\n};\n\n"];
+    
     [headerContent appendString:@"// 2D Character IDs\n"];
     [headerContent appendString:@"struct CharaID {\n    enum {\n"];
     [mChara2DGroup exportIDsToString:headerContent];
@@ -564,6 +616,96 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         NSLog(@"Failed to export resource IDs...");
     }
 }
+
+
+#pragma mark -
+#pragma mark 2Dテクスチャの設定アクション
+
+- (IBAction)referTex2DFile:(id)sender
+{
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
+    [openPanel setCanChooseDirectories:NO];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel beginSheetForDirectory:nil
+                                 file:nil
+                                types:[NSImage imageFileTypes]
+                       modalForWindow:oMainWindow
+                        modalDelegate:self
+                       didEndSelector:@selector(tex2DImageSheetDidEnd:returnCode:context:)
+                          contextInfo:nil];    
+}
+
+- (void)tex2DImageSheetDidEnd:(NSOpenPanel*)panel
+                     returnCode:(int)returnCode
+                        context:(void*)context
+{
+    if (returnCode == NSOKButton) {
+        NSString* filename = [panel filename];
+        
+        BXTexture2DSpec* theTexSpec = [self selectedTex2DSpec];
+        [theTexSpec setPreviewScale:1.0];
+        [theTexSpec setImageWithFileAtPath:filename];
+        [self setupEditorUIForTexture2D:theTexSpec];
+        [oTex2DPreviewView updateFrame];
+        [oTex2DPreviewView setNeedsDisplay:YES];
+        
+        [self updateChangeCount:NSChangeUndone];
+    }
+}
+
+- (IBAction)changedTex2DPreviewScale:(id)sender
+{
+    int scaleTag = [oTex2DPreviewScaleButton selectedTag];
+    double scale = (double)scaleTag / 100.0;
+
+    BXTexture2DSpec* theTexSpec = [self selectedTex2DSpec];
+    [theTexSpec setPreviewScale:scale];
+    [oTex2DPreviewView updateFrame];
+    [oTex2DPreviewView setNeedsDisplay:YES];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)changedTex2DGroupID:(id)sender
+{
+    BXTexture2DSpec* texSpec = [self selectedTex2DSpec];
+    if (!texSpec) {
+        return;
+    }
+    
+    int theID = [oTex2DGroupIDField intValue];
+    [texSpec setGroupID:theID];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)changedTex2DResourceID:(id)sender
+{
+    int theID = [oTex2DResourceIDField intValue];
+    
+    BXTexture2DSpec* texSpec = [self selectedTex2DSpec];
+    [texSpec setResourceID:theID];
+    
+    [oElementView reloadData];
+    
+    int theRow = [oElementView rowForItem:texSpec];
+    [oElementView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
+- (IBAction)changedTex2DResourceName:(id)sender
+{
+    NSString* theName = [oTex2DResourceNameField stringValue];
+    
+    BXTexture2DSpec* texSpec = [self selectedTex2DSpec];
+    [texSpec setResourceName:theName];
+    
+    [oElementView reloadData];
+    
+    [self updateChangeCount:NSChangeUndone];
+}
+
 
 
 #pragma mark -
@@ -1026,6 +1168,18 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         [self updateChangeCount:NSChangeUndone];
     }
+}
+
+
+#pragma mark-
+#pragma mark 2Dテクスチャに関係する操作
+
+- (void)addTexture2DWithInfo:(NSDictionary*)theInfo
+{
+    BXTexture2DSpec* newTexSpec = [[[BXTexture2DSpec alloc] initWithName:@"New Texture"] autorelease];
+    [newTexSpec setDocument:self];
+    [newTexSpec restoreElementInfo:theInfo document:self];
+    [mTex2DGroup addChild:newTexSpec];
 }
 
 
@@ -1762,6 +1916,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [resourcesWrapper removeFileWrapper:resourceMapWrapper];
     }
     [resourcesWrapper addRegularFileWithContents:[mFileManager resourceMapData] preferredFilename:@"ResourceMap.plist"];
+
+    NSFileWrapper* tex2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Texture2DInfos.plist"];
+    if (tex2DInfosWrapper) {
+        [contentsWrapper removeFileWrapper:tex2DInfosWrapper];
+    }
     
     NSFileWrapper* chara2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Chara2DInfos.plist"];
     if (chara2DInfosWrapper) {
@@ -1773,6 +1932,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [contentsWrapper removeFileWrapper:particle2DInfosWrapper];
     }
     
+    [contentsWrapper addRegularFileWithContents:[mTex2DGroup groupData] preferredFilename:@"Texture2DInfos.plist"];
     [contentsWrapper addRegularFileWithContents:[mChara2DGroup groupData] preferredFilename:@"Chara2DInfos.plist"];
     [contentsWrapper addRegularFileWithContents:[mParticle2DGroup groupData] preferredFilename:@"Particle2DInfos.plist"];
     
@@ -1852,6 +2012,16 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DImageDivYField setEnabled:YES];
         }
     }
+}
+
+- (void)setupEditorUIForTexture2D:(BXTexture2DSpec*)theSpec
+{
+    [oTex2DGroupIDField setIntValue:[theSpec groupID]];
+    [oTex2DResourceIDField setIntValue:[theSpec resourceID]];
+    [oTex2DResourceNameField setStringValue:[theSpec resourceName]];
+    [oTex2DImageNameField setStringValue:[theSpec imageName]];
+    
+    [oTex2DPreviewScaleButton selectItemWithTag:(int)([theSpec previewScale] * 100)];
 }
 
 - (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec
@@ -2119,6 +2289,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     else if (outlineView == oChara2DKomaListView) {
         // Root
         if (!item) {
+            NSLog(@"child-koma: %d", index);
             BXChara2DState* selectedState = [self selectedChara2DState];
             return [selectedState komaAtIndex:index];
         }
@@ -2284,6 +2455,16 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
             [oParticleView setupForParticleSpec:theParticleSpec];
             [oEditorTabView selectTabViewItemWithIdentifier:@"particle2d-editor"];
+        }
+        // テクスチャの編集
+        else if ([theElem isKindOfClass:[BXTexture2DSpec class]]) {
+            BXTexture2DSpec* theTexSpec = (BXTexture2DSpec*)theElem;
+
+            [self setupEditorUIForTexture2D:theTexSpec];
+
+            [oTex2DPreviewView updateFrame];
+            [oTex2DPreviewView setNeedsDisplay:YES];
+            [oEditorTabView selectTabViewItemWithIdentifier:@"texture2d-editor"];
         }
         // 選択なし
         else {
@@ -2480,6 +2661,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     return [NSArray arrayWithObjects:
             //sKADocumentToolbarItemAddBackground,
+            sKADocumentToolbarItemAddTexture2D,
             sKADocumentToolbarItemAddChara2D,
             sKADocumentToolbarItemAddParticle2D,
             //sKADocumentToolbarItemAddBGM,
@@ -2492,6 +2674,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     return [NSArray arrayWithObjects:
             //sKADocumentToolbarItemAddBackground,
+            sKADocumentToolbarItemAddTexture2D,
             sKADocumentToolbarItemAddChara2D,
             sKADocumentToolbarItemAddParticle2D,
             //sKADocumentToolbarItemAddBGM,
@@ -2510,6 +2693,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddBackground]) {
         [ret setTarget:self];
         [ret setAction:@selector(addBackground:)];
+    }
+    else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddTexture2D]) {
+        [ret setTarget:self];
+        [ret setAction:@selector(addTexture2D:)];
+        [ret setImage:[NSImage imageNamed:@"tbi_tex2d.tiff"]];
     }
     else if ([itemIdentifier isEqualToString:sKADocumentToolbarItemAddChara2D]) {
         [ret setTarget:self];

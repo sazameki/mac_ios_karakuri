@@ -53,6 +53,9 @@
 		8E62A5B6113AE08F005DC90E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B5113AE08F005DC90E /* Localizable.strings */; };
 		8E62A5B9113AE0BE005DC90E /* BXDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E62A5B7113AE0BE005DC90E /* BXDocument.xib */; };
 		8E62A5CB113AE18A005DC90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E62A5CA113AE18A005DC90E /* OpenGL.framework */; };
+		8E72FC1B12479FB6000B8B0E /* tbi_tex2d.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8E72FC1A12479FB6000B8B0E /* tbi_tex2d.tiff */; };
+		8E72FC281247A009000B8B0E /* BXTexture2DSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E72FC271247A009000B8B0E /* BXTexture2DSpec.mm */; };
+		8E72FCE41247A8A5000B8B0E /* BXTexture2DPreviewView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E72FCE31247A8A5000B8B0E /* BXTexture2DPreviewView.mm */; };
 		8E848159114F0FC70068D47F /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E848157114F0FC70068D47F /* NSString+UUID.m */; };
 		8E84827F1150D1F80068D47F /* NSFileHandle+BXExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E84827E1150D1F80068D47F /* NSFileHandle+BXExport.m */; };
 		8E84ADBA11489B4B00438868 /* transparent_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E84ADB911489B4B00438868 /* transparent_pattern.png */; };
@@ -157,6 +160,11 @@
 		8E62A5B5113AE08F005DC90E /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		8E62A5B8113AE0BE005DC90E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BXDocument.xib; sourceTree = "<group>"; };
 		8E62A5CA113AE18A005DC90E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		8E72FC1A12479FB6000B8B0E /* tbi_tex2d.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = tbi_tex2d.tiff; sourceTree = "<group>"; };
+		8E72FC261247A009000B8B0E /* BXTexture2DSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXTexture2DSpec.h; sourceTree = "<group>"; };
+		8E72FC271247A009000B8B0E /* BXTexture2DSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXTexture2DSpec.mm; sourceTree = "<group>"; };
+		8E72FCE21247A8A5000B8B0E /* BXTexture2DPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXTexture2DPreviewView.h; sourceTree = "<group>"; };
+		8E72FCE31247A8A5000B8B0E /* BXTexture2DPreviewView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXTexture2DPreviewView.mm; sourceTree = "<group>"; };
 		8E848157114F0FC70068D47F /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		8E848158114F0FC70068D47F /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
 		8E84827D1150D1F80068D47F /* NSFileHandle+BXExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileHandle+BXExport.h"; sourceTree = "<group>"; };
@@ -344,6 +352,7 @@
 			children = (
 				8E2AEDDB113AE35A00D32EFE /* Base */,
 				8ED752A9113B8EB2004E78EB /* Background */,
+				8E72FC2512479FE8000B8B0E /* Tex2D */,
 				8E2AEDDC113AE36400D32EFE /* Chara2D */,
 				8E2AEDDD113AE36E00D32EFE /* Particle2D */,
 				8ED7529F113B8DE7004E78EB /* BGM */,
@@ -435,6 +444,7 @@
 				8ED0E20F11ED39B800A7553A /* krbox-icon.icns */,
 				8EAB62AE114CF9A100C2CBC5 /* tbi_chara2d.tiff */,
 				8EAB6287114CEDC700C2CBC5 /* tbi_particle2d.tiff */,
+				8E72FC1A12479FB6000B8B0E /* tbi_tex2d.tiff */,
 				8E84ADB911489B4B00438868 /* transparent_pattern.png */,
 				8E62A5A6113AE082005DC90E /* SZSplitView */,
 				8E62A59F113AE082005DC90E /* Particle */,
@@ -488,6 +498,17 @@
 				8EE2F660115E46BE0041C1DE /* UserDefaults.plist */,
 			);
 			name = Strings;
+			sourceTree = "<group>";
+		};
+		8E72FC2512479FE8000B8B0E /* Tex2D */ = {
+			isa = PBXGroup;
+			children = (
+				8E72FC261247A009000B8B0E /* BXTexture2DSpec.h */,
+				8E72FC271247A009000B8B0E /* BXTexture2DSpec.mm */,
+				8E72FCE21247A8A5000B8B0E /* BXTexture2DPreviewView.h */,
+				8E72FCE31247A8A5000B8B0E /* BXTexture2DPreviewView.mm */,
+			);
+			name = Tex2D;
 			sourceTree = "<group>";
 		};
 		8E8A4118114A3DCC004C96A6 /* settings */ = {
@@ -617,6 +638,7 @@
 				8E4B236411F20A690041E14D /* particle_fire_128.png in Resources */,
 				8EFA8A1A11F2CDC600022A95 /* particle_smoke_256.png in Resources */,
 				8EFA8A3311F2CE8900022A95 /* particle_smoke_128.png in Resources */,
+				8E72FC1B12479FB6000B8B0E /* tbi_tex2d.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +692,8 @@
 				8EAB6186114CDC2100C2CBC5 /* BXResourceListView.mm in Sources */,
 				8E848159114F0FC70068D47F /* NSString+UUID.m in Sources */,
 				8E84827F1150D1F80068D47F /* NSFileHandle+BXExport.m in Sources */,
+				8E72FC281247A009000B8B0E /* BXTexture2DSpec.mm in Sources */,
+				8E72FCE41247A8A5000B8B0E /* BXTexture2DPreviewView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

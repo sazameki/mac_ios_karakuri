@@ -16,6 +16,7 @@
 #import "BXChara2DKoma.h"
 #import "BXChara2DKomaPreviewView.h"
 #import "BXChara2DSimulatorView.h"
+#import "BXTexture2DPreviewView.h"
 
 
 @interface BXDocument : NSDocument
@@ -27,6 +28,14 @@
     IBOutlet SZStatusBarBackgroundView* oStatusBarBGView;
     IBOutlet NSView*                    oExportAccessoryView;
     IBOutlet NSMatrix*                  oExportOptionMatrix;
+
+    ///// 2Dテクスチャの設定用アウトレット
+    IBOutlet NSTextField*               oTex2DGroupIDField;
+    IBOutlet NSTextField*               oTex2DResourceIDField;
+    IBOutlet NSTextField*               oTex2DResourceNameField;
+    IBOutlet NSTextField*               oTex2DImageNameField;
+    IBOutlet NSPopUpButton*             oTex2DPreviewScaleButton;
+    IBOutlet BXTexture2DPreviewView*    oTex2DPreviewView;
 
     ///// 2Dキャラクタの設定用アウトレット
     IBOutlet NSTextField*               oChara2DGroupIDField;
@@ -119,6 +128,7 @@
     NSMutableArray*     mRootElements;
     
     BXResourceGroup*    mBackgroundGroup;
+    BXResourceGroup*    mTex2DGroup;
     BXResourceGroup*    mChara2DGroup;
     BXResourceGroup*    mParticle2DGroup;
     BXResourceGroup*    mBGMGroup;
@@ -132,6 +142,7 @@
 
 ///// 一般的なアクション
 
+- (void)addTexture2D:(id)sender;
 - (void)addChara2D:(id)sender;
 - (void)addParticle2D:(id)sender;
 
@@ -139,6 +150,15 @@
 - (void)exportSelectedResource:(id)sender;
 
 - (void)updateExportedResources:(id)sender;
+
+
+///// 2Dテクスチャ設定アクション
+
+- (IBAction)referTex2DFile:(id)sender;
+- (IBAction)changedTex2DPreviewScale:(id)sender;
+- (IBAction)changedTex2DGroupID:(id)sender;
+- (IBAction)changedTex2DResourceID:(id)sender;
+- (IBAction)changedTex2DResourceName:(id)sender;
 
 
 ///// 2Dキャラクタ設定アクション
@@ -211,6 +231,14 @@
 - (IBAction)changedParticleBGColor1:(id)sender;
 
 - (IBAction)removeSelectedParticle2D:(id)sender;
+
+
+///// 2Dテクスチャ設定に関するメソッド
+
+- (BXTexture2DSpec*)selectedTex2DSpec;
+
+- (void)addTexture2DWithInfo:(NSDictionary*)theInfo;
+- (void)setupEditorUIForTexture2D:(BXTexture2DSpec*)theSpec;
 
 
 ///// 2Dキャラクタ設定に関するメソッド

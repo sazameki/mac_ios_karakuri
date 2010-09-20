@@ -21,6 +21,13 @@
 @end
 
 
+@interface BXResourceGroup (Texture2DSerialization)
+
+- (void)readTexture2DInfosData:(NSData*)data document:(BXDocument*)document;
+
+@end
+
+
 @interface BXResourceGroup (Chara2DSerialization)
 
 - (void)readChara2DInfosData:(NSData*)data document:(BXDocument*)document;
