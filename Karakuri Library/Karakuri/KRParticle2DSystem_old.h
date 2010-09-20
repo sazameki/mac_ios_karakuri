@@ -9,6 +9,7 @@
 #pragma once
 
 #include <Karakuri/Karakuri.h>
+#include <AvailabilityMacros.h>
 
 
 #define KR_PARTICLE2D_USE_POINT_SPRITE  0
@@ -107,7 +108,7 @@ public:
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(const std::string& filename, bool doLoop=false);
+    KRParticle2DSystem(const std::string& filename, bool doLoop=false) DEPRECATED_ATTRIBUTE;
 
     /*!
         @method KRParticle2DSystem
@@ -116,8 +117,8 @@ public:
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
-    KRParticle2DSystem(KRTexture2D* texture, bool doLoop=false);
-    virtual ~KRParticle2DSystem();
+    KRParticle2DSystem(KRTexture2D* texture, bool doLoop=false) DEPRECATED_ATTRIBUTE;
+    virtual ~KRParticle2DSystem() DEPRECATED_ATTRIBUTE;
     
 private:
     void    init();
@@ -131,13 +132,13 @@ public:
         @method draw
         このパーティクル・システムで生成されたすべてのパーティクルを描画します。
      */
-    void    draw();
+    void    draw() DEPRECATED_ATTRIBUTE;
     
     /*!
         @method step
         設定に基づいて必要なパーティクルを生成し、生成されたすべてのパーティクルを動かします。基本的に、1フレームに1回この関数を呼び出してください。
      */
-    void    step();
+    void    step() DEPRECATED_ATTRIBUTE;
 
 public:
     /*!
@@ -148,13 +149,13 @@ public:
         @method getStartPos
         ループ実行時のパーティクルの生成時の位置を取得します。
      */
-    KRVector2D  getStartPos() const;
+    KRVector2D  getStartPos() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setStartPos
         ループ実行時のパーティクルの生成時の位置を設定します。
      */
-    void    setStartPos(const KRVector2D& pos);
+    void    setStartPos(const KRVector2D& pos) DEPRECATED_ATTRIBUTE;
     
 public:
     /*!
@@ -166,7 +167,7 @@ public:
         @abstract 新しいパーティクル生成ポイントを指定された座標に追加します。
         setParticleCount() 関数で設定された最大個数だけパーティクルを生成した時点で、その生成ポイントは削除されます。
      */
-    void    addGenerationPoint(const KRVector2D& pos);
+    void    addGenerationPoint(const KRVector2D& pos) DEPRECATED_ATTRIBUTE;
 
 public:
     /*!
@@ -178,191 +179,191 @@ public:
         @abstract パーティクルを描画するためのブレンドモードを設定します。
         デフォルトのブレンドモードは、KRBlendModeAddition に設定されています。
      */
-    void    setBlendMode(KRBlendMode blendMode);
+    void    setBlendMode(KRBlendMode blendMode) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setColor
         パーティクル描画時に適用される初期カラーを設定します。
      */
-    void    setColor(const KRColor& color);
+    void    setColor(const KRColor& color) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setColorDelta
         パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、各色成分の変化の割り合いを設定します。
      */
-    void    setColorDelta(double red, double green, double blue, double alpha);
+    void    setColorDelta(double red, double green, double blue, double alpha) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setGenerateCount
         @abstract 1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を設定します。
         マイナスの値を設定すると、それ以降パーティクルは生成されなくなります。
      */
-    void    setGenerateCount(int count);
+    void    setGenerateCount(int count) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setGravity
         @abstract 各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を設定します。
         デフォルトでは加速度は (0.0, 0.0) に設定されています。
      */
-    void    setGravity(const KRVector2D& a);
+    void    setGravity(const KRVector2D& a) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setLife
         @abstract 各パーティクルの生存期間を設定します。
         既に生成されているパーティクルには影響を及ぼしません。デフォルトの生存期間は、60フレーム（=1秒）です。
      */
-    void    setLife(unsigned life);
+    void    setLife(unsigned life) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setMaxV
         @abstract パーティクル生成時にランダムで設定される移動速度の最大値を設定します。
      */
-    void    setMaxV(const KRVector2D& v);
+    void    setMaxV(const KRVector2D& v) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setMinV
         @abstract パーティクル生成時にランダムで設定される移動速度の最小値を設定します。
      */
-    void    setMinV(const KRVector2D& v);
+    void    setMinV(const KRVector2D& v) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setParticleCount
         @abstract パーティクルの最大個数を設定します。
         デフォルトの設定では256個です。
      */
-    void    setParticleCount(unsigned count);
+    void    setParticleCount(unsigned count) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setSizeDelta
         パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、サイズの変化の割り合いを設定します。
      */
-    void    setSizeDelta(double value);
+    void    setSizeDelta(double value) DEPRECATED_ATTRIBUTE;
     
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-    void    setSize(double size);
+    void    setSize(double size) DEPRECATED_ATTRIBUTE;
 #else
     /*!
         @method setMaxSize
         各パーティクルの生成時の最大サイズを設定します。
      */
-    void    setMaxSize(double size);
+    void    setMaxSize(double size) DEPRECATED_ATTRIBUTE;
 
     /*!
         @method setMinSize
         各パーティクルの生成時の最小サイズを設定します。
      */
-    void    setMinSize(double size);    
+    void    setMinSize(double size) DEPRECATED_ATTRIBUTE;    
 #endif
     
 public:
     /*!
-        @task 現在の設定確認のための関数
+        @task 現在の設定を確認するための関数
      */
     
     /*!
         @method getBlendMode
         @abstract パーティクルを描画するためのブレンドモードを取得します。
      */
-    KRBlendMode getBlendMode() const;
+    KRBlendMode getBlendMode() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getColor
         @abstract パーティクル描画時に適用される初期カラーを取得します。
      */
-    KRColor     getColor() const;
+    KRColor     getColor() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaAlpha
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたアルファ成分の変化の割り合いを取得します。
      */
-    double      getDeltaAlpha() const;
+    double      getDeltaAlpha() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaBlue
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた青成分の変化の割り合いを取得します。
      */
-    double      getDeltaBlue() const;
+    double      getDeltaBlue() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaGreen
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた緑成分の変化の割り合いを取得します。
      */
-    double      getDeltaGreen() const;
+    double      getDeltaGreen() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaRed
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた赤成分の変化の割り合いを取得します。
      */
-    double      getDeltaRed() const;
+    double      getDeltaRed() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getDeltaSize
         @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたサイズの変化の割り合いを取得します。
      */
-    double      getDeltaSize() const;
+    double      getDeltaSize() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getGenerateCount
         @abstract 1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を取得します。
      */
-    int         getGenerateCount() const;
+    int         getGenerateCount() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getGeneratedParticleCount
         @abstract 現時点で生成されているパーティクルの個数を取得します。
      */
-    unsigned    getGeneratedParticleCount() const;
+    unsigned    getGeneratedParticleCount() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getGravity
         @abstract 各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を取得します。
      */
-    KRVector2D  getGravity() const;
+    KRVector2D  getGravity() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getLife
         @abstract 各パーティクルの生存期間を取得します。
      */
-    unsigned    getLife() const;
+    unsigned    getLife() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getMaxV
         @abstract パーティクル生成時にランダムで設定される移動速度の最大値を取得します。
      */
-    KRVector2D  getMaxV() const;
+    KRVector2D  getMaxV() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getMinV
         @abstract パーティクル生成時にランダムで設定される移動速度の最小値を取得します。
      */
-    KRVector2D  getMinV() const;
+    KRVector2D  getMinV() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getParticleCount
         @abstract パーティクルの最大個数を取得します。
      */
-    unsigned    getParticleCount() const;
+    unsigned    getParticleCount() const DEPRECATED_ATTRIBUTE;
     
 public:
 #if KR_PARTICLE2D_USE_POINT_SPRITE
-    double      getSize() const;
+    double      getSize() const DEPRECATED_ATTRIBUTE;
 #else
     /*!
         @method getMaxSize
         @abstract 各パーティクルの生成時の最大サイズを取得します。
      */
-    double      getMaxSize() const;
+    double      getMaxSize() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getMinSize
         @abstract 各パーティクルの生成時の最小サイズを取得します。
      */
-    double      getMinSize() const;
+    double      getMinSize() const DEPRECATED_ATTRIBUTE;
 #endif
     
 public:
     virtual std::string to_s() const;
 
-};
+} DEPRECATED_ATTRIBUTE;
 
 

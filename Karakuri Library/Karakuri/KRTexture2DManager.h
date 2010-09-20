@@ -30,7 +30,7 @@ class KRTexture2DManager : public KRObject {
     std::map<std::string, int>          mTicket_DivY_Map;
     std::map<int, std::string>          mTexID_Ticket_Map;
     
-    std::map<int, KRTexture2D*>         mTexMap;
+    std::map<int, _KRTexture2D*>        mTexMap;
 
     int         mNextNewTexID;
 
@@ -90,7 +90,7 @@ public:
     void    _unloadTextureFiles(int groupID);
     
     int     _getResourceSize(int groupID);
-    KRTexture2D*        _getTexture(int texID);
+    _KRTexture2D*       _getTexture(int texID);
     
     
 #pragma mark ---- テクスチャの描画 ----

@@ -86,11 +86,11 @@ bool KRSlider::update(KRInput* input)
 void KRSlider::draw(KRGraphics* g)
 {
     if (mThumbTexture == NULL && mThumbTextureName.length() > 0) {
-        mThumbTexture = new KRTexture2D(mThumbTextureName);
+        mThumbTexture = new _KRTexture2D(mThumbTextureName);
     }
     
     if (mBackTexture == NULL && mBackTextureName.length() > 0) {
-        mBackTexture = new KRTexture2D(mBackTextureName);
+        mBackTexture = new _KRTexture2D(mBackTextureName);
     }
     
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
@@ -107,19 +107,19 @@ void KRSlider::draw(KRGraphics* g)
         KRColor drawColor(1.0, 1.0, 1.0, alpha);
         
         // Left Edge
-        mBackTexture->drawAtPointEx_(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mBackTextureEdgeSize, mFrame.height),
+        mBackTexture->drawAtPointEx(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mBackTextureEdgeSize, mFrame.height),
                                      0.0, KRVector2DZero, KRVector2DOne, drawColor);
         
         // Left Background
-        mBackTexture->drawInRect_(KRRect2D(mFrame.x+mBackTextureEdgeSize, mFrame.y, (centerX-(mFrame.x+mBackTextureEdgeSize)), mFrame.height),
+        mBackTexture->drawInRect(KRRect2D(mFrame.x+mBackTextureEdgeSize, mFrame.y, (centerX-(mFrame.x+mBackTextureEdgeSize)), mFrame.height),
                                   KRRect2D(mBackTexture->getWidth()/2-1, 0, 1, mFrame.height), drawColor);
         
         // Right Background
-        mBackTexture->drawInRect_(KRRect2D(centerX, mFrame.y, mFrame.x+mFrame.width-centerX-mBackTextureEdgeSize, mFrame.height),
+        mBackTexture->drawInRect(KRRect2D(centerX, mFrame.y, mFrame.x+mFrame.width-centerX-mBackTextureEdgeSize, mFrame.height),
                                   KRRect2D(mBackTexture->getWidth()/2, 0, 1, mFrame.height), drawColor);
         
         // Right Edge
-        mBackTexture->drawAtPointEx_(KRVector2D(mFrame.x+mFrame.width-mBackTextureEdgeSize, mFrame.y),
+        mBackTexture->drawAtPointEx(KRVector2D(mFrame.x+mFrame.width-mBackTextureEdgeSize, mFrame.y),
                                      KRRect2D(mBackTexture->getWidth()-mBackTextureEdgeSize, 0, mBackTextureEdgeSize, mFrame.height),
                                      0.0, KRVector2DZero, KRVector2DOne, drawColor);
     } else {
@@ -129,7 +129,7 @@ void KRSlider::draw(KRGraphics* g)
     }
     
     if (mThumbTexture != NULL) {
-        mThumbTexture->drawAtPoint_(KRVector2D(centerX-thumbWidth/2, mFrame.y), KRColor(1.0, 1.0, 1.0, alpha));
+        mThumbTexture->drawAtPoint(KRVector2D(centerX-thumbWidth/2, mFrame.y), KRColor(1.0, 1.0, 1.0, alpha));
     } else {
         KRColor drawColor = KRColor::Yellow;
         if (!mIsEnabled) {

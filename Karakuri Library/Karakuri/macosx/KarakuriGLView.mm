@@ -108,9 +108,9 @@ static volatile BOOL    sIsReady = NO;
     mKRGLContext.cglContext = (CGLContextObj)[[self openGLContext] CGLContextObj];
     CGLSetCurrentContext(mKRGLContext.cglContext);
     
-    mDefaultTex = new KRTexture2D("Default.png");
+    mDefaultTex = new _KRTexture2D("Default.png");
 #if KR_IPHONE_MACOSX_EMU
-    mTouchTex = new KRTexture2D("/Developer/Extras/Karakuri/images/System/iPhone Emulator/touch_circle.png");
+    mTouchTex = new _KRTexture2D("/Developer/Extras/Karakuri/images/System/iPhone Emulator/touch_circle.png");
     [self clearTouches];
 #endif
 
@@ -130,12 +130,12 @@ static volatile BOOL    sIsReady = NO;
     }
     
     // 表画面と裏画面の両方に描画しておく
-    mDefaultTex->drawAtPointEx_(gKRScreenSize/2, KRRect2DZero, angle, KRVector2D(0.5, 0.5), KRVector2DOne, KRColor::White);
-    KRTexture2D::processBatchedTexture2DDraws();
+    mDefaultTex->drawAtPointEx(gKRScreenSize/2, KRRect2DZero, angle, KRVector2D(0.5, 0.5), KRVector2DOne, KRColor::White);
+    _KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);
 
-    mDefaultTex->drawAtPointEx_(gKRScreenSize/2, KRRect2DZero, angle, KRVector2D(0.5, 0.5), KRVector2DOne, KRColor::White);
-    KRTexture2D::processBatchedTexture2DDraws();
+    mDefaultTex->drawAtPointEx(gKRScreenSize/2, KRRect2DZero, angle, KRVector2D(0.5, 0.5), KRVector2DOne, KRColor::White);
+    _KRTexture2D::processBatchedTexture2DDraws();
     CGLFlushDrawable(mKRGLContext.cglContext);    
 
     [[KRGameController sharedController] setKRGLContext:&mKRGLContext];
@@ -517,7 +517,7 @@ static volatile BOOL    sIsReady = NO;
 
     for (int i = 0; i < 5; i++) {
         if (mTouchPos[i].x >= 0) {
-            mTouchTex->drawAtPointCenter_(mTouchPos[i], KRColor::White);
+            mTouchTex->drawAtPointCenter(mTouchPos[i], KRColor::White);
         }
     }
     

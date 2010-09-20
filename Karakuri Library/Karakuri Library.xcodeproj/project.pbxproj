@@ -90,6 +90,14 @@
 		8E2A1AFC1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
 		8E2A1AFD1025A1E700B5DD4C /* KarakuriGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */; };
 		8E2A1AFE1025A1E700B5DD4C /* KarakuriGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */; };
+		8E329261124725D500C0DEEA /* KRTexture2D_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E32925F124725D500C0DEEA /* KRTexture2D_old.h */; };
+		8E329262124725D500C0DEEA /* KRTexture2D_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E329260124725D500C0DEEA /* KRTexture2D_old.mm */; };
+		8E329263124725D500C0DEEA /* KRTexture2D_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E32925F124725D500C0DEEA /* KRTexture2D_old.h */; };
+		8E329264124725D500C0DEEA /* KRTexture2D_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E329260124725D500C0DEEA /* KRTexture2D_old.mm */; };
+		8E329265124725D500C0DEEA /* KRTexture2D_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E32925F124725D500C0DEEA /* KRTexture2D_old.h */; };
+		8E329266124725D500C0DEEA /* KRTexture2D_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E329260124725D500C0DEEA /* KRTexture2D_old.mm */; };
+		8E329267124725D500C0DEEA /* KRTexture2D_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E32925F124725D500C0DEEA /* KRTexture2D_old.h */; };
+		8E329268124725D500C0DEEA /* KRTexture2D_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E329260124725D500C0DEEA /* KRTexture2D_old.mm */; };
 		8E37113E11511CA300B1655B /* BXResourceImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E37113C11511CA300B1655B /* BXResourceImporter.h */; };
 		8E37113F11511CA300B1655B /* BXResourceImporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E37113D11511CA300B1655B /* BXResourceImporter.mm */; };
 		8E37114011511CA300B1655B /* BXResourceImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E37113C11511CA300B1655B /* BXResourceImporter.h */; };
@@ -423,6 +431,14 @@
 		8E6023C01032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */; };
 		8E6023C11032B0E20009C1F4 /* KRSimulator2DJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E6023B91032B0E20009C1F4 /* KRSimulator2DJoint.h */; };
 		8E6023C21032B0E20009C1F4 /* KRSimulator2DJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */; };
+		8E72F99F12472D5A000B8B0E /* KRFont_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E72F99D12472D5A000B8B0E /* KRFont_old.h */; };
+		8E72F9A012472D5A000B8B0E /* KRFont_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E72F99E12472D5A000B8B0E /* KRFont_old.mm */; };
+		8E72F9A112472D5A000B8B0E /* KRFont_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E72F99D12472D5A000B8B0E /* KRFont_old.h */; };
+		8E72F9A212472D5A000B8B0E /* KRFont_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E72F99E12472D5A000B8B0E /* KRFont_old.mm */; };
+		8E72F9A312472D5A000B8B0E /* KRFont_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E72F99D12472D5A000B8B0E /* KRFont_old.h */; };
+		8E72F9A412472D5A000B8B0E /* KRFont_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E72F99E12472D5A000B8B0E /* KRFont_old.mm */; };
+		8E72F9A512472D5A000B8B0E /* KRFont_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E72F99D12472D5A000B8B0E /* KRFont_old.h */; };
+		8E72F9A612472D5A000B8B0E /* KRFont_old.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8E72F99E12472D5A000B8B0E /* KRFont_old.mm */; };
 		8E75FE38105288CE0012DAD3 /* KRBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E75FE36105288CE0012DAD3 /* KRBundle.h */; };
 		8E75FE39105288CE0012DAD3 /* KRBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E75FE37105288CE0012DAD3 /* KRBundle.m */; };
 		8E75FE3A105288CE0012DAD3 /* KRBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E75FE36105288CE0012DAD3 /* KRBundle.h */; };
@@ -795,6 +811,8 @@
 		8E1B938B101F9E7500D643AA /* KRTextReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTextReader.mm; sourceTree = "<group>"; };
 		8E2A1AF71025A1E700B5DD4C /* KarakuriGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KarakuriGlobals.h; sourceTree = "<group>"; };
 		8E2A1AF81025A1E700B5DD4C /* KarakuriGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KarakuriGlobals.cpp; sourceTree = "<group>"; };
+		8E32925F124725D500C0DEEA /* KRTexture2D_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRTexture2D_old.h; sourceTree = "<group>"; };
+		8E329260124725D500C0DEEA /* KRTexture2D_old.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRTexture2D_old.mm; sourceTree = "<group>"; };
 		8E37113C11511CA300B1655B /* BXResourceImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXResourceImporter.h; sourceTree = "<group>"; };
 		8E37113D11511CA300B1655B /* BXResourceImporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXResourceImporter.mm; sourceTree = "<group>"; };
 		8E40509A1029C9A400615B74 /* libkarakuri-macphone-emu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libkarakuri-macphone-emu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -870,6 +888,8 @@
 		8E60214410322F8F0009C1F4 /* smsutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smsutils.h; sourceTree = "<group>"; };
 		8E6023B91032B0E20009C1F4 /* KRSimulator2DJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRSimulator2DJoint.h; sourceTree = "<group>"; };
 		8E6023BA1032B0E20009C1F4 /* KRSimulator2DJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KRSimulator2DJoint.cpp; sourceTree = "<group>"; };
+		8E72F99D12472D5A000B8B0E /* KRFont_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRFont_old.h; sourceTree = "<group>"; };
+		8E72F99E12472D5A000B8B0E /* KRFont_old.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KRFont_old.mm; sourceTree = "<group>"; };
 		8E75FE36105288CE0012DAD3 /* KRBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRBundle.h; sourceTree = "<group>"; };
 		8E75FE37105288CE0012DAD3 /* KRBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRBundle.m; sourceTree = "<group>"; };
 		8E87B6E5103A04F80010745C /* KRNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRNetwork.h; sourceTree = "<group>"; };
@@ -1297,6 +1317,8 @@
 				8E537E8C10FAA924003C76D0 /* KRAnime2DManager.mm */,
 				8E9792681020C00700E3EC7A /* KRFont.h */,
 				8E9792691020C00700E3EC7A /* KRFont.mm */,
+				8E72F99D12472D5A000B8B0E /* KRFont_old.h */,
+				8E72F99E12472D5A000B8B0E /* KRFont_old.mm */,
 				8EF5BF1D102D744F004367D1 /* KRParticle2DSystem.h */,
 				8EF5BF1E102D744F004367D1 /* KRParticle2DSystem.cpp */,
 				8E168F36122A362400462EA7 /* KRParticle2DSystem_old.h */,
@@ -1305,6 +1327,8 @@
 				8E946907102265240073A4FD /* KRPrimitive2D.cpp */,
 				8EAB5F82101B205C00DDA881 /* KRTexture2D.h */,
 				8EAB5F83101B205C00DDA881 /* KRTexture2D.mm */,
+				8E32925F124725D500C0DEEA /* KRTexture2D_old.h */,
+				8E329260124725D500C0DEEA /* KRTexture2D_old.mm */,
 				8E168D3A122A136800462EA7 /* KRTexture2DAtlas.h */,
 				8E168D39122A136800462EA7 /* KRTexture2DAtlas.cpp */,
 				8EAB5F84101B205C00DDA881 /* KRTexture2DLoader.h */,
@@ -1487,6 +1511,8 @@
 				8EBCAF5F11E71E130017A640 /* KRChara2D.h in Headers */,
 				8E168D40122A136800462EA7 /* KRTexture2DAtlas.h in Headers */,
 				8E168F3C122A362400462EA7 /* KRParticle2DSystem_old.h in Headers */,
+				8E329267124725D500C0DEEA /* KRTexture2D_old.h in Headers */,
+				8E72F9A112472D5A000B8B0E /* KRFont_old.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1580,6 +1606,8 @@
 				8E9C486011F611C200F2A5C2 /* KRProxyView.h in Headers */,
 				8E168D3C122A136800462EA7 /* KRTexture2DAtlas.h in Headers */,
 				8E168F38122A362400462EA7 /* KRParticle2DSystem_old.h in Headers */,
+				8E329261124725D500C0DEEA /* KRTexture2D_old.h in Headers */,
+				8E72F9A512472D5A000B8B0E /* KRFont_old.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1673,6 +1701,8 @@
 				8E9C486211F611C200F2A5C2 /* KRProxyView.h in Headers */,
 				8E168D3E122A136800462EA7 /* KRTexture2DAtlas.h in Headers */,
 				8E168F3A122A362400462EA7 /* KRParticle2DSystem_old.h in Headers */,
+				8E329263124725D500C0DEEA /* KRTexture2D_old.h in Headers */,
+				8E72F9A312472D5A000B8B0E /* KRFont_old.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1767,6 +1797,8 @@
 				8EBCAF6311E71E130017A640 /* KRChara2D.h in Headers */,
 				8E168D42122A136800462EA7 /* KRTexture2DAtlas.h in Headers */,
 				8E168F3E122A362400462EA7 /* KRParticle2DSystem_old.h in Headers */,
+				8E329265124725D500C0DEEA /* KRTexture2D_old.h in Headers */,
+				8E72F99F12472D5A000B8B0E /* KRFont_old.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2013,6 +2045,8 @@
 				8EBCAF6011E71E130017A640 /* KRChara2D.mm in Sources */,
 				8E168D3F122A136800462EA7 /* KRTexture2DAtlas.cpp in Sources */,
 				8E168F3D122A362400462EA7 /* KRParticle2DSystem_old.cpp in Sources */,
+				8E329268124725D500C0DEEA /* KRTexture2D_old.mm in Sources */,
+				8E72F9A212472D5A000B8B0E /* KRFont_old.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2096,6 +2130,8 @@
 				8E9C486111F611C200F2A5C2 /* KRProxyView.mm in Sources */,
 				8E168D3B122A136800462EA7 /* KRTexture2DAtlas.cpp in Sources */,
 				8E168F39122A362400462EA7 /* KRParticle2DSystem_old.cpp in Sources */,
+				8E329262124725D500C0DEEA /* KRTexture2D_old.mm in Sources */,
+				8E72F9A612472D5A000B8B0E /* KRFont_old.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2179,6 +2215,8 @@
 				8E9C486311F611C200F2A5C2 /* KRProxyView.mm in Sources */,
 				8E168D3D122A136800462EA7 /* KRTexture2DAtlas.cpp in Sources */,
 				8E168F3B122A362400462EA7 /* KRParticle2DSystem_old.cpp in Sources */,
+				8E329264124725D500C0DEEA /* KRTexture2D_old.mm in Sources */,
+				8E72F9A412472D5A000B8B0E /* KRFont_old.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2263,6 +2301,8 @@
 				8EBCAF6411E71E130017A640 /* KRChara2D.mm in Sources */,
 				8E168D41122A136800462EA7 /* KRTexture2DAtlas.cpp in Sources */,
 				8E168F3F122A362400462EA7 /* KRParticle2DSystem_old.cpp in Sources */,
+				8E329266124725D500C0DEEA /* KRTexture2D_old.mm in Sources */,
+				8E72F9A012472D5A000B8B0E /* KRFont_old.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2324,7 +2364,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Karakuri Library_Prefix.pch";
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = "karakuri-macosx";
 				SDKROOT = macosx10.5;

@@ -138,6 +138,11 @@ KRKeyInfo KRInput::_getKeyState()
     return mKeyState;
 }
 
+KRKeyInfo KRInput::getKeyState()
+{
+    return _getKeyState();
+}
+
 KRKeyInfo KRInput::_getKeyStateOnce()
 {
 	KRKeyInfo ret = (mKeyState ^ mKeyStateOld) & mKeyState;
@@ -145,9 +150,19 @@ KRKeyInfo KRInput::_getKeyStateOnce()
 	return ret;
 }
 
+KRKeyInfo KRInput::getKeyStateOnce()
+{
+    return _getKeyStateOnce();
+}
+
 KRKeyInfo KRInput::_getKeyStateAgainstDummy()
 {
     return mKeyStateAgainstDummy;
+}
+
+KRKeyInfo KRInput::getKeyStateAgainstDummy()
+{
+    return _getKeyStateAgainstDummy();
 }
 #endif
 
@@ -212,7 +227,7 @@ std::vector<int> KRInput::getTouchIDs() const
 
     [sTouchLock lock];
     
-    for (std::vector<KRTouchInfo>::const_iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+    for (std::vector<_KRTouchInfo>::const_iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
         ret.push_back(it->touch_id);
     }
     
@@ -223,7 +238,7 @@ std::vector<int> KRInput::getTouchIDs() const
 
 KRVector2D KRInput::getTouchLocation(int touchID) const
 {
-    for (std::vector<KRTouchInfo>::const_iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+    for (std::vector<_KRTouchInfo>::const_iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
         if (it->touch_id == touchID) {
             return it->pos;
         }
@@ -232,11 +247,11 @@ KRVector2D KRInput::getTouchLocation(int touchID) const
     return KRVector2D(-1.0, -1.0);
 }
 
-const std::vector<KRTouchInfo> KRInput::getTouchInfos() const
+const std::vector<_KRTouchInfo> KRInput::getTouchInfos() const
 {
     [sTouchLock lock];
 
-    std::vector<KRTouchInfo> ret(mTouchInfos);
+    std::vector<_KRTouchInfo> ret(mTouchInfos);
 
     [sTouchLock unlock];
 
@@ -758,7 +773,7 @@ void KRInput::_processKeyUpCode(unsigned short keyCode)
 
 void KRInput::_startTouchImpl(unsigned touchID, double x, double y)
 {
-    KRTouchInfo newInfo;
+    _KRTouchInfo newInfo;
     
     newInfo.touch_id = touchID;
     newInfo.pos.x = x;
@@ -797,7 +812,7 @@ void KRInput::_moveTouchImpl(unsigned touchID, double x, double y, double dx, do
 {
     [sTouchLock lock];
 
-    for (std::vector<KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+    for (std::vector<_KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
         if (it->touch_id == touchID) {
             it->pos.x = x;
             it->pos.y = y;
@@ -818,7 +833,7 @@ void KRInput::_endTouchImpl(unsigned touchID, double x, double y, double dx, dou
 {
     [sTouchLock lock];
 
-    for (std::vector<KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
+    for (std::vector<_KRTouchInfo>::iterator it = mTouchInfos.begin(); it != mTouchInfos.end(); it++) {
         if (it->touch_id == touchID) {
             mTouchInfos.erase(it);
             break;

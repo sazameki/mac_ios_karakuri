@@ -181,6 +181,7 @@ kern_return_t smsGetData(sms_t * sms, sms_data_t * data)
 
 	structureOutputSize = service->outputSize;
 
+#warning "<< Using a deprecated function. >>"
 	result = IOConnectMethodStructureIStructureO(
 				sms->connect,
 				service->kernFunc,				/* index to kernel function */

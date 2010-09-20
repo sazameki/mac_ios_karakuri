@@ -10,6 +10,7 @@
 #pragma once
 
 #include <Karakuri/KarakuriLibrary.h>
+#include <AvailabilityMacros.h>
 
 
 struct KRInputSourceData;
@@ -36,6 +37,7 @@ typedef unsigned int        _KRMouseState;
     @abstract キーボードの状態をビットフラグで管理するための型です。
  */
 typedef unsigned long long  KRKeyInfo;
+typedef KRKeyInfo           KRKeyState  DEPRECATED_ATTRIBUTE;
 #endif
 
 
@@ -56,7 +58,7 @@ typedef int             _KRTouchState;
     @abstract <strong class="warning">(Deprecated) 現在、この構造体の利用は推奨されません。以前のバージョンとの互換性のためにのみ用意しています。</strong>
     <p>iPhone のタッチ情報を表すための構造体です。</p>
  */
-typedef struct KRTouchInfo {
+typedef struct _KRTouchInfo {
     /*
         @-var touch_id
         @abstract 複数のタッチ情報を識別するためのIDです。
@@ -70,7 +72,8 @@ typedef struct KRTouchInfo {
      */
     KRVector2D  pos;
 
-} KRTouchInfo;
+} _KRTouchInfo;
+typedef _KRTouchInfo    KRTouchInfo     DEPRECATED_ATTRIBUTE;
 #endif
 
 
@@ -242,7 +245,7 @@ private:
     bool                        mIsTouchedOnce;
     _KRTouchState               mTouchStateOld;
     int                         mTouchCountAgainstDummy;
-    std::vector<KRTouchInfo>    mTouchInfos;
+    std::vector<_KRTouchInfo>   mTouchInfos;
 
     unsigned                    mTouchArrow_touchID;
     KRVector2D                  mTouchArrowCenterPos;
@@ -342,7 +345,7 @@ public:
         @abstract <strong class="warning">(Deprecated) 現在、この関数の使用は推奨されません。getTouchIDs() と getTouchLocation() の組み合わせを利用してください。</strong>
         <p>現在のすべてのマルチタッチの情報を取得します。</p>
      */
-    const std::vector<KRTouchInfo> getTouchInfos() const;    
+    const std::vector<_KRTouchInfo> getTouchInfos() const;    
 #endif
     
 
@@ -407,8 +410,11 @@ public:
     bool        isKeyDownOnce(KRKeyInfo key) const;
     
     KRKeyInfo   _getKeyState();
+    KRKeyInfo   getKeyState()   DEPRECATED_ATTRIBUTE;   // (Deprecated) 代わりに isKeyDown() を使用してください。
     KRKeyInfo   _getKeyStateOnce();
+    KRKeyInfo   getKeyStateOnce()   DEPRECATED_ATTRIBUTE;   // (Deprecated) 代わりに isKeyDownOnce() を使用してください。
     KRKeyInfo   _getKeyStateAgainstDummy();
+    KRKeyInfo   getKeyStateAgainstDummy()   DEPRECATED_ATTRIBUTE;   // (Deprecated) 代わりに isKeyDownAgainstDummy() を使用してください。
     
 #endif
 

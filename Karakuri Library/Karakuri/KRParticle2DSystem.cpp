@@ -141,6 +141,8 @@ _KRParticle2DSystem::_KRParticle2DSystem(const std::string& filename, bool doLoo
     mGroupID = -1;
     mCharaSpecID = -1;
     mHasInnerTexture = true;
+
+#warning "<< Using a deprecated method. >>"
     mTexture = new KRTexture2D(filename);
     
     init();
@@ -173,6 +175,7 @@ _KRParticle2DSystem::~_KRParticle2DSystem()
     mParticles.clear();
     
     if (mHasInnerTexture) {
+#warning "<< Using a deprecated method. >>"
         delete mTexture;
     }
 }

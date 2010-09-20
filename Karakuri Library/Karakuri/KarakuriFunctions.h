@@ -11,6 +11,7 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 #include <Karakuri/KarakuriGlobals.h>
+#include <AvailabilityMacros.h>
 
 
 struct KRVector2D;
@@ -101,7 +102,7 @@ void    KRTranslate2D(const KRVector2D& size);
     @abstract   <strong class="warning">(Deprecated) 現在、この関数の利用は推奨されません。代わりに gKRGameMan->sleep() を利用してください。</strong>
     <p>一定時間スリープさせます。</p>
  */
-void    KRSleep(double interval);
+void    KRSleep(double interval)    DEPRECATED_ATTRIBUTE;
 
 /*!
     @function   KRCurrentTime
@@ -111,7 +112,7 @@ void    KRSleep(double interval);
     @discussion この数値は2001年1月1日 0時00分00秒からの経過時間（秒）となっていますが、基本的には差分をとって利用してください。
     <p>現在時刻を秒単位で表す数値をリターンします。</p>
  */
-double  KRCurrentTime();
+double  KRCurrentTime() DEPRECATED_ATTRIBUTE;
 
 /*!
     @function   KRGetKarakuriVersion
@@ -126,7 +127,7 @@ std::string KRGetKarakuriVersion();
     @abstract   <strong class="warning">(Deprecated) 現在、この関数の利用は推奨されません。代わりに gKRGameMan->changeWorld() を利用してください。</strong>
     <p>ワールドを切り替えます。</p>
  */
-void    KRChangeWorld(const std::string& worldName);
+void    KRChangeWorld(const std::string& worldName) DEPRECATED_ATTRIBUTE;
 
 /*!
     @function   KRCheckDeviceType

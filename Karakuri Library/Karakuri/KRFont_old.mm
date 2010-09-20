@@ -1,17 +1,20 @@
-/*!
-    @file   KRFont.cpp
-    @author numata
-    @date   09/07/30
+/*
+ *  KRFont_old.mm
+ *  Karakuri Library
+ *
+ *  Created by numata on 10/09/20.
+ *  Copyright 2010 Satoshi Numata. All rights reserved.
+ *
  */
 
-#include "KRFont.h"
+#include "KRFont_old.h"
 
 
 /*!
-    @method _KRFont
+    @method KRFont
     Constructor
  */
-_KRFont::_KRFont(const std::string& fontName, double size)
+KRFont::KRFont(const std::string& fontName, double size)
 {
     mFontName = fontName;
 
@@ -32,7 +35,7 @@ _KRFont::_KRFont(const std::string& fontName, double size)
     @method ~KRFont
     Destructor
  */
-_KRFont::~_KRFont()
+KRFont::~KRFont()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     [(NSFont *)mFontObj release];
@@ -43,19 +46,19 @@ _KRFont::~_KRFont()
 #endif
 }
 
-void* _KRFont::getFontObject() const
+void* KRFont::getFontObject() const
 {
     return mFontObj;
 }
 
-_KRTexture2D* _KRFont::createStringTexture(const std::string& str)
+KRTexture2D* KRFont::createStringTexture(const std::string& str)
 {
-    return new _KRTexture2D(str, this);
+    return new KRTexture2D(str, this);
 }
 
-std::string _KRFont::to_s() const
+std::string KRFont::to_s() const
 {
-    return KRFS("<font>(name=\"%s\")", mFontName.c_str());
+    return KRFS("<font_old>(name=\"%s\")", mFontName.c_str());
 }
 
 

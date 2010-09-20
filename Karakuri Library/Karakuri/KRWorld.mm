@@ -203,12 +203,12 @@ void KRWorld::finishLoadingWorld()
             double oneSize = mLoadingResourceAllSize / divCount;
             for (int i = 0; i < divCount; i++) {
                 _setFinishedSize(oneSize * i);
-                KRSleep(oneDuration);
+                gKRGameMan->sleep(oneDuration);
             }
             _setFinishedSize(mLoadingResourceAllSize);
         }
         
-        KRSleep(1.0);
+        gKRGameMan->sleep(1.0);
     }
 
     [[KRGameController sharedController] finishLoadingWorld];

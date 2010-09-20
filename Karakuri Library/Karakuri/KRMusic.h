@@ -10,6 +10,7 @@
 #pragma once
 
 #include <Karakuri/KarakuriLibrary.h>
+#include <AvailabilityMacros.h>
 
 
 /*!
@@ -101,5 +102,7 @@ public:
 public:
     std::string to_s() const;
 
-};
+} DEPRECATED_ATTRIBUTE;
+
+typedef KRMusic _KRMusic;
 

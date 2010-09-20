@@ -847,11 +847,11 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             
             mLoadingScreenWorld->startDrawView(mGraphics);
             
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 
 #if KR_IPHONE_MACOSX_EMU
             [gKRGLViewInst drawTouches];
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 #endif
         
             // ダブルバッファのスワップ
@@ -1040,7 +1040,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
 #if __DEBUG__
             mDebugControlManager->drawAllControls(gKRGraphicsInst, 0);
 #endif
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 #if __DEBUG__
             if (mFPSDisplay != NULL) {
                 mTextureChangeCounts[mTextureChangeCountPos++] = _KRTextureChangeCount;
@@ -1056,13 +1056,13 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 mFPSDisplay->drawTPF(gKRScreenSize.x-10, gKRScreenSize.y-30*2, mCurrentTPF);
                 mFPSDisplay->drawBPF(gKRScreenSize.x-10, gKRScreenSize.y-30*3, mCurrentBPF);
                 mFPSDisplay->drawCPF(gKRScreenSize.x-10, gKRScreenSize.y-30*4, _gCurrentCPF);
-                KRTexture2D::processBatchedTexture2DDraws();
+                _KRTexture2D::processBatchedTexture2DDraws();
             }
 #endif
             
 #if KR_IPHONE_MACOSX_EMU
             [gKRGLViewInst drawTouches];
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 #endif
 
             // ダブルバッファのスワップ
@@ -1345,7 +1345,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
             } else {
                 mGameManager->drawView(mGraphics);
             }
-            KRTexture2D::processBatchedTexture2DDraws();
+            _KRTexture2D::processBatchedTexture2DDraws();
 #if __DEBUG__
             if (mFPSDisplay != NULL) {
                 mTextureChangeCounts[mTextureChangeCountPos++] = _KRTextureChangeCount;
@@ -1361,7 +1361,7 @@ static inline uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
                 mFPSDisplay->drawTPF(gKRScreenSize.x-10, gKRScreenSize.y-30*2, mCurrentTPF);
                 mFPSDisplay->drawBPF(gKRScreenSize.x-10, gKRScreenSize.y-30*3, mCurrentBPF);
                 mFPSDisplay->drawCPF(gKRScreenSize.x-10, gKRScreenSize.y-30*4, _gCurrentCPF);
-                KRTexture2D::processBatchedTexture2DDraws();
+                _KRTexture2D::processBatchedTexture2DDraws();
             }
 #endif
 

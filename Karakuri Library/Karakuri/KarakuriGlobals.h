@@ -36,3 +36,9 @@ extern bool     _KRIsFullScreen;
 
 extern const std::string  KRFrameworkVersion;
 
+
+struct _KRTexture2DDrawData;
+
+extern const int                _gKRTexture2DBatchSize;
+extern _KRTexture2DDrawData     _gKRTexture2DDrawData[];
+extern int                      _gKRTexture2DBatchCount;

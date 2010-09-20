@@ -124,21 +124,21 @@ static BOOL sPhoneOrientatilHorizontal = YES;
         try {
             // iPad (Landscape)
             if (screenSize.x >= 1000) {
-                mDefaultTex = new KRTexture2D("Default-Landscape.png");
+                mDefaultTex = new _KRTexture2D("Default-Landscape.png");
             }
             // iPad (Portrait)
             else {
-                mDefaultTex = new KRTexture2D("Default-Portrait.png");
+                mDefaultTex = new _KRTexture2D("Default-Portrait.png");
             }
         } catch (KRRuntimeError& e) {
             mDefaultTex = NULL;
         }
         if (mDefaultTex == NULL) {
-            mDefaultTex = new KRTexture2D("Default.png");
+            mDefaultTex = new _KRTexture2D("Default.png");
         }
     } else {
         // iPhone
-        mDefaultTex = new KRTexture2D("Default.png");
+        mDefaultTex = new _KRTexture2D("Default.png");
     }
 
     glBindFramebufferOES(GL_FRAMEBUFFER_OES, mKRGLContext.viewFramebuffer);
@@ -154,12 +154,12 @@ static BOOL sPhoneOrientatilHorizontal = YES;
     
     glOrthof(0.0f, (float)mKRGLContext.backingWidth, 0.0f, (float)mKRGLContext.backingHeight, -1.0f, 1.0f);
     
-    mDefaultTex->drawInRect_(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight), KRColor::White);
-    KRTexture2D::processBatchedTexture2DDraws();
+    mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight), KRColor::White);
+    _KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
-    mDefaultTex->drawInRect_(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight), KRColor::White);
-    KRTexture2D::processBatchedTexture2DDraws();
+    mDefaultTex->drawInRect(KRRect2D(0, 0, mKRGLContext.backingWidth, mKRGLContext.backingHeight), KRColor::White);
+    _KRTexture2D::processBatchedTexture2DDraws();
     [mKRGLContext.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 
     sIsReady = YES;

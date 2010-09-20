@@ -19,7 +19,7 @@ KRLabel::KRLabel(const KRRect2D& frame)
     mText = "";
     mTextTexture = NULL;
     
-    mFont = new KRFont("Helvetica-Bold", 20);
+    mFont = new _KRFont("Helvetica-Bold", 20);
     
     mTextColor = KRColor::White;
     mTextAlignment = KRTextAlignmentLeft;
@@ -72,9 +72,9 @@ void KRLabel::draw(KRGraphics* g)
         KRVector2D drawPos(drawX, mFrame.y + mFrame.height/2 - mTextTexture->getHeight()/2);
         if (mHasTextShadow) {
             KRVector2D shadowPos = drawPos + mTextShadowOffset;
-            mTextTexture->drawAtPoint_(shadowPos, mTextShadowColor);
+            mTextTexture->drawAtPoint(shadowPos, mTextShadowColor);
         }
-        mTextTexture->drawAtPoint_(drawPos, mTextColor);
+        mTextTexture->drawAtPoint(drawPos, mTextColor);
     }
 }
 
@@ -86,7 +86,7 @@ std::string KRLabel::getText() const
 void KRLabel::setFont(const std::string& fontName, double size)
 {
     delete mFont;
-    mFont = new KRFont(fontName, size);
+    mFont = new _KRFont(fontName, size);
     mHasChangedText = true;
 }
 

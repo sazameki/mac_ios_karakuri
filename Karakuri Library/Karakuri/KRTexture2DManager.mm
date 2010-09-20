@@ -147,9 +147,9 @@ void KRTexture2DManager::_loadTextureFiles(int groupID, KRWorld* loaderWorld, do
                 ticket = mTexID_Ticket_Map[texID];
                 int divX = mTicket_DivX_Map[ticket];
                 int divY = mTicket_DivY_Map[ticket];
-                mTexMap[texID] = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
+                mTexMap[texID] = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
             } else {
-                mTexMap[texID] = new KRTexture2D(filename, scaleMode);
+                mTexMap[texID] = new _KRTexture2D(filename, scaleMode);
             }
             [filenameStr release];
         }
@@ -202,10 +202,10 @@ unsigned KRTexture2DManager::_getResourceLengthForTicket(const std::string& tick
     return mTicket_Length_Map[ticket];
 }
 
-KRTexture2D* KRTexture2DManager::_getTexture(int texID)
+_KRTexture2D* KRTexture2DManager::_getTexture(int texID)
 {
     // IDからテクスチャを引っ張ってくる。
-    KRTexture2D* theTex = mTexMap[texID];
+    _KRTexture2D* theTex = mTexMap[texID];
     if (theTex == NULL) {
         std::string filename = mTexID_ImageFileName_Map[texID];
         NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
@@ -216,9 +216,9 @@ KRTexture2D* KRTexture2DManager::_getTexture(int texID)
             std::string ticket = mTexID_Ticket_Map[texID];
             int divX = mTicket_DivX_Map[ticket];
             int divY = mTicket_DivY_Map[ticket];
-            theTex = new KRTexture2D(filename, ticket, divX, divY, scaleMode);
+            theTex = new _KRTexture2D(filename, ticket, divX, divY, scaleMode);
         } else {
-            theTex = new KRTexture2D(filename, scaleMode);
+            theTex = new _KRTexture2D(filename, scaleMode);
         }
         
         mTexMap[texID] = theTex;
@@ -261,32 +261,32 @@ void KRTexture2DManager::setTextureAtlasSize(int texID, const KRVector2D& size)
 
 void KRTexture2DManager::drawAtPoint(int texID, const KRVector2D& pos, double alpha)
 {
-    _getTexture(texID)->drawAtPoint_(pos, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawAtPoint(pos, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawAtPoint(int texID, const KRVector2D& pos, const KRColor& color)
 {
-    _getTexture(texID)->drawAtPoint_(pos, color);
+    _getTexture(texID)->drawAtPoint(pos, color);
 }
 
 void KRTexture2DManager::drawAtPointEx(int texID, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha)
 {
-    _getTexture(texID)->drawAtPointEx_(pos, KRRect2DZero, rotate, origin, scale, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawAtPointEx(pos, KRRect2DZero, rotate, origin, scale, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawAtPointEx(int texID, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
-    _getTexture(texID)->drawAtPointEx_(pos, KRRect2DZero, rotate, origin, scale, color);
+    _getTexture(texID)->drawAtPointEx(pos, KRRect2DZero, rotate, origin, scale, color);
 }
 
 void KRTexture2DManager::drawAtPointEx2(int texID, const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha)
 {
-    _getTexture(texID)->drawAtPointEx_(pos, srcRect, rotate, origin, scale, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawAtPointEx(pos, srcRect, rotate, origin, scale, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawAtPointEx2(int texID, const KRVector2D& pos, const KRRect2D& srcRect, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
-    _getTexture(texID)->drawAtPointEx_(pos, srcRect, rotate, origin, scale, color);
+    _getTexture(texID)->drawAtPointEx(pos, srcRect, rotate, origin, scale, color);
 }
 
 
@@ -295,32 +295,32 @@ void KRTexture2DManager::drawAtPointEx2(int texID, const KRVector2D& pos, const 
 
 void KRTexture2DManager::drawAtPointCenter(int texID, const KRVector2D& centerPos, double alpha)
 {
-    _getTexture(texID)->drawAtPointCenter_(centerPos, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawAtPointCenter(centerPos, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawAtPointCenter(int texID, const KRVector2D& centerPos, const KRColor& color)
 {
-    _getTexture(texID)->drawAtPointCenter_(centerPos, color);
+    _getTexture(texID)->drawAtPointCenter(centerPos, color);
 }
 
 void KRTexture2DManager::drawAtPointCenterEx(int texID, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, double alpha)
 {
-    _getTexture(texID)->drawAtPointCenterEx_(centerPos, KRRect2DZero, rotate, scale, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawAtPointCenterEx(centerPos, KRRect2DZero, rotate, scale, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawAtPointCenterEx(int texID, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color)
 {
-    _getTexture(texID)->drawAtPointCenterEx_(centerPos, KRRect2DZero, rotate, scale, color);
+    _getTexture(texID)->drawAtPointCenterEx(centerPos, KRRect2DZero, rotate, scale, color);
 }
 
 void KRTexture2DManager::drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, double alpha)
 {
-    _getTexture(texID)->drawAtPointCenterEx_(centerPos, srcRect, rotate, scale, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawAtPointCenterEx(centerPos, srcRect, rotate, scale, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawAtPointCenterEx2(int texID, const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, const KRColor& color)
 {
-    _getTexture(texID)->drawAtPointCenterEx_(centerPos, srcRect, rotate, scale, color);
+    _getTexture(texID)->drawAtPointCenterEx(centerPos, srcRect, rotate, scale, color);
 }
 
 
@@ -329,22 +329,22 @@ void KRTexture2DManager::drawAtPointCenterEx2(int texID, const KRVector2D& cente
 
 void KRTexture2DManager::drawInRect(int texID, const KRRect2D& destRect, double alpha)
 {
-    _getTexture(texID)->drawInRect_(destRect, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawInRect(destRect, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawInRect(int texID, const KRRect2D& destRect, const KRColor& color)
 {
-    _getTexture(texID)->drawInRect_(destRect, color);
+    _getTexture(texID)->drawInRect(destRect, color);
 }
 
 void KRTexture2DManager::drawInRect(int texID, const KRRect2D& destRect, const KRRect2D& srcRect, double alpha)
 {
-    _getTexture(texID)->drawInRect_(destRect, srcRect, KRColor(1, 1, 1, alpha));
+    _getTexture(texID)->drawInRect(destRect, srcRect, KRColor(1, 1, 1, alpha));
 }
 
 void KRTexture2DManager::drawInRect(int texID, const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color)
 {
-    _getTexture(texID)->drawInRect_(destRect, srcRect, color);
+    _getTexture(texID)->drawInRect(destRect, srcRect, color);
 }
 
 
@@ -358,12 +358,12 @@ void KRTexture2DManager::drawAtlasAtPoint(int texID, const KRVector2DInt& atlasP
 
 void KRTexture2DManager::drawAtlasAtPoint(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
 
-    theTex->drawAtPointEx_(pos, srcRect, 0.0, KRVector2DZero, KRVector2DOne, color);
+    theTex->drawAtPointEx(pos, srcRect, 0.0, KRVector2DZero, KRVector2DOne, color);
 }
 
 void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha)
@@ -373,7 +373,7 @@ void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atla
 
 void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     int theY = atlasPos.y;
@@ -384,7 +384,7 @@ void KRTexture2DManager::drawAtlasAtPointEx(int texID, const KRVector2DInt& atla
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * theY, atlasSize.x, atlasSize.y);
     
-    theTex->drawAtPointEx_(pos, srcRect, rotate, origin, scale, color);
+    theTex->drawAtPointEx(pos, srcRect, rotate, origin, scale, color);
 }
 
 void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double alpha)
@@ -394,12 +394,12 @@ void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& 
 
 void KRTexture2DManager::drawAtlasAtPointCenter(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
     
-    theTex->drawAtPointCenterEx_(centerPos, srcRect, 0.0, KRVector2DOne, color);
+    theTex->drawAtPointCenterEx(centerPos, srcRect, 0.0, KRVector2DOne, color);
 }
 
 void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, double alpha)
@@ -409,12 +409,12 @@ void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt
 
 void KRTexture2DManager::drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
     
-    theTex->drawAtPointCenterEx_(centerPos, srcRect, rotate, scale, color);
+    theTex->drawAtPointCenterEx(centerPos, srcRect, rotate, scale, color);
 }
 
 void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, double alpha)
@@ -424,12 +424,12 @@ void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPo
 
 void KRTexture2DManager::drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color)
 {
-    KRTexture2D* theTex = _getTexture(texID);
+    _KRTexture2D* theTex = _getTexture(texID);
     KRVector2D atlasSize = theTex->getAtlasSize();
     
     KRRect2D srcRect(atlasSize.x * atlasPos.x, atlasSize.y * atlasPos.y, atlasSize.x, atlasSize.y);
     
-    theTex->drawInRect_(destRect, srcRect, color);
+    theTex->drawInRect(destRect, srcRect, color);
 }
 
 

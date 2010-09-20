@@ -68,8 +68,8 @@ bool KRSwitch::update(KRInput* input)
 void KRSwitch::draw(KRGraphics* g)
 {
     if (mBackTexture == NULL && mBackTextureName.length() > 0 && mThumbTextureName.length() > 0) {
-        mBackTexture = new KRTexture2D(mBackTextureName);
-        mThumbTexture = new KRTexture2D(mThumbTextureName);
+        mBackTexture = new _KRTexture2D(mBackTextureName);
+        mThumbTexture = new _KRTexture2D(mThumbTextureName);
     }
     
     double alpha = (mIsEnabled? 1.0: _gKRControlDisabledAlpha);
@@ -81,19 +81,19 @@ void KRSwitch::draw(KRGraphics* g)
         double indicatorX = (mIsOn? 0.0: mTextureThumbX) + mTextureEdgeSize;
         
         // Indicator
-        mBackTexture->drawInRect_(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
+        mBackTexture->drawInRect(KRRect2D(mFrame.x+mTextureEdgeSize, mFrame.y, indicatorWidth, mBackTexture->getHeight()),
                                   KRRect2D(indicatorX, 0, indicatorWidth, mBackTexture->getHeight()), drawColor);
         
         // Left Edge
-        mBackTexture->drawAtPointEx_(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height), 0.0, KRVector2DZero, KRVector2DOne, drawColor);
+        mBackTexture->drawAtPointEx(KRVector2D(mFrame.x, mFrame.y), KRRect2D(0, 0, mTextureEdgeSize, mFrame.height), 0.0, KRVector2DZero, KRVector2DOne, drawColor);
 
         // Right Edge
-        mBackTexture->drawAtPointEx_(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
+        mBackTexture->drawAtPointEx(KRVector2D(mFrame.x+mFrame.width-mTextureEdgeSize, mFrame.y),
                                      KRRect2D(mBackTexture->getWidth()-mTextureEdgeSize, 0, mTextureEdgeSize, mFrame.height),
                                      0.0, KRVector2DZero, KRVector2DOne, drawColor);
 
         // Thumb
-        mThumbTexture->drawAtPoint_(KRVector2D((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y), drawColor);
+        mThumbTexture->drawAtPoint(KRVector2D((mIsOn? mFrame.x+mTextureThumbX:mFrame.x), mFrame.y), drawColor);
     } else {
         KRColor drawColor = (mIsOn? KRColor::Blue: KRColor::Red);
         drawColor.a = alpha;

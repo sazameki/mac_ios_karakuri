@@ -105,7 +105,7 @@ KRVector2DInt _KRChara2DKoma::getAtlasPos()
         return mAtlasPos;
     }
     
-    KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
+    _KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
     
     int divX = theTex->getDivX();
     
@@ -114,7 +114,7 @@ KRVector2DInt _KRChara2DKoma::getAtlasPos()
 
 KRVector2D _KRChara2DKoma::getAtlasSize()
 {
-    KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
+    _KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
     return theTex->getAtlasSize();
 }
 

@@ -51,7 +51,7 @@ void KRGraphics::setBlendMode(KRBlendMode mode)
 
 void KRGraphics::reflectBlendMode()
 {
-    KRTexture2D::processBatchedTexture2DDraws();
+    _KRTexture2D::processBatchedTexture2DDraws();
     switch (mBlendMode) {
         case KRBlendModeAlpha:
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

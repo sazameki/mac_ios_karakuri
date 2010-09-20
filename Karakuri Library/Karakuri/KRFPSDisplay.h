@@ -11,22 +11,22 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
-class KRFont;
-class KRTexture2D;
+class _KRFont;
+class _KRTexture2D;
 
 
 class KRFPSDisplay : public KRObject {
 
-    KRFont*             mFont;
+    _KRFont*            mFont;
 
-    KRTexture2D*        mNumberTex;
+    _KRTexture2D*       mNumberTex;
     KRVector2D          mNumberSize;
 
-    KRTexture2D*        mPointTex;
-    KRTexture2D*        mFPSTex;
-    KRTexture2D*        mTPFTex;
-    KRTexture2D*        mBPFTex;
-    KRTexture2D*        mCPFTex;
+    _KRTexture2D*       mPointTex;
+    _KRTexture2D*       mFPSTex;
+    _KRTexture2D*       mTPFTex;
+    _KRTexture2D*       mBPFTex;
+    _KRTexture2D*       mCPFTex;
     
 public:
 	KRFPSDisplay();
