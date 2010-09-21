@@ -7,6 +7,7 @@
 #include "KRParticle2DSystem.h"
 #include "KarakuriFunctions.h"
 #include "KRRandom.h"
+#import "BXDocument.h"
 
 
 /*!
@@ -96,9 +97,9 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename)
     init();
 }
 
-KRParticle2DSystem::KRParticle2DSystem(int imageTag, std::string& customPath)
+KRParticle2DSystem::KRParticle2DSystem(int imageTag, std::string& customPath, void* document)
 {
-    mTexture = new KRTexture2D(imageTag, customPath);
+    mTexture = new KRTexture2D(imageTag, customPath, (BXDocument*)document);
     
     init();
 }

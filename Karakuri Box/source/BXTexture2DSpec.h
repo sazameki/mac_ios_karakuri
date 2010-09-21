@@ -36,6 +36,7 @@
 - (int)atlasCount;
 - (BXTexture2DAtlas*)atlasAtIndex:(int)index;
 - (void)addAtlas:(BXTexture2DAtlas*)anAtlas;
+- (void)removeAtlas:(BXTexture2DAtlas*)anAtlas;
 
 - (NSString*)textureDescription;
 

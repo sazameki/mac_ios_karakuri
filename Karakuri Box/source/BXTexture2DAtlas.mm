@@ -9,6 +9,7 @@
 #import "BXTexture2DAtlas.h"
 #import "NSDictionary+LoadSave.h"
 #import "NSImage+BXEx.h"
+#import "BXTexture2DSpec.h"
 
 
 @implementation BXTexture2DAtlas
@@ -69,6 +70,11 @@
     rect = NSInsetRect(rect, 4.0, 4.0);
     
     [image drawThumbnailInRect:rect fromRect:NSMakeRect(mStartPos.x + mSize.x * point.x, mStartPos.y + mSize.y * point.y, mSize.x, mSize.y) background:YES border:YES];
+}
+
+- (void)removeFromParentTexture2D
+{
+    [mTex2D removeAtlas:self];
 }
 
 - (void)restoreElementInfo:(NSDictionary*)dict

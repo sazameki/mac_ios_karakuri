@@ -13,6 +13,7 @@
 #include "KRPNGLoader.h"
 #include "KarakuriGlobals.h"
 #import <OpenGL/OpenGL.h>
+#import "BXDocument.h"
 
 
 static const int KRTexture2DBatchSize = 1024;    // KRTexture2DBatchSize * 16 bytes will be used.
@@ -100,7 +101,7 @@ KRTexture2D::KRTexture2D(const std::string& filename, KRTexture2DScaleMode scale
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, KRTexture2DScaleMode scaleMode)
+KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, BXDocument* document, KRTexture2DScaleMode scaleMode)
 {
     if (sTexture2DBatchCount > 0) {
         KRTexture2D::processBatchedTexture2DDraws();
@@ -148,18 +149,26 @@ KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, KRTexture2DScale
     else if (imageTag == 402) {
         filename = "particle_smoke_128.png";
     }    
-    // カスタム画像
+    // カスタム画像（旧）
     else if (imageTag == 999) {
         filename = customPath;
     }
     
     mAtlasSize = KRVector2DZero;
-    
-    mFileName = filename;
-    NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-    mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mTextureTarget, &mImageSize, &mTextureSize,
-                                                      (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
-    [filenameStr release];
+
+    // カスタム画像（新）
+    if (imageTag >= 1000) {
+        BXTexture2DSpec* tex = [document tex2DWithID:imageTag];
+        mTextureName = KRCreateGLTextureFromTexture2D(tex, &mTextureTarget, &mImageSize, &mTextureSize, (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
+    }
+    // 従来画像
+    else {
+        mFileName = filename;
+        NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+        mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mTextureTarget, &mImageSize, &mTextureSize,
+                                                          (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
+        [filenameStr release];
+    }
     
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
         NSString *errorFormat = @"Failed to load \"%s\". Please confirm that the image file exists.";

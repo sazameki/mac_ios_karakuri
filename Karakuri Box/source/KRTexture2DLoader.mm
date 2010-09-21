@@ -17,11 +17,8 @@
 #define KRTextureMaxSize    1024
 
 
-GLuint KRCreateGLTextureFromTexture2DAtlas(BXTexture2DSpec* tex, NSRect atlasRect, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreateGLTextureFromNSImage(NSImage* nsImage, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
-    NSImage* mainImage = [tex image72dpi];
-    NSImage* nsImage = [mainImage subImageFromRect:atlasRect];
-    
     CGImageRef imageRef = [nsImage cgImage];
     
     GLuint textureName = GL_INVALID_VALUE;
@@ -123,6 +120,21 @@ GLuint KRCreateGLTextureFromTexture2DAtlas(BXTexture2DSpec* tex, NSRect atlasRec
     CGImageRelease(imageRef);
     
     return textureName;    
+}
+
+GLuint KRCreateGLTextureFromTexture2D(BXTexture2DSpec* tex, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+{
+    NSImage* nsImage = [tex image72dpi];
+    [nsImage setFlipped:YES];
+    return KRCreateGLTextureFromNSImage(nsImage, textureTarget, imageSize, textureSize, scalesLinear);
+}
+
+GLuint KRCreateGLTextureFromTexture2DAtlas(BXTexture2DSpec* tex, NSRect atlasRect, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+{
+    NSImage* mainImage = [tex image72dpi];
+    NSImage* nsImage = [mainImage subImageFromRect:atlasRect];
+    
+    return KRCreateGLTextureFromNSImage(nsImage, textureTarget, imageSize, textureSize, scalesLinear);
 }
 
 GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)

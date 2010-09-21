@@ -32,6 +32,8 @@
 
 - (void)drawAtlasFromTextureImage:(NSImage*)image point:(KRVector2DInt)point inRect:(NSRect)rect;
 
+- (void)removeFromParentTexture2D;
+
 - (void)restoreElementInfo:(NSDictionary*)dict;
 - (NSDictionary*)elementInfo;
 

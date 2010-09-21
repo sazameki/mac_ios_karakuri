@@ -73,6 +73,7 @@
 		8EAB6288114CEDC700C2CBC5 /* tbi_particle2d.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB6287114CEDC700C2CBC5 /* tbi_particle2d.tiff */; };
 		8EAB62AF114CF9A100C2CBC5 /* tbi_chara2d.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EAB62AE114CF9A100C2CBC5 /* tbi_chara2d.tiff */; };
 		8ED0E21011ED39B800A7553A /* krbox-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8ED0E20F11ED39B800A7553A /* krbox-icon.icns */; };
+		8ED0E5FA12495C9E002E902E /* BXTexture2DAtlasListView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED0E5F912495C9E002E902E /* BXTexture2DAtlasListView.mm */; };
 		8ED752A3113B8E2B004E78EB /* BXBGMResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */; };
 		8ED752A6113B8E49004E78EB /* BXSEResource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752A5113B8E49004E78EB /* BXSEResource.mm */; };
 		8ED752AC113B8F3F004E78EB /* BXBackgroundSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8ED752AB113B8F3F004E78EB /* BXBackgroundSpec.mm */; };
@@ -195,6 +196,8 @@
 		8EAB6287114CEDC700C2CBC5 /* tbi_particle2d.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = tbi_particle2d.tiff; sourceTree = "<group>"; };
 		8EAB62AE114CF9A100C2CBC5 /* tbi_chara2d.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = tbi_chara2d.tiff; sourceTree = "<group>"; };
 		8ED0E20F11ED39B800A7553A /* krbox-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "krbox-icon.icns"; sourceTree = "<group>"; };
+		8ED0E5F812495C9E002E902E /* BXTexture2DAtlasListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXTexture2DAtlasListView.h; sourceTree = "<group>"; };
+		8ED0E5F912495C9E002E902E /* BXTexture2DAtlasListView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXTexture2DAtlasListView.mm; sourceTree = "<group>"; };
 		8ED752A1113B8E2B004E78EB /* BXBGMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBGMResource.h; sourceTree = "<group>"; };
 		8ED752A2113B8E2B004E78EB /* BXBGMResource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BXBGMResource.mm; sourceTree = "<group>"; };
 		8ED752A4113B8E49004E78EB /* BXSEResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXSEResource.h; sourceTree = "<group>"; };
@@ -510,6 +513,8 @@
 				8E72FCE31247A8A5000B8B0E /* BXTexture2DPreviewView.mm */,
 				8E72004B1247E896000B8B0E /* BXTexture2DAtlas.h */,
 				8E72004C1247E896000B8B0E /* BXTexture2DAtlas.mm */,
+				8ED0E5F812495C9E002E902E /* BXTexture2DAtlasListView.h */,
+				8ED0E5F912495C9E002E902E /* BXTexture2DAtlasListView.mm */,
 			);
 			name = Tex2D;
 			sourceTree = "<group>";
@@ -698,6 +703,7 @@
 				8E72FC281247A009000B8B0E /* BXTexture2DSpec.mm in Sources */,
 				8E72FCE41247A8A5000B8B0E /* BXTexture2DPreviewView.mm in Sources */,
 				8E72004D1247E896000B8B0E /* BXTexture2DAtlas.mm in Sources */,
+				8ED0E5FA12495C9E002E902E /* BXTexture2DAtlasListView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

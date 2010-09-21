@@ -107,6 +107,12 @@
     [anAtlas setTexture2D:self];
 }
 
+- (void)removeAtlas:(BXTexture2DAtlas*)anAtlas
+{
+    [anAtlas setTexture2D:nil];
+    [mAtlasInfos removeObject:anAtlas];
+}
+
 
 #pragma mark -
 #pragma mark シリアライゼーションのサポート
@@ -178,7 +184,7 @@
         NSDictionary* anAtlasInfo = [atlasData objectAtIndex:i];
         BXTexture2DAtlas* anAtlas = [[BXTexture2DAtlas alloc] init];
         [anAtlas restoreElementInfo:anAtlasInfo];
-        [mAtlasInfos addObject:anAtlas];
+        [self addAtlas:anAtlas];
         [anAtlas release];
     }
 }    

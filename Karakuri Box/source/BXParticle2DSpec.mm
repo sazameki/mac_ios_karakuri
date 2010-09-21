@@ -81,7 +81,7 @@
         customPath = [imagePath cStringUsingEncoding:NSUTF8StringEncoding];
     }
     
-    KRParticle2DSystem* ret = new KRParticle2DSystem(mImageTag, customPath);
+    KRParticle2DSystem* ret = new KRParticle2DSystem(mImageTag, customPath, [self document]);
 
     ret->setGravity(*mGravity);
     ret->setLife(mLife);

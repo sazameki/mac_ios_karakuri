@@ -1157,6 +1157,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 #pragma mark-
 #pragma mark 2Dテクスチャに関係する操作
 
+- (BXTexture2DSpec*)tex2DWithID:(int)theID
+{
+    return (BXTexture2DSpec*)[mTex2DGroup childWithResourceID:theID];
+}
+
 - (BXTexture2DSpec*)tex2DWithUUID:(NSString*)theUUID
 {
     return (BXTexture2DSpec*)[mTex2DGroup childWithResourceUUID:theUUID];
@@ -1172,6 +1177,37 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [mTex2DGroup addChild:newTexSpec];
 
     [self didChangeValueForKey:@"isTex2DAtlasSelected"];
+}
+
+- (void)removeSelectedTexture2DAtlas
+{
+    BXTexture2DAtlas* selectedAtlas = [self selectedTex2DAtlas];
+    if (!selectedAtlas) {
+        return;
+    }
+
+    [self willChangeValueForKey:@"tex2DAtlasStartPosX"];
+    [self willChangeValueForKey:@"tex2DAtlasStartPosY"];
+    [self willChangeValueForKey:@"tex2DAtlasSizeX"];
+    [self willChangeValueForKey:@"tex2DAtlasSizeY"];        
+    [self willChangeValueForKey:@"tex2DAtlasCountX"];
+    [self willChangeValueForKey:@"tex2DAtlasCountY"];        
+    [self willChangeValueForKey:@"isTex2DAtlasSelected"];
+    
+    [selectedAtlas removeFromParentTexture2D];
+    [oTex2DAtlasListView reloadData];
+
+    [self didChangeValueForKey:@"tex2DAtlasStartPosX"];
+    [self didChangeValueForKey:@"tex2DAtlasStartPosY"];
+    [self didChangeValueForKey:@"tex2DAtlasSizeX"];
+    [self didChangeValueForKey:@"tex2DAtlasSizeY"];
+    [self didChangeValueForKey:@"tex2DAtlasCountX"];
+    [self didChangeValueForKey:@"tex2DAtlasCountY"];        
+    [self didChangeValueForKey:@"isTex2DAtlasSelected"];
+    
+    [oTex2DPreviewView setNeedsDisplay:YES];
+
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (BOOL)isTex2DAtlasSelected
@@ -2130,6 +2166,28 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oTex2DAtlasListView reloadData];
 }
 
+- (void)updateParticle2DTextureMenu
+{
+    NSMenu* theMenu = [oParticleImageButton menu];
+    
+    int i = [[theMenu itemArray] count] - 1;
+    while (i >= 0) {
+        NSMenuItem* anItem = [theMenu itemAtIndex:i];
+        if ([anItem tag] < 0) {
+            break;
+        }
+        [theMenu removeItemAtIndex:i];
+        i--;
+    }
+    
+    int texCount = [mTex2DGroup childCount];
+    for (int i = 0; i < texCount; i++) {
+        BXTexture2DSpec* aTex = (BXTexture2DSpec*)[mTex2DGroup childAtIndex:i];
+        NSMenuItem* newItem = [theMenu addItemWithTitle:[aTex textureDescription] action:NULL keyEquivalent:@""];
+        [newItem setTag:[aTex resourceID]];
+    }
+}
+
 - (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec
 {
     [oParticleGroupIDField setIntValue:[theSpec groupID]];
@@ -2203,6 +2261,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oParticleDeltaAlphaSlider setFloatValue:deltaAlpha];
     
     [oParticleImageButton selectItemWithTag:[theSpec imageTag]];
+    
+    [self updateParticle2DTextureMenu];
 }
 
 - (void)setupChara2DHitButtons

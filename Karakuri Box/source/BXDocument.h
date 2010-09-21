@@ -237,12 +237,15 @@
 
 ///// 2Dテクスチャ設定に関するメソッド
 
+- (BXTexture2DSpec*)tex2DWithID:(int)theID;
 - (BXTexture2DSpec*)tex2DWithUUID:(NSString*)theUUID;
 - (BXTexture2DSpec*)selectedTex2DSpec;
 - (BXTexture2DAtlas*)selectedTex2DAtlas;
 
 - (void)addTexture2DWithInfo:(NSDictionary*)theInfo;
 - (void)setupEditorUIForTexture2D:(BXTexture2DSpec*)theSpec;
+
+- (void)removeSelectedTexture2DAtlas;
 
 - (BOOL)isTex2DAtlasSelected;
 - (int)tex2DAtlasStartPosX;
