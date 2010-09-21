@@ -741,6 +741,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [newAtlas release];
     
     [oTex2DAtlasListView reloadData];
+    int theRow = [oTex2DAtlasListView rowForItem:newAtlas];
+    [oTex2DAtlasListView selectRowIndexes:[NSIndexSet indexSetWithIndex:theRow] byExtendingSelection:NO];
     [oTex2DPreviewView setNeedsDisplay:YES];
 }
 
@@ -790,9 +792,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         return;
     }
     
+    int nextID = 0;
     int motionCount = [charaSpec motionCount];
-    BXChara2DMotion* lastMotion = [charaSpec motionAtIndex:motionCount-1];
-    int nextID = [lastMotion motionID] + 1;
+    if (motionCount > 0) {
+        BXChara2DMotion* lastMotion = [charaSpec motionAtIndex:motionCount-1];
+        nextID = [lastMotion motionID] + 1;
+    }
     
     BXChara2DMotion* newMotion = [charaSpec addNewMotion];
     [newMotion setMotionID:nextID];
@@ -1352,7 +1357,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (BOOL)canRemoveChara2DMotion
 {
     BXChara2DSpec* selectedSpec = [self selectedChara2DSpec];
-    if ([selectedSpec motionCount] <= 1) {
+    if ([selectedSpec motionCount] == 0) {
         return NO;
     }
     
