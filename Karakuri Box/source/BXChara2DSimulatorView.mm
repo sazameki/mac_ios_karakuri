@@ -437,6 +437,9 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
         mKomaInterval = [mCurrentMotion defaultKomaInterval];
     }
 
+    NSString* motionStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentMotion motionID], [mCurrentMotion motionName], [mCurrentKoma komaNumber]-1];
+    [oCurrentMotionField setStringValue:motionStr];
+
     [self setNeedsDisplay:YES];
 
     [[self window] makeFirstResponder:self];
@@ -512,6 +515,7 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
         return;
     }
     mIsAnimationRunning = YES;
+    mHadInput = NO;
     
     [oFirstMotionButton setEnabled:NO];
     [oFirstMotionKomaButton setEnabled:NO];
@@ -795,7 +799,8 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
     
     // 何かしらの入力がない場合
     if (!((key & (KeyDown|KeyUp|KeyLeft|KeyRight|KeyZ|KeyX|KeyC)) || (mouse & MouseButtonLeft))) {
-        if ([oRevertToFirstMotionWithNoKeyButton state] == NSOnState) {
+        if (mHadInput && [oRevertToFirstMotionWithNoKeyButton state] == NSOnState) {
+            mHadInput = NO;
             int firstMotionID = [oFirstMotionButton selectedTag];
             if ([self getCurrentMotionID] != firstMotionID) {
                 unsigned changeMask = KRCharaMotionChangeModeNormalMask;
@@ -808,8 +813,16 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
                 int firstKomaNumber = [oFirstMotionKomaButton selectedTag];
                 
                 [self changeMotion:firstMotionID koma:firstKomaNumber mode:changeMask];
+                NSString* motionStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentMotion motionID], [mCurrentMotion motionName], [mCurrentKoma komaNumber]-1];
+                [oCurrentMotionField setStringValue:motionStr];
             }
         }
+    }
+    // 何かしら入力はあった
+    else {
+        mHadInput = YES;
+        NSString* motionStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentMotion motionID], [mCurrentMotion motionName], [mCurrentKoma komaNumber]-1];
+        [oCurrentMotionField setStringValue:motionStr];
     }
     
     if (mCurrentPos->x < 0) {
@@ -830,10 +843,10 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
         mKomaInterval--;
     }
     
-    if (mKomaInterval != 0) {
+    if (mKomaInterval > 0) {
         return;
     }
-    
+
     if (!mHasChangingStarted && mNextMotion && [mCurrentKoma isCancelable]) {
         mHasChangingStarted = YES;
         if (mSkipEndToNext || ![mCurrentMotion targetKomaForCancel]) {
@@ -855,6 +868,8 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
                 mKomaInterval = [mCurrentMotion defaultKomaInterval];
             }
         }
+        NSString* motionStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentMotion motionID], [mCurrentMotion motionName], [mCurrentKoma komaNumber]-1];
+        [oCurrentMotionField setStringValue:motionStr];
         return;
     }
     
@@ -890,7 +905,7 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
                 mKomaInterval = [mCurrentKoma interval];
                 if (mKomaInterval == 0) {
                     mKomaInterval = [mCurrentMotion defaultKomaInterval];
-                }                
+                }              
             } else {
                 mKomaNumber = [mCurrentKoma komaNumber];
             }

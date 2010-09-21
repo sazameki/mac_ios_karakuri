@@ -95,6 +95,8 @@ typedef unsigned int        KRMouseInfo;
     BXChara2DKoma*      mNextKoma;
     BOOL                mSkipEndToNext;
     BOOL                mHasChangingStarted;
+    
+    BOOL                mHadInput;
 }
 
 - (IBAction)changedFirstMotion:(id)sender;
