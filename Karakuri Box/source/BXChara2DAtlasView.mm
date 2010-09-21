@@ -8,15 +8,7 @@
 
 #import "BXChara2DAtlasView.h"
 #import "BXDocument.h"
-#import "BXChara2DImage.h"
 #import "NSImage+BXEx.h"
-
-
-@interface BXChara2DAtlasView ()
-
-- (BXChara2DImage*)selectedImage;
-
-@end
 
 
 @implementation BXChara2DAtlasView
@@ -42,11 +34,6 @@
     [super dealloc];
 }
 
-- (BXChara2DImage*)selectedImage
-{
-    return [oDocument selectedChara2DImage];
-}
-
 - (NSSize)minSize
 {
     NSSize ret = NSMakeSize(1, 1);
@@ -55,7 +42,8 @@
     NSClipView* contentView = [scrollView contentView];
     NSRect visibleRect = [contentView documentVisibleRect];
 
-    int atlasCount = [[self selectedImage] atlasImageCount];
+    BXTexture2DSpec* theTex = [oDocument selectedChara2DTexture2D];
+    int atlasCount = [theTex allAtlasPieceCount];
     
     mCurrentDivCountX = (int)visibleRect.size.width / gChara2DImageAtlasSizeX;
     
@@ -81,48 +69,55 @@
 
 - (void)selectAll:(id)sender
 {
-    BXChara2DImage* theImage = [self selectedImage];
-    if (!theImage) {
+    BXTexture2DSpec* theTex = [oDocument selectedChara2DTexture2D];
+    if (!theTex) {
         return;
     }
     
-    [mSelectionIndexes addIndexesInRange:NSMakeRange(0, [theImage atlasImageCount])];
+    [mSelectionIndexes addIndexesInRange:NSMakeRange(0, [theTex allAtlasPieceCount])];
     [self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    BXChara2DImage* theImage = [self selectedImage];
-
-    if (!theImage) {
+    BXTexture2DSpec* theTex = [oDocument selectedChara2DTexture2D];
+    if (!theTex) {
         [[NSColor darkGrayColor] set];
         NSRectFill(dirtyRect);
         return;
     }
- 
+    
     [NSGraphicsContext saveGraphicsState];
     [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+    [[NSGraphicsContext currentContext] setShouldAntialias:NO];
 
-    float yOffset = NSMaxY([self convertRect:[self frame] toView:nil]);
-    [[NSGraphicsContext currentContext] setPatternPhase:NSMakePoint(0, yOffset-4)];
+    int partCount = 0;
+    NSImage* theImage = [theTex image72dpi];
     
-    for (int i = 0; i < [theImage atlasImageCount]; i++) {
-        int x = i % mCurrentDivCountX;
-        int y = i / mCurrentDivCountX;
+    int atlasCount = [theTex atlasCount];
+    for (int i = 0; i < atlasCount; i++) {
+        BXTexture2DAtlas* anAtlas = [theTex atlasAtIndex:i];
+        KRVector2DInt atlasCount = [anAtlas count];
         
-        NSRect theRect = NSMakeRect(x * gChara2DImageAtlasSizeX, y * gChara2DImageAtlasSizeY, gChara2DImageAtlasSizeX, gChara2DImageAtlasSizeY);
-        
-        if ([mSelectionIndexes containsIndex:i]) {
-            [[NSColor selectedControlColor] set];
-            NSRectFill(theRect);
+        for (int y = 0; y < atlasCount.y; y++) {
+            for (int x = 0; x < atlasCount.x; x++) {
+                int drawX = partCount % mCurrentDivCountX;
+                int drawY = partCount / mCurrentDivCountX;
+
+                NSRect theRect = NSMakeRect(drawX * gChara2DImageAtlasSizeX, drawY * gChara2DImageAtlasSizeY, gChara2DImageAtlasSizeX, gChara2DImageAtlasSizeY);
+
+                if ([mSelectionIndexes containsIndex:partCount]) {
+                    [[NSColor selectedControlColor] set];
+                    NSRectFill(theRect);
+                }
+                
+                [anAtlas drawAtlasFromTextureImage:theImage point:KRVector2DInt(x, y) inRect:theRect];
+
+                partCount++;
+            }
         }
-
-        if (NSIntersectsRect(dirtyRect, theRect)) {
-            NSImage* nsImage = [theImage atlasImage72dpiAtIndex:i];
-            [nsImage drawThumbnailInRect:NSInsetRect(theRect, 4, 4) background:YES border:YES];
-        }        
     }
-
+    
     [NSGraphicsContext restoreGraphicsState];
 }
 
@@ -135,18 +130,23 @@
 {
     mHasSelectedAtlasImage = NO;
     
-    BXChara2DImage* theImage = [self selectedImage];
-    int atlasCount = [theImage atlasImageCount];
+    BXTexture2DSpec* theTex = [oDocument selectedChara2DTexture2D];
+    if (!theTex) {
+        [self setNeedsDisplay:YES];
+        return;
+    }
+
+    int pieceCount = [theTex allAtlasPieceCount];
 
     NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     unsigned modifierFlags = [theEvent modifierFlags];
-
+    
     int x = (int)pos.x / gChara2DImageAtlasSizeX;
     int y = (int)pos.y / gChara2DImageAtlasSizeY;
     
     int index = y * mCurrentDivCountX + x;
     
-    if (index < atlasCount) {
+    if (index < pieceCount) {
         // 追加の選択
         if (modifierFlags & NSCommandKeyMask) {
             if ([mSelectionIndexes containsIndex:index]) {
@@ -160,12 +160,13 @@
         // 範囲の追加
         else if (modifierFlags & NSShiftKeyMask) {
             if (mLastSelectedIndex >= 0) {
+                for (int i = index; i <= mLastSelectedIndex; i++) {
+                    [mSelectionIndexes addIndex:i];
+                }
                 for (int i = mLastSelectedIndex; i <= index; i++) {
                     [mSelectionIndexes addIndex:i];
                 }
             } else {
-                // TODO: 前の方向に範囲選択できるようにする
-                NSLog(@"TODO: 前の方向に範囲選択できるようにする");
                 [mSelectionIndexes addIndex:index];
                 mLastSelectedIndex = index;
             }
@@ -193,21 +194,36 @@
 
 - (NSImage*)draggingImage
 {
-    BXChara2DImage* theImage = [self selectedImage];
+    BXTexture2DSpec* theTex = [oDocument selectedChara2DTexture2D];
 
     int selectionCount = [mSelectionIndexes count];
     int imageSize = gChara2DImageAtlasSizeX + (selectionCount - 1) * gChara2DImageAtlasDraggingCascadeSize;
     
-    unsigned imageIndexes[selectionCount];
-    [mSelectionIndexes getIndexes:imageIndexes maxCount:selectionCount inIndexRange:nil];
+    NSImage* theImage = [theTex image72dpi];
     
     NSImage* draggingImage = [[[NSImage alloc] initWithSize:NSMakeSize(imageSize, imageSize)] autorelease];
     [draggingImage lockFocus];
-    for (int i = 0; i < selectionCount; i++) {
-        NSImage* anAtlasImage = [theImage atlasImage72dpiAtIndex:imageIndexes[i]];
-        NSRect theAtlasRect = NSMakeRect(i*gChara2DImageAtlasDraggingCascadeSize, i*gChara2DImageAtlasDraggingCascadeSize, gChara2DImageAtlasSizeX, gChara2DImageAtlasSizeX);
-        [anAtlasImage drawThumbnailInRect:theAtlasRect background:NO border:NO];
+    
+    int drawCount = 0;
+    
+    int atlasCount = [theTex atlasCount];
+    int index = 0;
+    for (int i = 0; i < atlasCount; i++) {
+        BXTexture2DAtlas* anAtlas = [theTex atlasAtIndex:i];
+        KRVector2DInt atlasCount = [anAtlas count];
+        
+        for (int y = 0; y < atlasCount.y; y++) {
+            for (int x = 0; x < atlasCount.x; x++) {
+                if ([mSelectionIndexes containsIndex:index]) {
+                    NSRect theAtlasRect = NSMakeRect(drawCount*gChara2DImageAtlasDraggingCascadeSize, drawCount*gChara2DImageAtlasDraggingCascadeSize, gChara2DImageAtlasSizeX, gChara2DImageAtlasSizeX);
+                    [anAtlas drawAtlasFromTextureImage:theImage point:KRVector2DInt(x, y) inRect:theAtlasRect];
+                    drawCount++;
+                }
+                index++;
+            }
+        }
     }
+    
     [draggingImage unlockFocus];
     [draggingImage setFlipped:YES];
 

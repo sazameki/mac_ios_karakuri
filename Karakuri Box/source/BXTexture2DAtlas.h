@@ -30,5 +30,10 @@
 - (void)setSize:(KRVector2DInt)size;
 - (void)setCount:(KRVector2DInt)count;
 
+- (void)drawAtlasFromTextureImage:(NSImage*)image point:(KRVector2DInt)point inRect:(NSRect)rect;
+
+- (void)restoreElementInfo:(NSDictionary*)dict;
+- (NSDictionary*)elementInfo;
+
 @end
 

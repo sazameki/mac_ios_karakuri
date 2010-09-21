@@ -9,7 +9,10 @@
 #import "BXChara2DKoma.h"
 #import "NSDictionary+LoadSave.h"
 #import "BXChara2DSpec.h"
-#import "BXChara2DState.h"
+#import "BXChara2DMotion.h"
+#import "BXTexture2DSpec.h"
+#import "BXDocument.h"
+#import "NSImage+BXEx.h"
 
 
 @implementation BXChara2DKomaHitInfo
@@ -306,10 +309,12 @@
 {
     self = [super init];
     if (self) {
-        NSString* imageTicket = [info stringValueForName:@"Image Ticket" currentValue:nil];
-        mImage = [chara2DSpec imageWithTicket:imageTicket];
-        mImageAtlasIndex = [info intValueForName:@"Atlas Index" currentValue:0];
-        
+        mTexture2DResourceUUID = [[info stringValueForName:@"Texture UUID" currentValue:nil] copy];
+        NSString* atlasRectStr = [info stringValueForName:@"Atlas Rect" currentValue:nil];
+        if (atlasRectStr) {
+            mTextureAtlasRect = NSRectFromString(atlasRectStr);
+        }
+
         mKomaNumber = [info intValueForName:@"Koma Number" currentValue:0];
         mIsCancelable = [info boolValueForName:@"Cancelable" currentValue:YES];
         mInterval = [info intValueForName:@"Interval" currentValue:0];
@@ -337,23 +342,24 @@
 - (void)dealloc
 {
     [mHitInfos release];
+    [mTexture2DResourceUUID release];
 
     [super dealloc];
 }
 
 - (BXDocument*)document
 {
-    return [mParentState document];
+    return [mParentMotion document];
 }
 
-- (BXChara2DState*)parentState
+- (BXChara2DMotion*)parentMotion
 {
-    return mParentState;
+    return mParentMotion;
 }
 
-- (void)setParentState:(BXChara2DState*)aState
+- (void)setParentMotion:(BXChara2DMotion*)aMotion
 {
-    mParentState = aState;
+    mParentMotion = aMotion;
 }
 
 - (void)drawHitInfosInRect:(NSRect)targetRect scale:(double)scale
@@ -496,12 +502,11 @@
     [mHitInfos removeObject:aHitInfo];
 }
 
-- (void)setImage:(BXChara2DImage*)image atlasAtIndex:(int)index
+- (void)setTexture:(BXTexture2DSpec*)texture atlasRect:(NSRect)rect
 {
-    mImage = image;
-    mImageAtlasIndex = index;
-    
-    [mImage incrementUsedCount];
+    [mTexture2DResourceUUID release];
+    mTexture2DResourceUUID = [[texture resourceUUID] copy];
+    mTextureAtlasRect = rect;
 }
 
 - (int)komaNumber
@@ -536,17 +541,18 @@
 
 - (NSImage*)nsImage
 {
-    return [mImage atlasImage72dpiAtIndex:mImageAtlasIndex];
-}
-
-- (BXChara2DImage*)image
-{
-    return mImage;
-}
-
-- (int)atlasIndex
-{
-    return mImageAtlasIndex;
+    if (!mTexture2DResourceUUID) {
+        return nil;
+    }
+    BXTexture2DSpec* texture = [[self document] tex2DWithUUID:mTexture2DResourceUUID];
+    if (!texture) {
+        return nil;
+    }
+    NSImage* image = [texture image72dpi];
+    if (!image) {
+        return nil;
+    }
+    return [image subImageFromRect:mTextureAtlasRect];
 }
 
 - (int)gotoTargetNumber
@@ -567,10 +573,10 @@
     mGotoTargetKoma = target;
 }
 
-- (void)replaceTempGotoInfoForState:(BXChara2DState*)state
+- (void)replaceTempGotoInfoForMotion:(BXChara2DMotion*)motion
 {
     if (mTempGotoTargetKomaNumber > 0) {
-        BXChara2DKoma* targetKoma = [state komaWithNumber:mTempGotoTargetKomaNumber];
+        BXChara2DKoma* targetKoma = [motion komaWithNumber:mTempGotoTargetKomaNumber];
         mGotoTargetKoma = targetKoma;
     }
     
@@ -579,7 +585,10 @@
 
 - (void)preparePreviewTexture
 {
-    mPreviewTex = new KRTexture2D(mImage, mImageAtlasIndex);
+    if (mTexture2DResourceUUID) {
+        BXTexture2DSpec* texture = [[self document] tex2DWithUUID:mTexture2DResourceUUID];
+        mPreviewTex = new KRTexture2D(texture, mTextureAtlasRect);
+    }
 }
 
 - (KRTexture2D*)previewTexture
@@ -591,8 +600,13 @@
 {
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
-    [theInfo setStringValue:[mImage imageTicket] forName:@"Image Ticket"];
-    [theInfo setIntValue:mImageAtlasIndex forName:@"Atlas Index"];
+    if (mTexture2DResourceUUID) {
+        [theInfo setStringValue:mTexture2DResourceUUID forName:@"Texture UUID"];
+    } else {
+        [theInfo removeObjectForKey:@"Texture UUID"];
+    }
+    [theInfo setStringValue:NSStringFromRect(mTextureAtlasRect) forName:@"Atlas Rect"];
+    
     [theInfo setIntValue:mKomaNumber forName:@"Koma Number"];
     [theInfo setBoolValue:mIsCancelable forName:@"Cancelable"];
     [theInfo setIntValue:mInterval forName:@"Interval"];

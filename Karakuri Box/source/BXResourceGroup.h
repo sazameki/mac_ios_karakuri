@@ -23,6 +23,7 @@
 
 @interface BXResourceGroup (Texture2DSerialization)
 
+- (NSMenu*)menuForTextures;
 - (void)readTexture2DInfosData:(NSData*)data document:(BXDocument*)document;
 
 @end

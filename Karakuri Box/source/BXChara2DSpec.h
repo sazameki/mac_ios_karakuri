@@ -7,83 +7,81 @@
 //
 
 #import "BXResourceElement.h"
-#import "BXChara2DState.h"
-#import "BXChara2DImage.h"
+#import "BXChara2DMotion.h"
 
 
 @interface BXChara2DSpec : BXResourceElement {
-    NSMutableArray*     mStates;
-    NSMutableArray*     mImages;
+    NSMutableArray*     mMotions;
     
     double              mKomaPreviewScale;
     
-    int         mFirstStateID;
-    int         mFirstStateKomaNumber;
-    BOOL        mRevertToFirstState;
+    int         mFirstMotionID;
+    int         mFirstMotionKomaNumber;
+    BOOL        mRevertToFirstMotion;
     BOOL        mIgnoresCancelFlag;
     BOOL        mSkipEndAnimation;
     
-    int         mActionStateIDUp;
+    int         mActionMotionIDUp;
     int         mActionKomaNumberUp;
     BOOL        mIgnoresCancelFlagUp;
     BOOL        mSkipEndAnimationUp;
     int         mActionSpeedUp;
     
-    int         mActionStateIDDown;
+    int         mActionMotionIDDown;
     int         mActionKomaNumberDown;
     BOOL        mIgnoresCancelFlagDown;
     BOOL        mSkipEndAnimationDown;
     int         mActionSpeedDown;
     
-    int         mActionStateIDLeft;
+    int         mActionMotionIDLeft;
     int         mActionKomaNumberLeft;
     BOOL        mIgnoresCancelFlagLeft;
     BOOL        mSkipEndAnimationLeft;
     int         mActionSpeedLeft;
     
-    int         mActionStateIDRight;
+    int         mActionMotionIDRight;
     int         mActionKomaNumberRight;
     BOOL        mIgnoresCancelFlagRight;
     BOOL        mSkipEndAnimationRight;
     int         mActionSpeedRight;
 
-    int         mActionStateIDZ;
+    int         mActionMotionIDZ;
     int         mActionKomaNumberZ;
     BOOL        mIgnoresCancelFlagZ;
     BOOL        mSkipEndAnimationZ;
     
-    int         mActionStateIDX;
+    int         mActionMotionIDX;
     int         mActionKomaNumberX;
     BOOL        mIgnoresCancelFlagX;
     BOOL        mSkipEndAnimationX;
     
-    int         mActionStateIDC;
+    int         mActionMotionIDC;
     int         mActionKomaNumberC;
     BOOL        mIgnoresCancelFlagC;
     BOOL        mSkipEndAnimationC;
     
-    int         mActionStateIDMouse;
+    int         mActionMotionIDMouse;
     int         mActionKomaNumberMouse;
     BOOL        mIgnoresCancelFlagMouse;
     BOOL        mSkipEndAnimationMouse;
     BOOL        mDoChangeMouseLocation;
 }
 
-- (id)initWithName:(NSString*)name defaultState:(BOOL)hasDefaultState;
+- (id)initWithName:(NSString*)name defaultMotion:(BOOL)hasDefaultMotion;
 
-- (int)firstStateID;
-- (void)setFirstStateID:(int)stateID;
-- (int)firstStateKomaNumber;
-- (void)setFirstStateKomaNumber:(int)komaNumber;
-- (BOOL)revertToFirstState;
-- (void)setRevertToFirstState:(BOOL)flag;
+- (int)firstMotionID;
+- (void)setFirstMotionID:(int)motionID;
+- (int)firstMotionKomaNumber;
+- (void)setFirstMotionKomaNumber:(int)komaNumber;
+- (BOOL)revertToFirstMotion;
+- (void)setRevertToFirstMotion:(BOOL)flag;
 - (BOOL)ignoresCancelFlag;
 - (void)setIgnoresCancelFlag:(BOOL)flag;
 - (BOOL)skipEndAnimation;
 - (void)setSkipEndAnimation:(BOOL)flag;
 
-- (int)actionStateIDUp;
-- (void)setActionStateIDUp:(int)stateID;
+- (int)actionMotionIDUp;
+- (void)setActionMotionIDUp:(int)motionID;
 - (int)actionKomaNumberUp;
 - (void)setActionKomaNumberUp:(int)komaNumber;
 - (BOOL)ignoresCancelFlagUp;
@@ -93,8 +91,8 @@
 - (int)actionSpeedUp;
 - (void)setActionSpeedUp:(int)value;
 
-- (int)actionStateIDDown;
-- (void)setActionStateIDDown:(int)stateID;
+- (int)actionMotionIDDown;
+- (void)setActionMotionIDDown:(int)motionID;
 - (int)actionKomaNumberDown;
 - (void)setActionKomaNumberDown:(int)komaNumber;
 - (BOOL)ignoresCancelFlagDown;
@@ -104,8 +102,8 @@
 - (int)actionSpeedDown;
 - (void)setActionSpeedDown:(int)value;
 
-- (int)actionStateIDLeft;
-- (void)setActionStateIDLeft:(int)stateID;
+- (int)actionMotionIDLeft;
+- (void)setActionMotionIDLeft:(int)motionID;
 - (int)actionKomaNumberLeft;
 - (void)setActionKomaNumberLeft:(int)komaNumber;
 - (BOOL)ignoresCancelFlagLeft;
@@ -115,8 +113,8 @@
 - (int)actionSpeedLeft;
 - (void)setActionSpeedLeft:(int)value;
 
-- (int)actionStateIDRight;
-- (void)setActionStateIDRight:(int)stateID;
+- (int)actionMotionIDRight;
+- (void)setActionMotionIDRight:(int)motionID;
 - (int)actionKomaNumberRight;
 - (void)setActionKomaNumberRight:(int)komaNumber;
 - (BOOL)ignoresCancelFlagRight;
@@ -126,8 +124,8 @@
 - (int)actionSpeedRight;
 - (void)setActionSpeedRight:(int)value;
 
-- (int)actionStateIDZ;
-- (void)setActionStateIDZ:(int)stateID;
+- (int)actionMotionIDZ;
+- (void)setActionMotionIDZ:(int)motionID;
 - (int)actionKomaNumberZ;
 - (void)setActionKomaNumberZ:(int)komaNumber;
 - (BOOL)ignoresCancelFlagZ;
@@ -135,8 +133,8 @@
 - (BOOL)skipEndAnimationZ;
 - (void)setSkipEndAnimationZ:(BOOL)flag;
 
-- (int)actionStateIDX;
-- (void)setActionStateIDX:(int)stateID;
+- (int)actionMotionIDX;
+- (void)setActionMotionIDX:(int)motionID;
 - (int)actionKomaNumberX;
 - (void)setActionKomaNumberX:(int)komaNumber;
 - (BOOL)ignoresCancelFlagX;
@@ -144,8 +142,8 @@
 - (BOOL)skipEndAnimationX;
 - (void)setSkipEndAnimationX:(BOOL)flag;
 
-- (int)actionStateIDC;
-- (void)setActionStateIDC:(int)stateID;
+- (int)actionMotionIDC;
+- (void)setActionMotionIDC:(int)motionID;
 - (int)actionKomaNumberC;
 - (void)setActionKomaNumberC:(int)komaNumber;
 - (BOOL)ignoresCancelFlagC;
@@ -153,8 +151,8 @@
 - (BOOL)skipEndAnimationC;
 - (void)setSkipEndAnimationC:(BOOL)flag;
 
-- (int)actionStateIDMouse;
-- (void)setActionStateIDMouse:(int)stateID;
+- (int)actionMotionIDMouse;
+- (void)setActionMotionIDMouse:(int)motionID;
 - (int)actionKomaNumberMouse;
 - (void)setActionKomaNumberMouse:(int)komaNumber;
 - (BOOL)ignoresCancelFlagMouse;
@@ -165,19 +163,13 @@
 - (void)setDoChangeMouseLocation:(BOOL)flag;
 
 
-- (BXChara2DState*)addNewState;
-- (int)stateCount;
-- (BXChara2DState*)stateAtIndex:(int)index;
-- (BXChara2DState*)stateWithID:(int)stateID;
-- (void)removeState:(BXChara2DState*)theState;
-- (void)sortStateList;
-- (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID;
-
-- (BXChara2DImage*)addImageAtPath:(NSString*)path document:(BXDocument*)document;
-- (int)imageCount;
-- (BXChara2DImage*)imageAtIndex:(int)index;
-- (BXChara2DImage*)imageWithTicket:(NSString*)imageTicket;
-- (void)removeImageAtIndex:(int)index;
+- (BXChara2DMotion*)addNewMotion;
+- (int)motionCount;
+- (BXChara2DMotion*)motionAtIndex:(int)index;
+- (BXChara2DMotion*)motionWithID:(int)motionID;
+- (void)removeMotion:(BXChara2DMotion*)theMotion;
+- (void)sortMotionList;
+- (void)changeMotionIDInAllKomaFrom:(int)oldMotionID to:(int)newMotionID;
 
 - (double)komaPreviewScale;
 - (void)setKomaPreviewScale:(double)value;

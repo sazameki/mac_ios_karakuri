@@ -14,6 +14,7 @@
 #import <OpenGL/gl.h>
 #import <OpenGL/glext.h>
 #import <OpenGL/glu.h>
+#import "BXTexture2DSpec.h"
 
 
 typedef enum {
@@ -55,7 +56,7 @@ public:
     
     KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
     KRTexture2D(int imageTag, std::string& customPath, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
-    KRTexture2D(BXChara2DImage* charaImage, int index);
+    KRTexture2D(BXTexture2DSpec* tex, NSRect atlasRect);
 
     ~KRTexture2D();
     

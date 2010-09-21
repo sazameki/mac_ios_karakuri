@@ -31,9 +31,13 @@
 - (double)previewScale;
 - (void)setPreviewScale:(double)scale;
 
+- (int)allAtlasPieceCount;
+
 - (int)atlasCount;
 - (BXTexture2DAtlas*)atlasAtIndex:(int)index;
 - (void)addAtlas:(BXTexture2DAtlas*)anAtlas;
+
+- (NSString*)textureDescription;
 
 @end
 

@@ -54,5 +54,7 @@
 - (NSData*)resourceMapData;
 - (void)restoreResourceMapData:(NSData*)data;
 
+- (void)removeUnusedTextureImages:(NSArray*)usedTickets;
+
 @end
 

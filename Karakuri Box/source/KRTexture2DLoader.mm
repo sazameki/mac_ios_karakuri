@@ -11,19 +11,21 @@
 #include "KarakuriGlobals.h"
 #include "KRPNGLoader.h"
 #import "NSImage+CGImageConversion.h"
+#import "NSImage+BXEx.h"
 
 
 #define KRTextureMaxSize    1024
 
 
-GLuint KRCreateGLTextureFromChara2DImage(BXChara2DImage* charaImage, int atlasIndex, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreateGLTextureFromTexture2DAtlas(BXTexture2DSpec* tex, NSRect atlasRect, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
 {
-    NSImage* nsImage = [charaImage atlasImage72dpiAtIndex:atlasIndex];
+    NSImage* mainImage = [tex image72dpi];
+    NSImage* nsImage = [mainImage subImageFromRect:atlasRect];
     
     CGImageRef imageRef = [nsImage cgImage];
- 
+    
     GLuint textureName = GL_INVALID_VALUE;
-
+    
     imageSize->x = CGImageGetWidth(imageRef);
     imageSize->y = CGImageGetHeight(imageRef);
     textureSize->x = 1.0;
@@ -120,7 +122,7 @@ GLuint KRCreateGLTextureFromChara2DImage(BXChara2DImage* charaImage, int atlasIn
     
     CGImageRelease(imageRef);
     
-    return textureName;
+    return textureName;    
 }
 
 GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)

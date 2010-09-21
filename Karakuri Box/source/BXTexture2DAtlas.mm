@@ -7,6 +7,8 @@
 //
 
 #import "BXTexture2DAtlas.h"
+#import "NSDictionary+LoadSave.h"
+#import "NSImage+BXEx.h"
 
 
 @implementation BXTexture2DAtlas
@@ -60,6 +62,37 @@
 - (NSString*)atlasDescription
 {
     return [NSString stringWithFormat:@"(%d, %d): (%d x %d)", mStartPos.x, mStartPos.y, mSize.x, mSize.y];
+}
+
+- (void)drawAtlasFromTextureImage:(NSImage*)image point:(KRVector2DInt)point inRect:(NSRect)rect
+{
+    rect = NSInsetRect(rect, 4.0, 4.0);
+    
+    [image drawThumbnailInRect:rect fromRect:NSMakeRect(mStartPos.x + mSize.x * point.x, mStartPos.y + mSize.y * point.y, mSize.x, mSize.y) background:YES border:YES];
+}
+
+- (void)restoreElementInfo:(NSDictionary*)dict
+{
+    mStartPos.x = [dict intValueForName:@"Atlas StartPos X" currentValue:mStartPos.x];
+    mStartPos.y = [dict intValueForName:@"Atlas StartPos Y" currentValue:mStartPos.y];
+    mSize.x = [dict intValueForName:@"Atlas Size X" currentValue:mSize.x];
+    mSize.y = [dict intValueForName:@"Atlas Size Y" currentValue:mSize.y];
+    mCount.x = [dict intValueForName:@"Atlas Count X" currentValue:mCount.x];
+    mCount.y = [dict intValueForName:@"Atlas Count Y" currentValue:mCount.y];
+}
+
+- (NSDictionary*)elementInfo
+{
+    NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
+    
+    [theInfo setIntValue:mStartPos.x forName:@"Atlas StartPos X"];
+    [theInfo setIntValue:mStartPos.y forName:@"Atlas StartPos Y"];
+    [theInfo setIntValue:mSize.x forName:@"Atlas Size X"];
+    [theInfo setIntValue:mSize.y forName:@"Atlas Size Y"];
+    [theInfo setIntValue:mCount.x forName:@"Atlas Count X"];
+    [theInfo setIntValue:mCount.y forName:@"Atlas Count Y"];
+    
+    return theInfo;
 }
 
 @end

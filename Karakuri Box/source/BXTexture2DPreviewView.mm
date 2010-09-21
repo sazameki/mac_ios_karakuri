@@ -57,13 +57,16 @@
             KRVector2DInt atlasCount = [anAtlas count];
             for (int y = 0; y < atlasCount.y; y++) {
                 for (int x = 0; x < atlasCount.x; x++) {
-                    NSRect theRect = NSMakeRect((atlasStartPos.x+atlasSize.x*x) * scale, (atlasStartPos.y+atlasSize.y*y) * scale, atlasSize.x * scale - 1, atlasSize.y * scale - 1);
+                    NSRect theRect = NSMakeRect((atlasStartPos.x+atlasSize.x*x) * scale, (atlasStartPos.y+atlasSize.y*y) * scale + 1, atlasSize.x * scale - 1, atlasSize.y * scale - 1);
                     
                     [[NSColor colorWithCalibratedRed:1.0 green:0.0 blue:0.0 alpha:0.2] set];
                     [NSBezierPath fillRect:theRect];
 
                     [[NSColor redColor] set];
                     [NSBezierPath strokeRect:theRect];
+
+                    [[NSColor colorWithCalibratedWhite:1.0 alpha:0.8] set];
+                    [NSBezierPath strokeRect:NSInsetRect(theRect, 1.0, 1.0)];
                 }
             }
         }

@@ -15,6 +15,7 @@
 @interface BXResourceElement : NSObject {
     BXDocument*         mDocument;
     
+    NSString*           mResourceUUID;
     int                 mGroupID;
     int                 mResourceID;
     NSString*           mResourceName;
@@ -32,6 +33,7 @@
 - (BOOL)isExpandable;
 - (BOOL)isGroupItem;
 
+- (NSString*)resourceUUID;
 - (int)groupID;
 - (int)resourceID;
 - (NSString*)resourceName;
@@ -42,6 +44,8 @@
 - (void)addChild:(BXResourceElement*)anElem;
 - (int)childCount;
 - (BXResourceElement*)childAtIndex:(int)index;
+- (BXResourceElement*)childWithResourceID:(int)resourceID;
+- (BXResourceElement*)childWithResourceUUID:(NSString*)theUUID;
 - (void)removeChild:(BXResourceElement*)anElem;
 
 - (void)sortChildrenByResourceID;

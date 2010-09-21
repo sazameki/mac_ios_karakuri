@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BXChara2DImage.h"
 #import "KRTexture2D.h"
 
 
 @class BXChara2DSpec;
-@class BXChara2DState;
+@class BXChara2DMotion;
 @class BXChara2DKoma;
+@class BXTexture2DSpec;
 
 
 enum {
@@ -69,33 +69,33 @@ enum {
 
 
 @interface BXChara2DKoma : NSObject {
-    BXChara2DState* mParentState;
+    BXChara2DMotion*    mParentMotion;
+    
+    NSString*           mTexture2DResourceUUID;
+    NSRect              mTextureAtlasRect;
 
-    BXChara2DImage* mImage;
-    int             mImageAtlasIndex;
+    int                 mKomaNumber;        // コマ番号：1から始まる番号（表示時には0からになる）
+    BOOL                mIsCancelable;
+    int                 mInterval;
     
-    int             mKomaNumber;
-    BOOL            mIsCancelable;
-    int             mInterval;
+    BXChara2DKoma*      mGotoTargetKoma;
     
-    BXChara2DKoma*  mGotoTargetKoma;
+    int                 mTempGotoTargetKomaNumber;
+    KRTexture2D*        mPreviewTex;
     
-    int             mTempGotoTargetKomaNumber;
-    KRTexture2D*    mPreviewTex;
-    
-    NSMutableArray* mHitInfos;
-    BOOL            mShowsHitInfos;
-    int             mCurrentHitGroupIndex;
+    NSMutableArray*     mHitInfos;
+    BOOL                mShowsHitInfos;
+    int                 mCurrentHitGroupIndex;
 }
 
 - (id)initWithInfo:(NSDictionary*)info chara2DSpec:(BXChara2DSpec*)chara2DSpec;
 
 - (BXDocument*)document;
 
-- (BXChara2DState*)parentState;
-- (void)setParentState:(BXChara2DState*)aState;
+- (BXChara2DMotion*)parentMotion;
+- (void)setParentMotion:(BXChara2DMotion*)aMotion;
 
-- (void)setImage:(BXChara2DImage*)image atlasAtIndex:(int)index;
+- (void)setTexture:(BXTexture2DSpec*)texture atlasRect:(NSRect)rect;
 
 - (void)drawHitInfosInRect:(NSRect)targetRect scale:(double)scale;
 - (int)hitInfoCount;
@@ -122,14 +122,12 @@ enum {
 - (int)interval;
 - (void)setInterval:(int)interval;
 - (NSImage*)nsImage;
-- (BXChara2DImage*)image;
-- (int)atlasIndex;
 
 - (BXChara2DKoma*)gotoTarget;
 - (int)gotoTargetNumber;
 - (void)setGotoTarget:(BXChara2DKoma*)target;
 
-- (void)replaceTempGotoInfoForState:(BXChara2DState*)state;
+- (void)replaceTempGotoInfoForMotion:(BXChara2DMotion*)motion;
 
 - (void)preparePreviewTexture;
 - (KRTexture2D*)previewTexture;

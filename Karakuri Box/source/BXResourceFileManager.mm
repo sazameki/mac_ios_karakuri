@@ -58,8 +58,20 @@
 - (NSString*)path
 {
     NSURL* docURL = [mDocument fileURL];
-    NSString* contentsPath = [[docURL path] stringByAppendingPathComponent:@"Contents"];
-    NSString* resourcesPath = [contentsPath stringByAppendingPathComponent:@"Resources"];
+    NSString* docPath = [docURL path];
+    NSString* resourcesPath = nil;
+    
+    if ([[docPath pathExtension] isEqualToString:@"krbox"]) {
+        NSDictionary* theInfo = [NSDictionary dictionaryWithContentsOfFile:docPath];
+        NSString* projFileName = [theInfo objectForKey:@"Project File"];
+        if (projFileName && [projFileName length] > 0) {
+            NSString* projFilePath = [[docPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:projFileName];
+            resourcesPath = [[projFilePath stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"Resources"];
+        }
+    } else {
+        NSString* contentsPath = [docPath stringByAppendingPathComponent:@"Contents"];
+        resourcesPath = [contentsPath stringByAppendingPathComponent:@"Resources"];
+    }
     
     return [resourcesPath stringByAppendingPathComponent:mFileName];
 }
@@ -186,6 +198,48 @@
                                                                        resourceName:resourceName
                                                                            document:mDocument] autorelease];
         [mResourceInfoMap setObject:theInfo forKey:theTicketObj];
+    }
+}
+
+- (void)removeUnusedTextureImages:(NSArray*)usedTickets
+{
+    NSURL* docURL = [mDocument fileURL];
+    NSString* docPath = [docURL path];
+    NSString* resourcesPath = nil;
+    
+    NSMutableArray* usedPaths = [NSMutableArray array];
+    int ticketCount = [usedTickets count];
+    for (int i = 0; i < ticketCount; i++) {
+        NSString* aTicket = [usedTickets objectAtIndex:i];
+        NSString* aUsedPath = [self pathForTicket:aTicket];
+        [usedPaths addObject:aUsedPath];
+    }
+    
+    if ([[docPath pathExtension] isEqualToString:@"krbox"]) {
+        NSDictionary* theInfo = [NSDictionary dictionaryWithContentsOfFile:docPath];
+        NSString* projFileName = [theInfo objectForKey:@"Project File"];
+        if (projFileName && [projFileName length] > 0) {
+            NSString* projFilePath = [[docPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:projFileName];
+            resourcesPath = [[projFilePath stringByAppendingPathComponent:@"Contents"] stringByAppendingPathComponent:@"Resources"];
+        }
+    } else {
+        NSString* contentsPath = [docPath stringByAppendingPathComponent:@"Contents"];
+        resourcesPath = [contentsPath stringByAppendingPathComponent:@"Resources"];
+    }
+
+    NSArray* dirFiles = [[NSFileManager defaultManager] subpathsAtPath:resourcesPath];
+    int fileCount = [dirFiles count];
+    for (int i = 0; i < fileCount; i++) {
+        NSString* aFilename = [dirFiles objectAtIndex:i];
+        if ([[aFilename pathExtension] caseInsensitiveCompare:@"plist"] == NSOrderedSame) {
+            continue;
+        }
+        NSString* path = [resourcesPath stringByAppendingPathComponent:aFilename];
+        if (![usedPaths containsObject:path]) {
+            if (![[NSFileManager defaultManager] removeFileAtPath:path handler:nil]) {
+                NSLog(@"Failed to remove an image file: %@", path);
+            }
+        }
     }
 }
 

@@ -1,25 +1,25 @@
 //
-//  BXChara2DState.mm
+//  BXChara2DMotion.mm
 //  Karakuri Box
 //
 //  Created by numata on 10/03/08.
 //  Copyright 2010 Satoshi Numata. All rights reserved.
 //
 
-#import "BXChara2DState.h"
+#import "BXChara2DMotion.h"
 #import "BXDocument.h"
 #import "NSMutableArray+Moving.h"
 #import "NSDictionary+LoadSave.h"
 
 
-@interface BXChara2DState ()
+@interface BXChara2DMotion ()
 
 - (void)renumberKomas;
 
 @end
 
 
-@implementation BXChara2DState
+@implementation BXChara2DMotion
 
 - (id)initWithName:(NSString*)name chara2DSpec:(BXChara2DSpec*)chara2DSpec
 {
@@ -29,20 +29,20 @@
         
         mTargetKomaForCancel = nil;
         
-        mStateName = [name copy];
-        mStateID = 0;
+        mMotionName = [name copy];
+        mMotionID = 0;
         mKomas = [[NSMutableArray alloc] init];
         
         mDefaultKomaInterval = 4;
         
-        mNextStateID = -1;
+        mNextMotionID = -1;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [mStateName release];
+    [mMotionName release];
     [mKomas release];
     
     [super dealloc];
@@ -68,25 +68,25 @@
     return mParentSpec;
 }
 
-- (int)stateID
+- (int)motionID
 {
-    return mStateID;
+    return mMotionID;
 }
 
-- (void)setStateID:(int)value
+- (void)setMotionID:(int)value
 {
-    mStateID = value;
+    mMotionID = value;
 }
 
-- (NSString*)stateName
+- (NSString*)motionName
 {
-    return mStateName;
+    return mMotionName;
 }
 
-- (void)setStateName:(NSString*)name
+- (void)setMotionName:(NSString*)name
 {
-    [mStateName release];
-    mStateName = [name copy];
+    [mMotionName release];
+    mMotionName = [name copy];
 }
 
 - (void)renumberKomas
@@ -106,7 +106,7 @@
 - (BXChara2DKoma*)insertKomaAtIndex:(int)index
 {
     BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] init] autorelease];
-    [aKoma setParentState:self];
+    [aKoma setParentMotion:self];
     [mKomas insertObject:aKoma atIndex:index];
     [self renumberKomas];
     return aKoma;
@@ -159,18 +159,16 @@
     }
     
     // 削除の実行
-    [theKoma setParentState:nil];
-    BXChara2DImage* theImage = [theKoma image];
-    [theImage decrementUsedCount];
+    [theKoma setParentMotion:nil];
     [mKomas removeObjectAtIndex:index];
 
     [self renumberKomas];
 }
 
-- (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID
+- (void)changeMotionIDInAllKomaFrom:(int)oldMotionID to:(int)newMotionID
 {
-    if (mNextStateID == oldStateID) {
-        mNextStateID = newStateID;
+    if (mNextMotionID == oldMotionID) {
+        mNextMotionID = newMotionID;
     }
 }
 
@@ -208,14 +206,14 @@
     mDefaultKomaInterval = interval;
 }
 
-- (int)nextStateID
+- (int)nextMotionID
 {
-    return mNextStateID;
+    return mNextMotionID;
 }
 
-- (void)setNextStateID:(int)stateID
+- (void)setNextMotionID:(int)motionID
 {
-    mNextStateID = stateID;
+    mNextMotionID = motionID;
 }
 
 - (void)preparePreviewTextures
@@ -226,13 +224,13 @@
     }    
 }
 
-- (NSDictionary*)stateInfo
+- (NSDictionary*)motionInfo
 {
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
     // 基本情報
-    [theInfo setIntValue:mStateID forName:@"State ID"];
-    [theInfo setStringValue:mStateName forName:@"State Name"];
+    [theInfo setIntValue:mMotionID forName:@"State ID"];
+    [theInfo setStringValue:mMotionName forName:@"State Name"];
     
     // コマ情報
     NSMutableArray* komaInfos = [NSMutableArray array];
@@ -245,8 +243,8 @@
     // デフォルトの間隔
     [theInfo setIntValue:mDefaultKomaInterval forName:@"Default Interval"];
     
-    // 次の状態ID
-    [theInfo setIntValue:mNextStateID forName:@"Next State ID"];
+    // 次の動作ID
+    [theInfo setIntValue:mNextMotionID forName:@"Next State ID"];
     
     // キャンセル時の終了アニメーション開始コマ
     [theInfo setIntValue:[mTargetKomaForCancel komaNumber] forName:@"Cancel Koma"];
@@ -254,26 +252,26 @@
     return theInfo;
 }
 
-- (void)restoreStateInfo:(NSDictionary*)theInfo
+- (void)restoreMotionInfo:(NSDictionary*)theInfo
 {
     // 基本情報
-    mStateID = [theInfo intValueForName:@"State ID" currentValue:mStateID];
-    [self setStateName:[theInfo stringValueForName:@"State Name" currentValue:mStateName]];
+    mMotionID = [theInfo intValueForName:@"State ID" currentValue:mMotionID];
+    [self setMotionName:[theInfo stringValueForName:@"State Name" currentValue:mMotionName]];
     
     // コマ情報
     NSArray* komaInfos = [theInfo objectForKey:@"Koma Infos"];
     for (int i = 0; i < [komaInfos count]; i++) {
         NSDictionary* aKomaInfo = [komaInfos objectAtIndex:i];
         BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] initWithInfo:aKomaInfo chara2DSpec:mParentSpec] autorelease];
-        [aKoma setParentState:self];
+        [aKoma setParentMotion:self];
         [mKomas addObject:aKoma];
     }
 
     // デフォルトの間隔
     mDefaultKomaInterval = [theInfo intValueForName:@"Default Interval" currentValue:mDefaultKomaInterval];
 
-    // 次の状態ID
-    mNextStateID = [theInfo intValueForName:@"Next State ID" currentValue:mNextStateID];
+    // 次の動作ID
+    mNextMotionID = [theInfo intValueForName:@"Next State ID" currentValue:mNextMotionID];
 
     // キャンセル時の終了アニメーション開始コマ
     int theKomaNumber = [theInfo intValueForName:@"Cancel Koma" currentValue:0];
@@ -282,7 +280,7 @@
     // Gotoコマ情報をオブジェクトに置き換え
     for (int i = 0; i < [mKomas count]; i++) {
         BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
-        [aKoma replaceTempGotoInfoForState:self];
+        [aKoma replaceTempGotoInfoForMotion:self];
     }
 }
 

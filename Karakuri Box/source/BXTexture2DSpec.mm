@@ -79,6 +79,18 @@
     mPreviewScale = scale;
 }
 
+- (int)allAtlasPieceCount
+{
+    int atlasCount = [mAtlasInfos count];
+    int ret = 0;
+    for (int i = 0; i < atlasCount; i++) {
+        BXTexture2DAtlas* anAtlas = [mAtlasInfos objectAtIndex:i];
+        KRVector2DInt atlasCount = [anAtlas count];
+        ret += atlasCount.x * atlasCount.y;
+    }
+    return ret;
+}
+
 - (int)atlasCount
 {
     return [mAtlasInfos count];
@@ -99,12 +111,12 @@
 #pragma mark -
 #pragma mark シリアライゼーションのサポート
 
-
 - (NSDictionary*)elementInfo
 {
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
     // 基本のIDと名前
+    [theInfo setStringValue:mResourceUUID forName:@"Resource UUID"];
     [theInfo setIntValue:mGroupID forName:@"Group ID"];
     [theInfo setIntValue:mResourceID forName:@"Resource ID"];
     [theInfo setStringValue:mResourceName forName:@"Resource Name"];
@@ -129,12 +141,24 @@
     // スケール
     [theInfo setDoubleValue:mPreviewScale forName:@"Preview Scale"];
     
+    // アトラス
+    NSMutableArray* atlasInfos = [NSMutableArray array];
+    int atlasCount = [mAtlasInfos count];
+    for (int i = 0; i < atlasCount; i++) {
+        BXTexture2DAtlas* anAtlas = [mAtlasInfos objectAtIndex:i];
+        NSDictionary* atlasInfo = [anAtlas elementInfo];
+        [atlasInfos addObject:atlasInfo];
+    }
+    [theInfo setObject:atlasInfos forKey:@"Atlas Data"];
+    
     return theInfo;
 }
 
 - (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document
 {
     // 基本のIDと名前
+    [mResourceUUID release];
+    mResourceUUID = [[theInfo stringValueForName:@"Resource UUID" currentValue:mResourceUUID] retain];
     mGroupID = [theInfo intValueForName:@"Group ID" currentValue:mResourceID];
     mResourceID = [theInfo intValueForName:@"Resource ID" currentValue:mResourceID];
     [self setResourceName:[theInfo stringValueForName:@"Resource Name" currentValue:mResourceName]];
@@ -146,6 +170,17 @@
     
     // プレビュー
     mPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mPreviewScale];
+    
+    // アトラス
+    NSArray* atlasData = [theInfo objectForKey:@"Atlas Data"];
+    int atlasCount = [atlasData count];
+    for (int i = 0; i < atlasCount; i++) {
+        NSDictionary* anAtlasInfo = [atlasData objectAtIndex:i];
+        BXTexture2DAtlas* anAtlas = [[BXTexture2DAtlas alloc] init];
+        [anAtlas restoreElementInfo:anAtlasInfo];
+        [mAtlasInfos addObject:anAtlas];
+        [anAtlas release];
+    }
 }    
 
 - (void)exportToFileHandle:(NSFileHandle*)fileHandle
@@ -179,6 +214,10 @@
     }
 }
 
+- (NSString*)textureDescription
+{
+    return [NSString stringWithFormat:@"%d: %@", mResourceID, mResourceName];
+}
 
 @end
 

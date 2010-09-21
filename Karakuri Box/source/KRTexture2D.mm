@@ -13,7 +13,6 @@
 #include "KRPNGLoader.h"
 #include "KarakuriGlobals.h"
 #import <OpenGL/OpenGL.h>
-#import "BXChara2DImage.h"
 
 
 static const int KRTexture2DBatchSize = 1024;    // KRTexture2DBatchSize * 16 bytes will be used.
@@ -172,17 +171,17 @@ KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, KRTexture2DScale
     _KRTexture2DName = GL_INVALID_VALUE;    
 }
 
-KRTexture2D::KRTexture2D(BXChara2DImage* charaImage, int index)
+KRTexture2D::KRTexture2D(BXTexture2DSpec* tex, NSRect atlasRect)
 {
     if (sTexture2DBatchCount > 0) {
         KRTexture2D::processBatchedTexture2DDraws();
     }
-    
-    mAtlasSize = KRVector2DZero;
-    
+
+    mAtlasSize = KRVector2D(atlasRect.size.width, atlasRect.size.height);
+
     mFileName = "----";
-    mTextureName = KRCreateGLTextureFromChara2DImage(charaImage, index, &mTextureTarget, &mImageSize, &mTextureSize, YES);
-    
+    mTextureName = KRCreateGLTextureFromTexture2DAtlas(tex, atlasRect, &mTextureTarget, &mImageSize, &mTextureSize, YES);
+
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
         NSString *errorFormat = @"Failed to load an image.";
         if (gKRLanguage == KRLanguageJapanese) {

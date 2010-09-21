@@ -48,9 +48,9 @@ static const KRKeyInfo      KeyEscape      = (0x1LL << 45);
 
 static const KRMouseInfo    MouseButtonLeft = 0x01;
 
-static const unsigned       KRCharaStateChangeModeNormalMask            = 0x00;
-static const unsigned       KRCharaStateChangeModeIgnoreCancelFlagMask  = 0x01;
-static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
+static const unsigned       KRCharaMotionChangeModeNormalMask            = 0x00;
+static const unsigned       KRCharaMotionChangeModeIgnoreCancelFlagMask  = 0x01;
+static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
 
 
 
@@ -61,9 +61,9 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
 - (KRMouseInfo)mouseState;
 - (KRMouseInfo)mouseStateOnce;
 
-- (int)getCurrentStateID;
+- (int)getCurrentMotionID;
 
-- (void)changeState:(int)stateID koma:(int)komaNumber mode:(unsigned)mask;
+- (void)changeMotion:(int)motionID koma:(int)komaNumber mode:(unsigned)mask;
 
 @end
 
@@ -104,92 +104,92 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
 #pragma mark -
 #pragma mark アクセッサ
 
-- (int)getCurrentStateID
+- (int)getCurrentMotionID
 {
-    if (mNextState) {
-        return [mNextState stateID];
+    if (mNextMotion) {
+        return [mNextMotion motionID];
     }
 
-    return [mCurrentState stateID];
+    return [mCurrentMotion motionID];
 }
 
-- (NSMenu*)makeStateButtonMenu
+- (NSMenu*)makeMotionButtonMenu
 {
-    NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"State Button"] autorelease];
+    NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Motion Button"] autorelease];
     
-    for (int i = 0; i < [mTargetSpec stateCount]; i++) {
-        BXChara2DState* theState = [mTargetSpec stateAtIndex:i];
-        NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"%d: %@", [theState stateID], [theState stateName]]
+    for (int i = 0; i < [mTargetSpec motionCount]; i++) {
+        BXChara2DMotion* theMotion = [mTargetSpec motionAtIndex:i];
+        NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"%d: %@", [theMotion motionID], [theMotion motionName]]
                                                  action:nil
                                           keyEquivalent:@""];
-        [theItem setTag:[theState stateID]];
+        [theItem setTag:[theMotion motionID]];
     }
     
     return theMenu;
 }
 
-- (void)updateStateButtons
+- (void)updateMotionButtons
 {
-    [oFirstStateButton setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonDown setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonUp setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonLeft setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonRight setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonZ setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonX setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonC setMenu:[self makeStateButtonMenu]];
-    [oActionStateButtonMouse setMenu:[self makeStateButtonMenu]];
+    [oFirstMotionButton setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonDown setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonUp setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonLeft setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonRight setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonZ setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonX setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonC setMenu:[self makeMotionButtonMenu]];
+    [oActionMotionButtonMouse setMenu:[self makeMotionButtonMenu]];
 }
 
 - (void)saveAnimationSettings
 {
-    [mTargetSpec setFirstStateID:[oFirstStateButton selectedTag]];
-    [mTargetSpec setFirstStateKomaNumber:[oFirstStateKomaButton selectedTag]];
-    [mTargetSpec setRevertToFirstState:([oRevertToFirstStateWithNoKeyButton state] == NSOnState)];
-    [mTargetSpec setIgnoresCancelFlag:([oIgnoreCancelDeclRevertToFirstState state] == NSOnState)];
-    [mTargetSpec setSkipEndAnimation:([oIgnoreFinalAnimationRevertToFirstState state] == NSOnState)];
+    [mTargetSpec setFirstMotionID:[oFirstMotionButton selectedTag]];
+    [mTargetSpec setFirstMotionKomaNumber:[oFirstMotionKomaButton selectedTag]];
+    [mTargetSpec setRevertToFirstMotion:([oRevertToFirstMotionWithNoKeyButton state] == NSOnState)];
+    [mTargetSpec setIgnoresCancelFlag:([oIgnoreCancelDeclRevertToFirstMotion state] == NSOnState)];
+    [mTargetSpec setSkipEndAnimation:([oIgnoreFinalAnimationRevertToFirstMotion state] == NSOnState)];
 
-    [mTargetSpec setActionStateIDUp:[oActionStateButtonUp selectedTag]];
-    [mTargetSpec setActionKomaNumberUp:[oActionStateKomaButtonUp selectedTag]];
+    [mTargetSpec setActionMotionIDUp:[oActionMotionButtonUp selectedTag]];
+    [mTargetSpec setActionKomaNumberUp:[oActionMotionKomaButtonUp selectedTag]];
     [mTargetSpec setIgnoresCancelFlagUp:([oIgnoreCancelDeclButtonUp state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationUp:([oIgnoreFinalAnimationButtonUp state] == NSOnState)];
     [mTargetSpec setActionSpeedUp:[oActionSpeedFieldUp intValue]];
     
-    [mTargetSpec setActionStateIDDown:[oActionStateButtonDown selectedTag]];
-    [mTargetSpec setActionKomaNumberDown:[oActionStateKomaButtonDown selectedTag]];
+    [mTargetSpec setActionMotionIDDown:[oActionMotionButtonDown selectedTag]];
+    [mTargetSpec setActionKomaNumberDown:[oActionMotionKomaButtonDown selectedTag]];
     [mTargetSpec setIgnoresCancelFlagDown:([oIgnoreCancelDeclButtonDown state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationDown:([oIgnoreFinalAnimationButtonDown state] == NSOnState)];
     [mTargetSpec setActionSpeedDown:[oActionSpeedFieldDown intValue]];
     
-    [mTargetSpec setActionStateIDLeft:[oActionStateButtonLeft selectedTag]];
-    [mTargetSpec setActionKomaNumberLeft:[oActionStateKomaButtonLeft selectedTag]];
+    [mTargetSpec setActionMotionIDLeft:[oActionMotionButtonLeft selectedTag]];
+    [mTargetSpec setActionKomaNumberLeft:[oActionMotionKomaButtonLeft selectedTag]];
     [mTargetSpec setIgnoresCancelFlagLeft:([oIgnoreCancelDeclButtonLeft state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationLeft:([oIgnoreFinalAnimationButtonLeft state] == NSOnState)];
     [mTargetSpec setActionSpeedLeft:[oActionSpeedFieldLeft intValue]];
     
-    [mTargetSpec setActionStateIDRight:[oActionStateButtonRight selectedTag]];
-    [mTargetSpec setActionKomaNumberRight:[oActionStateKomaButtonRight selectedTag]];
+    [mTargetSpec setActionMotionIDRight:[oActionMotionButtonRight selectedTag]];
+    [mTargetSpec setActionKomaNumberRight:[oActionMotionKomaButtonRight selectedTag]];
     [mTargetSpec setIgnoresCancelFlagRight:([oIgnoreCancelDeclButtonRight state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationRight:([oIgnoreFinalAnimationButtonRight state] == NSOnState)];
     [mTargetSpec setActionSpeedRight:[oActionSpeedFieldRight intValue]];
     
-    [mTargetSpec setActionStateIDZ:[oActionStateButtonZ selectedTag]];
-    [mTargetSpec setActionKomaNumberZ:[oActionStateKomaButtonZ selectedTag]];
+    [mTargetSpec setActionMotionIDZ:[oActionMotionButtonZ selectedTag]];
+    [mTargetSpec setActionKomaNumberZ:[oActionMotionKomaButtonZ selectedTag]];
     [mTargetSpec setIgnoresCancelFlagZ:([oIgnoreCancelDeclButtonZ state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationZ:([oIgnoreFinalAnimationButtonZ state] == NSOnState)];
     
-    [mTargetSpec setActionStateIDX:[oActionStateButtonX selectedTag]];
-    [mTargetSpec setActionKomaNumberX:[oActionStateKomaButtonX selectedTag]];
+    [mTargetSpec setActionMotionIDX:[oActionMotionButtonX selectedTag]];
+    [mTargetSpec setActionKomaNumberX:[oActionMotionKomaButtonX selectedTag]];
     [mTargetSpec setIgnoresCancelFlagX:([oIgnoreCancelDeclButtonX state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationX:([oIgnoreFinalAnimationButtonX state] == NSOnState)];
     
-    [mTargetSpec setActionStateIDC:[oActionStateButtonC selectedTag]];
-    [mTargetSpec setActionKomaNumberC:[oActionStateKomaButtonC selectedTag]];
+    [mTargetSpec setActionMotionIDC:[oActionMotionButtonC selectedTag]];
+    [mTargetSpec setActionKomaNumberC:[oActionMotionKomaButtonC selectedTag]];
     [mTargetSpec setIgnoresCancelFlagC:([oIgnoreCancelDeclButtonC state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationC:([oIgnoreFinalAnimationButtonC state] == NSOnState)];
     
-    [mTargetSpec setActionStateIDMouse:[oActionStateButtonMouse selectedTag]];
-    [mTargetSpec setActionKomaNumberMouse:[oActionStateKomaButtonMouse selectedTag]];
+    [mTargetSpec setActionMotionIDMouse:[oActionMotionButtonMouse selectedTag]];
+    [mTargetSpec setActionKomaNumberMouse:[oActionMotionKomaButtonMouse selectedTag]];
     [mTargetSpec setIgnoresCancelFlagMouse:([oIgnoreCancelDeclButtonMouse state] == NSOnState)];
     [mTargetSpec setSkipEndAnimationMouse:([oIgnoreFinalAnimationButtonMouse state] == NSOnState)];
     [mTargetSpec setDoChangeMouseLocation:([oDoChangeLocationButtonMouse state] == NSOnState)];
@@ -210,139 +210,139 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
 
     CGLUnlockContext(mCGLContext);
     
-    [oCurrentStateField setStringValue:@"--------"];
+    [oCurrentMotionField setStringValue:@"--------"];
     
     [oActionSpeedFieldUp setIntValue:2];
     [oActionSpeedFieldDown setIntValue:2];
     [oActionSpeedFieldLeft setIntValue:2];
     [oActionSpeedFieldRight setIntValue:2];    
     
-    [self updateStateButtons];
+    [self updateMotionButtons];
     
-    // 最初の状態の読み込み
-    int firstStateID = [mTargetSpec firstStateID];
-    int firstKomaNumber = [mTargetSpec firstStateKomaNumber];
-    if (![mTargetSpec stateWithID:firstStateID]) {
-        firstStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    // 最初のモーションの読み込み
+    int firstMotionID = [mTargetSpec firstMotionID];
+    int firstKomaNumber = [mTargetSpec firstMotionKomaNumber];
+    if (![mTargetSpec motionWithID:firstMotionID]) {
+        firstMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         firstKomaNumber = 1;
     }
-    [oFirstStateButton selectItemWithTag:firstStateID];
-    [self changedFirstState:self];
-    [oFirstStateKomaButton selectItemWithTag:firstKomaNumber];
-    [oIgnoreCancelDeclRevertToFirstState setState:([mTargetSpec ignoresCancelFlag]? NSOnState: NSOffState)];
-    [oRevertToFirstStateWithNoKeyButton setState:([mTargetSpec revertToFirstState]? NSOnState: NSOffState)];
-    [oIgnoreFinalAnimationRevertToFirstState setState:([mTargetSpec skipEndAnimation]? NSOnState: NSOffState)];
+    [oFirstMotionButton selectItemWithTag:firstMotionID];
+    [self changedFirstMotion:self];
+    [oFirstMotionKomaButton selectItemWithTag:firstKomaNumber];
+    [oIgnoreCancelDeclRevertToFirstMotion setState:([mTargetSpec ignoresCancelFlag]? NSOnState: NSOffState)];
+    [oRevertToFirstMotionWithNoKeyButton setState:([mTargetSpec revertToFirstMotion]? NSOnState: NSOffState)];
+    [oIgnoreFinalAnimationRevertToFirstMotion setState:([mTargetSpec skipEndAnimation]? NSOnState: NSOffState)];
     
     // KeyDown
-    int downStateID = [mTargetSpec actionStateIDDown];
+    int downMotionID = [mTargetSpec actionMotionIDDown];
     int downKomaNumber = [mTargetSpec actionKomaNumberDown];
-    if (![mTargetSpec stateWithID:downStateID]) {
-        downStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:downMotionID]) {
+        downMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         downKomaNumber = 1;
     }
-    [oActionStateButtonDown selectItemWithTag:downStateID];
-    [self changedActionStateDown:self];
-    [oActionStateKomaButtonDown selectItemWithTag:downKomaNumber];
+    [oActionMotionButtonDown selectItemWithTag:downMotionID];
+    [self changedActionMotionDown:self];
+    [oActionMotionKomaButtonDown selectItemWithTag:downKomaNumber];
     [oIgnoreCancelDeclButtonDown setState:([mTargetSpec ignoresCancelFlagDown]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonDown setState:([mTargetSpec skipEndAnimationDown]? NSOnState: NSOffState)];
     [oActionSpeedFieldDown setIntValue:[mTargetSpec actionSpeedDown]];
 
     // KeyUp
-    int upStateID = [mTargetSpec actionStateIDUp];
+    int upMotionID = [mTargetSpec actionMotionIDUp];
     int upKomaNumber = [mTargetSpec actionKomaNumberUp];
-    if (![mTargetSpec stateWithID:upStateID]) {
-        upStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:upMotionID]) {
+        upMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         upKomaNumber = 1;
     }
-    [oActionStateButtonUp selectItemWithTag:upStateID];
-    [self changedActionStateUp:self];
-    [oActionStateKomaButtonUp selectItemWithTag:upKomaNumber];
+    [oActionMotionButtonUp selectItemWithTag:upMotionID];
+    [self changedActionMotionUp:self];
+    [oActionMotionKomaButtonUp selectItemWithTag:upKomaNumber];
     [oIgnoreCancelDeclButtonUp setState:([mTargetSpec ignoresCancelFlagUp]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonUp setState:([mTargetSpec skipEndAnimationUp]? NSOnState: NSOffState)];
     [oActionSpeedFieldUp setIntValue:[mTargetSpec actionSpeedUp]];
 
     // Left
-    int leftStateID = [mTargetSpec actionStateIDLeft];
+    int leftMotionID = [mTargetSpec actionMotionIDLeft];
     int leftKomaNumber = [mTargetSpec actionKomaNumberLeft];
-    if (![mTargetSpec stateWithID:leftStateID]) {
-        leftStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:leftMotionID]) {
+        leftMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         leftKomaNumber = 1;
     }
-    [oActionStateButtonLeft selectItemWithTag:leftStateID];
-    [self changedActionStateLeft:self];
-    [oActionStateKomaButtonLeft selectItemWithTag:leftKomaNumber];
+    [oActionMotionButtonLeft selectItemWithTag:leftMotionID];
+    [self changedActionMotionLeft:self];
+    [oActionMotionKomaButtonLeft selectItemWithTag:leftKomaNumber];
     [oIgnoreCancelDeclButtonLeft setState:([mTargetSpec ignoresCancelFlagLeft]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonLeft setState:([mTargetSpec skipEndAnimationLeft]? NSOnState: NSOffState)];
     [oActionSpeedFieldLeft setIntValue:[mTargetSpec actionSpeedLeft]];
 
     // Right
-    int rightStateID = [mTargetSpec actionStateIDRight];
+    int rightMotionID = [mTargetSpec actionMotionIDRight];
     int rightKomaNumber = [mTargetSpec actionKomaNumberRight];
-    if (![mTargetSpec stateWithID:rightStateID]) {
-        rightStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:rightMotionID]) {
+        rightMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         rightKomaNumber = 1;
     }
-    [oActionStateButtonRight selectItemWithTag:rightStateID];
-    [self changedActionStateRight:self];
-    [oActionStateKomaButtonRight selectItemWithTag:rightKomaNumber];
+    [oActionMotionButtonRight selectItemWithTag:rightMotionID];
+    [self changedActionMotionRight:self];
+    [oActionMotionKomaButtonRight selectItemWithTag:rightKomaNumber];
     [oIgnoreCancelDeclButtonRight setState:([mTargetSpec ignoresCancelFlagRight]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonRight setState:([mTargetSpec skipEndAnimationRight]? NSOnState: NSOffState)];
     [oActionSpeedFieldRight setIntValue:[mTargetSpec actionSpeedRight]];
 
     // KeyZ
-    int zStateID = [mTargetSpec actionStateIDZ];
+    int zMotionID = [mTargetSpec actionMotionIDZ];
     int zKomaNumber = [mTargetSpec actionKomaNumberZ];
-    if (![mTargetSpec stateWithID:zStateID]) {
-        zStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:zMotionID]) {
+        zMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         zKomaNumber = 1;
     }
-    [oActionStateButtonZ selectItemWithTag:zStateID];
-    [self changedActionStateZ:self];
-    [oActionStateKomaButtonZ selectItemWithTag:zKomaNumber];
+    [oActionMotionButtonZ selectItemWithTag:zMotionID];
+    [self changedActionMotionZ:self];
+    [oActionMotionKomaButtonZ selectItemWithTag:zKomaNumber];
     [oIgnoreCancelDeclButtonZ setState:([mTargetSpec ignoresCancelFlagZ]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonZ setState:([mTargetSpec skipEndAnimationZ]? NSOnState: NSOffState)];
 
     // KeyX
-    int xStateID = [mTargetSpec actionStateIDX];
+    int xMotionID = [mTargetSpec actionMotionIDX];
     int xKomaNumber = [mTargetSpec actionKomaNumberX];
-    if (![mTargetSpec stateWithID:xStateID]) {
-        xStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:xMotionID]) {
+        xMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         xKomaNumber = 1;
     }
-    [oActionStateButtonX selectItemWithTag:xStateID];
-    [self changedActionStateX:self];
-    [oActionStateKomaButtonX selectItemWithTag:xKomaNumber];
+    [oActionMotionButtonX selectItemWithTag:xMotionID];
+    [self changedActionMotionX:self];
+    [oActionMotionKomaButtonX selectItemWithTag:xKomaNumber];
     [oIgnoreCancelDeclButtonX setState:([mTargetSpec ignoresCancelFlagX]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonX setState:([mTargetSpec skipEndAnimationX]? NSOnState: NSOffState)];
 
     // KeyC
-    int cStateID = [mTargetSpec actionStateIDC];
+    int cMotionID = [mTargetSpec actionMotionIDC];
     int cKomaNumber = [mTargetSpec actionKomaNumberC];
-    if (![mTargetSpec stateWithID:cStateID]) {
-        cStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:cMotionID]) {
+        cMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         cKomaNumber = 1;
     }
-    [oActionStateButtonC selectItemWithTag:cStateID];
-    [self changedActionStateC:self];
-    [oActionStateKomaButtonC selectItemWithTag:cKomaNumber];
+    [oActionMotionButtonC selectItemWithTag:cMotionID];
+    [self changedActionMotionC:self];
+    [oActionMotionKomaButtonC selectItemWithTag:cKomaNumber];
     [oIgnoreCancelDeclButtonC setState:([mTargetSpec ignoresCancelFlagC]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonC setState:([mTargetSpec skipEndAnimationC]? NSOnState: NSOffState)];
 
     // Mouse
-    int mouseStateID = [mTargetSpec actionStateIDMouse];
+    int mouseMotionID = [mTargetSpec actionMotionIDMouse];
     int mouseKomaNumber = [mTargetSpec actionKomaNumberMouse];
-    if (![mTargetSpec stateWithID:mouseStateID]) {
-        mouseStateID = [[mTargetSpec stateAtIndex:0] stateID];
+    if (![mTargetSpec motionWithID:mouseMotionID]) {
+        mouseMotionID = [[mTargetSpec motionAtIndex:0] motionID];
         mouseKomaNumber = 1;
     }
-    [oActionStateButtonMouse selectItemWithTag:mouseStateID];
-    [self changedActionStateMouse:self];
-    [oActionStateKomaButtonMouse selectItemWithTag:mouseKomaNumber];
+    [oActionMotionButtonMouse selectItemWithTag:mouseMotionID];
+    [self changedActionMotionMouse:self];
+    [oActionMotionKomaButtonMouse selectItemWithTag:mouseKomaNumber];
     [oIgnoreCancelDeclButtonMouse setState:([mTargetSpec ignoresCancelFlagMouse]? NSOnState: NSOffState)];
     [oIgnoreFinalAnimationButtonMouse setState:([mTargetSpec skipEndAnimationMouse]? NSOnState: NSOffState)];
     [oDoChangeLocationButtonMouse setState:([mTargetSpec doChangeMouseLocation]? NSOnState: NSOffState)];
     
-    mNextState = nil;
+    mNextMotion = nil;
     mNextKoma = nil;
 }
 
@@ -356,12 +356,12 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     }
 }
 
-- (NSMenu*)makeKomaMenuForState:(BXChara2DState*)aState
+- (NSMenu*)makeKomaMenuForMotion:(BXChara2DMotion*)aMotion
 {
     NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Koma Button Menu"] autorelease];
     
-    for (int i = 0; i < [aState komaCount]; i++) {
-        BXChara2DKoma* aKoma = [aState komaAtIndex:i];
+    for (int i = 0; i < [aMotion komaCount]; i++) {
+        BXChara2DKoma* aKoma = [aMotion komaAtIndex:i];
         NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"%d", [aKoma komaNumber]-1]
                                                  action:nil
                                           keyEquivalent:@""];
@@ -371,70 +371,70 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     return theMenu;
 }
 
-- (void)changeState:(int)stateID koma:(int)komaNumber mode:(unsigned)mask
+- (void)changeMotion:(int)motionID koma:(int)komaNumber mode:(unsigned)mask
 {
-    if (mNextState && [mNextState stateID] == stateID && [mNextKoma komaNumber] == komaNumber) {
+    if (mNextMotion && [mNextMotion motionID] == motionID && [mNextKoma komaNumber] == komaNumber) {
         return;
     }
     
-    mNextState = [mTargetSpec stateWithID:stateID];
-    mNextKoma = [mNextState komaWithNumber:komaNumber];
+    mNextMotion = [mTargetSpec motionWithID:motionID];
+    mNextKoma = [mNextMotion komaWithNumber:komaNumber];
     
     mHasChangingStarted = NO;
-    mSkipEndToNext = (mask & KRCharaStateChangeModeSkipEndMask)? YES: NO;
+    mSkipEndToNext = (mask & KRCharaMotionChangeModeSkipEndMask)? YES: NO;
     
-    if ([mCurrentKoma isCancelable] || (mask & KRCharaStateChangeModeIgnoreCancelFlagMask)) {
+    if ([mCurrentKoma isCancelable] || (mask & KRCharaMotionChangeModeIgnoreCancelFlagMask)) {
         mHasChangingStarted = YES;
-        if (mSkipEndToNext || ![mCurrentState targetKomaForCancel]) {
-            mCurrentState = mNextState;
+        if (mSkipEndToNext || ![mCurrentMotion targetKomaForCancel]) {
+            mCurrentMotion = mNextMotion;
             mCurrentKoma = mNextKoma;
-            mNextState = nil;
+            mNextMotion = nil;
             mNextKoma = nil;
             mKomaNumber = [mCurrentKoma komaNumber];
             mKomaInterval = [mCurrentKoma interval];
             if (mKomaInterval == 0) {
-                mKomaInterval = [mCurrentState defaultKomaInterval];
+                mKomaInterval = [mCurrentMotion defaultKomaInterval];
             }
         } else {
-            BXChara2DKoma* endStartKoma = [mCurrentState targetKomaForCancel];
+            BXChara2DKoma* endStartKoma = [mCurrentMotion targetKomaForCancel];
             mCurrentKoma = endStartKoma;
             mKomaNumber = [mCurrentKoma komaNumber];
             mKomaInterval = [mCurrentKoma interval];
             if (mKomaInterval == 0) {
-                mKomaInterval = [mCurrentState defaultKomaInterval];
+                mKomaInterval = [mCurrentMotion defaultKomaInterval];
             }
         }
     }    
 }
 
-- (IBAction)changedFirstState:(id)sender
+- (IBAction)changedFirstMotion:(id)sender
 {
-    mCurrentState = nil;
+    mCurrentMotion = nil;
     mCurrentKoma = nil;
 
-    if ([mTargetSpec stateCount] == 0) {
+    if ([mTargetSpec motionCount] == 0) {
         return;
     }
 
-    int theStateID = [oFirstStateButton selectedTag];
-    mCurrentState = [mTargetSpec stateWithID:theStateID];
+    int theMotionID = [oFirstMotionButton selectedTag];
+    mCurrentMotion = [mTargetSpec motionWithID:theMotionID];
 
-    [oFirstStateKomaButton setMenu:[self makeKomaMenuForState:mCurrentState]];
-    [self changedFirstStateKoma:self];
+    [oFirstMotionKomaButton setMenu:[self makeKomaMenuForMotion:mCurrentMotion]];
+    [self changedFirstMotionKoma:self];
     
     [self setNeedsDisplay:YES];
     
     [[self window] makeFirstResponder:self];
 }
 
-- (IBAction)changedFirstStateKoma:(id)sender
+- (IBAction)changedFirstMotionKoma:(id)sender
 {
-    int theKomaNumber = [oFirstStateKomaButton selectedTag];
+    int theKomaNumber = [oFirstMotionKomaButton selectedTag];
     mKomaNumber = theKomaNumber;
-    mCurrentKoma = [mCurrentState komaWithNumber:theKomaNumber];
+    mCurrentKoma = [mCurrentMotion komaWithNumber:theKomaNumber];
     mKomaInterval = [mCurrentKoma interval];
     if (mKomaInterval == 0) {
-        mKomaInterval = [mCurrentState defaultKomaInterval];
+        mKomaInterval = [mCurrentMotion defaultKomaInterval];
     }
 
     [self setNeedsDisplay:YES];
@@ -442,68 +442,68 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     [[self window] makeFirstResponder:self];
 }
 
-- (IBAction)changedActionStateDown:(id)sender
+- (IBAction)changedActionMotionDown:(id)sender
 {
-    int stateID = [oActionStateButtonDown selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonDown selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonDown setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonDown setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateUp:(id)sender
+- (IBAction)changedActionMotionUp:(id)sender
 {
-    int stateID = [oActionStateButtonUp selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonUp selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonUp setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonUp setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateLeft:(id)sender
+- (IBAction)changedActionMotionLeft:(id)sender
 {
-    int stateID = [oActionStateButtonLeft selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonLeft selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonLeft setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonLeft setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateRight:(id)sender
+- (IBAction)changedActionMotionRight:(id)sender
 {
-    int stateID = [oActionStateButtonRight selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonRight selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonRight setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonRight setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateZ:(id)sender
+- (IBAction)changedActionMotionZ:(id)sender
 {
-    int stateID = [oActionStateButtonZ selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonZ selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonZ setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonZ setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateX:(id)sender
+- (IBAction)changedActionMotionX:(id)sender
 {
-    int stateID = [oActionStateButtonX selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonX selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonX setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonX setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateC:(id)sender
+- (IBAction)changedActionMotionC:(id)sender
 {
-    int stateID = [oActionStateButtonC selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonC selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonC setMenu:[self makeKomaMenuForState:theState]];    
+    [oActionMotionKomaButtonC setMenu:[self makeKomaMenuForMotion:theMotion]];    
 }
 
-- (IBAction)changedActionStateMouse:(id)sender
+- (IBAction)changedActionMotionMouse:(id)sender
 {
-    int stateID = [oActionStateButtonMouse selectedTag];
-    BXChara2DState* theState = [mTargetSpec stateWithID:stateID];
+    int motionID = [oActionMotionButtonMouse selectedTag];
+    BXChara2DMotion* theMotion = [mTargetSpec motionWithID:motionID];
     
-    [oActionStateKomaButtonMouse setMenu:[self makeKomaMenuForState:theState]];
+    [oActionMotionKomaButtonMouse setMenu:[self makeKomaMenuForMotion:theMotion]];
 }
 
 - (IBAction)startAnimation:(id)sender
@@ -513,53 +513,53 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     }
     mIsAnimationRunning = YES;
     
-    [oFirstStateButton setEnabled:NO];
-    [oFirstStateKomaButton setEnabled:NO];
-    [oRevertToFirstStateWithNoKeyButton setEnabled:NO];
-    [oIgnoreCancelDeclRevertToFirstState setEnabled:NO];
-    [oIgnoreFinalAnimationRevertToFirstState setEnabled:NO];
+    [oFirstMotionButton setEnabled:NO];
+    [oFirstMotionKomaButton setEnabled:NO];
+    [oRevertToFirstMotionWithNoKeyButton setEnabled:NO];
+    [oIgnoreCancelDeclRevertToFirstMotion setEnabled:NO];
+    [oIgnoreFinalAnimationRevertToFirstMotion setEnabled:NO];
 
-    [oActionStateButtonUp setEnabled:NO];
-    [oActionStateKomaButtonUp setEnabled:NO];
+    [oActionMotionButtonUp setEnabled:NO];
+    [oActionMotionKomaButtonUp setEnabled:NO];
     [oIgnoreCancelDeclButtonUp setEnabled:NO];
     [oIgnoreFinalAnimationButtonUp setEnabled:NO];
     [oActionSpeedFieldUp setEnabled:NO];
 
-    [oActionStateButtonDown setEnabled:NO];
-    [oActionStateKomaButtonDown setEnabled:NO];
+    [oActionMotionButtonDown setEnabled:NO];
+    [oActionMotionKomaButtonDown setEnabled:NO];
     [oIgnoreCancelDeclButtonDown setEnabled:NO];
     [oIgnoreFinalAnimationButtonDown setEnabled:NO];
     [oActionSpeedFieldDown setEnabled:NO];
 
-    [oActionStateButtonLeft setEnabled:NO];
-    [oActionStateKomaButtonLeft setEnabled:NO];
+    [oActionMotionButtonLeft setEnabled:NO];
+    [oActionMotionKomaButtonLeft setEnabled:NO];
     [oIgnoreCancelDeclButtonLeft setEnabled:NO];
     [oIgnoreFinalAnimationButtonLeft setEnabled:NO];
     [oActionSpeedFieldLeft setEnabled:NO];
 
-    [oActionStateButtonRight setEnabled:NO];
-    [oActionStateKomaButtonRight setEnabled:NO];
+    [oActionMotionButtonRight setEnabled:NO];
+    [oActionMotionKomaButtonRight setEnabled:NO];
     [oIgnoreCancelDeclButtonRight setEnabled:NO];
     [oIgnoreFinalAnimationButtonRight setEnabled:NO];
     [oActionSpeedFieldRight setEnabled:NO];    
 
-    [oActionStateButtonZ setEnabled:NO];
-    [oActionStateKomaButtonZ setEnabled:NO];
+    [oActionMotionButtonZ setEnabled:NO];
+    [oActionMotionKomaButtonZ setEnabled:NO];
     [oIgnoreCancelDeclButtonZ setEnabled:NO];
     [oIgnoreFinalAnimationButtonZ setEnabled:NO];
     
-    [oActionStateButtonX setEnabled:NO];
-    [oActionStateKomaButtonX setEnabled:NO];
+    [oActionMotionButtonX setEnabled:NO];
+    [oActionMotionKomaButtonX setEnabled:NO];
     [oIgnoreCancelDeclButtonX setEnabled:NO];
     [oIgnoreFinalAnimationButtonX setEnabled:NO];
     
-    [oActionStateButtonC setEnabled:NO];
-    [oActionStateKomaButtonC setEnabled:NO];
+    [oActionMotionButtonC setEnabled:NO];
+    [oActionMotionKomaButtonC setEnabled:NO];
     [oIgnoreCancelDeclButtonC setEnabled:NO];
     [oIgnoreFinalAnimationButtonC setEnabled:NO];
 
-    [oActionStateButtonMouse setEnabled:NO];
-    [oActionStateKomaButtonMouse setEnabled:NO];
+    [oActionMotionButtonMouse setEnabled:NO];
+    [oActionMotionKomaButtonMouse setEnabled:NO];
     [oIgnoreCancelDeclButtonMouse setEnabled:NO];
     [oIgnoreFinalAnimationButtonMouse setEnabled:NO];
     [oDoChangeLocationButtonMouse setEnabled:NO];
@@ -567,7 +567,7 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     [oAnimationButton setAction:@selector(stopAnimation:)];
     [oAnimationButton setTitle:NSLocalizedString(@"Chara2D Simulator Animation Button Stop", nil)];
     
-    [self changedFirstStateKoma:self];
+    [self changedFirstMotionKoma:self];
     
     [[self window] makeFirstResponder:self];
     
@@ -581,53 +581,53 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     }
     mIsAnimationRunning = NO;
     
-    [oFirstStateButton setEnabled:YES];
-    [oFirstStateKomaButton setEnabled:YES];
-    [oRevertToFirstStateWithNoKeyButton setEnabled:YES];
-    [oIgnoreCancelDeclRevertToFirstState setEnabled:YES];
-    [oIgnoreFinalAnimationRevertToFirstState setEnabled:YES];
+    [oFirstMotionButton setEnabled:YES];
+    [oFirstMotionKomaButton setEnabled:YES];
+    [oRevertToFirstMotionWithNoKeyButton setEnabled:YES];
+    [oIgnoreCancelDeclRevertToFirstMotion setEnabled:YES];
+    [oIgnoreFinalAnimationRevertToFirstMotion setEnabled:YES];
 
-    [oActionStateButtonUp setEnabled:YES];
-    [oActionStateKomaButtonUp setEnabled:YES];
+    [oActionMotionButtonUp setEnabled:YES];
+    [oActionMotionKomaButtonUp setEnabled:YES];
     [oIgnoreCancelDeclButtonUp setEnabled:YES];
     [oIgnoreFinalAnimationButtonUp setEnabled:YES];
     [oActionSpeedFieldUp setEnabled:YES];
     
-    [oActionStateButtonDown setEnabled:YES];
-    [oActionStateKomaButtonDown setEnabled:YES];
+    [oActionMotionButtonDown setEnabled:YES];
+    [oActionMotionKomaButtonDown setEnabled:YES];
     [oIgnoreCancelDeclButtonDown setEnabled:YES];
     [oIgnoreFinalAnimationButtonDown setEnabled:YES];
     [oActionSpeedFieldDown setEnabled:YES];
 
-    [oActionStateButtonLeft setEnabled:YES];
-    [oActionStateKomaButtonLeft setEnabled:YES];
+    [oActionMotionButtonLeft setEnabled:YES];
+    [oActionMotionKomaButtonLeft setEnabled:YES];
     [oIgnoreCancelDeclButtonLeft setEnabled:YES];
     [oIgnoreFinalAnimationButtonLeft setEnabled:YES];
     [oActionSpeedFieldLeft setEnabled:YES];
 
-    [oActionStateButtonRight setEnabled:YES];
-    [oActionStateKomaButtonRight setEnabled:YES];
+    [oActionMotionButtonRight setEnabled:YES];
+    [oActionMotionKomaButtonRight setEnabled:YES];
     [oIgnoreCancelDeclButtonRight setEnabled:YES];
     [oIgnoreFinalAnimationButtonRight setEnabled:YES];
     [oActionSpeedFieldRight setEnabled:YES];
 
-    [oActionStateButtonZ setEnabled:YES];
-    [oActionStateKomaButtonZ setEnabled:YES];
+    [oActionMotionButtonZ setEnabled:YES];
+    [oActionMotionKomaButtonZ setEnabled:YES];
     [oIgnoreCancelDeclButtonZ setEnabled:YES];
     [oIgnoreFinalAnimationButtonZ setEnabled:YES];
     
-    [oActionStateButtonX setEnabled:YES];
-    [oActionStateKomaButtonX setEnabled:YES];
+    [oActionMotionButtonX setEnabled:YES];
+    [oActionMotionKomaButtonX setEnabled:YES];
     [oIgnoreCancelDeclButtonX setEnabled:YES];
     [oIgnoreFinalAnimationButtonX setEnabled:YES];
     
-    [oActionStateButtonC setEnabled:YES];
-    [oActionStateKomaButtonC setEnabled:YES];
+    [oActionMotionButtonC setEnabled:YES];
+    [oActionMotionKomaButtonC setEnabled:YES];
     [oIgnoreCancelDeclButtonC setEnabled:YES];
     [oIgnoreFinalAnimationButtonC setEnabled:YES];
     
-    [oActionStateButtonMouse setEnabled:YES];
-    [oActionStateKomaButtonMouse setEnabled:YES];
+    [oActionMotionButtonMouse setEnabled:YES];
+    [oActionMotionKomaButtonMouse setEnabled:YES];
     [oIgnoreCancelDeclButtonMouse setEnabled:YES];
     [oIgnoreFinalAnimationButtonMouse setEnabled:YES];
     [oDoChangeLocationButtonMouse setEnabled:YES];
@@ -637,7 +637,7 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     
     *mCurrentPos = KRVector2D(100, 100);
     
-    [self changedFirstState:self];
+    [self changedFirstMotion:self];
 }
 
 - (void)updateModel
@@ -650,136 +650,136 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     KRMouseInfo mouseOnce = [self mouseStateOnce];
     
     if (key & KeyLeft) {
-        int nextStateID = [oActionStateButtonLeft selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonLeft selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonLeft state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonLeft state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonLeft selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonLeft selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
         
         int speed = [oActionSpeedFieldLeft intValue];
         mCurrentPos->x -= speed;
     }
     if (key & KeyRight) {
-        int nextStateID = [oActionStateButtonRight selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonRight selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonRight state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonRight state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonRight selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonRight selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
 
         int speed = [oActionSpeedFieldRight intValue];
         mCurrentPos->x += speed;
     }
     if (key & KeyUp) {
-        int nextStateID = [oActionStateButtonUp selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonUp selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonUp state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonUp state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonUp selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonUp selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
         
         int speed = [oActionSpeedFieldUp intValue];
         mCurrentPos->y += speed;
     }
     if (key & KeyDown) {
-        int nextStateID = [oActionStateButtonDown selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonDown selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonDown state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonDown state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonDown selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonDown selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
 
         int speed = [oActionSpeedFieldDown intValue];
         mCurrentPos->y -= speed;
     }
     if (keyOnce & KeyZ) {
-        int nextStateID = [oActionStateButtonZ selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonZ selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonZ state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonZ state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonZ selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonZ selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
     }
     if (keyOnce & KeyX) {
-        int nextStateID = [oActionStateButtonX selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonX selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonX state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonX state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonX selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonX selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
     }
     if (keyOnce & KeyC) {
-        int nextStateID = [oActionStateButtonC selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonC selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonC state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonC state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonC selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonC selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
     }
     
     if (mouseOnce & MouseButtonLeft) {
-        int nextStateID = [oActionStateButtonMouse selectedTag];
-        if ([self getCurrentStateID] != nextStateID) {
-            unsigned changeMask = KRCharaStateChangeModeNormalMask;
+        int nextMotionID = [oActionMotionButtonMouse selectedTag];
+        if ([self getCurrentMotionID] != nextMotionID) {
+            unsigned changeMask = KRCharaMotionChangeModeNormalMask;
             if ([oIgnoreCancelDeclButtonMouse state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+                changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
             }
             if ([oIgnoreFinalAnimationButtonMouse state] == NSOnState) {
-                changeMask |= KRCharaStateChangeModeSkipEndMask;
+                changeMask |= KRCharaMotionChangeModeSkipEndMask;
             }
-            int nextKomaNumber = [oActionStateKomaButtonMouse selectedTag];
+            int nextKomaNumber = [oActionMotionKomaButtonMouse selectedTag];
             
-            [self changeState:nextStateID koma:nextKomaNumber mode:changeMask];            
+            [self changeMotion:nextMotionID koma:nextKomaNumber mode:changeMask];            
         }
         
         if ([oDoChangeLocationButtonMouse state] == NSOnState) {
@@ -795,19 +795,19 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     
     // 何かしらの入力がない場合
     if (!((key & (KeyDown|KeyUp|KeyLeft|KeyRight|KeyZ|KeyX|KeyC)) || (mouse & MouseButtonLeft))) {
-        if ([oRevertToFirstStateWithNoKeyButton state] == NSOnState) {
-            int firstStateID = [oFirstStateButton selectedTag];
-            if ([self getCurrentStateID] != firstStateID) {
-                unsigned changeMask = KRCharaStateChangeModeNormalMask;
-                if ([oIgnoreCancelDeclRevertToFirstState state] == NSOnState) {
-                    changeMask |= KRCharaStateChangeModeIgnoreCancelFlagMask;
+        if ([oRevertToFirstMotionWithNoKeyButton state] == NSOnState) {
+            int firstMotionID = [oFirstMotionButton selectedTag];
+            if ([self getCurrentMotionID] != firstMotionID) {
+                unsigned changeMask = KRCharaMotionChangeModeNormalMask;
+                if ([oIgnoreCancelDeclRevertToFirstMotion state] == NSOnState) {
+                    changeMask |= KRCharaMotionChangeModeIgnoreCancelFlagMask;
                 }
-                if ([oIgnoreFinalAnimationRevertToFirstState state] == NSOnState) {
-                    changeMask |= KRCharaStateChangeModeSkipEndMask;
+                if ([oIgnoreFinalAnimationRevertToFirstMotion state] == NSOnState) {
+                    changeMask |= KRCharaMotionChangeModeSkipEndMask;
                 }                
-                int firstKomaNumber = [oFirstStateKomaButton selectedTag];
+                int firstKomaNumber = [oFirstMotionKomaButton selectedTag];
                 
-                [self changeState:firstStateID koma:firstKomaNumber mode:changeMask];
+                [self changeMotion:firstMotionID koma:firstKomaNumber mode:changeMask];
             }
         }
     }
@@ -834,25 +834,25 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
         return;
     }
     
-    if (!mHasChangingStarted && mNextState && [mCurrentKoma isCancelable]) {
+    if (!mHasChangingStarted && mNextMotion && [mCurrentKoma isCancelable]) {
         mHasChangingStarted = YES;
-        if (mSkipEndToNext || ![mCurrentState targetKomaForCancel]) {
-            mCurrentState = mNextState;
+        if (mSkipEndToNext || ![mCurrentMotion targetKomaForCancel]) {
+            mCurrentMotion = mNextMotion;
             mCurrentKoma = mNextKoma;
-            mNextState = nil;
+            mNextMotion = nil;
             mNextKoma = nil;
             mKomaNumber = [mCurrentKoma komaNumber];
             mKomaInterval = [mCurrentKoma interval];
             if (mKomaInterval == 0) {
-                mKomaInterval = [mCurrentState defaultKomaInterval];
+                mKomaInterval = [mCurrentMotion defaultKomaInterval];
             }
         } else {
-            BXChara2DKoma* endStartKoma = [mCurrentState targetKomaForCancel];
+            BXChara2DKoma* endStartKoma = [mCurrentMotion targetKomaForCancel];
             mCurrentKoma = endStartKoma;
             mKomaNumber = [mCurrentKoma komaNumber];
             mKomaInterval = [mCurrentKoma interval];
             if (mKomaInterval == 0) {
-                mKomaInterval = [mCurrentState defaultKomaInterval];
+                mKomaInterval = [mCurrentMotion defaultKomaInterval];
             }
         }
         return;
@@ -864,32 +864,32 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
     } else {
         mKomaNumber++;
     }
-    if (mKomaNumber <= [mCurrentState komaCount]) {
-        mCurrentKoma = [mCurrentState komaWithNumber:mKomaNumber];
+    if (mKomaNumber <= [mCurrentMotion komaCount]) {
+        mCurrentKoma = [mCurrentMotion komaWithNumber:mKomaNumber];
         mKomaInterval = [mCurrentKoma interval];
         if (mKomaInterval == 0) {
-            mKomaInterval = [mCurrentState defaultKomaInterval];
+            mKomaInterval = [mCurrentMotion defaultKomaInterval];
         }
     } else {
-        if (mNextState) {
-            mCurrentState = mNextState;
+        if (mNextMotion) {
+            mCurrentMotion = mNextMotion;
             mCurrentKoma = mNextKoma;
-            mNextState = nil;
+            mNextMotion = nil;
             mNextKoma = nil;
             mKomaNumber = [mCurrentKoma komaNumber];
             mKomaInterval = [mCurrentKoma interval];
             if (mKomaInterval == 0) {
-                mKomaInterval = [mCurrentState defaultKomaInterval];
+                mKomaInterval = [mCurrentMotion defaultKomaInterval];
             }
         } else {
-            BXChara2DState* nextState = [mTargetSpec stateWithID:[mCurrentState nextStateID]];
-            if (nextState) {
-                mCurrentState = nextState;
+            BXChara2DMotion* nextMotion = [mTargetSpec motionWithID:[mCurrentMotion nextMotionID]];
+            if (nextMotion) {
+                mCurrentMotion = nextMotion;
                 mKomaNumber = 1;
-                mCurrentKoma = [mCurrentState komaWithNumber:mKomaNumber];
+                mCurrentKoma = [mCurrentMotion komaWithNumber:mKomaNumber];
                 mKomaInterval = [mCurrentKoma interval];
                 if (mKomaInterval == 0) {
-                    mKomaInterval = [mCurrentState defaultKomaInterval];
+                    mKomaInterval = [mCurrentMotion defaultKomaInterval];
                 }                
             } else {
                 mKomaNumber = [mCurrentKoma komaNumber];
@@ -897,8 +897,8 @@ static const unsigned       KRCharaStateChangeModeSkipEndMask           = 0x02;
         }        
     }
     
-    NSString* stateStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentState stateID], [mCurrentState stateName], [mCurrentKoma komaNumber]-1];
-    [oCurrentStateField setStringValue:stateStr];
+    NSString* motionStr = [NSString stringWithFormat:@"%d[%@] - %d", [mCurrentMotion motionID], [mCurrentMotion motionName], [mCurrentKoma komaNumber]-1];
+    [oCurrentMotionField setStringValue:motionStr];
 }
 
 - (void)refreshProc:(NSTimer*)theTimer

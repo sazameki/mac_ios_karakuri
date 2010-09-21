@@ -1,5 +1,5 @@
 //
-//  BXChara2DState.h
+//  BXChara2DMotion.h
 //  Karakuri Box
 //
 //  Created by numata on 10/03/08.
@@ -13,19 +13,19 @@
 @class BXChara2DSpec;
 
 
-@interface BXChara2DState : NSObject {
+@interface BXChara2DMotion : NSObject {
     BXChara2DSpec*  mParentSpec;
     
     BXChara2DKoma*  mTargetKomaForCancel;
     
-    int         mStateID;
-    NSString*   mStateName;
+    int         mMotionID;
+    NSString*   mMotionName;
     
     NSMutableArray* mKomas;
     
     int         mDefaultKomaInterval;
     
-    int         mNextStateID;
+    int         mNextMotionID;
 }
 
 - (id)initWithName:(NSString*)name chara2DSpec:(BXChara2DSpec*)chara2DSpec;
@@ -37,11 +37,11 @@
 
 - (BXChara2DSpec*)parentSpec;
 
-- (int)stateID;
-- (void)setStateID:(int)value;
+- (int)motionID;
+- (void)setMotionID:(int)value;
 
-- (NSString*)stateName;
-- (void)setStateName:(NSString*)name;
+- (NSString*)motionName;
+- (void)setMotionName:(NSString*)name;
 
 - (int)komaCount;
 - (BXChara2DKoma*)insertKomaAtIndex:(int)index;
@@ -49,20 +49,20 @@
 - (BXChara2DKoma*)komaWithNumber:(int)komaNumber;
 - (int)moveKomaFrom:(int)fromIndex to:(int)toIndex;
 - (void)removeKomaAtIndex:(int)index;
-- (void)changeStateIDInAllKomaFrom:(int)oldStateID to:(int)newStateID;
+- (void)changeMotionIDInAllKomaFrom:(int)oldMotionID to:(int)newMotionID;
 
 - (NSMenu*)makeKomaGotoMenuForKoma:(BXChara2DKoma*)koma document:(id)document;
 
 - (int)defaultKomaInterval;
 - (void)setDefaultKomaInterval:(int)interval;
 
-- (int)nextStateID;
-- (void)setNextStateID:(int)stateID;
+- (int)nextMotionID;
+- (void)setNextMotionID:(int)motionID;
 
 - (void)preparePreviewTextures;
 
-- (NSDictionary*)stateInfo;
-- (void)restoreStateInfo:(NSDictionary*)theInfo;
+- (NSDictionary*)motionInfo;
+- (void)restoreMotionInfo:(NSDictionary*)theInfo;
 
 @end
 

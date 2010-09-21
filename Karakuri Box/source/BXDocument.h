@@ -12,7 +12,6 @@
 #import "BXParticle2DSimulatorView.h"
 #import "BXResourceFileManager.h"
 #import "BXChara2DAtlasView.h"
-#import "BXChara2DImage.h"
 #import "BXChara2DKoma.h"
 #import "BXChara2DKomaPreviewView.h"
 #import "BXChara2DSimulatorView.h"
@@ -46,10 +45,9 @@
     IBOutlet NSTextField*               oChara2DResourceIDField;
     IBOutlet NSTextField*               oChara2DResourceNameField;
     
-    IBOutlet NSOutlineView*             oChara2DStateListView;
-    IBOutlet NSOutlineView*             oChara2DImageListView;
-    IBOutlet NSTextField*               oChara2DImageDivXField;
-    IBOutlet NSTextField*               oChara2DImageDivYField;
+    IBOutlet NSPopUpButton*             oChara2DTextureButton;
+
+    IBOutlet NSOutlineView*             oChara2DMotionListView;
     IBOutlet BXChara2DAtlasView*        oChara2DImageAtlasView;
     IBOutlet NSOutlineView*             oChara2DKomaListView;
     IBOutlet BXChara2DKomaPreviewView*  oChara2DKomaPreviewView;
@@ -57,10 +55,10 @@
     IBOutlet NSPopUpButtonCell*         oChara2DKomaIntervalButtonCell;
     
     IBOutlet NSPopUpButton*             oChara2DKomaDefaultIntervalButton;
-    IBOutlet NSPopUpButton*             oChara2DStateNextStateButton;
+    IBOutlet NSPopUpButton*             oChara2DMotionNextMotionButton;
 
     IBOutlet NSPopUpButton*             oChara2DKomaPreviewScaleButton;
-    IBOutlet NSPopUpButton*             oChara2DStateCancelKomaNumberButton;
+    IBOutlet NSPopUpButton*             oChara2DMotionCancelKomaNumberButton;
     IBOutlet NSPopUpButton*             oChara2DKomaActionCommandButton;
 
     IBOutlet NSPanel*                   oChara2DSimulatorPanel;
@@ -173,12 +171,11 @@
 - (IBAction)changedChara2DResourceID:(id)sender;
 - (IBAction)changedChara2DResourceName:(id)sender;
 
-- (IBAction)addChara2DImage:(id)sender;
-- (IBAction)addChara2DState:(id)sender;
-- (IBAction)changedChara2DImageDivX:(id)sender;
-- (IBAction)changedChara2DImageDivY:(id)sender;
-- (IBAction)removeChara2DState:(id)sender;
+- (IBAction)addChara2DMotion:(id)sender;
+- (IBAction)removeChara2DMotion:(id)sender;
 - (IBAction)changedChara2DKomaDefaultInterval:(id)sender;
+
+- (IBAction)changedChara2DSourceTexture:(id)sender;
 
 - (IBAction)changedChara2DKomaPreviewScale:(id)sender;
 
@@ -206,7 +203,6 @@
 - (IBAction)addChara2DHitInfoRect:(id)sender;
 
 - (IBAction)removeSelectedChara2D:(id)sender;
-- (IBAction)removeSelectedChara2DImage:(id)sender;
 
 
 ///// パーティクル設定アクション
@@ -241,6 +237,7 @@
 
 ///// 2Dテクスチャ設定に関するメソッド
 
+- (BXTexture2DSpec*)tex2DWithUUID:(NSString*)theUUID;
 - (BXTexture2DSpec*)selectedTex2DSpec;
 - (BXTexture2DAtlas*)selectedTex2DAtlas;
 
@@ -265,20 +262,19 @@
 ///// 2Dキャラクタ設定に関するメソッド
 
 - (BOOL)canAddChara2DImage;
-- (BOOL)canRemoveChara2DImage;
-- (BOOL)canRemoveChara2DState;
-- (void)removeSelectedChara2DKoma;
+- (BOOL)canRemoveChara2DMotion;
 - (BXChara2DSpec*)selectedChara2DSpec;
-- (BXChara2DImage*)selectedChara2DImage;
-- (BXChara2DState*)selectedChara2DState;
+- (BXChara2DMotion*)selectedChara2DMotion;
 - (BXChara2DKoma*)selectedChara2DKoma;
-- (void)updateChara2DAtlasList;
-- (BOOL)isChara2DImageSelected;
+- (BXTexture2DSpec*)selectedChara2DTexture2D;
 - (BOOL)isChara2DKomaSelected;
-- (BOOL)isChara2DStateSelected;
-- (BOOL)canChara2DStateSelectNextState;
+- (BOOL)isChara2DMotionSelected;
+- (BOOL)canChara2DMotionSelectNextMotion;
+- (void)removeSelectedChara2DKoma;
 
 - (void)addChara2DWithInfo:(NSDictionary*)theInfo;
+
+- (void)updateTextureButtonForChara2D;
 
 
 ///// 2Dパーティクル設定に関するメソッド
@@ -292,6 +288,7 @@
 - (NSFileWrapper*)contentsWrapper;
 - (NSFileWrapper*)resourcesWrapper;
 
+- (BXResourceGroup*)texture2DGroup;
 - (BXResourceGroup*)chara2DGroup;
 - (BXResourceGroup*)particle2DGroup;
 

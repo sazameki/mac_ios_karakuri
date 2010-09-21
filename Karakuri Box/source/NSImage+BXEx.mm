@@ -13,13 +13,21 @@
 
 - (void)drawThumbnailInRect:(NSRect)rect background:(BOOL)drawsBG border:(BOOL)drawsBorder
 {
+    [self drawThumbnailInRect:rect fromRect:NSZeroRect background:drawsBG border:drawsBorder];
+}
+
+- (void)drawThumbnailInRect:(NSRect)rect fromRect:(NSRect)fromRect background:(BOOL)drawsBG border:(BOOL)drawsBorder
+{
     [self setFlipped:YES];
     
     NSSize theSize = [self size];
     
     double sourceRatio = theSize.width / theSize.height;
+    if (fromRect.size.width > 0) {
+        sourceRatio = fromRect.size.width / fromRect.size.height;
+    }
     double targetRatio = rect.size.width / rect.size.height;
-
+    
     NSRect theRect = rect;
     if (sourceRatio < targetRatio) {
         // 横方向のサイズを縮小
@@ -32,7 +40,7 @@
         theRect.size.height = (int)theRect.size.height;
         theRect.origin.y = rect.origin.y + (rect.size.height - theRect.size.height) / 2;
     }
-
+    
     if (drawsBG) {
         NSImage* transpImage = [NSImage imageNamed:@"transparent_pattern.png"];
         [[NSColor colorWithPatternImage:transpImage] set];
@@ -41,8 +49,8 @@
         NSRectFill(theRect);
         //[[NSBezierPath bezierPathWithRect:theRect] fill];
     }
-
-    [self drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    
+    [self drawInRect:theRect fromRect:fromRect operation:NSCompositeSourceOver fraction:1.0];
     
     if (drawsBorder) {
         NSRect frameRect = NSInsetRect(theRect, -1, -1);
@@ -52,6 +60,22 @@
         [[NSColor blackColor] set];
         NSFrameRect(theRect);
     }
+}
+
+- (NSImage*)subImageFromRect:(NSRect)rect
+{
+    [self setFlipped:YES];
+
+    NSImage* subImage = [[[NSImage alloc] initWithSize:rect.size] autorelease];
+    [subImage lockFocus];
+    
+    [self drawInRect:NSMakeRect(0, 0, rect.size.width, rect.size.height)
+            fromRect:rect
+           operation:NSCompositeSourceOver
+            fraction:1.0];
+    
+    [subImage unlockFocus];
+    return subImage;
 }
 
 - (NSArray*)divideByX:(int)divX y:(int)divY

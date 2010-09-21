@@ -67,6 +67,20 @@
 
 @implementation BXResourceGroup (Texture2DSerialization)
 
+- (NSMenu*)menuForTextures
+{
+    NSMenu* menu = [[NSMenu alloc] initWithTitle:@"Textures"];
+    
+    int texCount = [self childCount];
+    for (int i = 0; i < texCount; i++) {
+        BXTexture2DSpec* aTexSpec = (BXTexture2DSpec*)[self childAtIndex:i];
+        NSMenuItem* item = [menu addItemWithTitle:[aTexSpec textureDescription] action:NULL keyEquivalent:@""];
+        [item setTag:[aTexSpec resourceID]];
+    }
+    
+    return menu;
+}
+
 - (void)readTexture2DInfosData:(NSData*)data document:(BXDocument*)document
 {
     NSArray* infos = [NSPropertyListSerialization propertyListFromData:data

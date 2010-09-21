@@ -12,6 +12,21 @@
 
 @implementation BXResourceListView
 
+- (NSMenu*)menuForTexture2D:(BXTexture2DSpec*)theSpec
+{
+    NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Chara2D Menu"] autorelease];
+    
+    // TODO: Texture2D複製のサポート
+    //[theMenu addItem:[NSMenuItem separatorItem]];    
+    
+    NSMenuItem* deleteItem = [theMenu addItemWithTitle:NSLocalizedString(@"Delete Texture2D", nil)
+                                                action:@selector(removeSelectedTexture2D:)
+                                         keyEquivalent:@""];
+    [deleteItem setTarget:oDocument];
+    
+    return theMenu;    
+}
+
 - (NSMenu*)menuForChara2D:(BXChara2DSpec*)theSpec
 {
     NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Chara2D Menu"] autorelease];
@@ -62,6 +77,18 @@
     return theMenu;    
 }
 
+- (NSMenu*)menuForTexture2DGroup:(BXResourceGroup*)theGroup
+{
+    NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Texture2D Group Menu"] autorelease];
+    
+    NSMenuItem* exportItem = [theMenu addItemWithTitle:NSLocalizedString(@"Add Texture2D", nil)
+                                                action:@selector(addTexture2D:)
+                                         keyEquivalent:@""];
+    [exportItem setTarget:oDocument];    
+    
+    return theMenu;
+}
+
 - (NSMenu*)menuForChara2DGroup:(BXResourceGroup*)theGroup
 {
     NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Chara2D Group Menu"] autorelease];
@@ -101,6 +128,10 @@
         return [self menuForChara2D:theItem];
     } else if ([theItem isKindOfClass:[BXParticle2DSpec class]]) {
         return [self menuForParticle2D:theItem];
+    } else if ([theItem isKindOfClass:[BXTexture2DSpec class]]) {
+        return [self menuForTexture2D:theItem];
+    } else if (theItem == [oDocument texture2DGroup]) {
+        return [self menuForTexture2DGroup:theItem];
     } else if (theItem == [oDocument chara2DGroup]) {
         return [self menuForChara2DGroup:theItem];
     } else if (theItem == [oDocument particle2DGroup]) {

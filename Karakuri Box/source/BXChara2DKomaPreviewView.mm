@@ -137,9 +137,9 @@
     
     // 他のすべてのコマに当たり範囲を追加
     if (tag == 10) {
-        BXChara2DState* selectedState = [oDocument selectedChara2DState];
-        for (int i = 0; i < [selectedState komaCount]; i++) {
-            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+        BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
+        for (int i = 0; i < [selectedMotion komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedMotion komaAtIndex:i];
             if (aKoma == selectedKoma) {
                 continue;
             }
@@ -150,9 +150,9 @@
     // 以降のすべてのコマに当たり範囲を追加
     else if (tag == 20) {
         BOOL foundSelectedKoma = NO;
-        BXChara2DState* selectedState = [oDocument selectedChara2DState];
-        for (int i = 0; i < [selectedState komaCount]; i++) {
-            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+        BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
+        for (int i = 0; i < [selectedMotion komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedMotion komaAtIndex:i];
             if (aKoma == selectedKoma) {
                 foundSelectedKoma = YES;
                 continue;
@@ -165,8 +165,8 @@
     }
     // 次のコマに当たり範囲を追加
     else if (tag == 30) {
-        BXChara2DState* selectedState = [oDocument selectedChara2DState];
-        BXChara2DKoma* nextKoma = [selectedState komaWithNumber:[selectedKoma komaNumber]+1];
+        BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
+        BXChara2DKoma* nextKoma = [selectedMotion komaWithNumber:[selectedKoma komaNumber]+1];
         if (nextKoma != NULL) {
             [nextKoma importHitInfosFromKoma:selectedKoma];
         }
@@ -174,9 +174,9 @@
     }
     // 他のすべてのコマの当たり範囲を置き換え
     if (tag == 40) {
-        BXChara2DState* selectedState = [oDocument selectedChara2DState];
-        for (int i = 0; i < [selectedState komaCount]; i++) {
-            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+        BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
+        for (int i = 0; i < [selectedMotion komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedMotion komaAtIndex:i];
             if (aKoma == selectedKoma) {
                 continue;
             }
@@ -187,9 +187,9 @@
     // 以降のすべてのコマの当たり範囲を置き換え
     else if (tag == 50) {
         BOOL foundSelectedKoma = NO;
-        BXChara2DState* selectedState = [oDocument selectedChara2DState];
-        for (int i = 0; i < [selectedState komaCount]; i++) {
-            BXChara2DKoma* aKoma = [selectedState komaAtIndex:i];
+        BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
+        for (int i = 0; i < [selectedMotion komaCount]; i++) {
+            BXChara2DKoma* aKoma = [selectedMotion komaAtIndex:i];
             if (aKoma == selectedKoma) {
                 foundSelectedKoma = YES;
                 continue;
@@ -202,8 +202,8 @@
     }
     // 次のコマの当たり判定を置き換え
     else if (tag == 60) {
-        BXChara2DState* selectedState = [oDocument selectedChara2DState];
-        BXChara2DKoma* nextKoma = [selectedState komaWithNumber:[selectedKoma komaNumber]+1];
+        BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
+        BXChara2DKoma* nextKoma = [selectedMotion komaWithNumber:[selectedKoma komaNumber]+1];
         if (nextKoma != NULL) {
             [nextKoma replaceHitInfosFromKoma:selectedKoma];
         }

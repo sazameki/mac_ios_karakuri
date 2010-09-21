@@ -7,6 +7,7 @@
 //
 
 #import "BXResourceElement.h"
+#import "NSString+UUID.h"
 
 
 @interface BXResourceElement ()
@@ -28,6 +29,8 @@
         mResourceName = [name copy];
         mChildElements = [NSMutableArray new];
         
+        mResourceUUID = [[NSString generateUUIDString] retain];
+        
         mGroupID = 0;
         mResourceID = 99;
     }
@@ -36,6 +39,7 @@
 
 - (void)dealloc
 {
+    [mResourceUUID release];
     [mResourceName release];
     [mChildElements release];
 
@@ -76,6 +80,11 @@
 - (BOOL)isGroupItem
 {
     return NO;
+}
+
+- (NSString*)resourceUUID
+{
+    return mResourceUUID;
 }
 
 - (int)groupID
@@ -131,6 +140,32 @@
 - (BXResourceElement*)childAtIndex:(int)index
 {
     return [mChildElements objectAtIndex:index];
+}
+
+- (BXResourceElement*)childWithResourceID:(int)resourceID
+{
+    int childCount = [mChildElements count];
+    for (int i = 0; i < childCount; i++) {
+        BXResourceElement* aChild = [mChildElements objectAtIndex:i];
+        if ([aChild resourceID] == resourceID) {
+            return aChild;
+        }
+    }
+    
+    return nil;
+}
+
+- (BXResourceElement*)childWithResourceUUID:(NSString*)theUUID
+{
+    int childCount = [mChildElements count];
+    for (int i = 0; i < childCount; i++) {
+        BXResourceElement* aChild = [mChildElements objectAtIndex:i];
+        if ([[aChild resourceUUID] isEqualToString:theUUID]) {
+            return aChild;
+        }
+    }
+    
+    return nil;
 }
 
 - (void)removeChild:(BXResourceElement*)anElem

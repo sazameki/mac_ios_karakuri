@@ -12,7 +12,7 @@
 #include <TargetConditionals.h>
 
 
-#define KARAKURI_FRAMEWORK_VERSION  "1.4.6"
+#define KARAKURI_FRAMEWORK_VERSION  "1.5.0"
 
 
 #if TARGET_OS_IPHONE
