@@ -301,6 +301,8 @@
         mHitInfos = [[NSMutableArray alloc] init];
         mShowsHitInfos = YES;
         mCurrentHitGroupIndex = 1;
+        
+        mPreviewTex = NULL;
     }
     return self;
 }

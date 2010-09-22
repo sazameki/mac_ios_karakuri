@@ -352,7 +352,9 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
     
     if (mCurrentKoma != NULL) {
         KRTexture2D* theTex = [mCurrentKoma previewTexture];
-        theTex->drawAtPoint(*mCurrentPos, KRColor::White);
+        if (theTex != NULL) {
+            theTex->drawAtPoint(*mCurrentPos, KRColor::White);
+        }
     }
 }
 

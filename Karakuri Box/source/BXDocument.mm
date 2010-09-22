@@ -2186,6 +2186,19 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         NSMenuItem* newItem = [theMenu addItemWithTitle:[aTex textureDescription] action:NULL keyEquivalent:@""];
         [newItem setTag:[aTex resourceID]];
     }
+    if (texCount == 0) {
+        NSMenuItem* newItem = [theMenu addItemWithTitle:NSLocalizedString(@"No Custom Texture", nil) action:NULL keyEquivalent:@""];
+        [newItem setTarget:nil];
+        [newItem setAction:NULL];
+        [newItem setTag:998];
+        [newItem setEnabled:NO];
+    }
+    
+    BXSingleParticle2DSpec* selectedParticle = [self selectedSingleParticle2DSpec];
+    if (selectedParticle) {
+        int tag = [selectedParticle imageTag];
+        [oParticleImageButton selectItemWithTag:tag];
+    }
 }
 
 - (void)setupEditorUIForSingleParticle2D:(BXSingleParticle2DSpec*)theSpec
