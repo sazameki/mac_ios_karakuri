@@ -55,7 +55,7 @@ public:
      */
     
     KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
-    KRTexture2D(int imageTag, std::string& customPath, BXDocument* document, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
+    KRTexture2D(BXTexture2DSpec* tex, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
     KRTexture2D(BXTexture2DSpec* tex, NSRect atlasRect);
 
     ~KRTexture2D();

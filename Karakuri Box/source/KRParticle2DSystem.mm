@@ -72,7 +72,7 @@ void KRParticle2DSystem::init()
     mBlendMode = KRBlendModeAlpha;
     
     mParticleCount = 256;
-    mGenerateCount = 5;
+    mGenerateCount = 5.0;
     
     mLife = 60;
     
@@ -97,9 +97,9 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename)
     init();
 }
 
-KRParticle2DSystem::KRParticle2DSystem(int imageTag, std::string& customPath, void* document)
+KRParticle2DSystem::KRParticle2DSystem(BXTexture2DSpec* tex)
 {
-    mTexture = new KRTexture2D(imageTag, customPath, (BXDocument*)document);
+    mTexture = new KRTexture2D(tex);
     
     init();
 }
@@ -157,7 +157,7 @@ unsigned KRParticle2DSystem::getParticleCount() const
     return mParticleCount;
 }
 
-int KRParticle2DSystem::getGenerateCount() const
+double KRParticle2DSystem::getGenerateCount() const
 {
     return mGenerateCount;
 }
@@ -249,7 +249,7 @@ void KRParticle2DSystem::setParticleCount(unsigned count)
     mParticleCount = count;
 }
 
-void KRParticle2DSystem::setGenerateCount(int count)
+void KRParticle2DSystem::setGenerateCount(double count)
 {
     mGenerateCount = count;
 }

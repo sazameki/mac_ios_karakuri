@@ -1564,55 +1564,17 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [self updateChangeCount:NSChangeUndone];
 }
 
-- (void)showCustomParticle2DImageSelectSheet
-{
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    [openPanel setCanChooseDirectories:NO];
-    [openPanel setAllowsMultipleSelection:NO];
-    [openPanel beginSheetForDirectory:nil
-                                 file:nil
-                                types:[NSImage imageFileTypes]
-                       modalForWindow:oMainWindow
-                        modalDelegate:self
-                       didEndSelector:@selector(customParticle2DImageSheetDidEnd:returnCode:context:)
-                          contextInfo:nil];
-}
-
-- (void)customParticle2DImageSheetDidEnd:(NSOpenPanel*)panel
-                              returnCode:(int)returnCode
-                                 context:(void*)context
-{
-    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
-
-    if (returnCode == NSOKButton) {
-        NSString* filename = [panel filename];
-        [particleSpec setImageAtPath:filename];
-        
-        [self saveDocument:self];
-        
-        [oParticleView rebuildParticleSystem];
-    } else {
-        [oParticleImageButton selectItemWithTag:[particleSpec imageTag]];
-    }
-}
-
 - (IBAction)changedParticleImage:(id)sender
 {
-    int tag = [oParticleImageButton selectedTag];
+    int textureID = [oParticleImageButton selectedTag];
     
-    // カスタム画像
-    if (tag == 999) {
-        [self showCustomParticle2DImageSelectSheet];
-    }
-    // プリセット画像
-    else {
-        BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
-        [particleSpec setImageTag:tag];
-        
-        [oParticleView rebuildParticleSystem];
-        
-        [self updateChangeCount:NSChangeUndone];
-    }    
+    BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
+    BXTexture2DSpec* texture = [self tex2DWithID:textureID];
+    [particleSpec setTexture:texture];
+    
+    [oParticleView rebuildParticleSystem];
+    
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedParticleLoopSetting:(id)sender
@@ -1928,11 +1890,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (IBAction)changedParticleGenerateCount:(id)sender
 {
-    int count = 0;
+    double count = 0;
     if (sender == oParticleGenerateCountSlider) {
-        count = [oParticleGenerateCountSlider intValue];
+        count = [oParticleGenerateCountSlider doubleValue];
     } else {
-        count = [oParticleGenerateCountField intValue];
+        count = [oParticleGenerateCountField doubleValue];
     }
     
     BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
@@ -2168,36 +2130,31 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)updateParticle2DTextureMenu
 {
+    [oParticleImageButton removeAllItems];
+
     NSMenu* theMenu = [oParticleImageButton menu];
     
-    int i = [[theMenu itemArray] count] - 1;
-    while (i >= 0) {
-        NSMenuItem* anItem = [theMenu itemAtIndex:i];
-        if ([anItem tag] < 0) {
-            break;
-        }
-        [theMenu removeItemAtIndex:i];
-        i--;
-    }
+    NSMenuItem* newItem = [theMenu addItemWithTitle:NSLocalizedString(@"No Particle2D Texture2D", nil) action:NULL keyEquivalent:@""];
+    [newItem setTag:-1];
     
+    [theMenu addItem:[NSMenuItem separatorItem]];
+
     int texCount = [mTex2DGroup childCount];
     for (int i = 0; i < texCount; i++) {
         BXTexture2DSpec* aTex = (BXTexture2DSpec*)[mTex2DGroup childAtIndex:i];
         NSMenuItem* newItem = [theMenu addItemWithTitle:[aTex textureDescription] action:NULL keyEquivalent:@""];
         [newItem setTag:[aTex resourceID]];
     }
-    if (texCount == 0) {
-        NSMenuItem* newItem = [theMenu addItemWithTitle:NSLocalizedString(@"No Custom Texture", nil) action:NULL keyEquivalent:@""];
-        [newItem setTarget:nil];
-        [newItem setAction:NULL];
-        [newItem setTag:998];
-        [newItem setEnabled:NO];
-    }
     
     BXSingleParticle2DSpec* selectedParticle = [self selectedSingleParticle2DSpec];
     if (selectedParticle) {
-        int tag = [selectedParticle imageTag];
-        [oParticleImageButton selectItemWithTag:tag];
+        BXTexture2DSpec* texture = [selectedParticle texture];
+        if (texture) {
+            [oParticleImageButton selectItemWithTag:[texture resourceID]];
+        } else {
+            [oParticleImageButton selectItemWithTag:-1];
+            [selectedParticle setTexture:nil];
+        }
     }
 }
 
@@ -2256,8 +2213,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oParticleDeltaScaleField setFloatValue:[theSpec deltaScale]];
     [oParticleDeltaScaleSlider setFloatValue:[theSpec deltaScale]];
 
-    [oParticleGenerateCountField setIntValue:[theSpec generateCount]];
-    [oParticleGenerateCountSlider setIntValue:[theSpec generateCount]];
+    [oParticleGenerateCountField setDoubleValue:[theSpec generateCount]];
+    [oParticleGenerateCountSlider setDoubleValue:[theSpec generateCount]];
 
     double deltaRed = [theSpec deltaRed];
     double deltaGreen = [theSpec deltaGreen];
@@ -2273,7 +2230,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oParticleDeltaAlphaField setFloatValue:deltaAlpha];
     [oParticleDeltaAlphaSlider setFloatValue:deltaAlpha];
     
-    [oParticleImageButton selectItemWithTag:[theSpec imageTag]];
+    BXTexture2DSpec* texture = [theSpec texture];
+    [oParticleImageButton selectItemWithTag:[texture resourceID]];
     
     [self updateParticle2DTextureMenu];
 }

@@ -17,7 +17,7 @@
 
 struct _KRParticle2DGenInfo {
     KRVector2D  centerPos;
-    int         count;
+    double      count;
 };
 
 
@@ -70,7 +70,7 @@ class KRParticle2DSystem {
     unsigned        mLife;
     KRVector2D      mStartPos;
     
-    KRTexture2D     *mTexture;
+    KRTexture2D*    mTexture;
     
     KRVector2D      mMinV;
     KRVector2D      mMaxV;
@@ -80,7 +80,7 @@ class KRParticle2DSystem {
     double          mMaxAngleV;
     
     unsigned        mParticleCount;
-    int             mGenerateCount;
+    double          mGenerateCount;
     
     KRBlendMode     mBlendMode;
     
@@ -108,7 +108,7 @@ public:
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
      */
     KRParticle2DSystem(const std::string& filename);
-    KRParticle2DSystem(int imageTag, std::string& customPath, void* document);
+    KRParticle2DSystem(BXTexture2DSpec* tex);
 
     virtual ~KRParticle2DSystem();
     
@@ -190,7 +190,7 @@ public:
         @abstract 1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を設定します。
         マイナスの値を設定すると、それ以降パーティクルは生成されなくなります。
      */
-    void    setGenerateCount(int count);
+    void    setGenerateCount(double count);
     
     /*!
         @method setGravity
@@ -291,7 +291,7 @@ public:
         @method getGenerateCount
         @abstract 1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を取得します。
      */
-    int         getGenerateCount() const;
+    double      getGenerateCount() const;
     
     /*!
         @method getGeneratedParticleCount

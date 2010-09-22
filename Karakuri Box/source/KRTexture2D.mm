@@ -101,81 +101,21 @@ KRTexture2D::KRTexture2D(const std::string& filename, KRTexture2DScaleMode scale
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-KRTexture2D::KRTexture2D(int imageTag, std::string& customPath, BXDocument* document, KRTexture2DScaleMode scaleMode)
+KRTexture2D::KRTexture2D(BXTexture2DSpec* tex, KRTexture2DScaleMode scaleMode)
 {
     if (sTexture2DBatchCount > 0) {
         KRTexture2D::processBatchedTexture2DDraws();
     }
     
-    std::string filename = "particle_blur_128.png";
-
-    // 円ぼかし 128x128
-    if (imageTag == 109) {
-        filename = "particle_blur_128.png";
-    }
-    // 円ぼかし 64x64
-    else if (imageTag == 108) {
-        filename = "particle_blur_64.png";
-    }
-    // 円ぼかし 32x32
-    else if (imageTag == 107) {
-        filename = "particle_blur_32.png";
-    }
-    // 円 128x128
-    else if (imageTag == 209) {
-        filename = "particle_circle_128.png";
-    }
-    // 円 64x64
-    else if (imageTag == 208) {
-        filename = "particle_circle_64.png";
-    }
-    // 円 32x32
-    else if (imageTag == 207) {
-        filename = "particle_circle_32.png";
-    }
-    // 炎 256x256
-    else if (imageTag == 301) {
-        filename = "particle_fire_256.png";
-    }    
-    // 炎 128x128
-    else if (imageTag == 302) {
-        filename = "particle_fire_128.png";
-    }    
-    // 煙 256x256
-    else if (imageTag == 401) {
-        filename = "particle_smoke_256.png";
-    }    
-    // 煙 128x128
-    else if (imageTag == 402) {
-        filename = "particle_smoke_128.png";
-    }    
-    // カスタム画像（旧）
-    else if (imageTag == 999) {
-        filename = customPath;
-    }
-    
     mAtlasSize = KRVector2DZero;
 
-    // カスタム画像（新）
-    if (imageTag >= 1000) {
-        BXTexture2DSpec* tex = [document tex2DWithID:imageTag];
-        mTextureName = KRCreateGLTextureFromTexture2D(tex, &mTextureTarget, &mImageSize, &mTextureSize, (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
-    }
-    // 従来画像
-    else {
-        mFileName = filename;
-        NSString *filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-        mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mTextureTarget, &mImageSize, &mTextureSize,
-                                                          (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);
-        [filenameStr release];
-    }
-    
+    mTextureName = KRCreateGLTextureFromTexture2D(tex, &mTextureTarget, &mImageSize, &mTextureSize, (scaleMode==KRTexture2DScaleModeLinear)? YES: NO);    
     if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
-        NSString *errorFormat = @"Failed to load \"%s\". Please confirm that the image file exists.";
+        NSString *errorFormat = @"Failed to load texture: %@";
         if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = @"\"%s\" の読み込みに失敗しました。画像ファイルが存在することを確認してください。";
+            errorFormat = @"テクスチャの読み込みに失敗しました：%@";
         }
-        NSLog(errorFormat, filename.c_str());
+        NSLog(errorFormat, tex);
     }
     _KRTexture2DName = GL_INVALID_VALUE;    
 }

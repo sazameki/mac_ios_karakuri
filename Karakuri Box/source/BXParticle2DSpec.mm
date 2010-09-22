@@ -36,8 +36,7 @@
         mDoLoop = YES;
         *mGenerationPos = KRVector2DZero;
 
-        mImageTag = 302;
-        mImageTicket = nil;
+        mTexture2DResourceUUID = nil;
 
         mLife = 140;
         *mColor = KRColor::White;
@@ -46,7 +45,7 @@
         mMaxAngleV = 5;
         mDeltaScale = -0.2;
         mBlendMode = KRBlendModeAddition;
-        mGenerateCount = 1;
+        mGenerateCount = 1.0;
         mMaxParticleCount = 256;
         mDeltaRed = 0.0;
         mDeltaGreen = 0.0;
@@ -65,23 +64,26 @@
     delete mMaxV;
     delete mMinV;
     
-    [mImageTicket release];
+    [mTexture2DResourceUUID release];
 
     [super dealloc];
 }
 
 
 - (KRParticle2DSystem*)createParticleSystem
-{    
-    std::string customPath = "";
-    
-    if (mImageTag == 999) {
-        BXResourceFileManager* fileManager = [[self document] fileManager];
-        NSString* imagePath = [fileManager pathForTicket:mImageTicket];
-        customPath = [imagePath cStringUsingEncoding:NSUTF8StringEncoding];
+{
+    if (!mTexture2DResourceUUID) {
+        return NULL;
     }
     
-    KRParticle2DSystem* ret = new KRParticle2DSystem(mImageTag, customPath, [self document]);
+    std::string customPath = "";
+    
+    BXTexture2DSpec* texture = [[self document] tex2DWithUUID:mTexture2DResourceUUID];
+    if (!texture) {
+        return NULL;
+    }
+
+    KRParticle2DSystem* ret = new KRParticle2DSystem(texture);
 
     ret->setGravity(*mGravity);
     ret->setLife(mLife);
@@ -154,7 +156,7 @@
     return mDoLoop;
 }
 
-- (int)generateCount
+- (double)generateCount
 {
     return mGenerateCount;
 }
@@ -167,11 +169,6 @@
 - (KRVector2D)gravity
 {
     return *mGravity;
-}
-
-- (int)imageTag
-{
-    return mImageTag;
 }
 
 - (int)life
@@ -202,6 +199,11 @@
 - (int)maxParticleCount
 {
     return mMaxParticleCount;
+}
+
+- (BXTexture2DSpec*)texture
+{
+    return [[self document] tex2DWithUUID:mTexture2DResourceUUID];
 }
 
 
@@ -253,7 +255,7 @@
     mDoLoop = flag;
 }
 
-- (void)setGenerateCount:(int)count
+- (void)setGenerateCount:(double)count
 {
     mGenerateCount = count;
 }
@@ -271,23 +273,6 @@
 - (void)setGravityY:(double)value
 {
     mGravity->y = value;
-}
-
-- (void)setImageTag:(int)tag
-{
-    mImageTag = tag;
-}
-
-- (void)setImageAtPath:(NSString*)path
-{
-    mImageTag = 999;
-    
-    if (mImageTicket) {
-        [mImageTicket release];
-    }
-    
-    BXResourceFileManager* fileManager = [[self document] fileManager];
-    mImageTicket = [[fileManager storeFileAtPath:path] copy];
 }
 
 - (void)setLife:(int)value
@@ -328,6 +313,16 @@
 - (void)setMaxParticleCount:(int)count
 {
     mMaxParticleCount = count;
+}
+
+- (void)setTexture:(BXTexture2DSpec*)texture;
+{
+    [mTexture2DResourceUUID release];
+    mTexture2DResourceUUID = nil;
+    
+    if (texture) {
+        mTexture2DResourceUUID = [[texture resourceUUID] copy];
+    }
 }
 
 
@@ -385,7 +380,7 @@
     [theInfo setDoubleValue:mDeltaAlpha forName:@"Delta Alpha"];
 
     // フレーム当たりの生成量
-    [theInfo setIntValue:mGenerateCount forName:@"Generate Count"];
+    [theInfo setDoubleValue:mGenerateCount forName:@"Generate Count"];
 
     // 最大生成数
     [theInfo setIntValue:mMaxParticleCount forName:@"Max Particle Count"];
@@ -398,11 +393,18 @@
     [theInfo setDoubleValue:mGenerationPos->y forName:@"Generation Pos Y"];
     
     // 画像
-    [theInfo setIntValue:mImageTag forName:@"Image Tag"];
-    if (mImageTicket) {
-        [theInfo setStringValue:mImageTicket forName:@"Image Ticket"];
+    if (mTexture2DResourceUUID) {
+        [theInfo setStringValue:mTexture2DResourceUUID forName:@"Texture UUID"];
+        
+        BXTexture2DSpec* tex = [[self document] tex2DWithUUID:mTexture2DResourceUUID];
+        if (tex) {
+            [theInfo setIntValue:[tex resourceID] forName:@"Texture ID"];
+        } else {
+            [theInfo removeObjectForKey:@"Texture ID"];
+        }
     } else {
-        [theInfo removeObjectForKey:@"Image Ticket"];
+        [theInfo removeObjectForKey:@"Texture UUID"];
+        [theInfo removeObjectForKey:@"Texture ID"];
     }
 
     return theInfo;
@@ -457,7 +459,7 @@
     mDeltaAlpha = [theInfo doubleValueForName:@"Delta Alpha" currentValue:mDeltaAlpha];
     
     // フレーム当たりの生成量
-    mGenerateCount = [theInfo intValueForName:@"Generate Count" currentValue:mGenerateCount];
+    mGenerateCount = [theInfo doubleValueForName:@"Generate Count" currentValue:mGenerateCount];
     
     // 最大生成数
     mMaxParticleCount = [theInfo intValueForName:@"Max Particle Count" currentValue:mMaxParticleCount];
@@ -470,8 +472,7 @@
     mGenerationPos->y = [theInfo doubleValueForName:@"Generation Pos Y" currentValue:mGenerationPos->y];
 
     // 画像
-    mImageTag = [theInfo intValueForName:@"Image Tag" currentValue:mImageTag];
-    mImageTicket = [[theInfo stringValueForName:@"Image Ticket" currentValue:mImageTicket] copy];
+    mTexture2DResourceUUID = [[theInfo stringValueForName:@"Texture UUID" currentValue:mTexture2DResourceUUID] copy];
 }
 
 @end
@@ -499,109 +500,14 @@
     [fileHandle writeBuffer:"KRP2" length:4];
     
     // リソース情報の書き出し
-    NSDictionary* elementInfo = [self elementInfo];
-    
-    NSString* presetTicket = nil;
-    if (!mImageTicket || [mImageTicket length] == 0) {
-        presetTicket = [NSString generateUUIDString];
-        [elementInfo setValue:presetTicket forKey:@"Image Ticket"];
-    }
+    NSDictionary* elementInfo = [self elementInfo];    
     
     NSString* errorStr = nil;
     NSData* infoData = [NSPropertyListSerialization dataFromPropertyList:elementInfo
                                                                   format:NSPropertyListBinaryFormat_v1_0
                                                         errorDescription:&errorStr];
     [fileHandle writeUnsignedIntValue:[infoData length]];
-    [fileHandle writeData:infoData];
-    
-    // リソースの書き出し（カスタム画像）
-    if (mImageTicket && [mImageTicket length] > 0) {
-        BXResourceFileManager* fileManager = [[self document] fileManager];
-        NSImage* image = [fileManager image72dpiForTicket:mImageTicket];
-        NSData* pngData = [image pngData];
-        
-        NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
-        [texInfo setIntValue:mGroupID forName:@"Group ID"];
-        [texInfo setObject:mImageTicket forKey:@"Ticket"];
-        [texInfo setObject:[fileManager resourceNameForTicket:mImageTicket] forKey:@"Resource Name"];
-        NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
-                                                                         format:NSPropertyListBinaryFormat_v1_0
-                                                               errorDescription:&errorStr];
-        
-        // ヘッダ
-        [fileHandle writeBuffer:"KRT2" length:4];
-        [fileHandle writeUnsignedIntValue:[texInfoData length]];
-        [fileHandle writeData:texInfoData];
-
-        // データ
-        [fileHandle writeBuffer:"KRDT" length:4];
-        [fileHandle writeUnsignedIntValue:[pngData length]];
-        [fileHandle writeData:pngData];
-    }
-    // リソースの書き出し（プリセット画像）
-    else {
-        NSString* filename = @"particle_blur_128.png";  // 円ぼかし 128x128
-
-        // 円ぼかし 64x64
-        if (mImageTag == 108) {
-            filename = @"particle_blur_64.png";
-        }
-        // 円ぼかし 32x32
-        else if (mImageTag == 107) {
-            filename = @"particle_blur_32.png";
-        }
-        // 円 128x128
-        else if (mImageTag == 209) {
-            filename = @"particle_circle_128.png";
-        }
-        // 円 64x64
-        else if (mImageTag == 208) {
-            filename = @"particle_circle_64.png";
-        }
-        // 円 32x32
-        else if (mImageTag == 207) {
-            filename = @"particle_circle_32.png";
-        }
-        // 炎 256x256
-        else if (mImageTag == 301) {
-            filename = @"particle_fire_256.png";
-        }
-        // 炎 128x128
-        else if (mImageTag == 302) {
-            filename = @"particle_fire_128.png";
-        }
-        // 煙 256x256
-        else if (mImageTag == 401) {
-            filename = @"particle_smoke_256.png";
-        }
-        // 煙 128x128
-        else if (mImageTag == 402) {
-            filename = @"particle_smoke_128.png";
-        }
-        
-        NSString* filepath = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
-        NSData* pngData = [[NSData alloc] initWithContentsOfMappedFile:filepath];
-
-        NSMutableDictionary* texInfo = [NSMutableDictionary dictionary];
-        [texInfo setIntValue:mGroupID forName:@"Group ID"];
-        [texInfo setObject:presetTicket forKey:@"Ticket"];
-        [texInfo setObject:filename forKey:@"Resource Name"];
-        NSData* texInfoData = [NSPropertyListSerialization dataFromPropertyList:texInfo
-                                                                         format:NSPropertyListBinaryFormat_v1_0
-                                                               errorDescription:&errorStr];
-        
-        // ヘッダ
-        [fileHandle writeBuffer:"KRT2" length:4];
-        [fileHandle writeUnsignedIntValue:[texInfoData length]];
-        [fileHandle writeData:texInfoData];
-        
-        // データ
-        [fileHandle writeBuffer:"KRDT" length:4];
-        [fileHandle writeUnsignedIntValue:[pngData length]];
-        [fileHandle writeData:pngData];
-        
-        [pngData release];
-    }
+    [fileHandle writeData:infoData];    
 }
 
 @end

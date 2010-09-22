@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="101602"/>
+			<integer value="100186"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -248,7 +248,7 @@
 										<object class="NSTabViewItem" id="484800662">
 											<string key="NSIdentifier">texture2d-editor</string>
 											<object class="NSView" key="NSView" id="915723898">
-												<reference key="NSNextResponder" ref="225689728"/>
+												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1121,7 +1121,6 @@
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
-												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Texture2D</string>
 											<reference key="NSColor" ref="806369588"/>
@@ -2775,7 +2774,6 @@
 														<reference key="NSHScroller" ref="438325279"/>
 														<reference key="NSContentView" ref="503319052"/>
 														<reference key="NSHeaderClipView" ref="832948242"/>
-														<reference key="NSCornerView" ref="522372993"/>
 														<bytes key="NSScrollAmts">QSAAAEEgAABBmAAAQZgAAA</bytes>
 													</object>
 													<object class="NSTextField" id="655749470">
@@ -3445,7 +3443,7 @@
 										<object class="NSTabViewItem" id="1013352480">
 											<string key="NSIdentifier">particle2d-editor</string>
 											<object class="NSView" key="NSView" id="539060000">
-												<nil key="NSNextResponder"/>
+												<reference key="NSNextResponder" ref="225689728"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3459,7 +3457,7 @@
 															<object class="NSTabViewItem" id="10079755">
 																<string key="NSIdentifier">0</string>
 																<object class="NSView" key="NSView" id="972460524">
-																	<reference key="NSNextResponder" ref="28533926"/>
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">256</int>
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3686,7 +3684,6 @@
 																		</object>
 																	</object>
 																	<string key="NSFrame">{{10, 25}, {462, 117}}</string>
-																	<reference key="NSSuperview" ref="28533926"/>
 																</object>
 																<string key="NSLabel">リソース設定</string>
 																<reference key="NSColor" ref="806369588"/>
@@ -3695,7 +3692,7 @@
 															<object class="NSTabViewItem" id="733706566">
 																<string key="NSIdentifier">1</string>
 																<object class="NSView" key="NSView" id="812629266">
-																	<nil key="NSNextResponder"/>
+																	<reference key="NSNextResponder" ref="28533926"/>
 																	<int key="NSvFlags">256</int>
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
@@ -4166,7 +4163,7 @@
 																				<string key="NSContents"/>
 																				<reference key="NSControlView" ref="774226757"/>
 																				<double key="NSMaxValue">20</double>
-																				<double key="NSMinValue">1</double>
+																				<double key="NSMinValue">0.0</double>
 																				<double key="NSValue">5</double>
 																				<double key="NSAltIncValue">0.0</double>
 																				<int key="NSNumberOfTickMarks">2</int>
@@ -4222,16 +4219,16 @@
 																							<boolean value="YES"/>
 																							<integer value="1040"/>
 																							<reference ref="81536675"/>
-																							<integer value="0"/>
-																							<integer value="0"/>
+																							<integer value="2"/>
+																							<integer value="2"/>
 																							<integer value="1"/>
 																							<string>-∞</string>
 																							<string/>
 																							<string>+∞</string>
 																						</object>
 																					</object>
-																					<string key="NS.positiveformat">#0</string>
-																					<string key="NS.negativeformat">#0</string>
+																					<string key="NS.positiveformat">#0.00</string>
+																					<string key="NS.negativeformat">#0.00</string>
 																					<nil key="NS.positiveattrs"/>
 																					<nil key="NS.negativeattrs"/>
 																					<nil key="NS.zero"/>
@@ -4372,6 +4369,7 @@
 																		</object>
 																	</object>
 																	<string key="NSFrame">{{10, 25}, {462, 117}}</string>
+																	<reference key="NSSuperview" ref="28533926"/>
 																</object>
 																<string key="NSLabel">基本設定</string>
 																<reference key="NSColor" ref="806369588"/>
@@ -5812,14 +5810,14 @@
 																<reference key="NSTabView" ref="28533926"/>
 															</object>
 														</object>
-														<reference key="NSSelectedTabViewItem" ref="10079755"/>
+														<reference key="NSSelectedTabViewItem" ref="733706566"/>
 														<reference key="NSFont" ref="26"/>
 														<int key="NSTvFlags">134217728</int>
 														<bool key="NSAllowTruncatedLabels">YES</bool>
 														<bool key="NSDrawsBackground">YES</bool>
 														<object class="NSMutableArray" key="NSSubviews">
 															<bool key="EncodedWithXMLCoder">YES</bool>
-															<reference ref="972460524"/>
+															<reference ref="812629266"/>
 														</object>
 													</object>
 													<object class="NSCustomView" id="107855883">
@@ -5923,20 +5921,21 @@
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
+												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Particle2D</string>
 											<reference key="NSColor" ref="806369588"/>
 											<reference key="NSTabView" ref="225689728"/>
 										</object>
 									</object>
-									<reference key="NSSelectedTabViewItem" ref="484800662"/>
+									<reference key="NSSelectedTabViewItem" ref="1013352480"/>
 									<reference key="NSFont" ref="22"/>
 									<int key="NSTvFlags">268435462</int>
 									<bool key="NSAllowTruncatedLabels">YES</bool>
 									<bool key="NSDrawsBackground">YES</bool>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<reference ref="915723898"/>
+										<reference ref="539060000"/>
 									</object>
 								</object>
 							</object>
@@ -17897,9 +17896,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<bytes key="NSTransformStruct">P4AAAL+AAABCkgAAwYgAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{145, 576}, {1000, 683}}</string>
+					<string>{{145, 473}, {1000, 683}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{145, 576}, {1000, 683}}</string>
+					<string>{{145, 473}, {1000, 683}}</string>
 					<integer value="1"/>
 					<string>{{201, 387}, {507, 413}}</string>
 					<integer value="1"/>

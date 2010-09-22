@@ -35,11 +35,10 @@
     double      mDeltaGreen;
     double      mDeltaBlue;
     double      mDeltaAlpha;
-    int         mGenerateCount;
+    double      mGenerateCount;
     int         mMaxParticleCount;
     
-    int         mImageTag;
-    NSString*   mImageTicket;
+    NSString*   mTexture2DResourceUUID;
 
     BOOL        mDoLoop;
     KRVector2D  *mGenerationPos;
@@ -56,16 +55,16 @@
 - (double)deltaBlue;
 - (double)deltaAlpha;
 - (BOOL)doLoop;
-- (int)generateCount;
+- (double)generateCount;
 - (KRVector2D)generationPos;
 - (KRVector2D)gravity;
-- (int)imageTag;
 - (int)life;
 - (int)maxAngleV;
 - (int)minAngleV;
 - (KRVector2D)maxV;
 - (KRVector2D)minV;
 - (int)maxParticleCount;
+- (BXTexture2DSpec*)texture;
 
 - (void)setBGColor1:(KRColor)color;
 - (void)setBlendMode:(KRBlendMode)blendMode;
@@ -76,12 +75,10 @@
 - (void)setDeltaBlue:(double)value;
 - (void)setDeltaAlpha:(double)value;
 - (void)setDoLoop:(BOOL)flag;
-- (void)setGenerateCount:(int)count;
+- (void)setGenerateCount:(double)count;
 - (void)setGenerationPos:(KRVector2D)pos;
 - (void)setGravityX:(double)value;
 - (void)setGravityY:(double)value;
-- (void)setImageTag:(int)tag;
-- (void)setImageAtPath:(NSString*)path;
 - (void)setLife:(int)value;
 - (void)setMaxAngleV:(int)value;
 - (void)setMinAngleV:(int)value;
@@ -90,6 +87,7 @@
 - (void)setMinVX:(double)value;
 - (void)setMinVY:(double)value;
 - (void)setMaxParticleCount:(int)count;
+- (void)setTexture:(BXTexture2DSpec*)texture;
 
 @end
 

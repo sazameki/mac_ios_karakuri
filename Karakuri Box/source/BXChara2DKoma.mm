@@ -507,8 +507,12 @@
 - (void)setTexture:(BXTexture2DSpec*)texture atlasRect:(NSRect)rect
 {
     [mTexture2DResourceUUID release];
-    mTexture2DResourceUUID = [[texture resourceUUID] copy];
-    mTextureAtlasRect = rect;
+    mTexture2DResourceUUID = nil;
+    
+    if (texture) {
+        mTexture2DResourceUUID = [[texture resourceUUID] copy];
+        mTextureAtlasRect = rect;
+    }
 }
 
 - (int)komaNumber
@@ -604,8 +608,15 @@
     
     if (mTexture2DResourceUUID) {
         [theInfo setStringValue:mTexture2DResourceUUID forName:@"Texture UUID"];
+        BXTexture2DSpec* texture = [[self document] tex2DWithUUID:mTexture2DResourceUUID];
+        if (texture) {
+            [theInfo setIntValue:[texture resourceID] forName:@"Texture ID"];
+        } else {
+            [theInfo removeObjectForKey:@"Texture ID"];
+        }
     } else {
         [theInfo removeObjectForKey:@"Texture UUID"];
+        [theInfo removeObjectForKey:@"Texture ID"];
     }
     [theInfo setStringValue:NSStringFromRect(mTextureAtlasRect) forName:@"Atlas Rect"];
     
