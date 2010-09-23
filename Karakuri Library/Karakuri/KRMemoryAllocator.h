@@ -11,7 +11,7 @@
 #include <Karakuri/KarakuriLibrary.h>
 
 
-/*
+/*!
     @define KR_DECLARE_USE_ALLOCATOR
     @group  Game System
     @abstract <p><strong class="warning">(Deprecated) 現在、このマクロ関数の利用は推奨されません。代わりに KRAnime2DManager クラスのアニメーション管理機構を使用してください。</strong></p>

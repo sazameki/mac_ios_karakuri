@@ -379,7 +379,10 @@ void _KRTexture2D::drawAtPointCenter(const KRVector2D& centerPos, const KRColor&
 
 void _KRTexture2D::drawAtPointCenterEx(const KRVector2D& centerPos, const KRRect2D& srcRect, double rotate, const KRVector2D& scale, const KRColor& color)
 {
-    KRVector2D theSize = getSize();
+    KRVector2D theSize = srcRect.getSize();
+    if (theSize.x == 0.0 || theSize.y == 0.0) {
+        theSize = getSize();
+    }
     theSize.x *= scale.x;
     theSize.y *= scale.y;
     KRVector2D pos = centerPos - theSize / 2;
@@ -401,7 +404,7 @@ void _KRTexture2D::drawAtPointCenterEx(const KRVector2D& centerPos, const KRRect
 #endif
     }
     
-    KRVector2D origin = KRVector2D(mImageSize.x * 0.5, mImageSize.y * 0.5);
+    KRVector2D origin = KRVector2D(theSize.x / scale.x / 2, theSize.y / scale.y / 2);
 
     KRRect2D theSrcRect = srcRect;
     if (theSrcRect.width == 0.0 && theSrcRect.height == 0.0) {
