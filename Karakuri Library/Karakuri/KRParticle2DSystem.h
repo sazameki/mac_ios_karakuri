@@ -13,9 +13,12 @@
 
 
 struct _KRParticle2DGenInfo {
-    KRVector2D  centerPos;
-    int         count;
-    int         zOrder;
+    KRVector2D  center_pos;
+    int         count_int;
+    int         count_decimals;
+    int         count_decimals_base;
+    int         z_order;
+    int         gen_count;
 };
 
 
@@ -64,7 +67,7 @@ public:
  */
 class _KRParticle2DSystem : public KRObject {
     
-    std::list<_KRParticle2D *>  mParticles;
+    std::list<_KRParticle2D*>   mParticles;
     
     int             mGroupID;
     int             mZOrder;
@@ -72,9 +75,6 @@ class _KRParticle2DSystem : public KRObject {
 
     unsigned        mLife;
     KRVector2D      mStartPos;
-    
-    KRTexture2D*    mTexture;
-    bool            mHasInnerTexture;
     
     KRVector2D      mMinV;
     KRVector2D      mMaxV;
@@ -84,7 +84,7 @@ class _KRParticle2DSystem : public KRObject {
     double          mMaxAngleV;
     
     unsigned        mParticleCount;
-    int             mGenerateCount;
+    double          mGenerateCount;
     
     KRBlendMode     mBlendMode;
     
@@ -100,36 +100,22 @@ class _KRParticle2DSystem : public KRObject {
     _KRParticle2DGenInfo    mGenInfos[_KRParticle2DGenMaxCount];
     int             mActiveGenCount;
 
+    _KRParticle2DGenInfo    mAutoGenInfo;
+
     double          mMinScale;
     double          mMaxScale;
     double          mMinSize;
     double          mMaxSize;
     
+    bool            mIsAutoGenerating;
+
 public:
     /*!
         @task コンストラクタ
      */
     
-    _KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder);
-    
     _KRParticle2DSystem(int groupID, int texID);
-    
-    /*!
-        @method _KRParticle2DSystem
-        @abstract テクスチャに使用する画像ファイルの名前を指定して、このパーティクル・システムを生成します。
-        <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
-        <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
-     */
-    _KRParticle2DSystem(const std::string& filename, bool doLoop=false);
 
-    /*!
-        @method _KRParticle2DSystem
-        @abstract テクスチャを指定して、このパーティクル・システムを生成します。
-        <p>このコンストラクタを利用することにより、同じテクスチャを異なる複数のパーティクル・システムで共有して効率的に使うことができます。同じ画像でサイズが異なるパーティクルを生成したい場合などに、このコンストラクタを利用してください。</p>
-        <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
-        <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
-     */
-    _KRParticle2DSystem(KRTexture2D *texture, bool doLoop=false);
     virtual ~_KRParticle2DSystem();
     
 private:
@@ -384,6 +370,10 @@ public:
      */
     double      getMinSize() const;
     double      getMinScale() const;
+
+public:
+    void        startAutoGeneration(int zOrder);
+    void        stopAutoGeneration();
     
 public:
     virtual std::string to_s() const;

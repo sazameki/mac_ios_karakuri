@@ -15,10 +15,10 @@
     Constructor
  */
 _KRParticle2D::_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
-                             double angleV, const KRColor& color, double scale,
-                             double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaScale)
-    : mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mScale(scale),
-      mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaScale(deltaScale)
+                             double angleV, const KRColor& color, double size, double scale,
+                             double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale)
+    : mBaseLife(life), mLife(life), mPos(pos), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mSize(size), mScale(scale),
+      mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaSize(deltaSize), mDeltaScale(deltaScale)
 {
     mAngle = 0.0;
 }
@@ -46,48 +46,6 @@ std::string _KRParticle2D::to_s() const
 }
 
 
-void KRParticle2DSystem::init()
-{    
-    mStartPos = KRVector2D(0, 0);
-    
-    mColor = KRColor::White;
-    
-    mMinScale = 1.0;
-    mMaxScale = 1.0;
-    
-    mMinV = KRVector2D(-8.0, -8.0);
-    mMaxV = KRVector2D(8.0, 8.0);
-    
-    mGravity = KRVector2DZero;
-    
-    mMinAngleV = -0.1;
-    mMaxAngleV = 0.1;
-    
-    mDeltaScale = -1.0;
-    mDeltaRed = 0.0;
-    mDeltaGreen = 0.0;
-    mDeltaBlue = 0.0;
-    mDeltaAlpha = -2.0;
-    
-    mBlendMode = KRBlendModeAlpha;
-    
-    mParticleCount = 256;
-    mGenerateCount = 5.0;
-    
-    mLife = 60;
-    
-    mActiveGenCount = 0;
-    for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
-        mGenInfos[i].count_int = 0;
-        mGenInfos[i].count_decimals = 0;
-    }
-    
-    mIsAutoGenerating = false;
-    mAutoGenInfo.count_int = 0;
-    mAutoGenInfo.count_decimals = 0;
-}
-
-
 #pragma mark -
 #pragma mark Constructor / Destructor
 
@@ -108,6 +66,53 @@ KRParticle2DSystem::KRParticle2DSystem(BXTexture2DSpec* tex)
     
     init();
 }
+
+void KRParticle2DSystem::init()
+{    
+    mStartPos = KRVector2D(0, 0);
+    
+    mColor = KRColor::White;
+    
+    mMinSize = 1.0;
+    mMaxSize = 1.0;
+
+    mMinScale = 1.0;
+    mMaxScale = 1.0;
+    
+    mMinV = KRVector2D(-8.0, -8.0);
+    mMaxV = KRVector2D(8.0, 8.0);
+    
+    mGravity = KRVector2DZero;
+    
+    mMinAngleV = -0.1;
+    mMaxAngleV = 0.1;
+    
+    mDeltaScale = -1.0;
+    mDeltaSize = 0.0;
+    mDeltaRed = 0.0;
+    mDeltaGreen = 0.0;
+    mDeltaBlue = 0.0;
+    mDeltaAlpha = -2.0;
+    
+    mBlendMode = KRBlendModeAlpha;
+    
+    mParticleCount = 256;
+    mGenerateCount = 5.0;
+    
+    mLife = 60;
+    
+    mActiveGenCount = 0;
+    for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
+        mGenInfos[i].gen_count = 0;
+        mGenInfos[i].count_int = 0;
+        mGenInfos[i].count_decimals = 0;
+    }
+    
+    mIsAutoGenerating = false;
+    mAutoGenInfo.count_int = 0;
+    mAutoGenInfo.count_decimals = 0;
+}
+
 
 /*!
     @method ~KRParticleSystem
@@ -150,6 +155,16 @@ double KRParticle2DSystem::getMaxScale() const
 double KRParticle2DSystem::getMinScale() const
 {
     return mMinScale;
+}
+
+double KRParticle2DSystem::getMinSize() const
+{
+    return mMinSize;
+}
+
+double KRParticle2DSystem::getMaxSize() const
+{
+    return mMaxSize;
 }
 
 KRVector2D KRParticle2DSystem::getStartPos() const
@@ -263,14 +278,24 @@ void KRParticle2DSystem::setGenerateCount(double count)
     mGenerateCount = count;
 }
 
+void KRParticle2DSystem::setMinScale(double scale)
+{
+    mMinScale = scale;
+}
+
 void KRParticle2DSystem::setMaxScale(double scale)
 {
     mMaxScale = scale;
 }
 
-void KRParticle2DSystem::setMinScale(double scale)
+void KRParticle2DSystem::setMinSize(double size)
 {
-    mMinScale = scale;
+    mMinSize = size;
+}
+
+void KRParticle2DSystem::setMaxSize(double size)
+{
+    mMaxSize = size;
 }
 
 void KRParticle2DSystem::setScaleDelta(double value)
@@ -308,7 +333,7 @@ void KRParticle2DSystem::setGravity(const KRVector2D& a)
     mGravity = a;
 }
 
-void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
+void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos, int zOrder)
 {
     if (mActiveGenCount >= _KRParticle2DGenMaxCount) {
         return;
@@ -343,11 +368,12 @@ void KRParticle2DSystem::step()
         if (mAutoGenInfo.count_int > 0) {
             for (int i = 0; i < mAutoGenInfo.count_int; i++) {
                 KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D* particle = new _KRParticle2D(mLife, mAutoGenInfo.center_pos, theV, mGravity, theAngleV, mColor, theScale,
-                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mAutoGenInfo.center_pos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
                 mParticles.push_back(particle);
             }
         }
@@ -358,11 +384,12 @@ void KRParticle2DSystem::step()
                 mAutoGenInfo.count_decimals = mAutoGenInfo.count_decimals_base;
                 
                 KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D* particle = new _KRParticle2D(mLife, mAutoGenInfo.center_pos, theV, mGravity, theAngleV, mColor, theScale,
-                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mAutoGenInfo.center_pos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
                 mParticles.push_back(particle);                
             }
         }
@@ -374,12 +401,15 @@ void KRParticle2DSystem::step()
         // Integer part
         if (mGenInfos[i].gen_count > 0 && mGenInfos[i].count_int > 0) {
             for (int j = 0; j < mGenInfos[i].count_int && mGenInfos[i].gen_count > 0; j++) {
-                KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double dx = mMaxV.x - mMinV.x;
+                double dy = mMaxV.x - mMinV.x;
+                KRVector2D theV(KRRandDouble() * dx + mMinV.x, KRRandDouble() * dy + mMinV.y);
+                double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D* particle = new _KRParticle2D(mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theScale,
-                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
                 mParticles.push_back(particle);
                 
                 mGenInfos[i].gen_count--;
@@ -398,11 +428,12 @@ void KRParticle2DSystem::step()
                 mGenInfos[i].count_decimals = mGenInfos[i].count_decimals_base;
 
                 KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double theSize = KRRandDouble() * (mMaxSize - mMinSize) + mMinSize;
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D* particle = new _KRParticle2D(mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theScale,
-                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
                 mParticles.push_back(particle);
 
                 mGenInfos[i].gen_count--;

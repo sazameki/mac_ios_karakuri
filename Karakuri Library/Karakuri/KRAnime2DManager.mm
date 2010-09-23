@@ -54,15 +54,6 @@ void KRAnime2DManager::_addCharaSpec(int specID, _KRChara2DSpec* spec)
     spec->setSpecID(specID);
 }
 
-int KRAnime2DManager::_addParticle2D(int groupID, const std::string& imageFileName)
-{
-    int theParticleID = mParticleSystemMap.size() + 1000;
-    
-    mParticleSystemMap[theParticleID] = new _KRParticle2DSystem(groupID, imageFileName, 0);
-    
-    return theParticleID;
-}
-
 void KRAnime2DManager::_addParticle2DWithTextureID(int groupID, int resourceID, int texID)
 {
     mParticleSystemMap[resourceID] = new _KRParticle2DSystem(groupID, texID);

@@ -99,7 +99,7 @@
             if ([mTargetSpec doLoop]) {
                 mParticleSystem->setStartPos(KRVector2D(pos.x, pos.y));
             } else {
-                mParticleSystem->addGenerationPoint(KRVector2D(pos.x, pos.y));
+                mParticleSystem->addGenerationPoint(KRVector2D(pos.x, pos.y), 0);
             }
         }
     }
@@ -113,7 +113,7 @@
         if ([mTargetSpec doLoop]) {
             mParticleSystem->setStartPos(KRVector2D(pos.x, pos.y));
         } else {
-            mParticleSystem->addGenerationPoint(KRVector2D(pos.x, pos.y));
+            mParticleSystem->addGenerationPoint(KRVector2D(pos.x, pos.y), 0);
         }
     }
 }

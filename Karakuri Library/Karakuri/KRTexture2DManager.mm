@@ -163,7 +163,6 @@ void KRTexture2DManager::_unloadTextureFilesInGroup(int groupID)
 
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
-        
         if (mTexMap[texID] != NULL) {
             delete mTexMap[texID];
             mTexMap[texID] = NULL;
@@ -175,7 +174,6 @@ _KRTexture2D* KRTexture2DManager::_getTexture(int texID)
 {
     _KRTexture2D* ret = mTexMap[texID];
 
-#if __DEBUG__
     if (ret == NULL) {
         const char *errorFormat = "Texture is not loaded with ID %d.";
         if (gKRLanguage == KRLanguageJapanese) {
@@ -183,7 +181,6 @@ _KRTexture2D* KRTexture2DManager::_getTexture(int texID)
         }
         throw KRRuntimeError(errorFormat, texID);
     }
-#endif
 
     return mTexMap[texID];
 }

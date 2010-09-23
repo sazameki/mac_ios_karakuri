@@ -163,11 +163,9 @@ public:
 
     
     /*
-        @-method _addParticle2D
+        @-method _addParticle2DWithTextureID
         @abstract 2次元の移動を行うパーティクル管理のシステムを生成します。火、爆発、煙、雲、霧などの表現に利用できます。
      */
-    int     _addParticle2D(int groupID, const std::string& imageFileName);
-    
     void    _addParticle2DWithTextureID(int groupID, int resourceID, int texID);
     
     _KRParticle2DSystem*    _getParticleSystem(int particleID) const;

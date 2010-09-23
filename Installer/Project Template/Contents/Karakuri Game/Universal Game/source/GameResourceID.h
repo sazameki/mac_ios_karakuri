@@ -1,4 +1,4 @@
-// Karakuri Box Exported Resource IDs (2010-09-23 17:35:13 +0900)
+// Karakuri Box Exported Resource IDs (2010-09-23 18:52:08 +0900)
 
 // 2D Texture IDs
 struct TexID {

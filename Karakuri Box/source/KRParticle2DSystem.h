@@ -20,6 +20,7 @@ struct _KRParticle2DGenInfo {
     int         count_int;
     int         count_decimals;
     int         count_decimals_base;
+    int         z_order;
     int         gen_count;
 };
 
@@ -37,10 +38,12 @@ public:
     KRVector2D  mGravity;
     KRColor     mColor;
     double      mScale;
+    double      mSize;
     double      mAngle;
     double      mAngleV;
     
     double      mDeltaScale;
+    double      mDeltaSize;
     double      mDeltaRed;
     double      mDeltaGreen;
     double      mDeltaBlue;
@@ -48,8 +51,8 @@ public:
     
 public:
 	_KRParticle2D(unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
-                  double angleV, const KRColor& color, double scale,
-                  double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaScale);
+                  double angleV, const KRColor& color, double size, double scale,
+                  double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale);
     ~_KRParticle2D();
     
 public:
@@ -89,6 +92,7 @@ class KRParticle2DSystem {
     
     KRColor         mColor;
     double          mDeltaScale;
+    double          mDeltaSize;
     double          mDeltaRed;
     double          mDeltaGreen;
     double          mDeltaBlue;
@@ -101,7 +105,9 @@ class KRParticle2DSystem {
 
     double          mMinScale;
     double          mMaxScale;
-    
+    double          mMinSize;
+    double          mMaxSize;
+
     bool            mIsAutoGenerating;
     
 public:
@@ -166,7 +172,7 @@ public:
         @abstract 新しいパーティクル生成ポイントを指定された座標に追加します。
         setParticleCount() 関数で設定された最大個数だけパーティクルを生成した時点で、その生成ポイントは削除されます。
      */
-    void    addGenerationPoint(const KRVector2D& pos);
+    void    addGenerationPoint(const KRVector2D& pos, int zOrder);
 
 public:
     /*!
@@ -246,10 +252,11 @@ public:
     
     void    setScaleDelta(double value);
     
-    void    setMaxScale(double scale);
-    
-    
     void    setMinScale(double scale);
+    void    setMaxScale(double scale);
+
+    void    setMinSize(double size);    
+    void    setMaxSize(double size);
 
 public:
     /*!
@@ -340,7 +347,18 @@ public:
     unsigned    getParticleCount() const;
     
 public:
+    /*!
+        @method getMaxSize
+        @abstract 各パーティクルの生成時の最大サイズを取得します。
+     */
+    double      getMaxSize() const;
     double      getMaxScale() const;
+    
+    /*!
+        @method getMinSize
+        @abstract 各パーティクルの生成時の最小サイズを取得します。
+     */
+    double      getMinSize() const;
     double      getMinScale() const;
     
 public:
