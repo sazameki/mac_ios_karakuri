@@ -1,4 +1,4 @@
-// Karakuri Box Exported Resource IDs (2010-09-23 18:52:08 +0900)
+// Karakuri Box Exported Resource IDs (2010-09-23 22:40:24 +0900)
 
 // 2D Texture IDs
 struct TexID {
@@ -24,9 +24,9 @@ struct TexID {
 struct CharaID {
     enum {
         Player              = 1000,
-        Explosion           = 1001,
-        EnemyThunder        = 1002,
-        EnemyIce            = 1003,
+        Explosion           = 2000,
+        EnemyThunder        = 3000,
+        EnemyIce            = 3001,
     };
 };
 

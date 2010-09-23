@@ -362,7 +362,7 @@ public:
     double      getMinScale() const;
     
 public:
-    void        startAutoGeneration();
+    void        startAutoGeneration(int zOrder);
     void        stopAutoGeneration();
 
 };

@@ -106,7 +106,7 @@
     ret->setColorDelta(mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha);
     
     if ([self doLoop]) {
-        ret->startAutoGeneration();
+        ret->startAutoGeneration(0);
     }
 
     return ret;

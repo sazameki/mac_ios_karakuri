@@ -241,6 +241,16 @@ body.list a:hover {
 	text-decoration: underline;
 }
 
+body.list a.deprecated:link {
+	color: #aaa;
+	text-decoration: line-through;
+}
+
+body.list a.deprecated:visited {
+	color: #aaa;
+	text-decoration: line-through;
+}
+
 body.list ul.toc li {
 	list-style-type: disc;
 }

@@ -9,7 +9,7 @@
 
 
 Player::Player()
-    : KRChara2D(CharaID::Player, CharaType::Player)
+    : KRChara2D(ClassType::Player, CharaID::Player)
 {
     setZOrder(100);
     

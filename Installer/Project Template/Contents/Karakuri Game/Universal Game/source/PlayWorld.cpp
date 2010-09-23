@@ -99,7 +99,7 @@ void PlayWorld::updateModel(KRInput* input)
         (*it)->move();
 
         // Hit test
-        KRChara2D* hitPlayer = gKRAnime2DMan->hitChara2D(CharaType::Player, HitType::Attack, *it, HitType::Block);
+        KRChara2D* hitPlayer = gKRAnime2DMan->hitChara2D(ClassType::Player, HitType::Attack, *it, HitType::Block);
         if (hitPlayer != NULL) {
             // Add Score
             mScore += 10;
@@ -122,7 +122,7 @@ void PlayWorld::updateModel(KRInput* input)
     if (isTouched) {
         if (mDraggingPlayer == NULL) {
             // Get an animating character at the touch position
-            KRChara2D* theChara = gKRAnime2DMan->getChara2D(CharaType::Player, touchPos);
+            KRChara2D* theChara = gKRAnime2DMan->getChara2D(ClassType::Player, touchPos);
 
             // Check the model type mapped for the character
             if (theChara != NULL) {

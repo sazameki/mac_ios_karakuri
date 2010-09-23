@@ -737,7 +737,7 @@
     [self setResourceName:[theInfo stringValueForName:@"Resource Name" currentValue:mResourceName]];    
     
     // テクスチャの選択
-    mSelectingTextureUUID = [[theInfo stringValueForName:@"Texture UUID" currentValue:mSelectingTextureUUID] retain];
+    mSelectingTextureUUID = [[theInfo stringValueForName:@"Texture UUID" currentValue:mSelectingTextureUUID] copy];
     
     // 動作
     NSArray* motionInfos = [theInfo objectForKey:@"Motion Infos"];

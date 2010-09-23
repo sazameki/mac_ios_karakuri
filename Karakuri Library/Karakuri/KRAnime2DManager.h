@@ -21,7 +21,7 @@ class KRSimulator2D;
     @class KRAnime2DManager
     @group Game Graphics
     <p>キャラクタのアニメーションを管理するためのクラスです。</p>
-    <p>このクラスのオブジェクトには、gKRAnime2DMan 変数を使ってアクセスしてください。</p>
+    <p><strong>このクラスのインスタンスには、グローバル変数 gKRAnime2DMan を使ってアクセス</strong>してください。</p>
     <p>主な使い方は、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
 class KRAnime2DManager : public KRObject {

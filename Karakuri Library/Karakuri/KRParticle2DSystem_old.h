@@ -56,7 +56,8 @@ public:
 /*!
     @class  KRParticle2DSystem
     @group  Game Graphics
-    @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box と gKRAnime2DMan を利用してください。</strong>
+    @deprecated
+    @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
     <p>2次元の移動を行うパーティクル群を生成し管理するための仕組みです。<br/>
     火、爆発、煙、雲、霧などの表現に利用できます。</p>
  */
@@ -104,7 +105,8 @@ public:
     
     /*!
         @method KRParticle2DSystem
-        @abstract テクスチャに使用する画像ファイルの名前を指定して、このパーティクル・システムを生成します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>テクスチャに使用する画像ファイルの名前を指定して、このパーティクル・システムを生成します。</p>
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
      */
@@ -112,7 +114,8 @@ public:
 
     /*!
         @method KRParticle2DSystem
-        @abstract テクスチャを指定して、このパーティクル・システムを生成します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>テクスチャを指定して、このパーティクル・システムを生成します。</p>
         <p>このコンストラクタを利用することにより、同じテクスチャを異なる複数のパーティクル・システムで共有して効率的に使うことができます。同じ画像でサイズが異なるパーティクルを生成したい場合などに、このコンストラクタを利用してください。</p>
         <p>デフォルトでは、addGenerationPoint() 関数を用いて、単発生成を行います。</p>
         <p>doLoop 引数に true を指定することで、パーティクルを無限に生成し続けるようになります。</p>
@@ -130,13 +133,15 @@ public:
     
     /*!
         @method draw
-        このパーティクル・システムで生成されたすべてのパーティクルを描画します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>このパーティクル・システムで生成されたすべてのパーティクルを描画します。</p>
      */
     void    draw() DEPRECATED_ATTRIBUTE;
     
     /*!
         @method step
-        設定に基づいて必要なパーティクルを生成し、生成されたすべてのパーティクルを動かします。基本的に、1フレームに1回この関数を呼び出してください。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>設定に基づいて必要なパーティクルを生成し、生成されたすべてのパーティクルを動かします。基本的に、1フレームに1回この関数を呼び出してください。</p>
      */
     void    step() DEPRECATED_ATTRIBUTE;
 
@@ -147,13 +152,15 @@ public:
     
     /*!
         @method getStartPos
-        ループ実行時のパーティクルの生成時の位置を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>ループ実行時のパーティクルの生成時の位置を取得します。</p>
      */
     KRVector2D  getStartPos() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setStartPos
-        ループ実行時のパーティクルの生成時の位置を設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>ループ実行時のパーティクルの生成時の位置を設定します。</p>
      */
     void    setStartPos(const KRVector2D& pos) DEPRECATED_ATTRIBUTE;
     
@@ -164,8 +171,9 @@ public:
     
     /*!
         @method addGenerationPoint
-        @abstract 新しいパーティクル生成ポイントを指定された座標に追加します。
-        setParticleCount() 関数で設定された最大個数だけパーティクルを生成した時点で、その生成ポイントは削除されます。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>新しいパーティクル生成ポイントを指定された座標に追加します。</p>
+        <p>setParticleCount() 関数で設定された最大個数だけパーティクルを生成した時点で、その生成ポイントは削除されます。</p>
      */
     void    addGenerationPoint(const KRVector2D& pos) DEPRECATED_ATTRIBUTE;
 
@@ -176,66 +184,76 @@ public:
 
     /*!
         @method setBlendMode
-        @abstract パーティクルを描画するためのブレンドモードを設定します。
-        デフォルトのブレンドモードは、KRBlendModeAddition に設定されています。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルを描画するためのブレンドモードを設定します。</p>
+        <p>デフォルトのブレンドモードは、KRBlendModeAddition に設定されています。</p>
      */
     void    setBlendMode(KRBlendMode blendMode) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setColor
-        パーティクル描画時に適用される初期カラーを設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクル描画時に適用される初期カラーを設定します。</p>
      */
     void    setColor(const KRColor& color) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setColorDelta
-        パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、各色成分の変化の割り合いを設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、各色成分の変化の割り合いを設定します。</p>
      */
     void    setColorDelta(double red, double green, double blue, double alpha) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setGenerateCount
-        @abstract 1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を設定します。
-        マイナスの値を設定すると、それ以降パーティクルは生成されなくなります。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を設定します。</p>
+        <p>マイナスの値を設定すると、それ以降パーティクルは生成されなくなります。</p>
      */
     void    setGenerateCount(int count) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setGravity
-        @abstract 各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を設定します。
-        デフォルトでは加速度は (0.0, 0.0) に設定されています。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を設定します。</p>
+        <p>デフォルトでは加速度は (0.0, 0.0) に設定されています。</p>
      */
     void    setGravity(const KRVector2D& a) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setLife
-        @abstract 各パーティクルの生存期間を設定します。
-        既に生成されているパーティクルには影響を及ぼしません。デフォルトの生存期間は、60フレーム（=1秒）です。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの生存期間を設定します。</p>
+        <p>既に生成されているパーティクルには影響を及ぼしません。デフォルトの生存期間は、60フレーム（=1秒）です。</p>
      */
     void    setLife(unsigned life) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setMaxV
-        @abstract パーティクル生成時にランダムで設定される移動速度の最大値を設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクル生成時にランダムで設定される移動速度の最大値を設定します。</p>
      */
     void    setMaxV(const KRVector2D& v) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setMinV
-        @abstract パーティクル生成時にランダムで設定される移動速度の最小値を設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクル生成時にランダムで設定される移動速度の最小値を設定します。</p>
      */
     void    setMinV(const KRVector2D& v) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setParticleCount
-        @abstract パーティクルの最大個数を設定します。
-        デフォルトの設定では256個です。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの最大個数を設定します。</p>
+        <p>デフォルトの設定では256個です。</p>
      */
     void    setParticleCount(unsigned count) DEPRECATED_ATTRIBUTE;
     
     /*!
         @method setSizeDelta
-        パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、サイズの変化の割り合いを設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じた、サイズの変化の割り合いを設定します。</p>
      */
     void    setSizeDelta(double value) DEPRECATED_ATTRIBUTE;
     
@@ -244,13 +262,15 @@ public:
 #else
     /*!
         @method setMaxSize
-        各パーティクルの生成時の最大サイズを設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの生成時の最大サイズを設定します。</p>
      */
     void    setMaxSize(double size) DEPRECATED_ATTRIBUTE;
 
     /*!
         @method setMinSize
-        各パーティクルの生成時の最小サイズを設定します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの生成時の最小サイズを設定します。</p>
      */
     void    setMinSize(double size) DEPRECATED_ATTRIBUTE;    
 #endif
@@ -262,85 +282,99 @@ public:
     
     /*!
         @method getBlendMode
-        @abstract パーティクルを描画するためのブレンドモードを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルを描画するためのブレンドモードを取得します。</p>
      */
     KRBlendMode getBlendMode() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getColor
-        @abstract パーティクル描画時に適用される初期カラーを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクル描画時に適用される初期カラーを取得します。</p>
      */
     KRColor     getColor() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaAlpha
-        @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたアルファ成分の変化の割り合いを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じたアルファ成分の変化の割り合いを取得します。</p>
      */
     double      getDeltaAlpha() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaBlue
-        @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた青成分の変化の割り合いを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じた青成分の変化の割り合いを取得します。</p>
      */
     double      getDeltaBlue() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaGreen
-        @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた緑成分の変化の割り合いを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じた緑成分の変化の割り合いを取得します。</p>
      */
     double      getDeltaGreen() const DEPRECATED_ATTRIBUTE;
 
     /*!
         @method getDeltaRed
-        @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じた赤成分の変化の割り合いを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じた赤成分の変化の割り合いを取得します。</p>
      */
     double      getDeltaRed() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getDeltaSize
-        @abstract パーティクルの生存期間の割り合い（0.0〜1.0）に応じたサイズの変化の割り合いを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの生存期間の割り合い（0.0〜1.0）に応じたサイズの変化の割り合いを取得します。</p>
      */
     double      getDeltaSize() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getGenerateCount
-        @abstract 1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>1フレーム（1回の step() 関数呼び出し）ごとのパーティクルの最大生成個数を取得します。</p>
      */
     int         getGenerateCount() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getGeneratedParticleCount
-        @abstract 現時点で生成されているパーティクルの個数を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>現時点で生成されているパーティクルの個数を取得します。</p>
      */
     unsigned    getGeneratedParticleCount() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getGravity
-        @abstract 各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの1フレーム（1回の step() 関数呼び出し）ごとに適用される加速度を取得します。</p>
      */
     KRVector2D  getGravity() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getLife
-        @abstract 各パーティクルの生存期間を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの生存期間を取得します。</p>
      */
     unsigned    getLife() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getMaxV
-        @abstract パーティクル生成時にランダムで設定される移動速度の最大値を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクル生成時にランダムで設定される移動速度の最大値を取得します。</p>
      */
     KRVector2D  getMaxV() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getMinV
-        @abstract パーティクル生成時にランダムで設定される移動速度の最小値を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクル生成時にランダムで設定される移動速度の最小値を取得します。</p>
      */
     KRVector2D  getMinV() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getParticleCount
-        @abstract パーティクルの最大個数を取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>パーティクルの最大個数を取得します。</p>
      */
     unsigned    getParticleCount() const DEPRECATED_ATTRIBUTE;
     
@@ -350,13 +384,15 @@ public:
 #else
     /*!
         @method getMaxSize
-        @abstract 各パーティクルの生成時の最大サイズを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの生成時の最大サイズを取得します。</p>
      */
     double      getMaxSize() const DEPRECATED_ATTRIBUTE;
     
     /*!
         @method getMinSize
-        @abstract 各パーティクルの生成時の最小サイズを取得します。
+        @abstract   <strong class="warning">(Deprecated) 現在、このクラスの利用は推奨されません。代わりに、Karakuri Box アプリケーションと KRAnime2DManager クラスを利用してください。</strong>
+        <p>各パーティクルの生成時の最小サイズを取得します。</p>
      */
     double      getMinSize() const DEPRECATED_ATTRIBUTE;
 #endif

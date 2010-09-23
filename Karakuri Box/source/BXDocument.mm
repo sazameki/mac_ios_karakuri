@@ -1155,8 +1155,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     if (ret == NSOKButton) {
         [mChara2DGroup removeChild:theSpec];
+        
         [oElementView reloadData];
-
+        [oElementView deselectAll:self];
         [self updateChangeCount:NSChangeUndone];
     }
 }
@@ -2388,7 +2389,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             return [item childCount];
         }
     }
-    // 2Dキャラクタの動作リスト
+    // 2Dキャラクタのモーション・リスト
     else if (outlineView == oChara2DMotionListView) {
         // Root
         if (!item) {

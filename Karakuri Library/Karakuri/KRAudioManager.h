@@ -19,7 +19,8 @@ class KRWorld;
 /*!
     @class  KRAudioManager
     @group  Game Audio
-    <p>ゲームの BGM と SE を管理するためのクラスです。このクラスのインスタンスには、グローバル変数 gKRAudioMan を使ってアクセスしてください。</p>
+    <p>ゲームの BGM と SE を管理するためのクラスです。</p>
+    <p><strong>このクラスのインスタンスには、グローバル変数 gKRAudioMan を使ってアクセス</strong>してください。</p>
     <p>このクラスを利用して再生するファイルの形式については、<a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/sound_format.html">サウンド形式について</a>」を参照してください。</p>
  */
 class KRAudioManager : public KRObject {

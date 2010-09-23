@@ -28,6 +28,9 @@ enum _KRChara2DHitAreaType {
 };
 
 
+class _KRChara2DSpec;
+
+
 struct _KRChara2DHitArea {
     int                     group;
     _KRChara2DHitAreaType   type;
@@ -71,23 +74,29 @@ public:
 
 
 class _KRChara2DMotion : public KRObject {
+    _KRChara2DSpec*                 mParentChara2DSpec;
+    std::vector<_KRChara2DKoma*>    mKomas;
     
-    std::vector<_KRChara2DKoma*>   mKomas;
-    
+    int     mMotionID;
     int     mCancelKomaNumber;
     int     mNextMotionID;
     
 public:
     _KRChara2DMotion();
     
-    void    initForBoxChara2D(int cancelKomaNumber, int nextMotionID);
+    void    initForBoxChara2D(int motionID, int cancelKomaNumber, int nextMotionID);
     
 public:
     void    addKoma(_KRChara2DKoma* aKoma);
     
 public:
-    int             getKomaCount();
-    _KRChara2DKoma* getKoma(int komaIndex);
+    int                 getMotionID() const;
+    int                 getKomaCount() const;
+    _KRChara2DKoma*     getKoma(int komaIndex) const;
+    _KRChara2DMotion*   getNextMotion() const;
+    
+public:
+    void            _setParentChara2D(_KRChara2DSpec* chara2d);
     
 };
 
@@ -95,7 +104,7 @@ public:
 /*
     @-class KRChara2DSpec
     @group Game Graphics
-    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
+    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2DManager">KRAnime2DManager</a> クラスで利用するキャラクタの特徴を表すためのクラスです。</p>
     <p>このクラスのインスタンスは、直接 new することもできますが、<a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/instm/KRAnime2D/loadCharacterSpecs/void_loadCharacterSpecs(const_std::string@_specFileName)">KRAnime2D::loadCharacterSpecs()</a> 関数を使って、キャラクタの特徴記述ファイルから読み込むこともできます。キャラクタの特徴記述ファイルの仕様については、「<a href="../../../../guide/2d_anime.html">2Dアニメーションの管理</a>」を参照してください。</p>
  */
 class _KRChara2DSpec : public KRObject {
@@ -143,9 +152,9 @@ public:
 /*!
     @class KRChara2D
     @group Game Graphics
-    <p><a href="../../Classes/KRAnime2D/index.html#//apple_ref/cpp/cl/KRAnime2D">KRAnime2D</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
+    <p><a href="../../Classes/KRAnime2DManager/index.html#//apple_ref/cpp/cl/KRAnime2DManager">KRAnime2DManager</a> クラスで利用できるアニメーション用のキャラクタを表すためのクラスです。</p>
     <p>このクラスから継承した独自のサブクラスを作成し、addChara2D() メソッドを使って画面に表示してください。キャラクタは、デフォルト状態では動作が -1 となっており、changeMotion() メソッドを一度は呼び出さなければ画面に表示されないことに注意してください。</p>
-    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D() メソッドを使って削除してください。removeChara2D() メソッドは、自動的に delete でオブジェクトの解放を行ないます。</p>
+    <p>作成したキャラクタは、ゲーム終了時に自動的に削除されますが、ゲーム実行中に削除する場合には、removeChara2D() メソッドを使って削除してください。removeChara2D() メソッドは、自動的に delete でオブジェクトの解放を行ないます。<strong>addChara2D() で追加したキャラクタは、絶対に自分で delete しないでください。</strong></p>
  */
 class KRChara2D : public KRObject {
     
@@ -188,11 +197,12 @@ public:
     
     /*!
         @method KRChara2D
-        @param charaSpecID  Karakuri Box で定義した、このキャラクタの特徴を表す ID です。
         @param classType    KRAnime2DManager でヒットテストを行う際に使われる、クラスの種類を示す値です。
-        Karakuri Box で作成したキャラクタの ID を第1引数の charaSpecID に、KRAnime2DManager でヒットテストを行う際に使うクラスの種類を示す値を第2引数の classType に指定して、このクラスのオブジェクトを生成します。
+        @param charaID      Karakuri Box で定義した、このキャラクタの特徴を表す ID です。
+        <p>KRAnime2DManager でヒットテストを行う際に使うクラスの種類を示す値を、第1引数の classType に指定します。</p>
+        <p>Karakuri Box で作成したキャラクタの ID を、第2引数の charaID に指定します。</p>
      */
-    KRChara2D(int charaSpecID, int classType);
+    KRChara2D(int classType, int charaID);
     virtual ~KRChara2D();
 
     bool    _isTemporal() const;

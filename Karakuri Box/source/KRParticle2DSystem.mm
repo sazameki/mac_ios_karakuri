@@ -484,10 +484,11 @@ void KRParticle2DSystem::draw()
 }
 
 
-void KRParticle2DSystem::startAutoGeneration()
+void KRParticle2DSystem::startAutoGeneration(int zOrder)
 {
     mIsAutoGenerating = true;
     
+    mAutoGenInfo.z_order = zOrder;
     mAutoGenInfo.center_pos = mStartPos;
     mAutoGenInfo.count_int = (int)mGenerateCount;
     double fraction = mGenerateCount - mAutoGenInfo.count_int;

@@ -907,9 +907,9 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
                 mKomaInterval = [mCurrentKoma interval];
                 if (mKomaInterval == 0) {
                     mKomaInterval = [mCurrentMotion defaultKomaInterval];
-                }              
+                }
             } else {
-                mKomaIndex = [mCurrentKoma komaIndex];
+                // Finished current motion
             }
         }        
     }

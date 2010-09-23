@@ -9,7 +9,7 @@
 
 
 Enemy::Enemy(int charaSpecID)
-    : KRChara2D(charaSpecID, CharaType::Enemy)
+    : KRChara2D(ClassType::Enemy, charaSpecID)
 {
     // Make this character visible (initial state = -1)
     changeMotion(0);

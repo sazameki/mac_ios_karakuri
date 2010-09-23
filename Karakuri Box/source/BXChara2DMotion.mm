@@ -86,7 +86,10 @@
 - (void)setMotionName:(NSString*)name
 {
     [mMotionName release];
-    mMotionName = [name copy];
+    mMotionName = nil;
+    if (name) {
+        mMotionName = [name copy];
+    }
 }
 
 - (void)renumberKomas
@@ -105,9 +108,10 @@
 
 - (BXChara2DKoma*)insertKomaAtIndex:(int)index
 {
-    BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] init] autorelease];
+    BXChara2DKoma* aKoma = [[BXChara2DKoma alloc] init];
     [aKoma setParentMotion:self];
     [mKomas insertObject:aKoma atIndex:index];
+    [aKoma release];
     [self renumberKomas];
     return aKoma;
 }
@@ -252,9 +256,10 @@
     NSArray* komaInfos = [theInfo objectForKey:@"Koma Infos"];
     for (int i = 0; i < [komaInfos count]; i++) {
         NSDictionary* aKomaInfo = [komaInfos objectAtIndex:i];
-        BXChara2DKoma* aKoma = [[[BXChara2DKoma alloc] initWithInfo:aKomaInfo chara2DSpec:mParentSpec] autorelease];
+        BXChara2DKoma* aKoma = [[BXChara2DKoma alloc] initWithInfo:aKomaInfo chara2DSpec:mParentSpec];
         [aKoma setParentMotion:self];
         [mKomas addObject:aKoma];
+        [aKoma release];
     }
 
     // デフォルトの間隔

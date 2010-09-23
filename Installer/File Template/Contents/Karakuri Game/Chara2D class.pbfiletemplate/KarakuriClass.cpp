@@ -9,7 +9,7 @@
 
 
 «FILEBASENAME»::«FILEBASENAME»()
-    : KRChara2D(CharaID::YOUR_CHARACTER_ID, CharaType::YOUR_CHARACTER_CLASS_TYPE)
+    : KRChara2D(ClassType::YOUR_CHARACTER_CLASS_TYPE, CharaID::YOUR_CHARACTER_ID)
 {
 	// TODO: Initialize this class
     mState = 0;

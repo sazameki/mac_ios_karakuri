@@ -21,7 +21,16 @@
         	<h2> <%= group.d_name %></h2>
         	<ul>
         	<% group.d_classes_and_structs.each do |a_class| %>
-        	   <li><a href="<%= a_class.d_href %>" target="toc"><%= a_class.d_name %></a></li>
+        		<% if !a_class.d_deprecated %>
+	        	   <li><a href="<%= a_class.d_href %>" target="toc"><%= a_class.d_name %></a></li>
+	        	<% end %>
+        	<% end %>
+        	</ul>
+        	<ul>
+        	<% group.d_classes_and_structs.each do |a_class| %>
+        		<% if a_class.d_deprecated %>
+	        	   <li><a href="<%= a_class.d_href %>" target="toc" class="deprecated"><%= a_class.d_name %></a></li>
+	        	<% end %>
         	<% end %>
         	</ul>
         <% end %>

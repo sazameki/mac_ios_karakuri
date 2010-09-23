@@ -64,7 +64,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     BXChara2DKoma* theKoma = [oDocument selectedChara2DKoma];
-
+    
     if (!theKoma) {
         [[NSColor controlColor] set];
         NSRectFill(dirtyRect);

@@ -22,8 +22,9 @@ struct _KRTexture2DResourceInfo {
 /*!
     @class KRTexture2DManager
     @group Game Graphics
-    <p>2次元のテクスチャの管理を行うためのクラスです。このクラスのインスタンスには、グローバル変数 gKRTex2DMan を使ってアクセスしてください。</p>
-    <p>テクスチャのサイズは、横幅・高さともに1024ピクセル以内である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
+    <p>2次元のテクスチャの管理を行うためのクラスです。</p>
+    <p><strong>このクラスのインスタンスには、グローバル変数 gKRTex2DMan を使ってアクセス</strong>してください。</p>
+    <p><strong>テクスチャのサイズは、横幅・高さともに1024ピクセル以内</strong>である必要があります。このサイズを超えている画像が指定された場合には、実行時例外が発生してゲームが強制終了します。</p>
     <p><a href="../../../../guide/index.html">開発ガイド</a>の「<a href="../../../../guide/texture.html">テクスチャについて</a>」も参照してください。</p>
  */
 class KRTexture2DManager : public KRObject {

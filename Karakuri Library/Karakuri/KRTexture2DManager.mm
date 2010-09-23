@@ -46,12 +46,6 @@ void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& i
 
 void KRTexture2DManager::_addTexture(int groupID, int texID, const std::string& resourceName, const std::string& resourceFileName, unsigned pos, unsigned length)
 {
-    static int undefinedTexID = 1000000;
-    if (texID == 0) {
-        texID = undefinedTexID;
-        undefinedTexID++;
-    }    
-    
     std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
     theTexIDList.push_back(texID);
     

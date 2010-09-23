@@ -33,7 +33,7 @@ struct MyTexID {
     };
 };
 
-struct CharaType {
+struct ClassType {
     enum {
         Player,
         Enemy

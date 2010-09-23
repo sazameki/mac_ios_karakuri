@@ -156,8 +156,9 @@ _KRChara2DMotion::_KRChara2DMotion()
     // Do nothing
 }
 
-void _KRChara2DMotion::initForBoxChara2D(int cancelKomaNumber, int nextMotionID)
+void _KRChara2DMotion::initForBoxChara2D(int motionID, int cancelKomaNumber, int nextMotionID)
 {
+    mMotionID = motionID;
     mCancelKomaNumber = cancelKomaNumber;
     mNextMotionID = nextMotionID;
 }
@@ -167,16 +168,33 @@ void _KRChara2DMotion::addKoma(_KRChara2DKoma* aKoma)
     mKomas.push_back(aKoma);
 }
 
-int _KRChara2DMotion::getKomaCount()
+int _KRChara2DMotion::getMotionID() const
+{
+    return mMotionID;
+}
+
+int _KRChara2DMotion::getKomaCount() const
 {
     return mKomas.size();
 }
 
-_KRChara2DKoma* _KRChara2DMotion::getKoma(int komaIndex)
+_KRChara2DKoma* _KRChara2DMotion::getKoma(int komaIndex) const
 {
     return mKomas[komaIndex];
 }
 
+_KRChara2DMotion* _KRChara2DMotion::getNextMotion() const
+{
+    if (mNextMotionID < 0) {
+        return NULL;
+    }
+    return mParentChara2DSpec->getMotion(mNextMotionID);
+}
+
+void _KRChara2DMotion::_setParentChara2D(_KRChara2DSpec* chara2d)
+{
+    mParentChara2DSpec = chara2d;
+}
 
 
 #pragma mark -
@@ -271,10 +289,11 @@ void _KRChara2DSpec::setSpecID(int specID)
 #pragma mark -
 #pragma mark KRChara2D クラスの実装
 
-KRChara2D::KRChara2D(int charaSpecID, int classType)
+KRChara2D::KRChara2D(int classType, int charaID)
 {
-    _mCharaSpec = gKRAnime2DMan->_getChara2DSpec(charaSpecID);
     _mClassType = classType;
+    _mCharaSpec = gKRAnime2DMan->_getChara2DSpec(charaID);
+
     _mZOrder = 0;
     _mIsHidden = false;
 
@@ -600,7 +619,15 @@ void KRChara2D::_step()
         else {
             // 最後のコマ
             if (_mCurrentKomaIndex == theMotion->getKomaCount() - 1) {
-                _mIsMotionFinished = true;
+                _KRChara2DMotion* nextMotion = theMotion->getNextMotion();
+                if (nextMotion != NULL) {
+                    _mCurrentMotionID = nextMotion->getMotionID();
+                    _mCurrentKomaIndex = 0;
+                    theKoma = theMotion->getKoma(_mCurrentKomaIndex);
+                    _mImageInterval = theKoma->getInterval();
+                } else {
+                    _mIsMotionFinished = true;
+                }
             }
             // それ以外の場合
             else  {

@@ -15,7 +15,7 @@
 _KRParticle2D::_KRParticle2D(int charaSpecID, unsigned life, const KRVector2D& pos, const KRVector2D& v, const KRVector2D& gravity,
                              double angleV, const KRColor& color, double size, double scale,
                              double deltaRed, double deltaGreen, double deltaBlue, double deltaAlpha, double deltaSize, double deltaScale)
-    : KRChara2D(charaSpecID, 1000000), mBaseLife(life), mLife(life), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mSize(size), mScale(scale),
+    : KRChara2D(1000000, charaSpecID), mBaseLife(life), mLife(life), mV(v), mGravity(gravity), mAngleV(angleV), mColor(color), mSize(size), mScale(scale),
       mDeltaRed(deltaRed), mDeltaGreen(deltaGreen), mDeltaBlue(deltaBlue), mDeltaAlpha(deltaAlpha), mDeltaSize(deltaSize), mDeltaScale(deltaScale)
 {
     mAngle = 0.0;
@@ -132,8 +132,8 @@ void _KRParticle2DSystem::init()
  */
 _KRParticle2DSystem::~_KRParticle2DSystem()
 {
-    for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
-        delete *it;
+    for (std::list<_KRParticle2D*>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
+        gKRAnime2DMan->removeChara2D(*it);
     }
     mParticles.clear();
 }
@@ -426,7 +426,7 @@ void _KRParticle2DSystem::step()
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
 
-                _KRParticle2D *particle = new _KRParticle2D(mCharaSpecID, mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theSize, theScale,
+                _KRParticle2D* particle = new _KRParticle2D(mCharaSpecID, mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theSize, theScale,
                                                             mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaSize, mDeltaScale);
                 particle->setZOrder(mGenInfos[i].z_order);
                 particle->setBlendMode(mBlendMode);
@@ -473,7 +473,7 @@ void _KRParticle2DSystem::step()
     mActiveGenCount -= finishedCount;
     
     // 各パーティクルの移動
-    for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end();) {
+    for (std::list<_KRParticle2D*>::iterator it = mParticles.begin(); it != mParticles.end();) {
         if ((*it)->step()) {
             it++;
         } else {
@@ -481,7 +481,7 @@ void _KRParticle2DSystem::step()
             it = mParticles.erase(it);
             gKRAnime2DMan->removeChara2D(theParticle);
         }
-    }    
+    }
 }
 
 void _KRParticle2DSystem::startAutoGeneration(int zOrder)

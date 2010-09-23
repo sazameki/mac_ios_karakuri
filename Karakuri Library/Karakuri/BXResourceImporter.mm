@@ -217,7 +217,8 @@
         int cancelKomaNumber = [[aMotionInfo objectForKey:@"Cancel Koma"] intValue]; // キャンセル時の終了アニメーション開始コマ
         
         _KRChara2DMotion* aMotion = new _KRChara2DMotion();
-        aMotion->initForBoxChara2D(cancelKomaNumber, nextMotionID);
+        aMotion->initForBoxChara2D(motionID, cancelKomaNumber, nextMotionID);
+        aMotion->_setParentChara2D(chara2DSpec);
 
         int defaultInterval = [[aMotionInfo objectForKey:@"Default Interval"] intValue]; // キャンセル時の終了アニメーション開始コマ
 
