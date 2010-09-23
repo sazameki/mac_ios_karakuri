@@ -167,6 +167,23 @@ void KRAudioManager::_loadAudioFilesInGroup(int groupID, KRWorld* loaderWorld, d
 
 void KRAudioManager::_unloadAudioFilesInGroup(int groupID)
 {
+    std::vector<int>& theBGMIDList = mBGM_GroupID_BGMIDList_Map[groupID];
+    for (std::vector<int>::const_iterator it = theBGMIDList.begin(); it != theBGMIDList.end(); it++) {
+        int bgmID = *it;
+        if (mBGMMap[bgmID] != NULL) {
+            delete mBGMMap[bgmID];
+            mBGMMap[bgmID] = NULL;
+        }
+    }
+    
+    std::vector<int>& theSEIDList = mSE_GroupID_SEIDList_Map[groupID];
+    for (std::vector<int>::const_iterator it = theSEIDList.begin(); it != theSEIDList.end(); it++) {
+        int seID = *it;
+        if (mSEMap[seID] != NULL) {
+            delete mSEMap[seID];
+            mSEMap[seID] = NULL;
+        }
+    }    
 }
 
 double KRAudioManager::getBGMVolume() const

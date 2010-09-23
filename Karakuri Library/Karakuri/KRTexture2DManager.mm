@@ -159,7 +159,16 @@ void KRTexture2DManager::_loadTextureFilesInGroup(int groupID, KRWorld* loaderWo
 
 void KRTexture2DManager::_unloadTextureFilesInGroup(int groupID)
 {
-    // TODO: Remove loaded textures
+    std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
+
+    for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
+        int texID = *it;
+        
+        if (mTexMap[texID] != NULL) {
+            delete mTexMap[texID];
+            mTexMap[texID] = NULL;
+        }
+    }
 }
 
 _KRTexture2D* KRTexture2DManager::_getTexture(int texID)
