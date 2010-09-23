@@ -65,9 +65,6 @@ bool _KRChara2DHitArea::hitTest(const KRVector2D& offset, const KRVector2D& scal
 
 _KRChara2DKoma::_KRChara2DKoma()
 {
-    mAtlasIndex = -1;
-    mAtlasPos = KRVector2DInt(-1, -1);
-    
     mHitAreaCount = 0;
     mHitAreas = NULL;
 }
@@ -79,58 +76,34 @@ _KRChara2DKoma::~_KRChara2DKoma()
     }
 }
 
-void _KRChara2DKoma::initForManualChara2D(int textureID, KRVector2DInt atlasPos, int interval, bool isCancelable, int gotoTarget)
+void _KRChara2DKoma::initForBoxChara2D(int texID, const KRRect2D& atlasRect, int interval, bool isCancelable, int gotoTargetIndex)
 {
-    mTextureID = textureID;
+    mTextureID = texID;
     
-    mAtlasPos = atlasPos;
+    mAtlasRect = atlasRect;
     mIsCancelable = isCancelable;
     mInterval = interval;
-    mGotoTarget = gotoTarget;    
+    mGotoTargetIndex = gotoTargetIndex;
 }
 
-void _KRChara2DKoma::initForBoxChara2D(const std::string& imageTicket, int atlasIndex, int interval, bool isCancelable, int gotoTarget)
+int _KRChara2DKoma::getGotoTargetIndex() const
 {
-    mTextureID = gKRTex2DMan->_getTextureIDForTicket(imageTicket);
-    
-    mAtlasIndex = atlasIndex;
-    mIsCancelable = isCancelable;
-    mInterval = interval;
-    mGotoTarget = gotoTarget;
+    return mGotoTargetIndex;
 }
 
-KRVector2DInt _KRChara2DKoma::getAtlasPos()
-{
-    if (mAtlasPos.x >= 0) {
-        return mAtlasPos;
-    }
-    
-    _KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
-    
-    int divX = theTex->getDivX();
-    
-    return KRVector2DInt(mAtlasIndex % divX, mAtlasIndex / divX);
-}
-
-KRVector2D _KRChara2DKoma::getAtlasSize()
-{
-    _KRTexture2D* theTex = gKRTex2DMan->_getTexture(mTextureID);
-    return theTex->getAtlasSize();
-}
-
-int _KRChara2DKoma::getGotoTarget()
-{
-    return mGotoTarget;
-}
-
-int _KRChara2DKoma::getInterval()
+int _KRChara2DKoma::getInterval() const
 {
     return mInterval;
 }
 
-int _KRChara2DKoma::getTextureID()
+int _KRChara2DKoma::getTextureID() const
 {
     return mTextureID;
+}
+
+KRVector2D _KRChara2DKoma::getAtlasSize() const
+{
+    return KRVector2D(mAtlasRect.width, mAtlasRect.height);
 }
 
 void _KRChara2DKoma::_importHitArea(void* hitInfo)
@@ -158,6 +131,11 @@ void _KRChara2DKoma::_importHitArea(void* hitInfo)
     }
 }
 
+KRRect2D _KRChara2DKoma::_getAtlasRect() const
+{
+    return mAtlasRect;
+}
+
 int _KRChara2DKoma::_getHitAreaCount() const
 {
     return mHitAreaCount;
@@ -178,12 +156,6 @@ _KRChara2DMotion::_KRChara2DMotion()
     // Do nothing
 }
 
-void _KRChara2DMotion::initForManualChara2D(int cancelKomaNumber, int nextMotionID)
-{
-    mCancelKomaNumber = cancelKomaNumber;
-    mNextMotionID = nextMotionID;
-}
-
 void _KRChara2DMotion::initForBoxChara2D(int cancelKomaNumber, int nextMotionID)
 {
     mCancelKomaNumber = cancelKomaNumber;
@@ -200,9 +172,9 @@ int _KRChara2DMotion::getKomaCount()
     return mKomas.size();
 }
 
-_KRChara2DKoma* _KRChara2DMotion::getKoma(int komaNumber)
+_KRChara2DKoma* _KRChara2DMotion::getKoma(int komaIndex)
 {
-    return mKomas[komaNumber-1];
+    return mKomas[komaIndex];
 }
 
 
@@ -250,9 +222,9 @@ void _KRChara2DSpec::initForManualParticle2D(const std::string& fileName)
     //mParticleTexID = gKRTex2DMan->addTexture(mGroupID, fileName);
 }
 
-void _KRChara2DSpec::initForBoxParticle2D(const std::string& imageTicket)
+void _KRChara2DSpec::initForBoxParticle2D(int texID)
 {
-    mParticleTexID = gKRTex2DMan->_getTextureIDForTicket(imageTicket);
+    mParticleTexID = texID;
 }
 
 void _KRChara2DSpec::addMotion(int motionID, _KRChara2DMotion* aMotion)
@@ -351,7 +323,7 @@ _KRChara2DKoma* KRChara2D::_getCurrentKoma() const
         return NULL;
     }
     
-    return theMotion->getKoma(_mCurrentKomaNumber);
+    return theMotion->getKoma(_mCurrentKomaIndex);
 }
 
 bool KRChara2D::hitTest(int hitType, const KRVector2D& pos) const
@@ -361,7 +333,7 @@ bool KRChara2D::hitTest(int hitType, const KRVector2D& pos) const
         return false;
     }
     
-    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaIndex);
     int count = theKoma->_getHitAreaCount();
     if (count == 0) {
         return false;
@@ -387,7 +359,7 @@ bool KRChara2D::hitTest(int hitType, const KRChara2D* targetChara, int targetHit
         return false;
     }
     
-    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaIndex);
     int count = theKoma->_getHitAreaCount();
     if (count == 0) {
         return false;
@@ -448,10 +420,10 @@ void KRChara2D::changeMotion(int motionID, unsigned modeMask)
     
     _mCurrentMotionID = motionID;
     
-    _mCurrentKomaNumber = 1;
+    _mCurrentKomaIndex = 0;
     _mIsMotionFinished = false;
     
-    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaIndex);
     _mImageInterval = theKoma->getInterval();
 }
 
@@ -462,7 +434,7 @@ int KRChara2D::getMotionID() const
 
 int KRChara2D::getCurrentMotionFrameIndex() const
 {
-    return _mCurrentKomaNumber - 1;
+    return _mCurrentKomaIndex;
 }
 
 bool KRChara2D::isMotionFinished() const
@@ -551,7 +523,7 @@ KRVector2D KRChara2D::getSize() const
         return KRVector2DZero;
     }
     
-    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+    _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaIndex);
     return theKoma->getAtlasSize();
 }
 
@@ -614,26 +586,26 @@ void KRChara2D::_step()
     _mImageInterval--;
     if (_mImageInterval == 0) {
         _KRChara2DMotion* theMotion = _mCharaSpec->getMotion(_mCurrentMotionID);
-        _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+        _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaIndex);
         
-        int gotoTarget = theKoma->getGotoTarget();
+        int gotoTargetIndex = theKoma->getGotoTargetIndex();
         
         // GOTO の場合
-        if (gotoTarget > 0) {
-            _mCurrentKomaNumber = gotoTarget;
-            theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+        if (gotoTargetIndex >= 0) {
+            _mCurrentKomaIndex = gotoTargetIndex;
+            theKoma = theMotion->getKoma(_mCurrentKomaIndex);
             _mImageInterval = theKoma->getInterval();
         }
         // 次のコマへ
         else {
             // 最後のコマ
-            if (theMotion->getKomaCount() == _mCurrentKomaNumber) {
+            if (_mCurrentKomaIndex == theMotion->getKomaCount() - 1) {
                 _mIsMotionFinished = true;
             }
             // それ以外の場合
             else  {
-                _mCurrentKomaNumber++;
-                theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+                _mCurrentKomaIndex++;
+                theKoma = theMotion->getKoma(_mCurrentKomaIndex);
                 _mImageInterval = theKoma->getInterval();
             }
         }
@@ -661,14 +633,13 @@ void KRChara2D::_draw()
             return;
         }
         
-        _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaNumber);
+        _KRChara2DKoma* theKoma = theMotion->getKoma(_mCurrentKomaIndex);
         
         gKRGraphicsInst->setBlendMode(_mBlendMode);
         
         int texID = theKoma->getTextureID();
-        
-        KRVector2DInt atlasPos = theKoma->getAtlasPos();
-        gKRTex2DMan->drawAtlasAtPointEx(texID, atlasPos, _mPos, 0.0, KRVector2DZero, _mScale, _mColor);
+        KRRect2D atlasRect = theKoma->_getAtlasRect();
+        gKRTex2DMan->drawAtPointEx2(texID, _mPos, atlasRect, 0.0, KRVector2DZero, _mScale, _mColor);
     }
 }
 

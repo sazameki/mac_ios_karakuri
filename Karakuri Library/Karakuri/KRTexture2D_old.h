@@ -57,9 +57,6 @@ private:
     bool        mIsAtlasFlipped;
 
 public:
-    static int  getResourceSize(const std::string& filename);
-
-public:
     /*!
         @task コンストラクタ
      */

@@ -168,12 +168,12 @@ void KRWorld::setResourceLoadingWorld(KRWorld* aWorld) KARAKURI_FRAMEWORK_INTERN
 void KRWorld::loadResourceGroup(int groupID)
 {
     if (mIsShowingLoadingWorld) {
-        mLoadingResourceAllSize += gKRTex2DMan->_getResourceSize(groupID);
-        mLoadingResourceAllSize += gKRAudioMan->_getResourceSize(groupID);
+        mLoadingResourceAllSize += gKRTex2DMan->_getResourceSizeInGroup(groupID);
+        mLoadingResourceAllSize += gKRAudioMan->_getResourceSizeInGroup(groupID);
         mLoadingResourceGroupIDs.push_back(groupID);
     } else {
-        gKRTex2DMan->_loadTextureFiles(groupID, NULL, 0.0);
-        gKRAudioMan->_loadAudioFiles(groupID, NULL, 0.0);
+        gKRTex2DMan->_loadTextureFilesInGroup(groupID, NULL, 0.0);
+        gKRAudioMan->_loadAudioFilesInGroup(groupID, NULL, 0.0);
     }
 }
 
@@ -181,19 +181,19 @@ void KRWorld::finishLoadingWorld()
 {
     if (mIsShowingLoadingWorld) {
         for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
-            int resourceSize = gKRTex2DMan->_getResourceSize(*it);
+            int resourceSize = gKRTex2DMan->_getResourceSizeInGroup(*it);
             double ratio = (double)resourceSize / mLoadingResourceAllSize;
             double minDuration = ratio * mLoadingResourceMinDuration;
             
-            gKRTex2DMan->_loadTextureFiles(*it, this, minDuration);
+            gKRTex2DMan->_loadTextureFilesInGroup(*it, this, minDuration);
         }
 
         for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
-            int resourceSize = gKRAudioMan->_getResourceSize(*it);
+            int resourceSize = gKRAudioMan->_getResourceSizeInGroup(*it);
             double ratio = (double)resourceSize / mLoadingResourceAllSize;
             double minDuration = ratio * mLoadingResourceMinDuration;
 
-            gKRAudioMan->_loadAudioFiles(*it, this, minDuration);
+            gKRAudioMan->_loadAudioFilesInGroup(*it, this, minDuration);
         }
         
         if (mLoadingResourceAllSize == 0) {

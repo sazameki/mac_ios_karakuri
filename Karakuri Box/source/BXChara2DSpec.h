@@ -15,53 +15,55 @@
     
     double              mKomaPreviewScale;
     
+    NSString*           mSelectingTextureUUID;
+    
     int         mFirstMotionID;
-    int         mFirstMotionKomaNumber;
+    int         mFirstMotionKomaIndex;
     BOOL        mRevertToFirstMotion;
     BOOL        mIgnoresCancelFlag;
     BOOL        mSkipEndAnimation;
     
     int         mActionMotionIDUp;
-    int         mActionKomaNumberUp;
+    int         mActionKomaIndexUp;
     BOOL        mIgnoresCancelFlagUp;
     BOOL        mSkipEndAnimationUp;
     int         mActionSpeedUp;
     
     int         mActionMotionIDDown;
-    int         mActionKomaNumberDown;
+    int         mActionKomaIndexDown;
     BOOL        mIgnoresCancelFlagDown;
     BOOL        mSkipEndAnimationDown;
     int         mActionSpeedDown;
     
     int         mActionMotionIDLeft;
-    int         mActionKomaNumberLeft;
+    int         mActionKomaIndexLeft;
     BOOL        mIgnoresCancelFlagLeft;
     BOOL        mSkipEndAnimationLeft;
     int         mActionSpeedLeft;
     
     int         mActionMotionIDRight;
-    int         mActionKomaNumberRight;
+    int         mActionKomaIndexRight;
     BOOL        mIgnoresCancelFlagRight;
     BOOL        mSkipEndAnimationRight;
     int         mActionSpeedRight;
 
     int         mActionMotionIDZ;
-    int         mActionKomaNumberZ;
+    int         mActionKomaIndexZ;
     BOOL        mIgnoresCancelFlagZ;
     BOOL        mSkipEndAnimationZ;
     
     int         mActionMotionIDX;
-    int         mActionKomaNumberX;
+    int         mActionKomaIndexX;
     BOOL        mIgnoresCancelFlagX;
     BOOL        mSkipEndAnimationX;
     
     int         mActionMotionIDC;
-    int         mActionKomaNumberC;
+    int         mActionKomaIndexC;
     BOOL        mIgnoresCancelFlagC;
     BOOL        mSkipEndAnimationC;
     
     int         mActionMotionIDMouse;
-    int         mActionKomaNumberMouse;
+    int         mActionKomaIndexMouse;
     BOOL        mIgnoresCancelFlagMouse;
     BOOL        mSkipEndAnimationMouse;
     BOOL        mDoChangeMouseLocation;
@@ -69,10 +71,13 @@
 
 - (id)initWithName:(NSString*)name defaultMotion:(BOOL)hasDefaultMotion;
 
+- (NSString*)selectingTextureUUID;
+- (void)setSelectingTextureUUID:(NSString*)textureUUID;
+
 - (int)firstMotionID;
 - (void)setFirstMotionID:(int)motionID;
-- (int)firstMotionKomaNumber;
-- (void)setFirstMotionKomaNumber:(int)komaNumber;
+- (int)firstMotionKomaIndex;
+- (void)setFirstMotionKomaIndex:(int)komaIndex;
 - (BOOL)revertToFirstMotion;
 - (void)setRevertToFirstMotion:(BOOL)flag;
 - (BOOL)ignoresCancelFlag;
@@ -82,8 +87,8 @@
 
 - (int)actionMotionIDUp;
 - (void)setActionMotionIDUp:(int)motionID;
-- (int)actionKomaNumberUp;
-- (void)setActionKomaNumberUp:(int)komaNumber;
+- (int)actionKomaIndexUp;
+- (void)setActionKomaIndexUp:(int)komaIndex;
 - (BOOL)ignoresCancelFlagUp;
 - (void)setIgnoresCancelFlagUp:(BOOL)flag;
 - (BOOL)skipEndAnimationUp;
@@ -93,8 +98,8 @@
 
 - (int)actionMotionIDDown;
 - (void)setActionMotionIDDown:(int)motionID;
-- (int)actionKomaNumberDown;
-- (void)setActionKomaNumberDown:(int)komaNumber;
+- (int)actionKomaIndexDown;
+- (void)setActionKomaIndexDown:(int)komaIndex;
 - (BOOL)ignoresCancelFlagDown;
 - (void)setIgnoresCancelFlagDown:(BOOL)flag;
 - (BOOL)skipEndAnimationDown;
@@ -104,8 +109,8 @@
 
 - (int)actionMotionIDLeft;
 - (void)setActionMotionIDLeft:(int)motionID;
-- (int)actionKomaNumberLeft;
-- (void)setActionKomaNumberLeft:(int)komaNumber;
+- (int)actionKomaIndexLeft;
+- (void)setActionKomaIndexLeft:(int)komaIndex;
 - (BOOL)ignoresCancelFlagLeft;
 - (void)setIgnoresCancelFlagLeft:(BOOL)flag;
 - (BOOL)skipEndAnimationLeft;
@@ -115,8 +120,8 @@
 
 - (int)actionMotionIDRight;
 - (void)setActionMotionIDRight:(int)motionID;
-- (int)actionKomaNumberRight;
-- (void)setActionKomaNumberRight:(int)komaNumber;
+- (int)actionKomaIndexRight;
+- (void)setActionKomaIndexRight:(int)komaIndex;
 - (BOOL)ignoresCancelFlagRight;
 - (void)setIgnoresCancelFlagRight:(BOOL)flag;
 - (BOOL)skipEndAnimationRight;
@@ -126,8 +131,8 @@
 
 - (int)actionMotionIDZ;
 - (void)setActionMotionIDZ:(int)motionID;
-- (int)actionKomaNumberZ;
-- (void)setActionKomaNumberZ:(int)komaNumber;
+- (int)actionKomaIndexZ;
+- (void)setActionKomaIndexZ:(int)komaIndex;
 - (BOOL)ignoresCancelFlagZ;
 - (void)setIgnoresCancelFlagZ:(BOOL)flag;
 - (BOOL)skipEndAnimationZ;
@@ -135,8 +140,8 @@
 
 - (int)actionMotionIDX;
 - (void)setActionMotionIDX:(int)motionID;
-- (int)actionKomaNumberX;
-- (void)setActionKomaNumberX:(int)komaNumber;
+- (int)actionKomaIndexX;
+- (void)setActionKomaIndexX:(int)komaIndex;
 - (BOOL)ignoresCancelFlagX;
 - (void)setIgnoresCancelFlagX:(BOOL)flag;
 - (BOOL)skipEndAnimationX;
@@ -144,8 +149,8 @@
 
 - (int)actionMotionIDC;
 - (void)setActionMotionIDC:(int)motionID;
-- (int)actionKomaNumberC;
-- (void)setActionKomaNumberC:(int)komaNumber;
+- (int)actionKomaIndexC;
+- (void)setActionKomaIndexC:(int)komaIndex;
 - (BOOL)ignoresCancelFlagC;
 - (void)setIgnoresCancelFlagC:(BOOL)flag;
 - (BOOL)skipEndAnimationC;
@@ -153,8 +158,8 @@
 
 - (int)actionMotionIDMouse;
 - (void)setActionMotionIDMouse:(int)motionID;
-- (int)actionKomaNumberMouse;
-- (void)setActionKomaNumberMouse:(int)komaNumber;
+- (int)actionKomaIndexMouse;
+- (void)setActionKomaIndexMouse:(int)komaIndex;
 - (BOOL)ignoresCancelFlagMouse;
 - (void)setIgnoresCancelFlagMouse:(BOOL)flag;
 - (BOOL)skipEndAnimationMouse;

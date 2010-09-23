@@ -38,7 +38,7 @@
 
         mTexture2DResourceUUID = nil;
 
-        mLife = 140;
+        mLife = 60;
         *mColor = KRColor::White;
         *mGravity = KRVector2D(0.0, 0.24);
         mMinAngleV = -5;
@@ -46,7 +46,7 @@
         mDeltaScale = -0.2;
         mBlendMode = KRBlendModeAddition;
         mGenerateCount = 1.0;
-        mMaxParticleCount = 256;
+        mMaxParticleCount = 1;
         mDeltaRed = 0.0;
         mDeltaGreen = 0.0;
         mDeltaBlue = 0.0;
@@ -104,6 +104,10 @@
     ret->setParticleCount(mMaxParticleCount);
     
     ret->setColorDelta(mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha);
+    
+    if ([self doLoop]) {
+        ret->startAutoGeneration();
+    }
 
     return ret;
 }

@@ -74,13 +74,13 @@ enum {
     NSString*           mTexture2DResourceUUID;
     NSRect              mTextureAtlasRect;
 
-    int                 mKomaNumber;        // コマ番号：1から始まる番号（表示時には0からになる）
+    int                 mKomaIndex;
     BOOL                mIsCancelable;
     int                 mInterval;
     
     BXChara2DKoma*      mGotoTargetKoma;
     
-    int                 mTempGotoTargetKomaNumber;
+    int                 mTempGotoTargetKomaIndex;
     KRTexture2D*        mPreviewTex;
     
     NSMutableArray*     mHitInfos;
@@ -114,8 +114,8 @@ enum {
 - (void)importHitInfosFromKoma:(BXChara2DKoma*)aKoma;
 - (void)replaceHitInfosFromKoma:(BXChara2DKoma*)aKoma;
 
-- (int)komaNumber;
-- (void)setKomaNumber:(int)number;
+- (int)komaIndex;
+- (void)setKomaIndex:(int)index;
 
 - (BOOL)isCancelable;
 - (void)setCancelable:(BOOL)flag;
@@ -123,9 +123,9 @@ enum {
 - (void)setInterval:(int)interval;
 - (NSImage*)nsImage;
 
-- (BXChara2DKoma*)gotoTarget;
-- (int)gotoTargetNumber;
-- (void)setGotoTarget:(BXChara2DKoma*)target;
+- (BXChara2DKoma*)gotoTargetKoma;
+- (int)gotoTargetKomaIndex;
+- (void)setGotoTargetKoma:(BXChara2DKoma*)koma;
 
 - (void)replaceTempGotoInfoForMotion:(BXChara2DMotion*)motion;
 

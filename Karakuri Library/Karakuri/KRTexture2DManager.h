@@ -11,6 +11,14 @@
 #include <Karakuri/Karakuri.h>
 
 
+struct _KRTexture2DResourceInfo {
+    unsigned                start_pos;
+    unsigned                length;
+    std::string             file_name;
+    KRTexture2DScaleMode    scale_mode;
+};
+
+
 /*!
     @class KRTexture2DManager
     @group Game Graphics
@@ -23,12 +31,8 @@ class KRTexture2DManager : public KRObject {
     std::map<int, std::vector<int> >    mGroupID_TexIDList_Map;
     std::map<int, std::string>          mTexID_ImageFileName_Map;
     std::map<int, KRTexture2DScaleMode> mTexID_ScaleMode_Map;
-    std::map<std::string, int>          mTicket_TexID_Map;
-    std::map<std::string, unsigned>     mTicket_StartPos_Map;
-    std::map<std::string, unsigned>     mTicket_Length_Map;
-    std::map<std::string, int>          mTicket_DivX_Map;
-    std::map<std::string, int>          mTicket_DivY_Map;
-    std::map<int, std::string>          mTexID_Ticket_Map;
+    
+    std::map<int, _KRTexture2DResourceInfo>     mTexID_ResourceInfo_Map;
     
     std::map<int, _KRTexture2D*>        mTexMap;
 
@@ -52,44 +56,24 @@ public:
     void    addTexture(int groupID, int texID, const std::string& imageFileName, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
 
     /*!
-        @method     addTexture
-        @abstract   グループID、テクスチャID、画像ファイルの名前（拡張子を含む）を指定してテクスチャを追加します。画像内の1コマあたりのサイズを指定して、各コマを描画できるようにします。
-        オプションで KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかの定数で画像補完方法を指定できます。
-     */
-    void    addTexture(int groupID, int texID, const std::string& imageFileName, const KRVector2D& atlasSize, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeNearest);
-    
-
-    /*!
-        @method getAtlasSize
-        @abstract テクスチャIDを指定して、テクスチャに指定された1コマごとのサイズを取得します。
-     */
-    KRVector2D  getAtlasSize(int texID);
-    
-    /*!
         @method getTextureSize
         @abstract テクスチャIDを指定して、テクスチャの全体のサイズを取得します。
      */
     KRVector2D  getTextureSize(int texID);
+    
+    
+    void    _addTexture(int groupID, int texID, const std::string& resourceName, const std::string& resourceFileName, unsigned pos, unsigned length);
 
-    /*!
-        @method setTextureAtlasSize
-        テクスチャIDを指定して、テクスチャの1コマごとのサイズを指定します。
-     */
-    void    setTextureAtlasSize(int texID, const KRVector2D& size);
+    //void        _setDivForTicket(const std::string& ticket, int divX, int divY);
+    //int         _getTextureIDForTicket(const std::string& ticket);
+    //std::string _getFileNameForTicket(const std::string& ticket);
+    //unsigned    _getResourceStartPosForTicket(const std::string& ticket);
+    //unsigned    _getResourceLengthForTicket(const std::string& ticket);
     
+    void    _loadTextureFilesInGroup(int groupID, KRWorld* loaderWorld, double minDuration);
+    void    _unloadTextureFilesInGroup(int groupID);
     
-    void    _addTexture(int groupID, const std::string& resourceName, int texID, const std::string& ticket, const std::string& resourceFileName, unsigned pos, unsigned length);
-
-    void        _setDivForTicket(const std::string& ticket, int divX, int divY);
-    int         _getTextureIDForTicket(const std::string& ticket);
-    std::string _getFileNameForTicket(const std::string& ticket);
-    unsigned    _getResourceStartPosForTicket(const std::string& ticket);
-    unsigned    _getResourceLengthForTicket(const std::string& ticket);
-    
-    void    _loadTextureFiles(int groupID, KRWorld* loaderWorld, double minDuration);
-    void    _unloadTextureFiles(int groupID);
-    
-    int     _getResourceSize(int groupID);
+    int     _getResourceSizeInGroup(int groupID);
     _KRTexture2D*       _getTexture(int texID);
     
     
@@ -203,84 +187,6 @@ public:
         @abstract IDと描画対象の矩形、描画元の矩形、色を指定してテクスチャを描画します。
      */
     void    drawInRect(int texID, const KRRect2D& destRect, const KRRect2D& srcRect, const KRColor& color);
-
-
-#pragma mark ---- アトラスの描画 ----
-    /*!
-        @task テクスチャの描画（アトラス指定）
-     */
-    
-    /*!
-        @method drawAtlasAtPoint
-        @abstract IDとアトラス座標、位置を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
-     */
-    void    drawAtlasAtPoint(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double alpha=1.0);
-
-    /*!
-        @method drawAtlasAtPoint
-        @abstract IDとアトラス座標、位置、色を指定してテクスチャを描画します。
-     */
-    void    drawAtlasAtPoint(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, const KRColor& color);
-
-    /*!
-        @method drawAtlasAtPointEx
-        @abstract IDとアトラス座標、回転と回転の中心点、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
-        回転の中心点 origin は、x も y も 0.0〜1.0 の、横幅と高さに対する比率で指定します。画像の左下の点が (0, 0)、右上の点が (1, 1) です。
-     */
-    void    drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, double alpha=1.0);
-
-    /*!
-        @method drawAtlasAtPointEx
-        @abstract IDとアトラス座標、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
-        回転の中心点 origin は、x も y も 0.0〜1.0 の、横幅と高さに対する比率で指定します。画像の左下の点が (0, 0)、右上の点が (1, 1) です。
-     */
-    void    drawAtlasAtPointEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& pos, double rotate, const KRVector2D& origin, const KRVector2D& scale, const KRColor& color);
-
-
-    /*!
-        @task テクスチャの描画（アトラス指定＋中心点指定）
-     */
-
-    /*!
-        @method drawAtlasAtPointCenter
-        @abstract IDとアトラス座標、描画の中心点を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
-     */
-    void    drawAtlasAtPointCenter(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double alpha=1.0);
-
-    /*!
-        @method drawAtlasAtPointCenter
-        @abstract IDとアトラス座標、描画の中心点、色を指定してテクスチャを描画します。
-     */
-    void    drawAtlasAtPointCenter(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, const KRColor& color);
-
-    /*!
-        @method drawAtlasAtPointCenterEx
-        @abstract IDとアトラス座標、描画の中心点、回転と回転の中心点、拡大率を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
-     */
-    void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, double alpha=1.0);
-
-    /*!
-        @method drawAtlasAtPointCenterEx
-        @abstract IDとアトラス座標、描画の中心点、回転と回転の中心点、拡大率、色を指定してテクスチャを描画します。
-     */
-    void    drawAtlasAtPointCenterEx(int texID, const KRVector2DInt& atlasPos, const KRVector2D& centerPos, double rotate, const KRVector2D& scale, const KRColor& color);
-
-
-    /*!
-        @task テクスチャの描画（アトラス指定＋矩形指定）
-     */
-    
-    /*!
-        @method drawAtlasAtPointCenterEx
-        @abstract IDとアトラス座標、描画対象の矩形を指定してテクスチャを描画します。オプションで不透明度を指定できます (0.0〜1.0)。
-     */
-    void    drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, double alpha=1.0);
-
-    /*!
-        @method drawAtlasAtPointCenterEx
-        @abstract IDとアトラス座標、描画対象の矩形、色を指定してテクスチャを描画します。
-     */
-    void    drawAtlasInRect(int texID, const KRVector2DInt& atlasPos, const KRRect2D& destRect, const KRColor& color);
 
 };
 

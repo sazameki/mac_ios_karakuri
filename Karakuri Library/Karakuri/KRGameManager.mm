@@ -156,8 +156,8 @@ void KRGameManager::setupResources()
 
 void KRGameManager::loadResourceGroup(int groupID)
 {
-    gKRTex2DMan->_loadTextureFiles(groupID, NULL, 0.0);
-    gKRAudioMan->_loadAudioFiles(groupID, NULL, 0.0);
+    gKRTex2DMan->_loadTextureFilesInGroup(groupID, NULL, 0.0);
+    gKRAudioMan->_loadAudioFilesInGroup(groupID, NULL, 0.0);
 }
 
 

@@ -18,9 +18,6 @@
 
     KRParticle2DSystem*     mParticleSystem;    
     NSTimer*                mTimer;
-    
-    BOOL                    mHasGeneratedParticle;
-    BOOL                    mForceGenerate;
 }
 
 - (void)setupForParticleSpec:(BXSingleParticle2DSpec*)aSpec;

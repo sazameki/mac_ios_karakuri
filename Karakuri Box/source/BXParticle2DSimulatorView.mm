@@ -15,10 +15,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        mTargetSpec = NULL;
+        mTargetSpec = nil;
         mParticleSystem = NULL;
-        mHasGeneratedParticle = YES;
-        mForceGenerate = NO;
     }
     return self;
 }
@@ -33,10 +31,6 @@
 - (void)refreshProc:(NSTimer*)theTimer
 {
     if (mParticleSystem != NULL) {
-        if ([mTargetSpec doLoop] || !mHasGeneratedParticle || mForceGenerate) {
-            mParticleSystem->addGenerationPoint([mTargetSpec generationPos]);
-            mHasGeneratedParticle = YES;
-        }
         mParticleSystem->step();
     }
     [self setNeedsDisplay:YES];
@@ -64,7 +58,11 @@
     }
     
     mParticleSystem = [mTargetSpec createParticleSystem];
-    
+    if (mParticleSystem != NULL) {
+        KRVector2D startPos = [mTargetSpec generationPos];
+        mParticleSystem->setStartPos(startPos);
+    }
+
     CGLUnlockContext(mCGLContext);
 }
 
@@ -81,7 +79,7 @@
 
 - (void)glDrawMain
 {
-    if (mTargetSpec != NULL) {
+    if (mTargetSpec) {
         mGraphics->clear([mTargetSpec bgColor1]);
     } else {
         mGraphics->clear(KRColor::Red);
@@ -94,28 +92,35 @@
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
-    if (mTargetSpec != NULL) {
+    if (mTargetSpec) {
         NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
         [mTargetSpec setGenerationPos:KRVector2D(pos.x, pos.y)];
+        if (mParticleSystem != NULL) {
+            if ([mTargetSpec doLoop]) {
+                mParticleSystem->setStartPos(KRVector2D(pos.x, pos.y));
+            } else {
+                mParticleSystem->addGenerationPoint(KRVector2D(pos.x, pos.y));
+            }
+        }
     }
-    
-    mHasGeneratedParticle = NO;
-    //mForceGenerate = YES;
 }
 
 - (void)mouseDragged:(NSEvent*)theEvent
 {
-    if (mTargetSpec != NULL) {
+    if (mTargetSpec) {
         NSPoint pos = [self convertPoint:[theEvent locationInWindow] fromView:nil];
         [mTargetSpec setGenerationPos:KRVector2D(pos.x, pos.y)];
+        if ([mTargetSpec doLoop]) {
+            mParticleSystem->setStartPos(KRVector2D(pos.x, pos.y));
+        } else {
+            mParticleSystem->addGenerationPoint(KRVector2D(pos.x, pos.y));
+        }
     }
-    
-    mHasGeneratedParticle = NO;  
 }
 
 - (void)mouseUp:(NSEvent*)theEvent
 {
-    mForceGenerate = NO;
+    // Do nothing
 }
 
 @end

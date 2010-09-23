@@ -36,14 +36,14 @@ void LogoWorld::drawView(KRGraphics* g)
     }
 
     if (KRCheckDeviceType(KRDeviceTypeIPad)) {
-        gKRTex2DMan->drawAtPoint(TexID::Logo, KRVector2DZero, alpha);
+        gKRTex2DMan->drawAtPoint(MyTexID::Logo, KRVector2DZero, alpha);
     } else {
         double angle = 0;
         if (gKRScreenSize.x > gKRScreenSize.y) {
             angle = M_PI_2;
         }
         
-        gKRTex2DMan->drawAtPointCenterEx(TexID::Logo, gKRScreenSize/2, angle, KRVector2DOne, alpha);
+        gKRTex2DMan->drawAtPointCenterEx(MyTexID::Logo, gKRScreenSize/2, angle, KRVector2DOne, alpha);
     }
 
     // We don't use animation mechanism at the logo world.

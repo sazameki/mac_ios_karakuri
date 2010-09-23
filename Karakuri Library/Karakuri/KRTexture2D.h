@@ -38,14 +38,6 @@ private:
     KRVector2D  mImageSize;         //!< The actual size of the image.
     KRVector2D  mTextureSize;       //!< Full size of the area used as a texture.
     
-    KRVector2D  mOrigin;
-    
-    void*       mTexture2DImpl;
-    KRVector2D  mAtlasSize;
-    
-    KRVector2DInt   mAtlasDiv;
-    bool        mIsAtlasFlipped;
-
 public:
     static int  getResourceSize(const std::string& filename);
 
@@ -57,18 +49,16 @@ public:
     /*!
         @method _KRTexture2D
         @abstract 画像ファイルの名前（拡張子を含む）を指定してテクスチャを生成します。
-        画像の保管方法として、KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかを指定します。
+        画像の補完方法として、KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかを指定します。
      */
-    _KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode);
-
+    _KRTexture2D(const std::string& filename, KRTexture2DScaleMode scaleMode=KRTexture2DScaleModeLinear);
+    
     /*!
         @method _KRTexture2D
-        @abstract 画像ファイルの名前（拡張子を含む）を指定してテクスチャを生成します。
-        第2引数でアトラスのサイズを設定することで、簡単に部分描画を行なうことができます。
+        @abstract リソースファイルの名前（拡張子 .krrs を含む）、画像データの開始位置、サイズを指定してテクスチャを生成します。
+        画像の補完方法として、KRTexture2DScaleModeNearest, KRTexture2DScaleModeLinear のいずれかを指定します。
      */
-    _KRTexture2D(const std::string& filename, const KRVector2D& atlasSize=KRVector2DZero);
-
-    _KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode);    
+    _KRTexture2D(const std::string& resourceFileName, unsigned startPos, unsigned length, KRTexture2DScaleMode scaleMode);    
 
     _KRTexture2D(const std::string& str, _KRFont* font);
     ~_KRTexture2D();
@@ -77,12 +67,6 @@ public:
     /*!
         @task 状態取得のための関数
      */
-
-    /*!
-        @method getAtlasSize
-        アトラス機能を使用する際の各部品のサイズを取得します。
-     */
-    KRVector2D  getAtlasSize() const;
 
     /*!
         @method getCenterPos
@@ -108,14 +92,6 @@ public:
      */
     double      getWidth() const;
     
-    int         getDivX();
-    int         getDivY();
-    bool        isAtlasFlipped();
-    
-    
-public:
-    void    setTextureAtlasSize(const KRVector2D& size);
-    void    setTextureOrigin(const KRVector2D& origin);    
     
 public:
     /*!

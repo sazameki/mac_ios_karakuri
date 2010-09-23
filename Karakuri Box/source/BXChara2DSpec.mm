@@ -35,52 +35,52 @@
         mKomaPreviewScale = 1.0;
         
         mFirstMotionID = -1;
-        mFirstMotionKomaNumber = 1;
+        mFirstMotionKomaIndex = 0;
         mRevertToFirstMotion = YES;
         mIgnoresCancelFlag = NO;
         mSkipEndAnimation = NO;
 
         mActionMotionIDUp = -1;
-        mActionKomaNumberUp = 1;
+        mActionKomaIndexUp = 0;
         mIgnoresCancelFlagUp = NO;
         mSkipEndAnimationUp = NO;
         mActionSpeedUp = 2;
         
         mActionMotionIDDown = -1;
-        mActionKomaNumberDown = 1;
+        mActionKomaIndexDown = 0;
         mIgnoresCancelFlagDown = NO;
         mSkipEndAnimationDown = NO;
         mActionSpeedDown = 2;
         
         mActionMotionIDLeft = -1;
-        mActionKomaNumberLeft = 1;
+        mActionKomaIndexLeft = 0;
         mIgnoresCancelFlagLeft = NO;
         mSkipEndAnimationLeft = NO;
         mActionSpeedLeft = 2;
         
         mActionMotionIDRight = -1;
-        mActionKomaNumberRight = 1;
+        mActionKomaIndexRight = 0;
         mIgnoresCancelFlagRight = NO;
         mSkipEndAnimationRight = NO;
         mActionSpeedRight = 2;
         
         mActionMotionIDZ = -1;
-        mActionKomaNumberZ = 1;
+        mActionKomaIndexZ = 0;
         mIgnoresCancelFlagZ = NO;
         mSkipEndAnimationZ = NO;
         
         mActionMotionIDX = -1;
-        mActionKomaNumberX = 1;
+        mActionKomaIndexX = 0;
         mIgnoresCancelFlagX = NO;
         mSkipEndAnimationX = NO;
         
         mActionMotionIDC = -1;
-        mActionKomaNumberC = 1;
+        mActionKomaIndexC = 0;
         mIgnoresCancelFlagC = NO;
         mSkipEndAnimationC = NO;
         
         mActionMotionIDMouse = -1;
-        mActionKomaNumberMouse = 1;
+        mActionKomaIndexMouse = 0;
         mIgnoresCancelFlagMouse = NO;
         mSkipEndAnimationMouse = NO;
         mDoChangeMouseLocation = YES;
@@ -95,6 +95,7 @@
 - (void)dealloc
 {
     [mMotions release];
+    [mSelectingTextureUUID release];
 
     [super dealloc];
 }
@@ -102,6 +103,20 @@
 
 #pragma mark -
 #pragma mark アクセッサ
+
+- (NSString*)selectingTextureUUID;
+{
+    return mSelectingTextureUUID;
+}
+
+- (void)setSelectingTextureUUID:(NSString*)textureUUID
+{
+    [mSelectingTextureUUID release];
+    mSelectingTextureUUID = nil;
+    if (textureUUID) {
+        mSelectingTextureUUID = [textureUUID copy];
+    }
+}
 
 - (int)firstMotionID
 {
@@ -113,14 +128,14 @@
     mFirstMotionID = motionID;
 }
 
-- (int)firstMotionKomaNumber
+- (int)firstMotionKomaIndex
 {
-    return mFirstMotionKomaNumber;
+    return mFirstMotionKomaIndex;
 }
 
-- (void)setFirstMotionKomaNumber:(int)komaNumber
+- (void)setFirstMotionKomaIndex:(int)komaIndex
 {
-    mFirstMotionKomaNumber = komaNumber;
+    mFirstMotionKomaIndex = komaIndex;
 }
 
 - (BOOL)revertToFirstMotion
@@ -166,14 +181,14 @@
     mActionMotionIDUp = motionID;
 }
 
-- (int)actionKomaNumberUp
+- (int)actionKomaIndexUp
 {
-    return mActionKomaNumberUp;
+    return mActionKomaIndexUp;
 }
 
-- (void)setActionKomaNumberUp:(int)komaNumber
+- (void)setActionKomaIndexUp:(int)komaIndex
 {
-    mActionKomaNumberUp = komaNumber;
+    mActionKomaIndexUp = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagUp
@@ -219,14 +234,14 @@
     mActionMotionIDDown = motionID;
 }
 
-- (int)actionKomaNumberDown
+- (int)actionKomaIndexDown
 {
-    return mActionKomaNumberDown;
+    return mActionKomaIndexDown;
 }
 
-- (void)setActionKomaNumberDown:(int)komaNumber
+- (void)setActionKomaIndexDown:(int)komaIndex
 {
-    mActionKomaNumberDown = komaNumber;
+    mActionKomaIndexDown = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagDown
@@ -272,14 +287,14 @@
     mActionMotionIDLeft = motionID;
 }
 
-- (int)actionKomaNumberLeft
+- (int)actionKomaIndexLeft
 {
-    return mActionKomaNumberLeft;
+    return mActionKomaIndexLeft;
 }
 
-- (void)setActionKomaNumberLeft:(int)komaNumber
+- (void)setActionKomaIndexLeft:(int)komaIndex
 {
-    mActionKomaNumberLeft = komaNumber;
+    mActionKomaIndexLeft = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagLeft
@@ -325,14 +340,14 @@
     mActionMotionIDRight = motionID;
 }
 
-- (int)actionKomaNumberRight
+- (int)actionKomaIndexRight
 {
-    return mActionKomaNumberRight;
+    return mActionKomaIndexRight;
 }
 
-- (void)setActionKomaNumberRight:(int)komaNumber
+- (void)setActionKomaIndexRight:(int)komaIndex
 {
-    mActionKomaNumberRight = komaNumber;
+    mActionKomaIndexRight = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagRight
@@ -378,14 +393,14 @@
     mActionMotionIDZ = motionID;
 }
 
-- (int)actionKomaNumberZ
+- (int)actionKomaIndexZ
 {
-    return mActionKomaNumberZ;
+    return mActionKomaIndexZ;
 }
 
-- (void)setActionKomaNumberZ:(int)komaNumber
+- (void)setActionKomaIndexZ:(int)komaIndex
 {
-    mActionKomaNumberZ = komaNumber;
+    mActionKomaIndexZ = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagZ
@@ -421,14 +436,14 @@
     mActionMotionIDX = motionID;
 }
 
-- (int)actionKomaNumberX
+- (int)actionKomaIndexX
 {
-    return mActionKomaNumberX;
+    return mActionKomaIndexX;
 }
 
-- (void)setActionKomaNumberX:(int)komaNumber
+- (void)setActionKomaIndexX:(int)komaIndex
 {
-    mActionKomaNumberX = komaNumber;
+    mActionKomaIndexX = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagX
@@ -464,14 +479,14 @@
     mActionMotionIDC = motionID;
 }
 
-- (int)actionKomaNumberC
+- (int)actionKomaIndexC
 {
-    return mActionKomaNumberC;
+    return mActionKomaIndexC;
 }
 
-- (void)setActionKomaNumberC:(int)komaNumber
+- (void)setActionKomaIndexC:(int)komaIndex
 {
-    mActionKomaNumberC = komaNumber;
+    mActionKomaIndexC = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagC
@@ -506,14 +521,14 @@
     mActionMotionIDMouse = motionID;
 }
 
-- (int)actionKomaNumberMouse
+- (int)actionKomaIndexMouse
 {
-    return mActionKomaNumberMouse;
+    return mActionKomaIndexMouse;
 }
 
-- (void)setActionKomaNumberMouse:(int)komaNumber
+- (void)setActionKomaIndexMouse:(int)komaIndex
 {
-    mActionKomaNumberMouse = komaNumber;
+    mActionKomaIndexMouse = komaIndex;
 }
 
 - (BOOL)ignoresCancelFlagMouse
@@ -593,7 +608,7 @@
 
 - (void)sortMotionList
 {
-    NSSortDescriptor* sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"stateID"
+    NSSortDescriptor* sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"motionID"
                                                               ascending:YES] autorelease];
     
     [mMotions sortUsingDescriptors:[NSArray arrayWithObject:sortDesc]];    
@@ -639,65 +654,72 @@
     [theInfo setIntValue:mResourceID forName:@"Resource ID"];
     [theInfo setStringValue:mResourceName forName:@"Resource Name"];
     
+    // テクスチャの選択
+    if (mSelectingTextureUUID) {
+        [theInfo setStringValue:mSelectingTextureUUID forName:@"Texture UUID"];
+    } else {
+        [theInfo removeObjectForKey:@"Texture UUID"];
+    }
+
     // 動作
     NSMutableArray* motionInfos = [NSMutableArray array];
     for (int i = 0; i < [mMotions count]; i++) {
         BXChara2DMotion* aMotion = (BXChara2DMotion*)[mMotions objectAtIndex:i];
         [motionInfos addObject:[aMotion motionInfo]];
     }
-    [theInfo setObject:motionInfos forKey:@"State Infos"];
+    [theInfo setObject:motionInfos forKey:@"Motion Infos"];
     
     // コマプレビューのスケール
     [theInfo setDoubleValue:mKomaPreviewScale forName:@"Preview Scale"];
     
     // シミュレーション用の設定
-    [theInfo setIntValue:mFirstMotionID forName:@"SIM First State ID"];
-    [theInfo setIntValue:mFirstMotionKomaNumber forName:@"SIM First Koma Number"];
-    [theInfo setBoolValue:mRevertToFirstMotion forName:@"SIM Revert To First State"];
+    [theInfo setIntValue:mFirstMotionID forName:@"SIM First Motion ID"];
+    [theInfo setIntValue:mFirstMotionKomaIndex forName:@"SIM First Koma Index"];
+    [theInfo setBoolValue:mRevertToFirstMotion forName:@"SIM Revert To First Motion"];
     [theInfo setBoolValue:mIgnoresCancelFlag forName:@"SIM Ignores Cancel Flag"];
     [theInfo setBoolValue:mSkipEndAnimation forName:@"SIM Skip End Animation"];
     
-    [theInfo setIntValue:mActionMotionIDUp forName:@"SIM Action State ID Up"];
-    [theInfo setIntValue:mActionKomaNumberUp forName:@"SIM Action Koma Number Up"];
+    [theInfo setIntValue:mActionMotionIDUp forName:@"SIM Action Motion ID Up"];
+    [theInfo setIntValue:mActionKomaIndexUp forName:@"SIM Action Koma Index Up"];
     [theInfo setBoolValue:mIgnoresCancelFlagUp forName:@"SIM Action Ignores Cancel Flag Up"];
     [theInfo setBoolValue:mSkipEndAnimationUp forName:@"SIM Action Skip End Animation Up"];
     [theInfo setIntValue:mActionSpeedUp forName:@"SIM Action Speed Up"];
     
-    [theInfo setIntValue:mActionMotionIDDown forName:@"SIM Action State ID Down"];
-    [theInfo setIntValue:mActionKomaNumberDown forName:@"SIM Action Koma Number Down"];
+    [theInfo setIntValue:mActionMotionIDDown forName:@"SIM Action Motion ID Down"];
+    [theInfo setIntValue:mActionKomaIndexDown forName:@"SIM Action Koma Index Down"];
     [theInfo setBoolValue:mIgnoresCancelFlagDown forName:@"SIM Action Ignores Cancel Flag Down"];
     [theInfo setBoolValue:mSkipEndAnimationDown forName:@"SIM Action Skip End Animation Down"];
     [theInfo setIntValue:mActionSpeedDown forName:@"SIM Action Speed Down"];
     
-    [theInfo setIntValue:mActionMotionIDLeft forName:@"SIM Action State ID Left"];
-    [theInfo setIntValue:mActionKomaNumberLeft forName:@"SIM Action Koma Number Left"];
+    [theInfo setIntValue:mActionMotionIDLeft forName:@"SIM Action Motion ID Left"];
+    [theInfo setIntValue:mActionKomaIndexLeft forName:@"SIM Action Koma Index Left"];
     [theInfo setBoolValue:mIgnoresCancelFlagLeft forName:@"SIM Action Ignores Cancel Flag Left"];
     [theInfo setBoolValue:mSkipEndAnimationLeft forName:@"SIM Action Skip End Animation Left"];
     [theInfo setIntValue:mActionSpeedLeft forName:@"SIM Action Speed Left"];
     
-    [theInfo setIntValue:mActionMotionIDRight forName:@"SIM Action State ID Right"];
-    [theInfo setIntValue:mActionKomaNumberRight forName:@"SIM Action Koma Number Right"];
+    [theInfo setIntValue:mActionMotionIDRight forName:@"SIM Action Motion ID Right"];
+    [theInfo setIntValue:mActionKomaIndexRight forName:@"SIM Action Koma Index Right"];
     [theInfo setBoolValue:mIgnoresCancelFlagRight forName:@"SIM Action Ignores Cancel Flag Right"];
     [theInfo setBoolValue:mSkipEndAnimationRight forName:@"SIM Action Skip End Animation Right"];
     [theInfo setIntValue:mActionSpeedRight forName:@"SIM Action Speed Right"];
     
     [theInfo setIntValue:mActionMotionIDZ forName:@"SIM Action Motion ID Z"];
-    [theInfo setIntValue:mActionKomaNumberZ forName:@"SIM Action Koma Number Z"];
+    [theInfo setIntValue:mActionKomaIndexZ forName:@"SIM Action Koma Index Z"];
     [theInfo setBoolValue:mIgnoresCancelFlagZ forName:@"SIM Action Ignores Cancel Flag Z"];
     [theInfo setBoolValue:mSkipEndAnimationZ forName:@"SIM Action Skip End Animation Z"];
     
-    [theInfo setIntValue:mActionMotionIDX forName:@"SIM Action State ID X"];
-    [theInfo setIntValue:mActionKomaNumberX forName:@"SIM Action Koma Number X"];
+    [theInfo setIntValue:mActionMotionIDX forName:@"SIM Action Motion ID X"];
+    [theInfo setIntValue:mActionKomaIndexX forName:@"SIM Action Koma Index X"];
     [theInfo setBoolValue:mIgnoresCancelFlagX forName:@"SIM Action Ignores Cancel Flag X"];
     [theInfo setBoolValue:mSkipEndAnimationX forName:@"SIM Action Skip End Animation X"];
     
-    [theInfo setIntValue:mActionMotionIDC forName:@"SIM Action State ID C"];
-    [theInfo setIntValue:mActionKomaNumberC forName:@"SIM Action Koma Number C"];
+    [theInfo setIntValue:mActionMotionIDC forName:@"SIM Action Motion ID C"];
+    [theInfo setIntValue:mActionKomaIndexC forName:@"SIM Action Koma Index C"];
     [theInfo setBoolValue:mIgnoresCancelFlagC forName:@"SIM Action Ignores Cancel Flag C"];
     [theInfo setBoolValue:mSkipEndAnimationC forName:@"SIM Action Skip End Animation C"];
     
-    [theInfo setIntValue:mActionMotionIDMouse forName:@"SIM Action State ID Mouse"];
-    [theInfo setIntValue:mActionKomaNumberMouse forName:@"SIM Action Koma Number Mouse"];
+    [theInfo setIntValue:mActionMotionIDMouse forName:@"SIM Action Motion ID Mouse"];
+    [theInfo setIntValue:mActionKomaIndexMouse forName:@"SIM Action Koma Index Mouse"];
     [theInfo setBoolValue:mIgnoresCancelFlagMouse forName:@"SIM Action Ignores Cancel Flag Mouse"];
     [theInfo setBoolValue:mSkipEndAnimationMouse forName:@"SIM Action Skip End Animation Mouse"];
     [theInfo setBoolValue:mDoChangeMouseLocation forName:@"SIM Do Change Mouse Location"];
@@ -714,8 +736,11 @@
     mResourceID = [theInfo intValueForName:@"Resource ID" currentValue:mResourceID];
     [self setResourceName:[theInfo stringValueForName:@"Resource Name" currentValue:mResourceName]];    
     
+    // テクスチャの選択
+    mSelectingTextureUUID = [[theInfo stringValueForName:@"Texture UUID" currentValue:mSelectingTextureUUID] retain];
+    
     // 動作
-    NSArray* motionInfos = [theInfo objectForKey:@"State Infos"];
+    NSArray* motionInfos = [theInfo objectForKey:@"Motion Infos"];
     for (int i = 0; i < [motionInfos count]; i++) {
         NSDictionary* aMotionInfo = [motionInfos objectAtIndex:i];
         BXChara2DMotion* theMotion = [[[BXChara2DMotion alloc] initWithName:@"New Motion" chara2DSpec:self] autorelease];
@@ -727,53 +752,53 @@
     mKomaPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mKomaPreviewScale];
     
     // シミュレーション用の設定
-    mFirstMotionID = [theInfo intValueForName:@"SIM First State ID" currentValue:mFirstMotionID];
-    mFirstMotionKomaNumber = [theInfo intValueForName:@"SIM First Koma Number" currentValue:mFirstMotionKomaNumber];
-    mRevertToFirstMotion = [theInfo boolValueForName:@"SIM Revert To First State" currentValue:mRevertToFirstMotion];
+    mFirstMotionID = [theInfo intValueForName:@"SIM First Motion ID" currentValue:mFirstMotionID];
+    mFirstMotionKomaIndex = [theInfo intValueForName:@"SIM First Koma Index" currentValue:mFirstMotionKomaIndex];
+    mRevertToFirstMotion = [theInfo boolValueForName:@"SIM Revert To First Motion" currentValue:mRevertToFirstMotion];
     mIgnoresCancelFlag = [theInfo boolValueForName:@"SIM Ignores Cancel Flag" currentValue:mIgnoresCancelFlag];
     mSkipEndAnimation = [theInfo boolValueForName:@"SIM Skip End Animation" currentValue:mSkipEndAnimation];
     
-    mActionMotionIDUp = [theInfo intValueForName:@"SIM Action State ID Up" currentValue:mActionMotionIDUp];
-    mActionKomaNumberUp = [theInfo intValueForName:@"SIM Action Koma Number Up" currentValue:mActionKomaNumberUp];
+    mActionMotionIDUp = [theInfo intValueForName:@"SIM Action Motion ID Up" currentValue:mActionMotionIDUp];
+    mActionKomaIndexUp = [theInfo intValueForName:@"SIM Action Koma Index Up" currentValue:mActionKomaIndexUp];
     mIgnoresCancelFlagUp = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Up" currentValue:mIgnoresCancelFlagUp];
     mSkipEndAnimationUp = [theInfo boolValueForName:@"SIM Action Skip End Animation Up" currentValue:mSkipEndAnimationUp];
     mActionSpeedUp = [theInfo intValueForName:@"SIM Action Speed Up" currentValue:mActionSpeedUp];
     
-    mActionMotionIDDown = [theInfo intValueForName:@"SIM Action State ID Down" currentValue:mActionMotionIDDown];
-    mActionKomaNumberDown = [theInfo intValueForName:@"SIM Action Koma Number Down" currentValue:mActionKomaNumberDown];
+    mActionMotionIDDown = [theInfo intValueForName:@"SIM Action Motion ID Down" currentValue:mActionMotionIDDown];
+    mActionKomaIndexDown = [theInfo intValueForName:@"SIM Action Koma Index Down" currentValue:mActionKomaIndexDown];
     mIgnoresCancelFlagDown = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Down" currentValue:mIgnoresCancelFlagDown];
     mSkipEndAnimationDown = [theInfo boolValueForName:@"SIM Action Skip End Animation Down" currentValue:mSkipEndAnimationDown];
     mActionSpeedDown = [theInfo intValueForName:@"SIM Action Speed Down" currentValue:mActionSpeedDown];
     
-    mActionMotionIDLeft = [theInfo intValueForName:@"SIM Action State ID Left" currentValue:mActionMotionIDLeft];
-    mActionKomaNumberLeft = [theInfo intValueForName:@"SIM Action Koma Number Left" currentValue:mActionKomaNumberLeft];
+    mActionMotionIDLeft = [theInfo intValueForName:@"SIM Action Motion ID Left" currentValue:mActionMotionIDLeft];
+    mActionKomaIndexLeft = [theInfo intValueForName:@"SIM Action Koma Index Left" currentValue:mActionKomaIndexLeft];
     mIgnoresCancelFlagLeft = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Left" currentValue:mIgnoresCancelFlagLeft];
     mSkipEndAnimationLeft = [theInfo boolValueForName:@"SIM Action Skip End Animation Left" currentValue:mSkipEndAnimationLeft];
     mActionSpeedLeft = [theInfo intValueForName:@"SIM Action Speed Left" currentValue:mActionSpeedLeft];
     
-    mActionMotionIDRight = [theInfo intValueForName:@"SIM Action State ID Right" currentValue:mActionMotionIDRight];
-    mActionKomaNumberRight = [theInfo intValueForName:@"SIM Action Koma Number Right" currentValue:mActionKomaNumberRight];
+    mActionMotionIDRight = [theInfo intValueForName:@"SIM Action Motion ID Right" currentValue:mActionMotionIDRight];
+    mActionKomaIndexRight = [theInfo intValueForName:@"SIM Action Koma Index Right" currentValue:mActionKomaIndexRight];
     mIgnoresCancelFlagRight = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Right" currentValue:mIgnoresCancelFlagRight];
     mSkipEndAnimationRight = [theInfo boolValueForName:@"SIM Action Skip End Animation Right" currentValue:mSkipEndAnimationRight];
     mActionSpeedRight = [theInfo intValueForName:@"SIM Action Speed Right" currentValue:mActionSpeedRight];
     
-    mActionMotionIDZ = [theInfo intValueForName:@"SIM Action State ID Z" currentValue:mActionMotionIDZ];
-    mActionKomaNumberZ = [theInfo intValueForName:@"SIM Action Koma Number Z" currentValue:mActionKomaNumberZ];
+    mActionMotionIDZ = [theInfo intValueForName:@"SIM Action Motion ID Z" currentValue:mActionMotionIDZ];
+    mActionKomaIndexZ = [theInfo intValueForName:@"SIM Action Koma Index Z" currentValue:mActionKomaIndexZ];
     mIgnoresCancelFlagZ = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Z" currentValue:mIgnoresCancelFlagZ];
     mSkipEndAnimationZ = [theInfo boolValueForName:@"SIM Action Skip End Animation Z" currentValue:mSkipEndAnimationZ];
     
-    mActionMotionIDX = [theInfo intValueForName:@"SIM Action State ID X" currentValue:mActionMotionIDX];
-    mActionKomaNumberX = [theInfo intValueForName:@"SIM Action Koma Number X" currentValue:mActionKomaNumberX];
+    mActionMotionIDX = [theInfo intValueForName:@"SIM Action Motion ID X" currentValue:mActionMotionIDX];
+    mActionKomaIndexX = [theInfo intValueForName:@"SIM Action Koma Index X" currentValue:mActionKomaIndexX];
     mIgnoresCancelFlagX = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag X" currentValue:mIgnoresCancelFlagX];
     mSkipEndAnimationX = [theInfo boolValueForName:@"SIM Action Skip End Animation X" currentValue:mSkipEndAnimationX];
     
-    mActionMotionIDC = [theInfo intValueForName:@"SIM Action State ID C" currentValue:mActionMotionIDC];
-    mActionKomaNumberC = [theInfo intValueForName:@"SIM Action Koma Number C" currentValue:mActionKomaNumberC];
+    mActionMotionIDC = [theInfo intValueForName:@"SIM Action Motion ID C" currentValue:mActionMotionIDC];
+    mActionKomaIndexC = [theInfo intValueForName:@"SIM Action Koma Index C" currentValue:mActionKomaIndexC];
     mIgnoresCancelFlagC = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag C" currentValue:mIgnoresCancelFlagC];
     mSkipEndAnimationC = [theInfo boolValueForName:@"SIM Action Skip End Animation C" currentValue:mSkipEndAnimationC];
     
-    mActionMotionIDMouse = [theInfo intValueForName:@"SIM Action State ID Mouse" currentValue:mActionMotionIDMouse];
-    mActionKomaNumberMouse = [theInfo intValueForName:@"SIM Action Koma Number Mouse" currentValue:mActionKomaNumberMouse];
+    mActionMotionIDMouse = [theInfo intValueForName:@"SIM Action Motion ID Mouse" currentValue:mActionMotionIDMouse];
+    mActionKomaIndexMouse = [theInfo intValueForName:@"SIM Action Koma Index Mouse" currentValue:mActionKomaIndexMouse];
     mIgnoresCancelFlagMouse = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Mouse" currentValue:mIgnoresCancelFlagMouse];
     mSkipEndAnimationMouse = [theInfo boolValueForName:@"SIM Action Skip End Animation Mouse" currentValue:mSkipEndAnimationMouse];
     mDoChangeMouseLocation = [theInfo boolValueForName:@"SIM Do Change Mouse Location" currentValue:mDoChangeMouseLocation];

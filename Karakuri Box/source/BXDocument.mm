@@ -768,8 +768,16 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 - (IBAction)changedChara2DSourceTexture:(id)sender
 {
     [self updateChara2DAtlasListSize];
-
     [oChara2DImageAtlasView setNeedsDisplay:YES];
+
+    BXChara2DSpec* charaSpec = [self selectedChara2DSpec];
+    if (!charaSpec) {
+        return;
+    }
+    BXTexture2DSpec* tex = [self selectedChara2DTexture2D];
+    [charaSpec setSelectingTextureUUID:[tex resourceUUID]];
+    
+    [self updateChangeCount:NSChangeUndone];
 }
 
 - (IBAction)changedChara2DGroupID:(id)sender
@@ -1451,8 +1459,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         return;
     }
     
-    int komaNumber = [oChara2DMotionCancelKomaNumberButton selectedTag];
-    BXChara2DKoma* theKoma = [selectedMotion komaWithNumber:komaNumber];
+    int komaIndex = [oChara2DMotionCancelKomaIndexButton selectedTag];
+    BXChara2DKoma* theKoma = [selectedMotion komaAtIndex:komaIndex];
     [selectedMotion setTargetKomaForCancel:theKoma];
     
     [self updateChangeCount:NSChangeUndone];
@@ -1479,11 +1487,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         }
     }
     
-    [oChara2DMotionCancelKomaNumberButton setMenu:theMenu];
+    [oChara2DMotionCancelKomaIndexButton setMenu:theMenu];
     
     if (selectedMotion) {
         BXChara2DKoma* theKoma = [selectedMotion targetKomaForCancel];
-        [oChara2DMotionCancelKomaNumberButton selectItemWithTag:[theKoma komaNumber]];
+        [oChara2DMotionCancelKomaIndexButton selectItemWithTag:[theKoma komaIndex]];
     }    
 }
 
@@ -1516,7 +1524,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DImageAtlasView setFrame:frame];
     
     [oChara2DImageAtlasView deselectAll];
-    
     [oChara2DImageAtlasView setNeedsDisplay:YES];    
 }
 
@@ -1583,6 +1590,8 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
  
     BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setDoLoop:doLoop];
+
+    [oParticleView rebuildParticleSystem];
 
     [self updateChangeCount:NSChangeUndone];
 }
@@ -1896,6 +1905,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     } else {
         count = [oParticleGenerateCountField doubleValue];
     }
+    if (count < 0.001) {
+        count = 0.001;
+    }
     
     BXSingleParticle2DSpec* particleSpec = [self selectedSingleParticle2DSpec];
     [particleSpec setGenerateCount:count];
@@ -2065,8 +2077,18 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DResourceIDField setIntValue:[theSpec resourceID]];
     [oChara2DResourceNameField setStringValue:[theSpec resourceName]];
 
+    NSString* textureUUID = [theSpec selectingTextureUUID];
+    if (textureUUID && [textureUUID length] > 0) {
+        BXTexture2DSpec* tex = [self tex2DWithUUID:textureUUID];
+        if (tex) {
+            [oChara2DTextureButton selectItemWithTag:[tex resourceID]];
+        } else {
+            [theSpec setSelectingTextureUUID:nil];
+            [self updateChangeCount:NSChangeUndone];
+        }
+    }
+    
     [oChara2DMotionListView reloadData];
-
     [oChara2DMotionListView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
@@ -2075,7 +2097,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     // モーションがない場合
     if (!theMotion) {
         [oChara2DKomaDefaultIntervalButton selectItemWithTag:1];
-        [oChara2DMotionCancelKomaNumberButton selectItemWithTag:0];
+        [oChara2DMotionCancelKomaIndexButton selectItemWithTag:0];
 
         // 次のモーションメニューをクリアする
         [oChara2DMotionNextMotionButton removeAllItems];
@@ -2454,7 +2476,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         
         // コマ#
         if ([columnIdentifier isEqualToString:@"koma_number"]) {
-            return [NSNumber numberWithInt:[(BXChara2DKoma*)item komaNumber]-1];
+            return [NSNumber numberWithInt:[(BXChara2DKoma*)item komaIndex]];
         }
         // コマ画像
         else if ([columnIdentifier isEqualToString:@"koma_image"]) {
@@ -2570,13 +2592,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oEditorTabView selectTabViewItemWithIdentifier:@"chara2d-editor"];
             BXChara2DSpec* theCharaSpec = (BXChara2DSpec*)theElem;
 
+            [self updateTextureButtonForChara2D];
             [self setupEditorUIForChara2D:theCharaSpec];
             
             [oChara2DKomaListView reloadData];
             [oChara2DImageAtlasView setNeedsDisplay:YES];
             
             [self setupEditorForChara2DMotion:[self selectedChara2DMotion]];
-            
             [self updateChara2DMotionCancelKomaButtonMenu];
             
             int theScaleTag = (int)([theCharaSpec komaPreviewScale] * 100);
@@ -2585,9 +2607,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             [oChara2DKomaPreviewView setNeedsDisplay:YES];
 
             [self willChangeValueForKey:@"canChara2DMotionSelectNextMotion"];
-            [self didChangeValueForKey:@"canChara2DMotionSelectNextMotion"];
-            
-            [self updateTextureButtonForChara2D];
+            [self didChangeValueForKey:@"canChara2DMotionSelectNextMotion"];            
         }
         // パーティクルの編集
         else if ([theElem isKindOfClass:[BXSingleParticle2DSpec class]]) {
@@ -2666,12 +2686,12 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     BXChara2DMotion* selectedMotion = [self selectedChara2DMotion];
     BXChara2DKoma* selectedKoma = [self selectedChara2DKoma];
     
-    int targetKomaNumber = [menuItem tag];
+    int targetKomaIndex = [menuItem tag];
     BXChara2DKoma* targetKoma = nil;
-    if (targetKomaNumber > 0) {
-        targetKoma = [selectedMotion komaAtIndex:targetKomaNumber-1];
+    if (targetKomaIndex >= 0) {
+        targetKoma = [selectedMotion komaAtIndex:targetKomaIndex];
     }
-    [selectedKoma setGotoTarget:targetKoma];
+    [selectedKoma setGotoTargetKoma:targetKoma];
     
     [self updateChangeCount:NSChangeUndone];
 }
@@ -2687,7 +2707,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             BXChara2DMotion* selectedMotion = [self selectedChara2DMotion];
             NSMenu* gotoMenu = [selectedMotion makeKomaGotoMenuForKoma:item document:self];
             [cell setMenu:gotoMenu];
-            [cell selectItemWithTag:[item gotoTargetNumber]];
+            [cell selectItemWithTag:[item gotoTargetKomaIndex]];
         }
     }
 }

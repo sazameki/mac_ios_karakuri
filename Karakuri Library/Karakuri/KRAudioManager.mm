@@ -54,7 +54,7 @@ void KRAudioManager::addSE(int groupID, int seID, const std::string& audioFileNa
 #pragma mark -
 #pragma mark リソースの管理
 
-int KRAudioManager::_getResourceSize(int groupID)
+int KRAudioManager::_getResourceSizeInGroup(int groupID)
 {
     int ret = 0;
     
@@ -78,7 +78,7 @@ int KRAudioManager::_getResourceSize(int groupID)
     return ret;
 }
 
-void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double minDuration)
+void KRAudioManager::_loadAudioFilesInGroup(int groupID, KRWorld* loaderWorld, double minDuration)
 {
     std::vector<int>& theBGMIDList = mBGM_GroupID_BGMIDList_Map[groupID];
     std::vector<int>& theSEIDList = mSE_GroupID_SEIDList_Map[groupID];
@@ -165,7 +165,7 @@ void KRAudioManager::_loadAudioFiles(int groupID, KRWorld* loaderWorld, double m
     }
 }
 
-void KRAudioManager::_unloadAudioFiles(int groupID)
+void KRAudioManager::_unloadAudioFilesInGroup(int groupID)
 {
 }
 
@@ -204,18 +204,11 @@ void KRAudioManager::playBGM(int bgmID, double volume)
     // IDからBGMを引っ張ってくる。
     mCurrentBGM = mBGMMap[bgmID];
     
-    // BGMが読み込まれていない場合はここで読み込む。
+    // BGMが読み込まれていない場合はエラーを表示
     if (mCurrentBGM == NULL) {
-        std::string filename = mBGM_BGMID_AudioFileName_Map[bgmID];
-        mBGMMap[bgmID] = new KRMusic(filename, true);
-        mCurrentBGM = mBGMMap[bgmID];
-    }
-    
-    // BGMが見つからなかったときの処理。
-    if (mCurrentBGM == NULL) {
-        const char *errorFormat = "Failed to find the BGM with ID %d.";
+        const char *errorFormat = "BGM with ID %d is not loaded.";
         if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "ID が %d の BGM は見つかりませんでした。";
+            errorFormat = "ID が %d の BGM は読み込まれていません。";
         }
         throw KRRuntimeError(errorFormat, bgmID);
     }    
@@ -264,17 +257,12 @@ void KRAudioManager::playSE(int seID, double volume, const KRVector3D& sourcePos
 {
     // IDからSEを引っ張ってくる。
     KRSound* theSound = mSEMap[seID];
-    if (theSound == NULL) {
-        std::string filename = mSE_SEID_AudioFileName_Map[seID];
-        mSEMap[seID] = new KRSound(filename, false);
-        theSound = mSEMap[seID];
-    }
 
-    // SEが見つからなかったときの処理。
+    // SEが見つからなかったときはエラー
     if (theSound == NULL) {
-        const char *errorFormat = "Failed to find the SE with ID %d.";
+        const char *errorFormat = "SE with ID %d is not loaded.";
         if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "ID が %d の SE は見つかりませんでした。";
+            errorFormat = "ID が %d の SE は読み込まれていません。";
         }
         throw KRRuntimeError(errorFormat, seID);
     }

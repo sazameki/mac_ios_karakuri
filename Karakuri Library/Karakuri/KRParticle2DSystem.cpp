@@ -120,13 +120,13 @@ _KRParticle2DSystem::_KRParticle2DSystem(int groupID, const std::string& imageFi
     @method _KRParticle2DSystem
     Constructor
  */
-_KRParticle2DSystem::_KRParticle2DSystem(int groupID, const std::string& ticket)
+_KRParticle2DSystem::_KRParticle2DSystem(int groupID, int texID)
     : mGroupID(groupID)
 {
     mZOrder = 0;
     mDoLoop = false;
     
-    mCharaSpecID = gKRAnime2DMan->_addTexCharaSpecWithTicket(groupID, ticket);
+    mCharaSpecID = gKRAnime2DMan->_addTexCharaSpecWithTextureID(groupID, texID);
     
     init();
 }

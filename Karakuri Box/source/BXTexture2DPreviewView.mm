@@ -25,6 +25,19 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [NSGraphicsContext saveGraphicsState];
+    
+    NSRect frame = [self frame];
+    NSImage* transpImage = [NSImage imageNamed:@"transparent_pattern.png"];
+    float yOffset = NSMaxY([self convertRect:frame toView:nil]);
+    [[NSGraphicsContext currentContext] setPatternPhase:NSMakePoint(0, yOffset)];
+    [[NSColor colorWithPatternImage:transpImage] set];
+    frame.origin = NSZeroPoint;
+    [NSBezierPath fillRect:frame];
+
+    [NSGraphicsContext restoreGraphicsState];    
+    
+    
     BXTexture2DSpec* theTexSpec = [oDocument selectedTex2DSpec];
 
     NSImage* image = [theTexSpec image72dpi];

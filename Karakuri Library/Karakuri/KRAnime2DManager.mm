@@ -54,149 +54,6 @@ void KRAnime2DManager::_addCharaSpec(int specID, _KRChara2DSpec* spec)
     spec->setSpecID(specID);
 }
 
-/*
-void KRAnime2DManager::addCharacterSpecs(int groupID, const std::string& specFileName)
-{
-    KRTextReader reader(specFileName);
-    
-    std::string str;
-    int lineCount = 0;
-    
-    KRChara2DSpec* theSpec = NULL;
-    KRChara2DState* theState = NULL;
-    int texID = -1;
-    int defaultInterval = 4;
-    
-    while (reader.readLine(&str)) {
-        lineCount++;
-        
-        // 空行や「#」から始まる行はスキップ
-        if (str.length() == 0 || str[0] == '#') {
-            continue;
-        }
-        
-        // 「@」から始まる行は、メタ情報の記述
-        if (str[0] == '@') {
-            continue;
-        }
-        
-        // 行構成の分割
-        std::vector<std::string> vec = KRSplitString(str, ", \t():=");
-        int elemCount = vec.size();
-        
-        if (elemCount == 0) {
-            continue;
-        }
-        
-        std::string command = vec[0];
-        
-        // キャラクタの生成
-        if (command == "chara") {
-            int specID = atoi(vec[1].c_str());
-            std::string filename = "";
-            int atlasX = 0;
-            int atlasY = 0;
-            int groupID = 0;
-            
-            for (int i = 2; i < elemCount;) {
-                if (vec[i] == "tex") {
-                    filename = vec[i+1];
-                    i += 2;
-                }
-                else if (vec[i] == "atlas") {
-                    atlasX = atoi(vec[i+1].c_str());
-                    atlasY = atoi(vec[i+2].c_str());
-                    i += 3;
-                }
-                else if (vec[i] == "group") {
-                    groupID = atoi(vec[i+1].c_str());
-                    i += 2;
-                }
-                else {
-                    throw KRRuntimeError("Invalid chara command parameter: %s", vec[i].c_str());
-                }
-            }
-            
-            if (filename == "" || atlasX == 0 || atlasY == 0) {
-                throw KRRuntimeError("chara command should have texture filename and atlas size specifications.");
-            }
-            
-            texID = gKRTex2DMan->addTexture(groupID, filename, KRVector2D(atlasX, atlasY));
-            
-            theSpec = new KRChara2DSpec(groupID);
-            theSpec->initForManualChara2D();
-            _addCharaSpec(specID, theSpec);
-            
-            theState = NULL;
-        }
-        // キャラクタの状態
-        else if (command == "state") {
-            defaultInterval = 4;
-
-            int stateID = atoi(vec[1].c_str());
-            int nextStateID = -1;
-            int cancelKomaNumber = 0;
-
-            for (int i = 2; i < elemCount;) {
-                if (vec[i] == "interval") {
-                    defaultInterval = atoi(vec[i+1].c_str());
-                    i += 2;
-                }
-                else if (vec[i] == "next") {
-                    nextStateID = atoi(vec[i+1].c_str());
-                    i += 2;
-                }
-                else if (vec[i] == "cancel") {
-                    cancelKomaNumber = atoi(vec[i+1].c_str());
-                    i += 2;
-                }
-                else {
-                    throw KRRuntimeError("Invalid state command parameter: %s", vec[i].c_str());
-                }
-            }
-            
-            theState = new KRChara2DState();
-            theState->initForManualChara2D(cancelKomaNumber, nextStateID);
-            theSpec->addState(stateID, theState);
-        }
-        // 各状態のコマ
-        else if (command == "image") {
-            int atlasX = atoi(vec[1].c_str());
-            int atlasY = atoi(vec[2].c_str());
-            int interval = defaultInterval;
-            bool isCancelable = true;
-            int gotoTarget = 0;
-            int komaNumber = theState->getKomaCount() + 1;
-            
-            for (int i = 3; i < elemCount;) {
-                if (vec[i] == "repeat-back") {
-                    gotoTarget = komaNumber - atoi(vec[i+1].c_str());
-                    i += 2;
-                }
-                else if (vec[i] == "interval") {
-                    interval = atoi(vec[i+1].c_str());
-                    i += 2;
-                }
-                else if (vec[i] == "cancel") {
-                    isCancelable = (atoi(vec[i+1].c_str())? true: false);
-                    i += 2;
-                }
-                else {
-                    throw KRRuntimeError("Invalid image command parameter: %s", vec[i].c_str());
-                }
-            }
-
-            KRChara2DKoma* aKoma = new KRChara2DKoma();
-            aKoma->initForManualChara2D(texID, KRVector2DInt(atlasX, atlasY), interval, isCancelable, gotoTarget);
-            theState->addKoma(aKoma);
-        }
-        // 不明なコマンド
-        else {
-            throw KRRuntimeError("Unknown command: %s", command.c_str());
-        }
-    }
-}*/
-
 int KRAnime2DManager::_addParticle2D(int groupID, const std::string& imageFileName)
 {
     int theParticleID = mParticleSystemMap.size() + 1000;
@@ -206,9 +63,9 @@ int KRAnime2DManager::_addParticle2D(int groupID, const std::string& imageFileNa
     return theParticleID;
 }
 
-void KRAnime2DManager::_addParticle2DWithTicket(int resourceID, int groupID, const std::string& imageTicket)
+void KRAnime2DManager::_addParticle2DWithTextureID(int groupID, int resourceID, int texID)
 {
-    mParticleSystemMap[resourceID] = new _KRParticle2DSystem(groupID, imageTicket);
+    mParticleSystemMap[resourceID] = new _KRParticle2DSystem(groupID, texID);
 }
 
 int KRAnime2DManager::_addTexCharaSpec(int groupID, const std::string& imageFileName)
@@ -224,13 +81,13 @@ int KRAnime2DManager::_addTexCharaSpec(int groupID, const std::string& imageFile
     return theSpecID;
 }
 
-int KRAnime2DManager::_addTexCharaSpecWithTicket(int groupID, const std::string& ticket)
+int KRAnime2DManager::_addTexCharaSpecWithTextureID(int groupID, int texID)
 {
     int theSpecID = mNextInnerCharaSpecID;
     mNextInnerCharaSpecID++;
     
     _KRChara2DSpec* theSpec = new _KRChara2DSpec(groupID, "");
-    theSpec->initForBoxParticle2D(ticket);
+    theSpec->initForBoxParticle2D(texID);
 
     _addCharaSpec(theSpecID, theSpec);
     

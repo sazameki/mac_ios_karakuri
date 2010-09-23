@@ -16,8 +16,11 @@
 
 
 struct _KRParticle2DGenInfo {
-    KRVector2D  centerPos;
-    double      count;
+    KRVector2D  center_pos;
+    int         count_int;
+    int         count_decimals;
+    int         count_decimals_base;
+    int         gen_count;
 };
 
 
@@ -93,9 +96,13 @@ class KRParticle2DSystem {
     
     _KRParticle2DGenInfo    mGenInfos[_KRParticle2DGenMaxCount];
     int             mActiveGenCount;
+    
+    _KRParticle2DGenInfo    mAutoGenInfo;
 
     double          mMinScale;
     double          mMaxScale;
+    
+    bool            mIsAutoGenerating;
     
 public:
     /*!
@@ -335,6 +342,10 @@ public:
 public:
     double      getMaxScale() const;
     double      getMinScale() const;
+    
+public:
+    void        startAutoGeneration();
+    void        stopAutoGeneration();
 
 };
 

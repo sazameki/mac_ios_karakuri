@@ -112,7 +112,7 @@ public:
     
     _KRParticle2DSystem(int groupID, const std::string& imageFileName, int zOrder);
     
-    _KRParticle2DSystem(int groupID, const std::string& ticket);
+    _KRParticle2DSystem(int groupID, int texID);
     
     /*!
         @method _KRParticle2DSystem

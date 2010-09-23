@@ -78,9 +78,6 @@ _KRTexture2D::_KRTexture2D(const std::string& filename, KRTexture2DScaleMode sca
         _KRTexture2D::processBatchedTexture2DDraws();
     }
     
-    mAtlasSize = KRVector2DZero;
-    mAtlasDiv = KRVector2DInt(1, 1);
-    mIsAtlasFlipped = false;
     mTextureTarget = GL_TEXTURE_2D;
 
     mFileName = filename;
@@ -99,42 +96,13 @@ _KRTexture2D::_KRTexture2D(const std::string& filename, KRTexture2DScaleMode sca
     _KRTexture2DName = GL_INVALID_VALUE;
 }
 
-_KRTexture2D::_KRTexture2D(const std::string& filename, const KRVector2D& atlasSize)
-{
-    if (_gKRTexture2DBatchCount > 0) {
-        _KRTexture2D::processBatchedTexture2DDraws();
-    }
-
-    mAtlasDiv = KRVector2DInt(1, 1);
-    mIsAtlasFlipped = false;
-    mTextureTarget = GL_TEXTURE_2D;
-
-    mFileName = filename;
-    NSString* filenameStr = [[NSString alloc] initWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-    mTextureName = KRCreateGLTextureFromImageWithName(filenameStr, &mImageSize, &mTextureSize);
-    [filenameStr release];
-    if (mTextureName == GL_INVALID_VALUE || mTextureName == GL_INVALID_OPERATION) {
-        const char* errorFormat = "Failed to load \"%s\". Please confirm that the image file exists.";
-        if (gKRLanguage == KRLanguageJapanese) {
-            errorFormat = "\"%s\" の読み込みに失敗しました。画像ファイルが存在することを確認してください。";
-        }
-        throw KRRuntimeError(errorFormat, filename.c_str());
-    }
-    _KRTexture2DName = GL_INVALID_VALUE;
-}
-
-_KRTexture2D::_KRTexture2D(const std::string& resourceFileName, const std::string& ticket, int divX, int divY, KRTexture2DScaleMode scaleMode)
+_KRTexture2D::_KRTexture2D(const std::string& resourceFileName, unsigned startPos, unsigned length, KRTexture2DScaleMode scaleMode)
 {
     if (_gKRTexture2DBatchCount > 0) {
         _KRTexture2D::processBatchedTexture2DDraws();
     }
     
-    mAtlasDiv = KRVector2DInt(divX, divY);
-    mIsAtlasFlipped = true;
     mTextureTarget = GL_TEXTURE_2D;
-    
-    unsigned startPos = gKRTex2DMan->_getResourceStartPosForTicket(ticket);
-    unsigned length = gKRTex2DMan->_getResourceLengthForTicket(ticket);
     
     NSString* filenameStr = [[NSString alloc] initWithCString:resourceFileName.c_str() encoding:NSUTF8StringEncoding];
     
@@ -157,9 +125,6 @@ _KRTexture2D::_KRTexture2D(const std::string& resourceFileName, const std::strin
         }
         throw KRRuntimeError(errorFormat, resourceFileName.c_str());
     }
-    
-    mAtlasSize.x = mImageSize.x / divX;
-    mAtlasSize.y = mImageSize.y / divY;
     
     _KRTexture2DName = GL_INVALID_VALUE;
 }
@@ -195,26 +160,6 @@ _KRTexture2D::~_KRTexture2D()
 #pragma mark -
 #pragma mark Status Getting Functions
 
-int _KRTexture2D::getDivX()
-{
-    return mAtlasDiv.x;
-}
-
-int _KRTexture2D::getDivY()
-{
-    return mAtlasDiv.y;
-}
-
-bool _KRTexture2D::isAtlasFlipped()
-{
-    return mIsAtlasFlipped;
-}
-
-KRVector2D _KRTexture2D::getAtlasSize() const
-{
-    return mAtlasSize;
-}
-
 double _KRTexture2D::getWidth() const
 {
     return mImageSize.x;
@@ -233,19 +178,6 @@ KRVector2D _KRTexture2D::getSize() const
 KRVector2D _KRTexture2D::getCenterPos() const
 {
     return KRVector2D(mImageSize.x / 2, mImageSize.y / 2);
-}
-
-
-#pragma mark -
-
-void _KRTexture2D::setTextureAtlasSize(const KRVector2D& size)
-{
-    mAtlasSize = size;
-}
-
-void _KRTexture2D::setTextureOrigin(const KRVector2D& origin)
-{
-    mOrigin = origin;
 }
 
 

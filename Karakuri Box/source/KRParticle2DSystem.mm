@@ -78,8 +78,13 @@ void KRParticle2DSystem::init()
     
     mActiveGenCount = 0;
     for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
-        mGenInfos[i].count = 0;
+        mGenInfos[i].count_int = 0;
+        mGenInfos[i].count_decimals = 0;
     }
+    
+    mIsAutoGenerating = false;
+    mAutoGenInfo.count_int = 0;
+    mAutoGenInfo.count_decimals = 0;
 }
 
 
@@ -224,6 +229,7 @@ KRVector2D KRParticle2DSystem::getGravity() const
 void KRParticle2DSystem::setStartPos(const KRVector2D& pos)
 {
     mStartPos = pos;
+    mAutoGenInfo.center_pos = mStartPos;
 }
 
 void KRParticle2DSystem::setColor(const KRColor& color)
@@ -251,6 +257,9 @@ void KRParticle2DSystem::setParticleCount(unsigned count)
 
 void KRParticle2DSystem::setGenerateCount(double count)
 {
+    if (count < 0.01) {
+        count = 0.01;
+    }
     mGenerateCount = count;
 }
 
@@ -305,9 +314,21 @@ void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
         return;
     }
     for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
-        if (mGenInfos[i].count == 0) {
-            mGenInfos[i].count = mGenerateCount;
-            mGenInfos[i].centerPos = pos;
+        if (mGenInfos[i].gen_count == 0) {
+            mGenInfos[i].center_pos = pos;
+            mGenInfos[i].gen_count = mParticleCount;
+            mGenInfos[i].count_int = (int)mGenerateCount;
+            double fraction = mGenerateCount - mGenInfos[i].count_int;
+            if (fraction > 0.0001) {
+                mGenInfos[i].count_decimals_base = (int)(1.0 / fraction);
+            } else {
+                mGenInfos[i].count_decimals_base = 0;
+            }
+            if (mGenInfos[i].count_int == 0) {
+                mGenInfos[i].count_decimals = 1;
+            } else {
+                mGenInfos[i].count_decimals = mGenInfos[i].count_decimals_base;
+            }
             mActiveGenCount++;
             break;
         }
@@ -316,33 +337,86 @@ void KRParticle2DSystem::addGenerationPoint(const KRVector2D& pos)
 
 void KRParticle2DSystem::step()
 {
-    // Point to Point Generation
-    int genCount = 0;
-    int finishedCount = 0;
-    for (int i = 0; i < mActiveGenCount; i++) {
-        if (mGenInfos[i].count > 0) {
-            unsigned createCount = KRMin(mGenerateCount, mGenInfos[i].count);
-            for (int j = 0; j < createCount; j++) {
+    // Auto Generation
+    if (mIsAutoGenerating) {
+        // Integer part
+        if (mAutoGenInfo.count_int > 0) {
+            for (int i = 0; i < mAutoGenInfo.count_int; i++) {
                 KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
                 double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
                 double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
                 
-                _KRParticle2D *particle = new _KRParticle2D(mLife, mGenInfos[i].centerPos, theV, mGravity, theAngleV, mColor, theScale,
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mAutoGenInfo.center_pos, theV, mGravity, theAngleV, mColor, theScale,
                                                             mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
                 mParticles.push_back(particle);
             }
-            mGenInfos[i].count -= createCount;
-            if (mGenInfos[i].count == 0) {
-                finishedCount++;
+        }
+        // Decimal part
+        if (mAutoGenInfo.count_decimals > 0) {
+            mAutoGenInfo.count_decimals--;
+            if (mAutoGenInfo.count_decimals == 0) {
+                mAutoGenInfo.count_decimals = mAutoGenInfo.count_decimals_base;
+                
+                KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
+                double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
+                
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mAutoGenInfo.center_pos, theV, mGravity, theAngleV, mColor, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                mParticles.push_back(particle);                
             }
-            genCount++;
-            if (genCount >= mActiveGenCount) {
-                break;
+        }
+    }
+    
+    // Point Generation
+    int finishedCount = 0;
+    for (int i = 0; i < _KRParticle2DGenMaxCount; i++) {
+        // Integer part
+        if (mGenInfos[i].gen_count > 0 && mGenInfos[i].count_int > 0) {
+            for (int j = 0; j < mGenInfos[i].count_int && mGenInfos[i].gen_count > 0; j++) {
+                KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
+                double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
+                
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                mParticles.push_back(particle);
+                
+                mGenInfos[i].gen_count--;
+            }
+            if (mGenInfos[i].gen_count == 0) {
+                finishedCount++;
+                if (finishedCount >= mActiveGenCount) {
+                    break;
+                }
+            }
+        }
+        // Decimal part
+        if (mGenInfos[i].gen_count > 0 && mGenInfos[i].count_decimals > 0) {
+            mGenInfos[i].count_decimals--;
+            if (mGenInfos[i].count_decimals == 0) {
+                mGenInfos[i].count_decimals = mGenInfos[i].count_decimals_base;
+
+                KRVector2D theV(KRRandInt(mMaxV.x - mMinV.x) + mMinV.x, KRRandInt(mMaxV.y - mMinV.y) + mMinV.y);
+                double theScale = KRRandDouble() * (mMaxScale - mMinScale) + mMinScale;
+                double theAngleV = KRRandDouble() * (mMaxAngleV - mMinAngleV) + mMinAngleV;
+                
+                _KRParticle2D* particle = new _KRParticle2D(mLife, mGenInfos[i].center_pos, theV, mGravity, theAngleV, mColor, theScale,
+                                                            mDeltaRed, mDeltaGreen, mDeltaBlue, mDeltaAlpha, mDeltaScale);
+                mParticles.push_back(particle);
+
+                mGenInfos[i].gen_count--;
+                if (mGenInfos[i].gen_count == 0) {
+                    finishedCount++;
+                    if (finishedCount >= mActiveGenCount) {
+                        break;
+                    }
+                }
             }
         }
     }
     mActiveGenCount -= finishedCount;
-    
+
     // Move all points 
     for (std::list<_KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end();) {
         if ((*it)->step()) {
@@ -352,7 +426,7 @@ void KRParticle2DSystem::step()
             it = mParticles.erase(it);
             delete theParticle;
         }
-    }    
+    }
 }
 
 void KRParticle2DSystem::draw()
@@ -378,5 +452,32 @@ void KRParticle2DSystem::draw()
     gKRGraphicsInst->setBlendMode(oldBlendMode);
 }
 
+
+void KRParticle2DSystem::startAutoGeneration()
+{
+    mIsAutoGenerating = true;
+    
+    mAutoGenInfo.center_pos = mStartPos;
+    mAutoGenInfo.count_int = (int)mGenerateCount;
+    double fraction = mGenerateCount - mAutoGenInfo.count_int;
+    if (fraction > 0.0001) {
+        mAutoGenInfo.count_decimals_base = (int)(1.0 / fraction);
+    } else {
+        mAutoGenInfo.count_decimals_base = 0;
+    }
+    if (mAutoGenInfo.count_int == 0) {
+        mAutoGenInfo.count_decimals = 1;
+    } else {
+        mAutoGenInfo.count_decimals = mAutoGenInfo.count_decimals_base;
+    }
+}
+
+void KRParticle2DSystem::stopAutoGeneration()
+{
+    mIsAutoGenerating = false;
+
+    mAutoGenInfo.count_int = 0;
+    mAutoGenInfo.count_decimals = 0;
+}
 
 

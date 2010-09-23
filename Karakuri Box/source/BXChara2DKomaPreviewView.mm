@@ -166,7 +166,7 @@
     // 次のコマに当たり範囲を追加
     else if (tag == 30) {
         BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
-        BXChara2DKoma* nextKoma = [selectedMotion komaWithNumber:[selectedKoma komaNumber]+1];
+        BXChara2DKoma* nextKoma = [selectedMotion komaAtIndex:[selectedKoma komaIndex]];
         if (nextKoma != NULL) {
             [nextKoma importHitInfosFromKoma:selectedKoma];
         }
@@ -203,7 +203,7 @@
     // 次のコマの当たり判定を置き換え
     else if (tag == 60) {
         BXChara2DMotion* selectedMotion = [oDocument selectedChara2DMotion];
-        BXChara2DKoma* nextKoma = [selectedMotion komaWithNumber:[selectedKoma komaNumber]+1];
+        BXChara2DKoma* nextKoma = [selectedMotion komaAtIndex:[selectedKoma komaIndex]];
         if (nextKoma != NULL) {
             [nextKoma replaceHitInfosFromKoma:selectedKoma];
         }

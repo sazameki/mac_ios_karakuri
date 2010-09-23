@@ -51,7 +51,7 @@ void TitleWorld::drawView(KRGraphics* g)
     // Clearing screen should be omitted because the title image fully covers the screen.
     //g->clear(KRColor::GreenYellow);
     
-    gKRTex2DMan->drawInRect(TexID::Title, KRRect2D(0, 0, gKRScreenSize.x, gKRScreenSize.y));
+    gKRTex2DMan->drawInRect(MyTexID::Title, KRRect2D(0, 0, gKRScreenSize.x, gKRScreenSize.y));
 
     // We don't use animation mechanism at the title world.
     //gKRAnime2DMan->draw();

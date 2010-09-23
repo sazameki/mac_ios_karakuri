@@ -40,13 +40,12 @@ struct _KRChara2DHitArea {
 
 class _KRChara2DKoma : public KRObject {
     
-    int     mTextureID;
-    int     mAtlasIndex;
-    int     mGotoTarget;
-    bool    mIsCancelable;
-    int     mInterval;
+    int         mTextureID;
+    KRRect2D    mAtlasRect;
+    int         mGotoTargetIndex;
+    bool        mIsCancelable;
+    int         mInterval;
     
-    KRVector2DInt       mAtlasPos;
     int                 mHitAreaCount;
     _KRChara2DHitArea*  mHitAreas;
     
@@ -54,18 +53,17 @@ public:
     _KRChara2DKoma();
     ~_KRChara2DKoma();
     
-    void    initForManualChara2D(int textureID, KRVector2DInt atlasPos, int interval, bool isCancelable, int gotoTarget);
-    void    initForBoxChara2D(const std::string& imageTicket, int atlasIndex, int interval, bool isCancelable, int gotoTarget);
+    void    initForBoxChara2D(int texID, const KRRect2D& atlasRect, int interval, bool isCancelable, int gotoTargetIndex);
     
 public:
-    KRVector2DInt   getAtlasPos();
-    KRVector2D      getAtlasSize();
-    int             getGotoTarget();
-    int             getInterval();
-    int             getTextureID();
+    int             getGotoTargetIndex() const;
+    int             getInterval() const;
+    int             getTextureID() const;
+    KRVector2D      getAtlasSize() const;
     
 public:
     void            _importHitArea(void* hitInfo);
+    KRRect2D        _getAtlasRect() const;
     int             _getHitAreaCount() const;
     _KRChara2DHitArea*  _getHitAreas() const;
     
@@ -82,7 +80,6 @@ class _KRChara2DMotion : public KRObject {
 public:
     _KRChara2DMotion();
     
-    void    initForManualChara2D(int cancelKomaNumber, int nextMotionID);
     void    initForBoxChara2D(int cancelKomaNumber, int nextMotionID);
     
 public:
@@ -90,7 +87,7 @@ public:
     
 public:
     int             getKomaCount();
-    _KRChara2DKoma* getKoma(int komaNumber);
+    _KRChara2DKoma* getKoma(int komaIndex);
     
 };
 
@@ -125,7 +122,7 @@ public:
     
     void    initForManualChara2D();
     void    initForManualParticle2D(const std::string& fileName);
-    void    initForBoxParticle2D(const std::string& imageTicket);
+    void    initForBoxParticle2D(int texID);
     
 public:
     /*!
@@ -162,7 +159,7 @@ private:
     int                 _mClassType;
 
     int                 _mCurrentMotionID;
-    int                 _mCurrentKomaNumber;
+    int                 _mCurrentKomaIndex;
     
     int                 _mImageInterval;
     int                 _mZOrder;

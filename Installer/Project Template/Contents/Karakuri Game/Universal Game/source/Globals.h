@@ -22,7 +22,7 @@ struct GroupID {
 
 
 // Texture IDs
-struct TexID {
+struct MyTexID {
     enum {
         Logo,
         LoadingText,

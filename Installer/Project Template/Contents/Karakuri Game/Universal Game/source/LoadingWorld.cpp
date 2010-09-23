@@ -40,12 +40,12 @@ void LoadingWorld::drawView(KRGraphics* g)
     
     double alpha = (double)mCount / 60;
     
-    gKRTex2DMan->drawAtPoint(TexID::LoadingText, KRVector2D(gKRScreenSize.x-200, 0), alpha);
-    gKRTex2DMan->drawAtPoint(TexID::LoadingChara, KRVector2D(gKRScreenSize.x-200, 50));
+    gKRTex2DMan->drawAtPoint(MyTexID::LoadingText, KRVector2D(gKRScreenSize.x-200, 0), alpha);
+    gKRTex2DMan->drawAtPoint(MyTexID::LoadingChara, KRVector2D(gKRScreenSize.x-200, 50));
     
-    KRVector2D barSize = gKRTex2DMan->getTextureSize(TexID::LoadingOn);
-    gKRTex2DMan->drawAtPoint(TexID::LoadingOff, KRVector2D(10, 10));
-    gKRTex2DMan->drawAtPointEx2(TexID::LoadingOn, KRVector2D(10, 10), KRRect2D(0, 0, (int)(barSize.x*progress+0.5), barSize.y),
+    KRVector2D barSize = gKRTex2DMan->getTextureSize(MyTexID::LoadingOn);
+    gKRTex2DMan->drawAtPoint(MyTexID::LoadingOff, KRVector2D(10, 10));
+    gKRTex2DMan->drawAtPointEx2(MyTexID::LoadingOn, KRVector2D(10, 10), KRRect2D(0, 0, (int)(barSize.x*progress+0.5), barSize.y),
                                 0.0, KRVector2DZero, KRVector2DOne);
 }
 

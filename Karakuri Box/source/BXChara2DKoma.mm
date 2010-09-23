@@ -293,7 +293,7 @@
 {
     self = [super init];
     if (self) {
-        mKomaNumber = 0;
+        mKomaIndex = -1;
         mIsCancelable = YES;
         mInterval = 0;
         mGotoTargetKoma = nil;        
@@ -312,16 +312,17 @@
     self = [super init];
     if (self) {
         mTexture2DResourceUUID = [[info stringValueForName:@"Texture UUID" currentValue:nil] copy];
-        NSString* atlasRectStr = [info stringValueForName:@"Atlas Rect" currentValue:nil];
-        if (atlasRectStr) {
-            mTextureAtlasRect = NSRectFromString(atlasRectStr);
-        }
+        int atlasX = [info intValueForName:@"Atlas X" currentValue:0];
+        int atlasY = [info intValueForName:@"Atlas Y" currentValue:0];
+        int atlasWidth = [info intValueForName:@"Atlas Width" currentValue:0];
+        int atlasHeight = [info intValueForName:@"Atlas Height" currentValue:0];
+        mTextureAtlasRect = NSMakeRect(atlasX, atlasY, atlasWidth, atlasHeight);
 
-        mKomaNumber = [info intValueForName:@"Koma Number" currentValue:0];
+        mKomaIndex = [info intValueForName:@"Koma Index" currentValue:-1];
         mIsCancelable = [info boolValueForName:@"Cancelable" currentValue:YES];
         mInterval = [info intValueForName:@"Interval" currentValue:0];
         
-        mTempGotoTargetKomaNumber = [info intValueForName:@"Goto Target" currentValue:0];
+        mTempGotoTargetKomaIndex = [info intValueForName:@"Goto Target Index" currentValue:-1];
         
         mGotoTargetKoma = nil;
 
@@ -515,14 +516,14 @@
     }
 }
 
-- (int)komaNumber
+- (int)komaIndex
 {
-    return mKomaNumber;
+    return mKomaIndex;
 }
 
-- (void)setKomaNumber:(int)number
+- (void)setKomaIndex:(int)index
 {
-    mKomaNumber = number;
+    mKomaIndex = index;
 }
 
 - (BOOL)isCancelable
@@ -561,32 +562,32 @@
     return [image subImageFromRect:mTextureAtlasRect];
 }
 
-- (int)gotoTargetNumber
+- (int)gotoTargetKomaIndex
 {
     if (!mGotoTargetKoma) {
-        return 0;
+        return -1;
     }
-    return [mGotoTargetKoma komaNumber];
+    return [mGotoTargetKoma komaIndex];
 }
 
-- (BXChara2DKoma*)gotoTarget
+- (BXChara2DKoma*)gotoTargetKoma
 {
     return mGotoTargetKoma;
 }
 
-- (void)setGotoTarget:(BXChara2DKoma*)target
+- (void)setGotoTargetKoma:(BXChara2DKoma*)koma
 {
-    mGotoTargetKoma = target;
+    mGotoTargetKoma = koma;
 }
 
 - (void)replaceTempGotoInfoForMotion:(BXChara2DMotion*)motion
 {
-    if (mTempGotoTargetKomaNumber > 0) {
-        BXChara2DKoma* targetKoma = [motion komaWithNumber:mTempGotoTargetKomaNumber];
+    if (mTempGotoTargetKomaIndex >= 0) {
+        BXChara2DKoma* targetKoma = [motion komaAtIndex:mTempGotoTargetKomaIndex];
         mGotoTargetKoma = targetKoma;
     }
     
-    mTempGotoTargetKomaNumber = -1;
+    mTempGotoTargetKomaIndex = -1;
 }
 
 - (void)preparePreviewTexture
@@ -618,12 +619,15 @@
         [theInfo removeObjectForKey:@"Texture UUID"];
         [theInfo removeObjectForKey:@"Texture ID"];
     }
-    [theInfo setStringValue:NSStringFromRect(mTextureAtlasRect) forName:@"Atlas Rect"];
+    [theInfo setIntValue:(int)mTextureAtlasRect.origin.x forName:@"Atlas X"];
+    [theInfo setIntValue:(int)mTextureAtlasRect.origin.y forName:@"Atlas Y"];
+    [theInfo setIntValue:(int)mTextureAtlasRect.size.width forName:@"Atlas Width"];
+    [theInfo setIntValue:(int)mTextureAtlasRect.size.height forName:@"Atlas Height"];
     
-    [theInfo setIntValue:mKomaNumber forName:@"Koma Number"];
+    [theInfo setIntValue:mKomaIndex forName:@"Koma Index"];
     [theInfo setBoolValue:mIsCancelable forName:@"Cancelable"];
     [theInfo setIntValue:mInterval forName:@"Interval"];
-    [theInfo setIntValue:[self gotoTargetNumber] forName:@"Goto Target"];
+    [theInfo setIntValue:[self gotoTargetKomaIndex] forName:@"Goto Target Index"];
     [theInfo setBoolValue:mShowsHitInfos forName:@"Shows Hit Infos"];
     [theInfo setIntValue:mCurrentHitGroupIndex forName:@"Current Hit Group Index"];
     

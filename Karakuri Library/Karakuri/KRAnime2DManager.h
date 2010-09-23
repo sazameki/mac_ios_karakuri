@@ -88,7 +88,7 @@ public:
     //void    addCharacterSpecs(int groupID, const std::string& specFileName);
     
     int     _addTexCharaSpec(int groupID, const std::string& imageFileName);
-    int     _addTexCharaSpecWithTicket(int groupID, const std::string& ticket);
+    int     _addTexCharaSpecWithTextureID(int groupID, int texID);
     
 
     _KRChara2DSpec* _getChara2DSpec(int specID);
@@ -168,7 +168,7 @@ public:
      */
     int     _addParticle2D(int groupID, const std::string& imageFileName);
     
-    void    _addParticle2DWithTicket(int resourceID, int groupID, const std::string& imageTicket);
+    void    _addParticle2DWithTextureID(int groupID, int resourceID, int texID);
     
     _KRParticle2DSystem*    _getParticleSystem(int particleID) const;
 

@@ -94,7 +94,7 @@
     unsigned komaCount = [mKomas count];
     for (int i = 0; i < komaCount; i++) {
         BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
-        [aKoma setKomaNumber:i+1];
+        [aKoma setKomaIndex:i];
     }
 }
 
@@ -124,17 +124,6 @@
     return [mKomas objectAtIndex:index];
 }
 
-- (BXChara2DKoma*)komaWithNumber:(int)komaNumber
-{
-    for (int i = 0; i < [mKomas count]; i++) {
-        BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
-        if ([aKoma komaNumber] == komaNumber) {
-            return aKoma;
-        }
-    }
-    return nil;
-}
-
 - (void)removeKomaAtIndex:(int)index
 {
     // 削除対象のコマ
@@ -147,14 +136,15 @@
             continue;
         }
         BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
-        if ([aKoma gotoTarget] == theKoma) {
+        if ([aKoma gotoTargetKoma] == theKoma) {
+            // 次のコマを GOTO のターゲットに設定する
             BXChara2DKoma* nextKoma = nil;
             if (index+1 < komaCount && index+1 != i) {
                 nextKoma = [mKomas objectAtIndex:index+1];
             } else if (index-1 >= 0 && index-1 != i) {
                 nextKoma = [mKomas objectAtIndex:index-1];
             }
-            [aKoma setGotoTarget:nextKoma];
+            [aKoma setGotoTargetKoma:nextKoma];
         }
     }
     
@@ -180,10 +170,10 @@
     [noneItem setTag:0];
     [noneItem setTarget:document];
     
-    int sourceIndex = [koma komaNumber] - 1;
+    int sourceKomaIndex = [koma komaIndex];
     
     for (int i = 0; i < [mKomas count]; i++) {
-        if (i == sourceIndex) {
+        if (i == sourceKomaIndex) {
             continue;
         }
         NSMenuItem* menuItem = [ret addItemWithTitle:[NSString stringWithFormat:@"%d", i]
@@ -229,8 +219,8 @@
     NSMutableDictionary* theInfo = [NSMutableDictionary dictionary];
     
     // 基本情報
-    [theInfo setIntValue:mMotionID forName:@"State ID"];
-    [theInfo setStringValue:mMotionName forName:@"State Name"];
+    [theInfo setIntValue:mMotionID forName:@"Motion ID"];
+    [theInfo setStringValue:mMotionName forName:@"Motion Name"];
     
     // コマ情報
     NSMutableArray* komaInfos = [NSMutableArray array];
@@ -244,10 +234,10 @@
     [theInfo setIntValue:mDefaultKomaInterval forName:@"Default Interval"];
     
     // 次の動作ID
-    [theInfo setIntValue:mNextMotionID forName:@"Next State ID"];
+    [theInfo setIntValue:mNextMotionID forName:@"Next Motion ID"];
     
     // キャンセル時の終了アニメーション開始コマ
-    [theInfo setIntValue:[mTargetKomaForCancel komaNumber] forName:@"Cancel Koma"];
+    [theInfo setIntValue:[mTargetKomaForCancel komaIndex] forName:@"Cancel Koma Index"];
     
     return theInfo;
 }
@@ -255,8 +245,8 @@
 - (void)restoreMotionInfo:(NSDictionary*)theInfo
 {
     // 基本情報
-    mMotionID = [theInfo intValueForName:@"State ID" currentValue:mMotionID];
-    [self setMotionName:[theInfo stringValueForName:@"State Name" currentValue:mMotionName]];
+    mMotionID = [theInfo intValueForName:@"Motion ID" currentValue:mMotionID];
+    [self setMotionName:[theInfo stringValueForName:@"Motion Name" currentValue:mMotionName]];
     
     // コマ情報
     NSArray* komaInfos = [theInfo objectForKey:@"Koma Infos"];
@@ -271,11 +261,11 @@
     mDefaultKomaInterval = [theInfo intValueForName:@"Default Interval" currentValue:mDefaultKomaInterval];
 
     // 次の動作ID
-    mNextMotionID = [theInfo intValueForName:@"Next State ID" currentValue:mNextMotionID];
+    mNextMotionID = [theInfo intValueForName:@"Next Motion ID" currentValue:mNextMotionID];
 
     // キャンセル時の終了アニメーション開始コマ
-    int theKomaNumber = [theInfo intValueForName:@"Cancel Koma" currentValue:0];
-    mTargetKomaForCancel = [self komaWithNumber:theKomaNumber];
+    int cancelKomaIndex = [theInfo intValueForName:@"Cancel Koma Index" currentValue:-1];
+    mTargetKomaForCancel = [self komaAtIndex:cancelKomaIndex];
 
     // Gotoコマ情報をオブジェクトに置き換え
     for (int i = 0; i < [mKomas count]; i++) {

@@ -87,20 +87,20 @@ void GameMain::setupResources()
     // Logo and Loading Worlds
     if (KRCheckDeviceType(KRDeviceTypeIPad)) {
         gKRTex2DMan->addTexture(GroupID::LogoAndLoading,
-                                TexID::Logo,
+                                MyTexID::Logo,
                                 (gKRScreenSize.x > gKRScreenSize.y)? "Default-Landscape.png": "Default-Portrait.png");
     } else {
-        gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::Logo, "Default.png");
+        gKRTex2DMan->addTexture(GroupID::LogoAndLoading, MyTexID::Logo, "Default.png");
     }
 
-    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingText, "loading_text.png");
-    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingChara, "loading_chara.png");
-    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingOff, "loading_off.png");
-    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, TexID::LoadingOn, "loading_on.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, MyTexID::LoadingText, "loading_text.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, MyTexID::LoadingChara, "loading_chara.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, MyTexID::LoadingOff, "loading_off.png");
+    gKRTex2DMan->addTexture(GroupID::LogoAndLoading, MyTexID::LoadingOn, "loading_on.png");
     gKRAudioMan->addBGM(GroupID::LogoAndLoading, BGM_ID::Loading, "bgm_loading.caf");
 
     // Title World
-    gKRTex2DMan->addTexture(GroupID::Title, TexID::Title, "title.png");
+    gKRTex2DMan->addTexture(GroupID::Title, MyTexID::Title, "title.png");
     gKRAudioMan->addBGM(GroupID::Title, BGM_ID::Title, "bgm_title.caf");
 
     // Play World

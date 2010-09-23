@@ -58,7 +58,7 @@
     IBOutlet NSPopUpButton*             oChara2DMotionNextMotionButton;
 
     IBOutlet NSPopUpButton*             oChara2DKomaPreviewScaleButton;
-    IBOutlet NSPopUpButton*             oChara2DMotionCancelKomaNumberButton;
+    IBOutlet NSPopUpButton*             oChara2DMotionCancelKomaIndexButton;
     IBOutlet NSPopUpButton*             oChara2DKomaActionCommandButton;
 
     IBOutlet NSPanel*                   oChara2DSimulatorPanel;

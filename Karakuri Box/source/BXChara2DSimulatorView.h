@@ -77,7 +77,7 @@ typedef unsigned int        KRMouseInfo;
 
     BXChara2DMotion*    mCurrentMotion;
     BXChara2DKoma*      mCurrentKoma;
-    int                 mKomaNumber;
+    int                 mKomaIndex;
     int                 mKomaInterval;
 
     KRKeyInfo           mKeyState;

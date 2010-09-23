@@ -41,7 +41,7 @@
     NSString*   mTexture2DResourceUUID;
 
     BOOL        mDoLoop;
-    KRVector2D  *mGenerationPos;
+    KRVector2D* mGenerationPos;
 }
 
 - (KRParticle2DSystem*)createParticleSystem;

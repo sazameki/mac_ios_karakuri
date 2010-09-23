@@ -46,7 +46,6 @@
 - (int)komaCount;
 - (BXChara2DKoma*)insertKomaAtIndex:(int)index;
 - (BXChara2DKoma*)komaAtIndex:(int)index;
-- (BXChara2DKoma*)komaWithNumber:(int)komaNumber;
 - (int)moveKomaFrom:(int)fromIndex to:(int)toIndex;
 - (void)removeKomaAtIndex:(int)index;
 - (void)changeMotionIDInAllKomaFrom:(int)oldMotionID to:(int)newMotionID;

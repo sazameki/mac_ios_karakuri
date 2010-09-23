@@ -135,6 +135,19 @@
     [super dealloc];
 }
 
+- (void)skipTexture2D
+{
+    unsigned infoSize = [mContext readUnsignedIntValue];
+    [mContext skip:infoSize];
+    
+    if ([mContext checkResourceType] != BXResourceTypeData) {
+        throw KRRuntimeError("KRGameManager::addResources(): Resource data is lacking: 0x%06x", [mContext currentPos]-4);
+    }
+    
+    unsigned dataLength = [mContext readUnsignedIntValue];
+    [mContext skip:dataLength];
+}
+
 - (void)skipChara2D
 {
     unsigned infoSize = [mContext readUnsignedIntValue];
@@ -145,6 +158,37 @@
 {
     unsigned infoSize = [mContext readUnsignedIntValue];
     [mContext skip:infoSize];
+}
+
+- (void)importTexture2D
+{
+    unsigned infoSize = [mContext readUnsignedIntValue];
+    NSData* data = [mContext readDataWithLength:infoSize];
+    
+    NSString* errorStr = nil;
+    NSDictionary* tex2DInfo = [NSPropertyListSerialization propertyListFromData:data
+                                                               mutabilityOption:NSPropertyListImmutable
+                                                                         format:nil
+                                                               errorDescription:&errorStr];
+    
+    if ([mContext checkResourceType] != BXResourceTypeData) {
+        throw KRRuntimeError("KRGameManager::addResources(): Resource data is lacking: 0x%06x", [mContext currentPos]-4);
+    }
+    
+    unsigned dataLength = [mContext readUnsignedIntValue];
+    unsigned dataStartPos = [mContext currentPos];
+    
+    int groupID = [[tex2DInfo objectForKey:@"Group ID"] intValue];
+    int resourceID = [[tex2DInfo objectForKey:@"Resource ID"] intValue];
+    NSString* resourceName = [tex2DInfo objectForKey:@"Resource Name"];
+    
+    gKRTex2DMan->_addTexture(groupID,
+                             resourceID,
+                             [resourceName cStringUsingEncoding:NSUTF8StringEncoding],
+                             [mFileName cStringUsingEncoding:NSUTF8StringEncoding],
+                             dataStartPos, dataLength);
+    
+    [mContext skip:dataLength];
 }
 
 - (void)importChara2D
@@ -164,21 +208,11 @@
 
     _KRChara2DSpec* chara2DSpec = new _KRChara2DSpec(groupID, std::string([resourceName cStringUsingEncoding:NSUTF8StringEncoding]));
 
-    NSArray* imageInfos = [chara2DInfo objectForKey:@"Image Infos"];
-    for (int i = 0; i < [imageInfos count]; i++) {
-        NSDictionary* anImageInfo = [imageInfos objectAtIndex:i];
-        int divX = [[anImageInfo objectForKey:@"Div X"] intValue];
-        int divY = [[anImageInfo objectForKey:@"Div Y"] intValue];
-        NSString* ticket = [anImageInfo objectForKey:@"Image Ticket"];
-        gKRTex2DMan->_setDivForTicket([ticket cStringUsingEncoding:NSUTF8StringEncoding], divX, divY);
-    }
-    
-    NSArray* motionInfos = [chara2DInfo objectForKey:@"State Infos"];
+    NSArray* motionInfos = [chara2DInfo objectForKey:@"Motion Infos"];
     for (int i = 0; i < [motionInfos count]; i++) {
         NSDictionary* aMotionInfo = [motionInfos objectAtIndex:i];
         
-        //NSString* stateName = [aStateInfo objectForKey:@"State Name"];
-        int motionID = [[aMotionInfo objectForKey:@"State ID"] intValue];
+        int motionID = [[aMotionInfo objectForKey:@"Motion ID"] intValue];
         int nextMotionID = [[aMotionInfo objectForKey:@"Next Motion ID"] intValue];
         int cancelKomaNumber = [[aMotionInfo objectForKey:@"Cancel Koma"] intValue]; // キャンセル時の終了アニメーション開始コマ
         
@@ -195,18 +229,20 @@
             if (interval == 0) {
                 interval = defaultInterval;
             }
-            //int komaNumber = [[aKomaInfo objectForKey:@"Koma Number"] intValue];
-            NSString* imageTicket = [aKomaInfo objectForKey:@"Image Ticket"];
-            int atlasIndex = [[aKomaInfo objectForKey:@"Atlas Index"] intValue];
+            int textureID = [[aKomaInfo objectForKey:@"Texture ID"] intValue];
+            KRRect2D atlasRect;
+            atlasRect.x = (double)[[aKomaInfo objectForKey:@"Atlas X"] intValue];
+            atlasRect.y = (double)[[aKomaInfo objectForKey:@"Atlas Y"] intValue];
+            atlasRect.width = (double)[[aKomaInfo objectForKey:@"Atlas Width"] intValue];
+            atlasRect.height = (double)[[aKomaInfo objectForKey:@"Atlas Height"] intValue];
             BOOL isCancelable = [[aKomaInfo objectForKey:@"Cancelable"] boolValue];
-            int gotoTarget = [[aKomaInfo objectForKey:@"Goto Target"] intValue];
+            int gotoTargetIndex = [[aKomaInfo objectForKey:@"Goto Target Index"] intValue];
 
             NSArray* hitInfos = [aKomaInfo objectForKey:@"Hit Infos"];
 
             _KRChara2DKoma* aKoma = new _KRChara2DKoma();
             aKoma->_importHitArea(hitInfos);
-            aKoma->initForBoxChara2D([imageTicket cStringUsingEncoding:NSUTF8StringEncoding], atlasIndex, interval,
-                                     (isCancelable? true: false), gotoTarget);
+            aKoma->initForBoxChara2D(textureID, atlasRect, interval, (isCancelable? true: false), gotoTargetIndex);
             aMotion->addKoma(aKoma);
         }
         
@@ -229,9 +265,9 @@
     
     int particleID = [[particle2DInfo objectForKey:@"Resource ID"] intValue];
     int groupID = [[particle2DInfo objectForKey:@"Group ID"] intValue];
-    NSString* imageTicket = [particle2DInfo objectForKey:@"Image Ticket"];
-    
-    gKRAnime2DMan->_addParticle2DWithTicket(particleID, groupID, [imageTicket cStringUsingEncoding:NSUTF8StringEncoding]);
+    int textureID = [[particle2DInfo objectForKey:@"Texture ID"] intValue];
+
+    gKRAnime2DMan->_addParticle2DWithTextureID(groupID, particleID, textureID);
     
     KRBlendMode blendMode = KRBlendModeAddition;
     KRColor color = KRColor::White;
@@ -346,54 +382,6 @@
     particleSys->setMinV(minV);
     particleSys->setScaleDelta(deltaScale);
     particleSys->setColorDelta(deltaRed, deltaGreen, deltaBlue, deltaAlpha);
-}
-
-- (void)skipTexture2D
-{
-    unsigned infoSize = [mContext readUnsignedIntValue];
-    [mContext skip:infoSize];
-
-    if ([mContext checkResourceType] != BXResourceTypeData) {
-        throw KRRuntimeError("KRGameManager::addResources(): Resource data is lacking: 0x%06x", [mContext currentPos]-4);
-    }
-    
-    unsigned dataLength = [mContext readUnsignedIntValue];
-    [mContext skip:dataLength];
-}
-
-- (void)importTexture2D
-{
-    unsigned infoSize = [mContext readUnsignedIntValue];
-    NSData* data = [mContext readDataWithLength:infoSize];
-    
-    NSString* errorStr = nil;
-    NSDictionary* tex2DInfo = [NSPropertyListSerialization propertyListFromData:data
-                                                               mutabilityOption:NSPropertyListImmutable
-                                                                         format:nil
-                                                               errorDescription:&errorStr];
-    
-    if ([mContext checkResourceType] != BXResourceTypeData) {
-        throw KRRuntimeError("KRGameManager::addResources(): Resource data is lacking: 0x%06x", [mContext currentPos]-4);
-    }
-    
-    unsigned dataLength = [mContext readUnsignedIntValue];
-    unsigned dataStartPos = [mContext currentPos];
-    
-    int groupID = [[tex2DInfo objectForKey:@"Group ID"] intValue];
-    int resourceID = [[tex2DInfo objectForKey:@"Resource ID"] intValue];
-    NSString* resourceName = [tex2DInfo objectForKey:@"Resource Name"];
-    NSString* ticket = [tex2DInfo objectForKey:@"Ticket"];
-    
-    NSLog(@"Resource: %@ (id=%d)", resourceName, resourceID);
-
-    gKRTex2DMan->_addTexture(groupID,
-                             [resourceName cStringUsingEncoding:NSUTF8StringEncoding],
-                             resourceID,
-                             [ticket cStringUsingEncoding:NSUTF8StringEncoding],
-                             [mFileName cStringUsingEncoding:NSUTF8StringEncoding],
-                             dataStartPos, dataLength);
-    
-    [mContext skip:dataLength];
 }
 
 - (void)importPrimitiveResources
