@@ -1499,7 +1499,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 {
     [oChara2DTextureButton removeAllItems];
     
-    NSMenu* menu = [mTex2DGroup menuForTextures];
+    NSMenu* menu = [mTex2DGroup menuForChara2DTextures];
     [oChara2DTextureButton setMenu:menu];
     
     if ([[menu itemArray] count] == 0) {
@@ -2169,8 +2169,10 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     int texCount = [mTex2DGroup childCount];
     for (int i = 0; i < texCount; i++) {
         BXTexture2DSpec* aTex = (BXTexture2DSpec*)[mTex2DGroup childAtIndex:i];
-        NSMenuItem* newItem = [theMenu addItemWithTitle:[aTex textureDescription] action:NULL keyEquivalent:@""];
-        [newItem setTag:[aTex resourceID]];
+        if ([aTex atlasCount] == 0) {
+            NSMenuItem* newItem = [theMenu addItemWithTitle:[aTex textureDescription] action:NULL keyEquivalent:@""];
+            [newItem setTag:[aTex resourceID]];
+        }
     }
     
     BXSingleParticle2DSpec* selectedParticle = [self selectedSingleParticle2DSpec];

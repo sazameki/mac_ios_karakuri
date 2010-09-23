@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="101602"/>
+			<integer value="100186"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -248,7 +248,7 @@
 										<object class="NSTabViewItem" id="484800662">
 											<string key="NSIdentifier">texture2d-editor</string>
 											<object class="NSView" key="NSView" id="915723898">
-												<reference key="NSNextResponder" ref="225689728"/>
+												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1119,41 +1119,40 @@
 															</object>
 														</object>
 													</object>
-													<object class="NSTextField" id="334348846">
+													<object class="NSTextField" id="51582626">
 														<reference key="NSNextResponder" ref="915723898"/>
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{14, 2}, {136, 14}}</string>
 														<reference key="NSSuperview" ref="915723898"/>
 														<bool key="NSEnabled">YES</bool>
-														<object class="NSTextFieldCell" key="NSCell" id="796782443">
+														<object class="NSTextFieldCell" key="NSCell" id="268743000">
 															<int key="NSCellFlags">68288064</int>
 															<int key="NSCellFlags2">272761856</int>
 															<string key="NSContents">画像サイズ（ピクセル）：</string>
 															<reference key="NSSupport" ref="430017602"/>
-															<reference key="NSControlView" ref="334348846"/>
+															<reference key="NSControlView" ref="51582626"/>
 															<reference key="NSBackgroundColor" ref="806369588"/>
 															<reference key="NSTextColor" ref="229662932"/>
 														</object>
 													</object>
-													<object class="NSTextField" id="748936980">
+													<object class="NSTextField" id="1057401157">
 														<reference key="NSNextResponder" ref="915723898"/>
 														<int key="NSvFlags">292</int>
 														<string key="NSFrame">{{152, 2}, {136, 14}}</string>
 														<reference key="NSSuperview" ref="915723898"/>
 														<bool key="NSEnabled">YES</bool>
-														<object class="NSTextFieldCell" key="NSCell" id="65706471">
+														<object class="NSTextFieldCell" key="NSCell" id="23297201">
 															<int key="NSCellFlags">68288064</int>
 															<int key="NSCellFlags2">272761856</int>
 															<string key="NSContents">xxxxxxxxxx</string>
 															<reference key="NSSupport" ref="430017602"/>
-															<reference key="NSControlView" ref="748936980"/>
+															<reference key="NSControlView" ref="1057401157"/>
 															<reference key="NSBackgroundColor" ref="806369588"/>
 															<reference key="NSTextColor" ref="229662932"/>
 														</object>
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
-												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Texture2D</string>
 											<reference key="NSColor" ref="806369588"/>
@@ -3477,7 +3476,7 @@
 										<object class="NSTabViewItem" id="1013352480">
 											<string key="NSIdentifier">particle2d-editor</string>
 											<object class="NSView" key="NSView" id="539060000">
-												<nil key="NSNextResponder"/>
+												<reference key="NSNextResponder" ref="225689728"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3726,14 +3725,14 @@
 															<object class="NSTabViewItem" id="733706566">
 																<string key="NSIdentifier">1</string>
 																<object class="NSView" key="NSView" id="812629266">
-																	<nil key="NSNextResponder"/>
+																	<reference key="NSNextResponder" ref="28533926"/>
 																	<int key="NSvFlags">256</int>
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
 																		<object class="NSPopUpButton" id="553642634">
 																			<reference key="NSNextResponder" ref="812629266"/>
 																			<int key="NSvFlags">268</int>
-																			<string key="NSFrame">{{53, 81}, {154, 22}}</string>
+																			<string key="NSFrame">{{86, 81}, {134, 22}}</string>
 																			<reference key="NSSuperview" ref="812629266"/>
 																			<bool key="NSEnabled">YES</bool>
 																			<object class="NSPopUpButtonCell" key="NSCell" id="513292477">
@@ -3927,13 +3926,13 @@
 																		<object class="NSTextField" id="600498688">
 																			<reference key="NSNextResponder" ref="812629266"/>
 																			<int key="NSvFlags">268</int>
-																			<string key="NSFrame">{{14, 87}, {37, 14}}</string>
+																			<string key="NSFrame">{{14, 87}, {70, 14}}</string>
 																			<reference key="NSSuperview" ref="812629266"/>
 																			<bool key="NSEnabled">YES</bool>
 																			<object class="NSTextFieldCell" key="NSCell" id="696452599">
 																				<int key="NSCellFlags">68288064</int>
 																				<int key="NSCellFlags2">272761856</int>
-																				<string key="NSContents">画像：</string>
+																				<string key="NSContents">テクスチャ：</string>
 																				<reference key="NSSupport" ref="430017602"/>
 																				<reference key="NSControlView" ref="600498688"/>
 																				<reference key="NSBackgroundColor" ref="806369588"/>
@@ -3966,7 +3965,7 @@
 																					<string>NSColor pasteboard type</string>
 																				</object>
 																			</object>
-																			<string key="NSFrame">{{105, 24}, {96, 23}}</string>
+																			<string key="NSFrame">{{105, 24}, {112, 23}}</string>
 																			<reference key="NSSuperview" ref="812629266"/>
 																			<bool key="NSEnabled">YES</bool>
 																			<bool key="NSIsBordered">YES</bool>
@@ -3994,7 +3993,7 @@
 																		<object class="NSPopUpButton" id="310386622">
 																			<reference key="NSNextResponder" ref="812629266"/>
 																			<int key="NSvFlags">268</int>
-																			<string key="NSFrame">{{102, 51}, {105, 22}}</string>
+																			<string key="NSFrame">{{102, 51}, {118, 22}}</string>
 																			<reference key="NSSuperview" ref="812629266"/>
 																			<bool key="NSEnabled">YES</bool>
 																			<object class="NSPopUpButtonCell" key="NSCell" id="1006809556">
@@ -4419,6 +4418,7 @@
 																		</object>
 																	</object>
 																	<string key="NSFrame">{{10, 25}, {462, 117}}</string>
+																	<reference key="NSSuperview" ref="28533926"/>
 																</object>
 																<string key="NSLabel">基本設定</string>
 																<reference key="NSColor" ref="806369588"/>
@@ -4427,7 +4427,7 @@
 															<object class="NSTabViewItem" id="994292759">
 																<string key="NSIdentifier">2</string>
 																<object class="NSView" key="NSView" id="775903663">
-																	<reference key="NSNextResponder" ref="28533926"/>
+																	<nil key="NSNextResponder"/>
 																	<int key="NSvFlags">256</int>
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
@@ -5285,7 +5285,6 @@
 																		</object>
 																	</object>
 																	<string key="NSFrame">{{10, 25}, {462, 117}}</string>
-																	<reference key="NSSuperview" ref="28533926"/>
 																</object>
 																<string key="NSLabel">移動設定</string>
 																<reference key="NSColor" ref="806369588"/>
@@ -5860,14 +5859,14 @@
 																<reference key="NSTabView" ref="28533926"/>
 															</object>
 														</object>
-														<reference key="NSSelectedTabViewItem" ref="994292759"/>
+														<reference key="NSSelectedTabViewItem" ref="733706566"/>
 														<reference key="NSFont" ref="26"/>
 														<int key="NSTvFlags">134217728</int>
 														<bool key="NSAllowTruncatedLabels">YES</bool>
 														<bool key="NSDrawsBackground">YES</bool>
 														<object class="NSMutableArray" key="NSSubviews">
 															<bool key="EncodedWithXMLCoder">YES</bool>
-															<reference ref="775903663"/>
+															<reference ref="812629266"/>
 														</object>
 													</object>
 													<object class="NSCustomView" id="107855883">
@@ -5971,20 +5970,21 @@
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
+												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Particle2D</string>
 											<reference key="NSColor" ref="806369588"/>
 											<reference key="NSTabView" ref="225689728"/>
 										</object>
 									</object>
-									<reference key="NSSelectedTabViewItem" ref="484800662"/>
+									<reference key="NSSelectedTabViewItem" ref="1013352480"/>
 									<reference key="NSFont" ref="22"/>
 									<int key="NSTvFlags">268435462</int>
 									<bool key="NSAllowTruncatedLabels">YES</bool>
 									<bool key="NSDrawsBackground">YES</bool>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<reference ref="915723898"/>
+										<reference ref="539060000"/>
 									</object>
 								</object>
 							</object>
@@ -10965,7 +10965,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oTex2DImageSizeField</string>
 						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="748936980"/>
+						<reference key="destination" ref="1057401157"/>
 					</object>
 					<int key="connectionID">101841</int>
 				</object>
@@ -15584,8 +15584,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="1004497464"/>
 							<reference ref="46036246"/>
 							<reference ref="720722624"/>
-							<reference ref="334348846"/>
-							<reference ref="748936980"/>
+							<reference ref="51582626"/>
+							<reference ref="1057401157"/>
 						</object>
 						<reference key="parent" ref="484800662"/>
 					</object>
@@ -16225,31 +16225,31 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">101837</int>
-						<reference key="object" ref="334348846"/>
+						<reference key="object" ref="51582626"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="796782443"/>
+							<reference ref="268743000"/>
 						</object>
 						<reference key="parent" ref="915723898"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">101838</int>
-						<reference key="object" ref="796782443"/>
-						<reference key="parent" ref="334348846"/>
+						<reference key="object" ref="268743000"/>
+						<reference key="parent" ref="51582626"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">101839</int>
-						<reference key="object" ref="748936980"/>
+						<reference key="object" ref="1057401157"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="65706471"/>
+							<reference ref="23297201"/>
 						</object>
 						<reference key="parent" ref="915723898"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">101840</int>
-						<reference key="object" ref="65706471"/>
-						<reference key="parent" ref="748936980"/>
+						<reference key="object" ref="23297201"/>
+						<reference key="parent" ref="1057401157"/>
 					</object>
 				</object>
 			</object>
