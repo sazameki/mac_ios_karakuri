@@ -39,6 +39,7 @@
     IBOutlet NSOutlineView*             oTex2DAtlasListView;
     IBOutlet NSTextField*               oTex2DAtlasStartPosXField;
     IBOutlet NSButton*                  oTex2DAtlasPreviewOnButton;
+    IBOutlet NSTextField*               oTex2DImageSizeField;
 
     ///// 2Dキャラクタの設定用アウトレット
     IBOutlet NSTextField*               oChara2DGroupIDField;
@@ -260,6 +261,8 @@
 - (void)setTex2DAtlasCountX:(int)x;
 - (int)tex2DAtlasCountY;
 - (void)setTex2DAtlasCountY:(int)y;
+
+- (void)setTex2DSizeDescription:(NSString*)desc;
 
 
 ///// 2Dキャラクタ設定に関するメソッド

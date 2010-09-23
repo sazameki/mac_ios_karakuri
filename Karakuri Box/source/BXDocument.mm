@@ -1527,6 +1527,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     [oChara2DImageAtlasView setNeedsDisplay:YES];    
 }
 
+- (void)setTex2DSizeDescription:(NSString*)desc
+{
+    [oTex2DImageSizeField setStringValue:desc];
+}
+
 
 #pragma mark -
 #pragma mark 2Dパーティクルの設定アクション

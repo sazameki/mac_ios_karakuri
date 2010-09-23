@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="100671"/>
+			<integer value="101602"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -248,7 +248,7 @@
 										<object class="NSTabViewItem" id="484800662">
 											<string key="NSIdentifier">texture2d-editor</string>
 											<object class="NSView" key="NSView" id="915723898">
-												<nil key="NSNextResponder"/>
+												<reference key="NSNextResponder" ref="225689728"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -446,7 +446,7 @@
 													<object class="NSTextField" id="690865801">
 														<reference key="NSNextResponder" ref="915723898"/>
 														<int key="NSvFlags">268</int>
-														<string key="NSFrame">{{90, 609}, {204, 19}}</string>
+														<string key="NSFrame">{{90, 609}, {181, 19}}</string>
 														<reference key="NSSuperview" ref="915723898"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="192175656">
@@ -463,7 +463,7 @@
 													<object class="NSButton" id="720722624">
 														<reference key="NSNextResponder" ref="915723898"/>
 														<int key="NSvFlags">268</int>
-														<string key="NSFrame">{{297, 604}, {96, 28}}</string>
+														<string key="NSFrame">{{274, 604}, {96, 28}}</string>
 														<reference key="NSSuperview" ref="915723898"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSButtonCell" key="NSCell" id="1054232655">
@@ -1119,8 +1119,41 @@
 															</object>
 														</object>
 													</object>
+													<object class="NSTextField" id="334348846">
+														<reference key="NSNextResponder" ref="915723898"/>
+														<int key="NSvFlags">292</int>
+														<string key="NSFrame">{{14, 2}, {136, 14}}</string>
+														<reference key="NSSuperview" ref="915723898"/>
+														<bool key="NSEnabled">YES</bool>
+														<object class="NSTextFieldCell" key="NSCell" id="796782443">
+															<int key="NSCellFlags">68288064</int>
+															<int key="NSCellFlags2">272761856</int>
+															<string key="NSContents">画像サイズ（ピクセル）：</string>
+															<reference key="NSSupport" ref="430017602"/>
+															<reference key="NSControlView" ref="334348846"/>
+															<reference key="NSBackgroundColor" ref="806369588"/>
+															<reference key="NSTextColor" ref="229662932"/>
+														</object>
+													</object>
+													<object class="NSTextField" id="748936980">
+														<reference key="NSNextResponder" ref="915723898"/>
+														<int key="NSvFlags">292</int>
+														<string key="NSFrame">{{152, 2}, {136, 14}}</string>
+														<reference key="NSSuperview" ref="915723898"/>
+														<bool key="NSEnabled">YES</bool>
+														<object class="NSTextFieldCell" key="NSCell" id="65706471">
+															<int key="NSCellFlags">68288064</int>
+															<int key="NSCellFlags2">272761856</int>
+															<string key="NSContents">xxxxxxxxxx</string>
+															<reference key="NSSupport" ref="430017602"/>
+															<reference key="NSControlView" ref="748936980"/>
+															<reference key="NSBackgroundColor" ref="806369588"/>
+															<reference key="NSTextColor" ref="229662932"/>
+														</object>
+													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
+												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Texture2D</string>
 											<reference key="NSColor" ref="806369588"/>
@@ -1129,7 +1162,7 @@
 										<object class="NSTabViewItem" id="358377521">
 											<string key="NSIdentifier">chara2d-editor</string>
 											<object class="NSView" key="NSView" id="77651629">
-												<reference key="NSNextResponder" ref="225689728"/>
+												<nil key="NSNextResponder"/>
 												<int key="NSvFlags">256</int>
 												<object class="NSMutableArray" key="NSSubviews">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -3436,7 +3469,6 @@
 													</object>
 												</object>
 												<string key="NSFrameSize">{829, 663}</string>
-												<reference key="NSSuperview" ref="225689728"/>
 											</object>
 											<string key="NSLabel">Chara2D</string>
 											<reference key="NSColor" ref="806369588"/>
@@ -5945,14 +5977,14 @@
 											<reference key="NSTabView" ref="225689728"/>
 										</object>
 									</object>
-									<reference key="NSSelectedTabViewItem" ref="358377521"/>
+									<reference key="NSSelectedTabViewItem" ref="484800662"/>
 									<reference key="NSFont" ref="22"/>
 									<int key="NSTvFlags">268435462</int>
 									<bool key="NSAllowTruncatedLabels">YES</bool>
 									<bool key="NSDrawsBackground">YES</bool>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
-										<reference ref="77651629"/>
+										<reference ref="915723898"/>
 									</object>
 								</object>
 							</object>
@@ -10929,6 +10961,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<int key="connectionID">101836</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oTex2DImageSizeField</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="748936980"/>
+					</object>
+					<int key="connectionID">101841</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -15535,7 +15575,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="1035070814"/>
 							<reference ref="1013833372"/>
 							<reference ref="690865801"/>
-							<reference ref="720722624"/>
 							<reference ref="539413113"/>
 							<reference ref="384343144"/>
 							<reference ref="854097096"/>
@@ -15544,6 +15583,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="596844468"/>
 							<reference ref="1004497464"/>
 							<reference ref="46036246"/>
+							<reference ref="720722624"/>
+							<reference ref="334348846"/>
+							<reference ref="748936980"/>
 						</object>
 						<reference key="parent" ref="484800662"/>
 					</object>
@@ -16180,6 +16222,34 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<int key="objectID">101835</int>
 						<reference key="object" ref="20872008"/>
 						<reference key="parent" ref="235843863"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">101837</int>
+						<reference key="object" ref="334348846"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="796782443"/>
+						</object>
+						<reference key="parent" ref="915723898"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">101838</int>
+						<reference key="object" ref="796782443"/>
+						<reference key="parent" ref="334348846"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">101839</int>
+						<reference key="object" ref="748936980"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="65706471"/>
+						</object>
+						<reference key="parent" ref="915723898"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">101840</int>
+						<reference key="object" ref="65706471"/>
+						<reference key="parent" ref="748936980"/>
 					</object>
 				</object>
 			</object>
@@ -16998,6 +17068,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>101834.IBPluginDependency</string>
 					<string>101834.IBViewBoundsToFrameTransform</string>
 					<string>101835.IBPluginDependency</string>
+					<string>101837.IBPluginDependency</string>
+					<string>101837.IBViewBoundsToFrameTransform</string>
+					<string>101838.IBPluginDependency</string>
+					<string>101839.IBPluginDependency</string>
+					<string>101839.IBViewBoundsToFrameTransform</string>
+					<string>101840.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.IBWindowTemplateEditedContentRect</string>
@@ -17787,7 +17863,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDtwAAxB2AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDlIAAxB2AAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -17936,6 +18012,16 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<bytes key="NSTransformStruct">P4AAAL+AAABDcgAAwlwAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBYAAAwWAAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDGAAAwWAAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{127, 628}, {1000, 683}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{127, 628}, {1000, 683}}</string>
@@ -17963,7 +18049,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">101836</int>
+			<int key="maxID">101841</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -19044,6 +19130,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>oTex2DAtlasStartPosXField</string>
 							<string>oTex2DGroupIDField</string>
 							<string>oTex2DImageNameField</string>
+							<string>oTex2DImageSizeField</string>
 							<string>oTex2DPreviewScaleButton</string>
 							<string>oTex2DPreviewView</string>
 							<string>oTex2DResourceIDField</string>
@@ -19132,6 +19219,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>SZStatusBarBackgroundView</string>
 							<string>NSOutlineView</string>
 							<string>NSButton</string>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
@@ -19229,6 +19317,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>oTex2DAtlasStartPosXField</string>
 							<string>oTex2DGroupIDField</string>
 							<string>oTex2DImageNameField</string>
+							<string>oTex2DImageSizeField</string>
 							<string>oTex2DPreviewScaleButton</string>
 							<string>oTex2DPreviewView</string>
 							<string>oTex2DResourceIDField</string>
@@ -19570,6 +19659,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oTex2DImageNameField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oTex2DImageSizeField</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">

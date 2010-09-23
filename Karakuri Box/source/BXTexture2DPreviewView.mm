@@ -45,6 +45,7 @@
     [image setFlipped:YES];
 
     NSSize imageSize = [image size];
+    [oDocument setTex2DSizeDescription:[NSString stringWithFormat:@"%d x %d", (int)imageSize.width, (int)imageSize.height]];
     
     [[NSGraphicsContext currentContext] saveGraphicsState];
     
