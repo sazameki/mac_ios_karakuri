@@ -12,7 +12,7 @@
 #include <Karakuri/KRPrimitive2D.h>
 
 
-KRGraphics *gKRGraphicsInst = NULL;
+KRGraphics* gKRGraphicsInst = NULL;
 
 KRGraphics::KRGraphics()
 {

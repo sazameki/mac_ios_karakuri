@@ -27,20 +27,20 @@ class KRSimulator2D;
 class KRShape2D : public KRObject {
     
 protected:
-    void    *mCPBody;
-    void    *mCPShape;
-    bool    mIsStatic;
-    double  mMass;
-    double  mElasticity;
-    double  mFriction;
+    void*       mCPBody;
+    void*       mCPShape;
+    bool        mIsStatic;
+    double      mMass;
+    double      mElasticity;
+    double      mFriction;
     KRVector2D  mCenterPos;
     
-    KRSimulator2D   *mSimulator;
+    KRSimulator2D*  mSimulator;
     
     unsigned    mCollisionID;
 
 private:
-    void    *mRepresentedObject;
+    void*   mRepresentedObject;
     int     mTag;
 
 protected:
@@ -77,7 +77,7 @@ public:
         @method getSimulator
         この図形が追加されているシミュレータを取得します。
      */
-    KRSimulator2D   *getSimulator() const;
+    KRSimulator2D*  getSimulator() const;
     
     /*!
         @method getVelocity
@@ -146,7 +146,7 @@ public:
         @method getRepresentedObject
         この図形に関連付けて管理しているオブジェクトのポインタを取得します。
      */
-    void    *getRepresentedObject() const;
+    void*   getRepresentedObject() const;
     
     /*!
         @method getTag
@@ -159,7 +159,7 @@ public:
         @method setRepresentedObject
         この図形に関連付けて管理するオブジェクトのポインタを指定します。
      */
-    void    setRepresentedObject(void *anObj);
+    void    setRepresentedObject(void* anObj);
     
     /*!
         @method setTag
@@ -188,10 +188,10 @@ protected:
     void    setStatic(bool flag);
 
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) = 0 KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) = 0 KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     virtual void    removeFromSimulator() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
-    void    *getCPBody() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void*   getCPBody() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     virtual std::string to_s() const;
@@ -247,7 +247,7 @@ public:
     void    setLineWidth(double width);
     
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     virtual std::string to_s() const;
@@ -264,7 +264,7 @@ class KRShape2DPoly : public KRShape2D {
     
 protected:
     int         mVertexCount;
-    KRVector2D  *mVertices;
+    KRVector2D* mVertices;
 
 public:
     /*!
@@ -276,7 +276,7 @@ public:
         @abstract 頂点の個数と頂点のデータと中心点の位置を指定して、この図形を初期化します。
         isStatic 引数を true に指定することで、他の図形に影響を与えても自分は影響を受けない static な図形を作成することができます。
      */
-    KRShape2DPoly(int vertexCount, KRVector2D *verts, const KRVector2D& pos, bool isStatic=false);
+    KRShape2DPoly(int vertexCount, KRVector2D* verts, const KRVector2D& pos, bool isStatic=false);
     virtual ~KRShape2DPoly();
     
 protected:
@@ -298,10 +298,10 @@ public:
         @abstract この図形のすべての頂点データの現在位置を、与えられた vertices 配列に設定します。
         この配列は、すべての頂点データを格納するための十分なサイズをもっている必要があります。
      */
-    void        getVertices(KRVector2D *vertices) const;
+    void        getVertices(KRVector2D* vertices) const;
     
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     virtual std::string to_s() const;
@@ -348,7 +348,7 @@ public:
     KRShape2DCircle(const KRVector2D& centerPos, double radius, bool isStatic=false);
     
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     virtual std::string to_s() const;

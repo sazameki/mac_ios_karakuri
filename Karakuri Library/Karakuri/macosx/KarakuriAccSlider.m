@@ -16,11 +16,11 @@
     mDelegate = obj;
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent*)theEvent
 {
     [super mouseDown:theEvent];
     // set up our mouseUp event. 
-    NSEvent *upEvent = [NSEvent mouseEventWithType:NSLeftMouseUp
+    NSEvent* upEvent = [NSEvent mouseEventWithType:NSLeftMouseUp
                                           location:[theEvent locationInWindow] 
                                      modifierFlags:[theEvent modifierFlags]
                                          timestamp:[theEvent timestamp]
@@ -33,7 +33,7 @@
     [NSApp sendEvent:upEvent];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent*)theEvent
 {
     [super mouseUp:theEvent];
     

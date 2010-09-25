@@ -223,7 +223,7 @@ void KRAudioManager::playBGM(int bgmID, double volume)
     
     // BGMが読み込まれていない場合はエラーを表示
     if (mCurrentBGM == NULL) {
-        const char *errorFormat = "BGM with ID %d is not loaded.";
+        const char* errorFormat = "BGM with ID %d is not loaded.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ID が %d の BGM は読み込まれていません。";
         }
@@ -277,7 +277,7 @@ void KRAudioManager::playSE(int seID, double volume, const KRVector3D& sourcePos
 
     // SEが見つからなかったときはエラー
     if (theSound == NULL) {
-        const char *errorFormat = "SE with ID %d is not loaded.";
+        const char* errorFormat = "SE with ID %d is not loaded.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ID が %d の SE は読み込まれていません。";
         }

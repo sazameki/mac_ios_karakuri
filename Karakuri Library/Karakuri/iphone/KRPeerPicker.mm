@@ -26,14 +26,14 @@
         mNetworkBrowser = [[KRNetworkBrowser alloc] initWithGameID:[NSString stringWithCString:gKRGameMan->getGameIDForNetwork().c_str() encoding:NSUTF8StringEncoding]];
         [mNetworkBrowser setDelegate:self];
 
-        NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
+        NSString* ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
         
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPeerPicker:)];
-        //UIBarButtonItem *bluetoothButton = [[UIBarButtonItem alloc] initWithTitle:@"Bluetooth" style:UIBarButtonItemStylePlain target:self action:@selector(changeToBluetoothMode:)];
+        UIBarButtonItem* closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelPeerPicker:)];
+        //UIBarButtonItem* bluetoothButton = [[UIBarButtonItem alloc] initWithTitle:@"Bluetooth" style:UIBarButtonItemStylePlain target:self action:@selector(changeToBluetoothMode:)];
         //bluetoothButton.enabled = NO;
         
-        UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:(isHorizontal? CGRectMake(0, 0, 480, 74): CGRectMake(0, 0, 320, 74))];
-        UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:ownName];
+        UINavigationBar* navBar = [[UINavigationBar alloc] initWithFrame:(isHorizontal? CGRectMake(0, 0, 480, 74): CGRectMake(0, 0, 320, 74))];
+        UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:ownName];
         navItem.leftBarButtonItem = closeButton;
         //navItem.rightBarButtonItem = bluetoothButton;
         if (gKRLanguage == KRLanguageJapanese) {
@@ -88,19 +88,19 @@
 #pragma mark -
 #pragma mark NetService delgation
 
-- (void)netService:(NSNetService *)service didNotResolve:(NSDictionary *)errorDict
+- (void)netService:(NSNetService*)service didNotResolve:(NSDictionary*)errorDict
 {
     [service stop];
     NSLog(@"netServiceDidNotResolve: %@", errorDict);
 }
 
-- (void)netServiceDidResolveAddress:(NSNetService *)service
+- (void)netServiceDidResolveAddress:(NSNetService*)service
 {
-    struct sockaddr *sockAddr = NULL;
-    NSData *addressData = nil;
+    struct sockaddr* sockAddr = NULL;
+    NSData* addressData = nil;
     for (int i = 0; i < [[service addresses] count]; i++) {
-        NSData *addrData = [[service addresses] objectAtIndex:i];
-        sockAddr = (struct sockaddr *)[addrData bytes];
+        NSData* addrData = [[service addresses] objectAtIndex:i];
+        sockAddr = (struct sockaddr*)[addrData bytes];
         if (sockAddr->sa_family == AF_INET && sockAddr->sa_len == sizeof(struct sockaddr_in)) {
             addressData = addrData;
             break;
@@ -118,34 +118,34 @@
 #pragma mark -
 #pragma mark Table View DataSource & Delegation
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [[mNetworkBrowser services] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-	static NSString *tableCellIdentifier = @"UITableViewCell";
+	static NSString* tableCellIdentifier = @"UITableViewCell";
 
-	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:tableCellIdentifier];
+	UITableViewCell* cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:tableCellIdentifier];
 	if (!cell) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableCellIdentifier] autorelease];
 	}
     
-    NSNetService *aService = [[mNetworkBrowser services] objectAtIndex:indexPath.row];
+    NSNetService* aService = [[mNetworkBrowser services] objectAtIndex:indexPath.row];
     cell.textLabel.text = [aService name];
 
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSNetService *theService = [[mNetworkBrowser services] objectAtIndex:indexPath.row];
+    NSNetService* theService = [[mNetworkBrowser services] objectAtIndex:indexPath.row];
     [theService scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [theService setDelegate:self];
     [theService resolveWithTimeout:20.0];    
@@ -155,7 +155,7 @@
 #pragma mark -
 #pragma mark Network Browser Delegation
 
-- (void)networkBrowserDidUpdatePeerPist:(KRNetworkBrowser *)browser
+- (void)networkBrowserDidUpdatePeerPist:(KRNetworkBrowser*)browser
 {
     [mTableView reloadData];
 }

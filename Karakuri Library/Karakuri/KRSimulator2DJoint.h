@@ -24,26 +24,26 @@ class KRSimulator2D;
 class KRJoint2D : public KRObject {
     
 private:
-    void    *mRepresentedObject;
+    void*   mRepresentedObject;
     int     mTag;
     
 protected:
-    void    *mConstraint;
+    void*   mConstraint;
 
-    KRShape2D   *mShape1;
-    KRShape2D   *mShape2;
+    KRShape2D*  mShape1;
+    KRShape2D*  mShape2;
     KRVector2D  mAnchor1;
     KRVector2D  mAnchor2;
     bool        mIsStatic;
     
-    KRSimulator2D   *mSimulator;
+    KRSimulator2D*  mSimulator;
 
 protected:
     bool        mIsRemovedFromSpace;
 
 protected:
-    KRJoint2D(KRShape2D *shape, const KRVector2D& anchor, const KRVector2D& staticAnchor);
-    KRJoint2D(KRShape2D *shape1, const KRVector2D& anchor1,  KRShape2D *shape2, const KRVector2D& anchor2);
+    KRJoint2D(KRShape2D* shape, const KRVector2D& anchor, const KRVector2D& staticAnchor);
+    KRJoint2D(KRShape2D* shape1, const KRVector2D& anchor1,  KRShape2D* shape2, const KRVector2D& anchor2);
 	virtual ~KRJoint2D();
 
 public:
@@ -69,19 +69,19 @@ public:
         @method getShape1
         このジョイントが結合している1つ目の図形を取得します。
      */
-    KRShape2D   *getShape1() const;
+    KRShape2D*  getShape1() const;
 
     /*!
         @method getShape2
         このジョイントが結合している2つ目の図形を取得します。
      */
-    KRShape2D   *getShape2() const;
+    KRShape2D*  getShape2() const;
 
     /*!
         @method getSimulator
         このジョイントが追加されているシミュレータを取得します。
      */
-    KRSimulator2D   *getSimulator() const;
+    KRSimulator2D*  getSimulator() const;
 
     /*!
         @method isStatic
@@ -98,7 +98,7 @@ public:
         @method getRepresentedObject
         このジョイントに関連付けて管理しているオブジェクトのポインタを取得します。
      */
-    void    *getRepresentedObject() const;
+    void*   getRepresentedObject() const;
 
     /*!
         @method getTag
@@ -111,7 +111,7 @@ public:
         @method setRepresentedObject
         このジョイントに関連付けて管理するオブジェクトのポインタを指定します。
      */
-    void    setRepresentedObject(void *anObj);
+    void    setRepresentedObject(void* anObj);
 
     /*!
         @method setTag
@@ -121,7 +121,7 @@ public:
 
 
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) = 0 KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) = 0 KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     virtual void    removeFromSimulator() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
@@ -143,17 +143,17 @@ public:
         @abstract シミュレータの場と図形を結合させるための結合部を作成します。
         anchor は shape のローカル座標であり、staticAnchor はワールド座標であることに注意してください。
      */
-    KRJoint2DPivot(KRShape2D *shape, const KRVector2D& anchor, const KRVector2D& staticAnchor);
+    KRJoint2DPivot(KRShape2D* shape, const KRVector2D& anchor, const KRVector2D& staticAnchor);
 
     /*!
         @method KRJoint2DPivot
         @abstract 2つの図形を結合させるための結合部を作成します。
         anchor1 は shape1 の、anchor2 は shape2 のローカル座標であることに注意してください。
      */
-	KRJoint2DPivot(KRShape2D *shape1, const KRVector2D& anchor1,  KRShape2D *shape2, const KRVector2D& anchor2);
+	KRJoint2DPivot(KRShape2D* shape1, const KRVector2D& anchor1,  KRShape2D* shape2, const KRVector2D& anchor2);
 
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     virtual std::string to_s() const;
@@ -182,14 +182,14 @@ public:
         @abstract シミュレータの場と図形を結合させるためのバネを作成します。
         anchor は shape のローカル座標であり、staticAnchor はワールド座標であることに注意してください。
      */
-	KRJoint2DSpring(KRShape2D *shape, const KRVector2D& anchor, const KRVector2D& staticAnchor);
+	KRJoint2DSpring(KRShape2D* shape, const KRVector2D& anchor, const KRVector2D& staticAnchor);
     
     /*!
         @method KRJoint2DSpring
         @abstract 2つの図形を結合させるためのバネを作成します。
         anchor1 は shape1 の、anchor2 は shape2 のローカル座標であることに注意してください。
      */
-	KRJoint2DSpring(KRShape2D *shape1, const KRVector2D& anchor1,  KRShape2D *shape2, const KRVector2D& anchor2);
+	KRJoint2DSpring(KRShape2D* shape1, const KRVector2D& anchor1,  KRShape2D* shape2, const KRVector2D& anchor2);
 
 	virtual ~KRJoint2DSpring();
     
@@ -240,7 +240,7 @@ public:
     void    setStiffness(double value);
 
 public:
-    virtual void    addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    virtual void    addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 public:
     virtual std::string to_s() const;

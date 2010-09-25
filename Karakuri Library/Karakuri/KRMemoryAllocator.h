@@ -21,7 +21,7 @@
 #define KR_DECLARE_USE_ALLOCATOR(allocator)\
     public:\
         void*   operator new(size_t size) { return allocator->allocate(size); }\
-        void    operator delete(void *ptr) { allocator->release(ptr); }\
+        void    operator delete(void* ptr) { allocator->release(ptr); }\
     private:
 
 /*

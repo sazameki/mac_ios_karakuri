@@ -27,7 +27,7 @@ public:
 
 public:
     KRWorld*    getCurrentWorld() const;
-    void        registerWorld(const std::string& name, KRWorld *aWorld);
+    void        registerWorld(const std::string& name, KRWorld* aWorld);
     KRWorld*    getWorldWithName(const std::string &name);
     KRWorld*    selectWorldWithName(const std::string &name, bool useLoadingThread);
 
@@ -41,6 +41,6 @@ public:
 };
 
 
-extern KRWorldManager *gKRWorldManagerInst;
+extern KRWorldManager*  gKRWorldManagerInst;
 
 

@@ -29,7 +29,7 @@ class KRAnime2DManager : public KRObject {
     std::map<int, _KRChara2DSpec*>  mCharaSpecMap;
     std::list<KRChara2D*>           mCharas;
     
-    std::map<int, _KRParticle2DSystem*>  mParticleSystemMap;
+    std::map<int, _KRParticle2DSystem*> mParticleSystemMap;
     std::map<int, KRSimulator2D*>       mSimulatorMap;
     
     int                             mNextInnerCharaSpecID;
@@ -54,10 +54,10 @@ public:
     void    draw();
     
     /*!
-        @-method stepAllCharas
+        @-method _stepAllCharas
         すべてのキャラクタのアニメーションをステップ実行します。
      */
-    void    stepAllCharas();
+    void    _stepAllCharas();
     
     
 #pragma mark ---- キャラクタの管理 ----
@@ -71,7 +71,7 @@ public:
         @abstract キャラクタの ID を指定して、新しいキャラクタの特徴を追加します。
         追加されたキャラクタの特徴は、ゲーム終了時に自動的に delete されます。
      */
-    void    _addCharaSpec(int specID, _KRChara2DSpec *spec);
+    void    _addCharaSpec(int specID, _KRChara2DSpec* spec);
     
     /*!
         @-method loadCharaSpecs
@@ -144,9 +144,9 @@ public:
         @method removeChara2D
         キャラクタを削除します。削除したキャラクタは即座に delete されますので、このメソッドの呼び出し後のタイミングでキャラクタオブジェクトに対する操作を行わないでください。
      */
-    void    removeChara2D(KRChara2D *chara);
+    void    removeChara2D(KRChara2D* chara);
 
-    void    _reorderChara2D(KRChara2D *chara);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+    void    _reorderChara2D(KRChara2D* chara);    KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 
     
 #pragma mark ---- 2Dシミュレータの管理 ----

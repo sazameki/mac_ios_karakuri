@@ -13,7 +13,7 @@
 
 @implementation KRNetworkBrowser
 
-+ (NSString *)bonjourTypeFromIdentifier:(NSString *)identifier
++ (NSString*)bonjourTypeFromIdentifier:(NSString*)identifier
 {
 	if (![identifier length]) {
 		return nil;
@@ -22,7 +22,7 @@
     return [NSString stringWithFormat:@"_%@._tcp.", identifier];
 }
 
-- (id)initWithGameID:(NSString *)gameID
+- (id)initWithGameID:(NSString*)gameID
 {
     self = [super init];
     if (self) {
@@ -47,10 +47,10 @@
     mDelegate = delegate;
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didRemoveService:(NSNetService *)service moreComing:(BOOL)moreComing
+- (void)netServiceBrowser:(NSNetServiceBrowser*)netServiceBrowser didRemoveService:(NSNetService*)service moreComing:(BOOL)moreComing
 {
-    NSString *serviceName = [service name];
-    NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
+    NSString* serviceName = [service name];
+    NSString* ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
     if (![serviceName isEqualToString:ownName]) {
         [mServices removeObject:service];
         if (mDelegate && [mDelegate respondsToSelector:@selector(networkBrowserDidUpdatePeerPist:)]) {
@@ -59,10 +59,10 @@
     }
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)service moreComing:(BOOL)moreComing
+- (void)netServiceBrowser:(NSNetServiceBrowser*)netServiceBrowser didFindService:(NSNetService*)service moreComing:(BOOL)moreComing
 {
-    NSString *serviceName = [service name];
-    NSString *ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
+    NSString* serviceName = [service name];
+    NSString* ownName = [NSString stringWithCString:gKRNetworkInst->getOwnName().c_str() encoding:NSUTF8StringEncoding];
     if (![serviceName isEqualToString:ownName]) {
         [mServices addObject:service];
         if (mDelegate && [mDelegate respondsToSelector:@selector(networkBrowserDidUpdatePeerPist:)]) {
@@ -71,7 +71,7 @@
     }
 }
 
-- (NSArray *)services
+- (NSArray*)services
 {
     return mServices;
 }

@@ -24,7 +24,7 @@
  */
 class _KRFont : public KRObject {
     
-    void        *mFontObj;
+    void*       mFontObj;
     std::string mFontName;
 
 public:

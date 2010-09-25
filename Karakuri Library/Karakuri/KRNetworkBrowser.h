@@ -14,23 +14,23 @@
 
 @protocol KRNetworkBrowserDelegate
 @optional
-- (void)networkBrowserDidUpdatePeerPist:(KRNetworkBrowser *)browser;
+- (void)networkBrowserDidUpdatePeerPist:(KRNetworkBrowser*)browser;
 @end
 
 
 @interface KRNetworkBrowser : NSObject {
     id              mDelegate;
 
-    NSNetServiceBrowser *mNetServiceBrowser;
-    NSMutableArray      *mServices;
+    NSNetServiceBrowser*    mNetServiceBrowser;
+    NSMutableArray*         mServices;
 }
 
-+ (NSString *)bonjourTypeFromIdentifier:(NSString *)identifier;
++ (NSString*)bonjourTypeFromIdentifier:(NSString*)identifier;
 
-- (id)initWithGameID:(NSString *)gameID;
+- (id)initWithGameID:(NSString*)gameID;
 
 - (void)setDelegate:(id)delegate;
 
-- (NSArray *)services;
+- (NSArray*)services;
 
 @end

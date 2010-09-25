@@ -10,7 +10,7 @@
 
 
 @interface KarakuriEmulatorBackView : NSView {
-    NSImage *mBackgroundImage;
+    NSImage*    mBackgroundImage;
 }
 
 @end

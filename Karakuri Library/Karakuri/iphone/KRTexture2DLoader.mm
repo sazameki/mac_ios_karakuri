@@ -36,7 +36,7 @@ typedef enum {
 } Texture2DPixelFormat;
 
 
-static GLuint _KRCreateGLTextureFromData(const void *data, Texture2DPixelFormat pixelFormat, NSUInteger width, NSUInteger height, CGSize contentSize, KRVector2D *imageSize_, KRVector2D *textureSize_, BOOL isFont)
+static GLuint _KRCreateGLTextureFromData(const void* data, Texture2DPixelFormat pixelFormat, NSUInteger width, NSUInteger height, CGSize contentSize, KRVector2D* imageSize_, KRVector2D* textureSize_, BOOL isFont)
 {
     GLuint  _name;
 	GLint   saveName;
@@ -121,7 +121,7 @@ static GLuint _KRCreateGLTextureFromData(const void *data, Texture2DPixelFormat 
     return _name;
 }
 
-static GLuint _KRCreateGLTextureFromCGImage(CGImageRef imageRef, UIImageOrientation orientation, BOOL sizeToFit, Texture2DPixelFormat pixelFormat, KRVector2D *imageSize_, KRVector2D *textureSize_, NSString *imageName)
+static GLuint _KRCreateGLTextureFromCGImage(CGImageRef imageRef, UIImageOrientation orientation, BOOL sizeToFit, Texture2DPixelFormat pixelFormat, KRVector2D* imageSize_, KRVector2D* textureSize_, NSString* imageName)
 {
     NSUInteger				width;
     NSUInteger              height;
@@ -235,20 +235,21 @@ static GLuint _KRCreateGLTextureFromCGImage(CGImageRef imageRef, UIImageOrientat
 	height = imageSize.height;
 	if ((height != 1) && (height & (height - 1))) {
 		i = 1;
-		while ((sizeToFit ? 2 * i : i) < height)
+		while ((sizeToFit ? 2 * i : i) < height) {
             i *= 2;
+        }
 		height = i;
 	}
 
 	if (width > KRTextureMaxSize) {
-        const char *errorFormat = "Failed to load \"%s\". Texture width should be equal to or lower than %d pixels.";
+        const char* errorFormat = "Failed to load \"%s\". Texture width should be equal to or lower than %d pixels.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの横幅は %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [imageName cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
 	}
 	if (height > KRTextureMaxSize) {
-        const char *errorFormat = "Failed to load \"%s\". Texture height should be equal to or lower than %d pixels.";
+        const char* errorFormat = "Failed to load \"%s\". Texture height should be equal to or lower than %d pixels.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの高さは %d ピクセル以下でなければいけません。";
         }
@@ -388,7 +389,7 @@ GLuint KRCreateGLTextureFromImageWithName(NSString* imageName, KRVector2D* image
 {
     static BOOL hasFailedInternalPNGLoading = NO;
     
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:nil];
+    NSString* imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:nil];
 
     if (!hasFailedInternalPNGLoading && [[imageName pathExtension] compare:@"png" options:NSCaseInsensitiveSearch] == NSOrderedSame) {
         GLuint textureName = KRCreatePNGGLTextureFromImageAtPath(imagePath, imageSize, textureSize, scalesLinear);
@@ -407,7 +408,7 @@ GLuint KRCreateGLTextureFromImageWithName(NSString* imageName, KRVector2D* image
     return ret;
 }
 
-GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D* imageSize, KRVector2D* textureSize, BOOL scalesLinear)
 {
     UIImage* image = [[UIImage alloc] initWithData:data];
 
@@ -418,13 +419,13 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D *imageSize, KRVec
     return ret;
 }
 
-GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& color, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize)
+GLuint KRCreateGLTextureFromString(NSString* str, void* fontObj, const KRColor& color, GLenum* textureTarget, KRVector2D* imageSize, KRVector2D* textureSize)
 {
     CGColorSpaceRef			colorSpace;
 	void*					data;
 	CGContextRef			context;
     
-    CGSize size = [str sizeWithFont:(UIFont *)fontObj];
+    CGSize size = [str sizeWithFont:(UIFont*)fontObj];
     CGSize revisedSize = size;
     int rwidth = revisedSize.width;
     if ((rwidth != 1) && (rwidth & (rwidth - 1))) {
@@ -462,12 +463,12 @@ GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& 
 	CGContextScaleCTM(context, 1.0, -1.0);
 	UIGraphicsPushContext(context);
     CGContextSetRGBFillColor(context, color.r, color.g, color.b, color.a);
-    [str drawAtPoint:CGPointMake(0.0, 0.0f) withFont:(UIFont *)fontObj];
+    [str drawAtPoint:CGPointMake(0.0, 0.0f) withFont:(UIFont*)fontObj];
 	UIGraphicsPopContext();
 
     *textureTarget = GL_TEXTURE_2D;
     
-    unsigned *p = (unsigned *)data;
+    unsigned* p = (unsigned*)data;
     for (int i = 0; i < rwidth * rheight; i++) {
         p[i] |= 0x00ffffff;
     }    

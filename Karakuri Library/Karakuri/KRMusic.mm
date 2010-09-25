@@ -27,19 +27,19 @@ int KRMusic::getResourceSize(const std::string& filename)
 {
     int ret = 0;
 
-    NSString *filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
+    NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
+    NSString* filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (filepath) {
-        NSDictionary *fileInfo = [[NSFileManager defaultManager] fileAttributesAtPath:filepath traverseLink:NO];
+        NSDictionary* fileInfo = [[NSFileManager defaultManager] fileAttributesAtPath:filepath traverseLink:NO];
         ret += (int)[fileInfo fileSize];
     }
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (filepath) {
-        NSDictionary *fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:filepath
+        NSDictionary* fileInfo = [[NSFileManager defaultManager] attributesOfItemAtPath:filepath
                                                                                   error:nil];
         ret += (int)[fileInfo fileSize];
     }
@@ -97,7 +97,7 @@ KRMusic::KRMusic(const std::string& filename, bool loop)
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     NSString* filenameStr = [NSString stringWithCString:filename.c_str() encoding:NSUTF8StringEncoding];
     NSString* filepath = [[NSBundle mainBundle] pathForResource:filenameStr ofType:nil];
-    NSURL *fileURL = nil;
+    NSURL* fileURL = nil;
     
     if (filepath) {
         fileURL = [NSURL fileURLWithPath:filepath];
@@ -126,16 +126,16 @@ KRMusic::~KRMusic()
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            [(NSSound *)mImpl release];
+            [(NSSound*)mImpl release];
         } else {
-            [(_KarakuriSound *)mImpl release];
+            [(_KarakuriSound*)mImpl release];
         }
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl release];
+        [(AVAudioPlayer*)mImpl release];
     }
 #endif
 }
@@ -144,7 +144,7 @@ void KRMusic::prepareToPlay()
 {
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl prepareToPlay];
+        [(AVAudioPlayer*)mImpl prepareToPlay];
     }
 #endif    
 }
@@ -154,9 +154,9 @@ bool KRMusic::isPlaying() const
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            return [(NSSound *)mImpl isPlaying];
+            return [(NSSound*)mImpl isPlaying];
         } else {
-            return [(_KarakuriSound *)mImpl isPlaying];
+            return [(_KarakuriSound*)mImpl isPlaying];
         }
     }
     return false;
@@ -164,7 +164,7 @@ bool KRMusic::isPlaying() const
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        return [(AVAudioPlayer *)mImpl isPlaying];
+        return [(AVAudioPlayer*)mImpl isPlaying];
     }
     return false;
 #endif
@@ -176,19 +176,19 @@ void KRMusic::play()
     if (mImpl) {
         if (sCanUseNSSound) {
             if (mIsPausing) {
-                [(NSSound *)mImpl resume];
+                [(NSSound*)mImpl resume];
             } else {
-                [(NSSound *)mImpl play];
+                [(NSSound*)mImpl play];
             }
         } else {
-            [(_KarakuriSound *)mImpl play];
+            [(_KarakuriSound*)mImpl play];
         }
     }
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl play];
+        [(AVAudioPlayer*)mImpl play];
     }
 #endif
 
@@ -200,16 +200,16 @@ void KRMusic::pause()
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            [(NSSound *)mImpl pause];
+            [(NSSound*)mImpl pause];
         } else {
-            [(_KarakuriSound *)mImpl pause];
+            [(_KarakuriSound*)mImpl pause];
         }
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl pause];
+        [(AVAudioPlayer*)mImpl pause];
     }
 #endif
     
@@ -221,18 +221,18 @@ void KRMusic::stop()
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            [(NSSound *)mImpl stop];
-            [(NSSound *)mImpl setCurrentTime:0.0];
+            [(NSSound*)mImpl stop];
+            [(NSSound*)mImpl setCurrentTime:0.0];
         } else {
-            [(_KarakuriSound *)mImpl stop];
+            [(_KarakuriSound*)mImpl stop];
         }
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl stop];
-        ((AVAudioPlayer *)mImpl).currentTime = 0.0;
+        [(AVAudioPlayer*)mImpl stop];
+        ((AVAudioPlayer*)mImpl).currentTime = 0.0;
     }
 #endif
     
@@ -244,23 +244,23 @@ double KRMusic::getVolume() const
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            NSMethodSignature *sig = [(NSSound *)mImpl methodSignatureForSelector:@selector(volume)];
-            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+            NSMethodSignature* sig = [(NSSound*)mImpl methodSignatureForSelector:@selector(volume)];
+            NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
             [invocation setSelector:@selector(volume)];
-            [invocation setTarget:(NSSound *)mImpl];
-            [invocation invokeWithTarget:(NSSound *)mImpl];
+            [invocation setTarget:(NSSound*)mImpl];
+            [invocation invokeWithTarget:(NSSound*)mImpl];
             float value;
             [invocation getReturnValue:&value];
             return (double)value;
         } else {
-            return (double)[(_KarakuriSound *)mImpl volume];
+            return (double)[(_KarakuriSound*)mImpl volume];
         }
     }
 #endif
     
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        return (double)[(AVAudioPlayer *)mImpl volume];
+        return (double)[(AVAudioPlayer*)mImpl volume];
     }
 #endif
 
@@ -272,22 +272,22 @@ void KRMusic::setVolume(double value)
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     if (mImpl) {
         if (sCanUseNSSound) {
-            NSMethodSignature *sig = [(NSSound *)mImpl methodSignatureForSelector:@selector(setVolume:)];
-            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+            NSMethodSignature* sig = [(NSSound*)mImpl methodSignatureForSelector:@selector(setVolume:)];
+            NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:sig];
             [invocation setSelector:@selector(setVolume:)];
-            [invocation setTarget:(NSSound *)mImpl];
+            [invocation setTarget:(NSSound*)mImpl];
             float floatValue = (float)value;
             [invocation setArgument:&floatValue atIndex:2];
-            [invocation invokeWithTarget:(NSSound *)mImpl];
+            [invocation invokeWithTarget:(NSSound*)mImpl];
         } else {
-            [(_KarakuriSound *)mImpl setVolume:(float)value];
+            [(_KarakuriSound*)mImpl setVolume:(float)value];
         }
     }
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
     if (mImpl) {
-        [(AVAudioPlayer *)mImpl setVolume:(float)value];
+        [(AVAudioPlayer*)mImpl setVolume:(float)value];
     }
 #endif
 }

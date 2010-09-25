@@ -16,7 +16,7 @@
 
 @class KRTCPServer;
 
-extern NSString * const KRTCPServerErrorDomain;
+extern NSString* const  KRTCPServerErrorDomain;
 
 typedef enum {
     kKRTCPServerCouldNotBindToIPv4Address = 1,
@@ -28,8 +28,8 @@ typedef enum {
 @protocol KRTCPServerDelegate <NSObject>
 @optional
 - (void)serverDidEnableBonjour:(KRTCPServer*)server withName:(NSString*)name;
-- (void)server:(KRTCPServer*)server didNotEnableBonjour:(NSDictionary *)errorDict;
-- (void)didAcceptConnectionForServer:(KRTCPServer*)server inputStream:(NSInputStream *)istr outputStream:(NSOutputStream *)ostr socket:(int)socket;
+- (void)server:(KRTCPServer*)server didNotEnableBonjour:(NSDictionary*)errorDict;
+- (void)didAcceptConnectionForServer:(KRTCPServer*)server inputStream:(NSInputStream*)istr outputStream:(NSOutputStream*)ostr socket:(int)socket;
 @end
 
 
@@ -41,7 +41,7 @@ typedef enum {
 	NSNetService* _netService;
 }
 
-- (BOOL)start:(NSError **)error;
+- (BOOL)start:(NSError**)error;
 - (BOOL)stop;
 - (BOOL)enableBonjourWithDomain:(NSString*)domain applicationProtocol:(NSString*)protocol name:(NSString*)name; //Pass "nil" for the default local domain - Pass only the application protocol for "protocol" e.g. "myApp"
 - (void)disableBonjour;
@@ -68,28 +68,28 @@ const int KRNetworkBufferSize = 2048;
 
 
 @interface KRNetworkImpl : NSObject<KRTCPServerDelegate> {
-    KRTCPServer   *mTCPServer;
+    KRTCPServer*    mTCPServer;
     
-    NSInputStream       *mInStream;
-	NSOutputStream      *mOutStream;
+    NSInputStream*  mInStream;
+	NSOutputStream* mOutStream;
     
     BOOL        mInReady;
     BOOL        mOutReady;
     
     char        mInBuffer[KRNetworkBufferSize];
     int         mInPos;
-    std::list<std::string>  *mInMessages;
+    std::list<std::string>* mInMessages;
     
     KRNetworkServerState    mState;
-    NSLock                  *mDataLock;
+    NSLock*                 mDataLock;
     
     int         mSocket;    
-    NSString    *mOwnName;
+    NSString*   mOwnName;
 
-    void        *mPeerPickerUI;
+    void*       mPeerPickerUI;
 }
 
-- (id)initWithGameID:(NSString *)gameID;
+- (id)initWithGameID:(NSString*)gameID;
 
 - (std::list<std::string>)receivedMessages;
 
@@ -99,7 +99,7 @@ const int KRNetworkBufferSize = 2048;
 - (CFSocketNativeHandle)nativeHandle;
 
 - (void)processConnectCallback;
-- (void)processDataCallback:(NSData *)data;
+- (void)processDataCallback:(NSData*)data;
 
 - (void)doAccept;
 - (void)doReject;
@@ -107,14 +107,14 @@ const int KRNetworkBufferSize = 2048;
 @end
 
 
-KRNetwork *gKRNetworkInst = NULL;
+KRNetwork*  gKRNetworkInst = NULL;
 
+NSString*   const KRTCPServerErrorDomain = @"KRTCPServerErrorDomain";
 
-NSString * const KRTCPServerErrorDomain = @"KRTCPServerErrorDomain";
 
 @interface KRTCPServer ()
 
-- (NSNetService *)netService;
+- (NSNetService*)netService;
 
 //@property(nonatomic,retain) NSNetService* netService;
 //@property(assign) uint16_t port;
@@ -123,12 +123,12 @@ NSString * const KRTCPServerErrorDomain = @"KRTCPServerErrorDomain";
 @implementation KRTCPServer
 
 //@synthesize delegate=_delegate, netService=_netService, port=_port;
-- (NSNetService *)netService
+- (NSNetService*)netService
 {
     return _netService;
 }
 
-- (void)setNetService:(NSNetService *)netService
+- (void)setNetService:(NSNetService*)netService
 {
     _netService = netService;
 }
@@ -164,7 +164,7 @@ NSString * const KRTCPServerErrorDomain = @"KRTCPServerErrorDomain";
     [super dealloc];
 }
 
-- (void)handleNewConnectionFromAddress:(NSData *)addr inputStream:(NSInputStream *)inStream outputStream:(NSOutputStream *)outStream socket:(int)socket
+- (void)handleNewConnectionFromAddress:(NSData*)addr inputStream:(NSInputStream*)inStream outputStream:(NSOutputStream*)outStream socket:(int)socket
 {
     // if the delegate implements the delegate method, call it
     if ([self delegate] && [[self delegate] respondsToSelector:@selector(didAcceptConnectionForServer:inputStream:outputStream:socket:)]) { 
@@ -175,23 +175,23 @@ NSString * const KRTCPServerErrorDomain = @"KRTCPServerErrorDomain";
 // This function is called by CFSocket when a new connection comes in.
 // We gather some data here, and convert the function call to a method
 // invocation on TCPServer.
-static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType type, CFDataRef address, const void *data, void *info)
+static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType type, CFDataRef address, const void* data, void* info)
 {
-    KRTCPServer *server = (KRTCPServer *)info;
+    KRTCPServer* server = (KRTCPServer*)info;
     if (kCFSocketAcceptCallBack == type) { 
         // for an AcceptCallBack, the data parameter is a pointer to a CFSocketNativeHandle
-        CFSocketNativeHandle nativeSocketHandle = *(CFSocketNativeHandle *)data;
+        CFSocketNativeHandle nativeSocketHandle = *(CFSocketNativeHandle*)data;
         uint8_t name[SOCK_MAXADDRLEN];
         socklen_t namelen = sizeof(name);
-        NSData *peer = nil;
-        if (0 == getpeername(nativeSocketHandle, (struct sockaddr *)name, &namelen)) {
+        NSData* peer = nil;
+        if (0 == getpeername(nativeSocketHandle, (struct sockaddr*)name, &namelen)) {
             peer = [NSData dataWithBytes:name length:namelen];
         }
         CFReadStreamRef readStream = NULL;
 		CFWriteStreamRef writeStream = NULL;
         CFStreamCreatePairWithSocket(kCFAllocatorDefault, nativeSocketHandle, &readStream, &writeStream);
         if (readStream != NULL && writeStream != NULL) {
-            [server handleNewConnectionFromAddress:peer inputStream:(NSInputStream *)readStream outputStream:(NSOutputStream *)writeStream socket:nativeSocketHandle];
+            [server handleNewConnectionFromAddress:peer inputStream:(NSInputStream*)readStream outputStream:(NSOutputStream*)writeStream socket:nativeSocketHandle];
         } else {
             // on any failure, need to destroy the CFSocketNativeHandle 
             // since we are not going to use it any more
@@ -202,7 +202,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
     }
 }
 
-- (BOOL)start:(NSError **)error
+- (BOOL)start:(NSError**)error
 {
     CFSocketContext socketCtxt = {0, self, NULL, NULL, NULL};
     _ipv4socket = CFSocketCreate(kCFAllocatorDefault, PF_INET, SOCK_STREAM, IPPROTO_TCP, kCFSocketAcceptCallBack, (CFSocketCallBack)&KRTCPServerAcceptCallBack, &socketCtxt);
@@ -216,7 +216,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
 	
 	
     int yes = 1;
-    setsockopt(CFSocketGetNative(_ipv4socket), SOL_SOCKET, SO_REUSEADDR, (void *)&yes, sizeof(yes));
+    setsockopt(CFSocketGetNative(_ipv4socket), SOL_SOCKET, SO_REUSEADDR, (void*)&yes, sizeof(yes));
 	
     // set up the IPv4 endpoint; use port 0, so the kernel will choose an arbitrary port for us, which will be advertised using Bonjour
     struct sockaddr_in addr4;
@@ -225,7 +225,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
     addr4.sin_family = AF_INET;
     addr4.sin_port = 0;
     addr4.sin_addr.s_addr = htonl(INADDR_ANY);
-    NSData *address4 = [NSData dataWithBytes:&addr4 length:sizeof(addr4)];
+    NSData* address4 = [NSData dataWithBytes:&addr4 length:sizeof(addr4)];
 	
     if (kCFSocketSuccess != CFSocketSetAddress(_ipv4socket, (CFDataRef)address4)) {
         if (error) *error = [[NSError alloc] initWithDomain:KRTCPServerErrorDomain code:kKRTCPServerCouldNotBindToIPv4Address userInfo:nil];
@@ -236,7 +236,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
     
 	// now that the binding was successful, we get the port number 
 	// -- we will need it for the NSNetService
-	NSData *addr = [(NSData *)CFSocketCopyAddress(_ipv4socket) autorelease];
+	NSData* addr = [(NSData*)CFSocketCopyAddress(_ipv4socket) autorelease];
 	memcpy(&addr4, [addr bytes], [addr length]);
 	[self setPort:ntohs(addr4.sin_port)];
     
@@ -297,13 +297,13 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
  See http://developer.apple.com/networking/bonjour/faq.html for more information.
  */
 
-- (void)netServiceDidPublish:(NSNetService *)sender
+- (void)netServiceDidPublish:(NSNetService*)sender
 {
     if ([self delegate] && [[self delegate] respondsToSelector:@selector(serverDidEnableBonjour:withName:)])
 		[[self delegate] serverDidEnableBonjour:self withName:sender.name];
 }
 
-- (void)netService:(NSNetService *)sender didNotPublish:(NSDictionary *)errorDict
+- (void)netService:(NSNetService*)sender didNotPublish:(NSDictionary*)errorDict
 {
 	[super netService:sender didNotPublish:errorDict];
 	if ([self delegate] && [[self delegate] respondsToSelector:@selector(server:didNotEnableBonjour:)])
@@ -341,7 +341,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
 
 @implementation KRNetworkImpl
 
-- (id)initWithGameID:(NSString *)gameID
+- (id)initWithGameID:(NSString*)gameID
 {
     self = [super init];
     if (self) {
@@ -359,7 +359,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
         mTCPServer = [KRTCPServer new];
         [mTCPServer setDelegate:self];
         
-        NSError *error;
+        NSError* error;
         if (!mTCPServer || ![mTCPServer start:&error]) {
             NSLog(@"Failed to create a TCP server: %@", error);
             [self release];
@@ -415,7 +415,7 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
     return (mState == KRNetworkServerStateConnected);
 }
 
-- (NSString *)ownName
+- (NSString*)ownName
 {
     return mOwnName;
 }
@@ -439,15 +439,15 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
     return mSocket;
 }
 
-- (int)sendMessage:(const char *)message
+- (int)sendMessage:(const char*)message
 {
-    static const char *CRLF = "\r\n";
+    static const char* CRLF = "\r\n";
     
     int length = 0;
     length += write(mSocket, message, strlen(message));
     length += write(mSocket, CRLF, 2);
-//    length += [mOutStream write:(uint8_t *)message maxLength:strlen(message)];
-//    length += [mOutStream write:(uint8_t *)CRLF maxLength:2];
+//    length += [mOutStream write:(uint8_t*)message maxLength:strlen(message)];
+//    length += [mOutStream write:(uint8_t*)CRLF maxLength:2];
     
     return length;
 }
@@ -485,20 +485,20 @@ static void KRTCPServerAcceptCallBack(CFSocketRef socket, CFSocketCallBackType t
 static void InvitationCallBack(CFSocketRef socketRef,
                          CFSocketCallBackType type,
                          CFDataRef address,
-                         const void *data,
-                         void *info)
+                         const void* data,
+                         void* info)
 {
-    KRNetworkImpl *impl = (KRNetworkImpl *)info;
+    KRNetworkImpl* impl = (KRNetworkImpl*)info;
     
     if (type == kCFSocketConnectCallBack) {
         [impl processConnectCallback];
     }
     else if (type == kCFSocketDataCallBack) {
-        [impl processDataCallback:(NSData *)data];
+        [impl processDataCallback:(NSData*)data];
     }
 }
 
-- (void)startInvitation:(NSData *)peerAddressData peerPickerUI:(void *)peerPickerUI
+- (void)startInvitation:(NSData*)peerAddressData peerPickerUI:(void*)peerPickerUI
 {
     mPeerPickerUI = peerPickerUI;
     mState = KRNetworkServerStateInviting;
@@ -526,7 +526,7 @@ static void InvitationCallBack(CFSocketRef socketRef,
 - (void)processConnectCallback
 {
     if (mState == KRNetworkServerStateInviting) {
-        NSString *inviteMessage = [NSString stringWithFormat:@"KRname %@", [self ownName]];
+        NSString* inviteMessage = [NSString stringWithFormat:@"KRname %@", [self ownName]];
         [self sendMessage:[inviteMessage cStringUsingEncoding:NSUTF8StringEncoding]];
         mState = KRNetworkServerStateWaitForInviteReply;
     }    
@@ -550,14 +550,14 @@ static BOOL isFDReady(int fd)
     return FD_ISSET(fd,&fds)? YES: NO;
 }
 
-- (void)processDataCallback:(NSData *)data
+- (void)processDataCallback:(NSData*)data
 {
     [mDataLock lock];
     
     if (!data) {
         while (YES) {
             if (mInStream) {
-                int length = [mInStream read:(uint8_t *)(mInBuffer + mInPos) maxLength:256];
+                int length = [mInStream read:(uint8_t*)(mInBuffer + mInPos) maxLength:256];
                 if (length <= 0) {
                     break;
                 }
@@ -609,20 +609,20 @@ static BOOL isFDReady(int fd)
 #if KR_MACOSX || KR_MACPHONE_EMU
         if (replyMessage.compare("KRaccept") == 0) {
             mState = KRNetworkServerStateConnected;
-            [(KRPeerPickerWindow *)mPeerPickerUI processAccepted];
+            [(KRPeerPickerWindow*)mPeerPickerUI processAccepted];
         } else {
             mState = KRNetworkServerStateWaitForClient;
-            [(KRPeerPickerWindow *)mPeerPickerUI processDenied];
+            [(KRPeerPickerWindow*)mPeerPickerUI processDenied];
         }
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
         if (replyMessage.compare("KRaccept") == 0) {
             mState = KRNetworkServerStateConnected;
-            [(KRPeerPickerController *)mPeerPickerUI processAccepted];
+            [(KRPeerPickerController*)mPeerPickerUI processAccepted];
         } else {
             mState = KRNetworkServerStateWaitForClient;
-            [(KRPeerPickerController *)mPeerPickerUI processDenied];
+            [(KRPeerPickerController*)mPeerPickerUI processDenied];
         }
 #endif
 
@@ -636,7 +636,7 @@ static BOOL isFDReady(int fd)
 
 @implementation KRNetworkImpl (NSStreamDelegate)
 
-- (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode
+- (void)stream:(NSStream*)stream handleEvent:(NSStreamEvent)eventCode
 {
 	switch (eventCode) {
         case NSStreamEventOpenCompleted:
@@ -675,12 +675,12 @@ static BOOL isFDReady(int fd)
 
 @implementation KRNetworkImpl (KRTCPServerDelegate)
 
-- (void)serverDidEnableBonjour:(KRTCPServer *)server withName:(NSString *)string
+- (void)serverDidEnableBonjour:(KRTCPServer*)server withName:(NSString*)string
 {
     mOwnName = [string copy];
 }
 
-- (void)didAcceptConnectionForServer:(KRTCPServer *)server inputStream:(NSInputStream *)inStream outputStream:(NSOutputStream *)outStream socket:(int)socket
+- (void)didAcceptConnectionForServer:(KRTCPServer*)server inputStream:(NSInputStream*)inStream outputStream:(NSOutputStream*)outStream socket:(int)socket
 {
     if (mState != KRNetworkServerStateWaitForClient) {
         uint8_t buffer[] = "KRbusy\r\n";
@@ -708,7 +708,7 @@ KRNetwork::KRNetwork(const std::string& gameID)
 {
     gKRNetworkInst = this;
     if (gameID.length() > 0) {
-        mImpl = (KRNetworkImpl *)[[KRNetworkImpl alloc] initWithGameID:[NSString stringWithCString:gameID.c_str() encoding:NSUTF8StringEncoding]];
+        mImpl = (KRNetworkImpl*)[[KRNetworkImpl alloc] initWithGameID:[NSString stringWithCString:gameID.c_str() encoding:NSUTF8StringEncoding]];
     } else {
         mImpl = NULL;
     }
@@ -717,23 +717,23 @@ KRNetwork::KRNetwork(const std::string& gameID)
 KRNetwork::~KRNetwork()
 {
     if (mImpl != NULL) {
-        [(KRNetworkImpl *)mImpl release];
+        [(KRNetworkImpl*)mImpl release];
     }
 }
 
 std::list<std::string> KRNetwork::getMessages() throw(KRNetworkError, KRRuntimeError)
 {
     if (mImpl == NULL) {
-        const char *errorFormat = "You have tried to invoke KRNetwork::getMessages() without setting the game ID.";
+        const char* errorFormat = "You have tried to invoke KRNetwork::getMessages() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::getMessages() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
-    if (![(KRNetworkImpl *)mImpl isConnected]) {
+    if (![(KRNetworkImpl*)mImpl isConnected]) {
         throw KRNetworkError("No connection");
     }
-    return [(KRNetworkImpl *)mImpl receivedMessages];
+    return [(KRNetworkImpl*)mImpl receivedMessages];
 }
 
 bool KRNetwork::isConnected()
@@ -741,7 +741,7 @@ bool KRNetwork::isConnected()
     if (mImpl == NULL) {
         return false;
     }
-    return ([(KRNetworkImpl *)mImpl isConnected]? true: false);
+    return ([(KRNetworkImpl*)mImpl isConnected]? true: false);
 }
 
 void KRNetwork::reset()
@@ -749,68 +749,68 @@ void KRNetwork::reset()
     if (mImpl == NULL) {
         return;
     }
-    return [(KRNetworkImpl *)mImpl reset];
+    return [(KRNetworkImpl*)mImpl reset];
 }
 
 std::string KRNetwork::getOwnName() const
 {
     if (mImpl == NULL) {
-        const char *errorFormat = "You have tried to invoke KRNetwork::getOwnName() without setting the game ID.";
+        const char* errorFormat = "You have tried to invoke KRNetwork::getOwnName() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::getOwnName() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
-    NSString *ownName = [(KRNetworkImpl *)mImpl ownName];
+    NSString* ownName = [(KRNetworkImpl*)mImpl ownName];
     return std::string([ownName cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
 int KRNetwork::sendMessage(const std::string& str) throw(KRNetworkError, KRRuntimeError)
 {
     if (mImpl == NULL) {
-        const char *errorFormat = "You have tried to invoke KRNetwork::sendMessage() without setting the game ID.";
+        const char* errorFormat = "You have tried to invoke KRNetwork::sendMessage() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::sendMessage() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
-    if (![(KRNetworkImpl *)mImpl isConnected]) {
+    if (![(KRNetworkImpl*)mImpl isConnected]) {
         throw KRNetworkError("No connection");
     }
-    return [(KRNetworkImpl *)mImpl sendMessage:str.c_str()];
+    return [(KRNetworkImpl*)mImpl sendMessage:str.c_str()];
 }
 
 void KRNetwork::showPeerPicker() throw(KRRuntimeError)
 {
     if (mImpl == NULL) {
-        const char *errorFormat = "You have tried to invoke KRNetwork::showPeerPicker() without setting the game ID.";
+        const char* errorFormat = "You have tried to invoke KRNetwork::showPeerPicker() without setting the game ID.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ゲームIDが設定されていない環境で、KRNetwork::showPeerPicker() 関数が呼ばれました。";
         }
         throw KRRuntimeError(errorFormat);
     }
     
-    [(KRNetworkImpl *)mImpl showPeerPicker];
+    [(KRNetworkImpl*)mImpl showPeerPicker];
 }
 
 void KRNetwork::doAccept() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
-        [(KRNetworkImpl *)mImpl doAccept];
+        [(KRNetworkImpl*)mImpl doAccept];
     }
 }
 
 void KRNetwork::doReject() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
-        [(KRNetworkImpl *)mImpl doReject];
+        [(KRNetworkImpl*)mImpl doReject];
     }
 }
 
-void KRNetwork::startInvitation(void *peerAddressData, void *peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRNetwork::startInvitation(void* peerAddressData, void* peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     if (mImpl != NULL) {
-        [(KRNetworkImpl *)mImpl startInvitation:(NSData *)peerAddressData peerPickerUI:peerPickerUI];
+        [(KRNetworkImpl*)mImpl startInvitation:(NSData*)peerAddressData peerPickerUI:peerPickerUI];
     }
 }
 

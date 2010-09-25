@@ -95,7 +95,7 @@ void KRWorld::startUpdateModel(KRInput* input)
 
     updateModel(input);
     
-    gKRAnime2DMan->stepAllCharas();
+    gKRAnime2DMan->_stepAllCharas();
 
     gInputLogFrameCounter++;
 }

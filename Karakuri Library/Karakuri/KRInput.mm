@@ -350,12 +350,12 @@ void KRInput::_processMouseDownImpl(_KRMouseState mouseMask)
 {
     mMouseState |= mouseMask;
 
-    if ((NSFileHandle *)gInputLogHandle != nil) {
+    if ((NSFileHandle*)gInputLogHandle != nil) {
         KRVector2D locationDouble = getMouseLocation();
         KRVector2DInt location((int)locationDouble.x, (int)locationDouble.y);
         mOldMouseLocationForInputLog = location;
-        NSString *dataStr = [NSString stringWithFormat:@"%u:MD%X(%d,%d)\n", gInputLogFrameCounter, mouseMask, mOldMouseLocationForInputLog.x, mOldMouseLocationForInputLog.y];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+        NSString* dataStr = [NSString stringWithFormat:@"%u:MD%X(%d,%d)\n", gInputLogFrameCounter, mouseMask, mOldMouseLocationForInputLog.x, mOldMouseLocationForInputLog.y];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }
 }
 
@@ -365,12 +365,12 @@ void KRInput::_processMouseDragImpl(const KRVector2D& pos)
         mMouseLocationForDummy = pos;
     }
     
-    if ((NSFileHandle *)gInputLogHandle != nil) {
+    if ((NSFileHandle*)gInputLogHandle != nil) {
         KRVector2D locationDouble = getMouseLocation();
         KRVector2DInt location((int)locationDouble.x, (int)locationDouble.y);
         if (location != mOldMouseLocationForInputLog) {
-            NSString *dataStr = [NSString stringWithFormat:@"%u:MM(%d,%d)\n", gInputLogFrameCounter, location.x, location.y];
-            [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+            NSString* dataStr = [NSString stringWithFormat:@"%u:MM(%d,%d)\n", gInputLogFrameCounter, location.x, location.y];
+            [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
             mOldMouseLocationForInputLog = location;
         }
     }
@@ -383,11 +383,11 @@ void KRInput::_processMouseUpImpl(_KRMouseState mouseMask)
     
 	mIsMouseDownOld = mIsMouseDownOld && ((mouseMask & (_MouseButtonLeft | _MouseButtonRight))? false: true);
 
-    if ((NSFileHandle *)gInputLogHandle != nil) {
+    if ((NSFileHandle*)gInputLogHandle != nil) {
         KRVector2D locationDouble = getMouseLocation();
         KRVector2DInt location((int)locationDouble.x, (int)locationDouble.y);
-        NSString *dataStr = [NSString stringWithFormat:@"%u:MU%X(%d,%d)\n", gInputLogFrameCounter, mouseMask, location.x, location.y];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+        NSString* dataStr = [NSString stringWithFormat:@"%u:MU%X(%d,%d)\n", gInputLogFrameCounter, mouseMask, location.x, location.y];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }
 }
 
@@ -440,9 +440,9 @@ void KRInput::_processKeyDown(KRKeyInfo keyMask)
 {
     mKeyState |= keyMask;
     
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        NSString *dataStr = [NSString stringWithFormat:@"%u:KD%qX\n", gInputLogFrameCounter, keyMask];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        NSString* dataStr = [NSString stringWithFormat:@"%u:KD%qX\n", gInputLogFrameCounter, keyMask];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }
 }
 
@@ -456,9 +456,9 @@ void KRInput::_processKeyUp(KRKeyInfo keyMask)
     mKeyState &= ~keyMask;
     mKeyStateOld &= ~keyMask;
 
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        NSString *dataStr = [NSString stringWithFormat:@"%u:KU%qX\n", gInputLogFrameCounter, keyMask];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        NSString* dataStr = [NSString stringWithFormat:@"%u:KU%qX\n", gInputLogFrameCounter, keyMask];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }
 }
 
@@ -883,9 +883,9 @@ void KRInput::_startTouch(unsigned touchID, double x, double y)
         _startTouchImpl(touchID, x, y);
     }
     
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        NSString *dataStr = [NSString stringWithFormat:@"%u:TD%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        NSString* dataStr = [NSString stringWithFormat:@"%u:TD%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }
 }
 
@@ -897,9 +897,9 @@ void KRInput::_moveTouch(unsigned touchID, double x, double y, double dx, double
         _moveTouchImpl(touchID, x, y, dx, dy);
     }
     
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        NSString *dataStr = [NSString stringWithFormat:@"%u:TM%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        NSString* dataStr = [NSString stringWithFormat:@"%u:TM%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }    
 }
 
@@ -911,9 +911,9 @@ void KRInput::_endTouch(unsigned touchID, double x, double y, double dx, double 
         _endTouchImpl(touchID, x, y, dx, dy);
     }
     
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        NSString *dataStr = [NSString stringWithFormat:@"%u:TU%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        NSString* dataStr = [NSString stringWithFormat:@"%u:TU%X(%f,%f)\n", gInputLogFrameCounter, touchID, x, y];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }    
 }
 
@@ -941,9 +941,9 @@ void KRInput::_setAcceleration(double x, double y, double z)
         _setAccelerationImpl(x, y, z);
     }
 
-    if ((NSFileHandle *)gInputLogHandle != nil) {
-        NSString *dataStr = [NSString stringWithFormat:@"%u:AC(%f,%f,%f)\n", gInputLogFrameCounter, x, y, z];
-        [(NSFileHandle *)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
+    if ((NSFileHandle*)gInputLogHandle != nil) {
+        NSString* dataStr = [NSString stringWithFormat:@"%u:AC(%f,%f,%f)\n", gInputLogFrameCounter, x, y, z];
+        [(NSFileHandle*)gInputLogHandle writeData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
     }    
 }
 

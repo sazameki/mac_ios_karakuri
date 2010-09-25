@@ -11,7 +11,7 @@
 
 @implementation KRBundle
 
-+ (BOOL)loadNibNamed:(NSString *)aNibNamed owner:(id)owner
++ (BOOL)loadNibNamed:(NSString*)aNibNamed owner:(id)owner
 {
     if (!aNibNamed && owner == NSApp) {
         // We don't use any nib in Karakuri Framework, so don't load anything.

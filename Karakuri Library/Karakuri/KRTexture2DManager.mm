@@ -26,7 +26,7 @@ void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& i
 {
     // 1000以上の ID は予約済み
     if (texID >= 1000) {
-        const char *errorFormat = "Texture ID should be lower than a thousand (1000).";
+        const char* errorFormat = "Texture ID should be lower than a thousand (1000).";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "テクスチャIDは 999 以下でなければいけません。";
         }
@@ -169,7 +169,7 @@ _KRTexture2D* KRTexture2DManager::_getTexture(int texID)
     _KRTexture2D* ret = mTexMap[texID];
 
     if (ret == NULL) {
-        const char *errorFormat = "Texture is not loaded with ID %d.";
+        const char* errorFormat = "Texture is not loaded with ID %d.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ID が %d のテクスチャはロードされていません。";
         }

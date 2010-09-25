@@ -16,18 +16,18 @@
 
 @protocol KRPeerPickerDelegate
 @optional
-- (void)peerPickerCanceled:(KRPeerPickerController *)pickerController;
-- (void)peerPickerAccepted:(KRPeerPickerController *)pickerController;
-- (void)peerPickerDenied:(KRPeerPickerController *)pickerController;
+- (void)peerPickerCanceled:(KRPeerPickerController*)pickerController;
+- (void)peerPickerAccepted:(KRPeerPickerController*)pickerController;
+- (void)peerPickerDenied:(KRPeerPickerController*)pickerController;
 @end
 
 
 @interface KRPeerPickerController : UIViewController<UITableViewDelegate, UITableViewDataSource> {
 	id      mDelegate;
     
-    UITableView         *mTableView;
+    UITableView*        mTableView;
 
-    KRNetworkBrowser    *mNetworkBrowser;
+    KRNetworkBrowser*   mNetworkBrowser;
 }
 
 @property (nonatomic, assign) id<KRPeerPickerDelegate> delegate;

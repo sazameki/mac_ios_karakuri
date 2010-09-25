@@ -54,7 +54,7 @@ void KRParticle2DSystem::init()
             sPointSpriteName = GL_POINT_SPRITE_ARB;
             sPointSpriteCoordReplaceName = GL_COORD_REPLACE_ARB;
         } else {
-            const char *errorFormat = "This computer does not support point sprite.";
+            const char* errorFormat = "This computer does not support point sprite.";
             if (gKRLanguage == KRLanguageJapanese) {
                 errorFormat = "このコンピュータはポイントスプライトをサポートしていません。";
             }
@@ -124,7 +124,7 @@ KRParticle2DSystem::KRParticle2DSystem(const std::string& filename, bool doLoop)
     @method KRParticle2DSystem
     Constructor
  */
-KRParticle2DSystem::KRParticle2DSystem(KRTexture2D *texture, bool doLoop)
+KRParticle2DSystem::KRParticle2DSystem(KRTexture2D* texture, bool doLoop)
     : mDoLoop(doLoop)
 {
     mHasInnerTexture = false;
@@ -139,7 +139,7 @@ KRParticle2DSystem::KRParticle2DSystem(KRTexture2D *texture, bool doLoop)
  */
 KRParticle2DSystem::~KRParticle2DSystem()
 {
-    for (std::list<_KRParticle2D_old *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
+    for (std::list<_KRParticle2D_old*>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
         delete *it;
     }
     mParticles.clear();
@@ -439,9 +439,9 @@ void KRParticle2DSystem::draw()
     unsigned particleCount = mParticles.size();
     
     GLfloat data[particleCount * 6];
-    GLfloat *p = data;
+    GLfloat* p = data;
     
-    for (std::list<KRParticle2D *>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
+    for (std::list<KRParticle2D*>::iterator it = mParticles.begin(); it != mParticles.end(); it++) {
         double ratio = (1.0 - (double)((*it)->mLife) / (*it)->mBaseLife);
         //float ratio2 = ratio * ratio;
         *(p++) = (*it)->mPos.x;

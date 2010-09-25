@@ -52,13 +52,13 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D* imageSize, KRVec
     revisedSize.y = (float)rheight;
     
     if (revisedSize.x > KRTextureMaxSize) {
-        const char *errorFormat = "Failed to load a texture.";
+        const char* errorFormat = "Failed to load a texture.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "テクスチャの読み込みに失敗しました。";
         }
         throw KRRuntimeError(errorFormat);
     } else if (revisedSize.y > KRTextureMaxSize) {
-        const char * errorFormat = "Failed to load a texture.";
+        const char* errorFormat = "Failed to load a texture.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "テクスチャの読み込みに失敗しました。";
         }
@@ -70,7 +70,7 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D* imageSize, KRVec
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
     
-    void *imageData = malloc(revisedSize.x * revisedSize.y * 4);
+    void* imageData = malloc(revisedSize.x * revisedSize.y * 4);
     if (imageData != NULL) {
         CGContextRef bitmapContext = CGBitmapContextCreate(imageData, revisedSize.x, revisedSize.y, 8,
                                                            revisedSize.x * 4, colorSpaceRef, kCGImageAlphaPremultipliedLast);
@@ -111,7 +111,7 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D* imageSize, KRVec
         
         /*{
          CGImageRef testImageRef = CGBitmapContextCreateImage(bitmapContext);
-         NSURL *destUrl = [NSURL fileURLWithPath:[@"~/Desktop/test.png" stringByExpandingTildeInPath]];
+         NSURL* destUrl = [NSURL fileURLWithPath:[@"~/Desktop/test.png" stringByExpandingTildeInPath]];
          CGImageDestinationRef imageDest = CGImageDestinationCreateWithURL((CFURLRef)destUrl, kUTTypePNG, 1, NULL);
          CGImageDestinationAddImage(imageDest, testImageRef, nil);
          CGImageDestinationFinalize(imageDest);
@@ -132,11 +132,11 @@ GLuint KRCreateGLTextureFromImageData(NSData* data, KRVector2D* imageSize, KRVec
     return textureName;    
 }
 
-GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, KRVector2D *imageSize, KRVector2D *textureSize, BOOL scalesLinear)
+GLuint KRCreateGLTextureFromImageWithName(NSString* imageName, KRVector2D* imageSize, KRVector2D* textureSize, BOOL scalesLinear)
 {
     static BOOL hasFailedInternalPNGLoading = NO;
 
-    NSString *imagePath = imageName;
+    NSString* imagePath = imageName;
     if (![imagePath hasPrefix:@"/"]) {
         imagePath = [[NSBundle mainBundle] pathForResource:imageName ofType:nil];
     }
@@ -188,13 +188,13 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, KRVector2D *image
     revisedSize.y = (float)rheight;
     
     if (revisedSize.x > KRTextureMaxSize) {
-        const char *errorFormat = "Failed to load \"%s\". Texture width should be equal to or lower than %d pixels.";
+        const char* errorFormat = "Failed to load \"%s\". Texture width should be equal to or lower than %d pixels.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの横幅は %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [imageName cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
     } else if (revisedSize.y > KRTextureMaxSize) {
-        const char * errorFormat = "Failed to load \"%s\". Texture height should be equal to or lower than %d pixels.";
+        const char* errorFormat = "Failed to load \"%s\". Texture height should be equal to or lower than %d pixels.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "\"%s\" の読み込みに失敗しました。テクスチャの高さは %d ピクセル以下でなければいけません。";
         }
@@ -206,7 +206,7 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, KRVector2D *image
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
     
-    void *imageData = malloc(revisedSize.x * revisedSize.y * 4);
+    void* imageData = malloc(revisedSize.x * revisedSize.y * 4);
     if (imageData != NULL) {
         CGContextRef bitmapContext = CGBitmapContextCreate(imageData, revisedSize.x, revisedSize.y, 8,
                                                            revisedSize.x * 4, colorSpaceRef, kCGImageAlphaPremultipliedLast);
@@ -247,7 +247,7 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, KRVector2D *image
         
         /*{
             CGImageRef testImageRef = CGBitmapContextCreateImage(bitmapContext);
-            NSURL *destUrl = [NSURL fileURLWithPath:[@"~/Desktop/test.png" stringByExpandingTildeInPath]];
+            NSURL* destUrl = [NSURL fileURLWithPath:[@"~/Desktop/test.png" stringByExpandingTildeInPath]];
             CGImageDestinationRef imageDest = CGImageDestinationCreateWithURL((CFURLRef)destUrl, kUTTypePNG, 1, NULL);
             CGImageDestinationAddImage(imageDest, testImageRef, nil);
             CGImageDestinationFinalize(imageDest);
@@ -269,10 +269,10 @@ GLuint KRCreateGLTextureFromImageWithName(NSString *imageName, KRVector2D *image
     return textureName;
 }
 
-GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& color, GLenum *textureTarget, KRVector2D *imageSize, KRVector2D *textureSize)
+GLuint KRCreateGLTextureFromString(NSString* str, void* fontObj, const KRColor& color, GLenum* textureTarget, KRVector2D* imageSize, KRVector2D* textureSize)
 {
-    NSDictionary *attrDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              (NSFont *)fontObj, NSFontAttributeName,
+    NSDictionary* attrDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              (NSFont*)fontObj, NSFontAttributeName,
                               [NSColor colorWithCalibratedRed:color.r green:color.g blue:color.b alpha:color.a], NSForegroundColorAttributeName,
                               nil];
     
@@ -306,26 +306,26 @@ GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& 
     revisedSize.height = (float)rheight;
     
     if (revisedSize.width > KRTextureMaxSize) {
-        const char *errorFormat = "Failed to create a string texture (\"%s\"). Texture width should be equal to or lower than %d pixels.";
+        const char* errorFormat = "Failed to create a string texture (\"%s\"). Texture width should be equal to or lower than %d pixels.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "文字列テクスチャの生成に失敗しました（\"%s\"）。テクスチャの横幅は %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [str cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
     } else if (revisedSize.height > KRTextureMaxSize) {
-        const char *errorFormat = "Failed to create a string texture (\"%s\"). Texture height should be equal to or lower than %d pixels.";
+        const char* errorFormat = "Failed to create a string texture (\"%s\"). Texture height should be equal to or lower than %d pixels.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "文字列テクスチャの生成に失敗しました（\"%s\"）。テクスチャの高さは %d ピクセル以下でなければいけません。";
         }
         throw KRRuntimeError(errorFormat, [str cStringUsingEncoding:NSUTF8StringEncoding], KRTextureMaxSize);
     }
     
-    NSImage *image = [[NSImage alloc] initWithSize:revisedSize];
+    NSImage* image = [[NSImage alloc] initWithSize:revisedSize];
     [image lockFocus];
     if ([str length] > 0) {
         [str drawAtPoint:NSMakePoint(0, revisedSize.height-size.height) withAttributes:attrDict];
     }
     
-    NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0f, 0.0f, revisedSize.width, revisedSize.height)];
+    NSBitmapImageRep* bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect(0.0f, 0.0f, revisedSize.width, revisedSize.height)];
     [image unlockFocus];
 
     GLuint texName = GL_INVALID_VALUE;
@@ -344,7 +344,7 @@ GLuint KRCreateGLTextureFromString(NSString *str, void *fontObj, const KRColor& 
     if (texName != GL_INVALID_VALUE && texName != GL_INVALID_OPERATION) {
         glBindTexture(GL_TEXTURE_2D, texName);
 
-        unsigned *p = (unsigned *)[bitmap bitmapData];
+        unsigned* p = (unsigned*)[bitmap bitmapData];
         for (int i = 0; i < rwidth * rheight; i++) {
 #ifdef __LITTLE_ENDIAN__
             p[i] |= 0x00ffffff;

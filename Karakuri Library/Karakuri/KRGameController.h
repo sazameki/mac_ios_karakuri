@@ -136,7 +136,7 @@ extern int      _gCharaDrawCountPos;
 - (BOOL)isGameInitialized;
 - (void)updateFrameRateSetting;
 
-//- (void)startLoadingScreenThreadForWorld:(KRWorld *)world;
+//- (void)startLoadingScreenThreadForWorld:(KRWorld*)world;
 - (void)startChaningWorld:(KRWorld*)world;
 
 - (void)startLoadingWorld:(KRWorld*)world;

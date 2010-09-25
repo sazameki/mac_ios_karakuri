@@ -50,7 +50,7 @@ KRRuntimeError::~KRRuntimeError() throw()
     // Nothing to do
 }
 
-const char *KRRuntimeError::what() const throw()
+const char* KRRuntimeError::what() const throw()
 {
     return mMessage.c_str();
 }

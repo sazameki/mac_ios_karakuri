@@ -44,7 +44,7 @@ void KRShape2D::setCollisionID(unsigned theID)
 {
     mCollisionID = theID;
     if (mCPShape != NULL) {
-        ((cpShape *)mCPShape)->collision_type = theID;
+        ((cpShape*)mCPShape)->collision_type = theID;
     }
 }
 
@@ -68,7 +68,7 @@ KRVector2D KRShape2D::getCenterPos() const
     if (mIsStatic) {
         return mCenterPos;
     }    
-    return KRVector2D(((cpBody *)mCPBody)->p.x, ((cpBody *)mCPBody)->p.y);
+    return KRVector2D(((cpBody*)mCPBody)->p.x, ((cpBody*)mCPBody)->p.y);
 }
 
 double KRShape2D::getAngle() const
@@ -76,7 +76,7 @@ double KRShape2D::getAngle() const
     if (mIsStatic) {
         return 0.0;
     }    
-    return ((cpBody *)mCPBody)->a;
+    return ((cpBody*)mCPBody)->a;
 }
 
 double KRShape2D::getAngleVelocity() const
@@ -84,7 +84,7 @@ double KRShape2D::getAngleVelocity() const
     if (mIsStatic) {
         return 0.0;
     }    
-    return ((cpBody *)mCPBody)->w;
+    return ((cpBody*)mCPBody)->w;
 }
 
 KRVector2D KRShape2D::getVelocity() const
@@ -92,7 +92,7 @@ KRVector2D KRShape2D::getVelocity() const
     if (mIsStatic) {
         return KRVector2DZero;
     }    
-    return KRVector2D(((cpBody *)mCPBody)->v.x, ((cpBody *)mCPBody)->v.y);
+    return KRVector2D(((cpBody*)mCPBody)->v.x, ((cpBody*)mCPBody)->v.y);
 }
 
 void KRShape2D::setAngle(double angle)
@@ -100,7 +100,7 @@ void KRShape2D::setAngle(double angle)
     if (mIsStatic) {
         return;
     }
-    cpBodySetAngle((cpBody *)mCPBody, angle);
+    cpBodySetAngle((cpBody*)mCPBody, angle);
 }
 
 void KRShape2D::setCenterPos(const KRVector2D& pos)
@@ -108,7 +108,7 @@ void KRShape2D::setCenterPos(const KRVector2D& pos)
     if (mIsStatic) {
         return;
     }
-    cpBodySetPos((cpBody *)mCPBody, cpv(pos.x, pos.y));
+    cpBodySetPos((cpBody*)mCPBody, cpv(pos.x, pos.y));
 }
 
 void KRShape2D::setVelocity(const KRVector2D& v)
@@ -116,7 +116,7 @@ void KRShape2D::setVelocity(const KRVector2D& v)
     if (mIsStatic) {
         return;
     }
-    cpBodySetVel((cpBody *)mCPBody, cpv(v.x, v.y));
+    cpBodySetVel((cpBody*)mCPBody, cpv(v.x, v.y));
 }
 
 void KRShape2D::setAngleVelocity(double w)
@@ -124,15 +124,15 @@ void KRShape2D::setAngleVelocity(double w)
     if (mIsStatic) {
         return;
     }
-    cpBodySetAngVel((cpBody *)mCPBody, w);
+    cpBodySetAngVel((cpBody*)mCPBody, w);
 }
 
-void *KRShape2D::getRepresentedObject() const
+void* KRShape2D::getRepresentedObject() const
 {
     return mRepresentedObject;
 }
 
-void KRShape2D::setRepresentedObject(void *anObj)
+void KRShape2D::setRepresentedObject(void* anObj)
 {
     mRepresentedObject = anObj;
 }
@@ -147,7 +147,7 @@ void KRShape2D::setTag(int tag)
     mTag = tag;
 }
 
-KRSimulator2D *KRShape2D::getSimulator() const
+KRSimulator2D* KRShape2D::getSimulator() const
 {
     return mSimulator;
 }
@@ -159,14 +159,14 @@ void KRShape2D::removeFromSimulator() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     }
     
     if (mIsStatic) {
-        cpSpaceRemoveStaticShape((cpSpace *)(mSimulator->getCPSpace()), (cpShape *)mCPShape);
-        cpShapeFree((cpShape *)mCPShape);
+        cpSpaceRemoveStaticShape((cpSpace*)(mSimulator->getCPSpace()), (cpShape*)mCPShape);
+        cpShapeFree((cpShape*)mCPShape);
         mCPShape = NULL;
     } else {
-        cpSpaceRemoveShape((cpSpace *)(mSimulator->getCPSpace()), (cpShape *)mCPShape);
-        cpSpaceRemoveBody((cpSpace *)(mSimulator->getCPSpace()), (cpBody *)mCPBody);
-        cpShapeFree((cpShape *)mCPShape);
-        cpBodyFree((cpBody *)mCPBody);
+        cpSpaceRemoveShape((cpSpace*)(mSimulator->getCPSpace()), (cpShape*)mCPShape);
+        cpSpaceRemoveBody((cpSpace*)(mSimulator->getCPSpace()), (cpBody*)mCPBody);
+        cpShapeFree((cpShape*)mCPShape);
+        cpBodyFree((cpBody*)mCPBody);
         mCPShape = NULL;
         mCPBody = NULL;
     }
@@ -175,7 +175,7 @@ void KRShape2D::removeFromSimulator() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
     mIsRemovedFromSpace = true;
 }
 
-void *KRShape2D::getCPBody() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void* KRShape2D::getCPBody() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     return mCPBody;
 }
@@ -200,7 +200,7 @@ KRVector2D KRShape2DLine::getP1() const
     if (mIsStatic) {
         return mP1;
     }
-    cpVect a = cpvadd(((cpBody *)mCPBody)->p, cpvrotate(((cpSegmentShape *)mCPShape)->a, ((cpBody *)mCPBody)->rot));
+    cpVect a = cpvadd(((cpBody*)mCPBody)->p, cpvrotate(((cpSegmentShape*)mCPShape)->a, ((cpBody*)mCPBody)->rot));
 
     return KRVector2D(a.x, a.y);
 }
@@ -210,7 +210,7 @@ KRVector2D KRShape2DLine::getP2() const
     if (mIsStatic) {
         return mP2;
     }
-	cpVect b = cpvadd(((cpBody *)mCPBody)->p, cpvrotate(((cpSegmentShape *)mCPShape)->b, ((cpBody *)mCPBody)->rot));
+	cpVect b = cpvadd(((cpBody*)mCPBody)->p, cpvrotate(((cpSegmentShape*)mCPShape)->b, ((cpBody*)mCPBody)->rot));
     return KRVector2D(b.x, b.y);
 }
 
@@ -219,30 +219,30 @@ void KRShape2DLine::setLineWidth(double width)
     mLineWidth = width;
 }
 
-void KRShape2DLine::addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRShape2DLine::addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     mSimulator = simulator;
     mIsRemovedFromSpace = false;
 
     if (mIsStatic) {
-        mCPShape = cpSegmentShapeNew((cpBody *)(simulator->getCPStaticBody()), cpv(mP1.x, mP1.y), cpv(mP2.x, mP2.y), mLineWidth);
-        ((cpShape *)mCPShape)->e = mElasticity;
-        ((cpShape *)mCPShape)->u = mFriction;
-        ((cpShape *)mCPShape)->layers = NOT_GRABABLE_MASK;
-        ((cpShape *)mCPShape)->collision_type = mCollisionID;
-        cpSpaceAddStaticShape((cpSpace *)(simulator->getCPSpace()), (cpShape *)mCPShape);
+        mCPShape = cpSegmentShapeNew((cpBody*)(simulator->getCPStaticBody()), cpv(mP1.x, mP1.y), cpv(mP2.x, mP2.y), mLineWidth);
+        ((cpShape*)mCPShape)->e = mElasticity;
+        ((cpShape*)mCPShape)->u = mFriction;
+        ((cpShape*)mCPShape)->layers = NOT_GRABABLE_MASK;
+        ((cpShape*)mCPShape)->collision_type = mCollisionID;
+        cpSpaceAddStaticShape((cpSpace*)(simulator->getCPSpace()), (cpShape*)mCPShape);
     } else {
         mCPBody = cpBodyNew(mMass, cpMomentForSegment(mMass, cpv(mP1.x, mP1.y), cpv(mP2.x, mP2.y)));
-        ((cpBody *)mCPBody)->p = cpv(mP1.x, mP1.y);
-        cpSpaceAddBody((cpSpace *)(simulator->getCPSpace()), (cpBody *)mCPBody);
+        ((cpBody*)mCPBody)->p = cpv(mP1.x, mP1.y);
+        cpSpaceAddBody((cpSpace*)(simulator->getCPSpace()), (cpBody*)mCPBody);
 
-        mCPShape = cpSegmentShapeNew(((cpBody *)mCPBody), cpv(mP1.x, mP1.y), cpv(mP2.x, mP2.y), mLineWidth);
-        ((cpShape *)mCPShape)->e = mElasticity;
-        ((cpShape *)mCPShape)->u = mFriction;
-        ((cpShape *)mCPShape)->collision_type = mCollisionID;
-        cpSpaceAddShape((cpSpace *)(simulator->getCPSpace()), (cpShape *)mCPShape);
+        mCPShape = cpSegmentShapeNew(((cpBody*)mCPBody), cpv(mP1.x, mP1.y), cpv(mP2.x, mP2.y), mLineWidth);
+        ((cpShape*)mCPShape)->e = mElasticity;
+        ((cpShape*)mCPShape)->u = mFriction;
+        ((cpShape*)mCPShape)->collision_type = mCollisionID;
+        cpSpaceAddShape((cpSpace*)(simulator->getCPSpace()), (cpShape*)mCPShape);
     }
-    ((cpShape *)mCPShape)->data = this;
+    ((cpShape*)mCPShape)->data = this;
 }
 
 std::string KRShape2DLine::to_s() const
@@ -254,7 +254,7 @@ std::string KRShape2DLine::to_s() const
 #pragma mark -
 #pragma mark Poly Shape
 
-KRShape2DPoly::KRShape2DPoly(int vertexCount, KRVector2D *verts, const KRVector2D& pos, bool isStatic)
+KRShape2DPoly::KRShape2DPoly(int vertexCount, KRVector2D* verts, const KRVector2D& pos, bool isStatic)
     : mVertexCount(vertexCount)
 {
     mCenterPos = pos;
@@ -282,19 +282,19 @@ int KRShape2DPoly::getVertexCount() const
     return mVertexCount;
 }
 
-void KRShape2DPoly::getVertices(KRVector2D *vertices) const
+void KRShape2DPoly::getVertices(KRVector2D* vertices) const
 {
-    cpPolyShape *poly = (cpPolyShape *)mCPShape;
+    cpPolyShape* poly = (cpPolyShape*)mCPShape;
     int count = poly->numVerts;
-	cpVect *verts = poly->verts;
+	cpVect* verts = poly->verts;
 	for (int i = 0; i < count; i++) {
-		cpVect v = cpvadd(((cpBody *)mCPBody)->p, cpvrotate(verts[i], ((cpBody *)mCPBody)->rot));
+		cpVect v = cpvadd(((cpBody*)mCPBody)->p, cpvrotate(verts[i], ((cpBody*)mCPBody)->rot));
         vertices[i].x = v.x;
         vertices[i].y = v.y;
     }
 }
 
-void KRShape2DPoly::addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRShape2DPoly::addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     mSimulator = simulator;
     mIsRemovedFromSpace = false;
@@ -307,24 +307,24 @@ void KRShape2DPoly::addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_
     }
     
     if (mIsStatic) {
-        mCPShape = cpPolyShapeNew((cpBody *)(simulator->getCPStaticBody()), mVertexCount, cpVerts, cpvzero);
-        ((cpShape *)mCPShape)->e = mElasticity;
-        ((cpShape *)mCPShape)->u = mFriction;
-        ((cpShape *)mCPShape)->layers = NOT_GRABABLE_MASK;
-        ((cpShape *)mCPShape)->collision_type = mCollisionID;
-        cpSpaceAddStaticShape((cpSpace *)(simulator->getCPSpace()), (cpShape *)mCPShape);
+        mCPShape = cpPolyShapeNew((cpBody*)(simulator->getCPStaticBody()), mVertexCount, cpVerts, cpvzero);
+        ((cpShape*)mCPShape)->e = mElasticity;
+        ((cpShape*)mCPShape)->u = mFriction;
+        ((cpShape*)mCPShape)->layers = NOT_GRABABLE_MASK;
+        ((cpShape*)mCPShape)->collision_type = mCollisionID;
+        cpSpaceAddStaticShape((cpSpace*)(simulator->getCPSpace()), (cpShape*)mCPShape);
     } else {
         mCPBody = cpBodyNew(mMass, cpMomentForPoly(1.0, mVertexCount, cpVerts, cpvzero));
-        ((cpBody *)mCPBody)->p = cpv(mCenterPos.x, mCenterPos.y);
-        cpSpaceAddBody((cpSpace *)(simulator->getCPSpace()), (cpBody *)mCPBody);
+        ((cpBody*)mCPBody)->p = cpv(mCenterPos.x, mCenterPos.y);
+        cpSpaceAddBody((cpSpace*)(simulator->getCPSpace()), (cpBody*)mCPBody);
 
-        mCPShape = cpPolyShapeNew(((cpBody *)mCPBody), mVertexCount, cpVerts, cpvzero);
-        ((cpShape *)mCPShape)->e = mElasticity;
-        ((cpShape *)mCPShape)->u = mFriction;
-        ((cpShape *)mCPShape)->collision_type = mCollisionID;
-        cpSpaceAddShape((cpSpace *)(simulator->getCPSpace()), (cpShape *)mCPShape);
+        mCPShape = cpPolyShapeNew(((cpBody*)mCPBody), mVertexCount, cpVerts, cpvzero);
+        ((cpShape*)mCPShape)->e = mElasticity;
+        ((cpShape*)mCPShape)->u = mFriction;
+        ((cpShape*)mCPShape)->collision_type = mCollisionID;
+        cpSpaceAddShape((cpSpace*)(simulator->getCPSpace()), (cpShape*)mCPShape);
     }
-    ((cpShape *)mCPShape)->data = this;
+    ((cpShape*)mCPShape)->data = this;
 }
 
 std::string KRShape2DPoly::to_s() const
@@ -373,30 +373,30 @@ KRShape2DCircle::KRShape2DCircle(const KRVector2D& centerPos, double radius, boo
     mCenterPos = centerPos;
 }
 
-void KRShape2DCircle::addToSimulator(KRSimulator2D *simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
+void KRShape2DCircle::addToSimulator(KRSimulator2D* simulator) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 {
     mSimulator = simulator;
     mIsRemovedFromSpace = false;
 
     if (mIsStatic) {
-        mCPShape = cpCircleShapeNew((cpBody *)(simulator->getCPStaticBody()), mRadius, cpv(mCenterPos.x, mCenterPos.y));
-        ((cpShape *)mCPShape)->e = mElasticity;
-        ((cpShape *)mCPShape)->u = mFriction;
-        ((cpShape *)mCPShape)->layers = NOT_GRABABLE_MASK;
-        ((cpShape *)mCPShape)->collision_type = mCollisionID;
-        cpSpaceAddStaticShape((cpSpace *)(simulator->getCPSpace()), (cpShape *)mCPShape);
+        mCPShape = cpCircleShapeNew((cpBody*)(simulator->getCPStaticBody()), mRadius, cpv(mCenterPos.x, mCenterPos.y));
+        ((cpShape*)mCPShape)->e = mElasticity;
+        ((cpShape*)mCPShape)->u = mFriction;
+        ((cpShape*)mCPShape)->layers = NOT_GRABABLE_MASK;
+        ((cpShape*)mCPShape)->collision_type = mCollisionID;
+        cpSpaceAddStaticShape((cpSpace*)(simulator->getCPSpace()), (cpShape*)mCPShape);
     } else {
         mCPBody = cpBodyNew(mMass, cpMomentForCircle(mMass, 0.0, mRadius, cpvzero));
-        ((cpBody *)mCPBody)->p = cpv(mCenterPos.x, mCenterPos.y);
-        cpSpaceAddBody((cpSpace *)(simulator->getCPSpace()), (cpBody *)mCPBody);
+        ((cpBody*)mCPBody)->p = cpv(mCenterPos.x, mCenterPos.y);
+        cpSpaceAddBody((cpSpace*)(simulator->getCPSpace()), (cpBody*)mCPBody);
         
-        mCPShape = cpCircleShapeNew(((cpBody *)mCPBody), mRadius, cpvzero);
-        ((cpShape *)mCPShape)->e = mElasticity;
-        ((cpShape *)mCPShape)->u = mFriction;
-        ((cpShape *)mCPShape)->collision_type = mCollisionID;
-        cpSpaceAddShape((cpSpace *)(simulator->getCPSpace()), ((cpShape *)mCPShape));        
+        mCPShape = cpCircleShapeNew(((cpBody*)mCPBody), mRadius, cpvzero);
+        ((cpShape*)mCPShape)->e = mElasticity;
+        ((cpShape*)mCPShape)->u = mFriction;
+        ((cpShape*)mCPShape)->collision_type = mCollisionID;
+        cpSpaceAddShape((cpSpace*)(simulator->getCPSpace()), ((cpShape*)mCPShape));        
     }
-    ((cpShape *)mCPShape)->data = this;
+    ((cpShape*)mCPShape)->data = this;
 }
 
 std::string KRShape2DCircle::to_s() const

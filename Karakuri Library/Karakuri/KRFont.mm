@@ -15,7 +15,7 @@ _KRFont::_KRFont(const std::string& fontName, double size)
 {
     mFontName = fontName;
 
-    NSString *fontNameStr = [[NSString alloc] initWithCString:fontName.c_str() encoding:NSUTF8StringEncoding];
+    NSString* fontNameStr = [[NSString alloc] initWithCString:fontName.c_str() encoding:NSUTF8StringEncoding];
 
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
     mFontObj = [[NSFont fontWithName:fontNameStr size:(float)size] retain];
@@ -35,11 +35,11 @@ _KRFont::_KRFont(const std::string& fontName, double size)
 _KRFont::~_KRFont()
 {
 #if KR_MACOSX || KR_IPHONE_MACOSX_EMU
-    [(NSFont *)mFontObj release];
+    [(NSFont*)mFontObj release];
 #endif
 
 #if KR_IPHONE && !KR_IPHONE_MACOSX_EMU
-    [(UIFont *)mFontObj release];
+    [(UIFont*)mFontObj release];
 #endif
 }
 

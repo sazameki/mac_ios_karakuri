@@ -48,6 +48,6 @@
 @end
 
 
-extern KarakuriGLView   *gKRGLViewInst;
+extern KarakuriGLView*  gKRGLViewInst;
 
 

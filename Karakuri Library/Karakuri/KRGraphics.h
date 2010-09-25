@@ -100,5 +100,5 @@ public:
     @abstract グラフィック設定のインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KRGraphics *gKRGraphicsInst;
+extern KRGraphics*  gKRGraphicsInst;
 

@@ -15,23 +15,23 @@
 
 @protocol KRPeerPickerDelegate
 @optional
-- (void)peerPickerCanceled:(KRPeerPickerWindow *)pickerWindow;
-- (void)peerPickerAccepted:(KRPeerPickerWindow *)pickerWindow;
-- (void)peerPickerDenied:(KRPeerPickerWindow *)pickerWindow;
+- (void)peerPickerCanceled:(KRPeerPickerWindow*)pickerWindow;
+- (void)peerPickerAccepted:(KRPeerPickerWindow*)pickerWindow;
+- (void)peerPickerDenied:(KRPeerPickerWindow*)pickerWindow;
 @end
 
 
 @interface KRPeerPickerWindow : NSWindow {
     id              mDelegate;
 
-    NSTextField     *mTitleField;
-    NSTableView     *mPeerListView;
-    NSButton        *mInviteButton;
+    NSTextField*    mTitleField;
+    NSTableView*    mPeerListView;
+    NSButton*       mInviteButton;
     
-    KRNetworkBrowser    *mNetworkBrowser;
+    KRNetworkBrowser*   mNetworkBrowser;
 }
 
-- (id)initWithMainWindow:(NSWindow *)mainWindow;
+- (id)initWithMainWindow:(NSWindow*)mainWindow;
 
 - (void)setDelegate:(id)delegate;
 

@@ -18,7 +18,7 @@
 
 @implementation KRPeerPickerWindow
 
-- (id)initWithMainWindow:(NSWindow *)mainWindow
+- (id)initWithMainWindow:(NSWindow*)mainWindow
 {
     NSRect contentRect = [mainWindow contentRectForFrameRect:[mainWindow frame]];
     
@@ -46,7 +46,7 @@
         }        
         [[self contentView] addSubview:mTitleField];
         
-        NSButton *cancelButton = [[[NSButton alloc] initWithFrame:NSMakeRect(contentRect.size.width-140*2-17*2, 12, 140, 32)] autorelease];
+        NSButton* cancelButton = [[[NSButton alloc] initWithFrame:NSMakeRect(contentRect.size.width-140*2-17*2, 12, 140, 32)] autorelease];
         if (gKRLanguage == KRLanguageJapanese) {
             [cancelButton setTitle:@"キャンセル"];
         } else {
@@ -79,12 +79,12 @@
         [mPeerListView setDoubleAction:@selector(doInvite:)];
         [mPeerListView setUsesAlternatingRowBackgroundColors:YES];
         
-        NSTableColumn *peerNameColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Peer Name"] autorelease];
+        NSTableColumn* peerNameColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Peer Name"] autorelease];
         [peerNameColumn setWidth:460];
         [[peerNameColumn headerCell] setTitle:@"Peer Name"];
         [mPeerListView addTableColumn:peerNameColumn];
         
-        NSScrollView *peerTableScrollView = [[[NSScrollView alloc] initWithFrame:NSMakeRect(20, 51, contentRect.size.width-40, contentRect.size.height-100)] autorelease];
+        NSScrollView* peerTableScrollView = [[[NSScrollView alloc] initWithFrame:NSMakeRect(20, 51, contentRect.size.width-40, contentRect.size.height-100)] autorelease];
         [peerTableScrollView setBorderType:NSBezelBorder];
         [peerTableScrollView setHasVerticalScroller:YES];
         [[peerTableScrollView contentView] setDocumentView:mPeerListView];
@@ -134,7 +134,7 @@
         return;
     }
     
-    NSNetService *theService = [[mNetworkBrowser services] objectAtIndex:selectedRow];
+    NSNetService* theService = [[mNetworkBrowser services] objectAtIndex:selectedRow];
     [theService scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [theService setDelegate:self];
     [theService resolveWithTimeout:20.0];
@@ -169,19 +169,19 @@
 #pragma mark -
 #pragma mark NetService delgation
 
-- (void)netService:(NSNetService *)service didNotResolve:(NSDictionary *)errorDict
+- (void)netService:(NSNetService*)service didNotResolve:(NSDictionary*)errorDict
 {
     [service stop];
     NSLog(@"netServiceDidNotResolve: %@", errorDict);
 }
 
-- (void)netServiceDidResolveAddress:(NSNetService *)service
+- (void)netServiceDidResolveAddress:(NSNetService*)service
 {
-    struct sockaddr *sockAddr = NULL;
-    NSData *addressData = nil;
+    struct sockaddr* sockAddr = NULL;
+    NSData* addressData = nil;
     for (int i = 0; i < [[service addresses] count]; i++) {
-        NSData *addrData = [[service addresses] objectAtIndex:i];
-        sockAddr = (struct sockaddr *)[addrData bytes];
+        NSData* addrData = [[service addresses] objectAtIndex:i];
+        sockAddr = (struct sockaddr*)[addrData bytes];
         if (sockAddr->sa_family == AF_INET && sockAddr->sa_len == sizeof(struct sockaddr_in)) {
             addressData = addrData;
             break;
@@ -199,12 +199,12 @@
 #pragma mark -
 #pragma mark Table View DataSource & Delegation
 
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (int)numberOfRowsInTableView:(NSTableView*)aTableView
 {
     return [[mNetworkBrowser services] count];
 }
 
-- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+- (void)tableViewSelectionDidChange:(NSNotification*)aNotification
 {
     if ([mPeerListView selectedRow] >= 0) {
         [mInviteButton setEnabled:YES];
@@ -213,9 +213,9 @@
     }
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
+- (id)tableView:(NSTableView*)aTableView objectValueForTableColumn:(NSTableColumn*)aTableColumn row:(int)rowIndex
 {
-    NSNetService *aService = [[mNetworkBrowser services] objectAtIndex:rowIndex];
+    NSNetService* aService = [[mNetworkBrowser services] objectAtIndex:rowIndex];
     return [aService name];
 }
 
@@ -223,7 +223,7 @@
 #pragma mark -
 #pragma mark Network Browser Delegation
 
-- (void)networkBrowserDidUpdatePeerPist:(KRNetworkBrowser *)browser
+- (void)networkBrowserDidUpdatePeerPist:(KRNetworkBrowser*)browser
 {
     [mPeerListView reloadData];
 }

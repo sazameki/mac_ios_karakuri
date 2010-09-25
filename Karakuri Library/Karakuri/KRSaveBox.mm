@@ -167,7 +167,7 @@ void KRSaveBox::setDoubleValue(const std::string& key, double doubleValue)
 	NSData* keyStrData = [[NSData alloc] initWithBytes:key.data() length:key.length()];
     NSString* keyStr = [[NSString alloc] initWithData:keyStrData encoding:NSUTF8StringEncoding];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSNumber numberWithDouble:doubleValue] forKey:keyStr];
     
     [keyStr release];

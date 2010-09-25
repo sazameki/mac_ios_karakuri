@@ -25,14 +25,14 @@ public:
     static void initSimulatorSystem();  KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY
 
 private:
-    void        *mCPSpace;
-    void        *mCPStaticBody;
+    void*       mCPSpace;
+    void*       mCPStaticBody;
     double      mNextAngle;
     bool        mHasChangedAngle;
     KRVector2D  mGravity;
-    std::list<KRShape2D *>  mShapes;
-    std::list<KRJoint2D *>  mJoints;
-    std::list<KRCollisionInfo2D>  mCollisions;
+    std::list<KRShape2D*>           mShapes;
+    std::list<KRJoint2D*>           mJoints;
+    std::list<KRCollisionInfo2D>    mCollisions;
 
 public:
     /*!
@@ -75,25 +75,25 @@ public:
         追加された図形は、自動的に解放されることはありません。
      */
     
-    void    addShape(KRShape2D *aShape);
+    void    addShape(KRShape2D* aShape);
 
     /*!
         @method getAllShapes
         このシミュレータに追加されたすべての図形をリターンします。
      */
-    std::list<KRShape2D *>  *getAllShapes();
+    std::list<KRShape2D*>*  getAllShapes();
 
     /*!
         @method getShape
         指定された位置にある図形を取得します。
      */
-    KRShape2D   *getShape(const KRVector2D& pos) const;
+    KRShape2D*  getShape(const KRVector2D& pos) const;
 
     /*!
         @method removeShape
         指定された図形をシミュレータから取り除きます。
      */
-    void    removeShape(KRShape2D *aShape);    
+    void    removeShape(KRShape2D* aShape);    
 
     /*!
         @task      ジョイント管理のための関数
@@ -104,19 +104,19 @@ public:
         @abstract 新しいジョイントをシミュレータに追加します。
         追加されたジョイントは、自動的に解放されることはありません。
      */
-    void    addJoint(KRJoint2D *aJoint);
+    void    addJoint(KRJoint2D* aJoint);
     
     /*!
         @method getAllJoints
         このシミュレータに追加されたすべてのジョイントをリターンします。
      */
-    std::list<KRJoint2D *>  *getAllJoints();
+    std::list<KRJoint2D*>*  getAllJoints();
     
     /*!
         @method removeJoint
         @abstract 指定されたジョイントをシミュレータから取り除きます。
      */
-    void    removeJoint(KRJoint2D *aJoint);
+    void    removeJoint(KRJoint2D* aJoint);
 
     /*!
         @task 設定のための関数
@@ -161,7 +161,7 @@ public:
         @method getCollisions
         直前のステップ実行で衝突が検知されたすべての図形の組をリターンします。
      */
-    std::list<KRCollisionInfo2D>  *getCollisions();
+    std::list<KRCollisionInfo2D>* getCollisions();
     
     /*!
         @method removeCollisionPair
@@ -172,8 +172,8 @@ public:
     void    addCollisionInfo(const KRCollisionInfo2D& anInfo) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
 public:
-    void    *getCPSpace() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
-    void    *getCPStaticBody() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void*   getCPSpace() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void*   getCPStaticBody() const KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
   
 public:
     virtual std::string to_s() const;

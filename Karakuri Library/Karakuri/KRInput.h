@@ -573,6 +573,6 @@ public:
     @abstract 入力クラスのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KRInput *gKRInputInst;
+extern KRInput* gKRInputInst;
 
 

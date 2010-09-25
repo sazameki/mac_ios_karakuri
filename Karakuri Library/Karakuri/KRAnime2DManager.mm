@@ -112,7 +112,7 @@ _KRChara2DSpec* KRAnime2DManager::_getChara2DSpec(int specID)
 {
     _KRChara2DSpec* theSpec = mCharaSpecMap[specID];
     if (theSpec == NULL) {
-        const char *errorFormat = "KRAnime2D::createCharacter() Character spec was not found for spec-id %d.";
+        const char* errorFormat = "KRAnime2D::createCharacter() Character spec was not found for spec-id %d.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "KRAnime2D::createCharacter() ID が %d のキャラクタ特徴は見つかりませんでした。";
         }
@@ -251,7 +251,7 @@ void KRAnime2DManager::_reorderChara2D(KRChara2D* chara)
     }    
 }
 
-void KRAnime2DManager::stepAllCharas()
+void KRAnime2DManager::_stepAllCharas()
 {
     for (std::list<KRChara2D*>::iterator it = mCharas.begin(); it != mCharas.end();) {
         (*it)->_step();
@@ -306,7 +306,7 @@ _KRParticle2DSystem* KRAnime2DManager::_getParticleSystem(int particleID) const
     
     // パーティクルシステムが見つからなかったときの処理。
     if (theParticleSystem == NULL) {
-        const char *errorFormat = "Failed to find the particle system with ID %d.";
+        const char* errorFormat = "Failed to find the particle system with ID %d.";
         if (gKRLanguage == KRLanguageJapanese) {
             errorFormat = "ID が %d のパーティクルシステムは見つかりませんでした。";
         }

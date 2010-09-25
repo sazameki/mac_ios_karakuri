@@ -25,7 +25,7 @@
 class KRNetwork : public KRObject {
     
 private:
-    void    *mImpl;
+    void*   mImpl;
     
 public:
     KRNetwork(const std::string& gameID);
@@ -73,7 +73,7 @@ public:
     void    doAccept() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     void    doReject() KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
     
-    void    startInvitation(void *peerAddressData, void *peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
+    void    startInvitation(void* peerAddressData, void* peerPickerUI) KARAKURI_FRAMEWORK_INTERNAL_USE_ONLY;
 
 };
 
@@ -84,6 +84,6 @@ public:
     @abstract 通信クラスのインスタンスを指す変数です。
     この変数が指し示すオブジェクトは、ゲーム実行の最初から最後まで絶対に変わりません。
  */
-extern KRNetwork *gKRNetworkInst;
+extern KRNetwork*   gKRNetworkInst;
 
 
