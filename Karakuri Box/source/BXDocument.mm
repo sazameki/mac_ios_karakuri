@@ -105,8 +105,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)loadResourceInfos
 {
-    NSLog(@"loadResourceInfos - 1");
-
     NSFileWrapper* contentsWrapper = [[mRootWrapper fileWrappers] objectForKey:@"Contents"];
     NSFileWrapper* resourcesWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Resources"];
     
@@ -118,30 +116,23 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         }
     }
     
-    NSLog(@"loadResourceInfos - A");
-
     if (contentsWrapper) {
-        NSLog(@"loadResourceInfos - A1");
         NSFileWrapper* tex2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Texture2DInfos.plist"];
         if (tex2DInfosWrapper) {
             [mTex2DGroup readTexture2DInfosData:[tex2DInfosWrapper regularFileContents] document:self];
         }
         
-        NSLog(@"loadResourceInfos - A2");
         NSFileWrapper* chara2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Chara2DInfos.plist"];
         if (chara2DInfosWrapper) {
             [mChara2DGroup readChara2DInfosData:[chara2DInfosWrapper regularFileContents] document:self];
         }
 
-        NSLog(@"loadResourceInfos - A3");
         NSFileWrapper* particle2DInfosWrapper = [[contentsWrapper fileWrappers] objectForKey:@"Particle2DInfos.plist"];
         if (particle2DInfosWrapper) {
             [mParticle2DGroup readParticle2DInfosData:[particle2DInfosWrapper regularFileContents] document:self];
         }
     }
     
-    NSLog(@"loadResourceInfos - B");
-
     [oElementView reloadData];
     if ([mTex2DGroup childCount] > 0) {
         [oElementView expandItem:mTex2DGroup];
@@ -153,8 +144,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         [oElementView expandItem:mParticle2DGroup];
     }
     
-    NSLog(@"loadResourceInfos - C");
-
     NSMutableArray* usedTextureTickets = [NSMutableArray array];
     int texCount = [mTex2DGroup childCount];
     for (int i = 0; i < texCount; i++) {
@@ -165,8 +154,6 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
         }
     }
     [mFileManager removeUnusedTextureImages:usedTextureTickets];                         
-
-    NSLog(@"loadResourceInfos - 99");
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController*) aController
@@ -1402,13 +1389,9 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 
 - (void)addChara2DWithInfo:(NSDictionary*)theInfo
 {
-    NSLog(@"addChara2DWithInfo:-1");
     BXChara2DSpec* newCharaSpec = [[[BXChara2DSpec alloc] initWithName:@"New Chara" defaultMotion:NO] autorelease];
-    NSLog(@"addChara2DWithInfo:-2");
     [newCharaSpec restoreElementInfo:theInfo document:self];
-    NSLog(@"addChara2DWithInfo:-3");
     [mChara2DGroup addChild:newCharaSpec];
-    NSLog(@"addChara2DWithInfo:-99");
 }
 
 - (BOOL)canAddChara2DImage

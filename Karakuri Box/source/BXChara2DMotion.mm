@@ -248,13 +248,11 @@
 
 - (void)restoreMotionInfo:(NSDictionary*)theInfo
 {
-    NSLog(@"restoreMotionInfo:-1");
     // 基本情報
     mMotionID = [theInfo intValueForName:@"Motion ID" currentValue:mMotionID];
     [self setMotionName:[theInfo stringValueForName:@"Motion Name" currentValue:mMotionName]];
     
     // コマ情報
-    NSLog(@"restoreMotionInfo:-2");
     NSArray* komaInfos = [theInfo objectForKey:@"Koma Infos"];
     for (int i = 0; i < [komaInfos count]; i++) {
         NSDictionary* aKomaInfo = [komaInfos objectAtIndex:i];
@@ -265,33 +263,24 @@
     }
 
     // デフォルトの間隔
-    NSLog(@"restoreMotionInfo:-3");
     mDefaultKomaInterval = [theInfo intValueForName:@"Default Interval" currentValue:mDefaultKomaInterval];
 
     // 次の動作ID
-    NSLog(@"restoreMotionInfo:-4");
     mNextMotionID = [theInfo intValueForName:@"Next Motion ID" currentValue:mNextMotionID];
 
     // キャンセル時の終了アニメーション開始コマ
-    NSLog(@"restoreMotionInfo:-5");
     int cancelKomaIndex = [theInfo intValueForName:@"Cancel Koma Index" currentValue:-1];
-    NSLog(@"cancelKomaIndex: %d", cancelKomaIndex);
-    NSLog(@"[mKomas count]-1: %d", [mKomas count]-1);
     if (cancelKomaIndex >= 0 && [mKomas count] > cancelKomaIndex) {
-        NSLog(@"komas: %@", mKomas);
-        NSLog(@"komaAtIndex: %d", cancelKomaIndex);
         mTargetKomaForCancel = [self komaAtIndex:cancelKomaIndex];
     } else {
         mTargetKomaForCancel = nil;
     }
 
     // Gotoコマ情報をオブジェクトに置き換え
-    NSLog(@"restoreMotionInfo:-6");
     for (int i = 0; i < [mKomas count]; i++) {
         BXChara2DKoma* aKoma = [mKomas objectAtIndex:i];
         [aKoma replaceTempGotoInfoForMotion:self];
     }
-    NSLog(@"restoreMotionInfo:-99");
 }
 
 @end
