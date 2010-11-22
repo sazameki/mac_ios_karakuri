@@ -44,7 +44,7 @@
                 
                 NSError* error = nil;
                 BXDocument* newDoc = [docController openDocumentWithContentsOfURL:fileURL display:YES error:&error];
-                
+
                 if (newDoc) {
                     processed = YES;
                 }

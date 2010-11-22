@@ -101,8 +101,8 @@
         
         for (int y = 0; y < atlasCount.y; y++) {
             for (int x = 0; x < atlasCount.x; x++) {
-                int drawX = partCount % mCurrentDivCountX;
-                int drawY = partCount / mCurrentDivCountX;
+                int drawX = (mCurrentDivCountX > 0)? (partCount % mCurrentDivCountX): 0;
+                int drawY = (mCurrentDivCountX > 0)? (partCount / mCurrentDivCountX): 0;
 
                 NSRect theRect = NSMakeRect(drawX * gChara2DImageAtlasSizeX, drawY * gChara2DImageAtlasSizeY, gChara2DImageAtlasSizeX, gChara2DImageAtlasSizeY);
 

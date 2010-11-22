@@ -729,6 +729,7 @@
 
 - (void)restoreElementInfo:(NSDictionary*)theInfo document:(BXDocument*)document
 {
+    NSLog(@"restoreElementInfo:-1");
     // 基本のIDと名前
     [mResourceUUID release];
     mResourceUUID = [[theInfo stringValueForName:@"Resource UUID" currentValue:mResourceUUID] retain];
@@ -737,9 +738,11 @@
     [self setResourceName:[theInfo stringValueForName:@"Resource Name" currentValue:mResourceName]];    
     
     // テクスチャの選択
+    NSLog(@"restoreElementInfo:-2");
     mSelectingTextureUUID = [[theInfo stringValueForName:@"Texture UUID" currentValue:mSelectingTextureUUID] copy];
     
     // 動作
+    NSLog(@"restoreElementInfo:-3");
     NSArray* motionInfos = [theInfo objectForKey:@"Motion Infos"];
     for (int i = 0; i < [motionInfos count]; i++) {
         NSDictionary* aMotionInfo = [motionInfos objectAtIndex:i];
@@ -749,9 +752,11 @@
     }
 
     // コマプレビューのスケール
+    NSLog(@"restoreElementInfo:-4");
     mKomaPreviewScale = [theInfo doubleValueForName:@"Preview Scale" currentValue:mKomaPreviewScale];
     
     // シミュレーション用の設定
+    NSLog(@"restoreElementInfo:-5");
     mFirstMotionID = [theInfo intValueForName:@"SIM First Motion ID" currentValue:mFirstMotionID];
     mFirstMotionKomaIndex = [theInfo intValueForName:@"SIM First Koma Index" currentValue:mFirstMotionKomaIndex];
     mRevertToFirstMotion = [theInfo boolValueForName:@"SIM Revert To First Motion" currentValue:mRevertToFirstMotion];
@@ -802,6 +807,7 @@
     mIgnoresCancelFlagMouse = [theInfo boolValueForName:@"SIM Action Ignores Cancel Flag Mouse" currentValue:mIgnoresCancelFlagMouse];
     mSkipEndAnimationMouse = [theInfo boolValueForName:@"SIM Action Skip End Animation Mouse" currentValue:mSkipEndAnimationMouse];
     mDoChangeMouseLocation = [theInfo boolValueForName:@"SIM Do Change Mouse Location" currentValue:mDoChangeMouseLocation];
+    NSLog(@"restoreElementInfo:-99");
 }
 
 @end

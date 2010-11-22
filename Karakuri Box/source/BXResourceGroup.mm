@@ -103,16 +103,21 @@
 
 - (void)readChara2DInfosData:(NSData*)data document:(BXDocument*)document
 {
+    NSLog(@"readChara2DInfosData:: - 1");
     NSArray* infos = [NSPropertyListSerialization propertyListFromData:data
                                                       mutabilityOption:NSPropertyListImmutable
                                                                 format:NULL
                                                       errorDescription:nil];
 
+    NSLog(@"readChara2DInfosData:: <%@>", infos);
+
     int infoCount = [infos count];
+    NSLog(@"infoCount=%d", infoCount);
     for (int i = 0; i < infoCount; i++) {
         NSDictionary* anInfo = [infos objectAtIndex:i];
         [document addChara2DWithInfo:anInfo];
     }
+    NSLog(@"readChara2DInfosData:: - 99");
 }
 
 @end
