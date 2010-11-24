@@ -171,7 +171,7 @@
     NSMenu* ret = [[[NSMenu alloc] initWithTitle:@"Koma Goto Popup Menu"] autorelease];
     
     NSMenuItem* noneItem = [ret addItemWithTitle:@"----" action:@selector(changedChara2DKomaGotoTarget:) keyEquivalent:@""];
-    [noneItem setTag:0];
+    [noneItem setTag:-1];
     [noneItem setTarget:document];
     
     int sourceKomaIndex = [koma komaIndex];
@@ -183,7 +183,7 @@
         NSMenuItem* menuItem = [ret addItemWithTitle:[NSString stringWithFormat:@"%d", i]
                                               action:@selector(changedChara2DKomaGotoTarget:)
                                        keyEquivalent:@""];
-        [menuItem setTag:i+1];
+        [menuItem setTag:i];
         [menuItem setTarget:document];
     }
     

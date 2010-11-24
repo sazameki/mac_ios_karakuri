@@ -848,7 +848,7 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
     if (mKomaInterval > 0) {
         return;
     }
-
+    
     if (!mHasChangingStarted && mNextMotion && [mCurrentKoma isCancelable]) {
         mHasChangingStarted = YES;
         if (mSkipEndToNext || ![mCurrentMotion targetKomaForCancel]) {
@@ -876,7 +876,7 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
     }
     
     int gotoTargetIndex = [mCurrentKoma gotoTargetKomaIndex];
-    if (gotoTargetIndex > 0) {
+    if (gotoTargetIndex >= 0) {
         mKomaIndex = gotoTargetIndex;
     } else {
         mKomaIndex++;

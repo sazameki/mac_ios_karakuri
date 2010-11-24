@@ -323,7 +323,7 @@
         mInterval = [info intValueForName:@"Interval" currentValue:0];
         
         mTempGotoTargetKomaIndex = [info intValueForName:@"Goto Target Index" currentValue:-1];
-        
+
         mGotoTargetKoma = nil;
 
         mHitInfos = [[NSMutableArray alloc] init];
