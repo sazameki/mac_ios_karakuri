@@ -49,7 +49,7 @@ struct KRVector2D;
     @abstract   行列スタックの最上部の変換行列を破棄します。
  */
 #define KRPopMatrix()\
-    KRTexture2D::processBatchedTexture2DDraws();\
+    _KRTexture2D::processBatchedTexture2DDraws();\
     _KRMatrixPushCount--;\
     glPopMatrix();
 

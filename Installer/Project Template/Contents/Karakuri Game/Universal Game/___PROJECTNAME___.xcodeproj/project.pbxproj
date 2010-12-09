@@ -622,7 +622,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "___PROJECTNAME___";
-				SDKROOT = iphonesimulator3.2;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -661,7 +661,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "___PROJECTNAME___";
-				SDKROOT = iphonesimulator3.2;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				ZERO_LINK = NO;
 			};
