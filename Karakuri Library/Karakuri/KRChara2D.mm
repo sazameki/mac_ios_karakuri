@@ -417,7 +417,7 @@ void KRChara2D::changeMotion(int motionID)
     changeMotion(motionID, KRCharaMotionChangeModeNormalMask);
 }
 
-void KRChara2D::changeMotion(int motionID, unsigned modeMask)
+void KRChara2D::changeMotion(int motionID, int modeMask)
 {
     if (_mCharaSpec->isParticle()) {
         return;

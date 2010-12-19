@@ -17,9 +17,20 @@
 extern KRMemoryAllocator*   _gKRChara2DAllocator;
 
 
-static const unsigned       KRCharaMotionChangeModeNormalMask            = 0x00;
-static const unsigned       KRCharaMotionChangeModeIgnoreCancelFlagMask  = 0x01;
-static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
+/*!
+    @enum   KRCharaMotionChangeMode
+    @group  Game Graphics
+    @constant   KRCharaMotionChangeModeNormalMask           Karakuri Box の設定に従ってモーションを変更することを表す定数です。
+    @constant   KRCharaMotionChangeModeIgnoreCancelFlagMask モーションの変更時に Karakuri Box のキャンセル設定を無視することを表す定数です。
+    @constant   KRCharaMotionChangeModeSkipEndMask          モーションの変更時に Karakuri Box で設定されたキャンセル開始時のコマをスキップすることを表す定数です。
+    @abstract   キャラクタのモーション変更方法を表すための型です。
+    ビット計算で組み合わせて使うことができます。
+ */
+enum {
+    KRCharaMotionChangeModeNormalMask            = 0x00,
+    KRCharaMotionChangeModeIgnoreCancelFlagMask  = 0x01,
+    KRCharaMotionChangeModeSkipEndMask           = 0x02,
+};
 
 
 enum _KRChara2DHitAreaType {
@@ -221,9 +232,10 @@ public:
 
     /*!
         @method changeMotion
-        キャラクタの動作を変更します。
+        @abstract 動作の変更方法を指定して、キャラクタの動作を変更します。
+        動作の変更方法は、<a href="../../Data%20Types/index.html#//apple_ref/cpp/tag/KRCharaMotionChangeMode">KRCharaMotionChangeMode</a> 型の enum 定数をビット計算で組み合わせて指定します。
      */
-    void    changeMotion(int motionID, unsigned modeMask);
+    void    changeMotion(int motionID, int modeMask);
 
     /*!
         @method getMotionID
