@@ -1470,13 +1470,13 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
 }
 
 - (void)updateChara2DMotionCancelKomaButtonMenu
-{    
+{
     NSMenu* theMenu = [[[NSMenu alloc] initWithTitle:@"Cancel Koma Menu"] autorelease];
     
     NSMenuItem* noneItem = [theMenu addItemWithTitle:NSLocalizedString(@"Cancel Koma Menu None Item Title", nil)
                                               action:@selector(changedChara2DMotionCancelKoma:)
                                        keyEquivalent:@""];
-    [noneItem setTag:0];
+    [noneItem setTag:-1];
     [noneItem setTarget:self];
  
     BXChara2DMotion* selectedMotion = [self selectedChara2DMotion];
@@ -1485,7 +1485,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
             NSMenuItem* theItem = [theMenu addItemWithTitle:[NSString stringWithFormat:@"#%d", i]
                                                      action:@selector(changedChara2DMotionCancelKoma:)
                                               keyEquivalent:@""];
-            [theItem setTag:i+1];
+            [theItem setTag:i];
             [theItem setTarget:self];
         }
     }
@@ -1494,7 +1494,11 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     
     if (selectedMotion) {
         BXChara2DKoma* theKoma = [selectedMotion targetKomaForCancel];
-        [oChara2DMotionCancelKomaIndexButton selectItemWithTag:[theKoma komaIndex]];
+        if (theKoma) {
+            [oChara2DMotionCancelKomaIndexButton selectItemWithTag:[theKoma komaIndex]];
+        } else {
+            [oChara2DMotionCancelKomaIndexButton selectItemWithTag:-1];
+        }
     }    
 }
 
@@ -2105,7 +2109,7 @@ static NSString*    sKADocumentToolbarItemAddStage      = @"KADocumentToolbarIte
     // モーションがない場合
     if (!theMotion) {
         [oChara2DKomaDefaultIntervalButton selectItemWithTag:1];
-        [oChara2DMotionCancelKomaIndexButton selectItemWithTag:0];
+        [oChara2DMotionCancelKomaIndexButton selectItemWithTag:-1];
 
         // 次のモーションメニューをクリアする
         [oChara2DMotionNextMotionButton removeAllItems];

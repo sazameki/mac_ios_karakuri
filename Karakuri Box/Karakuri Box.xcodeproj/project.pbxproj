@@ -252,7 +252,7 @@
 				8EA4996F1147608A002BEBA8 /* BXAppController.mm */,
 				8E62A55C113AE053005DC90E /* BXDocument.h */,
 				8E62A55D113AE053005DC90E /* BXDocument.mm */,
-				8E62A562113AE053005DC90E /* Resource */,
+				8E62A562113AE053005DC90E /* Resource Editor */,
 				8E62A56B113AE053005DC90E /* Karakuri */,
 				8E62A585113AE053005DC90E /* Cocoa Ex */,
 			);
@@ -330,7 +330,7 @@
 			name = Particle2D;
 			sourceTree = "<group>";
 		};
-		8E62A562113AE053005DC90E /* Resource */ = {
+		8E62A562113AE053005DC90E /* Resource Editor */ = {
 			isa = PBXGroup;
 			children = (
 				8E2AEDDB113AE35A00D32EFE /* Base */,
@@ -342,7 +342,7 @@
 				8ED752A0113B8DF3004E78EB /* SE */,
 				8ED752A8113B8E93004E78EB /* Stage */,
 			);
-			name = Resource;
+			name = "Resource Editor";
 			sourceTree = "<group>";
 		};
 		8E62A56B113AE053005DC90E /* Karakuri */ = {

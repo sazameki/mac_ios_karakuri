@@ -387,6 +387,8 @@ static const unsigned       KRCharaMotionChangeModeSkipEndMask           = 0x02;
     
     if ([mCurrentKoma isCancelable] || (mask & KRCharaMotionChangeModeIgnoreCancelFlagMask)) {
         mHasChangingStarted = YES;
+        
+        // 「キャンセルの開始コマ」で設定した終了アニメーションを無視する
         if (mSkipEndToNext || ![mCurrentMotion targetKomaForCancel]) {
             mCurrentMotion = mNextMotion;
             mCurrentKoma = mNextKoma;

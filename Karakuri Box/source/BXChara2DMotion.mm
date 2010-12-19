@@ -125,6 +125,9 @@
 
 - (BXChara2DKoma*)komaAtIndex:(int)index
 {
+    if (index < 0) {
+        return nil;
+    }
     return [mKomas objectAtIndex:index];
 }
 
@@ -241,7 +244,11 @@
     [theInfo setIntValue:mNextMotionID forName:@"Next Motion ID"];
     
     // キャンセル時の終了アニメーション開始コマ
-    [theInfo setIntValue:[mTargetKomaForCancel komaIndex] forName:@"Cancel Koma Index"];
+    if (mTargetKomaForCancel) {
+        [theInfo setIntValue:[mTargetKomaForCancel komaIndex] forName:@"Cancel Koma Index"];
+    } else {
+        [theInfo setIntValue:-1 forName:@"Cancel Koma Index"];
+    }
     
     return theInfo;
 }
