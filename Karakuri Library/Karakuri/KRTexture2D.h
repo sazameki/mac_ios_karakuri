@@ -36,7 +36,7 @@ private:
     GLuint      mTextureName;
     GLenum      mTextureTarget;
     KRVector2D  mImageSize;         //!< The actual size of the image.
-    KRVector2D  mTextureSize;       //!< Full size of the area used as a texture.
+    KRVector2D  mTextureSize;       //!< Full size of the area used as a texture. （サイズが2の乗数になっていない場合のサイズ割合）
     
 public:
     static int  getResourceSize(const std::string& filename);

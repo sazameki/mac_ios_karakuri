@@ -217,13 +217,12 @@ void _KRTexture2D::drawAtPointEx(const KRVector2D& pos, const KRRect2D& srcRect,
         theSrcRect.width = mImageSize.x;
         theSrcRect.height = mImageSize.y;
     }
-    theSrcRect.y = mImageSize.y - theSrcRect.y;
-    
+
     float texX = (theSrcRect.x / mImageSize.x) * mTextureSize.x;
     float texY = (theSrcRect.y / mImageSize.y) * mTextureSize.y;
     float texWidth = (theSrcRect.width / mImageSize.x) * mTextureSize.x;
-    float texHeight = (theSrcRect.height / mImageSize.y) * mTextureSize.y * -1;
-    
+    float texHeight = (theSrcRect.height / mImageSize.y) * mTextureSize.y;
+
     float p1_x = 0.0f;
     float p2_x = theSrcRect.width;
     float p3_x = 0.0f;
@@ -323,9 +322,9 @@ void _KRTexture2D::drawAtPointEx(const KRVector2D& pos, const KRRect2D& srcRect,
     
     float tx_1 = texX;
     float tx_2 = texX + texWidth;
-    float ty_1 = texY;
-    float ty_2 = texY + texHeight;
-    
+    float ty_1 = texY + texHeight;
+    float ty_2 = texY;
+
     _gKRTexture2DDrawData[batchPos].texCoords_x = tx_1;      _gKRTexture2DDrawData[batchPos].texCoords_y = ty_2;
     _gKRTexture2DDrawData[batchPos+1].texCoords_x = tx_2;    _gKRTexture2DDrawData[batchPos+1].texCoords_y = ty_2;
     _gKRTexture2DDrawData[batchPos+2].texCoords_x = tx_1;    _gKRTexture2DDrawData[batchPos+2].texCoords_y = ty_1;
