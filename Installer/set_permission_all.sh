@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo sleep 0
+
 echo File Tempaltes
 cd File\ Template
 ./set_permission.sh

@@ -191,6 +191,23 @@ public:
     
 public:
     /*!
+        @task クラスメソッド
+     */
+    
+    /*!
+        @method     createWithHSBA
+        @abstract   HSB色空間のパラメタを指定して色を生成します（H:0.0-1.0, S:0.0-1.0, B:0.0-1.0, A:0.0-1.0）。
+     */
+    static KRColor createWithHSBA(double hue, double saturation, double brightness, double alpha);
+    
+    /*!
+        @method     lerp
+        @abstract   2つの色の間を線形補間した色を作成します。
+     */
+    static KRColor  lerp(const KRColor& color1, const KRColor& color2, double amount);
+    
+public:
+    /*!
         @task コンストラクタ
      */
     
@@ -225,8 +242,18 @@ public:
     KRColor(const KRColor& color);
     
 public:
-    void set() const;
-    void setAsClearColor() const;
+    /*!
+        @task 主な操作
+     */
+    
+    /*!
+        @method     getHSB
+        @abstract   この色のHSB色空間における各パラメタを計算します。
+     */
+    void    getHSB(double* hue, double* saturation, double* brightness) const;
+    
+    void    set() const;
+    void    setAsClearColor() const;
     
 public:
     /*!

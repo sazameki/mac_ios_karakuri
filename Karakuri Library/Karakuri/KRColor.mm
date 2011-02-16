@@ -192,6 +192,123 @@ KRColor::KRColor(const KRColor& color)
     // Do nothing
 }
 
+KRColor KRColor::createWithHSBA(double hue, double saturation, double brightness, double alpha)
+{
+    KRColor ret;
+
+    ret.a = alpha;
+
+    if (saturation == 0.0) {
+	    ret.r = ret.g = ret.b = brightness;
+    } else {
+	    double f = 6 * hue;
+	    int i = (int)f;
+        f -= i;
+	    double p = brightness * (1.0 - saturation);
+	    double q = brightness * (1.0 - saturation * f);
+	    double t = brightness * (1.0 - saturation * (1.0 - f));
+	    switch (i) {
+            case 1:
+                ret.r = q;
+                ret.g = brightness;
+                ret.b = p;
+                break;
+            case 2:
+                ret.r = p;
+                ret.g = brightness;
+                ret.b = t;
+                break;
+            case 3:
+                ret.r = p;
+                ret.g = q;
+                ret.b = brightness;
+                break;
+            case 4:
+                ret.r = t;
+                ret.g = p;
+                ret.b = brightness;
+                break;
+            case 5:
+                ret.r = brightness;
+                ret.g = p;
+                ret.b = q;
+                break;
+            default:
+                ret.r = brightness;
+                ret.g = t;
+                ret.b = p;
+                break;                
+	    }        
+    }
+    return ret;
+}
+
+KRColor KRColor::lerp(const KRColor& color1, const KRColor& color2, double amount)
+{
+    if (amount < 0.0) {
+        amount = 0.0;
+    } else if (amount > 1.0) {
+        amount = 1.0;
+    }
+
+    double red = color1.r + (color2.r - color1.r) * amount;
+    double green = color1.g + (color2.g - color1.g) * amount;
+    double blue = color1.b + (color2.b - color1.b) * amount;
+    double alpha = color1.a + (color2.a - color1.a) * amount;
+    
+    return KRColor(red, green, blue, alpha);
+}
+
+void KRColor::getHSB(double* hue, double* saturation, double* brightness) const
+{
+    double theS = 0.0;
+    double theB = 0.0;
+    
+    double max = (r > g)? r: g;
+    if (b > max) {
+        max = b;
+    }
+
+    double min = (r < g)? r: g;
+    if (b < min) {
+        min = b;
+    }
+    
+    double minMaxDist = max - min;
+    
+    theB = max;
+    if (max != 0.0) {
+        theS = minMaxDist / max;
+    } else {
+        theS = 0.0;
+    }
+    
+    if (hue != NULL) {
+        if (theS == 0.0) {
+            *hue = 0.0;
+        } else {
+            if (r == max) {
+                *hue = (g - b) / minMaxDist;
+            } else if (g == max) {
+                *hue = (b - r) / minMaxDist + 2.0;
+            } else {
+                *hue = (r - g) / minMaxDist + 4.0;
+            }
+            *hue /= 6.0;
+            if (*hue < 0.0) {
+                *hue += 1.0;
+            }
+        }
+    }
+    
+    if (saturation != NULL) {
+        *saturation = theS;
+    }
+    if (brightness != NULL) {
+        *brightness = theB;
+    }
+}
+
 void KRColor::set() const
 {
     if (_KRColorRed != r || _KRColorGreen != g || _KRColorBlue != b || _KRColorAlpha != a) {

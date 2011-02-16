@@ -218,6 +218,8 @@ void KRWorld::finishLoadingWorld()
 
 void KRWorld::unloadResourceGroup(int groupID)
 {
+    gKRTex2DMan->_unloadTextureFilesInGroup(groupID);
+    gKRAudioMan->_unloadAudioFilesInGroup(groupID);
 }
 
 int KRWorld::_getFinishedSize()
