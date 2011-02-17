@@ -33,9 +33,10 @@ class KRAudioManager : public KRObject {
     std::map<int, std::vector<int> >    mSE_GroupID_SEIDList_Map;
     std::map<int, std::string>          mSE_SEID_AudioFileName_Map;
 
-    std::map<int, KRMusic*> mBGMMap;
-    std::map<int, KRSound*>  mSEMap;
-    
+    std::map<int, KRMusic*>             mBGMMap;
+    std::map<int, KRSound*>             mSEMap;
+    std::map<int, bool>                 mGroupID_Loaded_Map;
+
 public:
 	KRAudioManager();
 	virtual ~KRAudioManager();
@@ -62,6 +63,7 @@ public:
 public:
     int     _getResourceSizeInGroup(int groupID);
     void    _loadAudioFilesInGroup(int groupID, KRWorld* loaderWorld, double minDuration);
+    bool    _hasLoadedAudioFilesInGroup(int groupID);
     void    _unloadAudioFilesInGroup(int groupID);
     
     

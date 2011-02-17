@@ -95,13 +95,13 @@ public:
         
     /*!
         @method finishLoadingWorld
-        @abstract 読み込み画面の表示を終了します。
+        @abstract （バージョン1.6より、このメソッドは暫定的に利用できません。）読み込み画面の表示を終了します。
      */
     void    finishLoadingWorld();
     
     /*!
         @method startLoadingWorld
-        @abstract 読み込み画面の表示を開始します。この関数の呼び出し後は必ず finishLoadingWorld() 関数を呼び出し、その間では loadResourceGroup() 関数の呼び出し以外の処理は行わないでください。
+        @abstract （バージョン1.6より、このメソッドは暫定的に利用できません。）読み込み画面の表示を開始します。この関数の呼び出し後は必ず finishLoadingWorld() 関数を呼び出し、その間では loadResourceGroup() 関数の呼び出し以外の処理は行わないでください。
      */
     void    startLoadingWorld(const std::string& loadingWorldName, double minDuration=2.0);
 

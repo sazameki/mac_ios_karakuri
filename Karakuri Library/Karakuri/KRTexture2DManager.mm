@@ -42,6 +42,8 @@ void KRTexture2DManager::addTexture(int groupID, int texID, const std::string& i
     
     mTexID_ImageFileName_Map[texID] = imageFileName;
     mTexID_ScaleMode_Map[texID] = scaleMode;
+    
+    mGroupID_Loaded_Map[groupID] = false;
 }
 
 void KRTexture2DManager::_addTexture(int groupID, int texID, const std::string& resourceName, const std::string& resourceFileName, unsigned pos, unsigned length)
@@ -56,6 +58,8 @@ void KRTexture2DManager::_addTexture(int groupID, int texID, const std::string& 
     info.scale_mode = KRTexture2DScaleModeLinear;
     
     mTexID_ResourceInfo_Map[texID] = info;
+
+    mGroupID_Loaded_Map[groupID] = false;
 }
 
 int KRTexture2DManager::_getResourceSizeInGroup(int groupID)
@@ -82,6 +86,12 @@ int KRTexture2DManager::_getResourceSizeInGroup(int groupID)
 
 void KRTexture2DManager::_loadTextureFilesInGroup(int groupID, KRWorld* loaderWorld, double minDuration)
 {
+    //printf("_loadTextureFilesInGroup(%d)...\n", groupID);
+    if (mGroupID_Loaded_Map[groupID]) {
+        //printf("   Already loaded...\n");
+        return;
+    }
+    
     std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
 
     int allResourceSize = 0;
@@ -109,9 +119,11 @@ void KRTexture2DManager::_loadTextureFilesInGroup(int groupID, KRWorld* loaderWo
         int resourceSize;
         if (texID >= 1000) {
             resourceSize = mTexID_ResourceInfo_Map[texID].length;
+            //printf("   KRRS: %d\n", texID);
         } else {
             std::string filename = mTexID_ImageFileName_Map[texID];
             resourceSize = _KRTexture2D::getResourceSize(filename);
+            //printf("   file: %s(%d)\n", filename.c_str(), texID);
         }
 
         // リソースの読み込み処理
@@ -149,19 +161,35 @@ void KRTexture2DManager::_loadTextureFilesInGroup(int groupID, KRWorld* loaderWo
             loaderWorld->_setFinishedSize(baseFinishedSize + resourceSize);
         }
     }
+    //printf("====\n");
+
+    mGroupID_Loaded_Map[groupID] = true;
+}
+
+bool KRTexture2DManager::_hasLoadedTextureFilesInGroup(int groupID)
+{
+    return mGroupID_Loaded_Map[groupID];
 }
 
 void KRTexture2DManager::_unloadTextureFilesInGroup(int groupID)
 {
+    //printf("_unloadTextureFilesInGroup(%d)...\n", groupID);
+    if (!mGroupID_Loaded_Map[groupID]) {
+        //printf("  Not loaded...\n");
+        return;
+    }    
+    
     std::vector<int>& theTexIDList = mGroupID_TexIDList_Map[groupID];
-
     for (std::vector<int>::const_iterator it = theTexIDList.begin(); it != theTexIDList.end(); it++) {
         int texID = *it;
+        //printf("  Deleting %d...\n", texID);
         if (mTexMap[texID] != NULL) {
             delete mTexMap[texID];
             mTexMap[texID] = NULL;
         }
     }
+    
+    mGroupID_Loaded_Map[groupID] = false;
 }
 
 _KRTexture2D* KRTexture2DManager::_getTexture(int texID)

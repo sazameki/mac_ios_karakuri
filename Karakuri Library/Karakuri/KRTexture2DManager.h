@@ -32,6 +32,7 @@ class KRTexture2DManager : public KRObject {
     std::map<int, std::vector<int> >    mGroupID_TexIDList_Map;
     std::map<int, std::string>          mTexID_ImageFileName_Map;
     std::map<int, KRTexture2DScaleMode> mTexID_ScaleMode_Map;
+    std::map<int, bool>                 mGroupID_Loaded_Map;
     
     std::map<int, _KRTexture2DResourceInfo>     mTexID_ResourceInfo_Map;
     
@@ -72,6 +73,7 @@ public:
     //unsigned    _getResourceLengthForTicket(const std::string& ticket);
     
     void    _loadTextureFilesInGroup(int groupID, KRWorld* loaderWorld, double minDuration);
+    bool    _hasLoadedTextureFilesInGroup(int groupID);
     void    _unloadTextureFilesInGroup(int groupID);
     
     int     _getResourceSizeInGroup(int groupID);

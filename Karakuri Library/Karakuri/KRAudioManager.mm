@@ -38,6 +38,8 @@ void KRAudioManager::addBGM(int groupID, int bgmID, const std::string& audioFile
     theBGMIDList.push_back(bgmID);
     
     mBGM_BGMID_AudioFileName_Map[bgmID] = audioFileName;
+    
+    mGroupID_Loaded_Map[groupID] = false;
 }
 
 void KRAudioManager::addSE(int groupID, int seID, const std::string& audioFileName)
@@ -48,6 +50,8 @@ void KRAudioManager::addSE(int groupID, int seID, const std::string& audioFileNa
     theSEIDList.push_back(seID);
     
     mSE_SEID_AudioFileName_Map[seID] = audioFileName;
+
+    mGroupID_Loaded_Map[groupID] = false;
 }
 
 
@@ -80,6 +84,10 @@ int KRAudioManager::_getResourceSizeInGroup(int groupID)
 
 void KRAudioManager::_loadAudioFilesInGroup(int groupID, KRWorld* loaderWorld, double minDuration)
 {
+    if (mGroupID_Loaded_Map[groupID]) {
+        return;
+    }
+    
     std::vector<int>& theBGMIDList = mBGM_GroupID_BGMIDList_Map[groupID];
     std::vector<int>& theSEIDList = mSE_GroupID_SEIDList_Map[groupID];
     
@@ -163,14 +171,29 @@ void KRAudioManager::_loadAudioFilesInGroup(int groupID, KRWorld* loaderWorld, d
             loaderWorld->_setFinishedSize(baseFinishedSize + resourceSize);
         }
     }
+
+    mGroupID_Loaded_Map[groupID] = true;
+}
+
+bool KRAudioManager::_hasLoadedAudioFilesInGroup(int groupID)
+{
+    return mGroupID_Loaded_Map[groupID];
 }
 
 void KRAudioManager::_unloadAudioFilesInGroup(int groupID)
 {
+    if (!mGroupID_Loaded_Map[groupID]) {
+        return;
+    }
+    
     std::vector<int>& theBGMIDList = mBGM_GroupID_BGMIDList_Map[groupID];
     for (std::vector<int>::const_iterator it = theBGMIDList.begin(); it != theBGMIDList.end(); it++) {
         int bgmID = *it;
         if (mBGMMap[bgmID] != NULL) {
+            if (mCurrentBGM == mBGMMap[bgmID]) {
+                mCurrentBGM->stop();
+                mCurrentBGM = NULL;
+            }
             delete mBGMMap[bgmID];
             mBGMMap[bgmID] = NULL;
         }
@@ -183,7 +206,9 @@ void KRAudioManager::_unloadAudioFilesInGroup(int groupID)
             delete mSEMap[seID];
             mSEMap[seID] = NULL;
         }
-    }    
+    }
+    
+    mGroupID_Loaded_Map[groupID] = false;
 }
 
 double KRAudioManager::getBGMVolume() const
@@ -220,7 +245,7 @@ void KRAudioManager::playBGM(int bgmID, double volume)
     
     // IDからBGMを引っ張ってくる。
     mCurrentBGM = mBGMMap[bgmID];
-    
+
     // BGMが読み込まれていない場合はエラーを表示
     if (mCurrentBGM == NULL) {
         const char* errorFormat = "BGM with ID %d is not loaded.";

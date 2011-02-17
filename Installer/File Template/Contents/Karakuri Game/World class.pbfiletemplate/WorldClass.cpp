@@ -18,11 +18,7 @@
 
 void «FILEBASENAMEASIDENTIFIER»::becameActive()
 {
-    /*if (!hasLoadedResourceGroup(GroupID::Foo)) {
-        startLoadingWorld("load", 2.0);
-        loadResourceGroup(GroupID::Foo);
-        finishLoadingWorld();
-    }*/
+    //loadResourceGroup(GroupID::Foo);
 }
 
 void «FILEBASENAMEASIDENTIFIER»::resignedActive()

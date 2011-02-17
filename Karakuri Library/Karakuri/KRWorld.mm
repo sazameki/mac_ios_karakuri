@@ -26,6 +26,7 @@ KRWorld::KRWorld()
     mResourceLoadingWorld = NULL;
 }
 
+
 #pragma mark -
 #pragma mark Pre-process World Management
 
@@ -114,7 +115,7 @@ void KRWorld::startDrawView(KRGraphics* g)
 
 bool KRWorld::hasLoadedResourceGroup(int groupID)
 {
-    return false;
+    return (gKRTex2DMan->_hasLoadedTextureFilesInGroup(groupID) && gKRAudioMan->_hasLoadedAudioFilesInGroup(groupID));
 }
 
 double KRWorld::getLoadingProgress() const
@@ -127,6 +128,9 @@ double KRWorld::getLoadingProgress() const
 
 void KRWorld::startLoadingWorld(const std::string& loadingWorldName, double minDuration)
 {
+    printf("KRWorld::startLoadingWorld() is currently disabled (it doesn't affect) because of its buggy behavior...\n");
+    return;
+
     if (mResourceLoadingWorld != NULL) {
         if (gKRLanguage == KRLanguageJapanese) {
             std::string errorFormat = "読み込み画面用ワールド \"" + getName() + "\" の中で、別の読み込み画面を使うことはできません。";
@@ -179,6 +183,9 @@ void KRWorld::loadResourceGroup(int groupID)
 
 void KRWorld::finishLoadingWorld()
 {
+    printf("KRWorld::finishLoadingWorld() is currently disabled (it doesn't affect) because of its buggy behavior...\n");
+    return;
+
     if (mIsShowingLoadingWorld) {
         for (std::vector<int>::iterator it = mLoadingResourceGroupIDs.begin(); it != mLoadingResourceGroupIDs.end(); it++) {
             int resourceSize = gKRTex2DMan->_getResourceSizeInGroup(*it);

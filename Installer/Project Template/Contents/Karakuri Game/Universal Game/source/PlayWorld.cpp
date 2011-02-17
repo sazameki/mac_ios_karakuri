@@ -12,12 +12,8 @@
 
 void PlayWorld::becameActive()
 {
-    // Use the loading screen for pretty heavy resource loadings.
-    if (!hasLoadedResourceGroup(GroupID::Play)) {
-        startLoadingWorld("load", 2.0);     // Pass loading screen name and mininum duration for the screen.
-        loadResourceGroup(GroupID::Play);
-        finishLoadingWorld();
-    }
+    // Load all resources for the play world
+    loadResourceGroup(GroupID::Play);
     
     // Play BGM
     gKRAudioMan->playBGM(BGM_ID::Play);
@@ -64,7 +60,8 @@ void PlayWorld::resignedActive()
 {
     // Remove all characters.
     gKRAnime2DMan->removeAllCharas();
-    
+    mEnemies.clear();
+
     unloadResourceGroup(GroupID::Play);
     
 #if KR_IPHONE
