@@ -122,6 +122,7 @@ void KRAudioManager::_loadAudioFilesInGroup(int groupID, KRWorld* loaderWorld, d
         NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
         if (mBGMMap[bgmID] == NULL) {
             mBGMMap[bgmID] = new KRMusic(filename, true);
+            mBGMMap[bgmID]->_setBGMID(bgmID);
         }
         NSTimeInterval loadTime = [NSDate timeIntervalSinceReferenceDate] - startTime;
 
